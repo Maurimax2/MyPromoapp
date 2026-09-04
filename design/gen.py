@@ -41,13 +41,13 @@ MARK = ('<svg width="%(s)s" height="%(s)s" viewBox="0 0 48 48" fill="none">'
         '<defs><linearGradient id="mg%(u)s" x1="10" y1="14" x2="26" y2="40" gradientUnits="userSpaceOnUse">'
         '<stop stop-color="#8B5CF6"/><stop offset="1" stop-color="#6B21B5"/></linearGradient>'
         '<linearGradient id="mo%(u)s" x1="38" y1="14" x2="22" y2="40" gradientUnits="userSpaceOnUse">'
-        '<stop stop-color="#FB8B3C"/><stop offset="1" stop-color="#F97316"/></linearGradient></defs>'
+        '<stop stop-color="#FDBA74"/><stop offset="1" stop-color="#F97316"/></linearGradient></defs>'
         '<path d="M12 40V23l12 13" stroke="url(#mg%(u)s)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>'
         '<path d="M36 40V23L24 36" stroke="url(#mo%(u)s)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>'
         '<circle cx="12" cy="12" r="5.6" fill="%(pc)s"/><circle cx="36" cy="12" r="5.6" fill="%(oc)s"/></svg>')
 
 def mark(size=34, uid='a', white=False):
-    return MARK % dict(s=size, u=uid, pc='#FFFFFF' if white else '#7C3AED',
+    return MARK % dict(s=size, u=uid, pc='#FFFFFF' if white else '#8B5CF6',
                        oc='#FFFFFF' if white else '#F97316')
 
 CSS = """
@@ -68,20 +68,20 @@ CSS = """
   .hdr{background:%(surf)s;padding:18px 18px 14px;display:flex;flex-direction:column;gap:14px;
        border-bottom:1px solid %(linesoft)s;flex-shrink:0}
   .hdr-row{display:flex;align-items:center;gap:11px}
-  .hdr-t{font-size:20px;font-weight:700;letter-spacing:-.01em;flex:1}
+  .hdr-t{font-size:20px;font-weight:700;flex:1}
   .hdr-s{font-size:12px;color:%(ink3)s;font-weight:400}
-  .icobtn{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  .icobtn{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
           color:%(ink2)s;background:%(bg)s;flex-shrink:0}
 
   .hdr-bold{background:%(purple)s;color:#fff;padding:20px 18px 18px;display:flex;flex-direction:column;gap:15px;flex-shrink:0}
   .hdr-bold .hdr-t{color:#fff;font-size:23px}
-  .hdr-bold .hdr-s{color:#D8C7EE}
+  .hdr-bold .hdr-s{color:rgba(255,255,255,.78)}
   .hdr-bold .icobtn{background:rgba(255,255,255,.16);color:#fff}
 
   /* ---- search ---- */
   .srch{display:flex;align-items:center;gap:9px;background:%(bg)s;border-radius:13px;padding:0 14px;height:46px;
         font-size:14px;color:%(ink3)s}
-  .srch-b{background:rgba(255,255,255,.17);color:#EDE4F8}
+  .srch-b{background:rgba(255,255,255,.17);color:rgba(255,255,255,.75)}
 
   /* ---- segmented ---- */
   .seg{display:flex;gap:4px;background:%(bg)s;border-radius:12px;padding:4px}
@@ -90,7 +90,7 @@ CSS = """
   .tabs{display:flex;gap:22px;align-items:center}
   .tabs span{font-size:15px;font-weight:600;color:%(ink3)s;padding-bottom:8px}
   .tabs .on{color:%(purple)s;border-bottom:2.5px solid %(orange)s}
-  .tabs-b span{color:#C9B4E4}
+  .tabs-b span{color:rgba(255,255,255,.62)}
   .tabs-b .on{color:#fff;border-bottom-color:%(olight)s}
 
   /* ---- cards ---- */
@@ -139,15 +139,15 @@ CSS = """
 
   /* ---- nav ---- */
   .nav{position:absolute;bottom:0;left:0;right:0;height:76px;background:%(surf)s;
-       border-top:1px solid %(linesoft)s;display:flex;align-items:flex-start;padding:9px 4px 0;
+       border-top:1px solid %(linesoft)s;display:flex;align-items:center;padding:0 4px;
        box-shadow:0 -1px 20px rgba(26,20,36,.07)}
   .nav div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
-           font-size:10.5px;font-weight:600;color:%(ink3)s;min-height:44px;justify-content:center}
+           font-size:10.5px;font-weight:600;color:%(ink3)s;min-height:56px;justify-content:center}
   .nav .on{color:%(purple)s}
-  .fab{width:52px;height:52px;border-radius:17px;background:%(orange)s;color:#fff;
+  .nav .fab{width:52px;height:52px;flex:none;border-radius:17px;background:%(orange)s;color:#fff;
        display:flex;align-items:center;justify-content:center;margin-top:-14px;
        box-shadow:0 6px 16px rgba(249,115,22,.4)}
-  .navsp{flex:1;display:flex;justify-content:center}
+  .navsp{flex:1;display:flex;justify-content:center;align-items:center}
 """ % P
 
 def nav(active):
@@ -155,7 +155,7 @@ def nav(active):
     out = []
     for it in items:
         if it is None:
-            out.append('<div class="navsp"><div class="fab">%s</div></div>' % ic('plus', 24, 2.4))
+            out.append('<div class="navsp"><div class="fab">%s</div></div>' % ic('plus', 24, 2))
             continue
         k, lbl = it
         cls = ' class="on"' if k == active else ''
@@ -187,21 +187,21 @@ LECS = [
 POSTS = [
     ('أ م', P['purple'], 'أحمد محمد',  'طالب سنة 2 · طب',
      'ملخص فسيولوجيا الكلية',
-     'جمعت أهم النقاط من محاضرات الأستاذ في ورقتين. راجعوها قبل الامتحان وقولوا لي إذا نقص شيء.',
+     'جمعت أهم النقاط في ورقتين. راجعوها وقولوا لي إذا نقص شيء.',
      'فسيولوجيا', '54', '12'),
     ('م س', P['orange'], 'مريم سيدي', 'طالبة سنة 2 · صيدلة',
      'سؤال حول محاضرة اليوم',
-     'ما الفرق بين الأوعية اللمفاوية السطحية والعميقة في الرقبة؟ لم أفهم الجزء الأخير.',
+     'ما الفرق بين الأوعية اللمفاوية السطحية والعميقة في الرقبة؟',
      'تشريح', '23', '7'),
     ('ي و', P['plight'], 'يحيى ولد أحمد', 'طالب سنة 2 · طب',
      'ملفان يحملان الرقم 5 في التشريح',
-     'انتبهوا: الأوعية واللمفاويات كلاهما مرقّم ‎-5-‎ في الدرايف. الترتيب الصحيح هو الأوعية أولًا.',
+     'الأوعية واللمفاويات كلاهما مرقّم ‎-5-‎ في الدرايف. الصحيح: الأوعية أولًا.',
      'تشريح', '41', '9'),
 ]
 TODAY = [
     ('08:30', 'Fosses nasales',      'Ali Ghorbel',  'ANATOMIE',       P['ppale'], P['purple']),
     ('10:15', 'Les glucides',        'Kebir',        'BIOCHIMIE',      P['opale'], P['orange']),
-    ('14:00', 'Le néphron',          'M. Ould Baba', 'PHYSIOLOGIE S1', P['opale'], '#C2410C'),
+    ('14:00', 'Les lipides',         'Kadijetou Ba', 'BIOCHIMIE',      P['opale'], '#C2410C'),
 ]
 
 # ---------------------------------------------------------------- LOGIN
@@ -244,7 +244,7 @@ def login(v):
       '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px">'
       '%s'
       '<div style="font-size:32px;font-weight:700;color:#fff;margin-top:20px;letter-spacing:-.02em">MyPromo</div>'
-      '<div style="font-size:15px;color:#D8C7EE;line-height:1.85;text-align:center;margin-top:12px">'
+      '<div style="font-size:15px;color:rgba(255,255,255,.78);line-height:1.85;text-align:center;margin-top:12px">'
       'كل ما تشاركه دفعتك،<br>في مكان واحد</div></div>'
       '<div style="background:#fff;border-radius:30px 30px 0 0;padding:32px 26px 40px;'
       'display:flex;flex-direction:column;gap:11px">'
@@ -285,16 +285,18 @@ def feed(v):
         return ('<div class="phone" style="background:#fff">'
           '<div class="hdr" style="padding-bottom:0"><div class="hdr-row">'
           '<div class="hdr-t">الرئيسية</div><div class="icobtn">%s</div>%s</div>'
-          '<div class="tabs"><span class="on">لك</span><span>متابَعة</span><span>مادّتي</span></div></div>'
+          '<div class="tabs"><span class="on">لك</span><span>متابَعة</span></div></div>'
           '<div class="scroll">%s</div>%s</div>'
           % (ic('bell',19), av('ه ب', P['purple'], 38, 13),
              ''.join(post_card(p,'dense') for p in POSTS), nav('home')))
     return ('<div class="phone" style="background:%s">'
       '<div class="hdr-bold"><div class="hdr-row">%s'
-      '<div class="hdr-t">الرئيسية</div><div class="icobtn">%s</div></div>'
+      '<div class="hdr-t">الرئيسية</div><div class="icobtn">%s</div>%s</div>'
       '<div class="tabs tabs-b"><span class="on">لك</span><span>متابَعة</span></div></div>'
       '<div class="scroll"><div class="pad list" style="margin-top:-2px">%s</div></div>%s</div>'
-      % (P['bg'], mark(34,'f3',True), ic('bell',19), ''.join(post_card(p) for p in POSTS[:2]), nav('home')))
+      % (P['bg'], mark(34,'f3',True), ic('bell',19),
+         av('ه ب', 'rgba(255,255,255,.22)', 38, 13),
+         ''.join(post_card(p) for p in POSTS[:2]), nav('home')))
 
 # ---------------------------------------------------------------- ARCHIVE
 def archive(v):
@@ -317,8 +319,9 @@ def archive(v):
         rows = ''.join(
           '<div class="drow">%s<div class="grow"><div class="nm" style="font-size:14px">%s</div>'
           '<div class="mt">%s</div></div>%s</div>'
-          % (tile(k, bg, fg, True, 18), n, (('%s · %d ملف' % (pr, c)) if c else pr),
-             ('<span class="cnt">%d</span>' % c) if c else '<span style="font-size:11.5px;color:%s">فارغ</span>' % P['ink3'])
+          % (tile(k, bg, fg, True, 18), n, (('%d ملف · %s' % (c, pr)) if c else pr),
+             (('<span class="cnt">%d</span><span class="chev">%s</span>' % (c, ic('chev',17)))
+              if c else '<span style="font-size:11.5px;color:%s">فارغ</span>' % P['ink3']))
           for n, k, c, pr, bg, fg in MODS)
         lecs = ''.join(
           '<div class="drow"><span style="width:26px;height:26px;border-radius:8px;background:%s;color:%s;'
@@ -335,14 +338,15 @@ def archive(v):
           % (ic('bookmark',19), ic('search',18), rows, lecs, nav('archive')))
     cells = ''.join(
       '<div style="background:#fff;border-radius:18px;padding:15px;display:flex;flex-direction:column;gap:10px;'
-      'box-shadow:0 2px 10px rgba(26,20,36,.05)">%s'
+      '%sbox-shadow:0 2px 10px rgba(26,20,36,.05)">%s'
       '<div><div style="font-size:13.5px;font-weight:700;line-height:1.35">%s</div>'
       '<div style="font-size:11.5px;color:%s;margin-top:4px">%s</div></div></div>'
-      % (tile(k, bg, fg), n, P['ink3'], ('%d محاضرة' % c) if c else 'فارغ')
-      for n, k, c, pr, bg, fg in MODS[:4])
+      % ('grid-column:span 2;' if (i == len(MODS) - 1 and len(MODS) % 2) else '',
+         tile(k, bg, fg), n, P['ink3'], ('%d محاضرة' % c) if c else 'فارغ')
+      for i, (n, k, c, pr, bg, fg) in enumerate(MODS))
     return ('<div class="phone" style="background:%s">'
       '<div class="hdr-bold"><div class="hdr-row"><div class="hdr-t">الأرشيف'
-      '<div class="hdr-s">UNEM · PCEM2 · 9 مواد</div></div></div>'
+      '<div class="hdr-s">السداسي 1 · 5 مواد</div></div></div>'
       '<div class="srch srch-b">%s<span>ابحث في الأرشيف</span></div></div>'
       '<div class="scroll"><div class="pad">'
       '<div style="display:flex;gap:8px;margin-bottom:14px"><span class="chip">السداسي 1</span>'
@@ -358,7 +362,8 @@ def lectures(v):
           '<div style="width:52px;flex-shrink:0;text-align:center"><div style="font-size:15px;font-weight:700;'
           'color:%s;font-variant-numeric:tabular-nums">%s</div></div>'
           '<div style="width:3px;height:38px;border-radius:3px;background:%s;flex-shrink:0"></div>'
-          '<div class="grow"><div class="nm">%s</div><div class="mt">%s · %s</div></div>%s</div></div>'
+          '<div class="grow"><div class="nm">%s</div><div class="mt">%s · %s</div></div>'
+          '<span class="chev">%s</span></div></div>'
           % (P['purple'], t, fg, ti, pr, m, ic('chev',18))
           for t, ti, pr, m, bg, fg in TODAY)
         return ('<div class="phone">'
@@ -383,9 +388,9 @@ def lectures(v):
           '<div class="icobtn">%s</div></div></div>'
           '<div class="scroll"><div class="dhead">اليوم · الثلاثاء 4 سبتمبر</div>'
           '<div class="dlist">%s</div><div class="dhead">غدًا</div>'
-          '<div class="drow"><div style="width:44px;flex-shrink:0;font-size:13.5px;font-weight:700;color:%s">09:00</div>'
+          '<div class="dlist"><div class="drow"><div style="width:44px;flex-shrink:0;font-size:13.5px;font-weight:700;color:%s">09:00</div>'
           '<div class="grow"><div class="nm" style="font-size:14px">Oreille</div>'
-          '<div class="mt">Ali Ghorbel</div></div></div></div>%s</div>'
+          '<div class="mt">Ali Ghorbel</div></div></div></div></div>%s</div>'
           % (ic('clock',19), rows, P['purple'], nav('book')))
     rows = ''.join(
       '<div style="background:#fff;border-radius:18px;padding:15px;display:flex;gap:13px;align-items:center;'
@@ -394,7 +399,7 @@ def lectures(v):
       'flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">'
       '<div style="font-size:14px;font-weight:700">%s</div></div>'
       '<div class="grow"><div class="nm">%s</div><div class="mt">%s · %s</div></div></div>'
-      % (bg, fg, t.split(':')[0] + 'h', ti, pr, m) for t, ti, pr, m, bg, fg in TODAY)
+      % (bg, fg, t, ti, pr, m) for t, ti, pr, m, bg, fg in TODAY)
     return ('<div class="phone" style="background:%s">'
       '<div class="hdr-bold"><div class="hdr-row"><div class="hdr-t">المحاضرات'
       '<div class="hdr-s">الثلاثاء 4 سبتمبر · 3 محاضرات</div></div><div class="icobtn">%s</div></div>'
@@ -453,13 +458,13 @@ def profile(v):
       '%s<span class="chev">%s</span></div></div>'
       % (tile(k, P['ppale'], P['purple'], True, 18), lbl,
          ('<span class="cnt">%s</span>' % n) if n else '', ic('chev',18))
-      for k, lbl, n in PITEMS[:4])
+      for k, lbl, n in PITEMS)
     return ('<div class="phone" style="background:%s">'
       '<div class="hdr-bold" style="padding-bottom:46px"><div class="hdr-row">'
       '<div class="hdr-t">الملف الشخصي</div><div class="icobtn">%s</div></div>'
       '<div style="display:flex;align-items:center;gap:14px;margin-top:6px">%s'
       '<div><div style="font-size:19px;font-weight:700;color:#fff">هَمَد بشير</div>'
-      '<div style="font-size:12.5px;color:#D8C7EE;margin-top:3px">سنة 2 · طب · UNEM</div></div></div></div>'
+      '<div style="font-size:12.5px;color:rgba(255,255,255,.78);margin-top:3px">سنة 2 · طب · UNEM</div></div></div></div>'
       '<div class="scroll"><div class="pad" style="margin-top:-34px">'
       '<div class="card" style="display:flex;padding:16px 0;margin-bottom:12px">%s%s%s</div>'
       '<div class="list">%s</div></div></div>%s</div>'
