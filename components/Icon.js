@@ -29,6 +29,11 @@ const PATHS = {
   image: <><rect width="18" height="18" x="3" y="3" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" /></>,
   send: <><path d="M14.5 9.5 3 21" /><path d="M21.9 3.6a1 1 0 0 0-1.3-1.3L3.4 8.7a1 1 0 0 0 .1 1.9l7.5 1.9a1 1 0 0 1 .7.7l1.9 7.5a1 1 0 0 0 1.9.1z" /></>,
   heartFill: <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" fill="currentColor" />,
+  check: <polyline points="20 6 9 17 4 12" />,
+  x: <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
+  quiz: <><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></>,
+  zoomIn: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></>,
+  zoomOut: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M8 11h6" /></>,
   download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></>,
 };
 

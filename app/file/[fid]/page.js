@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Icon from '@/components/Icon';
+import BackButton from '@/components/BackButton';
 import PdfViewer from '@/components/PdfViewer';
 import { fileByFid } from '@/lib/data';
 
@@ -14,9 +14,7 @@ export default async function FileView({ params }) {
     <>
       <header className="head" style={{ paddingBottom: 14 }}>
         <div className="head-row">
-          <Link href="/archive" className="icobtn" aria-label="رجوع">
-            <Icon name="chevR" size={18} />
-          </Link>
+          <BackButton />
           <div className="grow">
             <div className="head-t" style={{ fontSize: 16 }}>{file ? file.title : 'ملف'}</div>
             <div className="head-s">

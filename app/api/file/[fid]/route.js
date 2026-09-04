@@ -11,7 +11,11 @@
 export const runtime = 'nodejs';
 
 const SOURCES = (fid) => [
+  // `confirm=t` skips the "Google can't scan this file" interstitial, which
+  // is otherwise returned as HTML instead of the file.
+  `https://drive.usercontent.google.com/download?id=${fid}&export=download&confirm=t`,
   `https://drive.usercontent.google.com/download?id=${fid}&export=download`,
+  `https://drive.google.com/uc?export=download&id=${fid}&confirm=t`,
   `https://drive.google.com/uc?export=download&id=${fid}`,
 ];
 

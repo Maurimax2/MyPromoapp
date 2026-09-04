@@ -9,6 +9,11 @@ Rules established by the project owner. Follow them; do not re-derive them.
   in Drive. Vessels are 5, lymphatics 5b. This is a fact about the course,
   not a guess — never reorder them and never flag it as unresolved again.
 
+- **Lectures belong to a chapter and are numbered straight through the module.**
+  Files Drive leaves unnumbered continue from where the numbered ones stop —
+  ANATOMIE runs 1–10 for الرأس والعنق, then 11–18 for التشريح العصبي. Never
+  show a lecture with a dash instead of a number.
+
 ## Language
 
 - The interface is Arabic, right-to-left.
@@ -43,9 +48,22 @@ Rules established by the project owner. Follow them; do not re-derive them.
 - Six promos: PCEM1, PCEM2, DCEM1, DCEM2, DCEM3, DCEM4. Each has its own badge
   colour, shown on every post. Only PCEM2 is indexed so far.
 
+## The file viewer
+
+- pdf.js needs `standardFontDataUrl` and `cMapUrl`, both served from our own
+  origin. Without the first, standard fonts are substituted and the letter
+  spacing collapses.
+- **Rendered pages are bitmaps and must be freed.** Keeping every page drawn
+  is what crashed Safari on long lectures. Only a window around the viewport
+  is ever retained.
+- Never measure every page before drawing. Page one is measured, drawn, and
+  its shape sizes the placeholders for the rest.
+
 ## Still to build
 
-Q&A, discussion, chat, per-subject icons, badges students earn.
+Q&A, discussion, chat, study rooms, per-subject icons, badges students earn.
+3D anatomical models are possible with open assets (Z-Anatomy, BodyParts3D)
+but heavy on mobile data — a later thing.
 
 ## Working method
 
