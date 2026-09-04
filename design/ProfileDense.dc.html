@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  a{color:#6B21B5;text-decoration:none}
+  a:hover{color:#8B5CF6}
+  .phone{
+    width:390px;height:844px;position:relative;overflow:hidden;
+    background:#F1F5F9;color:#1A1424;
+    font-family:'Cairo','Segoe UI',system-ui,sans-serif;
+    display:flex;flex-direction:column;
+    direction:rtl;text-align:right;
+  }
+  .scroll{flex:1;overflow:hidden;display:flex;flex-direction:column}
+  .pad{padding:16px 18px}
+
+  /* ---- header ---- */
+  .hdr{background:#FFFFFF;padding:18px 18px 14px;display:flex;flex-direction:column;gap:14px;
+       border-bottom:1px solid #F1EEF7;flex-shrink:0}
+  .hdr-row{display:flex;align-items:center;gap:11px}
+  .hdr-t{font-size:20px;font-weight:700;letter-spacing:-.01em;flex:1}
+  .hdr-s{font-size:12px;color:#9C95A9;font-weight:400}
+  .icobtn{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+          color:#655D75;background:#F1F5F9;flex-shrink:0}
+
+  .hdr-bold{background:#6B21B5;color:#fff;padding:20px 18px 18px;display:flex;flex-direction:column;gap:15px;flex-shrink:0}
+  .hdr-bold .hdr-t{color:#fff;font-size:23px}
+  .hdr-bold .hdr-s{color:#D8C7EE}
+  .hdr-bold .icobtn{background:rgba(255,255,255,.16);color:#fff}
+
+  /* ---- search ---- */
+  .srch{display:flex;align-items:center;gap:9px;background:#F1F5F9;border-radius:13px;padding:0 14px;height:46px;
+        font-size:14px;color:#9C95A9}
+  .srch-b{background:rgba(255,255,255,.17);color:#EDE4F8}
+
+  /* ---- segmented ---- */
+  .seg{display:flex;gap:4px;background:#F1F5F9;border-radius:12px;padding:4px}
+  .seg span{flex:1;text-align:center;font-size:13.5px;font-weight:600;color:#655D75;padding:9px 0;border-radius:9px}
+  .seg .on{background:#FFFFFF;color:#6B21B5;box-shadow:0 1px 3px rgba(26,20,36,.09)}
+  .tabs{display:flex;gap:22px;align-items:center}
+  .tabs span{font-size:15px;font-weight:600;color:#9C95A9;padding-bottom:8px}
+  .tabs .on{color:#6B21B5;border-bottom:2.5px solid #F97316}
+  .tabs-b span{color:#C9B4E4}
+  .tabs-b .on{color:#fff;border-bottom-color:#FDBA74}
+
+  /* ---- cards ---- */
+  .card{background:#FFFFFF;border-radius:17px;box-shadow:0 1px 2px rgba(26,20,36,.04),0 4px 16px rgba(26,20,36,.06)}
+  .row{display:flex;align-items:center;gap:13px;padding:14px}
+  .tile{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .tile-s{width:38px;height:38px;border-radius:11px}
+  .grow{flex:1;min-width:0}
+  .nm{font-size:15px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mt{font-size:12px;color:#9C95A9;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chev{color:#9C95A9;flex-shrink:0}
+  .list{display:flex;flex-direction:column;gap:10px}
+
+  /* ---- dense ---- */
+  .dlist{background:#FFFFFF;display:flex;flex-direction:column}
+  .drow{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid #F1EEF7}
+  .dhead{font-size:11px;font-weight:700;letter-spacing:.08em;color:#9C95A9;padding:14px 18px 7px;background:#F1F5F9}
+
+  /* ---- chips / pills ---- */
+  .chip{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:20px;
+        background:#EDE9FE;color:#6B21B5}
+  .chip-o{background:#FFF1E3;color:#C2410C}
+  .chip-g{background:#F1F5F9;color:#9C95A9}
+  .cnt{font-size:12px;font-weight:700;color:#6B21B5;font-variant-numeric:tabular-nums}
+
+  /* ---- avatar ---- */
+  .av{border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+      font-weight:700;color:#fff;font-size:14px}
+
+  /* ---- post ---- */
+  .ptitle{font-size:15px;font-weight:700;line-height:1.4;margin-top:9px}
+  .pbody{font-size:13px;color:#655D75;line-height:1.75;margin-top:5px}
+  .pfoot{display:flex;align-items:center;gap:16px;margin-top:11px;color:#9C95A9;font-size:12.5px;font-weight:600}
+  .pf{display:flex;align-items:center;gap:5px}
+
+  /* ---- buttons ---- */
+  .btn{height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+       font-size:15px;font-weight:700}
+  .btn-p{background:#6B21B5;color:#fff}
+  .btn-o{background:#F97316;color:#fff}
+  .btn-g{background:#F1F5F9;color:#1A1424}
+  .btn-w{background:#fff;color:#6B21B5}
+  .btn-ol{border:1.5px solid #E8E4F0;color:#1A1424}
+  .fld{height:52px;border-radius:14px;background:#F1F5F9;display:flex;align-items:center;gap:10px;
+       padding:0 15px;font-size:14px;color:#9C95A9}
+
+  /* ---- nav ---- */
+  .nav{position:absolute;bottom:0;left:0;right:0;height:76px;background:#FFFFFF;
+       border-top:1px solid #F1EEF7;display:flex;align-items:flex-start;padding:9px 4px 0;
+       box-shadow:0 -1px 20px rgba(26,20,36,.07)}
+  .nav div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+           font-size:10.5px;font-weight:600;color:#9C95A9;min-height:44px;justify-content:center}
+  .nav .on{color:#6B21B5}
+  .fab{width:52px;height:52px;border-radius:17px;background:#F97316;color:#fff;
+       display:flex;align-items:center;justify-content:center;margin-top:-14px;
+       box-shadow:0 6px 16px rgba(249,115,22,.4)}
+  .navsp{flex:1;display:flex;justify-content:center}
+</style>
+</helmet>
+<div class="phone" style="background:#fff"><div class="hdr"><div class="hdr-row"><div class="av" style="width:52px;height:52px;background:#6B21B5;font-size:17px">ه ب</div><div class="grow"><div style="font-size:17px;font-weight:700">هَمَد بشير</div><div style="font-size:12.5px;color:#9C95A9;margin-top:2px">سنة 2 · طب · UNEM</div></div><div class="icobtn"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div></div></div><div class="scroll"><div style="display:flex;padding:16px 0;background:#F1F5F9"><div style="flex:1;text-align:center"><div style="font-size:19px;font-weight:700;color:#6B21B5;font-variant-numeric:tabular-nums">8</div><div style="font-size:11.5px;color:#9C95A9;margin-top:2px">منشور</div></div><div style="flex:1;text-align:center"><div style="font-size:19px;font-weight:700;color:#F97316;font-variant-numeric:tabular-nums">12</div><div style="font-size:11.5px;color:#9C95A9;margin-top:2px">محفوظ</div></div><div style="flex:1;text-align:center"><div style="font-size:19px;font-weight:700;color:#8B5CF6;font-variant-numeric:tabular-nums">34</div><div style="font-size:11.5px;color:#9C95A9;margin-top:2px">تعليق</div></div></div><div class="dlist"><div class="drow"><div class="tile tile-s" style="background:#F1F5F9;color:#655D75"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div><div class="grow"><div class="nm" style="font-size:14px;font-weight:500">ملفاتي المحفوظة</div></div><span class="cnt">12</span><span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span></div><div class="drow"><div class="tile tile-s" style="background:#F1F5F9;color:#655D75"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></div><div class="grow"><div class="nm" style="font-size:14px;font-weight:500">منشوراتي</div></div><span class="cnt">8</span><span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span></div><div class="drow"><div class="tile tile-s" style="background:#F1F5F9;color:#655D75"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></div><div class="grow"><div class="nm" style="font-size:14px;font-weight:500">سجل التحميلات</div></div><span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span></div><div class="drow"><div class="tile tile-s" style="background:#F1F5F9;color:#655D75"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="grow"><div class="nm" style="font-size:14px;font-weight:500">الإعدادات</div></div><span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span></div><div class="drow"><div class="tile tile-s" style="background:#F1F5F9;color:#655D75"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></div><div class="grow"><div class="nm" style="font-size:14px;font-weight:500">تسجيل الخروج</div></div><span class="chev"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span></div></div></div><div class="nav"><div><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></div><div><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg><span>المحاضرات</span></div><div class="navsp"><div class="fab"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></div></div><div><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg><span>الأرشيف</span></div><div class="on"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>الملف</span></div></div></div>
+</x-dc>
+</body>
+</html>

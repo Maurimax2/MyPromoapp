@@ -1,0 +1,165 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-login",
+      "title": "تسجيل الدخول — بطاقات"
+    },
+    {
+      "file": "LoginDense.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-login",
+      "title": "تسجيل الدخول — مدمج"
+    },
+    {
+      "file": "LoginBold.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-login",
+      "title": "تسجيل الدخول — لوني"
+    },
+    {
+      "file": "FeedCards.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-feed",
+      "title": "الرئيسية — بطاقات"
+    },
+    {
+      "file": "FeedDense.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-feed",
+      "title": "الرئيسية — مدمج"
+    },
+    {
+      "file": "FeedBold.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-feed",
+      "title": "الرئيسية — لوني"
+    },
+    {
+      "file": "ArchiveCards.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-archive",
+      "title": "الأرشيف — بطاقات"
+    },
+    {
+      "file": "ArchiveDense.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-archive",
+      "title": "الأرشيف — مدمج"
+    },
+    {
+      "file": "ArchiveBold.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-archive",
+      "title": "الأرشيف — لوني"
+    },
+    {
+      "file": "LecturesCards.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-lectures",
+      "title": "المحاضرات — بطاقات"
+    },
+    {
+      "file": "LecturesDense.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-lectures",
+      "title": "المحاضرات — مدمج"
+    },
+    {
+      "file": "LecturesBold.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-lectures",
+      "title": "المحاضرات — لوني"
+    },
+    {
+      "file": "ProfileCards.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-profile",
+      "title": "الملف الشخصي — بطاقات"
+    },
+    {
+      "file": "ProfileDense.dc.html",
+      "x": 490,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-profile",
+      "title": "الملف الشخصي — مدمج"
+    },
+    {
+      "file": "ProfileBold.dc.html",
+      "x": 980,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "page": "page-profile",
+      "title": "الملف الشخصي — لوني"
+    }
+  ],
+  "pages": [
+    {
+      "id": "page-login",
+      "name": "تسجيل الدخول"
+    },
+    {
+      "id": "page-feed",
+      "name": "الرئيسية"
+    },
+    {
+      "id": "page-archive",
+      "name": "الأرشيف"
+    },
+    {
+      "id": "page-lectures",
+      "name": "المحاضرات"
+    },
+    {
+      "id": "page-profile",
+      "name": "الملف الشخصي"
+    }
+  ],
+  "launch": {
+    "view": "canvas",
+    "page": "page-login"
+  }
+}
