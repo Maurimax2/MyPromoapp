@@ -47,8 +47,12 @@ MARK = ('<svg width="%(s)s" height="%(s)s" viewBox="0 0 48 48" fill="none">'
         '<circle cx="12" cy="12" r="5.6" fill="%(pc)s"/><circle cx="36" cy="12" r="5.6" fill="%(oc)s"/></svg>')
 
 def mark(size=34, uid='a', white=False):
-    return MARK % dict(s=size, u=uid, pc='#FFFFFF' if white else '#8B5CF6',
-                       oc='#FFFFFF' if white else '#F97316')
+    """On a purple ground the whole mark goes white; the two-tone gradient
+    version is only legible on a light background."""
+    if white:
+        m = MARK.replace('url(#mg%(u)s)', '#FFFFFF').replace('url(#mo%(u)s)', '#FFFFFF')
+        return m % dict(s=size, u=uid, pc='#FFFFFF', oc='#FFFFFF')
+    return MARK % dict(s=size, u=uid, pc='#8B5CF6', oc='#F97316')
 
 CSS = """
   *{box-sizing:border-box;margin:0;padding:0}
@@ -57,7 +61,7 @@ CSS = """
   .phone{
     width:390px;height:844px;position:relative;overflow:hidden;
     background:%(bg)s;color:%(ink)s;
-    font-family:'Cairo','Segoe UI',system-ui,sans-serif;
+    font-family:'IBM Plex Sans Arabic','IBM Plex Sans',system-ui,sans-serif;
     display:flex;flex-direction:column;
     direction:rtl;text-align:right;
   }
@@ -212,13 +216,12 @@ def login(v):
           '%s'
           '<div style="font-size:31px;font-weight:700;margin-top:18px;letter-spacing:-.02em">'
           '<span style="color:%s">My</span><span style="color:%s">Promo</span></div>'
-          '<div style="font-size:15px;color:%s;line-height:1.85;text-align:center;margin-top:12px">'
-          'كل ما تشاركه دفعتك،<br>في مكان واحد</div>'
-          '<div style="width:100%%;display:flex;flex-direction:column;gap:11px;margin-top:44px">'
+          '<div style="width:100%%;display:flex;flex-direction:column;gap:11px;margin-top:40px">'
           '<div class="btn btn-p">تسجيل الدخول</div>'
           '<div class="btn btn-g">إنشاء حساب</div></div>'
-          '<div style="font-size:12.5px;color:%s;margin-top:26px">طلاب وأساتذة موثوقون فقط</div>'
-          '</div></div>' % (mark(74, 'l1'), P['ink'], P['purple'], P['ink2'], P['ink3']))
+          '<div style="font-size:11.5px;color:%s;line-height:1.9;text-align:center;margin-top:22px;'
+          'max-width:250px">بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</div>'
+          '</div></div>' % (mark(74, 'l1'), P['ink'], P['purple'], P['ink3']))
     if v == 'dense':
         return ('<div class="phone" style="background:#fff">'
           '<div style="padding:56px 26px 0;display:flex;flex-direction:column">'
@@ -251,7 +254,8 @@ def login(v):
       '<div style="font-size:19px;font-weight:700;margin-bottom:6px">أهلاً بك</div>'
       '<div class="btn btn-p">تسجيل الدخول</div>'
       '<div class="btn btn-ol">إنشاء حساب</div>'
-      '<div style="font-size:12.5px;color:%s;text-align:center;margin-top:10px">طلاب وأساتذة موثوقون فقط</div>'
+      '<div style="font-size:11.5px;color:%s;line-height:1.9;text-align:center;margin-top:10px">'
+      'بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</div>'
       '</div></div>' % (P['purple'], mark(80, 'l3', True), P['ink3']))
 
 # ---------------------------------------------------------------- FEED
@@ -476,7 +480,8 @@ def profile(v):
 SHELL = ('<!doctype html>\n<html>\n<head>\n<meta charset="utf-8">\n'
          '<script src="./support.js"></script>\n</head>\n<body>\n<x-dc>\n<helmet>\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-         'family=Cairo:wght@300;400;500;600;700&display=swap">\n<style>%s</style>\n</helmet>\n'
+         'family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">\n'
+         '<style>%s</style>\n</helmet>\n'
          '%s\n</x-dc>\n</body>\n</html>\n')
 
 SCREENS = [
