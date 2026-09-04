@@ -16,8 +16,8 @@ export default function Login() {
       </div>
 
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 11, marginTop: 40 }}>
-        <Link href="/" className="btn p">تسجيل الدخول</Link>
-        <Link href="/" className="btn g">إنشاء حساب</Link>
+        <Link href="/feed" className="btn p">تسجيل الدخول</Link>
+        <Link href="/feed" className="btn g">إنشاء حساب</Link>
       </div>
 
       <p style={{

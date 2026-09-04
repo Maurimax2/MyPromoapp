@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import Icon from './Icon';
 import { promoById } from '@/lib/data';
 
@@ -15,14 +16,14 @@ function Media({ a }) {
   }
   return (
     <div className="post-media">
-      <a className="post-file" href={a.href} target="_blank" rel="noopener noreferrer">
+      <Link className="post-file" href={`/file/${a.fid}`}>
         <div className="tile tint-orange"><Icon name="file" size={19} /></div>
         <div className="grow">
           <div className="post-file-nm">{a.name}</div>
           <div className="post-file-mt">{a.ext} · {a.mb} MB</div>
         </div>
-        <span className="chev"><Icon name="download" size={18} /></span>
-      </a>
+        <span className="chev"><Icon name="chev" size={18} /></span>
+      </Link>
     </div>
   );
 }

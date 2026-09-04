@@ -4,16 +4,16 @@ import { usePathname } from 'next/navigation';
 import Icon from './Icon';
 
 const TABS = [
-  { href: '/',         icon: 'home',    label: 'الرئيسية' },
-  { href: '/lectures', icon: 'book',    label: 'المحاضرات' },
-  { href: '/archive',  icon: 'archive', label: 'الأرشيف' },
-  { href: '/profile',  icon: 'user',    label: 'الملف' },
+  { href: '/feed',    icon: 'home',    label: 'الرئيسية' },
+  { href: '/notes',   icon: 'book',    label: 'الملخصات' },
+  { href: '/archive', icon: 'archive', label: 'الأرشيف' },
+  { href: '/profile', icon: 'user',    label: 'الملف' },
 ];
 
 export default function BottomNav() {
   const path = usePathname();
-  if (path.startsWith('/login')) return null;
-  const on = (href) => (href === '/' ? path === '/' : path.startsWith(href));
+  if (path === '/' || path.startsWith('/login')) return null;
+  const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">
       {TABS.slice(0, 2).map((t) => (

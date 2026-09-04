@@ -7,16 +7,16 @@ export function generateStaticParams() {
   return MODULES.map((m) => ({ id: m.id }));
 }
 
-function Row({ label, clash, none, title, ext, mb, href }) {
+function Row({ label, clash, none, title, ext, mb, fid }) {
   return (
-    <a className="lec" href={href} target="_blank" rel="noopener noreferrer">
+    <Link className="lec" href={`/file/${fid}`}>
       <span className={`num${clash ? ' clash' : ''}${none ? ' none' : ''}`}>{label}</span>
       <span className="grow">
         <span className="lec-nm" style={{ display: 'block' }}>{title}</span>
         <span className="lec-mt"><span className="ext">{ext}</span><span className="dot" />{mb} MB</span>
       </span>
-      <span className="chev"><Icon name="download" size={17} /></span>
-    </a>
+      <span className="chev"><Icon name="chev" size={17} /></span>
+    </Link>
   );
 }
 
@@ -47,7 +47,7 @@ export default async function Module({ params }) {
         <div className="eyebrow">{m.lectures.some((l) => l.n) ? 'حسب ترتيب التدريس' : 'الملفات'}</div>
         {m.lectures.map((l, i) => (
           <Row key={i} label={l.n ?? '—'} clash={l.clash} none={!l.n}
-            title={l.title} ext={l.ext} mb={l.mb} href={l.drive} />
+            title={l.title} ext={l.ext} mb={l.mb} fid={l.fid} />
         ))}
 
         {hasClash && (
@@ -67,7 +67,7 @@ export default async function Module({ params }) {
           <>
             <div className="eyebrow">{m.extra.label}</div>
             {m.extra.items.map((l, i) => (
-              <Row key={i} label="—" none title={l.title} ext={l.ext} mb={l.mb} href={l.drive} />
+              <Row key={i} label="—" none title={l.title} ext={l.ext} mb={l.mb} fid={l.fid} />
             ))}
           </>
         )}
