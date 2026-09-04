@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
-import { POSTS, promoById } from '@/lib/data';
+import PostCard from '@/components/PostCard';
+import { POSTS } from '@/lib/data';
 
 // The feed spans every promo. Each post carries its author's promo badge,
 // so you can tell at a glance whether an answer comes from your own year.
@@ -26,41 +27,19 @@ export default function Feed() {
       </header>
 
       <div className="scroll">
-        {posts.map((p) => {
-          const promo = promoById(p.promo);
-          return (
-            <article key={p.id} className="card" style={{ padding: 15 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-                <div className="av" style={{ width: 42, height: 42, fontSize: 14, background: p.colour }}>
-                  {p.initials}
-                </div>
-                <div className="grow">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                    <span style={{ fontSize: 14.5, fontWeight: 700 }}>{p.author}</span>
-                    <span className="pill solid" style={{ background: promo.badge, fontSize: 10.5, padding: '3px 8px' }}>
-                      {promo.name}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 3 }}>
-                    {p.field} · {p.when}
-                  </div>
-                </div>
-                <button className="chev" aria-label="خيارات"><Icon name="dots" size={18} /></button>
-              </div>
+        <div className="composer">
+          <div className="composer-top">
+            <div className="av" style={{ width: 40, height: 40, fontSize: 13, background: 'var(--purple)' }}>ه ب</div>
+            <div className="composer-field">شارك شيئًا مع دفعتك…</div>
+          </div>
+          <div className="composer-acts">
+            <button><span className="ic-img"><Icon name="image" size={19} /></span>صورة</button>
+            <button><span className="ic-pdf"><Icon name="file" size={19} /></span>ملف</button>
+            <button><Icon name="msg" size={19} />سؤال</button>
+          </div>
+        </div>
 
-              <h2 className="ptitle">{p.title}</h2>
-              <p className="pbody">{p.body}</p>
-
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 }}>
-                <div className="pfoot">
-                  <span className="pf"><Icon name="heart" size={17} />{p.likes}</span>
-                  <span className="pf"><Icon name="msg" size={17} />{p.comments}</span>
-                </div>
-                <span className="pill">{p.tag}</span>
-              </div>
-            </article>
-          );
-        })}
+        {posts.map((p) => <PostCard key={p.id} post={p} />)}
 
         {posts.length === 0 && (
           <div className="empty">
