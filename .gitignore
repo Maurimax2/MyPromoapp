@@ -5,3 +5,6 @@ out/
 .env.local
 .DS_Store
 design/mypromo-screens.html
+
+# copied out of node_modules by scripts/copy-pdfjs.mjs
+public/pdfjs/
