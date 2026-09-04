@@ -1,0 +1,620 @@
+<title>MyPromo الأرشيف</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --purple:#6B21B5;
+    --purple-light:#8B5CF6;
+    --purple-pale:#EDE9FE;
+    --orange:#F97316;
+    --orange-light:#FDBA74;
+    --orange-pale:#FFF1E3;
+    --bg:#F1F5F9;
+    --surface:#FFFFFF;
+    --ink:#1A1424;
+    --ink-2:#655D75;
+    --ink-3:#9C95A9;
+    --line:#E8E4F0;
+    --line-soft:#F0EDF6;
+    --shadow:0 1px 2px rgba(26,20,36,.04), 0 4px 16px rgba(26,20,36,.06);
+    --shadow-nav:0 -1px 20px rgba(26,20,36,.07);
+    --r-card:16px;
+    --r-tile:13px;
+    --font:"Cairo","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  /* ---------- phone frame ---------- */
+  .phone{
+    width:100%;
+    max-width:390px;
+    background:var(--bg);
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  @media(min-width:440px){
+    body{padding:24px 0;align-items:flex-start}
+    .phone{
+      min-height:auto;
+      height:844px;
+      border-radius:34px;
+      box-shadow:0 12px 48px rgba(26,20,36,.16);
+      border:1px solid var(--line);
+    }
+  }
+
+  .rtl{direction:rtl;text-align:right}
+
+  /* ---------- header ---------- */
+  .head{
+    background:var(--surface);
+    padding:16px 18px 12px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    border-bottom:1px solid var(--line-soft);
+    flex-shrink:0;
+    z-index:2;
+  }
+  .head-row{
+    display:flex;
+    align-items:center;
+    gap:11px;
+  }
+  .mark{width:34px;height:34px;flex-shrink:0;display:block}
+  .head-titles{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+  .head-title{font-size:19px;font-weight:700;line-height:1.25;letter-spacing:-.01em}
+  .head-sub{font-size:12px;font-weight:400;color:var(--ink-3);line-height:1.3}
+
+  .back{
+    width:34px;height:34px;flex-shrink:0;
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:11px;
+    display:grid;place-items:center;
+    color:var(--ink-2);
+    cursor:pointer;
+    padding:0;
+  }
+  .back:hover{background:var(--purple-pale);border-color:var(--purple-pale);color:var(--purple)}
+
+  /* ---------- search ---------- */
+  .search{
+    display:flex;align-items:center;gap:9px;
+    background:var(--bg);
+    border:1px solid transparent;
+    border-radius:12px;
+    padding:0 13px;
+    height:42px;
+    transition:border-color .15s, background .15s;
+  }
+  .search:focus-within{background:var(--surface);border-color:var(--purple-light)}
+  .search svg{color:var(--ink-3);flex-shrink:0}
+  .search input{
+    border:0;background:transparent;outline:0;
+    font-family:var(--font);font-size:14px;font-weight:400;
+    color:var(--ink);width:100%;
+    padding:0;
+  }
+  .search input::placeholder{color:var(--ink-3)}
+
+  /* ---------- segmented ---------- */
+  .seg{
+    display:flex;gap:4px;
+    background:var(--bg);
+    border-radius:11px;
+    padding:4px;
+  }
+  .seg button{
+    flex:1;border:0;cursor:pointer;
+    font-family:var(--font);font-size:13.5px;font-weight:600;
+    color:var(--ink-2);
+    background:transparent;
+    border-radius:8px;
+    padding:8px 0;
+    transition:.15s;
+  }
+  .seg button[aria-selected="true"]{
+    background:var(--surface);
+    color:var(--purple);
+    box-shadow:0 1px 3px rgba(26,20,36,.08);
+  }
+
+  /* ---------- scroll body ---------- */
+  .scroll{
+    flex:1;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:16px 18px 96px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+
+  .eyebrow{
+    font-size:11px;font-weight:700;
+    letter-spacing:.07em;
+    color:var(--ink-3);
+    margin:9px 2px 1px;
+  }
+  .eyebrow:first-child{margin-top:0}
+
+  /* ---------- module card ---------- */
+  .card{
+    background:var(--surface);
+    border-radius:var(--r-card);
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:13px;
+    padding:13px 14px;
+    width:100%;
+    border:0;
+    font-family:var(--font);
+    text-align:right;
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .card:active{transform:scale(.985)}
+  .card[disabled]{cursor:default;opacity:.72}
+  .card[disabled]:active{transform:none}
+
+  .tile{
+    width:44px;height:44px;flex-shrink:0;
+    border-radius:var(--r-tile);
+    display:grid;place-items:center;
+  }
+  .card-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .card-name{
+    font-size:14.5px;font-weight:600;color:var(--ink);
+    line-height:1.3;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card-meta{font-size:12px;font-weight:400;color:var(--ink-3);line-height:1.3}
+  .card-chev{color:var(--ink-3);flex-shrink:0}
+
+  .pill{
+    display:inline-flex;align-items:center;
+    font-size:11px;font-weight:600;
+    padding:3px 8px;border-radius:20px;
+    line-height:1.4;
+  }
+  .pill-empty{background:var(--bg);color:var(--ink-3)}
+  .pill-warn{background:var(--orange-pale);color:#C2410C}
+
+  /* ---------- lecture row ---------- */
+  .lec{
+    background:var(--surface);
+    border-radius:var(--r-card);
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:12px;
+    padding:12px 14px;
+    width:100%;border:0;
+    font-family:var(--font);text-align:right;
+    cursor:pointer;
+    transition:transform .12s ease;
+  }
+  .lec:active{transform:scale(.985)}
+  .num{
+    width:30px;height:30px;flex-shrink:0;
+    border-radius:9px;
+    background:var(--purple-pale);
+    color:var(--purple);
+    display:grid;place-items:center;
+    font-size:12.5px;font-weight:700;
+    font-variant-numeric:tabular-nums;
+  }
+  .num.dup{background:var(--orange-pale);color:#C2410C}
+  .num.none{background:var(--bg);color:var(--ink-3);font-size:14px}
+  .lec-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .lec-name{
+    font-size:14px;font-weight:500;color:var(--ink);line-height:1.35;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .lec-meta{
+    font-size:11.5px;color:var(--ink-3);
+    display:flex;align-items:center;gap:6px;
+  }
+  .ext{
+    font-weight:700;font-size:10px;letter-spacing:.04em;
+    color:var(--ink-2);
+  }
+  .dot{width:3px;height:3px;border-radius:50%;background:var(--line);flex-shrink:0}
+
+  /* ---------- notice ---------- */
+  .notice{
+    background:var(--orange-pale);
+    border-radius:var(--r-card);
+    padding:13px 14px;
+    display:flex;gap:11px;align-items:flex-start;
+  }
+  .notice svg{color:var(--orange);flex-shrink:0;margin-top:1px}
+  .notice-t{font-size:13px;font-weight:600;color:#7C2D12;line-height:1.4}
+  .notice-b{font-size:12px;font-weight:400;color:#9A3412;line-height:1.55;margin-top:3px}
+
+  .empty-state{
+    text-align:center;
+    padding:52px 24px;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+  }
+  .empty-state .tile{width:52px;height:52px;background:var(--purple-pale);color:var(--purple)}
+  .empty-t{font-size:15px;font-weight:600}
+  .empty-b{font-size:13px;color:var(--ink-3);line-height:1.6;max-width:250px}
+
+  /* ---------- bottom nav ---------- */
+  .nav{
+    position:absolute;bottom:0;left:0;right:0;
+    background:var(--surface);
+    border-top:1px solid var(--line-soft);
+    box-shadow:var(--shadow-nav);
+    display:flex;
+    padding:8px 6px 10px;
+    z-index:3;
+  }
+  .nav button{
+    flex:1;border:0;background:transparent;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-family:var(--font);font-size:10.5px;font-weight:600;
+    color:var(--ink-3);
+    padding:4px 0;
+    transition:color .15s;
+  }
+  .nav button[aria-selected="true"]{color:var(--purple)}
+  .nav svg{width:21px;height:21px}
+
+  :focus-visible{outline:2px solid var(--purple-light);outline-offset:2px}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+
+<div class="phone rtl">
+
+  <header class="head" id="head"></header>
+
+  <div class="scroll" id="scroll"></div>
+
+  <nav class="nav" id="nav"></nav>
+
+</div>
+
+<script>
+/* ============================================================
+   Icons — Lucide paths, inlined so the page has no script
+   dependency. One set, one stroke weight (2), throughout.
+   ============================================================ */
+const I = {
+  home:'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  book:'<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+  archive:'<rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/>',
+  user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  chevron:'<path d="m15 18-6-6 6-6"/>',
+  chevronR:'<path d="m9 18 6-6-6-6"/>',
+  file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>',
+  person:'<circle cx="12" cy="5" r="1"/><path d="m9 20 3-6 3 6"/><path d="m6 8 6 2 6-2"/><path d="M12 10v4"/>',
+  flask:'<path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/>',
+  micro:'<path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
+  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  atom:'<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/>',
+  baby:'<path d="M9 12h.01"/><path d="M15 12h.01"/><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5S14.5 8 13 8"/>',
+  alert:'<path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+};
+const svg = (d, w = 20) =>
+  `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+
+/* The MyPromo mark, drawn as an approximation of the logo.
+   Swap for the real PNG once it's uploaded. */
+const MARK = `<svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="gp" x1="10" y1="14" x2="26" y2="38" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/><stop offset="1" stop-color="#6B21B5"/>
+    </linearGradient>
+    <linearGradient id="go" x1="38" y1="14" x2="22" y2="38" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FB8B3C"/><stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+  <path d="M12 40V23l12 13" stroke="url(#gp)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M36 40V23L24 36" stroke="url(#go)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="5.6" fill="#7C3AED"/>
+  <circle cx="36" cy="12" r="5.6" fill="#F97316"/>
+</svg>`;
+
+/* ============================================================
+   Data — the REAL contents of UNEM-PCEM2, read from Drive.
+   "titre" is the cleaned display name; "src" is the untouched
+   Google Drive filename it came from.
+   ============================================================ */
+const DATA = {
+  S1:[
+    { id:'anat1', nom:'ANATOMIE', icon:I.person, tint:'--purple-pale', fg:'--purple',
+      prof:'Ali Ghorbel',
+      lectures:[
+        {n:1,  titre:'Intro — fonctions',              ext:'PDF',  mo:'10.1', src:'1-Intro-fonctions.pdf'},
+        {n:2,  titre:'Ostéologie de la tête',          ext:'PDF',  mo:'16.3', src:'-2- OSTEOLOGIE TETE (1).pdf'},
+        {n:3,  titre:"L'appareil manducateur",         ext:'PDF',  mo:'7.8',  src:'-3-Lappareil manducateur.pdf'},
+        {n:4,  titre:'Les muscles tête–cou',           ext:'PDF',  mo:'2.9',  src:'-4-Les muscles  tete-cou.pdf'},
+        {n:5,  titre:'Les vaisseaux tête et cou',      ext:'PDF',  mo:'7.8',  src:'-5- LES VX TETE ET COU.pdf', dup:true},
+        {n:5,  titre:'Lymphatiques tête–cou',          ext:'PDF',  mo:'1.5',  src:'-5- LYNPHATIQUES TETE COU.pdf', dup:true},
+        {n:6,  titre:'Appareil de vision',             ext:'PDF',  mo:'2.7',  src:'-6-Appareil de vision.pdf'},
+        {n:7,  titre:'Fosses nasales',                 ext:'PDF',  mo:'3.6',  src:'-7- FOSSES NASALES.pdf'},
+        {n:8,  titre:'Oreille',                        ext:'PDF',  mo:'2.5',  src:'-8- OREILLE.pdf'},
+        {n:9,  titre:'Larynx & pharynx',               ext:'PDF',  mo:'15.2', src:'-9-larynx pharynx.pdf'},
+        {n:10, titre:'Thyroïde & larynx',              ext:'PDF',  mo:'9.4',  src:'-10- THYROIDE -LARYNX.pdf'}
+      ],
+      nonNum:[
+        {titre:'Moelle épinière',       ext:'PDF', mo:'4.1', src:'moelle PDF 2023.pdf'},
+        {titre:'Télencéphale',          ext:'PDF', mo:'2.4', src:'-TELENCEPHALE  PDF 2023.pdf'},
+        {titre:'Diencéphale',           ext:'PDF', mo:'3.2', src:'DIENCEPHALE2023.pdf'},
+        {titre:'Cervelet',              ext:'PDF', mo:'2.7', src:'-CERVELET PDF 2023.pdf'},
+        {titre:'Tronc cérébral',        ext:'PDF', mo:'3.7', src:'TRONC CEREBRAL PDF 2023.pdf'},
+        {titre:'Méninges',              ext:'PDF', mo:'3.4', src:'MENINGES  2023.pdf'},
+        {titre:'Vaisseaux du cerveau',  ext:'PDF', mo:'1.5', src:'VX DU CERVEAU 2023.pdf'},
+        {titre:'Veines du cerveau',     ext:'PDF', mo:'2.2', src:'VEINES CERVEAU 2023.pdf'}
+      ],
+      flags:[
+        {titre:'SYSTEME NERVEUX TOME 1 — Mauritanie', why:'كتاب، وليس محاضرة ← المكتبة', mo:'19.1'},
+        {titre:'Embryologie — système nerveux',       why:'مادة أخرى ← EMBRYOLOGIE',      mo:'1.2'},
+        {titre:'Cavité buccale & glandes salivaires', why:'نسخة مكرّرة من ملف PowerPoint', mo:'4.1'},
+        {titre:'Appareil visuel',                     why:'PowerPoint — لا يفتح في المتصفح', mo:'12.6'}
+      ]},
+
+    { id:'bioc', nom:'BIOCHIMIE', icon:I.flask, tint:'--orange-pale', fg:'--orange',
+      prof:'Kebir · Kadijetou Ba', partiel:true,
+      lectures:[
+        {n:null, titre:'B.C partie Kebir',            ext:'PDF', mo:'10.0', src:'B.C partie Kebir(pp Mednvall).pdf'},
+        {n:null, titre:'B.C partie Ba',               ext:'PDF', mo:'15.1', src:'B.C partie Ba (pp Mednvall).pdf'},
+        {n:null, titre:'Fiches Kebir',                ext:'PDF', mo:'5.0',  src:'Fishes kebir.pdf'},
+        {n:null, titre:'Complément de cours & TD',    ext:'PDF', mo:'0.2',  src:'Complément de cours et TD PCEM2.pdf'}
+      ], nonNum:[], flags:[]},
+
+    { id:'physio1', nom:'PHYSIOLOGIE S1', icon:I.heart, tint:'--orange-pale', fg:'--orange',
+      prof:'بحسب النوع — لا يوجد تقسيم بالأستاذ', partiel:true,
+      lectures:[
+        {n:null, titre:'Polycopié 2020–2021', ext:'PDF', mo:'3.5',  src:'PHYSIO  S1 PCEM2 2020-2021.pdf'},
+        {n:null, titre:'Polycopié 2016–2017', ext:'PDF', mo:'14.7', src:'PHYSIO  S1 PCEM2 2016-2017.pdf'},
+        {n:null, titre:'Polycopié 2015–2016', ext:'PDF', mo:'4.6',  src:'PHYSIO  S1 PCEM2 2015-2016.pdf'}
+      ], nonNum:[], flags:[]},
+
+    { id:'histo', nom:'HISTOLOGIE', icon:I.micro, tint:'--purple-pale', fg:'--purple-light',
+      prof:'—', vide:true, lectures:[], nonNum:[], flags:[]},
+
+    { id:'sante', nom:'MODULE SANTE', icon:I.shield, tint:'--bg', fg:'--ink-3',
+      prof:'—', vide:true, lectures:[], nonNum:[], flags:[]}
+  ],
+
+  S2:[
+    { id:'anat2', nom:'ANATOMIE S2', icon:I.person, tint:'--purple-pale', fg:'--purple',
+      prof:'—', nonIndex:true, lectures:[], nonNum:[], flags:[]},
+    { id:'biophy', nom:'BIOPHYSIQUE', icon:I.atom, tint:'--purple-pale', fg:'--purple-light',
+      prof:'—', nonIndex:true, lectures:[], nonNum:[], flags:[]},
+    { id:'embryo', nom:'EMBRYOLOGIE', icon:I.baby, tint:'--orange-pale', fg:'--orange',
+      prof:'—', nonIndex:true, lectures:[], nonNum:[], flags:[]},
+    { id:'physio2', nom:'PHYSIOLOGIE S2', icon:I.heart, tint:'--orange-pale', fg:'--orange',
+      prof:'—', nonIndex:true, lectures:[], nonNum:[], flags:[]}
+  ]
+};
+
+const TABS = [
+  {id:'home',    label:'الرئيسية',   icon:I.home},
+  {id:'lec',     label:'المحاضرات',  icon:I.book},
+  {id:'archive', label:'الأرشيف',    icon:I.archive},
+  {id:'profile', label:'الملف',      icon:I.user}
+];
+
+/* ============================================================
+   State
+   ============================================================ */
+let tab = 'archive';
+let sem = 'S1';
+let openModule = null;
+let q = '';
+
+const head   = document.getElementById('head');
+const scroll = document.getElementById('scroll');
+const navEl  = document.getElementById('nav');
+
+const total = m => m.lectures.length + m.nonNum.length;
+const norm  = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+/* ============================================================
+   Render
+   ============================================================ */
+function render(){
+  renderNav();
+  if(tab !== 'archive'){ renderPlaceholder(); return; }
+  openModule ? renderModule() : renderModuleList();
+}
+
+function renderNav(){
+  navEl.innerHTML = TABS.map(t =>
+    `<button role="tab" aria-selected="${t.id===tab}" data-tab="${t.id}">
+       ${svg(t.icon,21)}<span>${t.label}</span>
+     </button>`).join('');
+}
+
+function renderPlaceholder(){
+  const t = TABS.find(x => x.id === tab);
+  head.innerHTML = `
+    <div class="head-row">
+      ${MARK}
+      <div class="head-titles">
+        <div class="head-title">${t.label}</div>
+        <div class="head-sub">MyPromo · UNEM PCEM2</div>
+      </div>
+    </div>`;
+  scroll.innerHTML = `
+    <div class="empty-state">
+      <div class="tile">${svg(I.clock,24)}</div>
+      <div class="empty-t">${t.label} — لاحقًا</div>
+      <div class="empty-b">هذه الشاشة لم تُبنَ بعد. نبني الأرشيف أولًا، ثم ننتقل إلى البقية خطوة بخطوة.</div>
+    </div>`;
+}
+
+function renderModuleList(){
+  head.innerHTML = `
+    <div class="head-row">
+      ${MARK}
+      <div class="head-titles">
+        <div class="head-title">الأرشيف</div>
+        <div class="head-sub">UNEM PCEM2 · ${DATA.S1.length + DATA.S2.length} مواد</div>
+      </div>
+    </div>
+    <div class="search">
+      ${svg(I.search,17)}
+      <input id="q" type="search" placeholder="ابحث في الأرشيف" value="${q}" autocomplete="off">
+    </div>
+    <div class="seg" role="tablist">
+      <button role="tab" aria-selected="${sem==='S1'}" data-sem="S1">السداسي 1</button>
+      <button role="tab" aria-selected="${sem==='S2'}" data-sem="S2">السداسي 2</button>
+    </div>`;
+
+  const list = DATA[sem].filter(m =>
+    !q || norm(m.nom).includes(norm(q)) ||
+    [...m.lectures, ...m.nonNum].some(l => norm(l.titre).includes(norm(q))));
+
+  if(!list.length){
+    scroll.innerHTML = `
+      <div class="empty-state">
+        <div class="tile">${svg(I.search,24)}</div>
+        <div class="empty-t">لا نتائج</div>
+        <div class="empty-b">لا توجد مادة أو محاضرة تطابق «${q}» في هذا السداسي.</div>
+      </div>`;
+    return;
+  }
+
+  scroll.innerHTML = list.map(m => {
+    let meta, pill = '';
+    if(m.vide){      meta = 'المجلد فارغ في Drive'; pill = `<span class="pill pill-empty">فارغ</span>`; }
+    else if(m.nonIndex){ meta = 'لم يُفهرس بعد';      pill = `<span class="pill pill-empty">قيد الفهرسة</span>`; }
+    else             meta = `${total(m)} ملف · ${m.prof}`;
+
+    const warn = (m.flags && m.flags.length)
+      ? `<span class="pill pill-warn">${m.flags.length} للمراجعة</span>` : '';
+
+    return `<button class="card" data-mod="${m.id}" ${(m.vide||m.nonIndex)?'disabled':''}>
+      <div class="tile" style="background:var(${m.tint});color:var(${m.fg})">${svg(m.icon,22)}</div>
+      <div class="card-text">
+        <div class="card-name">${m.nom}</div>
+        <div class="card-meta">${meta}</div>
+      </div>
+      ${pill || warn}
+      ${(m.vide||m.nonIndex) ? '' : `<span class="card-chev">${svg(I.chevron,18)}</span>`}
+    </button>`;
+  }).join('');
+}
+
+function renderModule(){
+  const m = [...DATA.S1, ...DATA.S2].find(x => x.id === openModule);
+
+  head.innerHTML = `
+    <div class="head-row">
+      <button class="back" id="back" aria-label="رجوع">${svg(I.chevronR,18)}</button>
+      <div class="head-titles">
+        <div class="head-title">${m.nom}</div>
+        <div class="head-sub">${m.prof} · ${total(m)} ملف</div>
+      </div>
+      <div class="tile" style="width:34px;height:34px;background:var(${m.tint});color:var(${m.fg})">
+        ${svg(m.icon,18)}
+      </div>
+    </div>`;
+
+  const row = (l, cls, label) => `
+    <button class="lec">
+      <span class="num ${cls}">${label}</span>
+      <span class="lec-text">
+        <span class="lec-name">${l.titre}</span>
+        <span class="lec-meta">
+          <span class="ext">${l.ext}</span><span class="dot"></span>${l.mo} MB
+        </span>
+      </span>
+      <span class="card-chev">${svg(I.chevron,17)}</span>
+    </button>`;
+
+  let html = '';
+
+  if(m.lectures.length){
+    html += `<div class="eyebrow">${m.partiel ? 'الملفات' : 'حسب ترتيب التدريس'}</div>`;
+    html += m.lectures.map(l =>
+      row(l, l.dup ? 'dup' : (l.n === null ? 'none' : ''), l.n === null ? '—' : l.n)).join('');
+  }
+
+  if(m.lectures.some(l => l.dup)){
+    html += `<div class="notice">
+      ${svg(I.alert,18)}
+      <div>
+        <div class="notice-t">ملفان يحملان الرقم 5</div>
+        <div class="notice-b">«Les vaisseaux tête et cou» و«Lymphatiques tête–cou» كلاهما مُرقّم ‎-5-‎ في Drive. أيّهما يأتي أولًا؟</div>
+      </div>
+    </div>`;
+  }
+
+  if(m.nonNum.length){
+    html += `<div class="eyebrow">بدون ترقيم — عصبية 2023</div>`;
+    html += m.nonNum.map(l => row(l, 'none', '—')).join('');
+  }
+
+  if(m.flags.length){
+    html += `<div class="eyebrow">تحتاج قرارًا منك</div>`;
+    html += m.flags.map(f => `
+      <button class="lec">
+        <span class="num dup">${svg(I.alert,15)}</span>
+        <span class="lec-text">
+          <span class="lec-name">${f.titre}</span>
+          <span class="lec-meta">${f.why}<span class="dot"></span>${f.mo} MB</span>
+        </span>
+      </button>`).join('');
+  }
+
+  scroll.innerHTML = html;
+  scroll.scrollTop = 0;
+}
+
+/* ============================================================
+   Events
+   ============================================================ */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-tab]');
+  if(t){ tab = t.dataset.tab; openModule = null; q = ''; return render(); }
+
+  const s = e.target.closest('[data-sem]');
+  if(s){ sem = s.dataset.sem; return render(); }
+
+  const mod = e.target.closest('[data-mod]');
+  if(mod && !mod.disabled){ openModule = mod.dataset.mod; return render(); }
+
+  if(e.target.closest('#back')){ openModule = null; return render(); }
+});
+
+document.addEventListener('input', e => {
+  if(e.target.id !== 'q') return;
+  q = e.target.value;
+  // Re-render the list, then restore focus and caret position.
+  const el = document.getElementById('q');
+  const pos = el.selectionStart;
+  renderModuleList();
+  const el2 = document.getElementById('q');
+  el2.focus();
+  el2.setSelectionRange(pos, pos);
+});
+
+render();
+</script>
