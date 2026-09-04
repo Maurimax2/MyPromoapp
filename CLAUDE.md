@@ -16,9 +16,16 @@ Rules established by the project owner. Follow them; do not re-derive them.
 
 ## Language
 
-- The interface is Arabic, right-to-left.
+The split is absolute: **the interface is Arabic, every piece of study content
+is French.** Students never study in Arabic and do not know the anatomical
+terms in Arabic — French is a necessity, not a preference.
+
+- Interface chrome — menus, buttons, screen names, labels — is Arabic, RTL.
+- **All study content is French.** Lecture titles, chapter names where they
+  name material, MCQs, flashcards, answer explanations, notes. Always.
 - **`S1` and `S2` are never translated.** That is what students say.
 - Module and lecture names stay in French, exactly as they appear in Drive.
+- Never write a medical or anatomical term in Arabic. Nobody uses them.
 
 ## The Drive
 
