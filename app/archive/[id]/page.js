@@ -7,10 +7,10 @@ export function generateStaticParams() {
   return MODULES.map((m) => ({ id: m.id }));
 }
 
-function Row({ label, clash, none, title, ext, mb, fid }) {
+function Row({ label, none, title, ext, mb, fid }) {
   return (
     <Link className="lec" href={`/file/${fid}`}>
-      <span className={`num${clash ? ' clash' : ''}${none ? ' none' : ''}`}>{label}</span>
+      <span className={`num${none ? ' none' : ''}`}>{label}</span>
       <span className="grow">
         <span className="lec-nm" style={{ display: 'block' }}>{title}</span>
         <span className="lec-mt"><span className="ext">{ext}</span><span className="dot" />{mb} MB</span>
@@ -24,8 +24,6 @@ export default async function Module({ params }) {
   const { id } = await params;
   const m = moduleById(id);
   if (!m) notFound();
-
-  const hasClash = (m.lectures || []).some((l) => l.clash);
 
   return (
     <>
@@ -46,22 +44,9 @@ export default async function Module({ params }) {
       <div className="scroll">
         <div className="eyebrow">{m.lectures.some((l) => l.n) ? 'حسب ترتيب التدريس' : 'الملفات'}</div>
         {m.lectures.map((l, i) => (
-          <Row key={i} label={l.n ?? '—'} clash={l.clash} none={!l.n}
+          <Row key={i} label={l.n ?? '—'} none={!l.n}
             title={l.title} ext={l.ext} mb={l.mb} fid={l.fid} />
         ))}
-
-        {hasClash && (
-          <div className="notice">
-            <Icon name="alert" size={18} />
-            <div>
-              <div className="notice-t">ملفان يحملان الرقم 5</div>
-              <div className="notice-b">
-                «Les vaisseaux tête et cou» و«Lymphatiques tête–cou» كلاهما مُرقّم ‎-5-‎ في Drive.
-                الترتيب بينهما لم يُحسم بعد.
-              </div>
-            </div>
-          </div>
-        )}
 
         {m.extra && (
           <>
