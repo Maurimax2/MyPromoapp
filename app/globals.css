@@ -737,3 +737,39 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .admin-import { transition: transform .12s ease; }
 .admin-import:active { transform: scale(.985); }
+
+/* ---------- importing ---------- */
+.admin-input {
+  height: 48px; border-radius: 13px; border: 1.5px solid var(--line);
+  background: var(--bg); padding: 0 14px; font: inherit; font-size: 15px;
+  font-weight: 500; color: var(--ink); width: 100%;
+}
+.admin-input:focus { outline: none; border-color: var(--purple); background: var(--surface); }
+.admin-err { font-size: 13px; color: var(--wrong); line-height: 1.7; }
+
+.admin-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: var(--ink-2); padding: 0 2px;
+}
+.admin-rows { display: flex; flex-direction: column; gap: 8px; }
+
+.imp {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 12px; display: flex; gap: 11px; align-items: flex-start;
+  transition: opacity .15s ease;
+}
+.imp.off { opacity: .45; }
+.imp-title {
+  width: 100%; border: 0; background: none; font: inherit; font-size: 14.5px;
+  font-weight: 600; color: var(--ink); padding: 2px 0;
+  border-bottom: 1.5px solid transparent;
+}
+.imp-title:focus { outline: none; border-bottom-color: var(--purple); }
+.imp-meta { font-size: 11.5px; color: var(--ink-3); margin: 3px 0 8px; overflow-wrap: anywhere; }
+.imp-kinds { display: flex; flex-wrap: wrap; gap: 5px; }
+.imp-kind {
+  font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 5px 10px;
+  background: var(--bg); color: var(--ink-3);
+  transition: background .12s ease, color .12s ease;
+}
+.imp-kind.on { background: var(--purple); color: #fff; }
