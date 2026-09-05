@@ -9,11 +9,12 @@
 //
 //   GOOGLE_API_KEY=… node scripts/extract-qcm.mjs [moduleId …]
 
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MODULES, sectionsFor } from '../lib/data.js';
 import { parseQcm } from '../lib/qcm/parse.js';
+import { parseAnswerKey, splitAtCorrection } from '../lib/qcm/key.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const key = process.env.GOOGLE_API_KEY;
@@ -31,8 +32,8 @@ async function fetchFile(fid) {
   for (let attempt = 0; ; attempt++) {
     const res = await fetch(url);
     if (res.ok) return new Uint8Array(await res.arrayBuffer());
-    if ((res.status === 403 || res.status === 429) && attempt < 5) {
-      await wait(2000 * 2 ** attempt);
+    if ((res.status === 403 || res.status === 429) && attempt < 7) {
+      await wait(3000 * 2 ** attempt);
       continue;
     }
     throw new Error(`drive ${res.status}`);
@@ -78,6 +79,15 @@ for (const m of modules) {
   const sources = sectionsFor(m, 'quiz').flatMap((s) =>
     s.items.map((it) => ({ ...it, section: s.title })),
   );
+  // A run that loses a file to Drive's rate limiter must not delete what an
+  // earlier run got out of it. Anything that fails today keeps yesterday's.
+  const path = join(root, 'lib/questions', `${m.id}.json`);
+  const previous = new Map();
+  try {
+    const old = JSON.parse(await readFile(path, 'utf8'));
+    for (const b of old.banks || []) previous.set(b.fid, b);
+  } catch { /* first run for this module */ }
+
   const banks = [];
   let questions = 0;
 
@@ -85,27 +95,66 @@ for (const m of modules) {
     // Photographed papers hold no text at all; they need OCR, not a parser.
     if ((src.ext || 'PDF').toUpperCase() !== 'PDF') continue;
     try {
-      await wait(250); // stay under Drive's per-second ceiling
+      await wait(500); // stay under Drive's per-second ceiling
       const text = await textOf(await fetchFile(src.fid));
       if (RESERVED.test(text)) {
         console.log(`  skip  ${m.id} · ${src.title} — redistribution reserved by its author`);
         continue;
       }
-      const qs = parseQcm(text);
-      const good = qs.filter((q) => q.options.length >= 3 && q.q.length > 15);
+      // Papers that answer themselves put the key after the questions; the
+      // rest keep it in a separate file the catalogue already points at.
+      const [asked, answered] = splitAtCorrection(text);
+      const usable = (list) => list.filter((q) => q.options.length >= 3 && q.q.length > 15);
+
+      // Some papers put `REPONSES` in the title, above everything. Cutting
+      // there would throw the paper away, so take whichever half actually
+      // holds the questions.
+      const beforeKey = parseQcm(asked);
+      const whole = parseQcm(text);
+      const qs = usable(whole).length > usable(beforeKey).length ? whole : beforeKey;
+
+      let key = parseAnswerKey(answered);
+      if (key.size === 0 && src.correction) {
+        try {
+          await wait(250);
+          key = parseAnswerKey(await textOf(await fetchFile(src.correction)));
+        } catch { /* the correction is a photograph, or gone */ }
+      }
+
+      let filled = 0;
+      for (const q of qs) {
+        if (!q.unanswered) continue;
+        const a = key.get(q.n);
+        if (!a) continue;
+        const within = a.filter((i) => i < q.options.length);
+        if (!within.length) continue;
+        q.answer = within;
+        q.unanswered = false;
+        filled += 1;
+      }
+
+      const good = usable(qs);
       if (good.length >= 3) {
         banks.push({ fid: src.fid, title: src.title, section: src.section, questions: good });
         questions += good.length;
-        console.log(`  ${String(good.length).padStart(4)}  ${m.id} · ${src.title}`);
+        const known = good.filter((q) => !q.unanswered).length;
+        console.log(`  ${String(good.length).padStart(4)} (${String(known).padStart(3)} answered)  ${m.id} · ${src.title}`);
       }
     } catch (err) {
-      console.error(`  ....  ${m.id} · ${src.title} — ${err.message}`);
+      const kept = previous.get(src.fid);
+      if (kept) {
+        banks.push(kept);
+        questions += kept.questions.length;
+        console.log(`  ${String(kept.questions.length).padStart(4)} (kept)      ${m.id} · ${src.title}`);
+      } else {
+        console.error(`  ....  ${m.id} · ${src.title} — ${err.message}`);
+      }
     }
   }
 
   await mkdir(join(root, 'lib/questions'), { recursive: true });
   await writeFile(
-    join(root, 'lib/questions', `${m.id}.json`),
+    path,
     JSON.stringify({ module: m.id, name: m.name, banks }, null, 1),
   );
   console.log(`${m.name}: ${questions} questions from ${banks.length} papers\n`);
