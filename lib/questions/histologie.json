@@ -1,0 +1,1017 @@
+{
+ "module": "histologie",
+ "name": "HISTOLOGIE",
+ "banks": [
+  {
+   "fid": "1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC",
+   "title": "Session 2018",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 1,
+     "q": "République lslamique de Mauritanie Honneur - Fraternité - Justice Ministère de l'Enseignement Supérieur et de la Recherche Scientifique Université des Sciences, de Technologie et de Médecine Faculté de Médecine Epreuve d’Histologie Spéciale Session principale Durée 1HEURE Deuxième Année Médecine Nom et Prénom : N 0 d’Anonymat : ___________________________________________________________________________ Pour chaque QCM cochez la ou les bonne(s) réponse(s) directement sur la grille de la page 13 1. Parmi les propositions suivantes, concernant l’appareil juxtaglomérulaire, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est localisé au niveau du pole urinaire du glomérule",
+      "Comporte des barorécepteurs localisés dans la media des artérioles efférentes",
+      "Comporte les cellules du lacis qui présentent les mêmes propriétés morpho- fonctionnelles que les cellules mésangiales intra-glomérulaires",
+      "Les cellules de la macula densa sont sensibles aux variations de concentrations de Na+ des urines qui circulent dans le tube contourné distal",
+      "Les cellules du lacis régulent le flux de sang dans le réseau capillaire peritubulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant le tube contourné proximal, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La réabsorption est intense et favorisée par la présence d’une bordure en brosse",
+      "Ses cellules sont plus riches en organites cytoplasmiques que les autres segments tubulaires du néphron.",
+      "La présence au niveau du pôle apical de mitochondries allongées témoigne d’un transport actif.",
+      "Il forme avec les anses de Henlé la substance médullaire.",
+      "Il forme avec les tubes collecteurs la substance corticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant la barrière de filtration glomérulaire, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La membrane basale est épaisse et formée de glycoprotéines chargées négativement",
+      "La membrane des pédicelles est recouverte par un glycocalix chargé positivement",
+      "La membrane de filtration est chargée négativement",
+      "Les pores des cellules endothéliales des capillaires glomérulaires sont comblés par un diaphragme",
+      "Toutes les composantes du sang passent la barrière à l’exception des cellules sanguines 2"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant la barrière de filtration glomérulaire, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La lésion de la barrière favorise le passage des protéines dans les urines primitives",
+      "Le podocyte participe à la filtration glomérulaire par ses prolongements du premier ordre",
+      "La membrane de filtration est chargée négativement",
+      "Les capillaires glomérulaires sont très larges et présentent des pores de l’ordre de 7μm",
+      "Toutes les composantes du plasma sanguin passent la barrière à l’exception des grosses molécules"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes, concernant l’œsophage, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La muqueuse est formée par un épithélium Malpighien kératinisé.",
+      "La musculeuse est formée de deux couches de cellules musculaires lisses dans son tiers inférieur.",
+      "Le chorion comporte des follicules lymphoïdes organisés en plaques",
+      "La couche la plus externe est une séreuse",
+      "L’épithélium de revêtement est brutalement remplacé par un épithélium simple de la muqueuse gastrique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes, concernant le duodénum, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Le chorion comporte des glandes de Brunner",
+      "Les secrétions des glandes duodénales de Brunner jouent un rôle de tampon contre l’acidité du chyme gastrique",
+      "sa musculeuse est doublée par des bandelettes longitudinales",
+      "Les follicules lymphoïdes de la sous muqueuse s’organisent en plaques de Payer.",
+      "les villosités duodénales ont un axe conjonctif qui contient des fibres de muscle lisse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes, concernant les glandes de Lieberkün, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Sont localisées au niveau de la sous muqueuse de l’intestin",
+      "Sont formées par des cellules caliciformes qui diminuent de nombre dans le segment colique",
+      "secrètent du lysozyme",
+      "participent au processus d’absorption intestinale",
+      "Sont dépourvues de cellules de Paneth au niveau du duodénum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les propositions suivantes, concernant les glandes de Lieberkün, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ce sont des glandes composées",
+      "Leur épithélium ne comporte pas des entérocytes",
+      "secrètent du mucus",
+      "participent au processus de la digestion",
+      "Sont pourvues de cellules de Paneth au niveau du colon 3"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Parmi les propositions suivantes, concernant la glande parotide, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est une glande composée",
+      "Le produit de sécrétion est mixte séreux et muqueux",
+      "Le canal excréteur principal est tapissé par un épithélium pavimenteux simple",
+      "Le mode de sécrétion est de type merocrine",
+      "Les acini ont ne lumière étroite et présentent par endroit des croissants de Gianuzzi"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Parmi les propositions suivantes, concernant l’organisation du parenchyme hépatique indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Dans le lobule hépatique, la circulation de la bile est centrifuge",
+      "Dans le lobule hépatique, le centre du lobule est occupé par une veinule centrolobulaire",
+      "Dans le lobule hépatique la circulation du sang dans les sinusoïdes est centrifuge",
+      "Le lobule portal est centré par une veine centrolobulaire",
+      "Le lobule portal est l’unité de sécrétion biliaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Parmi les propositions suivantes, concernant l’organisation du parenchyme hépatique indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "L’acinus hépatique correspond au territoire irrigué par les artères et les veines de 2 espaces portes consécutifs.",
+      "L’acinus hépatique est la plus petite unité basée sur la sécrétion biliaire",
+      "L’acinus hépatique, est la plus petite unité basée sur la circulation sanguine",
+      "Les lobules hépatiques sont bien limités par du tissu conjonctif dans l’espèce humaine",
+      "Une branche de la veine portale occupe le centre du lobule hépatique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes, concernant l’espace de Disse, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est un espace localisé entre le pole biliaire de l’hépatocyte et les sinusoides hépatique",
+      "C’est un espace fonctionnel favorisant les échanges entre hépatocytes et sinusoides hépatiques",
+      "C’est l’espace où s’exerce la fonction exocrine du foie",
+      "Comporte des Cellules de Ito",
+      "La présence importante de fibres de collagène ne perturbe pas sa fonction"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les propositions suivantes, concernant les papilles gustatives de type caliciforme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ont la forme d’un champignon qui effleure la surface de la langue.",
+      "Comportent une centaine de bourgeons du gout.",
+      "L’épithélium à leur surface est kératinisé",
+      "Sont les plus petites et les plus nombreuses des papilles linguales.",
+      "Comportent des récepteurs neurosensoriels responsables du gout"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Parmi les propositions suivantes, concernant les papilles gustatives de type filiforme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ont une forme effilée.",
+      "Comportent une centaine de bourgeons du gout. 4",
+      "Comportent des glandes de Von Ebner",
+      "Sont les plus petites et les plus nombreuses des papilles linguales.",
+      "Sont localisées dans la région du V lingual"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les propositions suivantes, concernant le pharynx indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Le nasopharynx est tapissé par une muqueuse respiratoire",
+      "L’oropharynx est tapissé par un épithélium pavimenteux stratifié kératinisé",
+      "Le laryngopharynx a la même muqueuse que l’oesophage",
+      "Il présente une charpente cartilagineuse",
+      "C’est l’organe de la phonation 5 Le schéma suivant concerne une coupe une coupe histologique au niveau du septa inter- alvéolaire, répondez aux QCM 9, 10, 11 et 12 :"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Parmi les cellules représentées dans le schéma du septa interalvéolaire la (les) quelle(s) participe(nt) aux échanges gazeux au niveau des alvéoles pulmonaires :",
+     "options": [
+      "Cellule 1",
+      "Cellule 2",
+      "Cellule 3",
+      "Cellule 4",
+      "Cellule 5"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Parmi les propositions suivantes, concernant la cellule 2, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Entretient des jonctions cellulaires avec la cellule 1",
+      "Présente des inclusions spécifiques sous forme de corps lamellaires",
+      "Participe à la fonction de l’épuration de l’air",
+      "Est d’origine hématopoïétique",
+      "Présente des inclusions spécifiques sous forme de vésicules de micropinocytose"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Parmi les propositions suivantes, concernant la cellule 3, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Représente 95% du revêtement épithélial des alvéoles",
+      "Présentent des inclusions spécifiques sous forme de corps lamellaires",
+      "Participent à la fonction de l’épuration de l’air",
+      "Participent à la formation des fibres de collagène et élastique du septa inter- alvéolaire",
+      "Présentent des inclusions sous forme de phagolysosomes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Parmi les propositions suivantes, concernant la cellule 4, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est un pneumocyte type I",
+      "Est une cellule endothéliale d’un capillaire continu",
+      "Ses prolongements cytoplasmique participent à la formation de la barrière alvéolo-capillaire 6",
+      "Secrète le surfactant",
+      "Est d’origine hématopoïètique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Parmi les structures suivantes la (les) quelle(s) participe(nt) au processus de la filtration mécanique de l’air au niveau des voies aériennes supérieures :",
+     "options": [
+      "Le surfactant",
+      "Les cils vibratiles de la muqueuse respiratoire",
+      "Les vibrisses au niveau des narines",
+      "Le macrophage alvéolaire",
+      "Les cellules de Clara"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Parmi les propositions suivantes, concernant la zone marginale de la rate, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Reçoit des branches artériolaires de l’artère centrale",
+      "Comporte des lymphocytes et des cellules présentatrices de l’antigène",
+      "Est organisée en sinus et en cordon",
+      "C’est la région de la destruction des globules rouges vieillies",
+      "Fait partie de la pulpe rouge 7"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Parmi les propositions suivantes, concernant l’organe lymphoïde représenté sur le schéma suivant, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La structure 1 comporte des fibres élastiques et des cellules musculaires lisses",
+      "La structure 2 est un sinus médullaire",
+      "La structure 3 est une zone B dépendante",
+      "La structure 4 présente une architecture en nappe",
+      "La structure 5 est un corpuscule de Hassal 8 Le schéma suivant représente le schéma de la structure histologique du thymus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Parmi les propositions suivantes, concernant la cellule 1, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "C’est une cellule réticulaire qui synthétise des fibres de réticuline",
+      "participent à la formation de la barrière sang-thymus",
+      "s’organise en réseau formant ainsi la charpente de l’organe",
+      "Ce sont des cellules d’origine hématopoïétique",
+      "Phagocyte les thymocytes apoptotiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Parmi les propositions suivantes, concernant la cellule 2, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Leurs progéniteurs forment des clones de prolifération dans la région medullaire",
+      "Subissent un processus de sélection par les cellules dendritiques",
+      "La majorité d’entre elles quittent la medullaire par des veinules post capillaires.",
+      "Au cours de leur processus de migration du cortex vers la medullaire, ils acquièrent des récepteurs type CD4 et CD8",
+      "Au cours de leur maturation elles ont un contact avec les antigènes apportés par voie lymphatique afférente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "Parmi les propositions suivantes, concernant la structure 4, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "C’est un ensemble de cellules différenciées et fonctionnelles",
+      "Est le résultat de la dégénérescence de la cellule2",
+      "Est fortement colorée par l’éosine",
+      "Est une structure spécifique du thymus",
+      "Est le lieu de phagocytose des thymocytes apoptotiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Parmi les propositions suivantes, concernant la jonction corticomedullaire du thymus, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Comporte des veinules post-capillaires à paroi perméable 9",
+      "Est le lieu d’un Chek-point positif de thymocytes matures",
+      "Comporte la concentration la plus élevée en thymocytes",
+      "Est le siège de prolifération des thymocytes",
+      "Peut comporter des lymphatiques afférents"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La mélanine est présente essentiellement dans les kératinocytes de la couche granuleuse.",
+      "Les kératinocytes de la couche cornée présentent la concentration la plus élevée en desmosomes.",
+      "Le mélanocyte est associé aux kératinocytes par des jonctions de type desmosome.",
+      "La cellule de Merkel n’est pas reconnaissable en microscopie optique.",
+      "Le cytoplasme des kératinocytes de la couche granuleuse renferme des kératinosomes et des grains de kératohyaline."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Le mélanocyte est localisé dans la couche basale de l'épiderme.",
+      "L’unité épidermo-épidermique est formée par l’ensemble des kératinocytes qui reçoivent de la mélanine par un seul mélanocyte",
+      "Le cytoplasme des kératinocytes de la couche granuleuse renferme des granules de Birbek.",
+      "Les cellules de Merkel sont des dérivés de la crête neurale.",
+      "Le kératinocyte de la couche cornée est très riche en mélanosomes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "Parmi les propositions suivantes, concernant les mélanocytes, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Sont des dérivés des crêtes neurales.",
+      "Comme les cellules de Langerhans, elles sont impliquées dans la réponse immunitaire.",
+      "Présentent des filaments de kératohyaline dans leur cytoplasme.",
+      "Stockent la mélanine dans les granules de Birbeck",
+      "Tout comme les cellules de Langerhans, les mélanocytes sont dépourvus de kératinosomes et de jonctions de type desmosome."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Parmi les propositions suivantes, concernant les formations annexes de la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La partie excrétrice des glandes sudoripares est ramifiée.",
+      "Les glandes sudoripares eccrines et apocrines sont des glandes simples, tubuleuses contournées.",
+      "L’innervation des glandes sudoripare est de type végétatif.",
+      "Les glandes sudoripares eccrines sont souvent associées aux follicules pileux.",
+      "La glande sébacée est une glande alvéolaire composée 10"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les corpuscules de Meissener sont particulièrement nombreux au niveau des pulpes des doigts",
+      "Les corpuscules de Paccini sont situés dans les papilles dermiques",
+      "Les corpuscules de Merkel sont formés par l’association des cellules de Merkel et des terminaisons nerveuses libres",
+      "Dans le corpuscule de Meissner, la fibre nerveuse myélinisée est située au centre de lamelles cellulaires concentriques faites de cellules de Schwann",
+      "Les corpuscules de Paccini sont spécifiques du tact fin"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "Parmi les propositions suivantes, concernant l’épiderme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "L’activité des mélanocytes est dépendante de l’exposition aux rayons solaires et des facteurs génétiques.",
+      "Les cellules de Langerhans participent à la phagocytose de la mélanine.",
+      "La cohésion entre les kératinocytes est forte grâce au cément intercornéocytaire.",
+      "Les complexes de Merckel participent à la perception de la sensibilité tactile de la peau.",
+      "les kératinocytes et les cellules de Langerhans ont la même origine embryologique."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Parmi les propositions suivantes, concernant le développement embryologique de la glande mammaire, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est identique pour les deux sexes",
+      "Les ébauches embryonnaires des glandes mammaires migrent le long de la crête mammaire pour se localiser dans la région thoracique",
+      "Après la naissance, la glande peut avoir une activité lactogène éphémère",
+      "La polythélie se manifeste par la présence de mamelons surnuméraires.",
+      "Les canaux galactophores se mettent en places après la naissance."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "Parmi les propositions suivantes, concernant la glande thyroïde, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les follicules sont de grande taille quand la glande est hyperactive.",
+      "Le colloïde est moins abondant quand la glande est hyperactive.",
+      "Les cellules parafolliculaires ont un contact avec le colloïde",
+      "Les cellules folliculaires sont riches en réticulum endoplasmique granulaire et un appareil de Golgi très développé",
+      "Les cellules folliculaires sont riches en réticulum endoplasmique lisse et en mitochondries à crêtes tubulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Parmi les hormones suivantes, indiquez celle(s) qui est (sont) synthétisée(s) par des cellules nerveuses :",
+     "options": [
+      "ACTH (hormone corticotrope)",
+      "TSH (thyréo-stimuline hormone)",
+      "GH (hormone de croissance)",
+      "Corticolibérine (CRH)",
+      "FSH (gonadotrophine) 11"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Parmi les propositions suivantes, concernant l’antéhypophyse, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les cellules sont organisées en cordons parallèles entourés par un riche réseau capillaire",
+      "Les cellules sécrétoires sont soit acidophiles soit basophiles",
+      "Les cellules chromophobes sont des cellules à haute activité sécrétoire.",
+      "Les cellules somatotropes sont les cellules les moins nombreuses",
+      "Toutes les cellules sécrétrices sont entourées par une membrane basale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "Parmi les propositions suivantes, concernant la glande surrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "A l’œil nu sa couleur jaune est due à sa richesse en lipides",
+      "A l’œil nu, la corticosurrénale est plus foncée que la médullosurrénale",
+      "La corticosurrénale est facilement décollable de la médullosurrénale",
+      "La corticosurrénale et la médullosurrénale ont la même origine embryologique",
+      "Les deux glandes ont une vascularisation étroitement reliée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Parmi les propositions suivantes, concernant la glande surrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La couche glomérulée est formée de petites cellules éosinophiles organisées sous forme sphérique",
+      "Les cellules de la couche glomérulée sont riches en réticulum endoplasmique granulaire et en appareil de golgi",
+      "Les cellules de la réticulée se disposent en cordons parallèles",
+      "Les cordons cellulaires sont séparés du réseau capillaire par une membrane basale",
+      "La réticulée ne secrète des androgènes que dans le sexe masculin"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Parmi les propositions suivantes, concernant le pancréas, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La partie exocrine s’organise en glande acineuse composée",
+      "La partie exocrine occupe 80 % de la glande",
+      "La partie endocrine s’organise en cordons parallèles",
+      "La distinction entre les différents types cellulaires des ilots de Langerhans se fait par microscopie électronique",
+      "La partie exocrine est sous le contrôle du pancréas endocrine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "Parmi les propositions suivantes, concernant la médullosurrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Reçoit le sang contenant les hormones de la corticosurrénale",
+      "L’adrénaline et la noradrénaline sont secrétées par le même type de cellule",
+      "comporte de larges veines centromédullaires",
+      "Les cellules chromaffines s’organisent en cordons parallèles",
+      "Les vésicules de sécrétion d’adrénaline et de noradrénaline peuvent être distinguées en microscopie optique 12 13 La Grille A B C D E A B C D E 1 21 2 22 3 23 4 24 5 25 6 26 7 27 8 28 9 29 10 30 11 31 12 32 13 33 14 34 15 35 16 36 17 37 18 38 19 39 20 40"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1WGh5kjGvnUbkiZIDj7TIHLt_SOlp5RXA",
+   "title": "Isolé — l’appareil digestif",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant l’œsophage, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La muqueuse est formée par un épithélium Malpighien kératinisé.",
+      "La musculeuse est formée de deux couches de cellules musculaires lisses dans son tiers inférieur.",
+      "Le chorion comporte des follicules lymphoïdes organisés en plaques",
+      "La couche la plus externe est une séreuse",
+      "L’épithélium de revêtement est brutalement remplacé par un épithélium simple de la muqueuse gastrique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant le duodénum, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Le chorion comporte des glandes de Brunner",
+      "Les secrétions des glandes duodénales de Brunner jouent un rôle de tampon contre l’acidité du chyme gastrique",
+      "sa musculeuse est doublée par des bandelettes longitudinales",
+      "Les follicules lymphoïdes de la sous muqueuse s’organisent en plaques de Payer.",
+      "les villosités duodénales ont un axe conjonctif qui contient des fibres de muscle lisse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant les glandes de Lieberkün, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Sont localisées au niveau de la sous muqueuse de l’intestin",
+      "Sont formées par des cellules caliciformes qui diminuent de nombre dans le segment colique",
+      "secrètent du lysozyme",
+      "participent au processus d’absorption intestinale",
+      "Sont dépourvues de cellules de Paneth au niveau du duodénum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant les glandes de Lieberkün, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ce sont des glandes composées",
+      "Leur épithélium ne comporte pas des entérocytes",
+      "secrètent du mucus",
+      "participent au processus de la digestion",
+      "Sont pourvues de cellules de Paneth au niveau du colon"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes, concernant les papilles gustatives de type caliciforme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ont la forme d’un champignon qui effleure la surface de la langue.",
+      "Comportent une centaine de bourgeons du gout.",
+      "L’épithélium à leur surface est kératinisé",
+      "Sont les plus petites et les plus nombreuses des papilles linguales.",
+      "Comportent des récepteurs neurosensoriels responsables du gout"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes, concernant les papilles gustatives de type filiforme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Ont une forme effilée.",
+      "Comportent une centaine de bourgeons du gout.",
+      "Comportent des glandes de Von Ebner",
+      "Sont les plus petites et les plus nombreuses des papilles linguales.",
+      "Sont localisées dans la région du V lingual Preparé par mednval nounou"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0",
+   "title": "Isolé — les glandes annexes",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant la glande parotide, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est une glande composée",
+      "Le produit de sécrétion est mixte séreux et muqueux",
+      "Le canal excréteur principal est tapissé par un épithélium pavimenteux simple",
+      "Le mode de sécrétion est de type merocrine",
+      "Les acini ont ne lumière étroite et présentent par endroit des croissants de Gianuzzi"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant l’organisation du parenchyme hépatique indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Dans le lobule hépatique, la circulation de la bile est centrifuge",
+      "Dans le lobule hépatique, le centre du lobule est occupé par une veinule centrolobulaire",
+      "Dans le lobule hépatique la circulation du sang dans les sinusoïdes est centrifuge",
+      "Le lobule portal est centré par une veine centrolobulaire",
+      "Le lobule portal est l’unité de sécrétion biliaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant l’organisation du parenchyme hépatique indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "L’acinus hépatique correspond au territoire irrigué par les artères et les veines de 2 espaces portes consécutifs.",
+      "L’acinus hépatique est la plus petite unité basée sur la sécrétion biliaire",
+      "L’acinus hépatique, est la plus petite unité basée sur la circulation sanguine",
+      "Les lobules hépatiques sont bien limités par du tissu conjonctif dans l’espèce humaine",
+      "Une branche de la veine portale occupe le centre du lobule hépatique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant l’espace de Disse, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est un espace localisé entre le pole biliaire de l’hépatocyte et les sinusoides hépatique",
+      "C’est un espace fonctionnel favorisant les échanges entre hépatocytes et sinusoides hépatiques",
+      "C’est l’espace où s’exerce la fonction exocrine du foie",
+      "Comporte des Cellules de Ito",
+      "La présence importante de fibres de collagène ne perturbe pas sa fonction Preparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A",
+   "title": "Isolé — l’appareil urinaire",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant l’appareil juxtaglomérulaire, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est localisé au niveau du pole urinaire du glomérule",
+      "Comporte des barorécepteurs localisés dans la media des artérioles efférentes",
+      "Comporte les cellules du lacis qui présentent les mêmes propriétés morpho- fonctionnelles que les cellules mésangiales intra-glomérulaires",
+      "Les cellules de la macula densa sont sensibles aux variations de concentrations de Na+ des urines qui circulent dans le tube contourné distal",
+      "Les cellules du lacis régulent le flux de sang dans le réseau capillaire peritubulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant le tube contourné proximal, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La réabsorption est intense et favorisée par la présence d’une bordure en brosse",
+      "Ses cellules sont plus riches en organites cytoplasmiques que les autres segments tubulaires du néphron.",
+      "La présence au niveau du pôle apical de mitochondries allongées témoigne d’un transport actif.",
+      "Il forme avec les anses de Henlé la substance médullaire.",
+      "Il forme avec les tubes collecteurs la substance corticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant la barrière de filtration glomérulaire, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La membrane basale est épaisse et formée de glycoprotéines chargées négativement",
+      "La membrane des pédicelles est recouverte par un glycocalix chargé positivement",
+      "La membrane de filtration est chargée négativement",
+      "Les pores des cellules endothéliales des capillaires glomérulaires sont comblés par un diaphragme",
+      "Toutes les composantes du sang passent la barrière à l’exception des cellules sanguines"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant la barrière de filtration glomérulaire, indiquer celle(s)qui est(sont) exacte(s)",
+     "options": [
+      "La lésion de la barrière favorise le passage des protéines dans les urines primitives",
+      "Le podocyte participe à la filtration glomérulaire par ses prolongements du premier ordre",
+      "La membrane de filtration est chargée négativement",
+      "Les capillaires glomérulaires sont très larges et présentent des pores de l’ordre de 7μm",
+      "Toutes les composantes du plasma sanguin passent la barrière à l’exception des grosses molécules"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1OZvWU0qwohyIHye8t8wH9MkqSpxyH614",
+   "title": "Isolé — le système lymphoïde",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant l’organe lymphoïde représenté sur le schéma suivant, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La structure 1 comporte des fibres élastiques et des cellules musculaires lisses",
+      "La structure 2 est un sinus médullaire",
+      "La structure 3 est une zone B dépendante",
+      "La structure 4 présente une architecture en nappe",
+      "La structure 5 est un corpuscule de Hassal Le schéma suivant représente le schéma de la structure histologique du thymus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant la cellule 1, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "C’est une cellule réticulaire qui synthétise des fibres de réticuline",
+      "participent à la formation de la barrière sang-thymus",
+      "s’organise en réseau formant ainsi la charpente de l’organe",
+      "Ce sont des cellules d’origine hématopoïétique",
+      "Phagocyte les thymocytes apoptotiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant la cellule 2, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Leurs progéniteurs forment des clones de prolifération dans la région medullaire",
+      "Subissent un processus de sélection par les cellules dendritiques",
+      "La majorité d’entre elles quittent la medullaire par des veinules post capillaires.",
+      "Au cours de leur processus de migration du cortex vers la medullaire, ils acquièrent des récepteurs type CD4 et CD8",
+      "Au cours de leur maturation elles ont un contact avec les antigènes apportés par voie lymphatique afférente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant la structure 4, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "C’est un ensemble de cellules différenciées et fonctionnelles",
+      "Est le résultat de la dégénérescence de la cellule2",
+      "Est fortement colorée par l’éosine",
+      "Est une structure spécifique du thymus",
+      "Est le lieu de phagocytose des thymocytes apoptotiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes, concernant la jonction corticomedullaire du thymus, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Comporte des veinules post-capillaires à paroi perméable",
+      "Est le lieu d’un Chek-point positif de thymocytes matures",
+      "Comporte la concentration la plus élevée en thymocytes",
+      "Est le siège de prolifération des thymocytes",
+      "Peut comporter des lymphatiques afférents"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes, concernant la zone marginale de la rate, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Reçoit des branches artériolaires de l’artère centrale",
+      "Comporte des lymphocytes et des cellules présentatrices de l’antigène",
+      "Est organisée en sinus et en cordon",
+      "C’est la région de la destruction des globules rouges vieillies",
+      "Fait partie de la pulpe rouge Preparé par mednval nounou"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1pcLkz123qBREzR4mBDvTtq_m1kL33fkK",
+   "title": "Isolé — le système tégumentaire",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La mélanine est présente essentiellement dans les kératinocytes de la couche granuleuse.",
+      "Les kératinocytes de la couche cornée présentent la concentration la plus élevée en desmosomes.",
+      "Le mélanocyte est associé aux kératinocytes par des jonctions de type desmosome.",
+      "La cellule de Merkel n’est pas reconnaissable en microscopie optique.",
+      "Le cytoplasme des kératinocytes de la couche granuleuse renferme des kératinosomes et des grains de kératohyaline."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Le mélanocyte est localisé dans la couche basale de l'épiderme.",
+      "L’unité épidermo-épidermique est formée par l’ensemble des kératinocytes qui reçoivent de la mélanine par un seul mélanocyte",
+      "Le cytoplasme des kératinocytes de la couche granuleuse renferme des granules de Birbek.",
+      "Les cellules de Merkel sont des dérivés de la crête neurale.",
+      "Le kératinocyte de la couche cornée est très riche en mélanosomes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant les mélanocytes, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Sont des dérivés des crêtes neurales.",
+      "Comme les cellules de Langerhans, elles sont impliquées dans la réponse immunitaire.",
+      "Présentent des filaments de kératohyaline dans leur cytoplasme.",
+      "Stockent la mélanine dans les granules de Birbeck",
+      "Tout comme les cellules de Langerhans, les mélanocytes sont dépourvus de kératinosomes et de jonctions de type desmosome."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant les formations annexes de la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La partie excrétrice des glandes sudoripares est ramifiée.",
+      "Les glandes sudoripares eccrines et apocrines sont des glandes simples, tubuleuses contournées.",
+      "L’innervation des glandes sudoripare est de type végétatif.",
+      "Les glandes sudoripares eccrines sont souvent associées aux follicules pileux.",
+      "La glande sébacée est une glande alvéolaire composée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes, concernant la peau, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les corpuscules de Meissener sont particulièrement nombreux au niveau des pulpes des doigts",
+      "Les corpuscules de Paccini sont situés dans les papilles dermiques",
+      "Les corpuscules de Merkel sont formés par l’association des cellules de Merkel et des terminaisons nerveuses libres",
+      "Dans le corpuscule de Meissner, la fibre nerveuse myélinisée est située au centre de lamelles cellulaires concentriques faites de cellules de Schwann",
+      "Les corpuscules de Paccini sont spécifiques du tact fin"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes, concernant l’épiderme, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "L’activité des mélanocytes est dépendante de l’exposition aux rayons solaires et des facteurs génétiques.",
+      "Les cellules de Langerhans participent à la phagocytose de la mélanine.",
+      "La cohésion entre les kératinocytes est forte grâce au cément intercornéocytaire.",
+      "Les complexes de Merckel participent à la perception de la sensibilité tactile de la peau.",
+      "les kératinocytes et les cellules de Langerhans ont la même origine embryologique."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes, concernant le développement embryologique de la glande mammaire, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Est identique pour les deux sexes",
+      "Les ébauches embryonnaires des glandes mammaires migrent le long de la crête mammaire pour se localiser dans la région thoracique",
+      "Après la naissance, la glande peut avoir une activité lactogène éphémère",
+      "La polythélie se manifeste par la présence de mamelons surnuméraires.",
+      "Les canaux galactophores se mettent en places après la naissance."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR",
+   "title": "Isolé — les glandes endocrines",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, concernant la glande thyroïde, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les follicules sont de grande taille quand la glande est hyperactive.",
+      "Le colloïde est moins abondant quand la glande est hyperactive.",
+      "Les cellules parafolliculaires ont un contact avec le colloïde",
+      "Les cellules folliculaires sont riches en réticulum endoplasmique granulaire et un appareil de Golgi très développé",
+      "Les cellules folliculaires sont riches en réticulum endoplasmique lisse et en mitochondries à crêtes tubulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les hormones suivantes, indiquez celle(s) qui est (sont) synthétisée(s) par des cellules nerveuses :",
+     "options": [
+      "ACTH (hormone corticotrope)",
+      "TSH (thyréo-stimuline hormone)",
+      "GH (hormone de croissance)",
+      "Corticolibérine (CRH)",
+      "FSH (gonadotrophine)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes, concernant l’antéhypophyse, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Les cellules sont organisées en cordons parallèles entourés par un riche réseau capillaire",
+      "Les cellules sécrétoires sont soit acidophiles soit basophiles",
+      "Les cellules chromophobes sont des cellules à haute activité sécrétoire.",
+      "Les cellules somatotropes sont les cellules les moins nombreuses",
+      "Toutes les cellules sécrétrices sont entourées par une membrane basale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes, concernant la glande surrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "A l’œil nu sa couleur jaune est due à sa richesse en lipides",
+      "A l’œil nu, la corticosurrénale est plus foncée que la médullosurrénale",
+      "La corticosurrénale est facilement décollable de la médullosurrénale",
+      "La corticosurrénale et la médullosurrénale ont la même origine embryologique",
+      "Les deux glandes ont une vascularisation étroitement reliée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes, concernant la glande surrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La couche glomérulée est formée de petites cellules éosinophiles organisées sous forme sphérique",
+      "Les cellules de la couche glomérulée sont riches en réticulum endoplasmique granulaire et en appareil de golgi",
+      "Les cellules de la réticulée se disposent en cordons parallèles",
+      "Les cordons cellulaires sont séparés du réseau capillaire par une membrane basale",
+      "La réticulée ne secrète des androgènes que dans le sexe masculin"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes, concernant le pancréas, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "La partie exocrine s’organise en glande acineuse composée",
+      "La partie exocrine occupe 80 % de la glande",
+      "La partie endocrine s’organise en cordons parallèles",
+      "La distinction entre les différents types cellulaires des ilots de Langerhans se fait par microscopie électronique",
+      "La partie exocrine est sous le contrôle du pancréas endocrine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes, concernant la médullosurrénale, indiquer celle(s)qui est(sont) exacte(s) :",
+     "options": [
+      "Reçoit le sang contenant les hormones de la corticosurrénale",
+      "L’adrénaline et la noradrénaline sont secrétées par le même type de cellule",
+      "comporte de larges veines centromédullaires",
+      "Les cellules chromaffines s’organisent en cordons parallèles",
+      "Les vésicules de sécrétion d’adrénaline et de noradrénaline peuvent être distinguées en microscopie optique"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
+}

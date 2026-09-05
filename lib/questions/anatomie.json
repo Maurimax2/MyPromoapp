@@ -1,0 +1,1252 @@
+{
+ "module": "anatomie",
+ "name": "ANATOMIE",
+ "banks": [
+  {
+   "fid": "1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy",
+   "title": "Isolé — neuro-anatomie",
+   "section": "Isolés",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Quel(s) est (sont) parmi les éléments suivants celui (ceux) qui est (ont) une origine télencéphalique ?",
+     "options": [
+      "le noyau caudé",
+      "le globus pallidus",
+      "le noyau sous-thalamique",
+      "le claustrum",
+      "le putamen"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Quel(s) est (sont) parmi les éléments suivants celui (ceux) qui est (ont) Une origine diencéphalique ?",
+     "options": [
+      "claustrum",
+      "le globus pallidus",
+      "le noyau sous-thalamique",
+      "la substantia nigra E:le putamen"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Quel(s) est (sont) parmi les éléments suivants celui (ceux) qui est (ont) une origine mésencéphalique ?",
+     "options": [
+      "le noyau caudé",
+      "le globus pallidus",
+      "le substantia nigra",
+      "le putamen"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Dans les circuits fonctionnels extra-pyramidaux quel(s) est (sont) parmi Les éléments suivants celui (ceux) sur le(s) quel(s) s'exerce une activité inhibitrice GABAergique ?",
+     "options": [
+      "le striatum",
+      "le globus pallidus externe",
+      "le noyau sous-thalamique",
+      "le cortex",
+      "le thalamus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Dans les circuits fonctionnels extra-pyramidaux quel(s) est (sont) parmi Les éléments suivants celui (ceux) sur le(s) quel(s) s'exerce une activité excitatrice Glutamatergique ?",
+     "options": [
+      "le striatum",
+      "le globus pallidus externe",
+      "le noyau sous-thalamique",
+      "le cortex",
+      "le thalamus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Il fait partie de l’encéphale.",
+      "C’est la pièce qui connecte le cerveau et le cervelet à la moelle épinière.",
+      "En vue ventrale on distingue trois pièces de crânial en caudal : la moelle allongée, le pont et les pédoncules cérébraux.",
+      "La moelle allongée présente une ressemblance anatomique avec la moelle épinière.",
+      "Les olives sont situées dans les cordons ventraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Le pont présente une face dorsale marquée par les gouttières basiliaires.",
+      "L’espace perforé postérieur est visible sur une vue dorsale du tronc cérébral.",
+      "Le pont correspond au métencéphale.",
+      "Le tronc cérébral est limité en crânial par le tractus optique.",
+      "Le tronc cérébral est oblique en bas et en avant."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Les pédoncules cérébraux sont constitués de substance blanche.",
+      "L’espace perforé postérieur se situe entre les pédoncules cérébraux.",
+      "Les colluculi crâniaux sont des relais des voies auditives.",
+      "De crânial en caudal les trois pièces embryologiques du tronc cérébral sont : le mésencéphale, le métencéphale et le myélencéphale.",
+      "Les olives sont situées dans les cordons latéraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Il correspond à la différenciation du prosencéphale c’est-à-dire le télencéphale et le diencéphale.",
+      "Le diencéphale est enroulé autour du télencéphale.",
+      "Le sillon longitudinal sépare le diencéphale du télencéphale.",
+      "La substance grise périphérique est composée de 6 couches de neurones.",
+      "Le corps calleux se situe dans le fond de la fissure transverse. Question nn11: les propositions suivantes concernent le cerveau : A : Le seul point de continuité entre télencéphale et diencéphale est ventral. B : Le corps calleux contient des corps neuronaux. C : L’intelligence est avant tout proportionnelle au poids du cerveau. D : Les sillons secondaires délimitent des lobes. E : Les sillons tertiaires sont très conservés même entre les différentes espèces."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "La partie antérieure de la face inférieure du cerveau est horizontale alors qu’elle est oblique en bas et en dehors dans sa partie postérieure.",
+      "Il possède cinq sillons primaires et six lobes.",
+      "Trois sillons sont visibles sur une vue latérale : sillons cingulaire, pariéto-occipital et calcarin.",
+      "Le sillon latéral délimite les lobes frontal et pariétal.",
+      "La fissure longitudinale sépare les deux hémisphères cérébraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Sur la face latérale on trouve les sillons latéral et central.",
+      "Le lobe de l’insula se situe dans le fond du sillon central.",
+      "Le sillon central sépare les lobes frontal et pariétal.",
+      "Tous les sillons primaires délimitent des lobes.",
+      "Le noyau interposé est composé du globus pallidus en médial et du putamen en latéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "les propositions suivantes concernent les noyaux du cerveau :",
+     "options": [
+      "On trouve de médial en latéral le thalamus, le noyau caudé, le noyau lenticulaire et le claustrum.",
+      "Le télencéphale est plutôt périphérique par rapport au diencéphale.",
+      "Sur une coupe frontale (dite de Charcot) le ventricule latéral et le noyau caudé sont sectionnés à deux reprises.",
+      "Le noyau caudé appartient au diencéphale.",
+      "Le putamen fait partie du diencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le noyau lenticulaire appartient totalement au télencéphale.",
+      "Le thalamus appartient au diencéphale alors que le claustrum fait partie du télencéphale.",
+      "Le lobe de l’insula est médial par rapport au claustrum.",
+      "Le sillon latéral sépare le lobe frontal du lobe temporal.",
+      "Le 3ème ventricule est situé en médial du thalamus."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le corps calleux est plus crânial que tous les noyaux.",
+      "Le noyau caudé est en médial du ventricule latéral.",
+      "Sur une coupe frontale, la substance blanche en crânial des noyaux est correspond au centre semi-ovale.",
+      "Les deux ventricules latéraux communiquent entre eux par le foramen inter- ventriculaire.",
+      "Le 3ème ventricule est le ventricule du diencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Un ventricule latéral comporte trois cornes : antérieure, postérieure et supérieure.",
+      "L’aqueduc du mésencéphale fait communiquer le 4ème ventricule avec les ventricules latéraux.",
+      "Le sillon calcarin ne délimite pas de lobe.",
+      "La capsule externe passe entre le claustrum et le lobe de l’insula.",
+      "La capsule interne se situe entre le noyau lenticulaire (en médial) et le thalamus (en latéral)."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Les ventricules latéraux appartiennent au télencéphale.",
+      "La capsule extrême est située entre le claustrum et le lobe de l’insula.",
+      "Le foramen inter-ventriculaire fait communiquer le ventricule latéral avec le 3ème ventricule.",
+      "Le sillon cingulaire délimite le lobe cingulaire.",
+      "Le cortex cérébral comporte 3 couches de neurones."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le corps calleux se situe dans le fond de la fissure transverse.",
+      "Sur une vue latérale, on peut observer les sillons central et latéral.",
+      "Le diencéphale communique avec le télencéphale en dorsal.",
+      "Les nombreux replis du cerveau viennent du fait qu’il s’est développé dans une boite inextensible.",
+      "Il dérive du prosencéphale et du mésencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le gyrus pré-central est somato-sensitif.",
+      "De part et d’autre du sillon calcarin se trouve l’aire visuelle.",
+      "L’aire auditive primaire se situe dans l’uncus.",
+      "Le gyrus post-central est somato-moteur.",
+      "L’uncus se situe à la face médiale du lobe temporal."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "L’aire auditive primaire se trouve en crânial du sillon latéral.",
+      "Toutes les aires sont visibles sur une vue latérale du cerveau.",
+      "L’aire olfactive se situe dans l’uncus.",
+      "Le gyrus pré-central est moteur alors que le gyrus post-central est sensitif.",
+      "En somatotopie, la partie médiale du gyrus pré-central correspond à la tête."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "En somatotopie, la représentation motrice de la tête se situe au niveau de la partie caudale du gyrus pré-central.",
+      "L’aire motrice primaire se situe dans le gyrus pré-central.",
+      "L’aire auditive primaire n’est pas visible sur une vue médiane.",
+      "Le fornix se situe au niveau de la suture transverse.",
+      "Le septum pellucidum sépare l'acqueduc du mésencéphale du 3ème ventricule."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "les propositions suivantes concernent les aires du langage :",
+     "options": [
+      "Elles sont situées dans l’hémisphère gauche.",
+      "L’aire de Wernicke est celle de l’élaboration de la parole.",
+      "L’aire de Broca est située en dorsal de l’aire de Wernicke.",
+      "L’aire de la lecture est proche de l’aire visuelle. L’aire de l’écriture est proche du gyrus précentral.",
+      "Si l’aire de Broca est atteinte le sujet comprend ce qu’on lui dit mais ne peut s’exprimer correctement."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Les sillons primaires sont très proches entre les espèces.",
+      "Si l’aire de Wernicke est atteinte, alors le sujet ne comprend plus ce qu’on lui dit.",
+      "La capsule externe se situe entre noyau lenticulaire et claustrum.",
+      "Le lobe de l’insula se situe dans de fond du sillon central.",
+      "Le centre semi-ovale est formé de la substance blanche."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "En vue dorsale, le cordon dorsal de la moelle allongée se clive en deux dans sa partie crâniale.",
+      "embryologiquement, c’est la face dorsale du pont qui donne le cervelet.",
+      "Les ventricules sont des cavités présentes dans chaque partie de l’encéphale.",
+      "Le 4ème ventricule se trouve au niveau du myélencéphale et du métencéphale. Il est donc dit ventricule rhombencéphalique.",
+      "Le 4ème ventricule communique avec le 3ème par l’aqueduc du mésencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Le tronc cérébral possède une fonction segmentaire et supra-segmentaire.",
+      "La fonction segmentaire correspond à l’émergence des nerfs crâniens.",
+      "La substance grise est périphérique comme au niveau du cervelet.",
+      "Une des fonctions supra-segmentaires correspond à la formation réticulaire responsable de l’éveil.",
+      "Les pédoncules cérébelleux inférieurs relient le cervelet à la moelle allongée."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Les colluculi crâniaux sont des relais des voies optiques.",
+      "Le prosencéphale se différencie en télencéphale et diencéphale.",
+      "L’espace perforé postérieur est visible sur une vue ventrale.",
+      "Les pédoncules cérébelleux inférieurs relient le cervelet et le pont.",
+      "Les pédoncules cérébelleux moyens limitent le 4ème ventricule."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "La substance grise est centrale.",
+      "Sa lésion (notamment au niveau de la formation réticulaire) peut provoquer un coma.",
+      "L’olive est plus proche du sillon latéral-ventral.",
+      "Le mésencéphale est limité en caudal par les voies optiques.",
+      "Le tronc cérébral est oblique en haut et en avant. Annotez les schemas suivants (A,B et C) : Schemas A 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 Schemas C 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1J8nvbe9SBZMnCCAYDrjqYebGQ0pcQNk6",
+   "title": "QCM du Pr Kleib — corrigés",
+   "section": "Banques de QCM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "À propos de l’ostéologie du crâne, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "L’os pariétal est un os pair de la partie latérale de la calvaria.",
+      "Il y a quatre os médians impairs",
+      "La voûte du crâne est appelée CALVARIA.",
+      "L’os éthmoïdal est un os de la partie antérieure du crane impair et symétrique.",
+      "Toute les réponses sont fausses"
+     ],
+     "answer": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 2,
+     "q": "À propos de l’ostéologie du crâne, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "L'os frontal participe uniquement à la formation de la voûte du crâne appelée CALVARIA.",
+      "L’os pariétal participe à la constitution de la base du crâne",
+      "Le os sphénoïdal comporte la selle turcique où se loge la glande hypophysaire.",
+      "L’os occipital présente uniquement une seule surface articulaire",
+      "Toute les réponses sont fausses"
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 3,
+     "q": "À propos de l’ostéologie du crâne, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "L’os temporal est un os pair",
+      "L’os éthmoïdal participe à la constitution des cavités orbitaires nasales.",
+      "L’incisure ethmoïdale forme un U ouvert en arrière, dans lequel vient s’encastrer la lame criblée de l’ethmoïde",
+      "L'orifice d'entrée du canal carotidien est situé sur la face exocrânienne postérieure.",
+      "Le processus ethmoïdal du sphénoïde s’articule avec l’os frontal."
+     ],
+     "answer": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "À propos de l’ostéologie du crâne, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "Le crane est formé de 8 os et 3 osselets",
+      "Le processus crista galli nait de la face supérieure de la lame criblée de l'ethmoïde.",
+      "Le condyle occipital s’articule avec l’odontoïde",
+      "Le tubercule sphénoïdal est un relief de la grande aile de l'os sphénoïde",
+      "L’os éthmoïdal ne participe pas à la constitution des cavités orbitaires nasales."
+     ],
+     "answer": [
+      0,
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "À propos de l’étage moyen de la base du crâne, quelle(s) est (sont) la (les) proposition(s) exacte(s)?",
+     "options": [
+      "Le foramen Rotendum (rond) est traversé par le nerf maxillaire (V2)",
+      "Le foramen Lacerum (déchiré antérieur) est traversé par le nerf mandibulaire (V3).",
+      "La grande aile du sphénoïde est séparée de la petite aile par la fissure orbitaire inferieure",
+      "Le foramen ovale est traversé par le nerf mandibulaire (V3)",
+      "On y retrouve le conduit auditif interne"
+     ],
+     "answer": [
+      0,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 6,
+     "q": "À propos de l’orbite, quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "Le canal optique est traversé par le nerf ophtalmique (V1).",
+      "L’os palatin fait partie des os de l’orbite",
+      "L’os ethmoïdal fait partie des os de l’orbite",
+      "Le processus ptérygoïdes forme la paroi inferieur de l’orbite.",
+      "L’os maxillaire fait partie des os de l’orbite"
+     ],
+     "answer": [
+      1,
+      2,
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 7,
+     "q": "À propos de l’os temporal quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "C’est un os pair qui participe à la formation de la base du crâne et de la calvaria",
+      "Il est constitué de trois parties embryologiquement différentes : pétreuse, squameuse et tympanique",
+      "La partie antérieure de l’écaille s’articule avec la grande aile du sphénoïde",
+      "Est un os de l’orbite.",
+      "Est traversé par le foramen rond."
+     ],
+     "answer": [
+      0,
+      1,
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 8,
+     "q": "À propos de L’os sphénoïdal quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "Le corps du sphénoïde est de forme cubique",
+      "La face supérieure présente d’avant en arrière, le jugum sphénoïdal, le sillon préchiasmatique, la selle turcique",
+      "Il forme la pommette de la face",
+      "La face supérieure présente d’avant en arrière, le sillon pré chiasmatique, le jugum sphénoïdal, la selle turcique.",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      0,
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 9,
+     "q": "À propos de L’os frontal quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "Est un os impair et symétrique",
+      "Est constitué de deux segments : un segment vertical, l’écaille et un segment horizontal, les parties nasales et orbitaires",
+      "Il s’article avec la mandibule.",
+      "Les muscles ptérygoïdiens s’insèrent sur l’os frontal.",
+      "Il participe à la fosse postérieure."
+     ],
+     "answer": [
+      0,
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 10,
+     "q": "À propos de l’os occipital quelle(s) est (sont) la (les) proposition(s) exacte(s) ?",
+     "options": [
+      "Il est constitué de trois parties embryologiquement différentes : pétreuse, squameuse et tympanique",
+      "Il est latéral et pyramidal avec un apex latéral",
+      "Le condyle occipital s’articule avec l’atlas",
+      "Le foramen magnum fait communiquer la fosse crânienne postérieure et le canal vertébral",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      2,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 11,
+     "q": "Certaines des propositions suivantes concernant la lame criblée (ou lame horizontale) de l'os ethmoïde sont vraies. Laquelle ou lesquelles ? Cochez, la ou les bonne (s) réponse (s) :",
+     "options": [
+      "Elle forme le toit des cavités nasales",
+      "Sa face supérieure comprend dans le plan médian la crista galli et latéralement les gouttières olfactives",
+      "Les deux nerfs olfactifs (I) reposent sur la face supérieure de la lame criblée",
+      "Elle laisse passer le nerf optique (II)",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      0,
+      1,
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 12,
+     "q": "Certaines des propositions suivantes concernant l'écaille de l'os frontal sont fausses. Laquelle ou lesquelles ?",
+     "options": [
+      "La tubérosité frontale est située à environ 3cm au-dessus du bord supra - orbitaire",
+      "La suture frontale (ou suture métopique) correspond au reliquat de la soudure des deux hémi-frontaux chez l'embryon",
+      "Le processus zygomatique se prolonge en haut et en dedans par la crête temporale supérieure",
+      "Les surfaces temporales de l'os frontal donnent insertions au muscle temporal",
+      "Les bosses orbitaires sont visibles sur la face exocrânienne de l'écaille."
+     ],
+     "answer": [
+      2,
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 13,
+     "q": "Certaines des propositions suivantes sont fausses. Laquelle ou lesquelles ?",
+     "options": [
+      "Le processus crista galli se trouve à l’étage antérieur du crane",
+      "Les ailes du processus crista galli limitent le foramen caecum en avant",
+      "Le processus mastoïde est porté par la face exocrânienne postérieure du rocher",
+      "La face exocrânienne de l’os temporal porte les empreintes de l'artère méningée moyenne",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      3,
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 14,
+     "q": "À propos de l’atlas, cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "L’atlas est fortement mobile par rapport au crâne.",
+      "Les processus transverses comportent chacun un foramen tranversaire.",
+      "Sur les faces médiales des masses latérales s’insère le ligament transverse.",
+      "La dent de l’axis se loge en arrière du ligament transverse.",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      1,
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 15,
+     "q": "Certaines des propositions suivantes concernant l’atlas sont vraies. Laquelle ou lesquelles ? Cochez la ou les bonne (s) réponse (s):",
+     "options": [
+      "Chaque arc présente un tubercule.",
+      "Est la première vertèbre cervicale.",
+      "Cette vertèbre n’a pas de corps vertébral mais deux masses latérales.",
+      "Chaque masse latérale comporte une surface articulaire : une cavité glénoïde pour la base du crâne.",
+      "Toutes les propositions précédentes sont vraies"
+     ],
+     "answer": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 16,
+     "q": "À propos de l’axis cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "Le processus articulaire caudal est orienté en bas et en avant.",
+      "Est la deuxième vertèbre cervicale.",
+      "Il donne passage à l’artère vertébrale par son foramen tranversaire.",
+      "La rotation se fait entre C1 et C2 : c’est la dent qui pivote dans sa loge au niveau de l’atlas.",
+      "Toute les réponses précédentes sont vraies"
+     ],
+     "answer": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 17,
+     "q": "À propos de La colonne vertébrale, cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "Il existe des disques cartilagineux entre tous les corps vertébraux du rachis.",
+      "Le disque intervertébral possède 2 parties : le nucléus pulposus au centre et l'annulus fibrosus en périphérie.",
+      "On peut effectuer une ponction de liquide céphalo-rachidien entre 2 processus transverses.",
+      "Il existe une asymétrie de longueur entre rachis et moelle spinale.",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      1,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 18,
+     "q": "Cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "L’os temporal est un os de l’orbite",
+      "La tête est divisée en deux parties : le crâne et la face osseuse.",
+      "La grande aile du sphénoïde est séparée de la petite aile par la fissure orbitaire supérieure",
+      "Le diaphragme de la selle turcique est la paroi latérale du sinus caverneux",
+      "Toutes les propositions précédentes sont fausses"
+     ],
+     "answer": [
+      1,
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 19,
+     "q": "À propos de La colonne vertébrale, cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "La moelle spinale se termine à hauteur de L4.",
+      "L’atlas est la deuxième vertèbre cervicale.",
+      "L’os occipital est Est un os impair et symétrique",
+      "Le rachis cervical est formé de 7 vertèbres cervicales",
+      "Toutes les propositions précédentes sont vraies"
+     ],
+     "answer": [
+      1,
+      2,
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 20,
+     "q": "À propos de La colonne vertébrale, cochez la (les) proposition(s) correcte(s) :",
+     "options": [
+      "Le rachis lombaire est formé de 5 vertèbres lombales",
+      "La vertèbre thoracique type possède deux pédicules.",
+      "Le foramen inter vertébral livre passage aux vaisseaux et aux nerfs spinaux.",
+      "Sur une vertèbre thoracique type on retrouve une fosse costale transversaire",
+      "Toutes les propositions précédentes sont vraies"
+     ],
+     "answer": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
+    }
+   ]
+  },
+  {
+   "fid": "1KtHxQiPeAWhnpv1vVNBWUm1vcIB_Ykr2",
+   "title": "QCM — le cerveau",
+   "section": "Banques de QCM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Il correspond à la différenciation du prosencéphale c’est-à-dire le télencéphale et le diencéphale.",
+      "Le diencéphale est enroulé autour du télencéphale.",
+      "Le sillon longitudinal sépare le diencéphale du télencéphale.",
+      "La substance grise périphérique est composée de 6 couches de neurones.",
+      "Le corps calleux se situe dans le fond de la fissure transverse."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le seul point de continuité entre télencéphale et diencéphale est ventral.",
+      "Le corps calleux contient des corps neuronaux.",
+      "L’intelligence est avant tout proportionnelle au poids du cerveau.",
+      "Les sillons secondaires délimitent des lobes.",
+      "Les sillons tertiaires sont très conservés même entre les différentes espèces."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "La partie antérieure de la face inférieure du cerveau est horizontale alors qu’elle est oblique en bas et en dehors dans sa partie postérieure.",
+      "Il possède cinq sillons primaires et six lobes.",
+      "Trois sillons sont visibles sur une vue latérale : sillons cingulaire, pariéto-occipital et calcarin.",
+      "Le sillon latéral délimite les lobes frontal et pariétal.",
+      "La fissure longitudinale sépare les deux hémisphères cérébraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Sur la face latérale on trouve les sillons latéral et central.",
+      "Le lobe de l’insula se situe dans le fond du sillon central.",
+      "Le sillon central sépare les lobes frontal et pariétal.",
+      "Tous les sillons primaires délimitent des lobes.",
+      "Le noyau interposé est composé du globus pallidus en médial et du putamen en latéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "les propositions suivantes concernent les noyaux du cerveau :",
+     "options": [
+      "On trouve de médial en latéral le thalamus, le noyau caudé, le noyau lenticulaire et le claustrum.",
+      "Le télencéphale est plutôt périphérique par rapport au diencéphale.",
+      "Sur une coupe frontale (dite de Charcot) le ventricule latéral et le noyau caudé sont sectionnés à deux reprises.",
+      "Le noyau caudé appartient au diencéphale.",
+      "Le putamen fait partie du diencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le noyau lenticulaire appartient totalement au télencéphale.",
+      "Le thalamus appartient au diencéphale alors que le claustrum fait partie du télencéphale.",
+      "Le lobe de l’insula est médial par rapport au claustrum.",
+      "Le sillon latéral sépare le lobe frontal du lobe temporal.",
+      "Le 3ème ventricule est situé en médial du thalamus."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le corps calleux est plus crânial que tous les noyaux.",
+      "Le noyau caudé est en médial du ventricule latéral.",
+      "Sur une coupe frontale, la substance blanche en crânial des noyaux est correspond au centre semi-ovale.",
+      "Les deux ventricules latéraux communiquent entre eux par le foramen inter-ventriculaire.",
+      "Le 3ème ventricule est le ventricule du diencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Un ventricule latéral comporte trois cornes : antérieure, postérieure et supérieure.",
+      "L’aqueduc du mésencéphale fait communiquer le 4ème ventricule avec les ventricules latéraux.",
+      "Le sillon calcarin ne délimite pas de lobe.",
+      "La capsule externe passe entre le claustrum et le lobe de l’insula.",
+      "La capsule interne se situe entre le noyau lenticulaire (en médial) et le thalamus (en latéral)."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Les ventricules latéraux appartiennent au télencéphale.",
+      "La capsule extrême est située entre le claustrum et le lobe de l’insula.",
+      "Le foramen inter-ventriculaire fait communiquer le ventricule latéral avec le 3ème ventricule.",
+      "Le sillon cingulaire délimite le lobe cingulaire.",
+      "Le cortex cérébral comporte 3 couches de neurones."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le corps calleux se situe dans le fond de la fissure transverse.",
+      "Sur une vue latérale, on peut observer les sillons central et latéral.",
+      "Le diencéphale communique avec le télencéphale en dorsal.",
+      "Les nombreux replis du cerveau viennent du fait qu’il s’est développé dans une boite inextensible.",
+      "Il dérive du prosencéphale et du mésencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Le gyrus pré-central est somato-sensitif.",
+      "De part et d’autre du sillon calcarin se trouve l’aire visuelle.",
+      "L’aire auditive primaire se situe dans l’uncus.",
+      "Le gyrus post-central est somato-moteur.",
+      "L’uncus se situe à la face médiale du lobe temporal."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "L’aire auditive primaire se trouve en crânial du sillon latéral.",
+      "Toutes les aires sont visibles sur une vue latérale du cerveau.",
+      "L’aire olfactive se situe dans l’uncus.",
+      "Le gyrus pré-central est moteur alors que le gyrus post-central est sensitif.",
+      "En somatotopie, la partie médiale du gyrus pré-central correspond à la tête."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "En somatotopie, la représentation motrice de la tête se situe au niveau de la partie caudale du gyrus pré-central.",
+      "L’aire motrice primaire se situe dans le gyrus pré-central.",
+      "L’aire auditive primaire n’est pas visible sur une vue médiane.",
+      "Le fornix se situe au niveau de la suture transverse.",
+      "Le septum pellucidum sépare l'acqueduc du mésencéphale du 3ème ventricule."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "les propositions suivantes concernent les aires du langage :",
+     "options": [
+      "Elles sont situées dans l’hémisphère gauche.",
+      "L’aire de Wernicke est celle de l’élaboration de la parole.",
+      "L’aire de Broca est située en dorsal de l’aire de Wernicke.",
+      "L’aire de la lecture est proche de l’aire visuelle. L’aire de l’écriture est proche du gyrus précentral.",
+      "Si l’aire de Broca est atteinte le sujet comprend ce qu’on lui dit mais ne peut s’exprimer correctement."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "les propositions suivantes concernent le cerveau :",
+     "options": [
+      "Les sillons primaires sont très proches entre les espèces.",
+      "Si l’aire de Wernicke est atteinte, alors le sujet ne comprend plus ce qu’on lui dit.",
+      "La capsule externe se situe entre noyau lenticulaire et claustrum.",
+      "Le lobe de l’insula se situe dans de fond du sillon central.",
+      "Le centre semi-ovale est formé de la substance blanche. Correction : Le cerveau, ce qu’il fallait répondre : 1 : AD 2 : A 3 : ABE 4 : AC 5 : ABC 6 : BDE 7 : ACE 8 : C 9 : ABCD 10 : BD 11 : BE 12 : CD 13 : ABCD. !ʡʠ اﻟﺪﻋﺎء ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 14 : ADE 15 : ABCE Pourquoi certaines propositions sont fausses :"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1wMOHaxxmSQJq95CXInYryg-Zs0DT6mHd",
+   "title": "QCM — la moelle épinière",
+   "section": "Banques de QCM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "La moelle épinière fait partie du système nerveux central.",
+      "Son diamètre est de 10 cm.",
+      "Elle est aplatie transversalement.",
+      "Elle présente six sillons et trois cordons sur une coupe horizontale.",
+      "En ventral, on trouve le sillon médian."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Elle possède, entre autres, deux sillons latéraux ventraux et deux sillons latéraux dorsaux.",
+      "La fissure médiane et le sillon médian sont impairs.",
+      "La moelle épinière entre dans la composition de l’encéphale.",
+      "Comme dans le cerveau, la substance grise est périphérique.",
+      "La fissure médiane est ventrale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Au centre de la substance grise on trouve une cavité virtuelle : le canal central.",
+      "Les cornes ventrales de la substance grise sont moins trapues que les cornes dorsales.",
+      "À l’inverse des cornes ventrales, les cornes dorsales atteignent la circonférence de la moelle épinière.",
+      "Le canal central est un résidu de la lumière du tube neural embryologique.",
+      "Le système nerveux central dérive de la couche ectoblastique qui a formé la gouttière puis le tube neural en se repliant."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Le cordon dorsal est divisé par le septum médian qui prolonge le sillon médian.",
+      "La partie ventro-périphérique de la substance grise correspond à la partie viscéro-motrice de la moelle épinière.",
+      "Le cordon ventral est situé entre les sillons latéraux dorsaux.",
+      "Les cornes dorsales reçoivent les informations sensitives.",
+      "Un cordon latéral se situe entre deux sillons latéraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Le SNCS et le SNOV sont tous deux présents dans la moelle épinière.",
+      "Le SNOV est situé dans la partie médullaire proche du canal central.",
+      "La partie ventrale de la substance grise correspondant au SNOV est dite viscéro-sensitive.",
+      "La moelle épinière donne naissance à 21 paires de nerfs spinaux.",
+      "De l’os occipital aux vertèbres lombaires (comprises) il y a 24 vertèbres et 24 paires de nerfs spinaux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "La racine motrice des nerfs sort de la moelle épinière par le sillon latéral dorsal.",
+      "Le renflement de la racine dorsale correspond au ganglion du SNOV.",
+      "On peut diviser la moelle épinière en 31 myélomères.",
+      "Chaque myélomère contient au moins un arc réflexe (myotatique) et est en rapport avec un segment de muscle (myotome), de peau (dermatome) et de viscère (viscérotome).",
+      "Il existe 5 paires de nerfs sacrés et 5 paires de nerfs coccygiens."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Elle se termine au niveau de S2.",
+      "Les nerfs ont une direction de plus en plus horizontale de crânial en caudal.",
+      "La moelle épinière subit une ascension apparente pendant l’enfance car elle croît moins vite en longueur que le rachis.",
+      "En dessous de L2 on ne trouve plus de nerfs.",
+      "Le filum terminal contient du tissu nerveux et fibreux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Un myélomère comporte un dermatome, un myotome et un viscérotome.",
+      "Le premier nerf cervical sort au dessus de la vertèbre C1.",
+      "La queue de cheval comporte des éléments nerveux et le filum terminal.",
+      "Le premier nerf thoracique sort en dessous de T1.",
+      "La pie-mère et l’arachnoïde sont des pachy-méninges."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Les racines sensitives des nerfs empruntent le sillon latéral dorsal.",
+      "De la moelle épinière à la paroi osseuse crânienne, on trouve : dure-mère, arachnoïde et pie-mère.",
+      "Il existe un espace entre arachnoïde et pie-mère qui est occupé par le Liquide Céphalo- Rachidien (LCR).",
+      "La pie-mère s’interrompt avec la moelle épinière au niveau de L2.",
+      "La dure-mère est la seule méninge à se terminer en S2."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les propositions suivantes concernent la moelle épinière :",
+     "options": [
+      "Les ponctions de LCR s’effectuent en caudal de L2.",
+      "L’anesthésie péridurale se réalise entre la dure-mère et l’os.",
+      "L’espace entre arachnoïde et dure-mère est réel.",
+      "La dure-mère est la seule pachy-méninge.",
+      "Les myélomères sacrés se trouvent au niveau de L2. Correction : ce qu’il fallait répondre : 1 : A 2 : ABE 3 : ACDE 4 : ADE 5 : AB. ﺎء اﻟﺪﻋ ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 6 : C 7 : C 8 : BCD 9 : ACD 10 : ABDE Pourquoi certaines propositions sont fausses :"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1Vf4eoKN1rHHDnchxMqgH1cRnp7ICMwrt",
+   "title": "QCM — le tronc cérébral",
+   "section": "Banques de QCM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Il fait partie de l’encéphale.",
+      "C’est la pièce qui connecte le cerveau et le cervelet à la moelle épinière.",
+      "En vue ventrale on distingue trois pièces de crânial en caudal : la moelle allongée, le pont et les pédoncules cérébraux.",
+      "La moelle allongée présente une ressemblance anatomique avec la moelle épinière.",
+      "Les olives sont situées dans les cordons ventraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Le pont présente une face dorsale marquée par les gouttières basiliaires.",
+      "L’espace perforé postérieur est visible sur une vue dorsale du tronc cérébral.",
+      "Le pont correspond au métencéphale.",
+      "Le tronc cérébral est limité en crânial par le tractus optique.",
+      "Le tronc cérébral est oblique en bas et en avant."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Les pédoncules cérébraux sont constitués de substance blanche.",
+      "L’espace perforé postérieur se situe entre les pédoncules cérébraux.",
+      "Les colluculi crâniaux sont des relais des voies auditives.",
+      "De crânial en caudal les trois pièces embryologiques du tronc cérébral sont : le mésencéphale, le métencéphale et le myélencéphale.",
+      "Les olives sont situées dans les cordons latéraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "les propositions suivantes concernent la structure de l’encéphale :",
+     "options": [
+      "L’encéphale provient de trois structures embryologiques : le prosencéphale, le mésencéphale et rhombencéphale qui se sont chacune divisée en deux.",
+      "L’encéphale comprend le cerveau, le cervelet et le tronc cérébral.",
+      "Le rhombencéphale se différencie en télencéphale et diencéphale.",
+      "Le cervelet, comme le pont, est issu du métencéphale.",
+      "Le cervelet est rattaché au tronc cérébral par trois paires de pédoncules cérébraux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Le sillon rétro-olivaire se confond avec le sillon latéral-dorsal.",
+      "A cause de son propre poids, la face ventrale du pont comporte une gouttière basilaire.",
+      "Le pont est séparé des deux autres pièces par deux sillons.",
+      "Le sillon pré-olivaire est situé a distance du sillon latéral-ventral.",
+      "L’olive est plus proche du sillon latéral-ventral que du sillon latéral-dorsal."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Les colluculi caudaux sont des relais des voies auditives.",
+      "Les pédoncules cérébelleux supérieurs et moyens limitent le 4ème ventricule.",
+      "Les pédoncules cérébelleux supérieurs relient le cervelet avec le mésencéphale, les moyens font la liaison avec le métencéphale et les inférieurs la liaison avec le myélencéphale.",
+      "Le 4ème ventricule est visible sur une vue ventrale du tronc cérébral.",
+      "Le pont n’a pas de face dorsale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "En vue dorsale, le cordon dorsal de la moelle allongée se clive en deux dans sa partie crâniale.",
+      "Embryologiquement, c’est la face dorsale du pont qui donne le cervelet.",
+      "Les ventricules sont des cavités présentes dans chaque partie de l’encéphale.",
+      "Le 4ème ventricule se trouve au niveau du myélencéphale et du métencéphale. Il est donc dit ventricule rhombencéphalique.",
+      "Le 4ème ventricule communique avec le 3ème par l’aqueduc du mésencéphale."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Le tronc cérébral possède une fonction segmentaire et supra-segmentaire.",
+      "La fonction segmentaire correspond à l’émergence des nerfs crâniens.",
+      "La substance grise est périphérique comme au niveau du cervelet.",
+      "Une des fonctions supra-segmentaires correspond à la formation réticulaire responsable de l’éveil.",
+      "Les pédoncules cérébelleux inférieurs relient le cervelet à la moelle allongée."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "Les colluculi crâniaux sont des relais des voies optiques.",
+      "Le prosencéphale se différencie en télencéphale et diencéphale.",
+      "L’espace perforé postérieur est visible sur une vue ventrale.",
+      "Les pédoncules cérébelleux inférieurs relient le cervelet et le pont.",
+      "Les pédoncules cérébelleux moyens limitent le 4ème ventricule."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "les propositions suivantes concernent le tronc cérébral :",
+     "options": [
+      "La substance grise est centrale.",
+      "Sa lésion (notamment au niveau de la formation réticulaire) peut provoquer un coma.",
+      "L’olive est plus proche du sillon latéral-ventral.",
+      "Le mésencéphale est limité en caudal par les voies optiques.",
+      "Le tronc cérébral est oblique en haut et en avant. Correction : Le tronc cérébral ce qu’il fallait répondre : 1 : ABD 2 : CD 3 : ABDE 4 : BD 5 : CE اﻟﺪﻋﺎء ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 6 : ACE 7 : ABCDE 07_02_2018 : ﻤﻮر اﻟﻤﻌ اﻟﻘﺼﺮ 8 : ABDE 9 : ABC 10 : ABCE Pourquoi certaines propositions sont fausses :"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1XUJzSEWF7227QAwWPNfVCHGS3M0T7ibp",
+   "title": "QCM — le rachis",
+   "section": "Banques de QCM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "A propos de l’ostéologie du cou, indiquez la ou les proposition(s) exacte(s)",
+     "options": [
+      "La vertèbre cervicale C1, aussi appelée axis, est dépourvue de corps vertébral",
+      "La vertèbre cervicale C2 est surmontée d’une saillie verticale",
+      "Le foramen spinal de C1 est divisé en deux parties par le ligament alaire",
+      "L’arc postérieur de C1 présente une concavité antérieure",
+      "La vertèbre cervicale C2 s’articule avec l’axis"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "A propos de la colonne vertébrale, indiquez la ou les proposition(s) exacte(s)",
+     "options": [
+      "Sur une vue antérieure, la colonne vertébrale n’est pas rectiligne et présente quatre courbures",
+      "La courbure la plus distale de la colonne est la lordose sacrée",
+      "Une lordose est une courbure à concavité postérieure",
+      "La colonne compte autant de vertèbres sacrales que de vertèbres thoraciques",
+      "La colonne compte autant de lordoses que de cyphoses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "A propos de la colonne vertébrale, indiquez la ou les proposition(s) exacte(s)",
+     "options": [
+      "Il existe huit vertèbres cervicales et douze vertèbres thoraciques",
+      "Entrent dans la composition de la colonne vertébrale cervicale les vertèbres C1 (axis) et C2 (atlas)",
+      "L’angle caudal de la scapula se projette en regard de C7",
+      "Le sommet de la crête iliaque se projette au niveau de la vertèbre T12"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "A propos de la vertèbre type, indiquez la ou les proposition(s) exacte(s)",
+     "options": [
+      "Les vertèbres sont principalement formées d’un corps vertébral en avant et d’un arc postérieur en arrière",
+      "Le foramen intervertébral permet le passage de la moelle épinière",
+      "Les processus épineux sont situés entre les processus articulaires supérieur et inférieur, de part et d’autre de l’arc postérieur",
+      "La colonne vertébrale est formée par l’empilement successif des corps vertébraux séparés par des disques intervertébraux",
+      "Les pédicules sont situés de part et d’autre du processus épineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "A propos du rachis, indiquez la ou les proposition(s) exacte(s)",
+     "options": [
+      "Une cyphose est une courbure à concavité postérieure",
+      "La portion lombaire du rachis forme une lordose",
+      "Un disque intervertébral est formé en périphérie par l'annulus pulposus et en son centre par le nucléus fibrosus",
+      "Les lames délimitent la partie postérieure du foramen spinal",
+      "Un trou de conjugaison est délimité par les processus transverses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Concernant les vertèbres, indiquez la ou les proposition(s) fausse(s)",
+     "options": [
+      "Le foramen vertébral de l’atlas est séparé en 2 par le ligament jaune",
+      "Les lames constituent les limites supérieure et inférieure des foramens intervertébraux",
+      "Les plateaux vertébraux sont strictement aplatis 2 QCM d’Anatomie Laboratoire d’Anatomie | Faculté de Médecine et Maïeutique - Lille",
+      "Il y a 5 vertèbres lombaires",
+      "L’arc postérieur est concave en avant 3 QCM d’Anatomie Laboratoire d’Anatomie | Faculté de Médecine et Maïeutique - Lille CORRECTION 1 BD 2 CE 3 C 4 AD 5 BD 6 ABC"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
+}

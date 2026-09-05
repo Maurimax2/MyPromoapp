@@ -1,0 +1,206 @@
+{
+ "module": "biochimie",
+ "name": "BIOCHIMIE",
+ "banks": [
+  {
+   "fid": "1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll",
+   "title": "QCM — enzymologie",
+   "section": "QCM et TD",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Quels sont les deux types principaux d’enzymes mentionnés dans la fiche ?",
+     "options": [
+      "Enzymes actives et inactives",
+      "Enzymes à coenzyme et enzymes à cofacteur",
+      "Enzymes homogènes et enzymes hétérogènes",
+      "Enzymes protéiques et enzymes à ARN"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Quelle est la principale fonction des enzymes à coenzyme ?",
+     "options": [
+      "Stabiliser la structure tertiaire des enzymes",
+      "Fixer les substrats",
+      "Catalyser les réactions",
+      "Régénérer les enzymes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Quelle partie de l’enzyme est en contact direct avec le substrat ?",
+     "options": [
+      "Le site de régénération",
+      "Le site de fixation",
+      "Le site de catalyse",
+      "Le site de stabilisation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Quelle caractéristique des enzymes leur permet de catalyser les réactions réversibles sans modifier l’équilibre final?",
+     "options": [
+      "Leur spécificité fonctionnelle",
+      "Leur spécificité du substrat",
+      "Leur régénération après la réaction",
+      "Leur cinétique allostérique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Comment s’exprime le taux de renouvellement (Turn Over) d’une enzyme ?",
+     "options": [
+      "En unités internationales (UI)",
+      "En moles par seconde (M/s)",
+      "En unités enzymatiques (UE)",
+      "En microMoles par minute (μM/min)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Quel facteur physique peut provoquer la dénaturation des enzymes ?",
+     "options": [
+      "La concentration du substrat",
+      "La pression atmosphérique",
+      "La température",
+      "Le pH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Comment s’appelle la courbe de saturation qui dépend du type de cinétique enzymatique ?",
+     "options": [
+      "Courbe sigmoidale",
+      "Courbe exponentielle",
+      "Courbe linéaire",
+      "Courbe logarithmique Reponse: 1 C 5 C 2 C 6 B 3 C 7 C 4 C 8 A Fiche 3: qcm cinétique michealienne: 1. Quelle est l'objectif principal de l'étude de la cinétique Michaelienne ? a. Comprendre la structure des enzymes. b. Analyser la composition des substrats. c. Comprendre comment les enzymes catalysent les réactions biochimiques. d. Examiner les réactions d'oxydation. 2. Quelle condition doit être satisfaite pour étudier la cinétique Michaelienne en utilisant une concentration de substrat élevée ? a. [S] doit être très faible par rapport à [E]. b. [S] doit être égal à [E]. c. [S] doit être très élevée par rapport à [E]. d. [S] doit être inférieure à [P]. 3. Quelle est la constante de Michaelis (KM) ? a. Elle représente la concentration d’enzyme. B. Elle est égale à [E] + [S]. C. Elle est le rapport [E][S] / [ES]. D. Elle est le rapport [E] / [S]. 4. Quelle équation décrit la relation entre la vitesse de réaction (V) et la concentration du substrat [S] dans la cinétique Michaelienne ? a. V = KM [S] b. V = [S].Vmax/(KM + [S]) c. V = [S] – KM d. V = [S] + KM 5. Quelle affirmation est vraie concernant la détermination graphique de KM ? a. Lorsque KM est négligeable par rapport à [S], la vitesse de réaction atteint V_max. B. Lorsque [S] est négligeable par rapport à KM, la réaction suit un ordre 2. C. Si KM est égale à [S], la vitesse est égale à V_max. D. KM n’affecte pas la vitesse de la réaction. 6. À quoi sert Lineweaver-Burk ? a. 1/V = KM/V_max* 1/S+1/V_max b. V = [S]/ (KM + [S]) c. V = [S]-KM d. 1/V = [S]/KM 7. Quel type d’inhibiteur diminue l’affinité de l’enzyme pour le substrat tout en n’affectant pas La vitesse de la réaction ? a. Inhibiteur compétitif b. Inhibiteur non compétitif c. Inhibiteur d. Inhibiteur irréversible 8. Quelle est la principale caractéristique de l’inhibiteur non compétitif ? a. Il augmente l’affinité de l’enzyme pour le substrat. B. Il diminue la vitesse de la réaction. C. Il n’affecte pas l’affinité de l’enzyme pour le substrát. D. Il augmente la vitesse de la réaction. Reponse: 1 C 5 A 2 C 6 A 3 C 7 A 4 B 8 C Fiche 4: qcm cinetique allosterique: 1. Laquelle des caractéristiques suivantes est attribuable aux enzymes allostériques ? a. Elles n'ont qu'un seul site actif. b. Elles ne sont pas régulées par des effecteurs. c. Elles ont une structure quaternaire composée de multiples sous- unités identiques. d. Elles n'ont pas de sites allostériques distincts. 2. Quelle est la principale caractéristique de la cinétique allostérique des enzymes ? a. Elle est linéaire. B. Elle est coopérative, avec une variation de la vitesse catalytique en ux effecteurs. C. Elle est inhibitrice. D. Elle est toujours activée par les effecteurs. 3. Comment les effecteurs influencent-ils l’activité des enzymes allostériques ? a. Ils modifient la séquence peptidique de l’enzyme. B. Ils se lient aux sites actifs de l’enzyme. C. Ils se lient aux sites allostériques, modifiant la configuration de l’enzyme. D. Ils stimulent la liaison du substrat au site actif. 4. Quelle est la différence fondamentale entre les formes R et T des enzymes allostériques ? a. La forme R favorise l’inhibiteur, tandis que la forme T favorise l’activateur. B. La forme Rest toujours inactive, tandis que la forme Test active. C. La forme R favorise la fixation du substrat et de l’activateur, tandis que la forme T favorise l’inhibiteur. D. Il n’y a pas de différence entre les formes R et T. 5. Qu’est-ce que l’effet homotrope dans la régulation des enzymes allostériques ? a. C’est la régulation de l’enzyme par des molécules autres que son substrat. B. C’est la régulation de l’enzyme par son propre substrat. C. C’est la régulation de l’enzyme par des facteurs environnementaux. D. C’est la régulation de l’enzyme par la température. 6. Comment les effecteurs hétérotropes influencent-ils l’activité enzymatique ? a. Ils n’ont aucun effet sur l’enzyme. B. Ils stimulent toujours l’activité de l’enzyme. C. Ils peuvent agir comme activateurs ou inhibiteurs en fonction de leur nature. D. Ils inhibent toujours l’activité de l’enzyme. 7. Quels sont les deux systèmes de régulation principaux pour les enzymes allostériques ? a. Le système X et le système Y. B. Le système A et le système B. C. Le système K (constante d’affinité) et le système V (constante de vitesse maximale). D. Le système C et le système D. 8. Comment se produit l’activation des enzymes allostériques ? a. Par une augmentation de la température. B.Lorsque des activateurs allostériques spécifiques se lient à des sites allostériques distincts. C. Par une réduction du pH. D. Lorsque les enzymes allostériques sont exposées à la lumière."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Dans quel exemple célèbre d’enzyme allostérique le coenzyme NAD+ joue-t-il un rôle crucial pour activer l’enzyme ?",
+     "options": [
+      "L’hexokinase.",
+      "La lactate déshydrogénase.",
+      "La trypsine.",
+      "La peptidase. 1 C 6 C 2 B 7 C 3 C 8 B 4 C 9 A 5 B 10 B Qcm du les classes des enzymes : 1. Quel est le mécanisme des oxydoréductases ? a. Catalyser la rupture de liaisons chimiques. B. Catalyser la formation de liaisons chimiques c.Catalyser les réactions d’oxydoréduction. D. Catalyser le transfert de groupes fonctionnels. 2. Quel type d’enzymes appartient à la classe des oxydoréductases et utilise l’oxygène moléculaire comme accepteur final d’électrons ? a. Déshydrogénases B.oxydases C.reductases D.kinases 3. Quelle classe d'enzymes est responsable du transfert de groupes fonctionnels d'un substrat à un autre ? a. Oxydoréductases. B.Transférases. c. Hydrolases. d. Isomérases. 4.Quelles enzymes transfèrent des groupes phosphate d’un substrat à un autre ? A.Kinases. B.Méthyltransférases. C. Protéases. D. Lipases. 5. Quel mécanisme caractérise les hydrolases ? A.Catalyser la rupture des liaisons chimiques par l’addition d’eau. B. Catalyser la formation de liaisons chimiques en utilisant de l’ATP. C. Catalyser la réorganisation des atomes d’une molécule. D. Catalyser des réactions d’oxydoréduction. 6. Quelles enzymes catalysent la dégradation des protéines par hydrolyse des liaisons peptidiques ? a. Kinases. B. Nuclease. C.Protéases. D. Carboxylase. 7. Quel mécanisme caractérise les ligases? a. Catalyser la rupture des liaisons chimiques par l’addition d’eau. B.Catalyser la formation de liaisons chimiques en utilisant de l’ATP. C. Catalyser la réorganisation des atomes d’une molécule. D. Catalyser des réactions d’oxydoréduction. 8.Quelle enzyme est un exemple de lyase ? a. Protéase. B. Nuclease. C Pyruvate décarboxylase D.kinase 9. Quel est le mécanisme des isomérases ? a. Catalyser la rupture de liaisons chimiques. b.Catalyser la formation de lilaisons chimiques c. Catalyser le réarrangement des atomes dans une même molécule d.Catalyser des réactions d'oxydoréduction. 10. Quelles enzymes catalysent la liaison de deux substrats en utilisant l’énergie d’une liaison Haute énergie, souvent fournie par lhydrolyse de ľATP ? a. Déshydrogénases. b. Ligases. C.hydrolases D.kinases Reponse: 1 C 6 C 2 B 7 B 3 B 8 C 4 A 9 C 5 A 10 B Fiche 6: qcm sur les types du coenzymes: 1. Quelle est la principale fonction du coenzyme NAD+ dans les réactions biochimiques ? a.Accepteur d'électrons dans les réactions d'oxydoréduction. b. Transporteur de groupes acyl. c. Donneur de groupes méthyle d.Coenzyme pour les réactions de carboxylation. 2.Quel est le rôle du coenzyme NADP+ dans le métabolisme cellulaire ? a. Il est principalement Impliqué dans les réactions d’oxydo- réduction. B. Ilest essentiel pour les réactions de Transamination des acides aminés. C. Il joue un rôle majeur dans la métabolisation des acides Gras. D.Il est nécessaire pour la biosynthèse des acides gras et la photosynthèse 3.Quel coenzyme est dérivé de la riboflavine (vitamine B2) et joue un rôle majeur dans les Réactions d’oxydo-réduction, comme celles du cycle de Krebs? A. NAD. B. NADP C.FAD. D.FMN. 4.Quel coenzyme est essentiel pour les réactions de décarboxylation, telles que celles qui se Produisent dans le cycle de Krebs ? A.TPP (Thiamine Pyrophosphate). B. PLP (Pyridoxal Phosphate) C.CoA (Coenzyme A). D. SAM (S-Adénosylméthionine). 5. Quel est le rôle principal de l’Acétyl-Coenzyme A (Acétyl-CoA) dans le métabolisme cellulaire ? a.llest le donneur de groupes méthyle pour les réactions de méthylation B. ll est essentiel Pour la biosynthèse des acides gras. C. Ll est nécessaire pour les réactions de carboxylation. D. Il est impliqué dans les réactions de transamination des acides aminés 6. Quelle vitamine est à la base de la coenzyme Biotine et joue un rôle essentiel dans les Réactions de carboxylation ? a. Vitamine C. B. Vitamine D. C. Vitamine B12 D. vitamine 87. 7. Quel est le principal rôle de la Méthylcobalamine (Vitamine B12) en tant que coenzyme? A.Donneur de groupes méthyle pour les réactions de méthylation. B. Transporteur de groupes Acyl. C..Coenzyme pour les réactions de carboxylation. D. NAD+ dans les réactions D’oxydoréduction. 8. Quelle est la fonction du coenzyme S-Adénosylméthionine (SAM) dans le métabolisme Cellulaire ? a. Coenzyme pour les réactions de carboxylation B. Donneur de groupes méthyle Pour les réactions de méthylation c.Coenzyme pour les réactions d’oxydoréduction. D. NAD+ Dans les réactions d’oxydoréduction Reponse: 1 A 5 B 2 B 6 D 3 C 7 A 4 A 8 B"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1",
+   "title": "TD — biochimie",
+   "section": "QCM et TD",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes, indique celle qui correspond mieux à la définition d'une clairance:",
+     "options": [
+      "Volume de plasma contenant une substance donnée, par unité de temps",
+      "Volume de plasma épuré en une substance donne par unité de temps",
+      "Volume d’urine contenant la même quantité d’une substance que 1ml de plasma",
+      "Volume de plasma contenant une substance donné passant par la reine par unité de temps",
+      "Volume d’urine d’où une substance peut être réabsorbée par unité de temps"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes, une seule est fausse, laquelle? Dans la cytolyse hépatique, les activités plasmatiques des enzymes suivantes sont augmentées:",
+     "options": [
+      "ALAT",
+      "ASAT",
+      "CK",
+      "LDH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Concernant le calcium ionise plasmatique, donner la proposition exacte.",
+     "options": [
+      "li représente 10% du calcium plasmatique total",
+      "Il représente la fraction physiologiquement inactive",
+      "Son augmentation stimule la synthèse de la forme active de la vitamine D",
+      "Son augmentation stimule la sécrétion de PTH",
+      "La fraction ionisée du calcium plasmatique dépend du pH sanguin"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les différents types de cellules existant dans le pancréas, quelles sont celles qui sécrètent l'insuline?",
+     "options": [
+      "Cellules alpha",
+      "Cellules bêta",
+      "Cellules delta",
+      "Cellules canaliculaires",
+      "Cellules acineuses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les résultats suivants, quel est le plus spécifique pour confirmer un diagnostic de cirrhose hépatique :",
+     "options": [
+      "Albuminémie diminuée",
+      "Bilirubine totale élevée",
+      "Transaminases (ALAT) élevées",
+      "Bloc Bêta-Gamma à l'électrophorèse",
+      "Phosphatases alcalines élevées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes concernant le syndrome de cholestase, laquelle (lesquelles) est (sont) exacte(s) On observe:",
+     "options": [
+      "Une augmentation de la bilirubine non conjuguée plasmatique",
+      "Une augmentation de l'élimination de stercobiline dans les selles",
+      "Une augmentation de l'activité phosphatasique alcaline plasmatique",
+      "Une diminution des protéines",
+      "Une augmentation de la gammaglutamyl transférase plasmatique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes concernant le métabolisme des phosphates, donner la (les) réponse(s) exacte(s):",
+     "options": [
+      "La PTH possède une action hyperphosphoremiante",
+      "La vitamine D possède une action hyperphosphoremiante",
+      "la calcitonine a une action hyperphosphoremiante",
+      "los contient 85% des phosphates",
+      "Dans le tissu osseux, les phosphates sont essentiellement présents sous la forme d'hydroxyapatite"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
+}

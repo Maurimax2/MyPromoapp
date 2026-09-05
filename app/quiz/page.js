@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import { quizzedModules } from '@/lib/data';
+import { questionCount } from '@/lib/questions';
 
 export default function QuizIndex() {
   const modules = quizzedModules();
@@ -23,8 +24,7 @@ export default function QuizIndex() {
               <div className="grow">
                 <div className="nm">{m.name}</div>
                 <div className="mt">
-                  {m.quiz ? `${m.quiz.questions.length} سؤال · ` : ''}
-                  {m.bankCount} ملف أسئلة
+                  {questionCount(m.id)} سؤال · {m.bankCount} ملف أسئلة
                 </div>
               </div>
               <span className="chev"><Icon name="chev" size={18} /></span>

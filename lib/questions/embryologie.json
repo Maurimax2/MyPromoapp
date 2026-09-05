@@ -1,0 +1,163 @@
+{
+ "module": "embryologie",
+ "name": "EMBRYOLOGIE",
+ "banks": [
+  {
+   "fid": "1A65iibnwFyTho4-KBUwuVOLTsti-ds1F",
+   "title": "Isolé — la tête et le cou",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 8,
+     "q": "L’absence de fusion entre les bourgeons, maxillaire supérieur et nasal externe, est responsable de :",
+     "options": [
+      "La fissure oblique de la face",
+      "L’otocéphalie",
+      "L’agénésie pré-maxillaire",
+      "La prosencéphalie",
+      "Le colobome de la face"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Le bec de lièvre médian est secondaire à :",
+     "options": [
+      "Un défaut de développement total des bourgeons mandibulaires",
+      "Un défaut de développement du processus intermaxillaire",
+      "Une absence de fusion des bourgeons nasaux internes sur la ligne médiane",
+      "Un défaut de confluence entre les deux bourgeons mandibulaires",
+      "Un défaut de confluence bilatéral du bourgeon maxillaire et du bourgeon mandibulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les dérivés des poches branchiales entoblastiques :",
+     "options": [
+      "La 1ère poche donne les cellules glandulaires des parathyroïdes supérieures",
+      "La 3éme poche donne les cellules épithéliales du thymus",
+      "La 3ème poche donne l'épithélium de l'oreille moyenne et de la trompe d'Eustache",
+      "La 2ème poche donne l'épithélium des amygdales palatines",
+      "La 4ème poche donne les cellules glandulaires des parathyroïdes inférieures"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Les dérivés des poches branchiales ectoblastiques :",
+     "options": [
+      "La 1ère poche forme l'épithélium de l’oreille moyenne",
+      "La 2ème poche donne l'épithélium de la trompe d'Eustache",
+      "La 1ère poche forme l'épithélium du conduit auditif externe",
+      "Les 3ème et 4ème poches poches disparaissent Les 3ème et 4ème poches forment le sinus cervical 17)Les affirmations suivantes concernant l’ébauche thyroïdienne embryologique sont vraies sauf une, laquelle ? A. Est d’origine entoblastique B. Prend naissance dans le plancher de l’intestin pharyngien C. Prend naissance dans la région du cou, en avant de la trachée D. Atteint sa situation définitive vers la 7ème semaine du développement embryologique",
+      "Devient fonctionnelle vers la fin du 3ème mois du développement embryologique 18) Les dérivés des poches bronchioles entoblastique : a) . L’épithélium de l’oreille moyenne b) . Les cellules épithéliales du thymus c) . Les tissus lymphoïdes des amygdales palatines d) . L’épithélium du conduit auditif externe e) . L’épithélium du nasopharynx 19) Les affirmations suivantes concernant l’ébauche thyroïdienne embryonnaire sont vraies sauf une, laquelle ? A. Est d’origine entoblastique B. Prend naissance dans le plancher de l’intestin pharyngien C. Prend naissance dans la région du cou, en avant de la trachée D. Atteint sa situation définitive vers la 7ème semaine du développement embryonnaire E. Devient fonctionnelle vers la fin du 3ème mois du développement embryonnaire 20 ) La vésicule optique : A. S’invagine pour former le nerf optique B. Provient d’une évagination du bourgeon frontal C. Est à l’origine de la rétine et son épithélium pigmentaire D. Induit la formation des couches externes de l’oeil E. Induit la formation de la placode cristallinienne Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1svHHO3BylvjVBiVcizBr2i_iiNRsWX55",
+   "title": "Isolé — l’œil et l’oreille",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "l’œil : Exam 2018 EXAM 2017 AUTRES : 12-) La région maculaire de la rétine",
+     "options": [
+      "constitue l’origine du nerf optique",
+      "ne comporte pas de cellules ganglionnaires",
+      "ne comporte pas de cônes",
+      "comporte la fovéa",
+      "se caractérise par un haut niveau de résolution visuelle 13 - Le stroma de la cornée comporte A. un tissu conjonctif dense orienté B. des keratinocytes C. des mélanocytes D. de nombreuses fibres nerveuses responsables du reflexe cornéen E. des capillaires sanguins de type continu 14) Les noyaux des cônes et des bâtonnets de la rétine s’observent au niveau de A. la couche limitante externe B. la couche plexiforme interne C. la couche granulaire externe D. l’ora serrata E. la couche granulaire interne 1) La région maculaire de la rétine A. constitue l’origine du nerf optique B. ne comporte pas de cellules ganglionnaires C. ne comporte pas de cônes D. comporte la fovéa E. se caractérise par un haut niveau de résolution visuelle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le stroma de la cornée comporte",
+     "options": [
+      "un tissu conjonctif dense orienté",
+      "des kératinocytes",
+      "des mélanocytes",
+      "de nombreuses fibres nerveuses responsables du reflexe cornéen",
+      "des capillaires sanguins de type continu"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les noyaux des cônes et des bâtonnets de la rétine s’observent au niveau de",
+     "options": [
+      "la couche limitante externe",
+      "la couche plexiforme interne",
+      "la couche granulaire externe",
+      "l’ora serrata",
+      "la couche granulaire interne Citez trois fonctions de l’épithélium pigmentaire de la rétine : a) - b) - c) - Oreille : exam 2018 : EXAM 2017 : AUTRES : 1) Le pavillon de l'oreille est : A. Constitué d'une armature de cartilage élastique B. Recouvert par une peau adhérente au périoste C. Comporte au niveau du derme des glandes sudoripares développées D. Comporte un hypoderme adipeux mal vascularisé au niveau du lobule E. D’une forme particulière à grande signification en dysmorphologie 2) Le conduit auditif externe : A. Forme un canal aplati B. Comporte une paroi cartilagineuse dans ses 2/3 internes C. Comporte au niveau de son 1/3 externe des volumineuses glandes sébacées D. Est fermé en dedans par une membrane circulaire E. Est le siège d’une sécrétion cérumineuse active 3) Le tympan : A. Est une membrane rigide séparant les oreilles, interne et moyenne B. Est constituée de 2 couches de fibres conjonctives C. Comporte une couche conjonctive externe à orientation circulaire D. Comporte une couche conjonctive interne à orientation radiaire E. Est tapissé par un épithélium malpighien non kératinisé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La chaîne des osselets de la cavité tympanique :",
+     "options": [
+      "Relie la membrane tympanique à la fenêtre ovale",
+      "Permet la transmission des ondes sonores à l'oreille interne",
+      "Est formée de dedans en dehors par le marteau, l’étrier et l’enclume",
+      "Est revêtue d'un épithélium simple pavimenteux à prismatique bas",
+      "Se caractérise par la manche du marteau enchâssée dans l’épaisseur du tympan"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Le labyrinthe osseux :",
+     "options": [
+      "S'ouvre sur l’oreille moyenne par la fenêtre ovale",
+      "S’ouvre sur la trompe d’eustache par la fenêtre ronde",
+      "Contient la périlymphe",
+      "Contient le sac membraneux du labyrinthe membraneux",
+      "Est formé par le vestibule et les canaux semi-circulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Les zones sensorielles de l’équilibration :",
+     "options": [
+      "Se trouvent au niveau de l’utricule et du saccule",
+      "Se présentent sous forme de crêtes vestibulaires",
+      "Se présentent sous forme de crêtes ampullaires",
+      "Sont formées de cellules épithéliales différenciées",
+      "Occupent les parois latérales des canaux semi-circulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "- La membrane otolithique :",
+     "options": [
+      "Est une membrane cellulaire parsemée de cristaux",
+      "Surmonte les cellules marginales des crêtes vestibulaires",
+      "Est en contact étroit avec le kinocil",
+      "Se caractérise par ses cristaux de carbonate de potassium",
+      "Joue un rôle essentiel dans l’équilibre linéaire 5- Légender les deux schémas suivants (0.5 pt): A B 1-………………………………………………………………………………………………... 2-………………………………………………………………………………………………... 3-………………………………………………………………………………………………... 4-………………………………………………………………………………………………... 5-………………………………………………………………………………………………... 6-………………………………………………………………………………………………... 7-………………………………………………………………………………………………..."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
+}
