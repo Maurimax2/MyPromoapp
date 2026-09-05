@@ -936,3 +936,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   height: 100%; background: var(--purple);
   transition: width .3s ease; min-width: 3px;
 }
+.login-alt {
+  font-size: 14px; font-weight: 600; color: var(--purple);
+  min-height: 44px; width: 100%;
+}
