@@ -7,7 +7,7 @@
 // panel does the work itself, one subject at a time, and says out loud what
 // happened to each.
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 
@@ -20,37 +20,40 @@ export default function Filling() {
   const [state, setState] = useState('starting');  // starting|running|done|error
   const started = useRef(false);
 
+  const run = useCallback(async () => {
+    setDone([]); setFailed([]); setState('starting');
+
+    const res = await fetch('/api/admin/seed/module');
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) { setFailed([{ name: '—', error: data.error || res.status }]); setState('error'); return; }
+
+    setList(data.modules);
+    setState('running');
+
+    // One at a time, on purpose. Nine short requests survive a serverless
+    // timeout where one long one does not.
+    for (const m of data.modules) {
+      setAt(m.name);
+      const r = await fetch('/api/admin/seed/module', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id: m.id }),
+      });
+      const out = await r.json().catch(() => ({}));
+      if (r.ok) setDone((d) => [...d, out]);
+      else setFailed((f) => [...f, { name: m.name, error: out.error || `HTTP ${r.status}` }]);
+    }
+
+    setAt(null);
+    setState('done');
+    router.refresh();
+  }, [router]);
+
   useEffect(() => {
     if (started.current) return;
     started.current = true;
-
-    (async () => {
-      const res = await fetch('/api/admin/seed/module');
-      const data = await res.json();
-      if (!res.ok) { setFailed([{ name: '—', error: data.error }]); setState('error'); return; }
-
-      setList(data.modules);
-      setState('running');
-
-      // One at a time, on purpose. Nine short requests survive a serverless
-      // timeout where one long one does not.
-      for (const m of data.modules) {
-        setAt(m.name);
-        const r = await fetch('/api/admin/seed/module', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ id: m.id }),
-        });
-        const out = await r.json();
-        if (r.ok) setDone((d) => [...d, out]);
-        else setFailed((f) => [...f, { name: m.name, error: out.error }]);
-      }
-
-      setAt(null);
-      setState('done');
-      router.refresh();
-    })();
-  }, [router]);
+    run();
+  }, [run]);
 
   const total = list.length || 9;
   const seen = done.length + failed.length;
@@ -80,11 +83,16 @@ export default function Filling() {
         </div>
       ))}
 
-      {state === 'done' && (
-        <button className="btn p" onClick={() => router.refresh()}>
-          <Icon name="check" size={17} /> تم
-        </button>
-      )}
+      {/* A run that failed needs another go, not an acknowledgement. تم used
+          to call refresh() on a screen whose state had not changed, which is
+          indistinguishable from a dead button. */}
+      {state === 'done' && (failed.length
+        ? <button className="btn p" onClick={run}>أعد المحاولة</button>
+        : <button className="btn p" onClick={() => router.refresh()}>
+            <Icon name="check" size={17} /> تم
+          </button>)}
+
+      {state === 'error' && <button className="btn p" onClick={run}>أعد المحاولة</button>}
     </section>
   );
 }

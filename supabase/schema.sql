@@ -218,6 +218,32 @@ create table if not exists audit_log (
 create index if not exists audit_actor_idx on audit_log (actor, at desc);
 
 -- ---------------------------------------------------------------------------
+-- Real constraints, not just indexes
+-- ---------------------------------------------------------------------------
+
+-- The unique INDEXES above stop duplicates, but Postgres will only infer an
+-- ON CONFLICT target from a unique CONSTRAINT — and never from a partial one
+-- like documents(drive_id) where drive_id is not null. Any upsert against
+-- them fails with "there is no unique or exclusion constraint matching the
+-- ON CONFLICT specification". A plain unique constraint on drive_id behaves
+-- the same way in practice, because Postgres already allows many NULLs.
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'chapters_module_title_key') then
+    alter table chapters add constraint chapters_module_title_key unique (module, title);
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'documents_drive_key') then
+    alter table documents add constraint documents_drive_key unique (drive_id);
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'banks_module_title_key') then
+    alter table question_banks add constraint banks_module_title_key unique (module, title);
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'questions_bank_n_key') then
+    alter table questions add constraint questions_bank_n_key unique (bank, n);
+  end if;
+end $$;
+
+-- ---------------------------------------------------------------------------
 -- Who can see and touch what
 -- ---------------------------------------------------------------------------
 
