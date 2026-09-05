@@ -29,19 +29,27 @@ export async function GET(request) {
   if (!user) return NextResponse.redirect(new URL('/login?e=1', url.origin));
 
   const admin = supabaseAdmin();
+  const staff = staffEmails().includes((user.email || '').toLowerCase());
+
   let { data: profile } = await admin
-    .from('profiles').select('role').eq('id', user.id).maybeSingle();
+    .from('profiles').select('role, status').eq('id', user.id).maybeSingle();
 
   if (!profile) {
-    const staff = staffEmails().includes((user.email || '').toLowerCase());
-    const row = {
+    profile = {
       id: user.id,
       email: user.email,
       role: staff ? 'admin' : 'student',
       status: staff ? 'approved' : 'pending',
     };
-    await admin.from('profiles').insert(row);
-    profile = row;
+    await admin.from('profiles').insert(profile);
+  } else if (staff && !STAFF.includes(profile.role)) {
+    // The role used to be decided only when the row was first created, so a
+    // profile made before ADMIN_EMAILS existed stayed a student forever and
+    // its owner was posted to the feed on every sign-in. ADMIN_EMAILS is
+    // server config nobody but us can set, so it is safe to apply every time.
+    await admin.from('profiles')
+      .update({ role: 'admin', status: 'approved' }).eq('id', user.id);
+    profile = { ...profile, role: 'admin', status: 'approved' };
   }
 
   const home = STAFF.includes(profile.role) ? '/admin' : '/feed';
