@@ -10,6 +10,8 @@
     "predev": "node scripts/copy-pdfjs.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.6",
+    "@supabase/supabase-js": "^2.115.0",
     "next": "^15.5.25",
     "pdfjs-dist": "^6.3.289",
     "react": "19.1.1",

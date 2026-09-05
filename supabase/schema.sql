@@ -90,6 +90,9 @@ create table if not exists chapters (
 );
 
 create index if not exists chapters_module_idx on chapters (module);
+-- A module names each chapter once, which is what lets an import update a
+-- chapter instead of adding a second one with the same name.
+create unique index if not exists chapters_module_title_idx on chapters (module, title);
 
 -- One row per openable file. `where_shown` is what decides the screen it
 -- appears on: the archive holds what you read, الملخصات what students wrote,
@@ -137,6 +140,7 @@ create table if not exists question_banks (
 );
 
 create index if not exists banks_module_idx on question_banks (module);
+create unique index if not exists banks_module_title_idx on question_banks (module, title);
 
 -- `answer` holds the indexes of the true propositions — one or several, which
 -- is how UNEM marks them. `source` says who decided: the paper's own key, a
