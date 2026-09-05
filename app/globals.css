@@ -931,3 +931,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ltr { direction: ltr; text-align: left; }
 .login-out { width: 100%; }
 .login-sent .btn { text-decoration: none; }
+.fill-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.fill-bar-in {
+  height: 100%; background: var(--purple);
+  transition: width .3s ease; min-width: 3px;
+}

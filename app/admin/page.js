@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import Filling from './Filling';
 import { supabaseServer } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -14,31 +15,19 @@ const count = async (sb, table, filter) => {
 export default async function AdminHome() {
   const sb = await supabaseServer();
 
-  const [pending, needAnswer, drafts, published, documents, modules] = await Promise.all([
+  const [pending, needAnswer, drafts, published, documents] = await Promise.all([
     count(sb, 'profiles', (q) => q.eq('status', 'pending')),
     count(sb, 'questions', (q) => q.eq('status', 'needs_answer')),
     count(sb, 'questions', (q) => q.eq('status', 'draft')),
     count(sb, 'questions', (q) => q.eq('status', 'published')),
     count(sb, 'documents'),
-    count(sb, 'modules'),
   ]);
 
   const empty = documents === 0 && published === 0;
 
   return (
     <div className="admin-body">
-      {empty && (
-        <section className="admin-card admin-seed">
-          <div className="admin-card-t">لا شيء في قاعدة البيانات بعد</div>
-          <p className="admin-card-b">
-            المحتوى الحالي — {modules} مادة، آلاف الملفات والأسئلة — ما زال داخل الشيفرة.
-            انقله مرة واحدة إلى قاعدة البيانات ليصبح قابلًا للتحرير من هنا.
-          </p>
-          <form action="/api/admin/seed" method="post">
-            <button className="btn p">انقل المحتوى الآن</button>
-          </form>
-        </section>
-      )}
+      {empty && <Filling />}
 
       <div className="admin-grid">
         <Link href="/admin/users" className="admin-tile">
