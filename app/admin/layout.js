@@ -20,6 +20,9 @@ export default async function AdminLayout({ children }) {
           <span className="admin-badge">{profile.role}</span>
         </Link>
         <Link href="/feed" className="admin-out">التطبيق</Link>
+        <form action="/auth/signout" method="post">
+          <button className="admin-out">خروج</button>
+        </form>
       </header>
       {children}
     </div>

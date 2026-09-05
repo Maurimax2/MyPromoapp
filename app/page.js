@@ -1,11 +1,8 @@
 import { redirect } from 'next/navigation';
-import { currentProfile, homeFor } from '@/lib/supabase/server';
 
-export const dynamic = 'force-dynamic';
-
-// Opening the site lands on sign-in — unless you are already signed in, in
-// which case it lands where you work.
-export default async function Home() {
-  const profile = await currentProfile();
-  redirect(profile ? homeFor(profile) : '/login');
+// Opening the site lands on sign-in. Always — even when you are already
+// signed in, because the front door is the front door and skipping it is how
+// you end up unable to tell whether the lock works.
+export default function Home() {
+  redirect('/login');
 }

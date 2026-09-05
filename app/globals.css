@@ -929,3 +929,5 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* A French title is forced LTR; its meta line has to follow, or the two
    lines of one row sit on opposite edges of the card. */
 .ltr { direction: ltr; text-align: left; }
+.login-out { width: 100%; }
+.login-sent .btn { text-decoration: none; }
