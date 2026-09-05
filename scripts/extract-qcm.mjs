@@ -99,14 +99,39 @@ async function ocrOf(data) {
   }
 }
 
-// A scanned sheet has a tick or a bullet before each proposition. The bullets
-// come back as `o`, `©`, `«`, `#` and worse; strip them so the letter opens the
-// line, which is what the parser looks for.
+// A scanned sheet has a tick or a bullet before each proposition, and OCR
+// renders it as anything at all — `o`, `©`, `æ`, `#`, `= - o`. Rather than
+// guess at the bullet, find where the proposition's letter actually starts and
+// cut everything before it.
+//
+// The heavier marks are the student's own ticks, which is to say the answer.
+// They are not trusted: OCR mistakes a smudge for a tick and a tick for a
+// smudge, and a wrong answer taught as right is worse than no question.
+const OPT_LINE = /^.{0,10}?([A-Ea-e]\s*[.):\u2013-]\s*\S.*)$/;
+const NUM_LINE = /^[^\p{L}\p{N}]{0,6}(\d{1,3}\s*[.):\u2013-]\s*\S.*)$/u;
+
 const tidyOcr = (text) =>
   text.split('\n')
-    .map((l) => l.replace(/^[^\p{L}\p{N}]{0,4}(?=[A-Ea-e]\s*[.):\u2013-])/u, '')
-                 .replace(/^[^\p{L}\p{N}]{0,4}(?=\d{1,3}\s*[.):\u2013-])/u, ''))
+    .map((line) => {
+      const opt = line.match(OPT_LINE);
+      if (opt) return opt[1];
+      const num = line.match(NUM_LINE);
+      return num ? num[1] : line;
+    })
     .join('\n');
+
+// OCR leaves speckle at the end of a line — a stray `k`, `#”`, `| :`, a lone
+// comma. Trim it, but only trim a single loose character, never a word.
+const scrub = (text) => text
+  .replace(/[\s|#*~_·•”“"'’,;:.\-—]+$/u, '')
+  .replace(/\s+\S$/u, (tail) => (text.length > 25 ? '' : tail))
+  .trim();
+
+const scrubQuestion = (q) => ({
+  ...q,
+  q: scrub(q.q),
+  options: q.options.map(scrub),
+});
 
 const only = process.argv.slice(2);
 const modules = only.length ? MODULES.filter((m) => only.includes(m.id)) : MODULES;
@@ -136,7 +161,8 @@ for (const m of modules) {
       // pdf.js takes ownership of the buffer it is handed, so it gets a copy —
       // otherwise there is nothing left for the OCR fallback to render.
       let text = await textOf(data.slice());
-      if (text.replace(/\s/g, '').length < 200) text = tidyOcr(await ocrOf(data));
+      const ocred = text.replace(/\s/g, '').length < 200;
+      if (ocred) text = tidyOcr(await ocrOf(data));
       if (RESERVED.test(text)) {
         console.log(`  skip  ${m.id} · ${src.title} — redistribution reserved by its author`);
         continue;
@@ -181,7 +207,7 @@ for (const m of modules) {
         filled += 1;
       }
 
-      const good = usable(qs);
+      const good = usable(ocred ? qs.map(scrubQuestion) : qs);
       if (good.length >= 3) {
         banks.push({ fid: src.fid, title: src.title, section: src.section, questions: good });
         questions += good.length;
