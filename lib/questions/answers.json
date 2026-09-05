@@ -1348,6 +1348,430 @@
       ],
       "by": "claude",
       "why": "La discrimination est d’autant meilleure que les récepteurs sont denses et les champs récepteurs petits."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:9": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "La somatostatine et la cholécystokinine freinent la motricité gastrique ; acétylcholine, gastrine et histamine la stimulent."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:10": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "La CCK est libérée par les produits de digestion des protides et des lipides dans le duodénum."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:11": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "La vidange gastrique est réglée par le système nerveux entérique ; mastication, déglutition, péristaltisme primaire et vomissement ont un centre bulbaire."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:13": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "La phase céphalique est vagale : acétylcholine directement, et gastrine libérée par la stimulation vagale."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:14": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "La cellule pariétale sécrète l’acide chlorhydrique et le facteur intrinsèque."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:15": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "La barrière muqueuse tient au mucus, aux bicarbonates et au renouvellement rapide de l’épithélium."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:16": {
+      "answer": [
+        1
+      ],
+      "by": "claude",
+      "why": "Les lipides quittent l’entérocyte sous forme de chylomicrons par la voie lymphatique."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:17": {
+      "answer": [
+        1
+      ],
+      "by": "claude",
+      "why": "Les micelles portent le cholestérol, les produits de la lipolyse et les vitamines liposolubles."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:18": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le glucose, les acides aminés et la vitamine C empruntent des cotransports sodium-dépendants."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:19": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les sels biliaires sont formés dans le foie, conjugués à la taurine ou à la glycine, et émulsionnent les lipides."
+    },
+    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:20": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Sans bile les lipides ne sont plus émulsionnés : stéatorrhée et carence en vitamines A, D, E et K."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:3": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Tactile et proprioceptif se projettent sur des aires distinctes (3a, 3b, 1, 2) ; la main et la face occupent les plus grandes surfaces."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:5": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La thermo-algésie emprunte le faisceau spinothalamique croisé : une hémisection gauche ou une lésion du VPL gauche l’abolit à droite. Les cordons postérieurs portent le tact fin."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:9": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le système photopique est celui des cônes. La voie P oppose les couleurs, la voie M porte le mouvement, la voie K le bleu-jaune."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:11": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La lumière isomérise le rétinal, ferme les canaux sodiques, hyperpolarise le photorécepteur et diminue sa libération de glutamate."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:13": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les points correspondants sont nasal d’un œil et temporal de l’autre, et tout objet sur l’horoptère y tombe."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:14": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le K+ de l’endolymphe entre au pôle apical et dépolarise la cellule ; les canaux calciques du pôle basal s’ouvrent et le glutamate est libéré."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:15": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La motricité cinétique regroupe les mouvements réflexes, automatiques et volontaires."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:16": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "On classe les réflexes par le type de récepteur et le nombre de synapses."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:17": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le récepteur est le fuseau — non l’organe tendineux de Golgi — et la voie efférente le motoneurone alpha."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:18": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Le réflexe de flexion est nociceptif, polysynaptique et diffus ; l’appui renforcé est le réflexe d’extension croisée."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:19": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Renshaw, le cortex et la formation réticulée bulbaire inhibent le tonus ; la boucle gamma et le cervelet le facilitent."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:20": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Parkinson et décortication donnent une hypertonie."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:21": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’équilibration est réflexe et multimodale : vestibule, vision et proprioception."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:22": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les canaux semi-circulaires sont dans l’oreille interne et détectent les accélérations angulaires ; la verticale est perçue par les otolithes."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:23": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les voies centrales partent des noyaux vestibulaires ; le nerf VIII et les récepteurs sont périphériques, et le cortex n’est atteint qu’après relais thalamique."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:24": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Vertige, nystagmus et ataxie font le syndrome vestibulaire ; la surdité est cochléaire."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:25": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Gnosies et praxies sont pariéto-temporo-occipitales ; curiosité, persévérance et sociabilité sont préfrontales."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:26": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les aires 18 et 19 sont visuelles associatives : leur lésion gauche donne une cécité verbale."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:27": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Les aires praxiques sont gauches ; leur lésion donne une apraxie, dont l’agraphie, non une aphasie."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:28": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Dans l’aphasie de Wernicke le débit est normal mais le langage incompréhensible, et le sujet n’a pas conscience de son trouble."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:29": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le préfrontal porte le comportement : curiosité, persévérance, sociabilité."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:30": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le préfrontal planifie, coordonne et maintient l’attention ; l’exécution du mouvement est frontale motrice, l’image du corps pariétale."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:31": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "L’EEG naît des cellules pyramidales et somme des potentiels post-synaptiques ; les PPSE donnent la dépolarisation, les PPSI l’hyperpolarisation."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:32": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le delta est le rythme du sommeil lent profond et du coma, absent chez l’adulte éveillé."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:33": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Pointes et pointes-ondes signent une hyperexcitabilité corticale — l’épilepsie ; le coma et la mort cérébrale donnent d’autres tracés."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:34": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "Mouvements oculaires rapides et rêves appartiennent au sommeil paradoxal."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:35": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le sommeil lent occupe environ 80 % de la nuit, et chaque cycle commence par du sommeil lent."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:36": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le nouveau-né s’endort en sommeil agité, dort seize à vingt heures, et son sommeil agité s’accompagne de mouvements."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:37": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les noyaux suprachiasmatiques agissent par l’épiphyse et la mélatonine ; leur lésion désorganise le sommeil sans le raccourcir."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:38": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les neurones du raphé sont actifs à l’éveil ; leur lésion donne une insomnie."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:39": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’hypothalamus postérieur est éveillant — histamine et orexine — et sa lésion donne une hypersomnie."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:40": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le sommeil lent consolide la mémoire, sécrète les hormones anabolisantes et répare ; la maturation nerveuse revient au sommeil paradoxal."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:41": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Somnambulisme, terreurs nocturnes et crises épileptiques surviennent en sommeil lent ; érection et congestion génitale en sommeil paradoxal."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:42": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La mémorisation baisse avec l’âge ; elle s’améliore avec la vigilance, la motivation, l’association et la charge affective."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:43": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "La consolidation est la plus longue des étapes de la mémoire."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:44": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le syndrome général d’adaptation de Selye associe hypercorticisme, décharge adrénergique, hypertrophie surrénalienne, ulcères et atrophie lymphoïde."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:45": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "Le sympathique élève la glycémie et la pression artérielle, stimule la lipolyse et la ventilation."
+    },
+    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:46": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le stress chronique fatigue, fait mal et déprime ; il augmente l’éveil plutôt qu’il ne le diminue."
     }
   }
 }
