@@ -1,0 +1,178 @@
+'use client';
+
+// The catalogue, editable.
+//
+// This is where a wrong name gets fixed. A row opens when you tap it; the
+// title is a plain field, the screen and the kind are chips, and nothing is
+// saved until you leave the field — so typing does not fire a request a
+// letter at a time.
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Icon from '@/components/Icon';
+
+const WHERE = [
+  { id: 'archive', label: 'الأرشيف' },
+  { id: 'notes',   label: 'الملخصات' },
+  { id: 'quiz',    label: 'اختبر نفسك' },
+];
+
+// The kinds a file can be, per screen. French words for the material itself,
+// Arabic for the screens — the same split as everywhere else.
+const SECTIONS = {
+  archive: [
+    { id: 'lecture', label: 'Cours' },
+    { id: 'poly',    label: 'Polycopié' },
+    { id: 'schema',  label: 'Schémas' },
+    { id: 'livre',   label: 'Livre' },
+  ],
+  notes: [
+    { id: 'resume', label: 'Résumé' },
+    { id: 'note',   label: 'Notes' },
+  ],
+  quiz: [
+    { id: 'exam',  label: 'Examen' },
+    { id: 'isole', label: 'Isolés' },
+    { id: 'qcm',   label: 'QCM' },
+  ],
+};
+
+const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
+
+export default function ContentScreen({ module, documents, where, counts, canDelete }) {
+  const router = useRouter();
+  const [rows, setRows] = useState(documents);
+  const [open, setOpen] = useState(null);
+  const [busy, setBusy] = useState(null);
+
+  const patch = async (id, body) => {
+    setRows((rs) => rs.map((d) => (d.id === id ? { ...d, ...body } : d)));
+    setBusy(id);
+    await fetch('/api/admin/documents', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id, ...body }),
+    });
+    setBusy(null);
+    // Moving a file to another screen takes it out of this list.
+    if (body.where_shown && body.where_shown !== where) {
+      setRows((rs) => rs.filter((d) => d.id !== id));
+      setOpen(null);
+      router.refresh();
+    }
+  };
+
+  const remove = async (id) => {
+    setBusy(id);
+    await fetch('/api/admin/documents', {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    setBusy(null);
+    setRows((rs) => rs.filter((d) => d.id !== id));
+    setOpen(null);
+    router.refresh();
+  };
+
+  const go = (w) => router.push(`/admin/content?module=${module.id}&where=${w}`);
+
+  return (
+    <div className="admin-body">
+      <Link href="/admin/content" className="admin-bar ct-back">
+        <span><Icon name="chev" size={15} /> {module?.name}</span>
+        <span>{module?.semester}</span>
+      </Link>
+
+      <div className="rev-tabs">
+        {WHERE.map((w) => (
+          <button
+            key={w.id}
+            className={`rev-tab${where === w.id ? ' on' : ''}`}
+            onClick={() => go(w.id)}
+          >
+            {w.label}<span>{counts[w.id]}</span>
+          </button>
+        ))}
+      </div>
+
+      {!rows.length ? (
+        <section className="admin-card admin-seed">
+          <div className="admin-card-t">لا ملفات هنا</div>
+          <p className="admin-card-b">لا شيء في هذه الشاشة لهذه المادة بعد.</p>
+        </section>
+      ) : (
+        <div className="admin-rows">
+          {rows.map((d) => (
+            <div key={d.id} className={`ctd${busy === d.id ? ' off' : ''}${!d.published ? ' hidden' : ''}`}>
+              <button className="ctd-head" onClick={() => setOpen(open === d.id ? null : d.id)}>
+                {d.n && <span className="ctd-n">{d.n}</span>}
+                <div className="grow">
+                  <div className="ctd-t" dir="ltr">{d.title}</div>
+                  <div className="ctd-b">
+                    {d.ext}{d.bytes ? ` · ${mb(d.bytes)}` : ''}
+                    {d.year ? ` · ${d.year}` : ''}
+                    {!d.published ? ' · مخفي' : ''}
+                  </div>
+                </div>
+                <Icon name="chev" size={17} />
+              </button>
+
+              {open === d.id && (
+                <div className="ctd-edit">
+                  <input
+                    className="admin-input"
+                    dir="ltr"
+                    defaultValue={d.title}
+                    onBlur={(e) => {
+                      const v = e.target.value.trim();
+                      if (v && v !== d.title) patch(d.id, { title: v });
+                    }}
+                    aria-label="اسم الملف"
+                  />
+
+                  <div className="imp-kinds">
+                    {SECTIONS[where].map((s) => (
+                      <button
+                        key={s.id}
+                        className={`imp-kind${d.section === s.id ? ' on' : ''}`}
+                        onClick={() => patch(d.id, { section: s.id })}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="ctd-move">
+                    <span>انقل إلى</span>
+                    {WHERE.filter((w) => w.id !== where).map((w) => (
+                      <button key={w.id} className="imp-kind" onClick={() => patch(d.id, { where_shown: w.id })}>
+                        {w.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="usr-acts">
+                    <button
+                      className="btn g sm"
+                      onClick={() => patch(d.id, { published: !d.published })}
+                    >
+                      {d.published ? 'أخفِ' : 'أظهِر'}
+                    </button>
+                    {d.drive_id && (
+                      <Link className="btn g sm" href={`/file/${d.drive_id}`}>افتح</Link>
+                    )}
+                    {canDelete && (
+                      <button className="btn g sm danger" onClick={() => remove(d.id)}>احذف</button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

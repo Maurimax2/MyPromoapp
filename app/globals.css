@@ -873,3 +873,42 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .btn.sm { height: 44px; font-size: 14.5px; gap: 7px; }
 .btn.g.sm { background: var(--bg); }
 .admin-input.sm { height: 44px; font-size: 14px; }
+
+/* ---------- the catalogue, editable ---------- */
+.ct-back { color: var(--ink-2); }
+.ct-back span { display: inline-flex; align-items: center; gap: 5px; }
+.ct-back svg { transform: scaleX(-1); }
+
+.ctm {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 14px; display: flex; align-items: center; gap: 11px; color: var(--ink-3);
+  transition: transform .12s ease;
+}
+.ctm:active { transform: scale(.985); }
+.ctm-t { font-size: 15px; font-weight: 700; color: var(--ink); }
+.ctm-b { font-size: 12.5px; margin-top: 2px; }
+
+.ctd {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  overflow: hidden; transition: opacity .15s ease;
+}
+.ctd.off { opacity: .45; pointer-events: none; }
+.ctd.hidden .ctd-t { color: var(--ink-3); }
+.ctd-head {
+  width: 100%; padding: 13px; display: flex; align-items: center; gap: 11px;
+  color: var(--ink-3); text-align: start;
+}
+.ctd-n {
+  flex-shrink: 0; min-width: 27px; height: 27px; border-radius: 9px;
+  background: var(--purple-pale); color: var(--purple);
+  font-size: 12.5px; font-weight: 700; line-height: 27px; text-align: center;
+}
+.ctd-t { font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.5; }
+.ctd-b { font-size: 11.5px; margin-top: 3px; direction: ltr; text-align: left; }
+.ctd-edit {
+  padding: 0 13px 13px; display: flex; flex-direction: column; gap: 10px;
+  border-top: 1px solid var(--line-soft); padding-top: 13px;
+}
+.ctd-move { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.ctd-move > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
+.btn.g.sm.danger { color: var(--wrong); }
