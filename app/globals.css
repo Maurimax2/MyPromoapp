@@ -773,3 +773,84 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: background .12s ease, color .12s ease;
 }
 .imp-kind.on { background: var(--purple); color: #fff; }
+
+/* ---------- reviewing questions ---------- */
+/* The card is the whole screen. Everything else is a thin frame around it:
+   which pile you are in, which paper it came from, and what the keys do. */
+.rev-tabs {
+  display: flex; gap: 6px; background: var(--surface);
+  border-radius: 999px; padding: 4px; box-shadow: var(--shadow);
+}
+.rev-tab {
+  flex: 1; min-height: 40px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 600; color: var(--ink-3);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: background .14s ease, color .14s ease;
+}
+.rev-tab span {
+  font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  background: var(--bg); color: var(--ink-3);
+  border-radius: 999px; padding: 2px 7px;
+}
+.rev-tab.on { background: var(--purple); color: #fff; }
+.rev-tab.on span { background: rgba(255, 255, 255, .22); color: #fff; }
+
+.rev-meta {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-3); padding: 0 3px;
+}
+.rev-meta > span:first-child { overflow-wrap: anywhere; }
+.rev-n { flex-shrink: 0; color: var(--purple); font-variant-numeric: tabular-nums; }
+
+/* Leaving is 180ms — long enough to read as movement, short enough that a
+   fast reviewer never waits for it. It matches the timeout in ReviewScreen. */
+.rev-card {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 16px; display: flex; flex-direction: column; gap: 13px;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.rev-card.out { opacity: 0; transform: translateY(-10px) scale(.985); }
+
+.rev-stem {
+  font-size: 16px; font-weight: 600; line-height: 1.65; color: var(--ink);
+  text-align: left;
+}
+.rev-options { display: flex; flex-direction: column; gap: 9px; }
+.rev-opt {
+  display: flex; align-items: flex-start; gap: 11px; width: 100%;
+  min-height: 48px; padding: 11px 13px; border-radius: 13px;
+  border: 1.5px solid var(--line); background: var(--bg);
+  font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--ink);
+  text-align: left;
+  transition: border-color .12s ease, background .12s ease;
+}
+.rev-opt.on { border-color: var(--purple); background: var(--purple-pale); }
+.rev-opt.on .rev-letter { background: var(--purple); color: #fff; }
+.rev-opt > svg { flex-shrink: 0; color: var(--purple); margin-top: 2px; }
+.rev-letter {
+  flex-shrink: 0; width: 25px; height: 25px; border-radius: 8px;
+  background: var(--line); color: var(--ink-2);
+  font-size: 12.5px; font-weight: 700; line-height: 25px; text-align: center;
+  transition: background .12s ease, color .12s ease;
+}
+
+.rev-why {
+  width: 100%; min-height: 62px; resize: vertical;
+  border-radius: 13px; border: 1.5px solid var(--line); background: var(--bg);
+  padding: 11px 13px; font: inherit; font-size: 14px; font-weight: 500;
+  line-height: 1.7; color: var(--ink); text-align: left;
+}
+.rev-why:focus { outline: none; border-color: var(--purple); background: var(--surface); }
+
+.rev-actions { display: flex; flex-direction: column; gap: 9px; }
+.rev-minor { display: flex; gap: 9px; }
+.rev-minor .pill {
+  flex: 1; min-height: 44px; justify-content: center;
+  background: var(--surface); box-shadow: var(--shadow);
+  transition: transform .12s ease;
+}
+.rev-minor .pill:active { transform: scale(.97); }
+.rev-hint {
+  font-size: 12px; color: var(--ink-3); text-align: center;
+  line-height: 1.7; padding-bottom: 6px;
+}
