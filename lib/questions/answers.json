@@ -2,98 +2,828 @@
   "note": "Answers for questions whose own paper carried no readable correction. `by` says who decided: `paper` is the paper's own key, read by hand where the parser could not; `claude` is Claude's answer and is shown to the student as such. Never merged into the extracted files, so a real correction always wins.",
   "answers": {
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:1": {
-      "answer": [2, 3, 4], "by": "claude",
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
       "why": "Le tegmen tympani appartient au rocher et regarde l’endocrâne. Les cellules aériques dépassent la mastoïde."
     },
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:2": {
-      "answer": [0, 1, 3], "by": "claude",
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
       "why": "Le cône lumineux est antéro-inférieur. Entre les deux replis malléolaires se trouve le processus latéral, non l’antérieur."
     },
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:3": {
-      "answer": [3], "by": "claude",
+      "answer": [
+        3
+      ],
+      "by": "claude",
       "why": "C’est la branche longue de l’incus qui s’articule avec la tête du stapes, et sa branche courte qui repose dans la fossa incudis. La tête du malleus s’articule en arrière."
     },
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:4": {
-      "answer": [0, 1, 2, 3], "by": "claude",
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
       "why": "La fenêtre ronde amortit l’onde de la périlymphe, non de l’endolymphe."
     },
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:5": {
-      "answer": [1, 2, 3], "by": "claude",
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
       "why": "Le plexus tympanique vient du nerf de Jacobson (IX), pas de la corde du tympan. La fenêtre ronde est postéro-inférieure au promontoire."
     },
     "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:6": {
-      "answer": [0, 3, 4], "by": "claude",
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
       "why": "Le semi-canal du muscle du marteau est au-dessus de celui de la trompe, et ce muscle est innervé par le V3 — c’est le muscle de l’étrier qui dépend du VII."
     },
-
     "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:8": {
-      "answer": [0], "by": "claude",
+      "answer": [
+        0
+      ],
+      "by": "claude",
       "why": "Le défaut de fusion entre bourgeon maxillaire supérieur et bourgeon nasal externe ouvre la fente faciale oblique, qui suit le trajet du canal lacrymo-nasal."
     },
     "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:9": {
-      "answer": [2], "by": "claude",
+      "answer": [
+        2
+      ],
+      "by": "claude",
       "why": "Le bec-de-lièvre médian tient à l’absence de fusion des deux bourgeons nasaux internes sur la ligne médiane."
     },
     "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:10": {
-      "answer": [1, 3], "by": "claude",
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
       "why": "1ère poche : oreille moyenne et trompe. 2ème : amygdale palatine. 3ème : thymus et parathyroïdes inférieures. 4ème : parathyroïdes supérieures."
     },
     "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:2": {
-      "answer": [0, 3], "by": "claude",
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
       "why": "Le stroma cornéen contient des kératocytes — non des kératinocytes — et aucun vaisseau : la cornée est avasculaire."
     },
     "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:4": {
-      "answer": [0, 1, 3, 4], "by": "claude",
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
       "why": "De dehors en dedans : marteau, enclume, étrier. La proposition inverse l’ordre."
     },
     "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:5": {
-      "answer": [0, 2, 3], "by": "claude",
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
       "why": "La fenêtre ronde s’ouvre sur l’oreille moyenne, non sur la trompe. Le labyrinthe osseux comprend aussi le limaçon."
     },
     "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:6": {
-      "answer": [0, 2, 3], "by": "claude",
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
       "why": "Les macules siègent dans l’utricule et le saccule, les crêtes ampullaires dans les ampoules des canaux semi-circulaires."
     },
-
     "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:2": {
-      "answer": [2], "by": "paper",
+      "answer": [
+        2
+      ],
+      "by": "paper",
       "why": "Réponse du corrigé de la fiche : enzymes homogènes et hétérogènes."
     },
     "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:3": {
-      "answer": [2], "by": "paper",
+      "answer": [
+        2
+      ],
+      "by": "paper",
       "why": "Réponse du corrigé de la fiche."
     },
     "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:4": {
-      "answer": [2], "by": "paper",
+      "answer": [
+        2
+      ],
+      "by": "paper",
       "why": "Réponse du corrigé de la fiche."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:1": {
-      "answer": [1], "by": "claude",
+      "answer": [
+        1
+      ],
+      "by": "claude",
       "why": "La clairance est le volume de plasma totalement épuré d’une substance par unité de temps."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:2": {
-      "answer": [2], "by": "claude",
+      "answer": [
+        2
+      ],
+      "by": "claude",
       "why": "La question demande la proposition fausse : la CK est d’origine musculaire et n’est pas un marqueur de cytolyse hépatique."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:3": {
-      "answer": [4], "by": "claude",
+      "answer": [
+        4
+      ],
+      "by": "claude",
       "why": "Le calcium ionisé représente environ la moitié du calcium total, c’est la fraction active, et son élévation freine la PTH. L’acidose augmente la fraction ionisée."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:4": {
-      "answer": [1], "by": "claude",
+      "answer": [
+        1
+      ],
+      "by": "claude",
       "why": "Les cellules bêta des îlots de Langerhans sécrètent l’insuline ; les alpha le glucagon, les delta la somatostatine."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:5": {
-      "answer": [3], "by": "claude",
+      "answer": [
+        3
+      ],
+      "by": "claude",
       "why": "Le bloc bêta-gamma à l’électrophorèse est le signe le plus spécifique de la cirrhose ; les autres anomalies se voient dans toute hépatopathie."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:6": {
-      "answer": [2, 4], "by": "claude",
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
       "why": "La cholestase élève la bilirubine conjuguée, les phosphatases alcalines et la GGT, et diminue la stercobiline dans les selles."
     },
     "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:7": {
-      "answer": [1, 3, 4], "by": "claude",
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
       "why": "La PTH et la calcitonine sont hypophosphorémiantes ; la vitamine D est hyperphosphorémiante. L’os contient 85 % des phosphates, sous forme d’hydroxyapatite."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:2": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le noyau caudé, le claustrum et le putamen naissent du télencéphale ; le pallidum et le noyau sous-thalamique du diencéphale."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:3": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le globus pallidus et le noyau sous-thalamique sont diencéphaliques ; la substantia nigra est mésencéphalique."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:4": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Seule la substantia nigra vient du mésencéphale."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:5": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le striatum inhibe le pallidum externe, le pallidum externe inhibe le noyau sous-thalamique, et le pallidum interne inhibe le thalamus — trois cibles GABAergiques."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:6": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le cortex excite le striatum et le noyau sous-thalamique ; le thalamus excite le cortex en retour. Réponse à vérifier auprès du cours : les circuits glutamatergiques sont décrits différemment selon les enseignants."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:7": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "De crânial en caudal ce sont les pédoncules, le pont puis la moelle allongée. Les olives siègent dans les cordons latéraux."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:8": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La gouttière basilaire marque la face ventrale du pont, et l’espace perforé postérieur ne se voit que de face."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:9": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les colliculi crâniaux sont un relais visuel ; les caudaux sont auditifs."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:12": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Sillons cingulaire, pariéto-occipital et calcarin sont médiaux. Le sillon latéral sépare le frontal du temporal."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:13": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’insula est au fond du sillon latéral. Le sillon calcarin ne délimite aucun lobe. Le noyau lenticulaire — non « interposé » — associe pallidum et putamen."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:14": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le noyau caudé et le putamen sont télencéphaliques."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:15": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le pallidum, partie du noyau lenticulaire, est d’origine diencéphalique. L’insula est latérale au claustrum."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:16": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le noyau caudé est latéral au ventricule. Les ventricules latéraux communiquent chacun avec le 3ème, jamais entre eux."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:17": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Les cornes sont frontale, occipitale et temporale ; l’aqueduc relie V4 au V3 ; la capsule extrême — non externe — sépare claustrum et insula ; le noyau lenticulaire est latéral à la capsule interne."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:18": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le cortex cérébral compte six couches."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:19": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Le seul point de continuité entre télencéphale et diencéphale est ventral, et le cerveau dérive du prosencéphale seul."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:20": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le gyrus pré-central est moteur, le post-central sensitif. L’aire auditive primaire siège dans le gyrus temporal transverse."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:21": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’aire auditive est sous le sillon latéral, et la partie médiale du gyrus pré-central commande le membre inférieur, non la tête."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:22": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le septum pellucidum sépare les deux ventricules latéraux."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:23": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Wernicke est la compréhension, Broca l’élaboration ; Broca est en avant de Wernicke."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:24": {
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "L’insula est au fond du sillon latéral."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:25": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les cinq propositions sont exactes."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:26": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Dans le tronc cérébral la substance grise est centrale, contrairement au cervelet."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:27": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Les pédoncules cérébelleux moyens relient le cervelet au pont ; les inférieurs à la moelle allongée."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:28": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le mésencéphale est limité en crânial par les voies optiques, et le tronc cérébral est oblique en bas et en avant."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:2": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Les mitochondries allongées siègent au pôle basal. Le tube contourné proximal est cortical."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:3": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres endothéliales glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:5": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "L’épithélium œsophagien est malpighien non kératinisé, les follicules lymphoïdes y sont isolés, et la couche externe est une adventice."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:7": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les glandes de Lieberkühn sont dans le chorion ; les cellules caliciformes augmentent vers le côlon ; les cellules de Paneth existent au duodénum."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:10": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:11": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités, et le centre du lobule est occupé par la veine centrolobulaire."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:12": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère (capillarisation des sinusoïdes)."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:13": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Les caliciformes sont grandes, peu nombreuses, sur le V lingual ; les fongiformes ont la forme d’un champignon, les filiformes sont les plus petites."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:14": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Les filiformes n’ont pas de bourgeons du goût ; les glandes de Von Ebner accompagnent les caliciformes."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:15": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’oropharynx est malpighien non kératinisé, la charpente du pharynx est fibro-musculaire, et la phonation est laryngée."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:20": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "La filtration mécanique tient aux vibrisses des narines et au tapis mucociliaire ; le surfactant et le macrophage agissent plus bas."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:21": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "La zone marginale est à la frontière des deux pulpes : sinus et cordons, comme l’hémolyse des hématies âgées, appartiennent à la pulpe rouge."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:26": {
+      "answer": [
+        0
+      ],
+      "by": "claude",
+      "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:27": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:28": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:29": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:30": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les glandes apocrines qui s’abouchent au follicule pileux ; la glande sébacée est alvéolaire ramifiée."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:31": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration ; les lamelles concentriques de Schwann les caractérisent, non le Meissner."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:32": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse, les kératinocytes de l’ectoderme."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:33": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:34": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; les cellules folliculaires sont de type protéique (REG, Golgi)."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:35": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:36": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons, non chaque cellule."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:37": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique alors que le cortex est mésodermique."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:38": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:39": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
+    },
+    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:40": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
+    },
+    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:1": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "La parotide est une glande séreuse pure : pas de croissants de Gianuzzi, qui appartiennent aux glandes mixtes."
+    },
+    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:2": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
+    },
+    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:3": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités."
+    },
+    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:4": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère."
+    },
+    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:1": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’appareil juxtaglomérulaire siège au pôle vasculaire, et ses barorécepteurs sont dans l’artériole afférente."
+    },
+    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:2": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Les mitochondries allongées siègent au pôle basal ; le tube contourné proximal est cortical."
+    },
+    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:3": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
+    },
+    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:4": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Les pédicelles sont des prolongements du deuxième et du troisième ordre, et les pores endothéliaux mesurent environ 70 nm, non 7 µm."
+    },
+    "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:5": {
+      "answer": [
+        0
+      ],
+      "by": "claude",
+      "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
+    },
+    "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:6": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "La zone marginale est à la frontière des deux pulpes : sinus, cordons et hémolyse appartiennent à la pulpe rouge."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:1": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:2": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:3": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:4": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les apocrines qui s’abouchent au follicule pileux ; la sébacée est alvéolaire ramifiée."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:5": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:6": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse."
+    },
+    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:7": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:1": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; ses cellules sont de type protéique."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:2": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:3": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:4": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:5": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:6": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
+    },
+    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:7": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
     }
   }
 }
