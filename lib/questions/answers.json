@@ -1772,6 +1772,267 @@
       ],
       "by": "claude",
       "why": "Le stress chronique fatigue, fait mal et déprime ; il augmente l’éveil plutôt qu’il ne le diminue."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:1": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "L’unité de masse atomique se rapporte au carbone 12, et le proton porte une charge positive."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:4": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’u.m.a est le douzième de la masse d’un atome de carbone 12 — non d’une mole. 0,511 MeV est l’équivalent de la masse de l’électron."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:7": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La bêta moins émet un électron et un antineutrino, son spectre est continu, et elle concerne les noyaux riches en neutrons."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:8": {
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "L’annihilation produit deux photons gamma de 511 keV, non des rayons X."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:9": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le gamma naît d’une désexcitation du noyau, non du cortège électronique, et n’a rien à voir avec les ultrasons."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:10": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les alpha ont un parcours de quelques micromètres, en ligne droite, avec un TEL très élevé ; l’émission alpha change le nombre de masse."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:11": {
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La radioactivité vient du noyau, non du cortège électronique."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:14": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les protons suivent une trajectoire rectiligne de quelques centimètres, avec un TEL supérieur à celui des électrons."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:15": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le TEL est maximal en fin de parcours — c’est le pic de Bragg."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:16": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le technétium 99m est un émetteur gamma de six heures, obtenu par élution d’un générateur au molybdène, et sert au diagnostic."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:17": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’effet photoélectrique absorbe totalement le photon ; ce sont les photons Compton qui sont diffusés."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:18": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "À 250 MeV la création de paire domine, suivie d’annihilation ; la CDA dépend du matériau et varie comme l’inverse de μ."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:19": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le Compton met en jeu un photon et un électron peu lié, avec diffusion du photon ; l’électron Auger suit l’effet photoélectrique."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:20": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "La proposition fausse : les scintillateurs solides ne sont pas des plaques photographiques."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:21": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le semi-conducteur est plus sensible que le détecteur à gaz, non moins."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:22": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le détecteur à gaz est rempli de gaz, non vidé, et n’a pas de place en IRM."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:23": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "L’activimètre est une chambre d’ionisation puits qui mesure l’activité à injecter ; le tube de Coolidge produit des rayons X."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:24": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "L’émulsion photographique sert à la dosimétrie passive et à l’image radiologique, jamais à mesurer une activité."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:25": {
+      "answer": [
+        0,
+        4
+      ],
+      "by": "claude",
+      "why": "Pour le patient, justification et optimisation. La limitation de dose vise le travailleur et le public."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:26": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "Après dix périodes l’activité est divisée par 1024 : 3700 / 1024 ≈ 3,6 MBq, qui ne figure pas parmi les propositions."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:27": {
+      "answer": [
+        1
+      ],
+      "by": "claude",
+      "why": "Les effets stochastiques sont tardifs, aléatoires, sans seuil, et non obligatoires."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:28": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les effets déterministes sont obligatoires, précoces, caractéristiques, à seuil, et tiennent à la mort cellulaire."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:30": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "Les effets biologiques dépendent du rayonnement, du tissu, de la dose et du débit de dose."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:31": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’accommodation diminue avec l’âge — c’est la presbytie."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:33": {
+      "answer": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le dioptre cornéen antérieur est le plus puissant de l’œil."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:34": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’hypermétropie est une amétropie sphérique par insuffisance de puissance, corrigée par un verre convergent."
+    },
+    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:36": {
+      "answer": [
+        1
+      ],
+      "by": "claude",
+      "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
+    },
+    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:35": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
+    },
+    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:39": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’oreille externe met l’onde en forme, l’amplifie, la conduit au tympan et sert à localiser la source."
+    },
+    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:40": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La trompe d’Eustache égalise les pressions de part et d’autre du tympan, non de la fenêtre ovale."
     }
   }
 }

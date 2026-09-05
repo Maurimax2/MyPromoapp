@@ -18,8 +18,17 @@ const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function textOf(fid) {
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fid}?alt=media&key=${key}`);
-  if (!res.ok) throw new Error(`drive ${res.status}`);
+  // Drive answers 403 rather than 429 when it rate-limits a long run.
+  let res;
+  for (let attempt = 0; ; attempt++) {
+    res = await fetch(`https://www.googleapis.com/drive/v3/files/${fid}?alt=media&key=${key}`);
+    if (res.ok) break;
+    if ((res.status === 403 || res.status === 429) && attempt < 6) {
+      await wait(3000 * 2 ** attempt);
+      continue;
+    }
+    throw new Error(`drive ${res.status}`);
+  }
   const doc = await pdfjs.getDocument({
     data: new Uint8Array(await res.arrayBuffer()),
     standardFontDataUrl: join(root, 'public/pdfjs/standard_fonts/'),

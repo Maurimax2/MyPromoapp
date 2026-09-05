@@ -1,5 +1,1033 @@
 {
  "module": "biophysique",
  "name": "BIOPHYSIQUE",
- "banks": []
+ "banks": [
+  {
+   "fid": "1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD",
+   "title": "Session 2024",
+   "section": "Examens — UNEM",
+   "questions": [
+    {
+     "n": 26,
+     "q": "Les effets stochastiques sont caractérisés par les éléments suivants: ,",
+     "options": [
+      "Un seuil ,",
+      "Obligatoires ,",
+      "Irréversibles .;,",
+      "Précoce ~",
+      "Liés à la survie de cellules lésées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Les effets déterministes des rayonnements ionisants sont: t",
+     "options": [
+      "Obligatoires ,",
+      "Généralement réversibles f",
+      "Proportionnels à la dose ,"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "La radiosensibilité aux rayonnements ionisants est : ,",
+     "options": [
+      "Maximale à la phase G2 f",
+      "Maximale à la phase M t",
+      "Minimale à la phase G1 .."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Dans les milieux transparents de l'œil Humaine: . .",
+     "options": [
+      "Le Dioptre cornéen postérieur est le plus puiss~nt d~s dioptres oculaires.",
+      "la puissance totale de l'œil est environ de 5.6 D1optr1e.",
+      "Le cristallin est l'organe responsable de l'astigmatisme mixte.",
+      "l'image est floue si elle est projetée en avant de la rétine. . , .",
+      "L 'humeur vitré est un liquide gélatineux qui donne la forme et la consistance de 1œtl."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Le parcours d'accommodation se définit par",
+     "options": [
+      "la distance du punctum proximum à l'œil",
+      "La distance du punctum remotum à l'œil",
+      "La distance qui sépare le punctum proximum à l'infini",
+      "La distance entre le punctum proximum et le punctum remotum.",
+      "La distance entrb le punctum remotum et l'infini."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "L'oreille externe :",
+     "options": [
+      "Transforme les ondes sonores sphériques en ondes sonores planes",
+      "Joue un rôle dans l'amplification des sons",
+      "Joue un rôle dans la localisation des sources sonores",
+      "Transmet l'onde sonore jusqu'au tympan",
+      "Joue un rôle dans l'audition binaurale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "L'oreille moyenne :",
+     "options": [
+      "Permet l'adaptation d'impédance acoustique entre l'air et les liquides de l'oreille interne",
+      "Permet la transmission des ondes sonores à l'oreille interne",
+      "Permet l'amplification du son par augmentation de la pression acoustique",
+      "Permet la modulation des sons sous l'action des muscles de l'oreille moyenne",
+      "La trempe d'Eustache permet l'équilibre des pressions de la fenêtre ovale."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV",
+   "title": "TD — PCEM2",
+   "section": "Examens — UNEM",
+   "questions": [
+    {
+     "n": 1,
+     "q": "TD N° 1 Rayonnements ionisant et optique de la vision Cocher une ou plusieurs questions justes 1-Un noyau d’un élément X, est un Nucléide, dont",
+     "options": [
+      "le nombre de masse est égale au nombre de Neutron et proton.",
+      "Le numéro atomique Z correspond au nombre de Protons.",
+      "L’unité de masse atomique est égale au douzième de la masse de l’atome carbone 14.",
+      "Les protons ont une charge négative.",
+      "les neutrons ont une charge nulle."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le noyau d’un atome",
+     "options": [
+      "Est l’origine d’émission des rayons β et gamma γ.",
+      "Est à l’origine d’émission des rayons X.",
+      "A une masse supérieur à la somme des masses des neutrons et des Protons isolés.",
+      "L’instabilité nucléaire est du à la répulsion forte entre protons.",
+      "Est d’autant plus instable que le nombre de masse du Noyau est grand."
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 3,
+     "q": "La radioactivité est",
+     "options": [
+      "Un phénomène aléatoire spontané.",
+      "Due à des transformations d’origine noyau atomique instable.",
+      "A la base de production de radioéléments artificielle.",
+      "Est à la base de l’imagerie par ultrasons.",
+      "Est à la base de la radiothérapie métabolique."
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "Une unité de masse atomique correspond :",
+     "options": [
+      "Au douzième de la masse de la mole de Carbone14",
+      "Au douzième de la masse de la mole de Carbone12",
+      "Au douzième de la masse de l’atome Carbone12",
+      "Est égal à 1,00898 pour le neutron",
+      "Est équivalent à 0,511 MeV pour le proton."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Une désintégration bêta plus (β + ) :",
+     "options": [
+      "Se produit lorsque le noyau atomique présente un excès de protons.",
+      "Résulte de la transformation d’un neutron en un positron.",
+      "S’accompagne d’une augmentation du numéro atomique Z.",
+      "Entraine une augmentation du nombre A d’une unité.",
+      "A pour conséquence l’émission de deux photons d’annihilations."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 6,
+     "q": "La capture électronique :",
+     "options": [
+      "Concerne des noyaux atomiques avec excès de Neutrons.",
+      "Est un mode de transformation nucléaire type isobarique.",
+      "Concerne les noyaux situés au dessous de la courbe de stabilité nucléaire.",
+      "Peut être suivi par émission d'un rayonnement β + .",
+      "Peut être suivi par l'émission d'un électron Auger."
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 7,
+     "q": "La radioactivité bêta moins (β - )",
+     "options": [
+      "consiste en l’émission d’un anti neutron et d’un électron.",
+      "est utilisée en routine dans les services d’imagerie radiologique.",
+      "Dont le spectre d’émission en énergie est un spectre de raie.",
+      "est à la base de la radiothérapie métabolique.",
+      "concerne surtout les noyaux ayant excès de neutrons."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Un rayonnement électromagnétique type X",
+     "options": [
+      "est produit au cours des captures électroniques.",
+      "peut causer des effets biologiques déterministes ou stochastiques. 2",
+      "Est utilisé en imagerie Radiologique.",
+      "accompagnele phénomène d’annihilation.",
+      "est un rayonnement dont l’énergie est proportionnelle à la fréquence."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "La radioactivité gamma γ",
+     "options": [
+      "est du à une désexcitation nucléaire.",
+      "est d’origine cortège électronique instable.",
+      "est utilisée en routine en imagerie Scintigraphique.",
+      "est à la base de l’imagerie par ultrason.",
+      "Sont des rayonnements ionisants à énergie élevée."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Un rayonnement de particules alpha (2 4 He):",
+     "options": [
+      "permet d'irradier des tissus plus profonds que les électrons.",
+      "est caractérisé par une trajectoire en centimètre dans l’organisme irradié.",
+      "A une trajectoire en ligne droite en interaction avec les électrons d'une cible.",
+      "Son TEL est plus grand que celui du proton.",
+      "Résulte d’une transformation isobarique."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "L’activité d’un échantillon radioactifs :",
+     "options": [
+      "est le nombre de désintégration radioactif de cet échantillon par seconde.",
+      "peut être mesuré par un Activimétre.",
+      "Dont l’unité de mesure est le Becquerel.",
+      "Due à des transformations d’origine cortège électronique.",
+      "Dont la période est inversement proportionnelle à la constante radioactive."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Les rayonnements de particules lourds type protons :",
+     "options": [
+      "sont utilisés en imagerie anatomique.",
+      "Leurs trajectoires est de l’ordre de centimètres dans l’organisme irradié.",
+      "Ont une trajectoire en ligne brisée en interaction avec les électrons d'une cible.",
+      "Le Transfert d’énergie linéique n’influence pas la trajectoire qui est rectiligne.",
+      "Le Transfert d’énergie linéique est plus grand que celui des électrons."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Le Transfert d’énergie linéique TEL:",
+     "options": [
+      "Est la quantité d’énergie transférée au milieu cible par unité de langueur de la Trajectoire.",
+      "Dépend de la nature de la matière traversée.",
+      "Il s’exprime en joule/m",
+      "S’il est > 16 eV, il peut ioniser une molécule d’eau.",
+      "En fin de parcours, il est minimal."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Le technétium 99m Tc métastable est : 43",
+     "options": [
+      "Est un isotope du technétium 97 43Tc stable.",
+      "Est un radionucléide utilisé en radiothérapie métabolique.",
+      "A une durée de vie de 6 heures. 3",
+      "Est un émetteur Beta plus.",
+      "Est produit à travers l’élution du Molybdène."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "L’ interaction du rayonnement ionisant par effet photoélectrique avec la matière :",
+     "options": [
+      "Est une interaction de type obligatoire.",
+      "On peut arrêter complètement le faisceau des rayonnements par des écrans de plomb.",
+      "Résulte d’une absorption totale du rayonnement incident par l’atome.",
+      "Dont les phénomènes secondaires de l’effet est l’expulsion d’un électron (Effet AUGER)",
+      "Est à l’origine des photons gamma diffusés."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Lorsqu’un organisme humain subit une irradiation externe par un faisceau de photons dont l’énergie est de 250 MeV,",
+     "options": [
+      "Les modes d’atténuation principaux sont les effets par création de paire.",
+      "Les effets secondaires de cette irradiation sont l’annihilation, ionisations et excitations des atomes cibles.",
+      "Les effets de cette irradiation sont obligatoires.",
+      "la couche de demi-atténuation CDA dépend de la nature du matériau cible.",
+      "la couche de demi-atténuation CDA est inversement proportionnelle au coefficient d’atténuation μ"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "L’interaction des rayonnements ionisants par effet Compton :",
+     "options": [
+      "Est une interaction entre un électron de la source et un électron atomique cible.",
+      "Est une interaction entre un photon énergétique et un électron faiblement lié.",
+      "Résulte d’une absorption totale du rayonnement incident.",
+      "Peut être suivi par une émission d’un électron Auger.",
+      "Est à l’origine des photons gamma diffusés."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Parmi les énoncés suivants, cocher la seule proposition fausse :",
+     "options": [
+      "Les scintillateurs solides convertissent le photon incident très énergétique en un grand nombre de photons lumineux.",
+      "Les scintillateurs du gamma camera sont constitués de cristaux de NaI.",
+      "Les PM (photomultiplicateurs) convertissent le signal lumineux en signal électrique.",
+      "La photocathode permet la transformation du photon en électron par effet photoélectrique.",
+      "les détecteurs à scintillation solide sont des plaques photographiques."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Le détecteur semi-conducteur.",
+     "options": [
+      "Est constitué par l’accolement de deux semi-conducteurs en cristaux de silicium.",
+      "Est moins sensible en détection des rayonnements ionisant que les détecteurs à gaz.",
+      "Est de faible dimension.",
+      "Peut détecter des photons de 3eV.",
+      "Peut détecter les Rayons non ionisants."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Le détecteur à gaz.",
+     "options": [
+      "Est constitué d’une enceinte avec un vide poussé.",
+      "Est fonctionnel avec une ddp supérieur à 100 Volt.",
+      "Est utilisé comme détecteur Geiger Muller.",
+      "En régime de «chambre d’ionisation »est utilisée en IRM.",
+      "Peut détecter les Rayons Béta plus. 4"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "En médecine nucléaire, l’Activimétre.",
+     "options": [
+      "Est constitué par un détecteur à gaz.",
+      "Est constitué par un tube de Coolidge.",
+      "Permet de mesurer l’activité du traceur à injecter au patient.",
+      "Est utilisé pour détecter les contaminations radioactives.",
+      "Toutes les propositions sont justes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Le détection des rayonnements à l’aide d’un détecteur à émulsion photographique.",
+     "options": [
+      "Est le détecteur le plus ancien composé de sels de Bromure d’argents fixé sur un support en plastique.",
+      "Peut être utilisé en dosimétrie passive.",
+      "Peut être utilisé en Activimétre.",
+      "Est utilisé pour visualiser les images médicales anatomiques.",
+      "Toutes les propositions précédentes sont justes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "Les principes de la radioprotection pour le patient :",
+     "options": [
+      "La justification",
+      "L’éloignement du patient",
+      "Le port d’un écran de plomb",
+      "La limitation",
+      "L’optimisation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Un flacon d’iode 131 a une activité de 3700 MBq. L’activité en MBq après 10 période est de :",
+     "options": [
+      "37",
+      "0,037",
+      "0,0037",
+      "370",
+      "Aucune préposition n’est juste."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Les effets Stochastique des rayonnements ionisants sont :",
+     "options": [
+      "Obligatoires",
+      "Tardifs se voit après des années de l’exposition.",
+      "réversibles",
+      "caractéristiques F- Liés à la transformation des cellules lésées."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "Les effets déterministes des rayonnements ionisants sont :",
+     "options": [
+      "Obligatoires",
+      "précoces",
+      "réversibles",
+      "caractéristiques",
+      "Liés à la mort cellulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Les effets biologiques des RI dépendent de divers facteurs liés :",
+     "options": [
+      "Caractéristiques du Rayonnement ionisant (type, énergie et parcours) 5",
+      "Composition de l'organisme (type cellulaire, tissu, …)",
+      "La dose absorbée",
+      "Le débit de dose",
+      "Toutes les réponses sont Justes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "L’accommodation:",
+     "options": [
+      "Est un phénomène réflexe lors d’une vision des objets rapprochés.",
+      "Dont le degré augmente chez le sujet âgé.",
+      "Est accompagné d’une contraction pupillaire.",
+      "Est du à des modifications de courbure du cristallin.",
+      "Peut être inhibé par des médicaments (collyres mydriatiques)."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Dans les milieux transparents de l’œil Humaine :",
+     "options": [
+      "Le Dioptre cornéen postérieur est le plus puissant des dioptres oculaires.",
+      "la puissance totale de l’œil est environ de 56 Dioptrie.",
+      "Le cristallin est l’organe responsable de l’accommodation.",
+      "l’image est floue si elle est projetée en avant de la rétine.",
+      "L’humeur vitré est un liquide gélatineux qui donne la forme et la consistance de l’œil."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "Une Hypermétrope:",
+     "options": [
+      "Est une amétropie cylindrique.",
+      "La puissance de l’œil est forte.",
+      "Le Foyer image est en arrière de la rétine.",
+      "Peut se manifester par une fatigue oculaire et des céphalées chez l’enfant.",
+      "L’anomalie de vision peut être corrigée par des verres sphériques convergents."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Le parcours d’accommodation se définit par : (cochez la seule réponse juste)",
+     "options": [
+      "La distance du Punctum Proximum à l’œil",
+      "La distance entre le Punctum Proximum et le Punctum Remotum.",
+      "La distance du Punctum Remotum à l’œil",
+      "La distance qui sépare le Punctum Proximum à la rétine.",
+      "La distance entre le Punctum Remotum et l’infini."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "Dans un astigmatisme myopique composé conforme à la règle, les focales sont situées :",
+     "options": [
+      "En arrière de la rétine",
+      "En avant de la rétine",
+      "La verticale est en avant de la rétine et l’horizontale est en arrière la rétine 6",
+      "La verticale est en arrière de l’horizontale.",
+      "Les deux focales sont sur la rétine."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Le punctum proximum PP est à 25cm en avant de l’œil, le PR : punctum remotum est à l’infini",
+     "options": [
+      "AA(Amplitude d’accommodation) est de 4 dioptries.",
+      "le sujet est Myope.",
+      "La vision de loin est altérée.",
+      "La vision de proche est normale.",
+      "le sujet ne lit pas normal sans lunette."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Dans un astigmatisme mixte conforme à la règle, les focales sont situées :",
+     "options": [
+      "En arrière de la rétine",
+      "En avant de la rétine",
+      "La verticale est en avant de la rétine et l’horizontale est en arrière la rétine",
+      "La verticale est en arrière de la rétine et l’horizontale est en avant de la rétine",
+      "Les deux focales sont sur la rétine."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "L’astigmatisme Hyperopique composé est définis par :",
+     "options": [
+      "Une focale en avant de la rétine, l’autre en arrière de la rétine.",
+      "Deux focales sont en arrière de la rétine.",
+      "Deux focales sont en avant de la rétine.",
+      "Deux focales sont sur la rétine.",
+      "Deux focales sont horizontales."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1qqDVEzwUAg2meIBhEhuT_c38YCsWO8lP",
+   "title": "Isolés — recueil complet",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Faculté de Médecine BIOPHYSIQUE PCEM2 Session Mai 2022 ; Durée 1 HEURE Indiquer la ou les propositions justes (Question à Choix Multiples, QCM) 1-La radioactivité est un phénomène:",
+     "options": [
+      "Aléatoire qui se produit lors des désintégrations nucléaire.",
+      "Put être suivi par des émissions particulaires.",
+      "Pet être suivi par des émissions de rayonnement électromagnétique.",
+      "Intéresse les Noyaux atomiques instable.",
+      "Qui peut être artificiel ou naturelle."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le noyau d'un atome",
+     "options": [
+      "Est l'origine d'émission des rayons ultraviolets.",
+      "Est à l'origine d'émission des rayons gamma.",
+      "A une masse inférieure à la somme des masses des neutrons et des protons.",
+      "L' instabilité nucléaire est du à la répulsion forte entre neutrons.",
+      "Est d'autant plus instable que le nombre de masse du Noyau est grand."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Dans la Structure du noyau Atomique:",
+     "options": [
+      "Les nucléides sont les neutrons et de protons.",
+      "Le numéro atomique Z correspond au nombre de Neutrons.",
+      "Le nombre des nucléons correspond à la somme des protons et d'électrons.",
+      "Le nombre de protons est égale au nombre d'électrons qui gravitent autour du noyau.",
+      "les neutrons ont une charge positive."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La radioactivité gamma y",
+     "options": [
+      "Est d'origine noyau atomique stable.",
+      "Résulte d'un réarrangement du cortège électronique de l'atome.",
+      "Est utilisée en imagerie ultrasonore.",
+      "Est à la base de l'imagerie résonance nucléaire.",
+      "Est détectée par la gamma caméra."
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "La capture électronique:",
+     "options": [
+      "Concerne des noyaux atomiques ayant un excès de neutrons.",
+      "Est plus probable pour les noyaux atomiques légers.",
+      "Concerne les noyaux atomiques stables.",
+      "Peut être suivi par émission d'un rayonnement B*.",
+      "Peut être suivi de 'émission d'un électron Auger."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 6,
+     "q": "Une désintégration bêta plus (ß*) :",
+     "options": [
+      "Se produit lorsque le noyau atomique présente un excès de protons.",
+      "Résulte de la transformation d'un neutron en un positron.",
+      "s'accompagne d'une diminution du numéro atomique Z.",
+      "Entraine une augmentation du nombre A d'une unité.",
+      "Est caractérisée par 'émission d'un proton. 2"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Un Faisceau externe de rayonnement de particules alpha (2 4He):",
+     "options": [
+      "Peut être utilisé en radiothérapie en protégeant les tissus sains environnant.",
+      "est caractérisé par une trajectoire en centimètre dans 'organisme irradié,",
+      "A une trajectoire en ligne brisée en interaction avec les électrons d'une cible.",
+      "Son TEL est plus grand que celui de l'électron.",
+      "est toujours accompagné de l'émission de neutrinos."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Le Transfert d'énergie linéique TEL:",
+     "options": [
+      "Est la quantité d'énergie transférée au milieu cible par unité de langueur de la trajectoire.",
+      "Dépend de la nature de la matière traversée.",
+      "Il s'exprime en joule/ um",
+      "S'il est > 16 ev, il peut ioniser une molécule d'eau.",
+      "En fin de parcours, il est Maximal."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "L' interaction du rayonnement ionisant par effet photoélectrique avec la matière:",
+     "options": [
+      "Est une interaction de type obligatoire.",
+      "On put qu'atténuer le faisceau des rayonnements par des écrans de plomb.",
+      "Résulte d'une absorption total du rayonnement incident par l'atome.",
+      "Dont les phénomènes secondaires de l'effet est l'expulsion d'un électron (Effet AUGER)",
+      "Est à l'origine des photons gamma diffusés."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Le détecteur à gaz des rayonnements ionisants.",
+     "options": [
+      "Est constitué d'une enceinte remplie de gaz rare.",
+      "Est non fonctionnel pour une ddp inférieure à 100Volt",
+      "Peut être utilisé comme détecteur Geijer Muller. DEn régime de «chambre d'ionisation » est utilisée comme Activimétre. E-Peut détecter les rayons Ultraviolets."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Le détecteur semi-conducteur.",
+     "options": [
+      "Est constitué par l'accolement de dux semi-conducteurs en cristaux de silicium.",
+      "Est moins sensible en détection des rayonnements ionisant que les détecteurs à gaz.",
+      "Est de fable dimension.",
+      "Peut détecter des photons de 3eV.",
+      "Peut détecter les Rayons non ionisants. 3"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Le détecteur à Scintillation solide",
+     "options": [
+      "Est constitué de cristaux de silicium.",
+      "Est utilisé comme détecteur d'émulsion photographique.",
+      "Est utilisé comme détecteur d'excitation.",
+      "Est utilisés pour l'imagerie scintigraphique et comme compteurs des particules.",
+      "Comprend également de photomultiplicateurs."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Une unité de masse atomique correspond :",
+     "options": [
+      "Au douzième de la masse de la mole de Carbone14",
+      "Au douzième de la masse de la mole de Carbone 12",
+      "Au douzième de la masse d'un atome de Carbone12",
+      "Est égal à 1,00898 pour le neutron",
+      "Est équivalent à 0,511 MeV pour l'électron"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "A propos de la détection des rayonnements à 'aide d'un compteur à gaz.",
+     "options": [
+      "Le détecteur d' un compteur à gaz est constitué d'un cristal scintillant et des PM.",
+      "En régime de «chambre d'ionisation» est utilisée en Activimétre.",
+      "to déalma de a computeurs pronomionnels est wild an garmer mulibarcle.",
+      "La dérecteur de de perews, pro portignse en pa m ma camera-",
+      "Toutes les propositions précédentes sont justes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "tes effers déterministes Hes cedentements ion sants sont:",
+     "options": [
+      "Obligatoires",
+      "précoces",
+      "réversibles",
+      "caractéristiques",
+      "Liés á la mort cellulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Donner la (les) propositiON(S) exactelshians un détecteur à scintilation;",
+     "options": [
+      "Liés à la mort cellulaire pile cristal permer la transformatitel a unhinoton de haute énergie en photons de basse énergie (scintilation)",
+      "Le scintillateur est constitué par une chambre d'ionisation.",
+      "Les scintillateurs du gamma camera son constitués par des cristaux de silicium,",
+      "Le cristal, Nal est l'élément in dispensable pour obtenir des photons moins énergétique.",
+      "La photocathode permet la transformation de l'Electron en photon par effet photoélectrique."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Un flacon diode 131 a une activité de 3700 MBq, L'activité en MBq après 10 période est de :",
+     "options": [
+      "37",
+      "0,037",
+      "0.0037",
+      "3,7",
+      "Aucune préposition 'est juste."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Lorsqu'un organisme human subit une irradiation externe par un faisceau de photons don’t l'énergie est supérieure à 1,022MeV,",
+     "options": [
+      "Les modes d'atténuation principaux sont les effets Compton et photo-électriques",
+      "L'interaction des rayonnements matière est un phénomène aléatoire. 4",
+      "La création de pairs ions positifs et négatifs est possible.",
+      "la couche de demi-atténuation CDA est inversement proportionnelle au coefficient d'atténuation.",
+      "Toutes les propositions précédentes sont fausses."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Donner la (les) proposition(s) exacte(s).",
+     "options": [
+      "Les dosimètres actifs permettent une mesure directe de la dose absorbée par le travailleur.",
+      "-Les compteurs à scintillation sont des dosimètres passifs.",
+      "Les détecteurs à Gaz sont moins sensible que les semi-conducteurs.",
+      "Les dosimètres passives sont des dosifilm permettant une mesure de la dose des RI absorbé.",
+      "Film radiographique sont des détecteurs sensible aux rayons X"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "En cas d'exposition aux rayonnements ionisants, les Facteurs influençant la survie cellulaire sont:",
+     "options": [
+      "La nature du rayonnement",
+      "Le Fractionnement de la dose",
+      "Le débit de dose",
+      "Le type cellulaire",
+      "L'effet oxygène"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Le facteur de pondération pour les particules alpha est égale à:",
+     "options": [
+      "WR = 5",
+      "We = 10",
+      "Wx = 15",
+      "WR = 20",
+      "WR = 1"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Lors de l'irradiation d'une cellule, la radiosensibilité est maximale durant:",
+     "options": [
+      "La phase M",
+      "La phase S",
+      "La phase G1",
+      "La phase G3",
+      "La phase G0"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "Une cellule est d'autant plus radiosensible si :",
+     "options": [
+      "Elle est jeune",
+      "Elle est mature",
+      "Elle est différenciée",
+      "Elle est indifférenciée",
+      "Elle se multiplie lentement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Pour éviter la contamination radioactive ; il faut se protéger:",
+     "options": [
+      "Par des gants en plomb.",
+      "Par un paravent de plomb.",
+      "Par des gants ordinaires.",
+      "En s'éloignant de la source radioactive.",
+      "Toutes les propositions précédentes sont fausses."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Les effets biologiques des rayonnements ionisants sont :",
+     "options": [
+      "Indirecte si rupture de la double chaine d'ADN 5",
+      "Directe si formation des radicaux libres.",
+      "Tardifs si développement d'un cancer radio-induit.",
+      "Précoces dans les malformations chromosomiques.",
+      "Minimes sur les gonades et le cristallin."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "Les effets Stochastique des rayonnements ionisants sont:",
+     "options": [
+      "Obligatoires",
+      "Tardifs se voit après des années de l'exposition.",
+      "réversibles",
+      "caractéristiques",
+      "Liés à la transformation des cellules lésées."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "La Tomographie par émission de positon est une imagerie médicale,",
+     "options": [
+      "De type Scintigraphique.",
+      "Dont le radio-traceur utilisé est émetteur de Beta plus.",
+      "Utilise la radioactivité par phénomène d'annihilation.",
+      "Utilise les photons gamma produit par le Fluor 18.",
+      "Utiliser pour la détection des foyers de cancer."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "L'accommodation :",
+     "options": [
+      "est un phénomène d'adaptation oculaire pour la vision de prés.",
+      "Dont le degré diminue avec l'âge.",
+      "s'accompagne d'une contraction pupillaire.",
+      "Est du à des modifications de courbure du cristallin.",
+      "Peut être inhibé par des médicaments (collyres cycloplégique)."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "La myopie se caractérise par :",
+     "options": [
+      "Le rayon de courbure cornéen diminué",
+      "La longueur axiale de l'oil est augmentée.",
+      "La vision de loin est floue.",
+      "les céphalées surviennent à la vision de proche.",
+      "Le Punctum Proximum est très proche de l'cil."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Dans 'astigmatisme myopique simple",
+     "options": [
+      "L'image d'un point est un segment de droite.",
+      "L'image d'un point est un point.",
+      "Le cristallin est souvent la cause.",
+      "Une focale est sur la rétine.",
+      "Une focale est en avant de la rétine. 6"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "L'astigmatisme :",
+     "options": [
+      "La cornée est non sphérique.",
+      "est essentiellement du à une anomalie du cristallin.",
+      "S'accompagne de vision floue.",
+      "le type direct conforme à la règle est le plus fréquent",
+      "Peut être mixte, simple ou composé."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "En cas d'irradiation cellulaire, les procédures de réparation de l'ADN sont:",
+     "options": [
+      "Action d'une ligase",
+      "Action d'endonucléases",
+      "Lipases",
+      "Polymérases",
+      "Toutes les propositions sont justes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Un Les principe fondamentaux suivants sont tous des principes de la radioprotection sauf un. Lequel?",
+     "options": [
+      "Précaution",
+      "Justification",
+      "Limitation",
+      "Optimisation",
+      "ALARA"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "L'oreille externe:",
+     "options": [
+      "Capte les sons grâce au pavillon et les orientent vers l'intérieur du conduit auditif.",
+      "Le tympan vibre sous l'effet des ultrasons.",
+      "Joe un rôle dans la localisation des sources sonores.",
+      "Transmet l'onde sonore jusqu'au tympan.",
+      "Transmet les sons dont la fréquence est comprise entre 20 Hz et 20KHz."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "L'oreille interne:",
+     "options": [
+      "Permet la transmission des vibrations sonores à la périlymphe.",
+      "Contient une rampe vestibulaire et une rampe tympanique.",
+      "Permet l'amplification du son par augmentation de la pression acoustique.",
+      "Permet la modulation des sons sous l'action des canaux semi circulaires.",
+      "La trompe d'Eustache permet l'équilibre des pressions des fenêtres rond et ovales."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
 }
