@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
-import { PROMOS, MODULES, fileCount } from '@/lib/data';
+import { PROMOS, MODULES, fileCount, allDocs } from '@/lib/data';
 
 // S1 and S2 are shown exactly as written — that is what students call them.
 const SEMESTERS = ['S1', 'S2'];
@@ -66,9 +66,10 @@ export default function Archive() {
 
         {chosen.indexed && modules.map((m) => {
           const n = fileCount(m);
+          const total = allDocs(m).length;
           const meta = m.empty ? 'المجلد فارغ في Drive'
             : m.pending ? 'لم يُفهرس بعد'
-            : `${n} ملف · ${m.professors.length ? m.professors.join(' · ') : m.note}`;
+            : [`${n} محاضرة`, `${total} ملف`, m.professors.join(' · ')].filter(Boolean).join(' · ');
 
           const inner = (
             <div className="card-row">
