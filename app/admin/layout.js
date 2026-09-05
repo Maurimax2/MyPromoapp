@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
-import { staffEmails } from '@/lib/supabase/admin';
+import { staffEmails, syncStaffRole } from '@/lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 // admin page" — and that is exactly how it read when my own account was still
 // filed as a student. Being turned away now says who you are and why.
 export default async function AdminLayout({ children }) {
-  const profile = await currentProfile();
+  const profile = await syncStaffRole(await currentProfile());
   if (!profile) redirect('/login');
 
   if (!isStaff(profile)) {
@@ -40,8 +40,8 @@ export default async function AdminLayout({ children }) {
               {!configured
                 ? 'المتغيّر ADMIN_EMAILS غير مضبوط على الخادم، فلا أحد يدخل اللوحة. اضبطه ثم أعد النشر، ثم اخرج وادخل من جديد.'
                 : listed
-                  ? 'بريدك مدرج في ADMIN_EMAILS لكن الدور لم يُحدَّث بعد. اخرج ثم ادخل مرة أخرى.'
-                  : 'بريدك غير مدرج في ADMIN_EMAILS. أضفه، أعد النشر، ثم اخرج وادخل من جديد.'}
+                  ? 'بريدك مدرج في ADMIN_EMAILS لكن تعذّر تحديث الدور — تحقّق من SUPABASE_SERVICE_ROLE_KEY على الخادم.'
+                  : 'بريدك غير مدرج في ADMIN_EMAILS. أضفه ثم أعد النشر — لا حاجة للخروج والدخول.'}
             </p>
             <form action="/auth/signout" method="post">
               <button className="btn p">خروج</button>

@@ -1,4 +1,5 @@
 import { currentProfile, homeFor } from '@/lib/supabase/server';
+import { syncStaffRole } from '@/lib/supabase/admin';
 import LoginForm from './LoginForm';
 import SignedIn from './SignedIn';
 
@@ -9,7 +10,7 @@ export const dynamic = 'force-dynamic';
 // than being asked again for an email they have already given, or bounced
 // past the door so fast they cannot see it exists.
 export default async function Login() {
-  const profile = await currentProfile();
+  const profile = await syncStaffRole(await currentProfile());
   if (profile) return <SignedIn profile={profile} home={homeFor(profile)} />;
   return <LoginForm />;
 }

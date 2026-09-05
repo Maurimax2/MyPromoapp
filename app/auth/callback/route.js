@@ -12,7 +12,7 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase/server';
-import { supabaseAdmin, staffEmails } from '@/lib/supabase/admin';
+import { supabaseAdmin, staffEmails, syncStaffRole } from '@/lib/supabase/admin';
 
 const STAFF = ['owner', 'admin', 'editor'];
 
@@ -42,14 +42,8 @@ export async function GET(request) {
       status: staff ? 'approved' : 'pending',
     };
     await admin.from('profiles').insert(profile);
-  } else if (staff && !STAFF.includes(profile.role)) {
-    // The role used to be decided only when the row was first created, so a
-    // profile made before ADMIN_EMAILS existed stayed a student forever and
-    // its owner was posted to the feed on every sign-in. ADMIN_EMAILS is
-    // server config nobody but us can set, so it is safe to apply every time.
-    await admin.from('profiles')
-      .update({ role: 'admin', status: 'approved' }).eq('id', user.id);
-    profile = { ...profile, role: 'admin', status: 'approved' };
+  } else {
+    profile = await syncStaffRole({ ...profile, id: user.id, email: user.email });
   }
 
   const home = STAFF.includes(profile.role) ? '/admin' : '/feed';
