@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import Icon from './Icon';
+import { record } from '@/lib/review';
 
 // A UNEM question can have one right answer or four. You tick what you think
 // is true and then confirm — there is no way to score a multiple-answer
@@ -15,7 +15,7 @@ const LETTER = (n) => String.fromCharCode(65 + n);
 const sameSet = (a, b) =>
   a.length === b.length && [...a].sort().every((v, i) => v === [...b].sort()[i]);
 
-export default function Quiz({ questions, moduleId, moduleName, source }) {
+export default function Quiz({ questions, moduleId, moduleName, source, onFinish }) {
   const [i, setI] = useState(0);
   const [ticked, setTicked] = useState([]);
   const [shown, setShown] = useState(false);
@@ -34,7 +34,11 @@ export default function Quiz({ questions, moduleId, moduleName, source }) {
 
   const confirm = () => {
     setShown(true);
-    if (sameSet(ticked, answer)) setScore((s) => s + 1);
+    const right = sameSet(ticked, answer);
+    if (right) setScore((s) => s + 1);
+    // Right or wrong, the schedule is told: a miss comes back in ten minutes,
+    // a hit waits longer each time until the question is learnt.
+    if (q.id) record(q.id, right);
   };
 
   const next = () => {
@@ -49,7 +53,7 @@ export default function Quiz({ questions, moduleId, moduleName, source }) {
   if (done) {
     const pct = Math.round((score / questions.length) * 100);
     return (
-      <div className="scroll">
+      <>
         <div className="card quiz-result">
           <div className={`quiz-score ${pct >= 50 ? 'good' : 'poor'}`}>{score}/{questions.length}</div>
           <div className="quiz-verdict">
@@ -57,15 +61,15 @@ export default function Quiz({ questions, moduleId, moduleName, source }) {
           </div>
           <div className="quiz-actions">
             <button className="btn p" onClick={restart}>أعد المحاولة</button>
-            <Link className="btn g" href={`/quiz/${moduleId}`}>العودة إلى {moduleName}</Link>
+            <button className="btn g" onClick={onFinish}>العودة إلى {moduleName}</button>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="scroll">
+    <>
       <div className="quiz-bar">
         <div className="quiz-bar-fill" style={{ width: `${((i + (shown ? 1 : 0)) / questions.length) * 100}%` }} />
       </div>
@@ -110,7 +114,7 @@ export default function Quiz({ questions, moduleId, moduleName, source }) {
         </>
       )}
 
-      {source && <div className="quiz-src">من: {source}</div>}
-    </div>
+      <div className="quiz-src">{q.topic || source || ''}</div>
+    </>
   );
 }

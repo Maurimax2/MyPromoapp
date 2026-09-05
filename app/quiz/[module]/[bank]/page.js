@@ -39,12 +39,14 @@ export default async function BankPage({ params }) {
           </div>
         </div>
       </header>
-      <Quiz
-        questions={questions}
-        moduleId={id}
-        moduleName={m.name}
-        source={bank ? bank.title : null}
-      />
+      <div className="scroll">
+        <Quiz
+          questions={questions}
+          moduleId={id}
+          moduleName={m.name}
+          source={bank ? bank.title : null}
+        />
+      </div>
     </>
   );
 }

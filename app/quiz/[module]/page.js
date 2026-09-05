@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Icon from '@/components/Icon';
 import { MODULES, moduleById, sectionsFor } from '@/lib/data';
+import QuizPicker from '@/components/QuizPicker';
 import { banksFor, questionCount, unansweredCount } from '@/lib/questions';
 
 export function generateStaticParams() {
@@ -38,36 +39,7 @@ export default async function QuizModule({ params }) {
 
       <div className="scroll">
         {total > 0 && (
-          <Link href={`/quiz/${id}/tout`} className="card quizcard">
-            <div className="quizcard-ic"><Icon name="quiz" size={19} /></div>
-            <div className="grow">
-              <div className="nm" style={{ fontSize: 14 }}>كل الأسئلة</div>
-              <div className="mt">{total} سؤال من {banks.length} امتحان</div>
-            </div>
-            <span className="chev"><Icon name="chev" size={18} /></span>
-          </Link>
-        )}
-
-        {banks.length > 0 && (
-          <section className="chapter">
-            <div className="chapter-head">
-              <span className={`chapter-ic tint-${m.tint}`}><Icon name="quiz" size={16} /></span>
-              <div className="grow">
-                <div className="chapter-t">Par épreuve</div>
-                <div className="chapter-s">{banks.length} امتحان</div>
-              </div>
-            </div>
-            {banks.map((b) => (
-              <Link key={b.fid} className="lec" href={`/quiz/${id}/${b.fid}`}>
-                <span className="num">{b.questions.length}</span>
-                <span className="grow">
-                  <span className="lec-nm" style={{ display: 'block' }}>{b.title}</span>
-                  <span className="lec-mt">{b.section}</span>
-                </span>
-                <span className="chev"><Icon name="chev" size={17} /></span>
-              </Link>
-            ))}
-          </section>
+          <QuizPicker banks={banks} moduleId={id} moduleName={m.name} />
         )}
 
         {total === 0 && (

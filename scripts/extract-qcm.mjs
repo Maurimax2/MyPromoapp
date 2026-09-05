@@ -104,7 +104,12 @@ for (const m of modules) {
       // Papers that answer themselves put the key after the questions; the
       // rest keep it in a separate file the catalogue already points at.
       const [asked, answered] = splitAtCorrection(text);
-      const usable = (list) => list.filter((q) => q.options.length >= 3 && q.q.length > 15);
+      // A proposition is a sentence, not a page. Anything longer than that is
+      // the parser having swallowed the questions that followed, and showing
+      // it to a student would be worse than dropping it.
+      const usable = (list) => list.filter((q) =>
+        q.options.length >= 3 && q.q.length > 15 && q.q.length < 400 &&
+        q.options.every((o) => o.length < 300));
 
       // Some papers put `REPONSES` in the title, above everything. Cutting
       // there would throw the paper away, so take whichever half actually
@@ -114,6 +119,9 @@ for (const m of modules) {
       const qs = usable(whole).length > usable(beforeKey).length ? whole : beforeKey;
 
       let key = parseAnswerKey(answered);
+      // Sheets that answer themselves fiche by fiche keep the key inline
+      // rather than at the end, so fall back to reading the whole document.
+      if (key.size === 0) key = parseAnswerKey(text);
       if (key.size === 0 && src.correction) {
         try {
           await wait(250);
