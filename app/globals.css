@@ -912,3 +912,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ctd-move { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 .ctd-move > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
 .btn.g.sm.danger { color: var(--wrong); }
+
+/* the years, and a year's subjects */
+.ctm-badge {
+  flex-shrink: 0; min-width: 62px; padding: 6px 9px; border-radius: 10px;
+  color: #fff; font-size: 12px; font-weight: 700; text-align: center;
+  letter-spacing: .01em;
+}
+.ct-sem { display: flex; flex-direction: column; gap: 8px; }
+.ct-none {
+  font-size: 13px; color: var(--ink-3); background: var(--surface);
+  border-radius: var(--r-card); padding: 15px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.ct-start { text-align: start; }
+/* A French title is forced LTR; its meta line has to follow, or the two
+   lines of one row sit on opposite edges of the card. */
+.ltr { direction: ltr; text-align: left; }

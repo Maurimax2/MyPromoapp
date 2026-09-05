@@ -28,21 +28,27 @@ export async function POST(request) {
   const db = supabaseAdmin();
   const report = { modules: 0, chapters: 0, documents: 0, banks: 0, questions: 0 };
 
+  // Every write below used to have its error thrown away, so the button said
+  // "done" over an empty database. It says what actually happened now.
+  const failures = [];
+  const check = (what, { error }) => { if (error) failures.push(`${what}: ${error.message}`); };
+
   for (const [i, m] of MODULES.entries()) {
-    await db.from('modules').upsert({
+    check(`module ${m.id}`, await db.from('modules').upsert({
       id: m.id, promo: m.promo, semester: m.semester, name: m.name,
       icon: m.icon, tint: m.tint, professors: m.professors || [], position: i,
-    });
+    }));
     report.modules += 1;
 
     // Chapters come back with their new ids so the lectures can point at them.
     const chapterId = new Map();
     for (const [c, ch] of (m.chapters || []).entries()) {
-      const { data } = await db.from('chapters')
+      const res = await db.from('chapters')
         .upsert({ module: m.id, title: ch.title, subtitle: ch.subtitle, position: c },
                 { onConflict: 'module,title' })
         .select('id').maybeSingle();
-      if (data) chapterId.set(ch.title, data.id);
+      check(`chapter ${ch.title}`, res);
+      if (res.data) chapterId.set(ch.title, res.data.id);
       report.chapters += 1;
     }
 
@@ -72,10 +78,12 @@ export async function POST(request) {
 
     // Parents first, then the other years that hang off them.
     const parents = rows.map(({ _versions, _correction, ...r }) => r);
-    const { data: saved } = await db.from('documents')
+    const savedRes = await db.from('documents')
       .upsert(parents, { onConflict: 'drive_id' })
       .select('id, drive_id');
-    report.documents += parents.length;
+    check(`documents ${m.id}`, savedRes);
+    const saved = savedRes.data;
+    report.documents += saved?.length ?? 0;
 
     const idByDrive = new Map((saved || []).map((d) => [d.drive_id, d.id]));
 
@@ -87,16 +95,19 @@ export async function POST(request) {
         parent: idByDrive.get(r.drive_id) ?? null, position: k,
       })));
     if (children.length) {
-      await db.from('documents').upsert(children, { onConflict: 'drive_id' });
+      check(`versions ${m.id}`, await db.from('documents')
+        .upsert(children, { onConflict: 'drive_id' }));
       report.documents += children.length;
     }
 
     for (const [b, bank] of banksFor(m.id).entries()) {
-      const { data: row } = await db.from('question_banks')
+      const bankRes = await db.from('question_banks')
         .upsert({ module: m.id, title: bank.title, section: bank.section || null,
                   document: idByDrive.get(bank.fid) ?? null, position: b },
                 { onConflict: 'module,title' })
         .select('id').maybeSingle();
+      check(`bank ${bank.title}`, bankRes);
+      const row = bankRes.data;
       if (!row) continue;
       report.banks += 1;
 
@@ -111,15 +122,27 @@ export async function POST(request) {
         status: (q.answer || []).length ? 'published' : 'needs_answer',
       }));
       if (questions.length) {
-        await db.from('questions').upsert(questions, { onConflict: 'bank,n' });
+        check(`questions ${bank.title}`, await db.from('questions')
+          .upsert(questions, { onConflict: 'bank,n' }));
         report.questions += questions.length;
       }
     }
   }
 
   await db.from('audit_log').insert({
-    actor: profile.id, action: 'seeded_catalogue', detail: report,
+    actor: profile.id, action: 'seeded_catalogue', detail: { ...report, failures },
   });
 
-  return NextResponse.redirect(new URL('/admin', request.url), 303);
+  // A failed migration must not look like a finished one. The first few
+  // messages are enough to say what went wrong — usually one missing table.
+  if (failures.length) {
+    const url = new URL('/admin', request.url);
+    url.searchParams.set('seed', 'failed');
+    url.searchParams.set('why', failures.slice(0, 3).join(' · ').slice(0, 300));
+    return NextResponse.redirect(url, 303);
+  }
+
+  const done = new URL('/admin', request.url);
+  done.searchParams.set('seed', String(report.documents));
+  return NextResponse.redirect(done, 303);
 }

@@ -80,9 +80,12 @@ export default function ContentScreen({ module, documents, where, counts, canDel
 
   return (
     <div className="admin-body">
-      <Link href="/admin/content" className="admin-bar ct-back">
-        <span><Icon name="chev" size={15} /> {module?.name}</span>
-        <span>{module?.semester}</span>
+      <Link
+        href={module?.promo ? `/admin/content?promo=${module.promo}` : '/admin/content'}
+        className="admin-bar ct-back"
+      >
+        <span><Icon name="chev" size={15} /> <span dir="ltr">{module?.name}</span></span>
+        <span dir="ltr">{module?.semester}</span>
       </Link>
 
       <div className="rev-tabs">
@@ -102,7 +105,9 @@ export default function ContentScreen({ module, documents, where, counts, canDel
           <div className="admin-card-t">لا ملفات هنا</div>
           <p className="admin-card-b">لا شيء في هذه الشاشة لهذه المادة بعد.</p>
         </section>
-      ) : (
+      ) : null}
+
+      {!rows.length ? null : (
         <div className="admin-rows">
           {rows.map((d) => (
             <div key={d.id} className={`ctd${busy === d.id ? ' off' : ''}${!d.published ? ' hidden' : ''}`}>
@@ -173,6 +178,15 @@ export default function ContentScreen({ module, documents, where, counts, canDel
           ))}
         </div>
       )}
+
+      <Link href={`/admin/import?module=${module?.id || ''}`} className="admin-card admin-import">
+        <div className="admin-import-ic"><Icon name="plus" size={22} /></div>
+        <div className="grow">
+          <div className="admin-card-t">أضف ملفات</div>
+          <div className="admin-card-b">الصق رابط مجلد Drive أو ملفًا واحدًا</div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
     </div>
   );
 }

@@ -1,85 +1,82 @@
-import Link from 'next/link';
-import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile, isAdmin } from '@/lib/supabase/server';
+import PromoScreen from './PromoScreen';
+import ModuleScreen from './ModuleScreen';
 import ContentScreen from './ContentScreen';
 
 export const dynamic = 'force-dynamic';
 
-// No module chosen yet: the modules themselves, with how many files each
-// holds. It is the fastest way to see that something never got imported.
-async function ModulePicker({ sb }) {
-  const { data: modules } = await sb
-    .from('modules').select('id, name, semester, tint').order('position');
+// Three depths, one route. The years, then a year's subjects, then a
+// subject's files — `?promo=` and `?module=` say how deep you are.
+export default async function ContentPage({ searchParams }) {
+  const params = await searchParams;
+  const sb = await supabaseServer();
 
-  const counts = {};
-  for (const m of modules || []) {
-    const { count } = await sb.from('documents')
-      .select('*', { count: 'exact', head: true }).eq('module', m.id);
-    counts[m.id] = count || 0;
-  }
+  // ---- a subject's files -------------------------------------------------
+  if (params?.module) {
+    const where = params.where || 'archive';
+    const me = await currentProfile();
 
-  if (!modules?.length) {
+    const [{ data: module }, { data: documents }] = await Promise.all([
+      sb.from('modules').select('id, name, semester, promo').eq('id', params.module).single(),
+      sb.from('documents')
+        .select('id, title, n, where_shown, section, ext, bytes, prof, year, published, drive_id')
+        .eq('module', params.module).eq('where_shown', where)
+        .order('position').limit(400),
+    ]);
+
+    const counts = {};
+    for (const w of ['archive', 'notes', 'quiz']) {
+      const { count } = await sb.from('documents')
+        .select('*', { count: 'exact', head: true })
+        .eq('module', params.module).eq('where_shown', w);
+      counts[w] = count || 0;
+    }
+
     return (
-      <div className="admin-body">
-        <section className="admin-card admin-seed">
-          <div className="admin-card-t">لا مواد بعد</div>
-          <p className="admin-card-b">انقل المحتوى إلى قاعدة البيانات من الصفحة الرئيسية أولًا.</p>
-          <Link href="/admin" className="btn g">الرئيسية</Link>
-        </section>
-      </div>
+      <ContentScreen
+        module={module}
+        documents={documents || []}
+        where={where}
+        counts={counts}
+        canDelete={isAdmin(me)}
+      />
     );
   }
 
-  return (
-    <div className="admin-body">
-      <div className="admin-bar"><span>المواد</span><span>{modules.length}</span></div>
-      <div className="admin-rows">
-        {modules.map((m) => (
-          <Link key={m.id} href={`/admin/content?module=${m.id}`} className="ctm">
-            <div className="grow">
-              <div className="ctm-t">{m.name}</div>
-              <div className="ctm-b">{m.semester} · {counts[m.id]} ملف</div>
-            </div>
-            <Icon name="chev" size={18} />
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
+  // ---- one year's subjects ----------------------------------------------
+  if (params?.promo) {
+    const [{ data: promo }, { data: modules }] = await Promise.all([
+      sb.from('promos').select('id, name, label').eq('id', params.promo).single(),
+      sb.from('modules').select('id, name, semester').eq('promo', params.promo).order('position'),
+    ]);
 
-export default async function ContentPage({ searchParams }) {
-  const params = await searchParams;
-  const moduleId = params?.module || null;
-  const where = params?.where || 'archive';
+    const files = {};
+    for (const m of modules || []) {
+      const { count } = await sb.from('documents')
+        .select('*', { count: 'exact', head: true }).eq('module', m.id);
+      files[m.id] = count || 0;
+    }
 
-  const sb = await supabaseServer();
-  if (!moduleId) return <ModulePicker sb={sb} />;
-
-  const me = await currentProfile();
-
-  const [{ data: module }, { data: documents }] = await Promise.all([
-    sb.from('modules').select('id, name, semester').eq('id', moduleId).single(),
-    sb.from('documents')
-      .select('id, title, n, where_shown, section, ext, bytes, prof, year, published, drive_id')
-      .eq('module', moduleId).eq('where_shown', where)
-      .order('position').limit(400),
-  ]);
-
-  const counts = {};
-  for (const w of ['archive', 'notes', 'quiz']) {
-    const { count } = await sb.from('documents')
-      .select('*', { count: 'exact', head: true }).eq('module', moduleId).eq('where_shown', w);
-    counts[w] = count || 0;
+    return <ModuleScreen promo={promo || { id: params.promo, name: params.promo }}
+                         modules={modules || []} files={files} />;
   }
 
-  return (
-    <ContentScreen
-      module={module}
-      documents={documents || []}
-      where={where}
-      counts={counts}
-      canDelete={isAdmin(me)}
-    />
-  );
+  // ---- the six years -----------------------------------------------------
+  const { data: promos } = await sb
+    .from('promos').select('id, name, label, badge, indexed').order('position');
+
+  const subjects = {};
+  const files = {};
+  for (const p of promos || []) {
+    const { data: mods } = await sb.from('modules').select('id').eq('promo', p.id);
+    subjects[p.id] = mods?.length || 0;
+    if (mods?.length) {
+      const { count } = await sb.from('documents')
+        .select('*', { count: 'exact', head: true })
+        .in('module', mods.map((m) => m.id));
+      files[p.id] = count || 0;
+    } else files[p.id] = 0;
+  }
+
+  return <PromoScreen promos={promos || []} subjects={subjects} files={files} />;
 }

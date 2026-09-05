@@ -23,9 +23,13 @@ const KINDS = [
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} MB` : '');
 
-export default function ImportScreen({ modules }) {
+export default function ImportScreen({ modules, preset }) {
   const [url, setUrl] = useState('');
-  const [module, setModule] = useState(modules[0]?.id || '');
+  // Arriving from a subject means the subject is already decided; picking it
+  // again from a list of nine is a step nobody needs.
+  const [module, setModule] = useState(
+    (preset && modules.some((m) => m.id === preset) ? preset : modules[0]?.id) || '',
+  );
   const [state, setState] = useState('idle');      // idle|reading|ready|saving|saved
   const [error, setError] = useState('');
   const [rows, setRows] = useState([]);
