@@ -9,13 +9,17 @@
 //
 //   GOOGLE_API_KEY=… node scripts/extract-qcm.mjs [moduleId …]
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { promisify } from 'node:util';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MODULES, sectionsFor } from '../lib/data.js';
 import { parseQcm } from '../lib/qcm/parse.js';
 import { parseAnswerKey, splitAtCorrection } from '../lib/qcm/key.js';
 
+const run = promisify(execFile);
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const key = process.env.GOOGLE_API_KEY;
 if (!key) { console.error('GOOGLE_API_KEY is not set'); process.exit(1); }
@@ -72,6 +76,38 @@ async function textOf(data) {
 // that carries that notice is skipped whatever folder it sits in.
 const RESERVED = /(droits?\s+(de\s+l'auteur\s+)?r[ée]serv|duplication[^.]{0,60}interdite|toute\s+reproduction[^.]{0,40}interdite)/i;
 
+// Half the archive is photographs of paper — no text layer at all. Those pages
+// are rendered at 300 dpi and read with Tesseract, which handles printed French
+// exam papers well. Handwritten corrections it reads badly; that is why the
+// answers to those are written by hand rather than trusted to the machine.
+async function ocrOf(data) {
+  const dir = await mkdtemp(join(tmpdir(), 'mypromo-ocr-'));
+  try {
+    await writeFile(join(dir, 'in.pdf'), data);
+    await run('pdftoppm', ['-r', '300', '-gray', '-png', join(dir, 'in.pdf'), join(dir, 'pg')],
+      { maxBuffer: 1 << 28 });
+    const pages = (await readdir(dir)).filter((f) => f.endsWith('.png')).sort();
+    let out = '';
+    for (const page of pages) {
+      const { stdout } = await run('tesseract', [join(dir, page), 'stdout', '-l', 'fra', '--psm', '6'],
+        { maxBuffer: 1 << 28 });
+      out += stdout + '\n';
+    }
+    return out;
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+}
+
+// A scanned sheet has a tick or a bullet before each proposition. The bullets
+// come back as `o`, `©`, `«`, `#` and worse; strip them so the letter opens the
+// line, which is what the parser looks for.
+const tidyOcr = (text) =>
+  text.split('\n')
+    .map((l) => l.replace(/^[^\p{L}\p{N}]{0,4}(?=[A-Ea-e]\s*[.):\u2013-])/u, '')
+                 .replace(/^[^\p{L}\p{N}]{0,4}(?=\d{1,3}\s*[.):\u2013-])/u, ''))
+    .join('\n');
+
 const only = process.argv.slice(2);
 const modules = only.length ? MODULES.filter((m) => only.includes(m.id)) : MODULES;
 
@@ -96,7 +132,11 @@ for (const m of modules) {
     if ((src.ext || 'PDF').toUpperCase() !== 'PDF') continue;
     try {
       await wait(500); // stay under Drive's per-second ceiling
-      const text = await textOf(await fetchFile(src.fid));
+      const data = await fetchFile(src.fid);
+      // pdf.js takes ownership of the buffer it is handed, so it gets a copy —
+      // otherwise there is nothing left for the OCR fallback to render.
+      let text = await textOf(data.slice());
+      if (text.replace(/\s/g, '').length < 200) text = tidyOcr(await ocrOf(data));
       if (RESERVED.test(text)) {
         console.log(`  skip  ${m.id} · ${src.title} — redistribution reserved by its author`);
         continue;
