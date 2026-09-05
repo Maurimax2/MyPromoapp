@@ -104,6 +104,11 @@ export default function Quiz({ questions, moduleId, moduleName, source, onFinish
         </button>
       ) : (
         <>
+          {q.by === 'claude' && (
+            <div className="quiz-by">
+              هذا الجواب من MyPromo، لا من ورقة التصحيح — الورقة الأصلية لا تحمل تصحيحًا.
+            </div>
+          )}
           <div className={`quiz-why ${sameSet(ticked, answer) ? 'ok' : 'no'}`}>
             {sameSet(ticked, answer)
               ? 'صحيح'

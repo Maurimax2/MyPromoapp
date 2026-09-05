@@ -1,0 +1,99 @@
+{
+  "note": "Answers for questions whose own paper carried no readable correction. `by` says who decided: `paper` is the paper's own key, read by hand where the parser could not; `claude` is Claude's answer and is shown to the student as such. Never merged into the extracted files, so a real correction always wins.",
+  "answers": {
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:1": {
+      "answer": [2, 3, 4], "by": "claude",
+      "why": "Le tegmen tympani appartient au rocher et regarde l’endocrâne. Les cellules aériques dépassent la mastoïde."
+    },
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:2": {
+      "answer": [0, 1, 3], "by": "claude",
+      "why": "Le cône lumineux est antéro-inférieur. Entre les deux replis malléolaires se trouve le processus latéral, non l’antérieur."
+    },
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:3": {
+      "answer": [3], "by": "claude",
+      "why": "C’est la branche longue de l’incus qui s’articule avec la tête du stapes, et sa branche courte qui repose dans la fossa incudis. La tête du malleus s’articule en arrière."
+    },
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:4": {
+      "answer": [0, 1, 2, 3], "by": "claude",
+      "why": "La fenêtre ronde amortit l’onde de la périlymphe, non de l’endolymphe."
+    },
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:5": {
+      "answer": [1, 2, 3], "by": "claude",
+      "why": "Le plexus tympanique vient du nerf de Jacobson (IX), pas de la corde du tympan. La fenêtre ronde est postéro-inférieure au promontoire."
+    },
+    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:6": {
+      "answer": [0, 3, 4], "by": "claude",
+      "why": "Le semi-canal du muscle du marteau est au-dessus de celui de la trompe, et ce muscle est innervé par le V3 — c’est le muscle de l’étrier qui dépend du VII."
+    },
+
+    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:8": {
+      "answer": [0], "by": "claude",
+      "why": "Le défaut de fusion entre bourgeon maxillaire supérieur et bourgeon nasal externe ouvre la fente faciale oblique, qui suit le trajet du canal lacrymo-nasal."
+    },
+    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:9": {
+      "answer": [2], "by": "claude",
+      "why": "Le bec-de-lièvre médian tient à l’absence de fusion des deux bourgeons nasaux internes sur la ligne médiane."
+    },
+    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:10": {
+      "answer": [1, 3], "by": "claude",
+      "why": "1ère poche : oreille moyenne et trompe. 2ème : amygdale palatine. 3ème : thymus et parathyroïdes inférieures. 4ème : parathyroïdes supérieures."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:2": {
+      "answer": [0, 3], "by": "claude",
+      "why": "Le stroma cornéen contient des kératocytes — non des kératinocytes — et aucun vaisseau : la cornée est avasculaire."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:4": {
+      "answer": [0, 1, 3, 4], "by": "claude",
+      "why": "De dehors en dedans : marteau, enclume, étrier. La proposition inverse l’ordre."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:5": {
+      "answer": [0, 2, 3], "by": "claude",
+      "why": "La fenêtre ronde s’ouvre sur l’oreille moyenne, non sur la trompe. Le labyrinthe osseux comprend aussi le limaçon."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:6": {
+      "answer": [0, 2, 3], "by": "claude",
+      "why": "Les macules siègent dans l’utricule et le saccule, les crêtes ampullaires dans les ampoules des canaux semi-circulaires."
+    },
+
+    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:2": {
+      "answer": [2], "by": "paper",
+      "why": "Réponse du corrigé de la fiche : enzymes homogènes et hétérogènes."
+    },
+    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:3": {
+      "answer": [2], "by": "paper",
+      "why": "Réponse du corrigé de la fiche."
+    },
+    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:4": {
+      "answer": [2], "by": "paper",
+      "why": "Réponse du corrigé de la fiche."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:1": {
+      "answer": [1], "by": "claude",
+      "why": "La clairance est le volume de plasma totalement épuré d’une substance par unité de temps."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:2": {
+      "answer": [2], "by": "claude",
+      "why": "La question demande la proposition fausse : la CK est d’origine musculaire et n’est pas un marqueur de cytolyse hépatique."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:3": {
+      "answer": [4], "by": "claude",
+      "why": "Le calcium ionisé représente environ la moitié du calcium total, c’est la fraction active, et son élévation freine la PTH. L’acidose augmente la fraction ionisée."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:4": {
+      "answer": [1], "by": "claude",
+      "why": "Les cellules bêta des îlots de Langerhans sécrètent l’insuline ; les alpha le glucagon, les delta la somatostatine."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:5": {
+      "answer": [3], "by": "claude",
+      "why": "Le bloc bêta-gamma à l’électrophorèse est le signe le plus spécifique de la cirrhose ; les autres anomalies se voient dans toute hépatopathie."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:6": {
+      "answer": [2, 4], "by": "claude",
+      "why": "La cholestase élève la bilirubine conjuguée, les phosphatases alcalines et la GGT, et diminue la stercobiline dans les selles."
+    },
+    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:7": {
+      "answer": [1, 3, 4], "by": "claude",
+      "why": "La PTH et la calcitonine sont hypophosphorémiantes ; la vitamine D est hyperphosphorémiante. L’os contient 85 % des phosphates, sous forme d’hydroxyapatite."
+    }
+  }
+}

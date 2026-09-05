@@ -638,3 +638,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pick .num { background: var(--bg); color: var(--ink-3); }
 .quizcard.review { background: var(--orange-pale); }
 .quizcard.review .quizcard-ic { background: var(--orange); color: #fff; }
+
+/* An answer MyPromo worked out, where the paper had no correction. */
+.quiz-by {
+  font-size: 11px; color: var(--orange); background: var(--orange-pale);
+  border-radius: 11px; padding: 9px 12px; line-height: 1.6;
+}
