@@ -84,6 +84,20 @@
       2
      ],
      "unanswered": false
+    },
+    {
+     "n": 9,
+     "q": "Qu’est-ce qui peut induire un changement conformationnel dans l’enzyme allostérique, activant ainsi son site actif ?",
+     "options": [
+      "L’effet homotrope.",
+      "La liaison d’un inhibiteur.",
+      "La coupure d’une séquence peptidique.",
+      "La déphosphorylation."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
     }
    ]
   },

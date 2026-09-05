@@ -8,6 +8,19 @@
    "section": "Isolés",
    "questions": [
     {
+     "n": 1,
+     "q": "Quel(2) est (sont) parmi les elements suivants celui (ceux) qui rentre(nt) actuellement dans le consensus de la définition des noyaux gris centraux ?",
+     "options": [
+      "le stratum",
+      "le globus pallidus",
+      "le noyau sous-thalamique",
+      "la substantia nigra",
+      "le slaustrum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 2,
      "q": "Quel(s) est (sont) parmi les éléments suivants celui (ceux) qui est (ont) une origine télencéphalique ?",
      "options": [
@@ -27,7 +40,8 @@
       "claustrum",
       "le globus pallidus",
       "le noyau sous-thalamique",
-      "la substantia nigra E:le putamen"
+      "la substantia nigra",
+      "le putamen"
      ],
      "answer": [],
      "unanswered": true

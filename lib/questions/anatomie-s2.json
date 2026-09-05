@@ -3,6 +3,151 @@
  "name": "ANATOMIE S2",
  "banks": [
   {
+   "fid": "13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG",
+   "title": "Session 2024",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Le haut appareil urinaire comprend",
+     "options": [
+      "la vessie et I'uretère",
+      "la prostate et I'urètre",
+      "les 2 reins et la prostate",
+      "les 2 reins et les 2 uretères",
+      "les 2 reins et la vessie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Lesrapports du rein droit sont",
+     "options": [
+      "La 3 portion du duodenum",
+      "La queue du pancréas",
+      "Le coion ascendant",
+      "La veine cave inferieure",
+      "Le foie 1"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "La veine rénale gauche",
+     "options": [
+      "La veine rénalegauche est plus longue que la droite",
+      "Elle reçoit la veine gonadique gauche et la veine phrénique gauche",
+      "Elle reçoit la veine surrénaliennegaucheet la veine gonadique gauche",
+      "Elle passe dans la pince aortiqueroésentérique",
+      "Elle prend origine la veine cave et se termine dans le hile rénal"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La vascularisationartérielle du rein",
+     "options": [
+      "Est de type terminal",
+      "Les artères prennent origine au niveau de l'aorte",
+      "Les collatéralessont l'artère surrénalienneinfeieuret l'artère gonadiaue",
+      "Les collatérales sont surrénalienne inferieure et artère urotéric supérieure",
+      "Se divise auniveau du hile en branche prépyelique et retro pyelique"
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 9,
+     "q": "L'urètre masculin",
+     "options": [
+      "comprend 3 sinus",
+      "se divise en urètre antérieuret urètre postérieur",
+      "se divise en urètre prostatioue, urètre membranaceeet urètre spongieux",
+      "I'urètre pénien constitue la portion mobile",
+      "le sinusnaviculaire est situé dans la prostate"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "le segmentpostérieur",
+     "options": [
+      "Comporte uniquementla rétine",
+      "Comporte uniquementle vitré",
+      "Est derrière le cristallin",
+      "Comporte uniquementla choroide",
+      "Comporte le vitré la rétine et choroide Réponse :"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "lachambre antérieure",
+     "options": [
+      "Est remplie de vitré",
+      "Est l'espace situé entrel'iris et le cristallin",
+      "Est l'espace situé entre la cornée et l'iris",
+      "Est remplie d'humeur aqueuse",
+      "Aucuneréponsen'estcorrecte Réponse :"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "L'orbite osseuse :",
+     "options": [
+      "Est composée de trois parois",
+      "Est formée par sept os",
+      "Assure la communication avec le crâne",
+      "Est une cavité triangulaire",
+      "Loge l'eil et ses annexes Réponse: 1"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "Les orifices del'orbite sont :",
+     "options": [
+      "Le canal optique",
+      "Les fosses nasales",
+      "La fissure orbitaire inférieure",
+      "La fissure orbitaire supérieure.",
+      "L'orifice supérieur du canal lacrymonasal Réponse :"
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "Concernant la fonction du muscle droit inférieur laquelle ou les quelles sontjustes :",
+     "options": [
+      "Abduction",
+      "Abaissement, intorsion et abduction",
+      "Elévation, intorsion et adduction",
+      "Abaissement,extorsion et adduction",
+      "Elévation, extorsion et abduction Réponse :"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
    "fid": "1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo",
    "title": "QCM — Soumaré, corrigés",
    "section": "QCM et questions",

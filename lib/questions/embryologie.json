@@ -3,6 +3,286 @@
  "name": "EMBRYOLOGIE",
  "banks": [
   {
+   "fid": "1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju",
+   "title": "Session 2022",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 3,
+     "q": "Au cours du développement embryonnaire du coeur:",
+     "options": [
+      "L'étape de convergence précède la plicature (looping) du tube cardiaque",
+      "Le cloisonnement se termine vers le 4 mois de développement embryonnaire",
+      "La convergence permet d'aligner les orifices cardiaques au même niveau",
+      "La délamination du flux sanguin correspond à la création de deux flux opposés droit et gauche dans le cœur",
+      "Les cellules de la gelée cardiaque se différencient en myocardiocytes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Au cours du cloisonnement de l'oreillette primitive :",
+     "options": [
+      "Le septum primum et le septum intermedium délimitent l'ostium secundum",
+      "Le foramen ovale se développe à partir de perforations du septum secundum",
+      "Le foramen ovale est la seul orifice qui fait communiquer les deux oreillettes",
+      "Le sens du flux sanguin est de l'oreillette droite vers l'oreillette gauche",
+      "La persistance d'une communication inter-auriculaire (CIA) après la naissance est responsable d'un shunt cyanogène"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La malformation cardiaque de type tétralogie de Fallot:",
+     "options": [
+      "Comporte une stênose pulmonare",
+      "Comporte une communication inter-auriculaire (CIA)",
+      "Comporte une hypotrophie du ventricule droit",
+      "Est responsable d'une cardiopathie cyanogène",
+      "Résulte d'un défaut de fermeture du canal artériel"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Est-ce que le blastème métanephrogène est à l'origine ?",
+     "options": [
+      "Du néphron",
+      "Des canaux efférents testiculaires",
+      "Du trigone vésical",
+      "Des canaux éjaculateurs",
+      "Des tubes de Bellini"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Au cours du stade 5 vésicules, le rhombencéphale va donner:",
+     "options": [
+      "Le diencéphale et le mésencéphale",
+      "Le mésencéphale",
+      "Le diencéphale",
+      "Le télencéphale et le diencéphale",
+      "Le myélencéphale et le métencéphale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Au cours du développement de la moelle épinière, la couche manteau donne:",
+     "options": [
+      "La couche marginale",
+      "La couche matrice",
+      "Les couches fondamentale et alaire",
+      "les méninges",
+      "La couche neuroépithéliale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "L’humeur aqueuse est résorbé par:",
+     "options": [
+      "Le canal veineux de l'angle irido-coréen",
+      "La couche choriocapillaire de la choroide",
+      "l'artére centrale de la rétine",
+      "L'épithélium du corps ciliaire",
+      "le stroma iridien"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Les structures d'échange avec la rétine nerveuse:",
+     "options": [
+      "La sclérotique",
+      "le choriocapillaire",
+      "Le corps vitré",
+      "Les corps ciliaires",
+      "l'épithélium pigmenté de la rétine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Est-ce que le bourgeon urétéral ?",
+     "options": [
+      "Est d'origine mésonephrotique",
+      "Est à l'origine des tubes collecteurs",
+      "Débute son développement au niveau du sinus urogénital",
+      "Donne naissance dans sa partie initiale aux canalicules effèrents",
+      "Est une partie intégrante du blastème métanephrogène"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "le rein polykystique:",
+     "options": [
+      "Résulte de la fusion des nephrons",
+      "Est un rein qui migre latéralement du côté lombaire atoit",
+      "Est un rein dont la migration crâniale est bloquée",
+      "Est une malformation hériditaire",
+      "Est associè fréquemment à une extrophie vésicale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "le développement du rein :",
+     "options": [
+      "Résulte du développement du bourgeon urêtéral",
+      "Est toujours associée au développement du canal de wolff",
+      "Empêche le développement d'une extrophie vésicale",
+      "Est associée à la production du liquide amniotique",
+      "Ne répond à aucune des affirmations ci-dessus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "L'extrophie vésicale est une malformation :",
+     "options": [
+      "Due à défaut de mésenchymatisation",
+      "Entraine le décès immédiat du nouveau né après l'accouchement",
+      "Associée à l'absence des canaux de Woiff",
+      "Qui entraine la genèse d' une ambiglité sexuelle",
+      "Fréquemment associée à un hypospadias"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Les canaux de Wolff sont à l'origine:",
+     "options": [
+      "Du rété testis",
+      "Des tubes séminifères",
+      "Des cônes efférents",
+      "De l'épididyme",
+      "Du canal déférent"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "La vésicule optique:",
+     "options": [
+      "S'invagine et donne naissance à la fente colobomique",
+      "Provient d'une évagination du cerveau antérieur",
+      "Est à l'origine de lépithélium pigmentaire de la rétine",
+      "Induit la formation des couches externes de l'ocil",
+      "donne naissance à la placode cristallinienne."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "quelles sont les structures qui impliquées dans la formation de stomodaeum:",
+     "options": [
+      "Le bourgeon frontal",
+      "Le septum nasal",
+      "Le processus palatin.",
+      "Les bourgeons maxillaires",
+      "L'intestin pharyngien"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "La Fente faciale qui intéresse l'arcade dentnire supérieur correspond à :",
+     "options": [
+      "Fente labio-alvéolo-palatine",
+      "Fente labiale simple",
+      "Fente labio-narinaire",
+      "Fente labio-alvéolaire",
+      "Bec de lièvre médian"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Les canalicules efférents",
+     "options": [
+      "Se différencient à partir du canal de wolff",
+      "Relient l'épididyme au rete testis",
+      "Sont issus de tubules de tissu mésoblatique",
+      "Sont une structure éphémère",
+      "S'ouvrent dans les canaux de muller"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "toutes les affirmations concernant l'atrésie sophagienne sont vraies sauf une laquelle?",
+     "options": [
+      "Correspond à une discontinuité de la lumière osophagienne.",
+      "Est une malformation qui entrave la santé du nouveau-né.",
+      "Est du à l'absence de mésenchymatisation",
+      "Est une malformation associée à une fistule oesotrachéale",
+      "Son diagnostic est possible en salle de travail dès la naissance."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Le mésentère commun",
+     "options": [
+      "Est une malfornation qui peut entrainer des syndromes ocelusifs des intesting.",
+      "Est due à une rotation incomplète de l’intestin moyen réalisant seulement: 90 degrès en sens inverse des aiguilles d'une montre.",
+      "Survient au cours de l'hernie physiologique de l'iniestin moyen.",
+      "Entraine une disposition du colon et des anses intestinales à droite.",
+      "Peut s'associer à une dextroposition du cour."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Le glaucome congénital:",
+     "options": [
+      "Est du à un manque de sérition de l'humeur aqueuse",
+      "son diagnostic dès la naissance est obligatoire",
+      "Entraine inéluctablement la cécité",
+      "Est une agénésie des globes oculaires",
+      "est à angle fermé (hypermésenchymatisation de l'angle irido-cornéen)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Le tractus thyréoglosse",
+     "options": [
+      "Prend un trajet caudal à partir du foramen coecum.",
+      "Nait entre tuberculum impar et copula",
+      "Donne des malformations sous forme de kystes latéraux du cou.",
+      "S'étend du plancher pharyngien jusqu'à les gros vaisseaux du cour.",
+      "Est une poche branchiale endoblastique."
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
    "fid": "1A65iibnwFyTho4-KBUwuVOLTsti-ds1F",
    "title": "Isolé — la tête et le cou",
    "section": "Isolés par chapitre",
@@ -54,6 +334,19 @@
    "section": "Isolés par chapitre",
    "questions": [
     {
+     "n": 1,
+     "q": "l’œil : Exam 2018 EXAM 2017 AUTRES : 12-) La région maculaire de la rétine",
+     "options": [
+      "constitue l’origine du nerf optique",
+      "ne comporte pas de cellules ganglionnaires",
+      "ne comporte pas de cônes",
+      "comporte la fovéa",
+      "se caractérise par un haut niveau de résolution visuelle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 2,
      "q": "Le stroma de la cornée comporte",
      "options": [
@@ -101,6 +394,65 @@
       "Se présentent sous forme de crêtes ampullaires",
       "Sont formées de cellules épithéliales différenciées",
       "Occupent les parois latérales des canaux semi-circulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "- La membrane otolithique :",
+     "options": [
+      "Est une membrane cellulaire parsemée de cristaux",
+      "Surmonte les cellules marginales des crêtes vestibulaires",
+      "Est en contact étroit avec le kinocil",
+      "Se caractérise par ses cristaux de carbonate de potassium",
+      "Joue un rôle essentiel dans l’équilibre linéaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t",
+   "title": "QCM — l’œil et l’oreille",
+   "section": "QCM",
+   "questions": [
+    {
+     "n": 16,
+     "q": "Cochez parmi les affirmations suivantes, celles qui sont vraies :",
+     "options": [
+      "Les gonades se forment dans l’embryon à partir de l’épithélium coelomique et du mésoblaste",
+      "Les cellules germinales naissent et se développent dans les gonades de l’embryon de 4 semaines",
+      "Le rete tetis se forme à partir de l’épithélium coelomique",
+      "Les cellules de Leydig se forment à partir de mésoblaste",
+      "L’origine embryologique des cellules de Leydig et de Sertloli est commune"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Les affirmations suivantes concernant l’ébauche thyroïdienne embryologique sont vraies sauf une, laquelle ?",
+     "options": [
+      "Est d’origine entoblastique",
+      "Prend naissance dans le plancher de l’intestin pharyngien",
+      "Prend naissance dans la région du cou, en avant de la trachée",
+      "Atteint sa situation définitive vers la 7ème semaine du développement embryologique",
+      "Devient fonctionnelle vers la fin du 3ème mois du développement embryologique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "La vésicule optique :",
+     "options": [
+      "S’invagine pour former le nerf optique",
+      "Provient d’une évagination du bourgeon frontal",
+      "Est à l’origine de la rétine et son épithélium pigmentaire",
+      "Induit la formation des couches externes de l’oeil",
+      "Induit la formation de la placode cristallinienne"
      ],
      "answer": [],
      "unanswered": true

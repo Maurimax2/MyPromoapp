@@ -8,12 +8,343 @@
    "section": "Examens",
    "questions": [
     {
+     "n": 1,
+     "q": "Epreuve de physiologie PCEM2 S2 Année universitaire 2021-22 1- Les informations véhiculées par les systèmes sensitivo-sensoriels sont wiles pour",
+     "options": [
+      "l'entretien de l'éveil",
+      "la focalisation de l'attention",
+      "le contrôle de la motricité somatique",
+      "l'élaboration des sensations et perceptions",
+      "l'amélioration de la mémorisation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Au niveau des récepteurs nerveux du type Il",
+     "options": [
+      "le site transducteur et le site générateur sont situés sur le même élément",
+      "le stimulus adéquat produit un potentiel de récepteur",
+      "le potentiel générateur a une amplitude proportionnelle à l'intensité du stimulus",
+      "le potentiel de récepteur est responsable de l'apparition de potentiels d'action au niveau de la fibre afférente primaire",
+      "la fréquence de potentiels d'action au niveau de la fire afférente primaire augmente quand la durée du stimulus augmente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Dans les caractéristiques des sensations",
+     "options": [
+      "le seuil absolu est la plus fable intensité du stimulus qui peut être perçue",
+      "plus le seuil absolu est bas plus le pouvoir de détection est faible",
+      "le seuil différentiel d'intensité est la plus fable variation 'intensité du stimulus juste perceptible",
+      "plus le seuil différentiel d'intensité est bas plus le pouvoir de discrimination d'intensité est faible",
+      "plus le seuil de discrimination spatiale est fable, meilleure est la discrimination spatiale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Les récepteurs cutanés tactiles sensible aux vibrations sont",
+     "options": [
+      "les terminaisons libres autour des follicules pileux",
+      "les disques de Merkel",
+      "les corpuscules de Ruffini",
+      "les corpuscules de Meissner",
+      "les corpuscules de Pacini"
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "Les projections corticales des voies lemniscales",
+     "options": [
+      "se font au niveau de la circonvolution frontale ascendante",
+      "sont somatotopiques",
+      "sont croisées",
+      "sont inversées",
+      "sont proportionnelles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Le système lemniscal est responsable des sensations",
+     "options": [
+      "de contact au niveau de la peau",
+      "du mouvement de déplacement sur la peau",
+      "de position des parties du corps",
+      "du chaud",
+      "du froid 2"
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 7,
+     "q": "Une hémisection transversale de la moelle à droite se manifeste au niveau du territoire sous-jacent à la lésion par une anesthésie",
+     "options": [
+      "tactile gauche",
+      "vibratoire gauche",
+      "douloureuse gauche",
+      "thermique gauche",
+      "proprioceptive gauche"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Le pouvoir de discrimination spatiale élevé de la sensation tactile au niveau des mains et de la face s'explique par",
+     "options": [
+      "la forte densité des récepteurs à ce niveau",
+      "la grande taille des champs récepteurs des neurones dans ces régions",
+      "la vitesse de conduction rapide des fibres des voies",
+      "le phénomène d'inhibition latérale",
+      "l'hyperreprésentation de ces régions au niveau de l'aire somesthésique primaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les sensations thermiques et douloureuses sont caractérisées par",
+     "options": [
+      "un pouvoir de détection faible",
+      "un pouvoir de discrimination d'intensité élevé",
+      "un pouvoir de discrimination spatiale faible",
+      "une capacité de localisation du stimulus précise",
+      "un pou voir éveillant très élevé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Dans l'organisation des voies de la douleur",
+     "options": [
+      "les fibres afférentes primaires convergent vers le 2ème neurone central",
+      "les fibres afférentes primaires se divisent en collatérale ascendantes et descendantes au niveau de la moelle",
+      "les 2èmes fibres rejoignent le cordon antéro-latéral du même côté de l'entrée dans la moelle",
+      "le faisceau néo-spino-thalamique rejoint les voies lemniscales au niveau du tronc cérébral",
+      "le faisceau paléo-spino-thalamique se projette sur l'aire somesthésique primaire (SI) avec une certain somatotopie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Les substances algogènes (hyperalgésiantes) impliquées dans le mode indirect de transduction de la douleur sont",
+     "options": [
+      "la sérotonine",
+      "l'histamine",
+      "les ions H+",
+      "les ions K+",
+      "les ions Na+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "La composante de la douleur engendrée par le mode de transduction direct est",
+     "options": [
+      "bien localisée",
+      "diffuse",
+      "persistante longtemps après arrêt du stimulus",
+      "rapide",
+      "de type piqûre 3"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Dans le contrôle médullaire sepmentaire de la douleur (« gate control »)",
+     "options": [
+      "les fibres de gros diamètte stimulent les interneurones de la substance gélatineuse de Rolanda",
+      "les fibres de petit diamètre inhibent les interneurones de la substance gélatineuse de Rolando",
+      "les interneurones de la substance gélatineuse de Rolando inhibent la transmission des Intlun nociceptifs",
+      "la substance P renforce P'inhibition exercée par les interneurone de la substance gélatineuse de Rolando",
+      "la sérotonine diminue l'inhibition exercèe par les fibres de gros diamètre"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Les structures exerçant un contrôle supra-segmentaire inhibiteur de la douleur sont",
+     "options": [
+      "le noyau dorsal et le noyau ventral inférieur du Raphé",
+      "la formation réticulée bulbaire",
+      "le noyau ventro-postéro-latéral (VPL) du thalamus",
+      "les aires somesthésiques primaire (SI)",
+      "les régions frontales du cerveau (cortex préfrontal)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Le système scotopique de la vision",
+     "options": [
+      "est formé par les bâtonnets",
+      "est responsable de la vision nocturne",
+      "participe à la vision des couleurs",
+      "a la plus grande sensibilité à la lumière",
+      "ses signaux sont véhiculés par la voie K"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Les cellules ganglionnaires de type P de la rétine",
+     "options": [
+      "sont peu nombreuses",
+      "sont localisées au niveau de la région centrale de la rétine",
+      "reçoivent les informations des cônes Let M sans mélange des signaux",
+      "ont un champ récepteur de grande taille",
+      "sont impliquées dans la vision des couleurs et la vision à haute résolution spatiale (analyse des détails)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Au cours de 'adaptation à l'obscurité",
+     "options": [
+      "le seuil de perception visuelle augmente jusqu'à attendre un plateau en 4 à 5 mn",
+      "le seuil de perception visuelle baisse ensuite fortement et atteint un 2*m* plateau au bout de 20 à 30 mn",
+      "les cônes interviennent de manière peu intense",
+      "les bâtonnets interviennent plus précocement que les cônes",
+      "le temps d'adaptation à l'obscurité serait en rapport avec la régénération du pigment rétinien"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Au cours de la phototransduction au niveau des photorécepteurs",
+     "options": [
+      "le rétinal se détache de l'opsine sous l'effet des photons lumineux",
+      "le détachement du rétinal de l'opsine active la transducine",
+      "l'activation de la transducine augmente la concentration de GMPc",
+      "l'augmentation de la concentration de GMPc est à l'origine d'une augmentation de la concentration intracytoplasmique d'ions Ca*",
+      "I' augmentation de la concentration intracytoplasmique d'ions Ca** est à l'origine de décharges de potentiels d'action 4"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Les cellules bipolaires de la rétine",
+     "options": [
+      "reçoivent l'information directement d'un groupe de photorécepteurs",
+      "reçoivent l'information indirectement des cellules amacrines",
+      "libèrent le glutamate comme neurotransmetteur",
+      "les bipolaires «ON » sont hyperpolarisées à l'obscurité",
+      "les bipolaires « OFF » sont dépolarisées à la stimulation lumineuse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Dans l'organisation en colonnes du cortex visuel",
+     "options": [
+      "les colonnes d'orientation codent toutes les orientations de l'espace",
+      "les cellules d'une colonne de dominance oculaire sont plus activées quand l'information visuelle provient d'un cil",
+      "chaque colonne de dominance oculaire ne comporte que des colonnes d'orientation d'une même direction de l'espace",
+      "les chevilles des couleurs sont activées par une stimulation lumineuse de même couleur",
+      "une hypercolonne est formée par l'association de deux colonnes d'orientation (droite et gauche) et des chevilles des couleurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "La vision des couleurs met en jeu des cellules à opposition de couleurs de type",
+     "options": [
+      "Rouge - Vert",
+      "Vert - Bleu",
+      "Bleu - Jaune",
+      "Jaune - Vert",
+      "Jaune – Rouge"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Dans la vision binoculaire",
+     "options": [
+      "l'image de l'objet provient de 'ensemble du champ visuel",
+      "lorsque les deux images d'un objet se projettent sur des points rétiniens correspondants il est vu simple",
+      "l'image d'un objet ne tombe sur des points rétiniens correspondants que s'il est fixé par le sujet",
+      "les points correspondants de l'hémirétine temporale droite sont situés au niveau de l'hémirétine temporale gauche",
+      "les neurones binoculaire du cortex visuel assurent la fusion des images"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "La sensation auditive est caractérisée par",
+     "options": [
+      "un seuil absolu qui varie en fonction de la fréquence du son",
+      "un seuil minimal situé entre 1 et 4 kHz",
+      "un seuil de la douleur 'environ 130 dB",
+      "un seuil différentiel d' intensité qui augmente quand I' intensité augmente",
+      "un seuil différentiel de fréquence qui diminue quand la fréquence augmente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Dans les phénomènes mécaniques de la transduction cochléaire",
+     "options": [
+      "les variations de pression acoustique sont transformées en une onde qui se déplace le long de la membrane basilaire",
+      "la vitesse de propagation de l'onde augmente de la base à l'apex",
+      "l'amplitude de l'onde est augmentée par les cellules ciliées externes",
+      "la position du point 'amplitude maximale de l'onde est fonction de la fréquence du son pur",
+      "les sons de fréquence aigué déforment préférentiellement la région de l'apex, ceux de fréquence grave celle de la base 5"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "Le codage de la fréquence des sons",
+     "options": [
+      "débute au niveau de la membrane basilaire",
+      "est amélioré par les cellules ciliées externes",
+      "est affiné au niveau central par la tonotopie",
+      "s'effectue par l'augmentation de la fréquence de décharge au niveau des neurones",
+      "s'effectue aussi par l'augmentation du nombre de neurones recrutes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 26,
      "q": "La motricité somatique est impliquée dans :",
      "options": [
       "la communication",
       "la détection des stimuli",
-      "la mobilisation du corps D.la perception E. la posture"
+      "la mobilisation du corps",
+      "la perception",
+      "la posture"
      ],
      "answer": [],
      "unanswered": true
@@ -250,6 +581,201 @@
      ],
      "answer": [],
      "unanswered": true
+    },
+    {
+     "n": 46,
+     "q": "Les aires 18 et 19 gauches",
+     "options": [
+      "traitent des informations visuelles",
+      "traitent des informations auditives",
+      "permettent de reconnaître les objets par la vue",
+      "sont responsables d'une cécité verbale quand elles sont lésées",
+      "sont responsables d'une surdité verbale quand elles sont lésées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 47,
+     "q": "Les aires praxiques",
+     "options": [
+      "sont situées au niveau de la région pariéto-temporo-occipitale droite",
+      "sont indispensables pour la réalisation des habiletés",
+      "sont indispensables pour le langage parlés",
+      "sont responsables d'une aphasie quand elles sont lésées",
+      "sont responsables d'une incapacité d'exécuter le langage écrit"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 48,
+     "q": "Dans l'aphasie de WERNICKE",
+     "options": [
+      "la lésion est située au niveau de la région postérieure de la première et deuxième circonvolutions temporales gauches",
+      "le sujet est conscient de son trouble du langage",
+      "la construction du langage est perturbée",
+      "le discours verbal est de débit normal mais le langage est incompréhensible",
+      "l'articulation des mots est impossible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 49,
+     "q": "Le cortex préfrontal latéral (aires 9 et 46)",
+     "options": [
+      "est associé à l'élaboration de processus cognitifs complexes",
+      "joue un rôle dans le contrôle exécutif (planification et raisonnement déductif)",
+      "est impliqué dans l'adaptation des mouvements des yeux et de la main aux tâches nécessitant une localisation spatiale",
+      "est impliqué dans les processus affectifs et motivationnels (contrôle de l'humeur)",
+      "inhibe les comportements instinctifs pour l'adaptation à la vie sociale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 50,
+     "q": "L'activité électrique cérébrale (EEG)",
+     "options": [
+      "a comme origine les cellules pyramidales du cortex cérébral",
+      "résulte de la sommation de potentiels postsynaptiques (PPS) membranaires",
+      "est rythmée par les noyaux à projections diffuses du thalamus",
+      "a une amplitude qui augmente quand le niveau d'éveil augmente",
+      "a une fréquence qui diminue quand le niveau d'éveil diminue"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 51,
+     "q": "Lerythme électroencéphalographique delta est",
+     "options": [
+      "de fréquence inférieure ou égale à 4 Hz",
+      "d'amplitude variable",
+      "présent chez l'adulte normal éveillé",
+      "présent au stade Il (N2) du sommeil lent",
+      "présent chez un sujet dans un coma profond"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 52,
+     "q": "Le stade IV (N3) du sommeil lent se caractérise par",
+     "options": [
+      "une activité thêta prédominante",
+      "une hypotonie musculaire",
+      "des mouvements oculaires rapides",
+      "une diminution de la fréquence cardiaque",
+      "des rêves 9"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 53,
+     "q": "Au cours du sommeil lent on observe",
+     "options": [
+      "une atonie musculaire",
+      "une exagération de réflexes ostéotendineux à l'endormissement",
+      "un signe de Babinski",
+      "des mouvements oculaires rapides",
+      "des images hypnagogiques au stade I (NI)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 54,
+     "q": "Le sommeil paradoxal se caractérise à la polysomnographie par",
+     "options": [
+      "une atonie musculaire",
+      "une activité lente delta à I'EEG",
+      "des movements oculaires rapides à l'électrooculogramme",
+      "une irrégularité de la fréquence cardiaque",
+      "la régularité du rythme respiratoire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 55,
+     "q": "Durant une nuit de sommeil chez l'adulte",
+     "options": [
+      "le sommeil lent occupe 20% de la durée totale du sommeil",
+      "on observe 3 à 5 cycles de 90 mn en moyenne",
+      "la durée du sommeil lent profond par cycle diminue du début vers la fin de la nuit",
+      "la durée du sommeil paradoxal par cycle augmente du début vers la fin de la nuit",
+      "le sommeil paradoxal apparaît en premier dans un cycle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 56,
+     "q": "Dans la régulation chronobiologique du rythme veille - sommeil",
+     "options": [
+      "les noyaux suprachiasmatiques de l'hypothalamus reçoivent I' information sur la photopériode (lumière - obscurité) par des voies directes rétino-hypothalamique",
+      "les noyaux suprachiasmatiques synchronisent le rythme veille - sommeil avec celui de la température centrale",
+      "le besoin (pression) de sommeil augmente avec la durée de l'éveil qui le précède",
+      "la pression du sommeil est minimale vers 3 4 heures du matin",
+      "la pression du sommeil est maximale le matin quand la température centrale est à son Minimum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 57,
+     "q": "A propos des mécanismes de l'éveil",
+     "options": [
+      "le centre de l'éveil est localisé au niveau de l'hypothalamus antérieur",
+      "les neurones à histamine présentent une activité tonique pendant l'éveil",
+      "la stimulation des neurones à orexine (hypocrétine) provoque l'éveil",
+      "les neurones cholinergiques du télencéphale basal (noyau de meynert) sont actif durant l'éveil",
+      "la stimulation des neurones de la formation réticulée bulbaire inhibe l'éveil"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 58,
+     "q": "Les fonctions du sommeil paradoxal sont",
+     "options": [
+      "la maturation du système nerveux",
+      "la réparation des tissus et la croissance",
+      "l'élimination des déchets toxiques des systèmes respiratoire, cardiovasculaire et glandulaire",
+      "l'élimination des informations inutiles (oubli)",
+      "la consolidation des apprentissages (consolidation des traces mnésiques) 10"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 59,
+     "q": "L'apprentissage associatif comprend",
+     "options": [
+      "la sensibilisation",
+      "le conditionnement passif (Pavlovien)",
+      "le conditionnement actif (opérant ou Skinnérien)",
+      "l'apprentissage latent",
+      "l'apprentissage par observation (imitation)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 60,
+     "q": "Les étapes de la mémoire dépendant de la vigilance avec l'attention et de la motivation sont",
+     "options": [
+      "l'encodage (mémorisation)",
+      "le stockage",
+      "la consolidation",
+      "la récupération (remémorisation)",
+      "l'oubli"
+     ],
+     "answer": [],
+     "unanswered": true
     }
    ]
   },
@@ -258,6 +784,19 @@
    "title": "Épreuve — PCEM2 S2",
    "section": "Examens",
    "questions": [
+    {
+     "n": 2,
+     "q": "Exam 2020 SN 1. Les aspects de la sensation codés par les récepteurs nerveux sont",
+     "options": [
+      "La modalité",
+      "l'intensité",
+      "la durée",
+      "le seuil de discrimination d'intensité",
+      "le caractère agréable ou désagréable"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
     {
      "n": 3,
      "q": "Au niveau du cortex somesthésique primaire (aire SI)",
@@ -1010,6 +1549,58 @@
      ],
      "answer": [],
      "unanswered": true
+    },
+    {
+     "n": 68,
+     "q": "32- La dérivation DI de l'ECG est obtenue par recueil de l'activité électrique :",
+     "options": [
+      "au niveau du membre inférieur gauche",
+      "au niveau du membre supérieur droit",
+      "entre le membre supérieur droit et le membre inférieur gauche",
+      "entre le membre supérieur droit et le membre supérieur gauche",
+      "entre le membre supérieur gauche et le membre inférieur gauche 33 -Le cathétérisme droit permet de mesurer les pressions au niveau : A- de l'aorte B- de l'artère pulmonaire C- de l'oreillette droite D- des capillaires pulmonaires E- du ventricule gauche"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 69,
+     "q": "39- le débit cardiaque augmente en cas d'augmentation :",
+     "options": [
+      "du retour veineux",
+      "du volume télésystolique",
+      "de la post-charge",
+      "du tonus parasympathique",
+      "de l'inotropisme myocardique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 90,
+     "q": "43- Le péristaltisme",
+     "options": [
+      "est un réflexe sympathique",
+      "est une relaxation en amont et une contraction en aval du bol alimentaire",
+      "est provoqué par la présence des aliments dans le tube digestif",
+      "permet de propager le chyme alimentaire dans le sens oral-aboral",
+      "peut être déclenché par une irritation chimique de la paroi"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 92,
+     "q": "57- L'absence de la bile entraine :",
+     "options": [
+      "une mal absorption des glucides",
+      "une insolubilisation des lipides",
+      "un déficit en vitamines liposolubles (A, D, E et K)",
+      "une mal absorption des protides",
+      "une stéatorrhée 58- Concernant l'absorption des protides : A. peut se faire par voie paracellulaire B. nécessite un cotransport Na+/acide aminé C. nécessite des transporteurs de type GLUT 2 D. se fait par un cotransport H+/di et tripeptides E. met en jeu un transporteur appelé DMT1"
+     ],
+     "answer": [],
+     "unanswered": true
     }
    ]
   },
@@ -1018,6 +1609,209 @@
    "title": "Isolé — la somesthésie",
    "section": "Isolés par chapitre",
    "questions": [
+    {
+     "n": 1,
+     "q": "Le seuil différentiel d'intensité d'un stimulus",
+     "options": [
+      "est la plus faible intensité du stimulus juste perçue",
+      "est la plus faible variation d'intensité du stimulus perceptible par le sujet",
+      "traduit un pouvoir de détection élevé quand il est faible",
+      "traduit un pouvoir de discrimination d'intensité faible quand il est bas",
+      "augmente quand la densité de récepteurs augmente"
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 2,
+     "q": "La proprioception regroupe les sensations",
+     "options": [
+      "de vibration",
+      "de position des segments du corps",
+      "du mouvement",
+      "de la force",
+      "de pression."
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 3,
+     "q": "Parmi les manifestations suivantes indiquer celles observées après une hémisection transversale de la moelle à droite au niveau au niveau du territoire sous-jacent à la lésion",
+     "options": [
+      "une anesthésie tactile gauche",
+      "une anesthésie vibratoire gauche",
+      "une anesthésie douloureuse gauche",
+      "une anesthésie thermique gauche",
+      "une anesthésie proprioceptive gauche"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "La sensation tactile fine est caractérisée par",
+     "options": [
+      "un seuil de détection bas au niveau de la face",
+      "un pouvoir de discrimination spatiale faible au niveau des mains",
+      "une capacité précise de localisation du stimulus",
+      "une absence de fidélité dans la transmission de l’information",
+      "une rapidité de la réponse"
+     ],
+     "answer": [
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 6,
+     "q": "Les récepteurs de la proprioception sont",
+     "options": [
+      "les corpuscules de PACCINI",
+      "les corpuscules de IGGO",
+      "les fuseaux neuro-musculaires",
+      "les organes tendineux de GOLGI",
+      ".les récepteurs articulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Les voies lemniscales:",
+     "options": [
+      "véhicule les informations nociceptives",
+      "sont non myélinisées",
+      "font relais au niveau de la corne postérieure de la moelle",
+      "décussent au niveau du tronc cérébral",
+      "se projettent au niveau du cortex somesthésique primaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les neurones formant le cordon antérolatéral",
+     "options": [
+      "sont myélinisés et de gros diamètre",
+      "ont une organisation somatotopique",
+      "prennent naissance au niveau de la corne postérieure de la moelle",
+      "traversent la ligne médiane au niveau de la moelle",
+      "constituent les deuxièmes neurone du système extralemniscal"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Au niveau du cortex somesthésique primaire (aire SI)",
+     "options": [
+      "les voies lemniscales droites se projettent su l'aire SI gauche",
+      "les projections des voies lemniscales sont somatotopiques",
+      "la représentation de la face inférieur est située à la partie basse externe de SI",
+      "les projections des voies de la sensibilité tactile sont mélangées avec les projections des voies de la sensibilité proprioceptives",
+      "la représentation des organes génitaux externes occupe la plus grande surface."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les aires associatives pariétales 5 et 7 gauches",
+     "options": [
+      "sont situées en avant de l’aire SI",
+      "ont une organisation somatotopiques",
+      "traitent les informations tactiles et proprioceptives",
+      "sont responsables de la reconnaissance des objets par le toucher",
+      "permettent la reconnaissance de la position des différentes parties du corps"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Le pouvoir de discrimination spatiale de la sensation tactile fine",
+     "options": [
+      "est important au niveau des mains",
+      "est important au niveau des organes génitaux externes",
+      "est inversement proportionnel à la densité des récepteurs tactiles dans une région",
+      "est proportionnel à la taille des champs récepteurs des neurones du tact",
+      "est exploré avec un compas à deux pointes mousses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Le seuil différentiel d'intensité d'un stimulus",
+     "options": [
+      "est la plus faible intensité du stimulus juste perçue",
+      "est la plus faible variation d'intensité du stimulus perceptible par le sujet",
+      "traduit un pouvoir de détection élevé quand il est faible",
+      "traduit un pouvoir de discrimination d'intensité faible quand il est bas",
+      "augmente quand la densité de récepteurs augmente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "La lésion du cordon postérieur entraîne au niveau du territoire sous-jacent à la lésion",
+     "options": [
+      "une anesthésie tactile",
+      "une douleur",
+      "une exagération des réflexes ostéo-tendineux",
+      "une ataxie",
+      "une hyperesthésie thermique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "La syringomyélie à son début se manifeste sur le plan sensitif par une anesthésie",
+     "options": [
+      "tactile fine",
+      "proprioceptive",
+      "vibratoire",
+      "thermique",
+      "douloureuse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Le potentiel évoqué somesthésique est altéré en cas de lésion",
+     "options": [
+      "des racines postérieures",
+      "des cordons postérieurs",
+      "des voies extralemniscales",
+      "des aires somesthésiques primaires",
+      "des aires pariétales associatives"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Une anesthésie thermique au niveau du membre inférieur droit peut s'observer en cas:",
+     "options": [
+      "d'une syringomyélie au niveau de la moelle lombaire",
+      "d'une lésion du cordon postérieur droit au niveau de la moelle dorsale",
+      "d'une hémisection transversale gauche de la moelle dorsale",
+      "d'une lésion des noyaux graciles et cunéiformes gauches du tronc cérébral",
+      "d'une lésion du noyau thalamique ventro-postéro-latéral gauche."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
     {
      "n": 17,
      "q": "parmi les récepteurs suivants, lesquels appartiennent au système somesthésique :",
@@ -1162,6 +1956,58 @@
      "unanswered": true
     },
     {
+     "n": 28,
+     "q": "Parmi les récepteurs suivants indiquer ceux faisant partie du système extralemniscal",
+     "options": [
+      "les récepteurs annexés aux poils",
+      "les disques de Merkel",
+      "les corpuscules de Pacini",
+      "les nocicepteurs",
+      ".les thermorécepteurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "Parmi les régions suivantes de la peau indiquer celles ayant une large représentation au niveau de l’aire somesthésique primaire (SI)",
+     "options": [
+      "le dos",
+      "l’abdomen",
+      "la plante des pieds",
+      "la face",
+      ".la main"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Parmi les atteintes suivantes indiquer celles qui se manifestent entre autre par une anesthésie tactile",
+     "options": [
+      "la syringomyélie",
+      "la lésion du cordon postérieur",
+      "la lésion du cordon antéro-latéral",
+      "la lésion du noyau ventro-postéro-latéral (VPL) du thalamus",
+      ".la lésion de l’aire somesthésique secondaire (SII)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "La sensation tactile fine est caractérisée par",
+     "options": [
+      "un seuil de détection bas au niveau de la face",
+      "un pouvoir de discrimination spatiale faible au niveau des mains",
+      "une capacité précise de localisation du stimulus",
+      "une absence de fidélité dans la transmission de l’information",
+      "une rapidité de la réponse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 32,
      "q": "Parmi, les propositions suivantes, quelle est la grandeur neurophysiologique mesurable :",
      "options": [
@@ -1278,6 +2124,45 @@
      "unanswered": true
     },
     {
+     "n": 42,
+     "q": "Parmi les sensations suivantes indiquer celles élaborées par le système lemniscal",
+     "options": [
+      "la douleur",
+      "le tact",
+      "le chaud",
+      "le sens de position du corps",
+      ".le sens de mouvement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 43,
+     "q": "La lésion des cordons postérieurs à droite se manifeste sur le plan sensitif par une anesthésie",
+     "options": [
+      "tactile fine gauche",
+      "proprioceptive droite",
+      "vibratoire droite",
+      "thermique gauche",
+      "douloureuse gauche"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 44,
+     "q": "La sensation thermique",
+     "options": [
+      "se déclenche à partir d’une température cutanée de 10° Celsius",
+      "possède un caractère éveillant",
+      "a un pouvoir de détection élevé",
+      "a un pouvoir de discrimination d'intensité faible",
+      "est localisée avec une grande précision"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 45,
      "q": "Parmi les récepteurs suivants, lesquels ne font pas partie du système somesthésique :",
      "options": [
@@ -1363,6 +2248,136 @@
    "section": "Isolés par chapitre",
    "questions": [
     {
+     "n": 1,
+     "q": "Parmi les substances suivantes indiquer celles impliquées dans le mode de transduction indirecte de la douleur",
+     "options": [
+      "la sérotonine",
+      "les bradykinines",
+      "l’histamine",
+      "les ions Na+",
+      "les ions Ca++"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Une hypoalgésie peut être obtenue par la stimulation des",
+     "options": [
+      "afférences de faible diamètre de type C",
+      "afférences de gros diamètre",
+      "cordons postérieurs",
+      "noyaux du raphé du tronc cérébral",
+      "noyaux ventro-postéro-latéraux du thalamus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Une diminution du phénomène d'hyperalgésie peut être obtenue à la périphérie par",
+     "options": [
+      "les ions potassium",
+      "les ions acides",
+      "les prostaglandines E",
+      "l'aspirine",
+      "la xylocaïne"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Dans le contrôle médullaire de la douleur",
+     "options": [
+      "les interneurones de la substance gélatineuse de Rolando ont un effet inhibiteur",
+      "les fibres de gros diamètre exercent un effet inhibiteur sur les messages douloureux",
+      "les fibres de petit diamètre stimulent les interneurones de la substance gélatineuse de Rolando",
+      "les voies réticulo-spinales inhibent les interneurones de la substance gélatineuse de Rolando",
+      "le 2 ème neurone de la douleur inhibe les interneurones de la substance gélatineuse de Rolando"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Une douleur de type neurologique peut être traitée efficacement par",
+     "options": [
+      "les anesthésiques locaux",
+      "les antalgiques périphériques",
+      "les dérivés de la morphine",
+      "les stimulations électriques des cordons postérieurs",
+      "la section des cordons antéro-latéraux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Les douleurs projetées",
+     "options": [
+      "sont des douleurs viscérales ressenties au niveau d’un territoire cutané",
+      "sont des douleurs psychogènes",
+      "s’expliquent par la convergence des fibres afférentes primaires nociceptives cutanées et viscérales sur le même neurone central",
+      "ne sont pas soumises au contrôle médullaire",
+      "sont traitées par la naloxone"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Une douleur de type neurologique peut s'observer en cas de",
+     "options": [
+      "stimulation importante des nocicepteurs",
+      "lésion des fibres de petit diamètre",
+      "lésion des cordons postérieurs",
+      "lésion du noyau VPL du thalamus",
+      "lésion de l'aire somesthésique primaire (SI)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Parmi les substances suivantes indiquer celles impliquées dans le mode de transduction indirecte de la douleur",
+     "options": [
+      "la sérotonine",
+      "les bradykinines",
+      "l’histamine",
+      "les ions Na+",
+      "les ions Ca++"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Parmi les substances suivantes indiquer celles qui diminuent le phénomène d'hyperalgésie",
+     "options": [
+      "les ions potassium",
+      "les ions acides",
+      "les prostaglandines E",
+      "l'aspirine",
+      "la xylocaïne"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes se rapportant au contrôle médullaire de la douleur indiquer celles qui sont correctes",
+     "options": [
+      "les interneurones de la substance gélatineuse de Rolando ont un effet inhibiteur",
+      "les fibres de gros diamètre exercent un effet inhibiteur sur les messages douloureux",
+      "les fibres de petit diamètre stimulent les interneurones de la substance gélatineuse de Rolando",
+      "les voies réticulo-spinales inhibent les interneurones de la substance gélatineuse de Rolando",
+      "le 2 ème neurone de la douleur inhibe les interneurones de la substance gélatineuse de Rolando"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
      "n": 13,
      "q": "Parmi les substances suivantes indiquer celles qui provoquent une hyperalgésie :",
      "options": [
@@ -1426,6 +2441,546 @@
      ],
      "answer": [],
      "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "La douleur de type brûlure",
+     "options": [
+      "est rapide",
+      "est mal localisée",
+      "persiste longtemps après arrêt du stimulus",
+      "met en jeu un mécanisme de transduction directe",
+      "est véhiculée par les voies néospino-thalamiques Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1a6WEmNbPBhYiFE7WPJ1440KTVZleq3OB",
+   "title": "Isolé — la vision et l’audition",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "la vision : Exam 2016 : EXAM 2017 : RETRAPAGE 2016 : RETTRAPAGE 2017 : ED 1. - La lésion du chiasma optique est à l'origine d'une",
+     "options": [
+      "cécité unilatérale",
+      "hémianopsie latérale homonyme",
+      "hémianopsie bitemporale",
+      "quadranopsie",
+      "cécité bilatérale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "- Une hémianopsie est la conséquence d’une lésion:",
+     "options": [
+      "du nerf optique",
+      "du CGL thalamique",
+      "du chiasma optique",
+      "des radiations optiques",
+      "des bandelettes optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "- Une hémianopsie latérale homonyme est la conséquence d’une lésion:",
+     "options": [
+      "du nerf optique",
+      "du chiasma optique",
+      "du noyau géniculé latéral",
+      "des bandelettes optiques",
+      "des radiations optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "- Une quadranopsie est la conséquence d’une lésion:",
+     "options": [
+      "du nerf optique",
+      "du CGL thalamique",
+      "du chiasma optique",
+      "des bandelettes optiques",
+      "des radiations optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "- La sensibilité visuelle est caractérisée par",
+     "options": [
+      "un champ binauculaire de 180° de rayon",
+      "un seuil absolu de détection faible",
+      "un seuil différentiel faible",
+      "un seuil de discrimination spatiale faible",
+      "un seuil de résolution temporelle faible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "– Au niveau de la rétines les cônes :",
+     "options": [
+      "sont plus nombreux que les bâtonnets",
+      "diffèrent par leur sensibilité aux longueurs d’onde de la lumière",
+      "sont responsables de la vision scotopique",
+      "sont responsables de la vision des couleurs.",
+      "sont absents de la fovéa"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "- Les cellules photoréceptrices du type bâtonnet :",
+     "options": [
+      "sont responsables de la vision scotopique",
+      "sont responsables de la vision photopique",
+      "contiennent beaucoup de pigment",
+      "sont saturées à la lumière du jour.",
+      "sont absentes de la fovéa"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "- Au niveau de la rétine :",
+     "options": [
+      "les cônes sont plus nombreux dans la région centrale",
+      "les cellules amacrines relient les photorécepteurs aux cellules ganglionnaires",
+      "les cellules horizontales relient les cellules bipolaires aux cellules ganglionnaires",
+      "les photons lumineux hyperpolarisent les photorécepteurs",
+      "les potentiels d'action apparaissent au niveau des cellules ganglionnaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "- Lors d’une stimulation lumineuse :",
+     "options": [
+      "les canaux ioniques à sodium s’ouvrent",
+      "le potentiel de membrane passe à -70 mV",
+      "le rétinal se détache de l’opsine",
+      "la transducine est activée",
+      "la concentration intracytoplasmique en Calcium (Ca++) augmente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "- Lors d’une stimulation lumineuse :",
+     "options": [
+      "le potentiel de membrane du photorécepteur est dépolarisé à +40 mV",
+      "le potentiel de membrane est hyperpolarisé à -70 mV",
+      "le rétinal, partie vitaminique du pigment visuel, change de sa configuration TRANS en sa configuration CIS.",
+      "il se produit une synthèse de la rhodopsine à partir de l’opsine et du rétinal",
+      "il se produit une dégradation du GMPc en GMP"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "- Au cours de la phototransduction au niveau des photorécepteurs rétiniens",
+     "options": [
+      "le rétinal se fixe à l’opsine",
+      "la concentration de GMPc diminue",
+      "la concentration intracytoplasmique du CA++ augmente",
+      "la libération de glutamate diminue",
+      "le photorécepteur est dépolarisé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "- Au niveau des photorécepteurs de la rétine le Ca++ cytoplasmique",
+     "options": [
+      "diminue sous l'effet de la lumière",
+      "diminue sous l'effet de l'augmentation de la GMPc",
+      "a pour effet d'augmenter la synthèse de la GMPc",
+      "maintient les canaux à Na+ fermés",
+      "est responsable de l'adaptation à la lumière"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "- Au niveau des photorécepteurs de la rétine le Ca++ cytoplasmique",
+     "options": [
+      "augmente sous l'effet de la lumière",
+      "augmente sous l'effet de l'augmentation de la GMPc",
+      "a pour effet de diminuer la synthèse de la GMPc",
+      "maintient les canaux à Na+ ouverts",
+      "est responsable de l'adaptation à l'obscurité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "- Au niveau des photorécepteurs de la rétine la GMPc",
+     "options": [
+      "augmente sous l'effet de la lumière",
+      "augmente sous l'effet de l'augmentation du Ca++ intracytoplasmique",
+      "a pour effet de diminuer la concentration de Ca++ intracytoplasmique",
+      "maintient les canaux à Na+ ouverts",
+      "est responsable de l'adaptation à l'obscurité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "- Les photons lumineux provoquent au niveau de la rétine",
+     "options": [
+      "l'isomérisation du pigment de la rhodopsine",
+      "la régénération de la rhodopsine",
+      "la dépolarisation des photorécepteurs",
+      "l'augmentation de la libération de neurotransmetteur par les photorécepteurs",
+      "la dépolarisation de certaines cellules bipolaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "- Les photons lumineux provoquent au niveau de la rétine",
+     "options": [
+      "l'isomérisation du pigment de la rhodopsine",
+      "l'ouverture de canaux ioniques potassiques",
+      "l'hyperpolarisation des photorécepteurs",
+      "la diminution de la libération de neurotransmetteur par les photorécepteurs",
+      "la diminution de l'activité de certaines cellules ganglionnaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "- le phénomène d’adaptation à la lumière est dû à l’action",
+     "options": [
+      "de la rhodopsine",
+      "de la GMPc",
+      "de la transducine",
+      "des ions Na+",
+      "des ions Ca++"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "- Les cellules bipolaires invaginées",
+     "options": [
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "libèrent le glutamate comme neurotransmetteur",
+      "sont excitées à l’obscurité",
+      "sont inhibées à l’éclairement",
+      "sont le point de départ de la voie « ON »"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "- Les cellules bipolaires de type « OFF » (superficielles)",
+     "options": [
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "libèrent le glutamate comme neurotransmetteur",
+      "sont excitées à l’obscurité",
+      "sont inhibées à l’éclairement",
+      "sont excitées par le glutamate"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "- L’organisation en colonne du cortex visuel primaire met en jeu:",
+     "options": [
+      "la rétinotopie",
+      "les colonnes d’orientation",
+      "les colonnes de dominance oculaire",
+      "les colonnes binoculaires",
+      "les chevilles (tâches ou « Blobs ») de couleurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "- Les cellules simples du cortex visuel",
+     "options": [
+      "sont organisées en colonnes verticales",
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "ont un champ récepteur circulaire",
+      "sont sensibles aux stimuli lumineux circulaires",
+      "participent à l'analyse des couleurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "- Les cellules ganglionnaires de type M (ou Y)",
+     "options": [
+      "sont de petite taille",
+      "ont un champ récepteur de grande surface",
+      "ont une vitesse de conduction nerveuse lente",
+      "sont le point de départ d'une voie impliquée dans l'analyse du mouvement du stimulus visuel",
+      "sont localisées à la fovéa"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "- Les cellules ganglionnaires de type P (ou X)",
+     "options": [
+      "sont de petite taille",
+      "ont un champ récepteur de grande surface",
+      "ont une VCN lente",
+      "sont le point de départ d'un voie impliquée dans l'analyse du mouvement du stimulus visuel",
+      "sont localisées à la fovéa"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "- Le corps genouillé latéral",
+     "options": [
+      "est un noyau thalamique non spécifique",
+      "est organisé en 6 couches",
+      "reçoit les fibres ganglionnaires d'une seule rétine",
+      "a une organisation rétinotopique",
+      "est le point de départ des bandelettes optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "- Les cellules simples du cortex visuel",
+     "options": [
+      "sont organisées en colonnes verticales",
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "ont un champ récepteur circulaire",
+      "sont sensibles aux stimuli lumineux circulaires",
+      "participent à l'analyse des couleurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "- Les cellules bipolaires superficielles",
+     "options": [
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "libèrent le glutamate comme neurotransmetteur",
+      "sont excitées à l’obscurité",
+      "sont inhibées à l’éclairement",
+      "sont le point de départ de la voie « OFF »"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "- Les neurones suivants ont un champ récepteur de forme circulaire :",
+     "options": [
+      "les cellules complexes du cortex visuel",
+      "les cellules hypercomplexes du cortex visuel",
+      "les cellules simples du cortex visuel",
+      "les cellules des CGL thalamiques",
+      "les cellules ganglionnaires rétiniennes."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "- La vision des couleurs met en jeu des cônes ayant une sensibilité élevée au",
+     "options": [
+      "Rouge",
+      "Vert",
+      "Jaune",
+      "bleu",
+      "violet"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "- La vision des couleurs met en jeu des cellules à opposition de couleurs de type",
+     "options": [
+      "Rouge - Vert",
+      "Vert - Bleu",
+      "Bleu - Jaune",
+      "Jaune - Vert",
+      "Jaune - Rouge"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "L'agnosie visuelle peut être observée en cas de lésion",
+     "options": [
+      "de la rétine de l'œil gauche",
+      "du nerf optique gauche",
+      "du chiasma optique",
+      "de l'aire corticale 17 gauche",
+      "de l’aire corticale 19 gauche"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Les mouvements de vergence",
+     "options": [
+      "associent des saccades rapides et des mouvements lents",
+      "consistent à faire converger les axes optiques des deux yeux vers le même objet",
+      "consistent à maintenir parallèles les axes optiques des deux yeux",
+      "mettent en jeu simultanément les deux yeux",
+      "peuvent être déclenchés à partir du système vestibulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "L'Electrorétinogramme",
+     "options": [
+      "explore l'activité des cellules sensorielles de la rétine",
+      "explore l'activité de l'ensemble des voies visuelles jusqu'au cortex occipital",
+      "comporte une onde électronégative de latence 20 ms",
+      "comporte une onde électropositive de latence 100 ms",
+      "est absent en cas de lésion rétinienne totale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "Le potentiel évoqué visuel par damier alternant",
+     "options": [
+      "explore l'activité des cellules sensorielles de la rétine",
+      "explore l'activité de l'ensemble des voies visuelles jusqu'au cortex occipital",
+      "comporte une onde électronégative de latence 20 ms",
+      "comporte une onde électropositive de latence 100 ms",
+      "est absent en cas de lésion complète des nerfs optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Le potentiel évoqué visuel",
+     "options": [
+      "explore l'activité des cellules sensorielles de la rétine",
+      "explore l'activité de l'ensemble des voies visuelles jusqu'au cortex occipital",
+      "comporte une onde électronégative de latence 20 ms",
+      "comporte une onde électropositive de latence 100 ms",
+      "est absent en cas de section totale des nerfs optiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Parmi les propositions suivantes se rapportant au système photopique de la vision indiquer celles qui sont correctes :",
+     "options": [
+      "Il est formé par les bâtonnets",
+      "il permet la vison des couleurs",
+      "la voie P mélange les signaux reçus des différentes variétés de photorécepteurs",
+      "la voie M est impliquée dans la perception du mouvement du stimulus visuel",
+      "la voie K joue un rôle important dans la vision des couleurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Parmi les propositions suivantes se rapportant au système scotopique de la vision indiquer celles qui sont correctes :",
+     "options": [
+      "Il est formé par les bâtonnets",
+      "il est responsable de la vision nocturne",
+      "il participe à la vision des couleurs",
+      "il a la plus grande sensibilité à la lumière",
+      "les signaux de ce système sont véhiculés par la voie K"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Parmi les caractéristiques suivantes de la sensibilité visuelle indiquer celles qui sont correctes :",
+     "options": [
+      "le champ visuel binoculaire a une étendue de 180° selon l’axe horizontal",
+      "le seuil absolu de détection correspond à l’énergie de quelques photons lumineux",
+      "le seuil différentiel d’intensité correspond à 30 à 40 niveau de gris entre le noir et le blanc",
+      "le seuil de discrimination spatiale est maximal à la périphérie de la rétine",
+      "le pouvoir de discrimination temporelle est faible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "Parmi les caractéristiques suivantes concernant les cellules bipolaires de la rétine indiquer celles qui sont correctes :",
+     "options": [
+      "elles reçoivent les informations directement des photorécepteur",
+      "elles reçoivent les informations des cellules horizontales",
+      "les cellules bipolaires « ON » sont hyperpolarisées à l’obscurité",
+      "les cellules bipolaires « OFF » sont dépolarisées à la stimulation lumineuse",
+      "la dépolarisation des cellules bipolaires engendre une décharge de potentiels d’action"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 41,
+     "q": "Parmi les caractéristiques suivantes concernant les cellules bipolaires de la rétine indiquer celles qui sont correctes :",
+     "options": [
+      "elles sont inactives à l’obscurité",
+      "les ganglionnaires « ON » sont excitées quand les bipolaires « OFF » sont inhibées",
+      "les ganglionnaires « OF » sont inhibées quand les bipolaires « OFF » sont excitées",
+      "les ganglionnaires à centre « ON » sont excitées par un spot lumineux éclairant le centre de leur champ récepteur",
+      "les cellules ganglionnaires sont plus sensibles aux contrastes qu’à l’intensité de la lumière"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 42,
+     "q": "Parmi les propositions suivantes se rapportant à la vision binoculaire indiquer celles qui sont correctes",
+     "options": [
+      "elle n’existe que pour le champ visuel binoculaire",
+      "les points rétiniens correspondants de l’hémirétine nasale d’un œil sont situés au niveau de l’hémirétine nasale de l’autre œil",
+      "un objet ne tombe sur des points rétiniens correspondants que quand il est fixé par le sujet",
+      "la fusion des images visuelles est possible grâce à l’oculomotricité",
+      "la fusion des images visuelles est assurée au niveau du cortex visuel par les colonnes de dominance oculaire xam audition isolé Exam 2018 Exam 2017 RETRAPAGE 2016 RETRAPAGE 2017 ED :"
+     ],
+     "answer": [],
+     "unanswered": true
     }
    ]
   },
@@ -1434,6 +2989,292 @@
    "title": "Isolé — les réflexes médullaires",
    "section": "Isolés par chapitre",
    "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique inverse indiquer celles qui sont justes",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les éléments suivants indiquer ceux qui font partie de l’arc réflexe myotatique",
+     "options": [
+      "les fuseaux neuromusculaires",
+      "les récepteurs tendineux de Golgi",
+      "les fibres Ib",
+      "les fibres de type II",
+      "les motoneurones Gamma"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe de flexion, indiquer celles qui sont justes",
+     "options": [
+      "les récepteurs sont cutanés tactiles",
+      "les voies afférentes sont les fibres de type III et IV",
+      "le centre d’intégration est un seul segment médullaire",
+      "la réponse réflexe persiste après l’arrêt du stimulus",
+      "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe d’extension, indiquer celles qui sont justes",
+     "options": [
+      "les récepteurs sont cutanés tactiles",
+      "les voies afférentes sont les fibres de type II et III",
+      "le centre d’intégration est un seul segment médullaire",
+      "la réponse réflexe est localisée à un seul muscle",
+      "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Le réflexe de flexion",
+     "options": [
+      "a comme point de départ des nocicepteurs",
+      "est monosynaptique",
+      "a une iffuse à plusieurs muscles",
+      "a une latence d'apparition courte",
+      "a comme finalité l’augmentation de l’appui du membre stimulé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Le réflexe ipsilatéral de flexion",
+     "options": [
+      "a comme point de départ des nocicepteurs",
+      "est monosynaptique",
+      "a une iffuse à plusieurs muscles",
+      "a une latence d'apparition courte",
+      "a comme finalité l’augmentation de l’appui du membre stimulé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les réflexes suivants indiquer ceux dont la st diffuse",
+     "options": [
+      "réflexe d’extension",
+      "réflexe de flexion",
+      "réflexe myotatique inverse",
+      "réflexe myotatique",
+      "réflexe cutané plantaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Le système moteur",
+     "options": [
+      "est nécessaire à la communication",
+      "permet les activités cinétiques volontaires",
+      "a une organisation fonctionnelle hiérarchique",
+      "assure les perceptions",
+      "est responsable de la proprioception"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les activités motrices reflexes sont",
+     "options": [
+      "stéréotypées",
+      "intentionnelles",
+      "involontaires",
+      "déclenchées par la simple volonté",
+      "dirigées vers un but"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Les activités motrices volontaires sont",
+     "options": [
+      "stéréotypées",
+      "intentionnelles",
+      "involontaires",
+      "déclenchées par la simple volonté",
+      "dirigées vers un but"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, indiquer celles qui sont justes",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, inverse indiquer celles qui sont justes",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Le réflexe myotatique",
+     "options": [
+      "peut être mis en jeu par l’activation des motoneurone Gamma",
+      "est le support du tonus musculaire",
+      "intervient dans l’adaptation posturale",
+      "est renforcé par le réflexe de flexion",
+      "est inhibé par le cervelet"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les éléments suivants indiquer ceux qui font partie de l’arc réflexe myotatique inverse",
+     "options": [
+      "les fuseaux neuromusculaires",
+      "les récepteurs tendineux de Golgi",
+      "les fibres Ib",
+      "les fibres de type II",
+      "les motoneurones Gamma"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Parmi les réflexes suivants indiquer ceux dont la st localisée",
+     "options": [
+      "réflexe d’extension",
+      "réflexe de flexion",
+      "réflexe myotatique inverse",
+      "réflexe myotatique",
+      "réflexe cutané plantaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Les réflexes proprioceptifs sont explorés cliniquement par",
+     "options": [
+      "les réflexes cutanés abdominaux",
+      "les réflexes crémastériens",
+      "les réflexes cutanés plantaires",
+      "les réflexes ostéo-tendineux",
+      "les réflexes de Hoffmann"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Les réflexes extéroceptifs sont explorés cliniquement par",
+     "options": [
+      "les réflexes cutanés abdominaux",
+      "les réflexes crémastériens",
+      "les réflexes cutanés plantaires",
+      "les réflexes ostéo-tendineux",
+      "les réflexes de Hoffmann"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Parmi les propositions suivantes se rapportant aux motoneurones gamma indiquer celles qui sont correctes",
+     "options": [
+      "ils sont myélinisés de gros diamètre",
+      "ils innervent les extrémités contractiles des fibres du fuseau neuro-musculaire",
+      "ils sont excités par les afférences Ia",
+      "ils sont inhibés par l’interneurone de Renschaw",
+      "leur excitation augmente le tonus musculaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, indiquer celles qui sont correctes",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à son étirement",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Les activités motrices volontaires sont",
+     "options": [
+      "stéréotypées",
+      "intentionnelles",
+      "dirigées vers un but",
+      "toujours déclenchées par un stimulus d’origine exogène",
+      "s’améliorent par l’apprentissage"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, indiquer celles qui sont correcte",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, indiquer celles qui sont correcte",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
     {
      "n": 24,
      "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, indiquer celles qui sont justes",
@@ -1456,6 +3297,19 @@
       "le centre d’intégration est un seul segment médullaire",
       "la réponse réflexe est localisée à un seul muscle",
       "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture Rép : a – b – e"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Le système moteur",
+     "options": [
+      "est nécessaire à la communication",
+      "permet les activités cinétiques volontaires",
+      "a une organisation fonctionnelle hiérarchique",
+      "assure les perceptions",
+      "est responsable de la proprioception – B - C"
      ],
      "answer": [],
      "unanswered": true
@@ -1485,6 +3339,983 @@
      ],
      "answer": [],
      "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "Les activités motrices volontaires sont",
+     "options": [
+      "stéréotypées",
+      "intentionnelles",
+      "involontaires",
+      "déclenchées par la simple volonté",
+      "dirigées vers un but Rép : B – D – E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Le réflexe myotatique",
+     "options": [
+      "peut être mis en jeu par l’activation des motoneurone Gamma",
+      "est le support du tonus musculaire",
+      "intervient dans l’adaptation posturale",
+      "est renforcé par le réflexe de flexion",
+      "est inhibé par le cervelet Rép : A – B - C"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique, inverse indiquer celles qui sont justes",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension",
+      "son récepteur est l’organe tendineux de Golgi",
+      "il est monosynaptique",
+      "la réponse réflexe est localisée à un seul muscle",
+      "il est exploré cliniquement par les réflexes ostéo-tendineux Rép : A – B - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe de flexion, indiquer celles qui sont justes",
+     "options": [
+      "les récepteurs sont cutanés tactiles",
+      "les voies afférentes sont les fibres de type III et IV",
+      "le centre d’intégration est un seul segment médullaire",
+      "la réponse réflexe persiste après l’arrêt du stimulus",
+      "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture Rép : B - D Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1Q8c9BfXprJ2311NDJD9Sj46tTsEhOgNJ",
+   "title": "Isolé — le tonus musculaire",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Une hypotonie musculaire s’observe en cas de lésion",
+     "options": [
+      "de la formation réticulée bulbaire",
+      "des noyaux vestibulaires",
+      "du cervelet",
+      "de la substance noire (locus niger)",
+      "de l’aire prémotrice du cortex cérébral"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les structures suivantes indiquer celles qui exercent un effet facilitateur sur le tonus musculaire",
+     "options": [
+      "la formation réticulée bulbaire",
+      "la formation réticulée mésencéphalique",
+      "les noyaux vestibulaires",
+      "le noyau rouge",
+      "le cervelet"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Une hypotonie peut s’observer en cas de lésion :",
+     "options": [
+      "des voies motrices centrales",
+      "du mésencéphale",
+      "des muscles striés squelettiques",
+      "des nerfs moteurs",
+      "médullaire aigue (choc spinal)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les éléments suivants indiquer ceux qui exercent un effet inhibiteur sur le tonus musculaire au niveau de la moelle",
+     "options": [
+      "la boucle de Renschaw",
+      "la boucle gamma",
+      "le réflexe myotatique inverse",
+      "les fibres Ia du même muscle",
+      "les fibres II du même muscle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes se rapportant au tonus musculaire indiquer celles qui sont correcte",
+     "options": [
+      "le tonus musculaire est d’origine nerveuse",
+      "la section du nerf moteur d’un muscle abolit son tonus",
+      "l’activité des unités motrices toniques a comme origine le réflexe myotatique inverse",
+      "l’augmentation de l’activité des fibres gamma augmente le tonus musculaire",
+      "l’augmentation de l’activité des fibres Ib augmente le tonus musculaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les structures exerçant un effet inhibiteur sur le tonus musculaire sont",
+     "options": [
+      "la formation réticulée bulbaire",
+      "les noyaux vestibulaires",
+      "le cervelet",
+      "les noyaux gris centraux",
+      "le cortex cérébral"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Une hypertonie musculaire s’observe en cas de lésion",
+     "options": [
+      "de la formation réticulée mésencéphalique",
+      "des noyaux vestibulaires",
+      "du cervelet",
+      "de la substance noire (locus niger)",
+      "de l’aire prémotrice du cortex cérébral"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Le tonus musculaire",
+     "options": [
+      "est assuré par des contractions musculaires phasiques",
+      "est le résultat de l’activation d’unités motrices toniques",
+      "a comme origine le réflexe myotatique",
+      "diminue en cas de section des racines postérieures",
+      "est maintenu par le réflexe myotatique inverse – C - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Parmi les structures suivantes indiquer celles qui exercent un effet facilitateur sur le tonus musculaire",
+     "options": [
+      "la formation réticulée bulbaire",
+      "la formation réticulée mésencéphalique",
+      "les noyaux vestibulaires",
+      "le noyau rouge",
+      "le cervelet – C - E Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1iV7TvuiYJ5-Vr361_2_sGSOGNL4OhPeN",
+   "title": "Isolé — l’équilibration",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les structures suivantes indiquer celles qui exercent un effet facilitateur sur le tonus musculaire",
+     "options": [
+      "la formation réticulée bulbaire",
+      "la formation réticulée mésencéphalique",
+      "les noyaux vestibulaires",
+      "le noyau rouge",
+      "le cervelet"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La fonction d’équilibration a comme aspects",
+     "options": [
+      "l’adoption des postures",
+      "la communication gestuelle",
+      "le maintien de l’équilibre",
+      "l’adaptation des mouvements",
+      "l’orientation du corps dans l’espace"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Les canaux semi-circulaires",
+     "options": [
+      "sont sensibles à l'accélération linéaire",
+      "interviennent dans la stabilisation du regard",
+      "ont un rôle prédictif dans le maintien de l'équilibre",
+      "interviennent uniquement dans l'équilibre statique",
+      "sont excités par l'eau froide"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les canaux semi-circulaires horizontaux:",
+     "options": [
+      "interviennent dans le maintien de l'équilibre statique",
+      "ont un rôle prédictif dans l'équilibration",
+      "déterminent l'orientation de la tête par rapport à la pesanteur",
+      "ont un fonctionnement synergique",
+      "sont inhibés par l'eau chaude"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Les récepteurs maculaires vestibulaires:",
+     "options": [
+      "sont sensibles à l'accélération linéaire",
+      "interviennent dans la stabilisation du regard",
+      "interviennent dans le maintien de l'équilibre statique",
+      "renseignent sur la position de la tête par rapport à la pesanteur",
+      "sont inactifs en position allongée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Les récepteurs maculaires des utricules",
+     "options": [
+      "interviennent dans le maintien de l'équilibre statique",
+      "ont un rôle prédictif dans l'équilibration.",
+      "déterminent l'orientation de la tête par rapport à la pesanteur.",
+      "ont un fonctionnement synergique",
+      "sont activés lors de l'inclinaison de la tête."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les voies vestibulaires centrales:",
+     "options": [
+      "ont pour origine les récepteurs vestibulaires",
+      "forment avec les fibres cochléaires le nerf auditif",
+      "font relais au niveau des noyaux vestibulaires",
+      "atteignent les motoneurones spinaux par les faisceaux vestibulo-spinaux",
+      "atteignent les noyaux végétatifs du nerf pneumogastrique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "La lésion de l'appareil vestibulaire gauche provoque:",
+     "options": [
+      "une marche en zigzag",
+      "un vertige",
+      "un nystagmus gauche",
+      "une diminution du tonus musculaire de l'hémicorps gauche",
+      "une exagération des réflexes ostéo-tendineux gauches"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les canaux semi-circulaires",
+     "options": [
+      "ont comme stimulus adéquat la rotation à vitesse constante",
+      "interviennent dans la stabilisation du regard",
+      "ont un rôle prédictif dans l'équilibration",
+      "interviennent uniquement dans l'équilibre statique",
+      "renseignent sur la position de la tête par rapport à la verticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "La fonction d’équilibration a comme aspects",
+     "options": [
+      "l’adoption des postures",
+      "la communication gestuelle",
+      "le maintien de l’équilibre",
+      "l’adaptation des mouvements",
+      "l’orientation du corps dans l’espace"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les propositions suivantes se rapportant au fonctionnement des canaux semicirculaires, indiquer celles qui sont justes",
+     "options": [
+      "la rotation de la tête à vitesse constante engendre un courant de liquide endolymphatique au niveau du canal semi circulaire",
+      "l’effet maximal du courant de liquide endolymphatique est observé au niveau du canal disposé dans le plan de la rotation",
+      "l’activité des fibres afférentes primaires annexées aux cellules ciliées est nulle au repos",
+      "l’activité des fibres afférentes primaires annexées aux cellules ciliées augmente quand la cupule se déplace dans un sens et diminue quand elle se déplace en sens inverse",
+      "l’activité des fibres afférentes primaires annexées aux cellules ciliées des canaux semicirculaires horizontaux augmente quand la cupule se déplace l’utricule"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Parmi les propositions suivantes se rapportant aux canaux semi-circulaires indiquer celles qui sont correctes",
+     "options": [
+      "ils sont sensibles à l’accélération linéaire",
+      "l’accélération produit un courant de liquide endolymphatique ayant le même sens qu’elle",
+      "le courant endolymphatique est à l’origine d’un déplacement de la cupule",
+      "le déplacement de la cupule provoque une modification de l’activité des neurones annexés aux cellules ciliées",
+      "l’effet au niveau des nerfs ampullaires dépend du sens de déplacement de la cupule"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les propositions suivantes se rapportant aux macules utriculaires et sacculaires indiquer celles qui sont correctes",
+     "options": [
+      "elles sont sensibles à l’accélération linéaire",
+      "elles sont soumises en permanence aux forces de pesanteur",
+      "leur orientation est fixe quelque soit la position de la tête",
+      "les saccules sont mis en jeu par l’inclinaison de la tête vers l’avant ou vers l’arrière",
+      "les utricules sont mis en jeu par l’inclinaison latérale de la tête"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "L’appareil vestibulaire",
+     "options": [
+      "exerce un effet inhibiteur sur le tonus musculaire",
+      "est impliqué dans le maintien des postures et attitudes",
+      "stabilise l’équilibre",
+      "participe au contrôle des mouvements oculaires",
+      "participe au contrôle de l’exécution des mouvements volontaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Parmi les propositions suivantes se rapportant à la stabilisation de l’équilibre, indiquer celles qui sont justes",
+     "options": [
+      "un corps est en équilibre si la verticale passant par son centre de gravité se projette à l’intérieur du polygone de sustentation",
+      "l’équilibre est d’autant plus stable que la taille est grande par rapport au polygone de sustentation",
+      "l’équilibre d’un homme debout est très instable",
+      "le réglage précis du tonus musculaire garantit l’équilibre",
+      "l’ajustement précis du tonus musculaire pour le maintien de l’équilibre s’améliore par l’apprentissage"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Parmi les propositions suivantes se rapportant au fonctionnement des récepteurs maculaires, indiquer celles qui sont justes",
+     "options": [
+      "la déformation des cils est à l’origine d’une modification de l’activité des fibres afférentes primaires annexées aux cellules ciliées",
+      "les saccules sont stimulées par l’inclinaison latérale de la tête",
+      "la stimulation est maximale au niveau du saccule du côté opposé à l’inclinaison",
+      "les utricules sont mis en jeu par l’inclinaison de la tête vers l’avant ou vers l’arrière",
+      "quand l’utricule d’un côté est excité celui du côté opposé est inhibé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Lors d’une accélération angulaire il se produit au niveau des canaux semicirculaires",
+     "options": [
+      "un courant de liquide en dolymphatique dans le même sens que l’accélération",
+      "un déplacement de la cupule",
+      "une déformation des cils des cellules ciliées",
+      "un déplacement des otolites",
+      "une modification de la fréquence de décharge au niveau des fibres afférentes annexées aux cellules ciliées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Les récepteurs proprioceptifs du cou",
+     "options": [
+      "renseignent sur la position de la tête par rapport au reste du corps",
+      "envoient des informations qui déclenchent des réflexes d’adaptation posturale",
+      "envoient des informations qui empêchent d’avoir une sensation de déséquilibre",
+      "interviennent en cas d’inclinaison de la tête solidaire avec le reste du corps",
+      "interviennent en cas d’inclinaison de la tête seule"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Les récepteurs maculaires",
+     "options": [
+      "ont comme stimulus adéquat l'accélération linéaire",
+      "interviennent dans la stabilisation du regard",
+      "ont un rôle prédictif dans l'équilibration",
+      "interviennent dans l'équilibre statique",
+      "renseignent sur la position de la tête par rapport à la verticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Parmi les propositions suivantes se rapportant aux macules utriculaires et sacculaires indiquer celles qui sont correctes",
+     "options": [
+      "elles sont sensibles à l’accélération linéaire",
+      "elles sont soumises en permanence aux forces de pesanteur",
+      "leur orientation est fixe quelque soit la position de la tête",
+      "les saccules sont mis en jeu par l’inclinaison de la tête vers l’avant ou vers l’arrière",
+      "les utricules sont mis en jeu par l’inclinaison latérale de la tête – B"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "L’appareil vestibulaire",
+     "options": [
+      "exerce un effet inhibiteur sur le tonus musculaire",
+      "est impliqué dans le maintien des postures et attitudes",
+      "stabilise l’équilibre",
+      "participe au contrôle des mouvements oculaires",
+      "participe au contrôle de l’exécution des mouvements volontaires – C – D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Parmi les propositions suivantes se rapportant au fonctionnement des récepteurs maculaires, indiquer celles qui sont justes",
+     "options": [
+      "la déformation des cils est à l’origine d’une modification de l’activité des fibres afférentes primaires annexées aux cellules ciliées",
+      "les saccules sont stimulées par l’inclinaison latérale de la tête",
+      "la stimulation est maximale au niveau du saccule du côté opposé à l’inclinaison",
+      "les utricules sont mis en jeu par l’inclinaison de la tête vers l’avant ou vers l’arrière",
+      "quand l’utricule d’un côté est excité celui du côté opposé est inhibé Rép : A – B – D Les qcm corrigés en dessus sont corrigés par le professeur DOUGUI Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1TpS5pTmIenhi-2B_2kjYhF0V2FmDwaer",
+   "title": "Isolé — le cervelet",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes se rapportant au circuit des fibres moussues indiquer celles qui sont correctes",
+     "options": [
+      "il amène les informations d’une seule origine, l’olive bulbaire",
+      "les fibres moussues envoient une collatérale aux noyaux cérébelleux",
+      "les fibres moussues s’articulent avec les cellules en grains",
+      "les axones des cellules en grains forment les fibres parallèles",
+      "la fibre parallèle s’articule avec une seule cellule de Purkinje"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La zone latérale du cervelet",
+     "options": [
+      "est en relation avec le cortex moteur",
+      "contrôle la posture et l’équilibre",
+      "exerce des effets facilitateurs sur le tonus musculaire",
+      "contrôle les mouvements volontaires lents",
+      "intervient dans le contrôle de la motricité de la main"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La stimulation d'une fibre moussue provoque",
+     "options": [
+      "une excitation directe des noyaux cérébelleux",
+      "une excitation des cellules granulaires",
+      "une excitation directe de la cellule de Purkinje",
+      "une inhibition des noyaux cérébelleux par l'intermédiaire de la cellule de Purkinje",
+      "une excitation de la cellule de Purkinje par l'intermédiaire des interneurones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Le cervelet intervient",
+     "options": [
+      "dans l’étape d’intension du mouvement",
+      "dans l’étape de planification du mouvement",
+      "dans l’étape de programmation du mouvement",
+      "à la phase d’initiation du mouvement",
+      "à la phase d’arrêt du mouvement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La fibre moussue",
+     "options": [
+      "est une voie d'entrée d'information au cortex cérébelleux",
+      "amène des informations uniquement de l'olive bulbaire",
+      "a un axone qui forme les fibres parallèles",
+      "s'articule avec plusieurs cellules granulaires",
+      "envoie une collatérale aux noyaux cérébelleux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "L'activité des noyaux cérébelleux est",
+     "options": [
+      "facilitatrice",
+      "renforcée par les collatérales des fibres moussues",
+      "renforcée par les interneurones de Golgi",
+      "diminuée par les cellules de Purkinje",
+      "diminuée par les collatérales des fibres grimpantes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Le lobe floculonodulaire du cervelet",
+     "options": [
+      "est en relation avec le cortex moteur",
+      "contrôlent les mouvements volontaires rapides",
+      "participent au contrôle du tonus musculaire",
+      "participent au contrôle de l'équilibre",
+      "contrôle la motricité des globes oculaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "La fibre grimpante",
+     "options": [
+      "est une voie d'entrée d'information au cortex cérébelleux",
+      "a comme origine l'olive bulbaire",
+      "s'articule avec les neurones des noyaux cérébelleux",
+      "s'articule avec la cellule de Purkinje",
+      "s'articule avec l'interneurone de Golgi"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "La cellule de Purkinje du cervelet est stimulée par",
+     "options": [
+      "les fibres parallèles",
+      "les cellules à corbeille",
+      "les fibres grimpantes",
+      "les interneurones de Golgi",
+      "les cellules des noyaux cérébelleux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Les régions latérales du cervelet (ou néocervelet)",
+     "options": [
+      "sont en relation avec le cortex moteur",
+      "exercent leur effet sur les motoneurones par l'intermédiaire des voies pyramidales",
+      "contrôlent les mouvements volontaires rapides",
+      "participent au contrôle du tonus musculaire",
+      "participent au contrôle de l'équilibre"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les neurones suivants du cervelet, indiquer ceux ayant un effet facilitateur:",
+     "options": [
+      "cellule à corbeille",
+      "cellule de Purkinje",
+      "cellule granulaire",
+      "cellule de Golgi",
+      "cellules nucléaires."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Quels sont parmi les types de mouvements suivants ceux contrôlés par le cervelet :",
+     "options": [
+      "mouvements lents volontaires",
+      "mouvements choréo-athétosiques",
+      "mouvements réflexes",
+      "mouvements rapides de projection",
+      "mouvements saccadés des yeux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Le néostriatum est formé par",
+     "options": [
+      "le noyau caudé",
+      "le putamen",
+      "le pallidum",
+      "la substancia nigra",
+      "le corps de LUYS"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Parmi les propositions suivantes se rapportant au contrôle de la motricité par le cervelet indiquer celles qui sont correctes",
+     "options": [
+      "les cellules des noyaux cérébelleux exercent un effet facilitateur sur le tonus musculaire",
+      "le paléo-cervelet ajuste le tonus des muscles posturaux qui s'opposent à l'action de la pesanteur",
+      "le néo-cervelet participe à la régulation de la posture et l'équilibration",
+      "le cervelet contrôle les mouvements volontaires lents",
+      "le cervelet est impliqué dans l’apprentissage des mouvements"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Parmi les propositions suivantes se rapportant à l’organisation du cervelet indiquer celles qui sont correctes",
+     "options": [
+      "la subdivision transversale en lobe est intéressante pour la systématisation des afférences",
+      "la subdivision longitudinale est intéressante pour la systématisation des efférences",
+      "les connexions sont organisées de manière à ce que chaque moitié du cervelet contrôle l’hémicorps controlatéral",
+      "les efférences du cortex cérébelleux sont constituées par les axones des cellules nucléaire",
+      "le cortex cérébelleux peut être considéré comme un système d’intégration ayant une seule voie d’entrée et deux voies de sortie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "La lésion du cervelet chez l’homme se manifeste par",
+     "options": [
+      "une hypertonie",
+      "une incoordination motrice dans le temps et dans l’espace",
+      "une ataxie",
+      "une paralysie musculaire",
+      "une dysarthrie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Parmi les cellules nerveuses suivantes du cervelet indiquer celles qui font partie du circuit des fibres grimpantes",
+     "options": [
+      "les cellules en grain",
+      "les cellules de Purkinje",
+      "les cellules étoilées",
+      "les cellules à corbeille",
+      "les cellules des noyaux cérébelleux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Parmi les propositions suivantes se rapportant au circuit des fibres moussues du cervelet indiquer celles qui sont correctes",
+     "options": [
+      "les fibres moussues amènent les informations uniquement de l’olive bulbaire",
+      "les fibres moussue excitent directement par une collatérale les neurones des noyaux cérébelleux",
+      "les cellules en grain excitent directement les cellules de Purkinje",
+      "les fibres parallèles excitent les cellules en grain par l’intermédiaire des cellule de Golgi",
+      "les fibres parallèles inhibent les cellules de Purkinje par les cellule à corbeille"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Parmi les propositions suivantes se rapportant au circuit des fibres moussues indiquer celles qui sont correctes",
+     "options": [
+      "il amène les informations d’une seule origine, l’olive bulbaire",
+      "les fibres moussues envoient une collatérale aux noyaux cérébelleux",
+      "les fibres moussues s’articulent avec les cellules en grains",
+      "les axones des cellules en grains forment les fibres parallèles",
+      "la fibre parallèle s’articule avec une seule cellule de Purkinje"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Le cervelet intervient dans les étapes suivantes du mouvement volontaire",
+     "options": [
+      "préparation",
+      "planification",
+      "programmation",
+      "démarrage (initiation)",
+      "arrêt"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "La stimulation d'une fibre grimpante provoque",
+     "options": [
+      "une excitation directe des noyaux cérébelleux",
+      "une excitation des cellules granulaires",
+      "une excitation directe de la cellule de Purkinje",
+      "une inhibition des noyaux cérébelleux par l'intermédiaire de la cellule de Purkinje",
+      "une excitation de la cellule de Purkinje par l'intermédiaire des interneurones Rep : a – c - d Préparer par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1mM0PAgDHJrv69V_7qul47kpvD3DkXas2",
+   "title": "Isolé — les noyaux gris centraux",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Au niveau des noyaux gris centraux la dopamine",
+     "options": [
+      "est libérée par les neurones quittant la substance noire",
+      "est libérée en excès sous l’effet du GABA (acide gamma-amino-butirique)",
+      "excite les neurones du pallidum",
+      "inhibe les neurones du corps de LUYS (noyau subthalamique)",
+      "inhibe les neurones du striatum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La maladie de Parkinson a comme origine",
+     "options": [
+      "une dégénérescence de la substancia nigra",
+      "une diminution de la dopamine au niveau du striatum",
+      "un blocage des récepteurs de la dopamine au niveau du striatum",
+      "une augmentation de l'acétylcholine au niveau du striatum",
+      "une augmentation du GABA au niveau du striatum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La diminution de la dopamine au niveau du striatum se manifeste par",
+     "options": [
+      "une chorée",
+      "une athétose",
+      "un hémiballisme",
+      "une rigidité",
+      "une hypokinésie Rép : D - E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les noyaux gris centraux",
+     "options": [
+      "préparent la « base de tonus » nécessaire aux mouvements des membres",
+      "interviennent dans le contrôle des mouvements volontaires lents",
+      "exercent une action directe sur les motoneurones alpha et gamma",
+      "participent à la planification des mouvements volontaires",
+      "contrôlent l’exécutions des mouvements volontaires en utilisant les informations sensitivo- sensorielles. Rép : A – B - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Le néostriatum est formé par",
+     "options": [
+      "le noyau caudé",
+      "le putamen",
+      "le pallidum",
+      "la substancia nigra",
+      "le corps de LUYS"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Un syndrome Parkinsonien peut s'observer en cas",
+     "options": [
+      "de dégénérescence de la substancia nigra",
+      "de diminution de la dopamine au niveau du striatum",
+      "de blocage des récepteurs de la dopamine au niveau du striatum",
+      "d'augmentation de l'acétylcholine au niveau du striatum",
+      "d'augmentation du GABA au niveau du striatum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les noyaux sous-thalamiques sont",
+     "options": [
+      "le noyau caudé",
+      "le putamen",
+      "le pallidum",
+      "la substancia nigra",
+      "le corps de LUYS"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Un syndrome parkinsonien peut être dû à une",
+     "options": [
+      "diminution du GABA",
+      "diminution de la sérotonine",
+      "diminution de la dopamine",
+      "augmentation de l'acétylcholine",
+      "augmentation de la noradrénaline"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "L'atteinte des noyaux gris centraux se manifeste par une:",
+     "options": [
+      "hypoesthésie",
+      "chorée",
+      "rigidité",
+      "hémiplégie",
+      "ataxie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Parmi les neurotransmetteurs suivants indiquer ceux impliqués dans le fonctionnement des noyaux gris centraux",
+     "options": [
+      "l’acétylcholine",
+      "la sérotonine",
+      "la dopamine",
+      "la noradrénaline",
+      "l’acide gamma-amino-butyrique (GABA)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes se rapportant à la maladie de Parkinson indiquer celles qui sont correctes",
+     "options": [
+      "elle est due à un blocage des récepteurs cholinergiques des neurones du striatum",
+      "elle est traitée par la dopamine",
+      "le tremblement observé dans cette maladie",
+      "l’hypokinésie",
+      "la rigidité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Au niveau des noyaux gris centraux la dopamine",
+     "options": [
+      "est libérée par les neurones quittant la substance noire",
+      "est libérée en excès sous l’effet du GABA (acide gamma-amino-butirique)",
+      "excite les neurones du pallidum",
+      "inhibe les neurones du corps de LUYS (noyau subthalamique)",
+      "inhibe les neurones du striatum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Parmi les propositions suivantes se rapportant à la maladie de Parkinson indiquer celles qui sont correctes",
+     "options": [
+      "elle se manifeste par des mouvements amples, brusques, involontaires des racines des membres",
+      "elle est due à une dégénérescence des neurones dopaminergiques de la substance noire",
+      "elle peut être due à une diminution de la choline-acétylase",
+      "la rigidité observée s’explique par un hyperfonctionnement des motoneurones alpha",
+      "elle est traitée par la L-DOPA"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "La chorée de Huntington",
+     "options": [
+      "serait due à un déficit en choline acétylase",
+      "est traitée efficacement par le GABA (acide gamma-amino-butyrique)",
+      "",
+      "",
+      ""
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "La diminution du GABA au niveau des noyaux gris centraux se manifeste par",
+     "options": [
+      "une chorée",
+      "une athétose",
+      "un hémiballisme",
+      "une rigidité",
+      "une hypokinésie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Parmi les neurotransmetteurs suivants indiquer ceux libérés par les neurones des noyaux gris centraux",
+     "options": [
+      "l’acétylcholine",
+      "la noradrénaline",
+      "la sérotonine",
+      "la dopamine",
+      "le GABA (acide gamma-amino-butirique)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Les noyaux gris centraux",
+     "options": [
+      "préparent la « base de tonus » nécessaire aux mouvements des membres",
+      "interviennent dans le contrôle des mouvements volontaires lents",
+      "exercent une action directe sur les motoneurones alpha et gamma",
+      "participent à la planification des mouvements volontaires",
+      "contrôlent l’exécutions des mouvements volontaires en utilisant les informations sensitivo- sensorielles. – B - D Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
     }
    ]
   },
@@ -1493,6 +4324,581 @@
    "title": "Isolé — le contrôle cortical de la motricité",
    "section": "Isolés par chapitre",
    "questions": [
+    {
+     "n": 1,
+     "q": "La section du faisceau pyramidal au niveau de la pyramide bulbaire se manifeste du côté opposé à la lésion par",
+     "options": [
+      "une hémiplégie permanente",
+      "une exagération des réflexes ostéo-tendineux",
+      "une hypotonie",
+      "une inversion du réflexe cutané plantaire (signe de Babinski)",
+      "une incapacité d’effectuer des tâches motrices apprises avant la lésion"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La crise épileptique Bravais-Jacksonienne est due à une décharge anormale au niveau de l’aire",
+     "options": [
+      "motrice principale",
+      "prémotrice",
+      "motrice supplémentaire",
+      "motrice 8.",
+      "pariétale associative."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "L'aire motrice supplémentaire",
+     "options": [
+      "est située en arrière de l’aire motrice principale",
+      "intervient à l'étape d'intention du mouvement volontaire",
+      "participe à la programmation des mouvements volontaires",
+      "participe à la coordination des mouvements bimanuels",
+      "contrôle surtout les muscles axiaux et proximaux des membres"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "L'enregistrement de l'activité des cellules de l'aire 4 au cours d'un mouvement montre que",
+     "options": [
+      "cette activité augmente 120 à 150 ms après le début du mouvement",
+      "la fréquence de décharge est proportionnelle à la force développée par le muscle activé",
+      "pour une même articulation, les mêmes cellules augmentent leur fréquence de décharge en cas de flexion ou d'extension",
+      "l'activité de certaines cellules varie avec la vitesse du mouvement",
+      "l'activité de certaines cellules varie avec la direction du mouvement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La section de la pyramide bulbaire donne :",
+     "options": [
+      "une hémiparésie controlatérale",
+      "une hypertonie controlatérale",
+      "un signe de Babinski controlatéral",
+      "un reflexe de préhension forcée controlatéral.",
+      "une déviation des globes oculaires vers le côté de la lésion."
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 7,
+     "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus en fait à une interruption des voies extrapyramidales:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du reflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les signes suivants du syndrome pyramidal clinique indiquer ceux dus effectivement à une interruption du faisceau pyramidal:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du réflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 9,
+     "q": "La lésion conjointe des aires motrices corticales 4 et 6 donne :",
+     "options": [
+      "une hémiplégie homolatérale",
+      "une spasticité controlatérale",
+      "une diminution des réflexes ostéo-tendineux controlatérale.",
+      "un signe de Babinski controlatéral.",
+      "un réflexe de préhension forcé homolatéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Le cortex moteur principal (aire 4) est impliqué dans les étapes suivantes du mouvement :",
+     "options": [
+      "Incitation",
+      "Intention",
+      "Planification",
+      "Programmation",
+      "Exécution."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "La section du faisceau pyramidal au niveau de la pyramide bulbaire se manifeste du côté opposé à la lésion par",
+     "options": [
+      "une hémiplégie permanente",
+      "une exagération des réflexes ostéo-tendineux",
+      "une hypotonie",
+      "une inversion du réflexe cutané plantaire (signe de Babinski)",
+      "une incapacité d’effectuer des tâches motrices apprises avant la lésion"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "L’aire motrice primaire (aire 4)",
+     "options": [
+      "est le point de départ de l’exécution du mouvement volontaire",
+      "participe à la programmation du mouvement volontaire",
+      "intervient dans la phase d’intension du mouvement volontaire",
+      "contrôle les mouvements bimanuels",
+      "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "La crise épileptique Bravais-Jaksonienne est due à une décharge anormale au niveau de l’aire",
+     "options": [
+      "motrice principale",
+      "prémotrice",
+      "motrice supplémentaire",
+      "motrice 8.",
+      "pariétale associative."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "L’aire motrice supplémentaire",
+     "options": [
+      "intervient à l’étape d’intention du mouvement volontaire",
+      "construit le mouvement en relation avec le système de la mémoire",
+      "coordonne l’activité des deux cortex moteurs droit et gauche pour les mouvements bimanuels",
+      "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible",
+      "est impliquée dans les mouvements visuo-guidés"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les propositions suivantes se rapportant au circuit des fibres moussues indiquer celles qui sont correctes",
+     "options": [
+      "il amène les informations d’une seule origine, l’olive bulbaire",
+      "les fibres moussues envoient une collatérale aux noyaux cérébelleux",
+      "les fibres moussues s’articulent avec les cellules en grains",
+      "les axones des cellules en grains forment les fibres parallèles",
+      "la fibre parallèle s’articule avec une seule cellule de Purkinje"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "La section de la pyramide bulbaire donne :",
+     "options": [
+      "une hémiparésie controlatérale",
+      "une hypertonie controlatérale",
+      "un signe de Babinski controlatéral",
+      "un reflexe de préhension forcée controlatéral.",
+      "une déviation des globes oculaires vers le côté de la lésion."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus en fait à une interruption des voies extrapyramidales:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du reflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Parmi les signes suivants du syndrome pyramidal clinique indiquer ceux dus effectivement à une interruption du faisceau pyramidal:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du réflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "La lésion conjointe des aires motrices corticales 4 et 6 donne :",
+     "options": [
+      "une hémiplégie homolatérale",
+      "une spasticité controlatérale",
+      "une diminution des réflexes ostéo-tendineux controlatérale.",
+      "un signe de Babinski controlatéral.",
+      "un réflexe de préhension forcé homolatéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Le cortex moteur principal (aire 4) est impliqué dans les étapes suivantes du mouvement :",
+     "options": [
+      "Incitation",
+      "Intention",
+      "Planification",
+      "Programmation",
+      "Exécution."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 21,
+     "q": "Les voies pyramidales",
+     "options": [
+      "proviennent uniquement de l'aire 4",
+      "passent par la capsule interne",
+      "font obligatoirement relais au niveau du tronc cérébral",
+      "croisent la ligne médiane au niveau de la partie inférieure du bulbe rachidien",
+      "s'articulent avec les motoneurones alpha et gamma directement ou par l'intermédiaire d'interneurones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Les voies extrapyramidales sont constituées des faisceaux :",
+     "options": [
+      "corticonucléaire",
+      "corticospinal",
+      "réticulo-spinal",
+      "vestibulo-spinal",
+      "cérébello-spinal"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Les voies extrapyramidales",
+     "options": [
+      "proviennent uniquement de l'aire 4",
+      "passent par la capsule interne",
+      "font obligatoirement relais au niveau du tronc cérébral",
+      "croisent la ligne médiane au niveau de la partie inférieure du bulbe rachidien",
+      "s'articulent avec les motoneurones alpha et gamma directement ou par l'intermédiaire d'interneurones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Le système latéral regroupe les faisceaux",
+     "options": [
+      "pyramidal croisé",
+      "rubro-spinal",
+      "cortico-spinal ventral",
+      "tectospinal",
+      "vestibulo-spinal"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "La section du faisceau pyramidal au niveau de la pyramide bulbaire se manifeste du côté opposé à la lésion par",
+     "options": [
+      "une hémiplégie permanente",
+      "une exagération des réflexes ostéo-tendineux",
+      "une hypotonie",
+      "une inversion du réflexe cutané plantaire (signe de Babinski)",
+      "une incapacité d’effectuer des tâches motrices apprises avant la lésion"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "La section de la pyramide bulbaire donne :",
+     "options": [
+      "une hémiparésie controlatérale",
+      "une hypertonie controlatérale",
+      "un signe de Babinski controlatéral",
+      "un reflexe de préhension forcée controlatéral.",
+      "une déviation des globes oculaires vers le côté de la lésion."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Parmi les signes suivants du syndrome pyramidal clinique indiquer ceux dus effectivement à une interruption du faisceau pyramidal:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du réflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "La lésion conjointe des aires motrices corticales 4 et 6 donne :",
+     "options": [
+      "une hémiplégie homolatérale",
+      "une spasticité controlatérale",
+      "une diminution des réflexes ostéo-tendineux controlatérale.",
+      "un signe de Babinski controlatéral.",
+      "un réflexe de préhension forcé homolatéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "L'aire motrice principale",
+     "options": [
+      "est localisée au niveau de la circonvolution frontale ascendante",
+      "correspond à l'aire 6 de Brodmann",
+      "contient les cellules pyramidales géantes de BETZ",
+      "donne 50 % des fibres du faisceau pyramidal",
+      "reçoit des informations d'origine périphérique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "L'aire prémotrice",
+     "options": [
+      "est localisée au niveau de la circonvolution frontale ascendante",
+      "correspond à l'aire 6 de Brodmann",
+      "contient les cellules pyramidales géantes de BETZ",
+      "donne une partie des fibres du faisceau pyramidal",
+      "reçoit des informations d'origine cérébelleuses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Parmi les crises épileptiques suivantes indiquer celles qui ont comme point de départ le cortex moteur",
+     "options": [
+      "crise tonico-clonique généralisée (« grand mal »)",
+      "crise d’absence (« petit mal »)",
+      "crise versive",
+      "crise Bravais - Jacksonienne",
+      "crise partielle motrice simple du membre inférieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "La crise épileptique versive est due à une décharge anormale au niveau de l’aire",
+     "options": [
+      "motrice principale",
+      "prémotrice",
+      "motrice supplémentaire",
+      "motrice 8.",
+      "pariétale associative."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Le cortex moteur primaire",
+     "options": [
+      "intervient à l'étape d'intention du mouvement volontaire",
+      "participe à l'étape de programmation du mouvement volontaire",
+      "est le point de départ de l'exécution du mouvement volontaire",
+      "exerce par l'intermédiaire des voies pyramidales un effet facilitateur sur les motoneurones alpha et gamma",
+      "exerce par l'intermédiaire des voies extra- pyramidales un effet inhibiteur sur les motoneurones alpha et gamma"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "L’aire motrice primaire (aire 4)",
+     "options": [
+      "est le point de départ de l’exécution du mouvement volontaire",
+      "participe à la programmation du mouvement volontaire",
+      "intervient dans la phase d’intension du mouvement volontaire",
+      "contrôle les mouvements bimanuels",
+      "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Le cortex moteur primaire (aire 4)",
+     "options": [
+      "commande les muscles de l’hémicorps opposé",
+      "est le point de départ de l’étape d’exécution du mouvement volontaire",
+      "participe à l’étape de programmation des mouvements",
+      "contrôle la motricité fines des mains par les voies extrapyramidale",
+      "exerce un effet facilitateur sur les motoneurones (augmente le tonus musculaire) par les voies extrapyramidales"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "L’aire prémotrice (aire 6)",
+     "options": [
+      "intervient à l’étape d’intention du mouvement volontaire",
+      "construit le mouvement en relation avec le système de la mémoire",
+      "coordonne l’activité des deux cortex moteurs droit et gauche pour les mouvements bimanuels",
+      "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible",
+      "est impliquée dans les mouvements visuo-guidés"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "Parmi les structures suivantes indiquer celles qui participent à l’étape de planification du mouvement",
+     "options": [
+      "l’aire motrice principale (aire 4)",
+      "l’aire prémotrice (aire 6)",
+      "l’aire motrice supplémentaire",
+      "le cervelet",
+      "les noyaux gris centraux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Parmi les structures suivantes indiquer celles qui participent à l’étape d’exécution du mouvement",
+     "options": [
+      "l’aire motrice principale (aire 4)",
+      "l’aire prémotrice (aire 6)",
+      "l’aire motrice supplémentaire",
+      "le cervelet",
+      "les noyaux gris centraux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Parmi les structures suivantes indiquer celles qui participent à l’étape de programmation du mouvement",
+     "options": [
+      "l’aire motrice principale (aire 4)",
+      "l’aire prémotrice (aire 6)",
+      "l’aire motrice supplémentaire",
+      "le cervelet",
+      "les noyaux gris centraux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "L'exécution de mouvements volontaires nécessite l'intégrité",
+     "options": [
+      "du cortex moteur primaire",
+      "du faisceau pyramidal",
+      "des motoneurones périphériques",
+      "du cervelet",
+      "des noyaux gris centraux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 41,
+     "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus en fait à une interruption des voies extrapyramidales:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du reflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 42,
+     "q": "Le cortex moteur principal (aire 4) est impliqué dans les étapes suivantes du mouvement :",
+     "options": [
+      "Incitation",
+      "Intention",
+      "Planification",
+      "Programmation",
+      "Exécution."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 43,
+     "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus en fait à une interruption des voies pyramidales:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du réflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 44,
+     "q": "L'enregistrement de l'activité des cellules de l'aire 4 au cours d'un mouvement montre que",
+     "options": [
+      "cette activité augmente 120 à 150 ms après le début du mouvement",
+      "la fréquence de décharge est proportionnelle à la force développée par le muscle activé",
+      "pour une même articulation, les mêmes cellules augmentent leur fréquence de décharge en cas de flexion ou d'extension",
+      "l'activité de certaines cellules varie avec la vitesse du mouvement",
+      "l'activité de certaines cellules augmente après l’arrêt du mouvement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 45,
+     "q": "L’aire pré motrice (aire 6)",
+     "options": [
+      "intervient à l’étape d’intention du mouvement volontaire",
+      "construit le mouvement en relation avec le système de la mémoire",
+      "coordonne l’activité des deux cortex moteurs droit et gauche pour les mouvements bimanuels",
+      "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
     {
      "n": 46,
      "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus à une interruption des voies extrapyramidales:",
@@ -1528,6 +4934,1097 @@
       "coordonne l’activité des deux cortex moteurs droit et gauche pour les mouvements bimanuels",
       "contrôle les muscles axiaux et proximaux impliqués dans la phase initiale d’orientation du corps vers la cible",
       "est impliquée dans les mouvements visuo-guidés Rép : d - e"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 49,
+     "q": "La section du faisceau pyramidal au niveau de la pyramide bulbaire se manifeste du côté opposé à la lésion par",
+     "options": [
+      "une hémiplégie permanente",
+      "une exagération des réflexes ostéo-tendineux",
+      "une hypotonie",
+      "une inversion du réflexe cutané plantaire (signe de Babinski)",
+      "une incapacité d’effectuer des tâches motrices apprises avant la lésion Rép : C - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 50,
+     "q": "Le cortex moteur primaire (aire 4)",
+     "options": [
+      "commande les muscles de l’hémicorps opposé",
+      "est le point de départ de l’étape d’exécution du mouvement volontaire",
+      "participe à l’étape de programmation des mouvements",
+      "contrôle la motricité fines des mains par les voies extrapyramidale",
+      "exerce un effet facilitateur sur les motoneurones (augmente le tonus musculaire) par les voies extrapyramidales Rép : A – B – C Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1m9feBbvmoIhFNnNF8VRR8IOUAAhZOXL6",
+   "title": "Isolé — le néocortex",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les aires 5 et 7 gauches",
+     "options": [
+      "traitent des informations du domaine somesthésique",
+      "sont impliquées dans les perceptions tactiles et proprioceptives",
+      "sont responsables d’une anesthésie tactile quand elles sont lésées",
+      "sont responsables d’une incapacité de reconnaître les objets par le toucher quand elles sont lésées",
+      "sont responsables d’une apraxie quand elles sont lésées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les aires praxiques",
+     "options": [
+      "sont situées au niveau de la région pariéto-temporo-occipitale droite",
+      "sont indispensables pour la réalisation des habiletés",
+      "sont indispensables pour le langage parlés",
+      "sont responsables d’une aphasie quand elles sont lésées",
+      "sont responsables d’une incapacité d’exécuter le langage écrits"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "L’aire 22 gauche",
+     "options": [
+      "permet la reconnaissance des sons entendus",
+      "participe au contrôle de la phonation quand le sujet parle",
+      "est impliquée dans l’élaboration du langage écrit",
+      "est responsable d’une incapacité de comprendre la signification du langage parlé quand elle est lésée",
+      "est responsable d’une perturbation de la reconnaissance des mélodies quand elle est lésée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les aires praxiques",
+     "options": [
+      "sont situées au niveau de la région pariéto-temporo-occipitale droite",
+      "sont indispensables pour la réalisation des habiletés",
+      "sont indispensables pour le langage parlés",
+      "sont responsables d’une aphasie quand elles sont lésées",
+      "sont responsables d’une incapacité d’exécuter le langage écrits"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La lésion des aires pariéto-occipito-temporales gauches peut être à l’origine",
+     "options": [
+      "d’une aphasie de BROCCA",
+      "d’une agnosie tactile",
+      "d’une agnosie visuelle",
+      "d’une agnosie auditive",
+      "d’une perte du comportement de curiosité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Dans l'aphasie de WERNICKE",
+     "options": [
+      "la lésion est située au niveau de la région postérieure de la première et deuxième circonvolutions temporales gauches",
+      "la lésion est située au niveau de l'aire 44 frontale gauche",
+      "la construction du langage est perturbée",
+      "le discours verbal est de débit normal mais le langage est incompréhensible",
+      "l'articulation des mots est impossible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Dans l'aphasie de BROCA",
+     "options": [
+      "la lésion est située au niveau de la région postérieure de la première et deuxième circonvolutions temporales gauches",
+      "la lésion est située au niveau de l'aire 44 frontale gauche",
+      "la construction du langage est perturbée",
+      "le discours verbal est de débit normal mais le langage est incompréhensible",
+      "l'articulation des mots est impossible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les aires associatives préfrontales sont impliquées dans",
+     "options": [
+      "l’élaboration des gnosies",
+      "l’élaboration des praxies",
+      "le comportement de curiosité",
+      "le comportement de persévérance",
+      "le comportement de sociabilité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "La lésion bilatérale des aires associatives préfrontale se manifeste par",
+     "options": [
+      "une agnosie auditive",
+      "une diminution des mouvements spontanés",
+      "une perte de l’autocritique et du jugement",
+      "une diminution de fixation de l’attention",
+      "une apraxie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Les aires associatives préfrontales sont impliquées dans",
+     "options": [
+      "la planification de l’action",
+      "la coordination des fonctions intellectuelles supérieures",
+      "le maintien de l’attention",
+      "le contrôle de l’exécution des mouvements volontaires",
+      "la perception de l’image de son propre corps"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Les aires préfrontales sont impliquées dans",
+     "options": [
+      "le comportement de persévérance",
+      "le comportement d’investigation",
+      "l’exécution des habiletés gestuelles (praxies)",
+      "l’élaboration du langage",
+      "la coordination des fonctions intellectuelles supérieures"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Les aires associatives préfrontales sont impliquées dans",
+     "options": [
+      "l’élaboration des gnosies",
+      "l’élaboration des praxies",
+      "le comportement de curiosité",
+      "le comportement de persévérance",
+      "le comportement de sociabilité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Les aires associatives préfrontales sont impliquées dans",
+     "options": [
+      "la planification de l’action",
+      "la coordination des fonctions intellectuelles supérieures",
+      "le maintien de l’attention",
+      "le contrôle de l’exécution des mouvements volontaires",
+      "la perception de l’image de son propre corps"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "41/ La lésion des aires pariéto-occipito-temporales gauches peut être à l’origine",
+     "options": [
+      "d’une aphasie de BROCA",
+      "d’une agnosie tactile",
+      "d’une agnosie visuelle",
+      "d’une agnosie auditive",
+      "d’une perte du comportement de curiosité Rép : b – c – d"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "L’aire 22 gauche",
+     "options": [
+      "permet la reconnaissance des sons entendus",
+      "participe au contrôle de la phonation quand le sujet parle",
+      "est impliquée dans l’élaboration du langage écrit",
+      "est responsable d’une incapacité de comprendre la signification du langage parlé quand elle est lésée",
+      "est responsable d’une perturbation de la reconnaissance des mélodies quand elle est lésée – D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Les aires praxiques",
+     "options": [
+      "sont situées au niveau de la région pariéto-temporo-occipitale droite",
+      "sont indispensables pour la réalisation des habiletés",
+      "sont indispensables pour le langage parlés",
+      "sont responsables d’une aphasie quand elles sont lésées",
+      "sont responsables d’une incapacité d’exécuter le langage écrits – C - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Les aires associatives priéto-temporo-occipitales sont impliquées dans",
+     "options": [
+      "l’élaboration des gnosies",
+      "l’élaboration des praxies",
+      "le comportement de curiosité",
+      "le comportement de persévérance",
+      "le comportement de sociabilité Rép : A - B"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Dans l'aphasie de BROCA",
+     "options": [
+      "la lésion est située au niveau de la région postérieure de la première et deuxième circonvolutions temporales gauches",
+      "la lésion est située au niveau de l'aire 44 frontale gauche",
+      "la construction du langage est perturbée",
+      "le discours verbal est de débit normal mais le langage est incompréhensible",
+      "l'articulation des mots est impossible Rép : B – C - E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "La lésion bilatérale des aires associatives préfrontale se manifeste par",
+     "options": [
+      "une agnosie auditive",
+      "une diminution des mouvements spontanés",
+      "une perte de l’autocritique et du jugement",
+      "une diminution de fixation de l’attention",
+      "une apraxie Rép : B – C - D Préparé par mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1lPTBs3NH-e4cveuxVOZycwjcFC5jE_nz",
+   "title": "Isolé — EEG, mémoire et connexions thalamiques",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Le rythme électroencéphalographique alpha",
+     "options": [
+      "a une fréquence située entre 8 et 12 Hz",
+      "a une amplitude moyenne de 50 μV",
+      "apparaît à l’ouverture des yeux",
+      "est localisé au niveau des régions antérieures du crâne",
+      "est présent au stade II du sommeil lent"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions se rapportant à l’activité électroencéphalographique (EEG) indiquer celles qui sont correctes",
+     "options": [
+      "elle comme origine les cellules granulaires du cortex cérébral",
+      "elle résulte de la sommation de potentiels post-synaptiques (PPS)",
+      "les potentiels post-synaptiques (PPS) font que la cellule peut être assimilée à un dipôle électrique",
+      "la sommation de potentiels post-synaptiques inhibiteurs (PPSI) est à l’origine d’ondes de dépolarisation",
+      "la sommation de potentiels post-synaptiques excitateurs (PPSE) est à l’origine d’ondes d’hyperpolarisation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions se rapportant à la rythmicité l’activité électroencéphalographique (EEG) indiquer celles qui sont correctes",
+     "options": [
+      "elle a pour origine la synchronisation de l’activité des cellules corticales par la formation réticulée du tronc cérébral",
+      "elle est modulée par les noyaux à projection diffuse du thalamus",
+      "quand l’activité de la formation réticulée augmente la fréquence de l’EEG augmente",
+      "quand l’activité de la formation réticulée augmente l’amplitude de l’EEG diminue",
+      "la rythmicité disparaît quand le cortex est déconnectée de la formation réticulée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Le rythme électroencéphalographique alpha",
+     "options": [
+      "a une fréquence située entre 8 et 12 Hz",
+      "a une amplitude moyenne de 50 μV",
+      "apparaît à l’ouverture des yeux",
+      "est localisé au niveau des régions antérieures du crâne",
+      "est présent au stade II du sommeil lent"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Les pointes et pointe-ondes à l'EEG",
+     "options": [
+      "traduisent une souffrance cérébrale",
+      "traduisent une hyperexcitabilité du cortex cérébral",
+      "s'observent en cas d'épilepsie",
+      "s'observent en cas de coma",
+      "s'observent en cas de mort cérébrale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La crise épileptique tonicoclonique généralisée se manifeste à l’EEG par",
+     "options": [
+      "une décharge de pointes amples à",
+      "une décharge de pointe-ondes à 3 Hz",
+      "un aplatissement de l’activité de fond durant plusieurs secondes",
+      "un ralentissement de l’activité de fond persistant jusqu’à une heure après la fin de la crise",
+      "une décharge de polypointe-ondes favorisée par la stimulation lumineuse intermittente (SLI)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "L’activité électroencéphalographique physiologique",
+     "options": [
+      "est la somme de potentiels d'action",
+      "a comme origine les cellules pyramidales du cortex cérébral",
+      "est rythmée par les noyaux thalamiques non spécifiques (à projection diffuse)",
+      "est modulée par les afférences d’origine médullaire",
+      "augmente d’amplitude quand le niveau de vigilance augmente"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "La crise épileptique généralisée de type absence « Petit Mal » se manifeste à l’EEG par",
+     "options": [
+      "une décharge de pointes amples à",
+      "une décharge de pointe-ondes à 3 Hz",
+      "un aplatissement de l’activité de fond durant plusieurs secondes",
+      "un ralentissement de l’activité de fond persistant jusqu’à une heure après la fin de la crise",
+      "une décharge de polypointe-ondes favorisée par la stimulation lumineuse intermittente (SLI)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Parmi les propositions se rapportant à la rythmicité l’activité électroencéphalographique (EEG) indiquer celles qui sont correctes",
+     "options": [
+      "elle a pour origine la synchronisation de l’activité des cellules corticales par la formation réticulée du tronc cérébral",
+      "elle est modulée par les noyaux à projection diffuse du thalamus",
+      "quand l’activité de la formation réticulée augmente la fréquence de l’EEG augmente",
+      "quand l’activité de la formation réticulée augmente l’amplitude de l’EEG diminue",
+      "la rythmicité disparaît quand le cortex est déconnectée de la formation réticulée Rép : C – D"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1OOL-cBa_B17EiDjeN9a1_i5ulIGXaaTI",
+   "title": "Isolé — le sommeil",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes se rapportant à l’organisation d’une nuit de sommeil chez l’adulte indiquer celles qui sont correctes",
+     "options": [
+      "le sommeil lent occupe 20% de la durée totale du sommeil",
+      "une nuit de sommeil comporte 3 à 5 cycles de 90 mn en moyenne",
+      "la durée du sommeil lent profond par cycle diminue du début vers la fin de la nuit",
+      "la durée du sommeil paradoxal par cycle augmente du début vers la fin de la nuit",
+      "le sommeil paradoxal apparaît en premier dans un cycle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes se rapportant au sommeil du sujet âgé indiquer celles qui sont correctes",
+     "options": [
+      "la latence d’endormissement est plus longue que chez l’adulte jeune",
+      "les phases de sommeil paradoxal sont plus courtes (3 à 15 mn) que chez l’adulte jeune",
+      "le nombre de cycles par nuit est de 6 à 7",
+      "les premiers cycles sont plus longs",
+      "le sommeil lent est plus abondant en début de nuit"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Le sommeil paradoxal se caractérise par:",
+     "options": [
+      "une atonie musculaire",
+      "une activité E.E.G lente delta",
+      "des mouvements oculaires rapides",
+      "une irrégularité de la fréquence cardiaque",
+      "la régularité du rythme respiratoire"
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "Les neurones à Orexines (Hypocrétines)",
+     "options": [
+      "sont localisés au niveau des noyaux du raphé",
+      "projettent sur l’ensemble du cerveau",
+      "leur stimulation est éveillante",
+      "leur stimulation provoque une anorexie",
+      "leur lésion serait impliquée dans la narcolepsie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "ses neurones sont sérotoniergiques",
+      "la lésion de ses neurones provoque un coma prolongé",
+      "l’administration du précurseur de la sérotonine (5-HTP) après inhibition de sa synthèse rétablit l’éveil",
+      "la sérotonine contribue à l’entretien de l’éveil",
+      "la sérotonine joue un rôle fondamental dans le déclenchement de l’endormissement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les hormones suivantes indiquer celles qui ont un maximum de sécrétion la nuit",
+     "options": [
+      "le cortisol",
+      "la mélatonine",
+      "l’hormone de croissance",
+      "l’adrénaline",
+      "la noradrénaline"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Parmi les propositions suivantes se rapportant à l’hypothalamus postérieur indiquer celles qui sont correctes",
+     "options": [
+      "sa lésion se manifeste par une insomnie",
+      "il est inhibé par l’hypothalamus antérieur",
+      "il contient des neurones histaminergiques",
+      "il contient des neurones à orexine (hypocrétine)",
+      "il est excité par des neurones provenant des noyaux intralaminaires du thalamus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Parmi les propositions suivantes se rapportant au système du télencéphale basal (noyau de MEYNERT) indiquer celles qui sont correctes",
+     "options": [
+      "ses neurones cholinergiques et gluatamatergiques activent les neurones corticaux",
+      "ses neurones GABAergiques inhibent le cortex",
+      "ses neurones sont actifs pendant le sommeil lent",
+      "il active les motoneurones de la moelle",
+      "sa lésion neurotoxique est responsable d’un coma irréversible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes se rapportant aux noyaux du raphé indiquer celles qui sont correctes",
+     "options": [
+      "les neurones de ce noyau sont sérotoninergiques",
+      "ses neurones se projettent directement sur l’hypothalamus",
+      "la lésion des neurones de ce noyau entraîne une insomnie prolongée",
+      "l’activité des neurones de ce noyau est maximale pendant le sommeil paradoxal",
+      "la sérotonine contribue à l’endormissement en tant qu’élément du système « anti-éveil »"
+     ],
+     "answer": [
+      4
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 14,
+     "q": "Le système du télencéphale basal (noyau de MEYNERT)",
+     "options": [
+      "fait partie du « réseau exécutif » de l’éveil",
+      "est constitué de neurones synthétisant l’acétylcholine",
+      "envoie des projections vers les motoneurones de la moelle épinière",
+      "envoie des projections vers le cortex et les noyaux thalamiques à projection diffuse",
+      "est responsable d’un coma irréversible en cas de sa lésion neurotoxique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les propositions suivantes se rapportant aux noyaux du tronc cérébral indiquer celles qui sont correctes",
+     "options": [
+      "les noyaux mésopontins cholinergiques augmentent l’activité du noyau réticulaire thalamique appartenant au système du sommeil et inhibent les neurones thalamo-corticaux impliqués dans l’éveil",
+      "la stimulation des neurones de la formation réticulée mésencéphalique déclenche un éveil prolongé",
+      "la stimulation des neurones du noyau réticulé bulbaire magnocellulaire provoque une somnolence prolongée",
+      "la lésion des noyaux sérotoninergiques du raphé antérieur est à l’origine d’une insomnie prolongée",
+      "la stimulation des neurones à orexine est éveillante"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Parmi les propositions suivantes se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "les neurones de ce noyau sont sérotoninergiques",
+      "certaines des terminaisons axonales des neurones de ce noyau inhibent l’hypothalamus antérieur",
+      "la lésion des neurones de ce noyau entraîne une insomnie prolongée",
+      "l’activité des neurones de ce noyau est maximale pendant le sommeil paradoxal",
+      "la sérotonine contribue à l’endormissement en tant qu’élément du système « anti-éveil »"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Au cours du sommeil lent profond en début de nuit",
+     "options": [
+      "la température centrale s’élève",
+      "le tonus musculaire diminue",
+      "la sécrétion de l’hormone de croissance (GH) augmente",
+      "le rythme respiratoire se ralentit",
+      "on observe une érection du pénis"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Le niveau de vigilance diminue en cas",
+     "options": [
+      "d'inhibition de la formation réticulée mésencéphalique",
+      "d'augmentation de la pression partielle du CO2 du sang",
+      "de diminution de la pression partielle d'oxygène dans le sang",
+      "de diminution de l'adrénaline dans le cerveau",
+      "de prise de médicaments barbituriques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Le sommeil paradoxal se caractérise par",
+     "options": [
+      "des images hypnagogiques",
+      "une atonie musculaire",
+      "une activité lente à l'EEG",
+      "une érection du pénis",
+      "des mouvements oculaires rapides"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "Le sommeil lent profond se caractérise par",
+     "options": [
+      "une activité EEG rapide",
+      "une diminution de la réactivité aux stimulations sensorielle",
+      "un ralentissement de la fréquence cardiaque",
+      "des mouvement oculaires rapides",
+      "une érection du pénis"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "Le syndrome d’apnées obstructives du sommeil (syndrome de GELINEAU)",
+     "options": [
+      "est caractérisée par des crises de sommeil paradoxal",
+      "associe une narcolepsie et une cataplexie",
+      "se manifeste par une insomnie nocturne et une somnolence diurne",
+      "survient chez les sujets obèses",
+      "est améliorées par les antidépresseurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Parmi les propositions suivantes se rapportant au système diffus de l’hypothalamus postérieur indiquer celles qui sont correctes",
+     "options": [
+      "il contient des neurones histaminergiques",
+      "il est considéré comme l’un des plus importants centre du sommeil",
+      "il envoie des axones excitateurs à l’hypothalamus antérieur",
+      "l’inhibition de la synthèse de l’histamine à son niveau entraîne un éveil intense hyperactif",
+      "son activité est inhibée par des axones provenant de l’hypothalamus antérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Parmi les propositions suivantes se rapportant au système diffus de l’hypothalamus postérieur indiquer celles qui sont correctes",
+     "options": [
+      "il contient des neurones histaminergiques",
+      "il est considéré comme l’un des plus importants centre du sommeil",
+      "il envoie des axones inhibiteur à l’hypothalamus antérieur",
+      "l’inhibition de la synthèse de l’histamine à son niveau entraîne un éveil intense hyperactif",
+      "son activité est inhibée par des axones provenant de l’hypothalamus postérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 25,
+     "q": "Parmi les propositions suivantes se rapportant au système du télencéphale basal (noyau de MEYNERT) indiquer celles qui sont correctes",
+     "options": [
+      "il fait partie du « réseau exécutif » de l’éveil",
+      "il est constitué de neurones synthétisant l’acétylcholine",
+      "il envoie des projections vers les motoneurones de la moelle épinière",
+      "il envoie des projections vers le cortex et les noyaux thalamiques à projection diffuse",
+      "sa lésion neurotoxique est responsable d’un coma irréversible"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Parmi les structures suivantes indiquer celles qui font partie du réseau exécutif de l’éveil",
+     "options": [
+      "l’hypothalamus antérieur",
+      "la formation réticulée mésencéphalique",
+      "le télencéphale basa",
+      "les noyaux du raphé",
+      "le noyau du locus coeruléus pontique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Parmi les propositions suivantes se rapportant à l’hypothalamus postérieur indiquer celles qui sont correctes",
+     "options": [
+      "sa lésion entraîne une insomnie prolongée",
+      "il contient des neurones histaminergiques",
+      "il contient des neurones GABAergiques",
+      "il stimule l’hypothalamus antérieur",
+      "il est inhibé par l’hypothalamus antérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "Les neurones à Orexines (Hypocrétines)",
+     "options": [
+      "sont localisés au niveau des noyaux du raphé",
+      "projettent sur l’ensemble du cerveau",
+      "leur stimulation est éveillante",
+      "leur stimulation provoque une anorexie",
+      "leur lésion serait impliquée dans la narcolepsie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "Parmi les propositions se rapportant à la formation réticulée indiquer celles qui sont correctes",
+     "options": [
+      "la stimulation des neurones de formation réticulée mésencéphalique déclenche un éveil prolongée",
+      "la formation réticulée mésencéphalique formait classiquement le système réticulaire activateur ascendant",
+      "la stimulation des neurones du noyau réticulé bulbaire magnocellulaire ventral provoque une somnolence",
+      "elle est inhibée par les neurones du noyau locus coeruléus pontique",
+      "elle est inhibée par les neurones à histamine de l’hypothalamus postérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Parmi les propositions se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "ses neurones sont sérotoniergiques",
+      "la lésion de ses neurones provoque un coma prolongé",
+      "l’administration du précurseur de la sérotonine (5-HTP) après inhibition de sa synthèse rétablit l’éveil",
+      "la sérotonine contribue à l’entretien de l’éveil",
+      "la sérotonine joue un rôle fondamental dans le déclenchement de l’endormissement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Parmi les propositions se rapportant à l’aire préoptique de l’hypothalamus antérieur indiquer celles qui sont correctes",
+     "options": [
+      "sa lésion provoque une insomnie prolongée",
+      "cette insomnie est abolie par l’injection d’un agoniste GABAergique (le mucimol) au niveau de l’hypothalamus postérieur",
+      "les neurones de cette aire sont GABAergiques",
+      "les neurones de cette aire stimulent les structures du sommeil",
+      "elle est inhibée par les neurones sérotoninergiques du noyau du raphé antérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "Parmi les propositions se rapportant au réseau du sommeil paradoxal indiquer celles qui sont correctes",
+     "options": [
+      "la lésion étendue de la partie dorsomédiane de la formation réticulée pontique (noyau sublatérodorsal) provoque la disparition du sommeil paradoxal",
+      "l’inhibition des neurones descendants du noyau sublatérodorsal est responsables de l’atonie musculaire",
+      "les neurones ascendants du noyau sublatérodorsal sont impliqués dans l’activation corticale",
+      "l’activation des neurones à hypocrétine (orexine) induit l’apparition du sommeil paradoxal",
+      "les neurones GABAergiques empêchent la survenue du sommeil paradoxal pendant l’éveil"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Parmi les fonctions suivantes indiquer celles du sommeil lent",
+     "options": [
+      "maturation du système nerveux",
+      "amélioration de la fixation des souvenirs (mémorisation)",
+      "consolidation des programmes génétiques innés",
+      "apparition du sommeil paradoxal",
+      "réparation des dégâts tissulaires et psychologiques de la période de veille"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "Parmi les fonctions suivantes indiquer celles du sommeil paradoxal",
+     "options": [
+      "maturation du système nerveux",
+      "amélioration de la fixation des souvenirs (mémorisation)",
+      "consolidation des programmes génétiques innés",
+      "apparition du sommeil lent",
+      "réparation des dégâts tissulaires et psychologiques de la période de veille"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "La narcolepsie se caractérise par",
+     "options": [
+      "une insomnie nocturne",
+      "des apnées obstructives pendant le sommeil",
+      "des épisodes brusques de sommeil paradoxal pendant la journée",
+      "des épisodes de cataplexie",
+      "des crises de somnambulisme"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Le stade III du sommeil lent se caractérise par",
+     "options": [
+      "des fuseaux à l'électroencéphalogramme",
+      "une hypotonie musculaire",
+      "des mouvements oculaires rapides",
+      "une diminution de la fréquence cardiaque",
+      "des rêves"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "Au cours du sommeil paradoxal on observe",
+     "options": [
+      "un ralentissement de l'E.E.G.",
+      "la présence de fuseaux de sommeil à l'E.E.G.",
+      "une érection du pénis",
+      "une atonie musculaire",
+      "des illusions hypnagogiques."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Le nombre de cycles au cours d'une nuit de sommeil chez l'adulte normal varie :",
+     "options": [
+      "de 1 à 3",
+      "de 5 à 6",
+      "de 7 à 9",
+      "de 10 à 12",
+      "de 13 à 15"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Le sommeil paradoxal se caractérise à la polysomnographie par:",
+     "options": [
+      "une atonie musculaire",
+      "une activité lente delta à l'E.E.G",
+      "des mouvements oculaires rapides à l'électrooculogramme",
+      "une irrégularité de la fréquence cardiaque",
+      "la régularité du rythme respiratoire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "Les neurones à Orexines (Hypocrétines)",
+     "options": [
+      "sont localisés au niveau des noyaux du raphé",
+      "projettent sur l’ensemble du cerveau",
+      "leur stimulation est éveillante",
+      "leur stimulation provoque une anorexie",
+      "leur lésion serait impliquée dans la narcolepsie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 41,
+     "q": "Parmi les propositions se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "ses neurones sont sérotoniergiques",
+      "la lésion de ses neurones provoque un coma prolongé",
+      "l’administration du précurseur de la sérotonine (5-HTP) après inhibition de sa synthèse rétablit l’éveil",
+      "la sérotonine contribue à l’entretien de l’éveil",
+      "la sérotonine joue un rôle fondamental dans le déclenchement de l’endormissement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 42,
+     "q": "Parmi les fonctions suivantes indiquer celles du sommeil paradoxal",
+     "options": [
+      "maturation du système nerveux",
+      "amélioration de la fixation des souvenirs (mémorisation)",
+      "consolidation des programmes génétiques innés",
+      "apparition du sommeil lent",
+      "réparation des dégâts tissulaires et psychologiques de la période de veille"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 43,
+     "q": "Le niveau de vigilance augmente en cas",
+     "options": [
+      "de stimulation de la formation réticulée mésencéphalique",
+      "d'augmentation de la pression partielle du CO2 du sang",
+      "de diminution de la pression partielle d'oxygène dans le sang",
+      "de diminution de l'adrénaline dans le cerveau",
+      "de prise de médicaments barbituriques Rép : a – b - c"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 44,
+     "q": "Le sommeil paradoxal se caractérise par",
+     "options": [
+      "des images hypnagogiques",
+      "une atonie musculaire",
+      "une activité lente à l'EEG",
+      "une érection du pénis",
+      "des mouvements oculaires rapides Rép : b – d – e"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 46,
+     "q": "La maladie de GELINEAU",
+     "options": [
+      "est caractérisée par des crises de sommeil paradoxal",
+      "associe une narcolepsie et une cataplexie",
+      "se manifeste par une insomnie nocturne et une somnolence diurne",
+      "survient chez les sujets obèses",
+      "est améliorées par les antidépresseurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 47,
+     "q": "Le syndrome de PICKWICK",
+     "options": [
+      "est caractérisée par la survenue de longues apnées pendant le sommeil",
+      "associe une narcolepsie et une cataplexie",
+      "se manifeste par une insomnie nocturne et une somnolence diurne",
+      "survient chez les sujets obèses",
+      "est améliorées par les antidépresseurs"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 48,
+     "q": "Le système du télencéphale basal (noyau de MEYNERT)",
+     "options": [
+      "fait partie du « réseau exécutif » de l’éveil",
+      "est constitué de neurones synthétisant l’acétylcholine",
+      "envoie des projections vers les motoneurones de la moelle épinière",
+      "envoie des projections vers le cortex et les noyaux thalamiques à projection diffuse",
+      "est responsable d’un coma irréversible en cas de sa lésion neurotoxique – B - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 49,
+     "q": "Parmi les propositions suivantes se rapportant à l’organisation d’une nuit de sommeil chez l’adulte indiquer celles qui sont correctes",
+     "options": [
+      "le sommeil lent occupe 20% de la durée totale du sommeil",
+      "une nuit de sommeil comporte 4 à 6 cycles de 90 mn en moyenne",
+      "la durée du sommeil lent profond par cycle diminue du début vers la fin de la nuit",
+      "la durée du sommeil paradoxal par cycle augmente du début vers la fin de la nuit",
+      "le sommeil paradoxal apparaît en premier dans un cycle – C - D"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 50,
+     "q": "Parmi les propositions suivantes se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "les neurones de ce noyau sont sérotoninergiques",
+      "certaines des terminaisons axonales des neurones de ce noyau inhibent l’hypothalamus antérieur",
+      "la lésion des neurones de ce noyau entraîne une insomnie prolongée",
+      "l’activité des neurones de ce noyau est maximale pendant le sommeil paradoxal",
+      "la sérotonine contribue à l’endormissement en tant qu’élément du système « anti-éveil » – C -E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 51,
+     "q": "Parmi les propositions suivantes se rapportant au système diffus de l’hypothalamus postérieur indiquer celles qui sont correctes",
+     "options": [
+      "il contient des neurones histaminergiques",
+      "il est considéré comme l’un des plus importants centre du sommeil",
+      "il envoie des axones inhibiteurs à l’hypothalamus antérieur",
+      "l’inhibition de la synthèse de l’histamine à son niveau entraîne un éveil intense hyperactif",
+      "son activité est inhibée par des axones provenant de l’hypothalamus antérieur Rép : A – C - E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 52,
+     "q": "Le niveau de vigilance diminue en cas",
+     "options": [
+      "d'inhibition de la formation réticulée mésencéphalique",
+      "d'augmentation de la pression partielle du CO2 du sang",
+      "de diminution de la pression partielle d'oxygène dans le sang",
+      "de diminution de l'adrénaline dans le cerveau",
+      "de prise de médicaments barbituriques Rép : A – D - E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 53,
+     "q": "Le sommeil paradoxal se caractérise par",
+     "options": [
+      "des images hypnagogiques",
+      "une atonie musculaire",
+      "une activité lente à l'EEG",
+      "une érection du pénis",
+      "des mouvements oculaires rapides Rép : B – D - E"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 54,
+     "q": "Parmi les propositions suivantes se rapportant au noyau du raphé antérieur indiquer celles qui sont correctes",
+     "options": [
+      "les neurones de ce noyau sont sérotoninergiques",
+      "certaines des terminaisons axonales des neurones de ce noyau inhibent l’hypothalamus antérieur",
+      "la lésion des neurones de ce noyau entraîne une insomnie prolongée",
+      "l’activité des neurones de ce noyau est maximale pendant le sommeil paradoxal",
+      "la sérotonine contribue à l’endormissement en tant qu’élément du système « anti-éveil » Rép : A – C"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 55,
+     "q": "Parmi les propositions suivantes se rapportant à l’état de veille indiquer celles qui sont correctes",
+     "options": [
+      "la performance à accomplir une tâche augmente proportionnellement avec le niveau de vigilance",
+      "durant la veille calme le tonus musculaire est absent",
+      "durant la veille calme les yeux fermés, l’activité EEG prédominante est l’activité alpha",
+      "durant la veille vigile ou attentive l’activité EEG est lente de type delta",
+      "durant la veille vigile ou attentive les pupilles dilatées"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 56,
+     "q": "Parmi les propositions suivantes se rapportant au sommeil du sujet âgé indiquer celles qui sont correctes",
+     "options": [
+      "la latence d’endormissement est plus longue que chez l’adulte jeune",
+      "les phases de sommeil paradoxal sont plus courtes (3 à 15 mn) que chez l’adulte jeune",
+      "le nombre de cycles par nuit est de 6 à 7",
+      "les premiers cycles sont plus longs",
+      "le sommeil lent est plus abondant en début de nuit"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 57,
+     "q": "Une somnolence s'observe en cas de stimulation",
+     "options": [
+      "du système réticulaire activateur ascendant",
+      "du système réticulaire inhibiteur",
+      "des noyaux du raphé",
+      "du noyau du faisceau solitaire",
+      "de l'hypothalamus antérieur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 58,
+     "q": "Le sommeil lent aurait pour fonctions:",
+     "options": [
+      "la restauration des tissus",
+      "la préparation du sommeil paradoxal",
+      "la maturation du système nerveux",
+      "la mémorisation des souvenirs récents",
+      "la consolidation des programmes génétiques innés Préparé par mednval"
      ],
      "answer": [],
      "unanswered": true
@@ -1590,6 +6087,275 @@
      ],
      "answer": [],
      "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La sensation thermique :",
+     "options": [
+      "compote deux sous modalités sensitives",
+      "possède un caractère éveillant",
+      "à un pouvoir de détection élevé",
+      "à un pouvoir de de discrimination d'intensité faible",
+      "est localisée avec une grande précision UDITION"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "16ft5ft2s7jekOTjeRWggo-6-Eq-U0rt-",
+   "title": "QCM — recueil",
+   "section": "QCM — Pr Ben Cheikh",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Le réflexe myotatique inverse",
+     "options": [
+      "est la contraction d’un muscle en réponse à son propre étirement",
+      "a comme récepteur les organes tendineux de Golgi",
+      "est mis en jeu par la stimulation des motoneurone Gamma",
+      "est polysynaptique",
+      "est exploré en clinique par les réflexes ostéo-tendineux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le réflexe de flexion",
+     "options": [
+      "a comme récepteurs des nocicepteurs cutanés",
+      "est monosynaptique",
+      "a une iffuse à plusieurs muscles",
+      "a une latence d'apparition courte",
+      "a comme finalité l’augmentation de l’appui du membre stimulé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les motoneurones Alpha sont stimulés par",
+     "options": [
+      "les fibres Ia provenant des muscles antagonistes",
+      "les fibres Ib provenant des muscles antagonistes",
+      "l'interneurone de Renschaw",
+      "les fibres Gamma du même muscle",
+      "les fibres II du même muscle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Le tonus musculaire",
+     "options": [
+      "est la légère tension à laquelle se trouve soumis tout muscle squelettique",
+      "a comme origine l’activité des centres moteurs supramédullaires",
+      "augmente en cas d’activation des motoneurones Gamma",
+      "augmente en cas de lésion des pyramides bulbaires",
+      "disparaît en cas de lésion des motoneurones Alpha"
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "Une hypotonie musculaire s’observe en cas de lésion",
+     "options": [
+      "de la formation réticulée bulbaire",
+      "des noyaux vestibulaires",
+      "du cervelet",
+      "de la substance noire (locus niger)",
+      "de l’aire prémotrice du cortex cérébral"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La fonction d’équilibration",
+     "options": [
+      "se fait par un contrôle volontaire",
+      "est polymodale",
+      "assure l’orientation dans l’espace",
+      "utilise les informations tactiles et proprioceptives",
+      "est altérée lors de la fermeture des yeux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les canaux semi-circulaires",
+     "options": [
+      "ont comme stimulus adéquat la rotation à vitesse constante",
+      "interviennent dans la stabilisation du regard",
+      "ont un rôle prédictif dans l'équilibration",
+      "interviennent uniquement dans l'équilibre statique",
+      "renseignent sur la position de la tête par rapport à la verticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les récepteurs maculaires vestibulaires:",
+     "options": [
+      "sont sensibles à l'accélération linéaire",
+      "interviennent dans la stabilisation du regard",
+      "interviennent dans le maintien de l'équilibre statique",
+      "renseignent sur la position de la tête par rapport à la pesanteur",
+      "sont inactifs en position allongée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "La lésion de l'appareil vestibulaire gauche provoque:",
+     "options": [
+      "une marche en zigzag",
+      "un vertige",
+      "un nystagmus gauche",
+      "une diminution du tonus musculaire de l'hémicorps gauche",
+      "une exagération des réflexes ostéo-tendineux gauches"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Le cortex moteur primaire",
+     "options": [
+      "intervient à l'étape d'intention du mouvement volontaire",
+      "participe à l'étape de programmation du mouvement volontaire",
+      "est le point de départ de l'exécution du mouvement volontaire",
+      "exerce par l'intermédiaire des voies pyramidales un effet facilitateur sur les motoneurones alpha et gamma",
+      "exerce par l'intermédiaire des voies extra- pyramidales un effet inhibiteur sur les motoneurones alpha et gamma"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "L'aire motrice supplémentaire",
+     "options": [
+      "est le point de départ d'une crise épileptique versive quand elle est anormalement stimulée",
+      "intervient à l'étape d'intention du mouvement volontaire",
+      "participe à la programmation des mouvements volontaires",
+      "participe à la coordination des mouvements bimanuels",
+      "contrôle surtout les muscles axiaux et proximaux des membres"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Indiquer parmi les signes suivants du syndrome pyramidal clinique ceux dus en fait à une interruption des voies extrapyramidales:",
+     "options": [
+      "déficit moteur prédominant sur les muscles distaux des extrémités",
+      "spasticité",
+      "inversion du reflexe cutané plantaire",
+      "exagération des réflexes ostéo-tendineux",
+      "présence d'un réflexe de préhension forcée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "La lésion conjointe des aires motrices corticales 4 et 6 donne :",
+     "options": [
+      "une hémiplégie homolatérale",
+      "une spasticité controlatérale",
+      "une diminution des réflexes ostéo-tendineux controlatérale.",
+      "un signe de Babinski controlatéral.",
+      "un réflexe de préhension forcé homolatéral."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "La stimulation d'une fibre grimpante provoque",
+     "options": [
+      "une excitation directe des noyaux cérébelleux",
+      "une excitation des cellules granulaires",
+      "une excitation directe de la cellule de Purkinje",
+      "une inhibition des noyaux cérébelleux par l'intermédiaire de la cellule de Purkinje",
+      "une inhibition de la cellule de Purkinje par l'intermédiaire des interneurones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "La stimulation d'une fibre moussue provoque",
+     "options": [
+      "une excitation directe des noyaux cérébelleux",
+      "une excitation des cellules granulaires",
+      "une excitation directe de la cellule de Purkinje",
+      "une inhibition des noyaux cérébelleux par l'intermédiaire de la cellule de Purkinje",
+      "une inhibition de la cellule de Purkinje par l'intermédiaire des interneurones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "La cellule de Purkinje du cervelet est stimulée par",
+     "options": [
+      "les fibres parallèles",
+      "les cellules à corbeille",
+      "les fibres grimpantes",
+      "les interneurones de Golgi",
+      "les cellules des noyaux cérébelleux"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Quels sont parmi les types de mouvements suivants ceux contrôlés par le cervelet :",
+     "options": [
+      "mouvements lents volontaires",
+      "mouvements choréo-athétosiques",
+      "mouvements réflexes",
+      "mouvements rapides de projection",
+      "mouvements saccadés des yeux."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "Le néostriatum est formé par",
+     "options": [
+      "le noyau caudé",
+      "le putamen",
+      "le pallidum",
+      "la substancia nigra",
+      "le corps de LUYS"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 20,
+     "q": "La maladie de Parkinson a comme origine",
+     "options": [
+      "une dégénérescence de la substancia nigra",
+      "une diminution de la dopamine au niveau du striatum",
+      "un blocage des récepteurs de la dopamine au niveau du striatum",
+      "une augmentation de l'acétylcholine au niveau du striatum",
+      "une augmentation du GABA au niveau du striatum Questions d’auto-évaluation 2018"
+     ],
+     "answer": [],
+     "unanswered": true
     }
    ]
   },
@@ -1598,6 +6364,86 @@
    "title": "ED — physiologie digestive",
    "section": "QCM — Pr Ben Cheikh",
    "questions": [
+    {
+     "n": 1,
+     "q": "Le rythme électrique de base (REB) de la paroi musculaire digestive:",
+     "options": [
+      "provient de la variabilité du potentiel de membrane",
+      "est identique pour tout le tube digestif",
+      "est absent dans l’œsophage et la partie proximale de l’estomac",
+      "peut déclencher un potentiel d’action",
+      "est absent au niveau du duodénum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "A propos du contrôle nerveux digestif :",
+     "options": [
+      "l’activité motrice digestive est d’origine corticale",
+      "le plexus myentérique (Auerbach) est responsable du contrôle de la motricité",
+      "le plexus sous-muqueux (Meissner) est responsable du contrôle de la sécrétion",
+      "le système sympathique inhibe le système nerveux entérique",
+      "le système parasympathique inhibe l’activité motrice et sécrétoire"
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 3,
+     "q": "Le péristaltisme :",
+     "options": [
+      "est une activité motrice reflexe",
+      "résulte de l’étirement de la paroi digestive",
+      "est provoqué par la stimulation du système sympathique",
+      "est une relaxation en amont et une contraction en aval du bol alimentaire",
+      "permet de propager le chyme alimentaire dans le sens oral-aboral"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La cholécystokinine (CCK) :",
+     "options": [
+      "est sécrétée par les cellules endocrines de l’estomac",
+      "stimule la contraction de la vésicule biliaire",
+      "inhibe la sécrétion des enzymes pancréatiques",
+      "ralentie la vidange gastrique",
+      "est sécrétée suite l’arrivée des aliments dans le duodénum"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La déglutition :",
+     "options": [
+      "est volontaire dans sa phase buccale",
+      "est déclenchée par le contact des aliments avec les piliers de la bouche",
+      "est volontaire dans sa phase pharyngée",
+      "se déroule en trois phases",
+      "est caractérisée par l’ouverture continue du sphincter supérieur de l’œsophage"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "La principale stimulation du péristaltisme primaire de l’œsophage est :",
+     "options": [
+      "la présence d’aliments dans l’œsophage",
+      "la déglutition",
+      "le reflux d’aliments de l’estomac",
+      "la fermeture du sphincter supérieur de l’œsophage",
+      "l’ouverture du sphincter inférieur de l’œsophage"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
     {
      "n": 9,
      "q": "le quel des médiateurs suivants inhibent les contractions gastriques :",
@@ -1632,7 +6478,20 @@
       "la déglutition",
       "le péristaltisme œsophagien primaire",
       "les vomissements",
-      "la vidange gastrique 11- La quelle des activités motrices suivantes peut survenir sans contrôle central : A. la mastication B. la déglutition C. le péristaltisme œsophagien primaire D. les vomissements E. la vidange gastrique"
+      "la vidange gastrique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "A propos de la salive :",
+     "options": [
+      "la salive primitive est isotonique au plasma",
+      "la salive contient agents antibactériens",
+      "le système parasympathique est responsable d’une sécrétion peu abondante",
+      "la salive définitive est hypertonique",
+      "le système sympathique inhibe la sécrétion salivaire"
      ],
      "answer": [],
      "unanswered": true
@@ -1723,7 +6582,7 @@
       "conjugués avec la taurine ou la glycine",
       "sont des sels de Na+ ou de K+",
       "sont capables de disperser les lipides dans l’eau",
-      "sont nécessaires à l’absorption des acides aminés 19- Les sels biliaires sont: A. formés dans l’intestin B. conjugués avec la taurine ou la glycine C. sont des sels de Na+ ou de K+ D. sont capables de disperser les lipides dans l’eau E. sont nécessaires à l’absorption des acides aminés"
+      "sont nécessaires à l’absorption des acides aminés"
      ],
      "answer": [],
      "unanswered": true
@@ -1736,7 +6595,282 @@
       "un déficit en vitamines liposolubles (A, D, E et K)",
       "une mal absorption des protides",
       "une stéatorrhée",
-      "une mal absorption des glucides 20- L’absence de la bile entraine : A. une insolubilisation des lipides B. un déficit en vitamines liposolubles (A, D, E et K) C. une mal absorption des protides D. une stéatorrhée E. une mal absorption des glucides"
+      "une mal absorption des glucides"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "18OHbaIN7m4JKMoe4p6iRE_ueJOmc-12j",
+   "title": "QCM — Dougui, corrigés",
+   "section": "ED et anciens examens",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Parmi les caractéristiques suivantes indiquer celles des activités motrices volontaires :",
+     "options": [
+      "stéréotypées .",
+      "intentionnelles .",
+      "finalisées .",
+      "apprises .",
+      "inconscientes ."
+     ],
+     "answer": [
+      2
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 2,
+     "q": "Le système moteur :",
+     "options": [
+      "est nécessaire à la communication .",
+      "permet les activités cinétiques volontaires .",
+      "a une organisation fonctionnelle hiérarchique.",
+      "assure les perceptions .",
+      "est responsable de la proprioception ."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": "Parmi les rôles suivants indiquer ceux du réflexe myotatique :",
+     "options": [
+      "c’est un système de régulation de la tension développée par le muscle .",
+      "il est le support du tonus musculaire .",
+      "il protège le muscle de la déchirure ou de la désinsertion par une tension excessive.",
+      "il intervient dans l’adaptation posturale .",
+      "il participe à l’ajustement et à la préparation des mouvements."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 5,
+     "q": "Les motoneurones Alpha sont stimulés par :",
+     "options": [
+      "les fibres Ia provenant des muscles antagonistes.",
+      "les fibres Ib provenant des muscles antagonistes .",
+      "l'interneurone de Renschaw .",
+      "les fibres Gamma du même muscle .",
+      "les fibres II du même muscle ."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes se rapportant aux motoneurones Gamma indiquer celles qui sont correctes :",
+     "options": [
+      "ils innervent les extrémités contractiles des fibres intrafusales.",
+      "ils règlent la sensibilité des récepteurs du fuseau neuro-musculaire.",
+      "ils sont excités par les fibres Ia provenant du même muscle .",
+      "ils sont inhibés par les fibres Ib provenant du même muscle.",
+      "leur activité augmente quand celle des noyaux vestibulaires augmente."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 7,
+     "q": "Parmi les éléments suivants indiquer ceux qui font partie de l’arc réflexe myotatique inverse :",
+     "options": [
+      "les fuseaux neuromusculaires.",
+      "les récepteurs tendineux de Golgi.",
+      "les fibres Ib .",
+      "les fibres de type II .",
+      "les motoneurones Gamma. 44"
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 8,
+     "q": "Parmi les rôles suivants indiquer ceux du réflexe myotatique inverse :",
+     "options": [
+      "c’est un système de régulation de la tension développée par le muscle .",
+      "il est le support du tonus musculaire .",
+      "il protège le muscle de la déchirure ou de la désinsertion par une tension excessive .",
+      "il intervient dans l’adaptation posturale.",
+      "il participe à l’ajustement et à la préparation des mouvements ."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 9,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe myotatique inverse indiquer celles qui sont justes :",
+     "options": [
+      "il se définit comme le relâchement réflexe d’un muscle en réponse à une augmentation de sa tension .",
+      "son récepteur est l’organe tendineux de Golgi .",
+      "il est monosynaptique.",
+      "la réponse réflexe est localisée à un seul muscle.",
+      "il est exploré cliniquement par les réflexes ostéotendineux ."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 10,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe de flexion, indiquer celles qui sont justes :",
+     "options": [
+      "les récepteurs sont cutanés tactiles .",
+      "les voies afférentes sont les fibres de type III et IV .",
+      "le centre d’intégration est un seul segment médullaire .",
+      "la réponse réflexe persiste après l’arrêt du stimulus .",
+      "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture."
+     ],
+     "answer": [
+      1
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 11,
+     "q": "Le réflexe de flexion :",
+     "options": [
+      "a comme point de départ des nocicepteurs.",
+      "est monosynaptique.",
+      "a une iffuse à plusieurs muscles .",
+      "a une latence d'apparition courte.",
+      "a comme finalité l’augmentation de l’appui du membre stimulé ."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 12,
+     "q": "Parmi les propositions suivantes se rapportant au réflexe d’extension, indiquer celles qui sont justes :",
+     "options": [
+      "les récepteurs sont cutanés tactiles .",
+      "les voies afférentes sont les fibres de type II et III.",
+      "le centre d’intégration est un seul segment médullaire .",
+      "la réponse réflexe est localisée à un seul muscle.",
+      "la réponse réflexe a pour but d’assurer un meilleur appui pour stabiliser la posture ."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 13,
+     "q": "Parmi les réflexes suivants indiquer ceux dont la st diffuse à plusieurs muscles :",
+     "options": [
+      "réflexe d’extension .",
+      "réflexe de flexion.",
+      "réflexe myotatique inverse.",
+      "réflexe myotatique .",
+      "réflexe cutané plantaire ."
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 14,
+     "q": "Les réflexes extéroceptifs sont explorés cliniquement par :",
+     "options": [
+      "les réflexes cutanés abdominaux .",
+      "les réflexes crémastériens .",
+      "les réflexes cutanés plantaires.",
+      "les réflexes ostéotendineux .",
+      "les réflexes de Hoffmann 45"
+     ],
+     "answer": [
+      0
+     ],
+     "unanswered": false
+    }
+   ]
+  },
+  {
+   "fid": "1vbYKulbBuGpT7i6ZJ4PwVUj0Offy9CSs",
+   "title": "QCM corrigés",
+   "section": "ED et anciens examens",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les systèmes sensoriels",
+     "options": [
+      "font obligatoirement relais au niveau de la formation réticulée du tronc cérébral",
+      "comportent un relais thalamique spécifique",
+      "ont tous des projections corticales bilatérales # D – sont responsables des sensations conscientes # E - sont à l’origine des perceptions"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les caractéristiques du stimulus pouvant être codées au niveau des récepteurs sont",
+     "options": [
+      "Le caractère agréable ou désagréable",
+      "le déplacement",
+      "la forme # D – l’intensité # E – la nature"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "/ Les voies lemniscales:",
+     "options": [
+      "véhicule les informations nociceptives",
+      "sont non myélinisées",
+      "font relais au niveau de la corne postérieure de la moelle # D - décussent au niveau du tronc cérébral # E - se projettent au niveau du cortex somesthésique primaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "La syringomyélie à son début se manifeste sur le plan sensitif par une anesthésie",
+     "options": [
+      "tactile fine",
+      "proprioceptive",
+      "vibratoire # D - thermique # E - douloureuse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 23,
+     "q": "Une diminution du phénomène d'hyperalgésie peut être obtenue à la périphérie par",
+     "options": [
+      "les ions potassium",
+      "les ions acides",
+      "les prostaglandines E # D - l'aspirine # E - la xylocaïne"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Les cellules bipolaires invaginées",
+     "options": [
+      "reçoivent l'information directement des cellules ganglionnaires",
+      "libèrent le glutamate comme neurotransmetteur",
+      "sont excitées à l’obscurité # D – sont inhibées à l’éclairement # E – sont le point de départ de la voie « ON »"
      ],
      "answer": [],
      "unanswered": true
