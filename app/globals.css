@@ -957,3 +957,29 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .imp-sem .imp-kinds { flex: 1; }
 .imp .imp-kind { flex-shrink: 0; align-self: flex-start; }
+
+/* ---------- waiting ---------- */
+/* A shape in the right place beats a spinner: the screen does not jump when
+   the real thing lands. */
+.sk {
+  background: var(--surface);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.sk::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(107, 33, 181, .06), transparent);
+  transform: translateX(-100%);
+  animation: sweep 1.3s ease-in-out infinite;
+}
+@keyframes sweep { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .sk::after { animation: none; } }
+
+.sk-bar  { height: 120px; }
+.sk-tile { height: 96px; border-radius: var(--r-card); }
+.sk-card { height: 92px; }
+.sk-tabs { height: 48px; border-radius: 999px; }
+.sk-row  { height: 74px; }

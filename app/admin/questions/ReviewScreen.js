@@ -122,7 +122,30 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
       {!current ? (
         <section className="admin-card admin-seed">
           <div className="admin-card-t">لا شيء هنا</div>
-          <p className="admin-card-b">لا أسئلة في هذه القائمة.</p>
+          {/* An empty list that does not say where the questions ARE reads as a
+              broken screen. If another pile has some, point at it. */}
+          {(() => {
+            const other = TABS.find((t) => t.id !== status && counts[t.id] > 0);
+            const total = TABS.reduce((n, t) => n + (counts[t.id] || 0), 0);
+            if (other) return (
+              <>
+                <p className="admin-card-b">
+                  لا أسئلة {TABS.find((t) => t.id === status)?.label}
+                  {moduleId ? ' في هذه المادة' : ''} — لكن هناك {counts[other.id]} في «{other.label}».
+                </p>
+                <button className="btn p" onClick={() => go({ status: other.id })}>
+                  اذهب إلى {other.label}
+                </button>
+              </>
+            );
+            if (!total) return (
+              <p className="admin-card-b">
+                لا أسئلة في قاعدة البيانات بعد. انقل المحتوى من الصفحة الرئيسية،
+                أو استورد ورقة أسئلة من Drive.
+              </p>
+            );
+            return <p className="admin-card-b">لا أسئلة في هذه القائمة.</p>;
+          })()}
         </section>
       ) : (
         <>

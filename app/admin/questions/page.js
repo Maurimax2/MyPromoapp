@@ -10,9 +10,6 @@ export default async function QuestionsPage({ searchParams }) {
 
   const sb = await supabaseServer();
 
-  const { data: modules } = await sb
-    .from('modules').select('id, name').order('position');
-
   let query = sb
     .from('questions')
     .select('id, n, stem, options, answer, why, status, source, question_banks!inner(title, module)')
@@ -22,14 +19,17 @@ export default async function QuestionsPage({ searchParams }) {
 
   if (moduleId) query = query.eq('question_banks.module', moduleId);
 
-  const { data: questions } = await query;
+  // One round trip for the lot, rather than five in a row.
+  const states = ['needs_answer', 'draft', 'published'];
+  const [{ data: modules }, { data: questions }, ...tallies] = await Promise.all([
+    sb.from('modules').select('id, name').order('position'),
+    query,
+    ...states.map((s) =>
+      sb.from('questions').select('*', { count: 'exact', head: true }).eq('status', s)),
+  ]);
 
   const counts = {};
-  for (const s of ['needs_answer', 'draft', 'published']) {
-    const { count } = await sb.from('questions')
-      .select('*', { count: 'exact', head: true }).eq('status', s);
-    counts[s] = count || 0;
-  }
+  states.forEach((s, i) => { counts[s] = tallies[i]?.count || 0; });
 
   return (
     <ReviewScreen

@@ -129,7 +129,24 @@ export default function ContentScreen({ module, documents, where, counts, canDel
       {!rows.length ? (
         <section className="admin-card admin-seed">
           <div className="admin-card-t">لا ملفات هنا</div>
-          <p className="admin-card-b">لا شيء في هذه الشاشة لهذه المادة بعد.</p>
+          {(() => {
+            const other = WHERE.find((w) => w.id !== where && counts[w.id] > 0);
+            return other ? (
+              <>
+                <p className="admin-card-b">
+                  لا ملفات في «{WHERE.find((w) => w.id === where)?.label}» — لكن هناك
+                  {' '}{counts[other.id]} في «{other.label}».
+                </p>
+                <button className="btn p" onClick={() => go(other.id)}>
+                  اذهب إلى {other.label}
+                </button>
+              </>
+            ) : (
+              <p className="admin-card-b">
+                لا ملفات في هذه المادة بعد. أضفها من «أضف ملفات» بالأسفل.
+              </p>
+            );
+          })()}
         </section>
       ) : null}
 
