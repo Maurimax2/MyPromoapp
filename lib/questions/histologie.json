@@ -8,19 +8,6 @@
    "section": "Examens",
    "questions": [
     {
-     "n": 1,
-     "q": "République lslamique de Mauritanie Honneur - Fraternité - Justice Ministère de l'Enseignement Supérieur et de la Recherche Scientifique Université des Sciences, de Technologie et de Médecine Faculté de Médecine Epreuve d’Histologie Spéciale Session principale Durée 1HEURE Deuxième Année Médecine Nom et Prénom : N 0 d’Anonymat : ___________________________________________________________________________ Pour chaque QCM cochez la ou les bonne(s) réponse(s) directement sur la grille de la page 13 1. Parmi les propositions suivantes, concernant l’appareil juxtaglomérulaire, indiquer celle(s)qui est(sont) exacte(s) :",
-     "options": [
-      "Est localisé au niveau du pole urinaire du glomérule",
-      "Comporte des barorécepteurs localisés dans la media des artérioles efférentes",
-      "Comporte les cellules du lacis qui présentent les mêmes propriétés morpho- fonctionnelles que les cellules mésangiales intra-glomérulaires",
-      "Les cellules de la macula densa sont sensibles aux variations de concentrations de Na+ des urines qui circulent dans le tube contourné distal",
-      "Les cellules du lacis régulent le flux de sang dans le réseau capillaire peritubulaire"
-     ],
-     "answer": [],
-     "unanswered": true
-    },
-    {
      "n": 2,
      "q": "Parmi les propositions suivantes, concernant le tube contourné proximal, indiquer celle(s)qui est(sont) exacte(s)",
      "options": [
@@ -56,8 +43,10 @@
       "Les capillaires glomérulaires sont très larges et présentent des pores de l’ordre de 7μm",
       "Toutes les composantes du plasma sanguin passent la barrière à l’exception des grosses molécules"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 5,
@@ -82,8 +71,10 @@
       "Les follicules lymphoïdes de la sous muqueuse s’organisent en plaques de Payer.",
       "les villosités duodénales ont un axe conjonctif qui contient des fibres de muscle lisse"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 7,
@@ -108,8 +99,10 @@
       "participent au processus de la digestion",
       "Sont pourvues de cellules de Paneth au niveau du colon 3"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 9,
@@ -121,8 +114,10 @@
       "Le mode de sécrétion est de type merocrine",
       "Les acini ont ne lumière étroite et présentent par endroit des croissants de Gianuzzi"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1
+     ],
+     "unanswered": false
     },
     {
      "n": 10,
@@ -765,11 +760,8 @@
       "La structure 4 présente une architecture en nappe",
       "La structure 5 est un corpuscule de Hassal Le schéma suivant représente le schéma de la structure histologique du thymus"
      ],
-     "answer": [
-      1,
-      3
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 2,
@@ -782,9 +774,7 @@
       "Phagocyte les thymocytes apoptotiques"
      ],
      "answer": [
-      2,
-      3,
-      4
+      2
      ],
      "unanswered": false
     },
@@ -798,10 +788,8 @@
       "Au cours de leur processus de migration du cortex vers la medullaire, ils acquièrent des récepteurs type CD4 et CD8",
       "Au cours de leur maturation elles ont un contact avec les antigènes apportés par voie lymphatique afférente"
      ],
-     "answer": [
-      2
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 4,
@@ -813,10 +801,8 @@
       "Est une structure spécifique du thymus",
       "Est le lieu de phagocytose des thymocytes apoptotiques"
      ],
-     "answer": [
-      4
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 5,
@@ -828,10 +814,8 @@
       "Est le siège de prolifération des thymocytes",
       "Peut comporter des lymphatiques afférents"
      ],
-     "answer": [
-      1
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 6,
@@ -843,10 +827,8 @@
       "C’est la région de la destruction des globules rouges vieillies",
       "Fait partie de la pulpe rouge Preparé par mednval nounou"
      ],
-     "answer": [
-      4
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     }
    ]
   },

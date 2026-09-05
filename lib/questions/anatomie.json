@@ -110,19 +110,6 @@
      "unanswered": true
     },
     {
-     "n": 10,
-     "q": "les propositions suivantes concernent le cerveau :",
-     "options": [
-      "Il correspond à la différenciation du prosencéphale c’est-à-dire le télencéphale et le diencéphale.",
-      "Le diencéphale est enroulé autour du télencéphale.",
-      "Le sillon longitudinal sépare le diencéphale du télencéphale.",
-      "La substance grise périphérique est composée de 6 couches de neurones.",
-      "Le corps calleux se situe dans le fond de la fissure transverse. Question nn11: les propositions suivantes concernent le cerveau : A : Le seul point de continuité entre télencéphale et diencéphale est ventral. B : Le corps calleux contient des corps neuronaux. C : L’intelligence est avant tout proportionnelle au poids du cerveau. D : Les sillons secondaires délimitent des lobes. E : Les sillons tertiaires sont très conservés même entre les différentes espèces."
-     ],
-     "answer": [],
-     "unanswered": true
-    },
-    {
      "n": 12,
      "q": "les propositions suivantes concernent le cerveau :",
      "options": [
@@ -703,8 +690,12 @@
       "La substance grise périphérique est composée de 6 couches de neurones.",
       "Le corps calleux se situe dans le fond de la fissure transverse."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      2,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 2,
@@ -716,8 +707,13 @@
       "Les sillons secondaires délimitent des lobes.",
       "Les sillons tertiaires sont très conservés même entre les différentes espèces."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 3,
@@ -729,8 +725,11 @@
       "Le sillon latéral délimite les lobes frontal et pariétal.",
       "La fissure longitudinale sépare les deux hémisphères cérébraux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 4,
@@ -742,8 +741,12 @@
       "Tous les sillons primaires délimitent des lobes.",
       "Le noyau interposé est composé du globus pallidus en médial et du putamen en latéral."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 5,
@@ -755,8 +758,11 @@
       "Le noyau caudé appartient au diencéphale.",
       "Le putamen fait partie du diencéphale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 6,
@@ -768,8 +774,11 @@
       "Le sillon latéral sépare le lobe frontal du lobe temporal.",
       "Le 3ème ventricule est situé en médial du thalamus."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 7,
@@ -781,8 +790,11 @@
       "Les deux ventricules latéraux communiquent entre eux par le foramen inter-ventriculaire.",
       "Le 3ème ventricule est le ventricule du diencéphale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 8,
@@ -794,8 +806,11 @@
       "La capsule externe passe entre le claustrum et le lobe de l’insula.",
       "La capsule interne se situe entre le noyau lenticulaire (en médial) et le thalamus (en latéral)."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1
+     ],
+     "unanswered": false
     },
     {
      "n": 9,
@@ -807,8 +822,10 @@
       "Le sillon cingulaire délimite le lobe cingulaire.",
       "Le cortex cérébral comporte 3 couches de neurones."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 10,
@@ -820,8 +837,12 @@
       "Les nombreux replis du cerveau viennent du fait qu’il s’est développé dans une boite inextensible.",
       "Il dérive du prosencéphale et du mésencéphale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      2,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 11,
@@ -833,8 +854,12 @@
       "Le gyrus post-central est somato-moteur.",
       "L’uncus se situe à la face médiale du lobe temporal."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      2,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 12,
@@ -846,8 +871,12 @@
       "Le gyrus pré-central est moteur alors que le gyrus post-central est sensitif.",
       "En somatotopie, la partie médiale du gyrus pré-central correspond à la tête."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 13,
@@ -859,8 +888,10 @@
       "Le fornix se situe au niveau de la suture transverse.",
       "Le septum pellucidum sépare l'acqueduc du mésencéphale du 3ème ventricule."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 14,
@@ -872,8 +903,11 @@
       "L’aire de la lecture est proche de l’aire visuelle. L’aire de l’écriture est proche du gyrus précentral.",
       "Si l’aire de Broca est atteinte le sujet comprend ce qu’on lui dit mais ne peut s’exprimer correctement."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 15,
@@ -883,10 +917,12 @@
       "Si l’aire de Wernicke est atteinte, alors le sujet ne comprend plus ce qu’on lui dit.",
       "La capsule externe se situe entre noyau lenticulaire et claustrum.",
       "Le lobe de l’insula se situe dans de fond du sillon central.",
-      "Le centre semi-ovale est formé de la substance blanche. Correction : Le cerveau, ce qu’il fallait répondre : 1 : AD 2 : A 3 : ABE 4 : AC 5 : ABC 6 : BDE 7 : ACE 8 : C 9 : ABCD 10 : BD 11 : BE 12 : CD 13 : ABCD. !ʡʠ اﻟﺪﻋﺎء ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 14 : ADE 15 : ABCE Pourquoi certaines propositions sont fausses :"
+      "Le centre semi-ovale est formé de la substance blanche."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      3
+     ],
+     "unanswered": false
     }
    ]
   },
@@ -905,8 +941,13 @@
       "Elle présente six sillons et trois cordons sur une coupe horizontale.",
       "En ventral, on trouve le sillon médian."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 2,
@@ -918,8 +959,11 @@
       "Comme dans le cerveau, la substance grise est périphérique.",
       "La fissure médiane est ventrale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 3,
@@ -931,8 +975,10 @@
       "Le canal central est un résidu de la lumière du tube neural embryologique.",
       "Le système nerveux central dérive de la couche ectoblastique qui a formé la gouttière puis le tube neural en se repliant."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1
+     ],
+     "unanswered": false
     },
     {
      "n": 4,
@@ -944,8 +990,11 @@
       "Les cornes dorsales reçoivent les informations sensitives.",
       "Un cordon latéral se situe entre deux sillons latéraux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 5,
@@ -957,8 +1006,10 @@
       "La moelle épinière donne naissance à 21 paires de nerfs spinaux.",
       "De l’os occipital aux vertèbres lombaires (comprises) il y a 24 vertèbres et 24 paires de nerfs spinaux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 6,
@@ -970,8 +1021,13 @@
       "Chaque myélomère contient au moins un arc réflexe (myotatique) et est en rapport avec un segment de muscle (myotome), de peau (dermatome) et de viscère (viscérotome).",
       "Il existe 5 paires de nerfs sacrés et 5 paires de nerfs coccygiens."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 7,
@@ -983,8 +1039,12 @@
       "En dessous de L2 on ne trouve plus de nerfs.",
       "Le filum terminal contient du tissu nerveux et fibreux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 8,
@@ -996,8 +1056,11 @@
       "Le premier nerf thoracique sort en dessous de T1.",
       "La pie-mère et l’arachnoïde sont des pachy-méninges."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 9,
@@ -1009,8 +1072,11 @@
       "La pie-mère s’interrompt avec la moelle épinière au niveau de L2.",
       "La dure-mère est la seule méninge à se terminer en S2."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 10,
@@ -1020,10 +1086,12 @@
       "L’anesthésie péridurale se réalise entre la dure-mère et l’os.",
       "L’espace entre arachnoïde et dure-mère est réel.",
       "La dure-mère est la seule pachy-méninge.",
-      "Les myélomères sacrés se trouvent au niveau de L2. Correction : ce qu’il fallait répondre : 1 : A 2 : ABE 3 : ACDE 4 : ADE 5 : AB. ﺎء اﻟﺪﻋ ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 6 : C 7 : C 8 : BCD 9 : ACD 10 : ABDE Pourquoi certaines propositions sont fausses :"
+      "Les myélomères sacrés se trouvent au niveau de L2."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2
+     ],
+     "unanswered": false
     }
    ]
   },
@@ -1042,8 +1110,12 @@
       "La moelle allongée présente une ressemblance anatomique avec la moelle épinière.",
       "Les olives sont situées dans les cordons ventraux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 2,
@@ -1055,8 +1127,11 @@
       "Le tronc cérébral est limité en crânial par le tractus optique.",
       "Le tronc cérébral est oblique en bas et en avant."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 3,
@@ -1068,8 +1143,13 @@
       "De crânial en caudal les trois pièces embryologiques du tronc cérébral sont : le mésencéphale, le métencéphale et le myélencéphale.",
       "Les olives sont situées dans les cordons latéraux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 4,
@@ -1081,8 +1161,11 @@
       "Le cervelet, comme le pont, est issu du métencéphale.",
       "Le cervelet est rattaché au tronc cérébral par trois paires de pédoncules cérébraux."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 5,
@@ -1094,8 +1177,11 @@
       "Le sillon pré-olivaire est situé a distance du sillon latéral-ventral.",
       "L’olive est plus proche du sillon latéral-ventral que du sillon latéral-dorsal."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 6,
@@ -1107,8 +1193,12 @@
       "Le 4ème ventricule est visible sur une vue ventrale du tronc cérébral.",
       "Le pont n’a pas de face dorsale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      2,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 7,
@@ -1120,8 +1210,14 @@
       "Le 4ème ventricule se trouve au niveau du myélencéphale et du métencéphale. Il est donc dit ventricule rhombencéphalique.",
       "Le 4ème ventricule communique avec le 3ème par l’aqueduc du mésencéphale."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 8,
@@ -1133,8 +1229,13 @@
       "Une des fonctions supra-segmentaires correspond à la formation réticulaire responsable de l’éveil.",
       "Les pédoncules cérébelleux inférieurs relient le cervelet à la moelle allongée."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      3,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 9,
@@ -1146,8 +1247,12 @@
       "Les pédoncules cérébelleux inférieurs relient le cervelet et le pont.",
       "Les pédoncules cérébelleux moyens limitent le 4ème ventricule."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 10,
@@ -1157,10 +1262,15 @@
       "Sa lésion (notamment au niveau de la formation réticulaire) peut provoquer un coma.",
       "L’olive est plus proche du sillon latéral-ventral.",
       "Le mésencéphale est limité en caudal par les voies optiques.",
-      "Le tronc cérébral est oblique en haut et en avant. Correction : Le tronc cérébral ce qu’il fallait répondre : 1 : ABD 2 : CD 3 : ABDE 4 : BD 5 : CE اﻟﺪﻋﺎء ﺎﻟﺻ ﺢ ﻣﻦ ﺗﻨﺴﻮﻧﺎ ﻻ 6 : ACE 7 : ABCDE 07_02_2018 : ﻤﻮر اﻟﻤﻌ اﻟﻘﺼﺮ 8 : ABDE 9 : ABC 10 : ABCE Pourquoi certaines propositions sont fausses :"
+      "Le tronc cérébral est oblique en haut et en avant."
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      2,
+      4
+     ],
+     "unanswered": false
     }
    ]
   },
@@ -1179,8 +1289,11 @@
       "L’arc postérieur de C1 présente une concavité antérieure",
       "La vertèbre cervicale C2 s’articule avec l’axis"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 2,
@@ -1192,8 +1305,11 @@
       "La colonne compte autant de vertèbres sacrales que de vertèbres thoraciques",
       "La colonne compte autant de lordoses que de cyphoses"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2,
+      4
+     ],
+     "unanswered": false
     },
     {
      "n": 3,
@@ -1204,8 +1320,10 @@
       "L’angle caudal de la scapula se projette en regard de C7",
       "Le sommet de la crête iliaque se projette au niveau de la vertèbre T12"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      2
+     ],
+     "unanswered": false
     },
     {
      "n": 4,
@@ -1217,8 +1335,11 @@
       "La colonne vertébrale est formée par l’empilement successif des corps vertébraux séparés par des disques intervertébraux",
       "Les pédicules sont situés de part et d’autre du processus épineux"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 5,
@@ -1230,8 +1351,11 @@
       "Les lames délimitent la partie postérieure du foramen spinal",
       "Un trou de conjugaison est délimité par les processus transverses"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      1,
+      3
+     ],
+     "unanswered": false
     },
     {
      "n": 6,
@@ -1241,10 +1365,14 @@
       "Les lames constituent les limites supérieure et inférieure des foramens intervertébraux",
       "Les plateaux vertébraux sont strictement aplatis 2 QCM d’Anatomie Laboratoire d’Anatomie | Faculté de Médecine et Maïeutique - Lille",
       "Il y a 5 vertèbres lombaires",
-      "L’arc postérieur est concave en avant 3 QCM d’Anatomie Laboratoire d’Anatomie | Faculté de Médecine et Maïeutique - Lille CORRECTION 1 BD 2 CE 3 C 4 AD 5 BD 6 ABC"
+      "L’arc postérieur est concave en avant 3 QCM d’Anatomie Laboratoire d’Anatomie | Faculté de Médecine et Maïeutique - Lille"
      ],
-     "answer": [],
-     "unanswered": true
+     "answer": [
+      0,
+      1,
+      2
+     ],
+     "unanswered": false
     }
    ]
   }
