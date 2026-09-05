@@ -946,3 +946,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .admin-title { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
 .admin-top .icobtn { width: 40px; height: 40px; }
 .admin-top .icobtn svg { transform: scaleX(1); }
+
+/* importing: year, then subject, then the link */
+.imp-kind.add { gap: 5px; display: inline-flex; align-items: center; color: var(--purple); background: var(--purple-pale); }
+.imp-kind.on { background: var(--purple); color: #fff; }
+.imp-sem { display: flex; align-items: flex-start; gap: 9px; }
+.imp-sem-n {
+  flex-shrink: 0; min-width: 26px; padding: 4px 0; text-align: center;
+  font-size: 12px; font-weight: 700; color: var(--ink-3);
+}
+.imp-sem .imp-kinds { flex: 1; }
+.imp .imp-kind { flex-shrink: 0; align-self: flex-start; }

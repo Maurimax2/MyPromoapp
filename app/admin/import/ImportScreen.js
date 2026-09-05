@@ -1,12 +1,15 @@
 'use client';
 
-// Paste a Drive link, correct what it found, save.
+// Importing, in the order the question is actually asked.
 //
-// The names Drive holds are not names a student should read, so every row
-// arrives with a cleaned-up guess and a guess at what kind of document it is.
-// The person importing corrects those guesses; nothing is saved until they do.
+// It used to open on a Drive link and a flat list of nine subjects, which
+// only works while there are nine. The question is: which year, which
+// subject, which semester — and both a year and a subject can be made right
+// here, because most of the six promos have nothing in them yet and the
+// subjects for those years do not exist to be picked from.
 
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 
 const KINDS = [
@@ -21,22 +24,63 @@ const KINDS = [
   { id: 'qcm',     where: 'quiz',    label: 'QCM / TD' },
 ];
 
-const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} MB` : '');
+const SEMESTERS = ['S1', 'S2'];
+const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function ImportScreen({ modules, preset }) {
+export default function ImportScreen({ promos, modules, preset }) {
+  const router = useRouter();
+
+  const start = preset ? modules.find((m) => m.id === preset) : null;
+  const [promo, setPromo] = useState(start?.promo || null);
+  const [module, setModule] = useState(start?.id || null);
+
+  const [newPromo, setNewPromo] = useState(null);   // null | {name, label}
+  const [newModule, setNewModule] = useState(null); // null | {name, semester}
+  const [saving, setSaving] = useState(false);
+
   const [url, setUrl] = useState('');
-  // Arriving from a subject means the subject is already decided; picking it
-  // again from a list of nine is a step nobody needs.
-  const [module, setModule] = useState(
-    (preset && modules.some((m) => m.id === preset) ? preset : modules[0]?.id) || '',
-  );
-  const [state, setState] = useState('idle');      // idle|reading|ready|saving|saved
+  const [state, setState] = useState('idle');       // idle|reading|ready|saving|saved
   const [error, setError] = useState('');
   const [rows, setRows] = useState([]);
   const [truncated, setTruncated] = useState(false);
 
+  const subjects = useMemo(
+    () => modules.filter((m) => m.promo === promo), [modules, promo]);
   const chosen = useMemo(() => rows.filter((r) => r.keep), [rows]);
+  const here = modules.find((m) => m.id === module);
 
+  // ---- making a year, and a subject inside it ---------------------------
+  const addPromo = async (e) => {
+    e.preventDefault();
+    setSaving(true); setError('');
+    const res = await fetch('/api/admin/promos', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(newPromo),
+    });
+    const data = await res.json().catch(() => ({}));
+    setSaving(false);
+    if (!res.ok) { setError(data.error || `تعذّرت الإضافة (${res.status})`); return; }
+    setNewPromo(null); setPromo(data.id); setModule(null);
+    router.refresh();
+  };
+
+  const addModule = async (e) => {
+    e.preventDefault();
+    setSaving(true); setError('');
+    const res = await fetch('/api/admin/modules', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ promo, ...newModule }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setSaving(false);
+    if (!res.ok) { setError(data.error || `تعذّرت الإضافة (${res.status})`); return; }
+    setNewModule(null); setModule(data.id);
+    router.refresh();
+  };
+
+  // ---- reading the folder ----------------------------------------------
   const read = async (e) => {
     e.preventDefault();
     setState('reading'); setError(''); setRows([]);
@@ -46,10 +90,10 @@ export default function ImportScreen({ modules, preset }) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ url }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
 
-    if (!res.ok) { setError(data.error || 'تعذّرت القراءة'); setState('idle'); return; }
-    setRows(data.files.map((f) => ({ ...f, keep: true })));
+    if (!res.ok) { setError(data.error || `تعذّرت القراءة (${res.status})`); setState('idle'); return; }
+    setRows((data.files || []).map((f) => ({ ...f, keep: true })));
     setTruncated(!!data.truncated);
     setState('ready');
   };
@@ -58,14 +102,14 @@ export default function ImportScreen({ modules, preset }) {
     setRows((list) => list.map((r, k) => (k === i ? { ...r, ...change } : r)));
 
   const save = async () => {
-    setState('saving');
+    setState('saving'); setError('');
     const res = await fetch('/api/admin/documents', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ module, items: chosen }),
     });
-    const data = await res.json();
-    if (!res.ok) { setError(data.error || 'تعذّر الحفظ'); setState('ready'); return; }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) { setError(data.error || `تعذّر الحفظ (${res.status})`); setState('ready'); return; }
     setState('saved');
   };
 
@@ -73,12 +117,15 @@ export default function ImportScreen({ modules, preset }) {
     return (
       <div className="admin-body">
         <section className="admin-card admin-seed">
-          <div className="admin-card-t">حُفظ {chosen.length} ملف</div>
+          <div className="admin-card-t">حُفظ {chosen.length} ملفًا</div>
           <p className="admin-card-b">
-            الملفات الآن في قاعدة البيانات. الخطوة التالية: استخراج الأسئلة من أوراق الامتحانات.
+            في <span dir="ltr">{here?.name}</span> — {promos.find((p) => p.id === promo)?.name}
           </p>
-          <button className="btn p" onClick={() => { setRows([]); setUrl(''); setState('idle'); }}>
-            استيراد مجلد آخر
+          <button
+            className="btn p"
+            onClick={() => { setRows([]); setUrl(''); setState('idle'); router.refresh(); }}
+          >
+            استورد مجلدًا آخر
           </button>
         </section>
       </div>
@@ -87,63 +134,161 @@ export default function ImportScreen({ modules, preset }) {
 
   return (
     <div className="admin-body">
-      <form className="admin-card admin-seed" onSubmit={read}>
-        <div className="admin-card-t">استيراد من Drive</div>
-        <input
-          className="admin-input" dir="ltr" value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://drive.google.com/drive/folders/…"
-          aria-label="رابط المجلد"
-        />
-        <select className="admin-input" value={module} onChange={(e) => setModule(e.target.value)}>
-          {modules.map((m) => (
-            <option key={m.id} value={m.id}>{m.name} · {m.semester}</option>
-          ))}
-        </select>
-        <button className="btn p" disabled={!url.trim() || state === 'reading'}>
-          {state === 'reading' ? 'جارٍ القراءة…' : 'اقرأ المجلد'}
+      {/* ---------------- the year ---------------- */}
+      <div className="admin-bar"><span>١ · السنة</span></div>
+      <div className="imp-kinds">
+        {promos.map((p) => (
+          <button
+            key={p.id}
+            className={`imp-kind${promo === p.id ? ' on' : ''}`}
+            style={promo === p.id ? { background: p.badge } : undefined}
+            onClick={() => { setPromo(p.id); setModule(null); setNewModule(null); }}
+          >
+            {p.name}
+          </button>
+        ))}
+        <button className="imp-kind add" onClick={() => setNewPromo({ name: '', label: '' })}>
+          <Icon name="plus" size={14} /> سنة
         </button>
-        {error && <div className="admin-err">{error}</div>}
-      </form>
+      </div>
 
-      {state === 'ready' && (
+      {newPromo && (
+        <form className="admin-card admin-seed" onSubmit={addPromo}>
+          <div className="admin-card-t">سنة جديدة</div>
+          <input
+            className="admin-input" dir="ltr" autoFocus placeholder="PCEM1"
+            value={newPromo.name}
+            onChange={(e) => setNewPromo({ ...newPromo, name: e.target.value })}
+            aria-label="اسم السنة" />
+          <input
+            className="admin-input" placeholder="السنة الأولى"
+            value={newPromo.label}
+            onChange={(e) => setNewPromo({ ...newPromo, label: e.target.value })}
+            aria-label="الاسم بالعربية" />
+          <div className="usr-acts">
+            <button className="btn p sm" disabled={saving || !newPromo.name.trim()}>أضف</button>
+            <button type="button" className="btn g sm" onClick={() => setNewPromo(null)}>ألغِ</button>
+          </div>
+        </form>
+      )}
+
+      {/* ---------------- the subject ---------------- */}
+      {promo && (
         <>
-          <div className="admin-bar">
-            <span>{chosen.length} من {rows.length} ملف</span>
-            <button
-              className="pill grey"
-              onClick={() => {
-                const all = chosen.length !== rows.length;
-                setRows((list) => list.map((r) => ({ ...r, keep: all })));
-              }}
-            >
-              {chosen.length === rows.length ? 'إلغاء الكل' : 'اختر الكل'}
+          <div className="admin-bar"><span>٢ · المادة</span><span>{subjects.length}</span></div>
+
+          {SEMESTERS.map((s) => {
+            const list = subjects.filter((m) => m.semester === s);
+            if (!list.length) return null;
+            return (
+              <div key={s} className="imp-sem">
+                <span className="imp-sem-n" dir="ltr">{s}</span>
+                <div className="imp-kinds">
+                  {list.map((m) => (
+                    <button
+                      key={m.id}
+                      className={`imp-kind${module === m.id ? ' on' : ''}`}
+                      onClick={() => setModule(m.id)}
+                    >
+                      {m.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+
+          {!subjects.length && !newModule && (
+            <div className="ct-none">لا مواد في هذه السنة بعد</div>
+          )}
+
+          <div className="imp-kinds">
+            <button className="imp-kind add" onClick={() => setNewModule({ name: '', semester: 'S1' })}>
+              <Icon name="plus" size={14} /> مادة
             </button>
           </div>
 
+          {newModule && (
+            <form className="admin-card admin-seed" onSubmit={addModule}>
+              <div className="admin-card-t">
+                مادة جديدة في {promos.find((p) => p.id === promo)?.name}
+              </div>
+              <input
+                className="admin-input" dir="ltr" autoFocus placeholder="ANATOMIE"
+                value={newModule.name}
+                onChange={(e) => setNewModule({ ...newModule, name: e.target.value })}
+                aria-label="اسم المادة بالفرنسية" />
+              <div className="imp-kinds">
+                {SEMESTERS.map((s) => (
+                  <button
+                    type="button" key={s}
+                    className={`imp-kind${newModule.semester === s ? ' on' : ''}`}
+                    onClick={() => setNewModule({ ...newModule, semester: s })}
+                  >
+                    <span dir="ltr">{s}</span>
+                  </button>
+                ))}
+              </div>
+              <p className="admin-card-b">الاسم بالفرنسية، كما يكتبه الأساتذة.</p>
+              <div className="usr-acts">
+                <button className="btn p sm" disabled={saving || !newModule.name.trim()}>أضف</button>
+                <button type="button" className="btn g sm" onClick={() => setNewModule(null)}>ألغِ</button>
+              </div>
+            </form>
+          )}
+        </>
+      )}
+
+      {/* ---------------- the folder ---------------- */}
+      {module && state !== 'ready' && (
+        <form className="admin-card admin-seed" onSubmit={read}>
+          <div className="admin-card-t">٣ · رابط Drive</div>
+          <p className="admin-card-b">
+            إلى <span dir="ltr">{here?.name}</span> · <span dir="ltr">{here?.semester}</span>
+          </p>
+          <input
+            className="admin-input" dir="ltr" type="url"
+            placeholder="https://drive.google.com/drive/folders/…"
+            value={url} onChange={(e) => setUrl(e.target.value)}
+            aria-label="رابط المجلد" />
+          <button className="btn p" disabled={!url.trim() || state === 'reading'}>
+            {state === 'reading' ? 'نقرأ…' : 'اقرأ المجلد'}
+          </button>
+        </form>
+      )}
+
+      {error && <div className="admin-err">{error}</div>}
+
+      {/* ---------------- what was found ---------------- */}
+      {state === 'ready' && (
+        <>
+          <div className="admin-bar">
+            <span>وُجد {rows.length} ملفًا</span>
+            <span>{chosen.length} محدّد</span>
+          </div>
           {truncated && (
-            <div className="quiz-note">المجلد كبير — عُرضت أول 600 ملف فقط.</div>
+            <div className="notice">
+              <Icon name="alert" size={19} />
+              <div><div className="notice-t">المجلد كبير</div>
+                <div className="notice-b">قرأنا أول دفعة فقط. استورد بقية المجلدات على دفعات.</div></div>
+            </div>
           )}
 
           <div className="admin-rows">
             {rows.map((r, i) => (
               <div key={r.drive_id} className={`imp${r.keep ? '' : ' off'}`}>
                 <button
-                  className={`pick-box${r.keep ? ' on' : ''}`}
+                  className={`imp-kind${r.keep ? ' on' : ''}`}
                   onClick={() => patch(i, { keep: !r.keep })}
-                  aria-label="ضمّن هذا الملف"
+                  aria-label={r.keep ? 'استبعد' : 'أدرج'}
                 >
-                  {r.keep && <Icon name="check" size={13} />}
+                  <Icon name={r.keep ? 'check' : 'plus'} size={14} />
                 </button>
-
                 <div className="grow">
                   <input
-                    className="imp-title" value={r.title}
-                    onChange={(e) => patch(i, { title: e.target.value })}
-                  />
-                  <div className="imp-meta" dir="ltr">
-                    {r.ext} · {mb(r.bytes)} · {r.folder || '/'}
-                  </div>
+                    className="imp-title" dir="ltr" value={r.title}
+                    onChange={(e) => patch(i, { title: e.target.value })} />
+                  <div className="imp-meta">{r.folder} · {r.ext} · {mb(r.bytes)}</div>
                   <div className="imp-kinds">
                     {KINDS.map((k) => (
                       <button
@@ -160,9 +305,12 @@ export default function ImportScreen({ modules, preset }) {
             ))}
           </div>
 
-          <button className="btn p" disabled={!chosen.length || state === 'saving'} onClick={save}>
-            {state === 'saving' ? 'جارٍ الحفظ…' : `احفظ ${chosen.length} ملف`}
-          </button>
+          <div className="usr-acts">
+            <button className="btn p" disabled={!chosen.length || state === 'saving'} onClick={save}>
+              {state === 'saving' ? 'نحفظ…' : `احفظ ${chosen.length} ملفًا`}
+            </button>
+            <button className="btn g" onClick={() => { setRows([]); setState('idle'); }}>ألغِ</button>
+          </div>
         </>
       )}
     </div>
