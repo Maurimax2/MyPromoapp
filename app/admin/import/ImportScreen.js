@@ -248,11 +248,11 @@ export default function ImportScreen({ promos, modules, preset }) {
           </p>
           <input
             className="admin-input" dir="ltr" type="url"
-            placeholder="https://drive.google.com/drive/folders/…"
+            placeholder="رابط مجلد أو ملف من Drive"
             value={url} onChange={(e) => setUrl(e.target.value)}
-            aria-label="رابط المجلد" />
+            aria-label="رابط Drive" />
           <button className="btn p" disabled={!url.trim() || state === 'reading'}>
-            {state === 'reading' ? 'نقرأ…' : 'اقرأ المجلد'}
+            {state === 'reading' ? 'نقرأ…' : 'اقرأ الرابط'}
           </button>
         </form>
       )}
