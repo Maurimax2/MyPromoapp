@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import Filling from './Filling';
+import Settings from './Settings';
 import { supabaseServer } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
@@ -27,6 +28,8 @@ export default async function AdminHome() {
 
   return (
     <div className="admin-body">
+      <Settings />
+
       {empty && <Filling />}
 
       <div className="admin-grid">

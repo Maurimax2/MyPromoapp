@@ -986,3 +986,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .sk-card { height: 92px; }
 .sk-tabs { height: 48px; border-radius: 999px; }
 .sk-row  { height: 74px; }
+
+/* which server variables are actually set */
+.env-rows { display: flex; flex-direction: column; gap: 2px; }
+.env {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid var(--line-soft);
+}
+.env:last-child { border-bottom: 0; }
+.env-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--wrong);
+}
+.env.ok .env-dot { background: var(--right); }
+.env-k { font-size: 12.5px; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+.env-v { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; }
+.env-state {
+  flex-shrink: 0; font-size: 11.5px; font-weight: 700;
+  color: var(--wrong);
+}
+.env.ok .env-state { color: var(--right); }
