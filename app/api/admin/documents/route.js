@@ -1,4 +1,11 @@
 // Saving what the import screen was shown, after a person has corrected it.
+//
+// No ON CONFLICT here either. Postgres infers a conflict target only from a
+// unique CONSTRAINT, and documents(drive_id) is a PARTIAL unique index —
+// `where drive_id is not null` — which it can never infer from. The upsert
+// that used to be here failed every save with "there is no unique or
+// exclusion constraint matching the ON CONFLICT specification". So we look
+// first: what is already stored gets updated, the rest is inserted.
 
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff, isAdmin } from '@/lib/supabase/server';
@@ -16,30 +23,57 @@ export async function POST(request) {
   }
 
   const db = supabaseAdmin();
-  const rows = items.map((it, i) => ({
-    module,
-    where_shown: it.where || 'archive',
-    section: it.section || 'lecture',
-    title: it.title,
-    ext: it.ext || 'PDF',
-    bytes: it.bytes ?? null,
-    drive_id: it.drive_id,
-    position: i,
-    created_by: profile.id,
-  }));
+  const rows = items
+    .filter((it) => it.drive_id && String(it.title || '').trim())
+    .map((it, i) => ({
+      module,
+      where_shown: it.where || 'archive',
+      section: it.section || 'lecture',
+      title: String(it.title).trim(),
+      ext: it.ext || 'PDF',
+      bytes: it.bytes ?? null,
+      drive_id: it.drive_id,
+      position: i,
+      created_by: profile.id,
+    }));
 
-  const { error, count } = await db
-    .from('documents')
-    .upsert(rows, { onConflict: 'drive_id', count: 'exact' });
+  if (!rows.length) return NextResponse.json({ error: 'لا شيء لحفظه' }, { status: 400 });
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  // The same file can be imported twice — from a folder and again on its own —
+  // so a second save must correct the row rather than make another.
+  const known = new Map();
+  for (let i = 0; i < rows.length; i += 100) {
+    const slice = rows.slice(i, i + 100);
+    const { data, error } = await db.from('documents')
+      .select('id, drive_id').in('drive_id', slice.map((r) => r.drive_id));
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    for (const d of data || []) known.set(d.drive_id, d.id);
+  }
+
+  const fresh = rows.filter((r) => !known.has(r.drive_id));
+  const again = rows.filter((r) => known.has(r.drive_id));
+
+  if (fresh.length) {
+    const { error } = await db.from('documents').insert(fresh);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  for (const r of again) {
+    const { created_by, ...fields } = r;
+    const { error } = await db.from('documents')
+      .update(fields).eq('id', known.get(r.drive_id));
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  const count = rows.length;
 
   await db.from('audit_log').insert({
     actor: profile.id, action: 'imported_documents',
-    target_type: 'module', target_id: module, detail: { count: rows.length },
+    target_type: 'module', target_id: module,
+    detail: { added: fresh.length, updated: again.length },
   });
 
-  return NextResponse.json({ saved: count ?? rows.length });
+  return NextResponse.json({ saved: count, added: fresh.length, updated: again.length });
 }
 
 // Correcting one file after the fact: its name, the screen it appears on,
