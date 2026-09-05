@@ -28,16 +28,26 @@ export default function UsersScreen({ people, status, counts, canAct, meId }) {
   const router = useRouter();
   const [rows, setRows] = useState(people);
   const [busy, setBusy] = useState(null);
+  const [error, setError] = useState('');
 
   const patch = async (id, body) => {
-    setBusy(id);
-    const r = await fetch('/api/admin/users', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id, ...body }),
-    });
+    setBusy(id); setError('');
+    let r, data;
+    try {
+      r = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id, ...body }),
+      });
+      data = await r.json().catch(() => ({}));
+    } catch {
+      setBusy(null); setError('لا اتصال بالخادم'); return;
+    }
     setBusy(null);
-    if (!r.ok) return;
+
+    // Silence here was the bug: a refused call looked exactly like a button
+    // that does nothing.
+    if (!r.ok) { setError(data.error || `تعذّر الحفظ (${r.status})`); return; }
 
     // A decided person leaves this list; a promo or role change stays in it.
     if (body.status) setRows((rs) => rs.filter((p) => p.id !== id));
@@ -58,6 +68,8 @@ export default function UsersScreen({ people, status, counts, canAct, meId }) {
           </button>
         ))}
       </div>
+
+      {error && <div className="admin-err">{error}</div>}
 
       {!rows.length ? (
         <section className="admin-card admin-seed">

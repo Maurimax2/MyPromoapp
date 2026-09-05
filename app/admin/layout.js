@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
+import AdminHeader from './AdminHeader';
 import { redirect } from 'next/navigation';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { staffEmails, syncStaffRole } from '@/lib/supabase/admin';
@@ -24,9 +26,10 @@ export default async function AdminLayout({ children }) {
     return (
       <div className="admin">
         <header className="admin-top">
-          <Link href="/admin" className="admin-brand">
+          <Link href="/admin" className="admin-mark">
             <span>My</span><span className="admin-brand-b">Promo</span>
           </Link>
+          <div className="grow" />
           <Link href="/feed" className="admin-out">التطبيق</Link>
         </header>
         <div className="admin-body">
@@ -54,16 +57,9 @@ export default async function AdminLayout({ children }) {
 
   return (
     <div className="admin">
-      <header className="admin-top">
-        <Link href="/admin" className="admin-brand">
-          <span>My</span><span className="admin-brand-b">Promo</span>
-          <span className="admin-badge">{profile.role}</span>
-        </Link>
-        <Link href="/feed" className="admin-out">التطبيق</Link>
-        <form action="/auth/signout" method="post">
-          <button className="admin-out">خروج</button>
-        </form>
-      </header>
+      <Suspense fallback={<div className="admin-top" />}>
+        <AdminHeader role={profile.role} />
+      </Suspense>
       {children}
     </div>
   );

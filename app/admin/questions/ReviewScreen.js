@@ -25,6 +25,7 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
   const [why, setWhy] = useState(questions[0]?.why || '');
   const [busy, setBusy] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [error, setError] = useState('');
   const current = queue[0];
   const whyRef = useRef(null);
 
@@ -50,13 +51,23 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
   const send = useCallback(async (next) => {
     if (!current || busy) return;
     if (next === 'published' && !ticked.length) return;
-    setBusy(true);
-    await fetch('/api/admin/questions', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id: current.id, answer: ticked, why, status: next }),
-    });
+    setBusy(true); setError('');
+    let res, data;
+    try {
+      res = await fetch('/api/admin/questions', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id: current.id, answer: ticked, why, status: next }),
+      });
+      data = await res.json().catch(() => ({}));
+    } catch {
+      setBusy(false); setError('لا اتصال بالخادم'); return;
+    }
     setBusy(false);
+
+    // A question that failed to save must stay on screen. Advancing past it
+    // would lose the answer and nobody would know.
+    if (!res.ok) { setError(data.error || `تعذّر الحفظ (${res.status})`); return; }
     advance();
   }, [current, ticked, why, busy, advance]);
 
@@ -158,6 +169,8 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
               <button className="pill grey" onClick={() => send('rejected')}>احذف</button>
             </div>
           </div>
+
+          {error && <div className="admin-err">{error}</div>}
 
           <p className="rev-hint">
             الأرقام تختار · Enter ينشر · Esc يتخطى · بقي {queue.length}

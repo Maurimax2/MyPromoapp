@@ -940,3 +940,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 14px; font-weight: 600; color: var(--purple);
   min-height: 44px; width: 100%;
 }
+
+/* the panel header, with a way back */
+.admin-mark { font-size: 17px; font-weight: 700; letter-spacing: -.02em; flex-shrink: 0; }
+.admin-title { font-size: 16px; font-weight: 700; letter-spacing: -.01em; }
+.admin-top .icobtn { width: 40px; height: 40px; }
+.admin-top .icobtn svg { transform: scaleX(1); }

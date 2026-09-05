@@ -45,16 +45,35 @@ export default function ContentScreen({ module, documents, where, counts, canDel
   const [rows, setRows] = useState(documents);
   const [open, setOpen] = useState(null);
   const [busy, setBusy] = useState(null);
+  const [error, setError] = useState('');
 
   const patch = async (id, body) => {
+    const before = rows.find((d) => d.id === id);
     setRows((rs) => rs.map((d) => (d.id === id ? { ...d, ...body } : d)));
-    setBusy(id);
-    await fetch('/api/admin/documents', {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id, ...body }),
-    });
+    setBusy(id); setError('');
+
+    let res, data;
+    try {
+      res = await fetch('/api/admin/documents', {
+        method: 'PATCH',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id, ...body }),
+      });
+      data = await res.json().catch(() => ({}));
+    } catch {
+      setBusy(null); setRows((rs) => rs.map((d) => (d.id === id ? before : d)));
+      setError('لا اتصال بالخادم'); return;
+    }
     setBusy(null);
+
+    // The row was changed on screen before the request went out, so a refusal
+    // has to put it back — otherwise the panel shows something the database
+    // does not have.
+    if (!res.ok) {
+      setRows((rs) => rs.map((d) => (d.id === id ? before : d)));
+      setError(data.error || `تعذّر الحفظ (${res.status})`);
+      return;
+    }
     // Moving a file to another screen takes it out of this list.
     if (body.where_shown && body.where_shown !== where) {
       setRows((rs) => rs.filter((d) => d.id !== id));
@@ -64,29 +83,34 @@ export default function ContentScreen({ module, documents, where, counts, canDel
   };
 
   const remove = async (id) => {
-    setBusy(id);
-    await fetch('/api/admin/documents', {
-      method: 'DELETE',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
+    setBusy(id); setError('');
+    let res, data;
+    try {
+      res = await fetch('/api/admin/documents', {
+        method: 'DELETE',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      data = await res.json().catch(() => ({}));
+    } catch {
+      setBusy(null); setError('لا اتصال بالخادم'); return;
+    }
     setBusy(null);
+    if (!res.ok) { setError(data.error || `تعذّر الحذف (${res.status})`); return; }
     setRows((rs) => rs.filter((d) => d.id !== id));
     setOpen(null);
     router.refresh();
   };
 
-  const go = (w) => router.push(`/admin/content?module=${module.id}&where=${w}`);
+  const go = (w) =>
+    router.push(`/admin/content?promo=${module.promo}&module=${module.id}&where=${w}`);
 
   return (
     <div className="admin-body">
-      <Link
-        href={module?.promo ? `/admin/content?promo=${module.promo}` : '/admin/content'}
-        className="admin-bar ct-back"
-      >
-        <span><Icon name="chev" size={15} /> <span dir="ltr">{module?.name}</span></span>
+      <div className="admin-bar">
+        <span dir="ltr">{module?.name}</span>
         <span dir="ltr">{module?.semester}</span>
-      </Link>
+      </div>
 
       <div className="rev-tabs">
         {WHERE.map((w) => (
@@ -99,6 +123,8 @@ export default function ContentScreen({ module, documents, where, counts, canDel
           </button>
         ))}
       </div>
+
+      {error && <div className="admin-err">{error}</div>}
 
       {!rows.length ? (
         <section className="admin-card admin-seed">

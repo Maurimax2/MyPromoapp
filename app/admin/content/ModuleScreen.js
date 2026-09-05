@@ -40,10 +40,10 @@ export default function ModuleScreen({ promo, modules, files }) {
 
   return (
     <div className="admin-body">
-      <Link href="/admin/content" className="admin-bar ct-back">
-        <span><Icon name="chev" size={15} /> {promo.name}</span>
+      <div className="admin-bar">
+        <span>{promo.name}</span>
         <span>{modules.length} مادة</span>
-      </Link>
+      </div>
 
       {SEMESTERS.map((s) => {
         const list = modules.filter((m) => m.semester === s);
@@ -55,7 +55,7 @@ export default function ModuleScreen({ promo, modules, files }) {
             ) : (
               <div className="admin-rows">
                 {list.map((m) => (
-                  <Link key={m.id} href={`/admin/content?module=${m.id}`} className="ctm">
+                  <Link key={m.id} href={`/admin/content?promo=${promo.id}&module=${m.id}`} className="ctm">
                     <div className="grow">
                       <div className="ctm-t" dir="ltr">{m.name}</div>
                       <div className="ctm-b ltr">{files[m.id] || 0} ملف</div>
