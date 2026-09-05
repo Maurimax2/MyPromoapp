@@ -824,6 +824,221 @@
       ],
       "by": "claude",
       "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:17": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Rétine, appareil vestibulaire et corpuscule gustatif relèvent des sens spéciaux, non de la somesthésie."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:18": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:19": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La proprioception vient des récepteurs articulaires, des fuseaux neuromusculaires et de l’organe tendineux de Golgi."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:20": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "Le diapason explore la sensibilité vibratoire, portée par les corpuscules de Pacini."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:21": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Les récepteurs articulaires renseignent sur la position des segments et le sens de position ; la vitesse et l’allongement relèvent du fuseau."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:22": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Trois neurones : le ganglion spinal, le noyau de Goll ou de Burdach, puis le thalamus."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:23": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "Les fibres C sont amyéliniques : ce sont les plus lentes."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:24": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "L’astéréognosie est l’incapacité de reconnaître la forme d’un objet par le toucher."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:25": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La proprioception inconsciente emprunte les voies spino-cérébelleuses et converge sur le cervelet ; l’extralemniscal porte la douleur et la thermie."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:26": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Le premier relais extralemniscal est la corne postérieure, couche V de Rexed ; la voie croise ensuite."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:27": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Toutes les modalités passent par le thalamus, à la seule exception de l’olfaction."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:32": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "La sensibilité est mesurable ; la sensation et la perception sont subjectives."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:33": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Corpuscule de Ruffini et disques de Merkel sont somesthésiques ; goût, vestibule et olfaction sont des sens spéciaux."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:34": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:35": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Les cordons postérieurs sont homolatéraux : une lésion droite abolit à droite le tact fin, la proprioception et la vibration, en épargnant douleur et thermie."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:36": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La sensation thermique détecte bien et éveille, mais se localise mal."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:37": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Seule la sensibilité est une grandeur mesurable."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:38": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "Trois neurones, comme pour toute voie lemniscale."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:40": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "La transduction convertit l’énergie du stimulus en potentiel de récepteur ; le potentiel d’action ne naît qu’au-delà du seuil."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:41": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le fuseau répond à l’étirement, non à la tension — c’est l’organe tendineux de Golgi qui mesure la tension. Les fibres primaires ont une réponse dynamique."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:45": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Rétine, appareil vestibulaire et corpuscule gustatif sont hors du système somesthésique."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:46": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Merkel, Meissner et Ruffini sont cutanés ; bâtonnets et organe de Corti appartiennent à la vision et à l’audition."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:47": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La proprioception dynamique repose sur les récepteurs articulaires et l’organe tendineux de Golgi."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:48": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’organe tendineux de Golgi mesure la tension : forte lors d’une contraction active, faible lors d’un allongement passif."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:49": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+    },
+    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:50": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "La lésion de S1 abolit la localisation fine et l’appréciation des pressions, des poids, des formes et des textures."
     }
   }
 }
