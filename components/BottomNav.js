@@ -12,7 +12,9 @@ const TABS = [
 
 export default function BottomNav() {
   const path = usePathname();
-  if (path === '/' || path.startsWith('/login')) return null;
+  // The panel is not the app: it has its own header and no use for the four
+  // student tabs sitting over its buttons.
+  if (path === '/' || path.startsWith('/login') || path.startsWith('/admin')) return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">
