@@ -2033,6 +2033,268 @@
       ],
       "by": "claude",
       "why": "La trompe d’Eustache égalise les pressions de part et d’autre du tympan, non de la fenêtre ovale."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:3": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La plicature précède la convergence, le cloisonnement s’achève vers la 8e semaine, et la gelée cardiaque donne les coussins endocardiques."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:4": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’ostium primum est délimité par le septum primum et le septum intermedium ; le foramen ovale est une lacune du septum secundum, et une CIA donne un shunt gauche-droit non cyanogène."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:5": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "La tétralogie associe sténose pulmonaire, CIV, dextroposition de l’aorte et hypertrophie du ventricule droit ; elle est cyanogène."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:6": {
+      "answer": [
+        0
+      ],
+      "by": "claude",
+      "why": "Le blastème métanéphrogène donne le néphron ; les tubes collecteurs et de Bellini viennent du bourgeon urétéral."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:7": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "Le rhombencéphale se divise en métencéphale et myélencéphale."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:9": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "La couche manteau donne les lames fondamentale et alaire."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:10": {
+      "answer": [
+        0
+      ],
+      "by": "claude",
+      "why": "L’humeur aqueuse est résorbée par le canal de Schlemm, dans l’angle irido-cornéen."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:12": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "La rétine nerveuse échange avec la choriocapillaire à travers l’épithélium pigmentaire."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:13": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Le bourgeon urétéral naît du canal de Wolff et donne les voies excrétrices, dont les tubes collecteurs."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:14": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "Le rein polykystique est une malformation héréditaire par défaut de jonction entre tubes collecteurs et néphrons."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:16": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Le rein définitif naît de la rencontre du bourgeon urétéral, issu du canal de Wolff, et du blastème ; son urine forme le liquide amniotique."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:17": {
+      "answer": [
+        0
+      ],
+      "by": "claude",
+      "why": "L’extrophie vésicale tient à un défaut de mésenchymatisation de la paroi abdominale ; elle s’associe à un épispadias, non à un hypospadias."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:18": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le canal de Wolff donne l’épididyme, le déférent, les vésicules séminales et le canal éjaculateur."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:19": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La vésicule optique induit la placode cristallinienne sans lui donner naissance."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:20": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Le stomodaeum est limité par le bourgeon frontal en haut et les bourgeons maxillaires et mandibulaires latéralement."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:21": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "Une fente atteignant l’arcade dentaire supérieure est une fente labio-alvéolaire."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:22": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Les canalicules efférents viennent des tubules mésonéphrotiques et relient le rete testis à l’épididyme."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:23": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "La proposition fausse : l’atrésie tient à un défaut de recanalisation et de séparation d’avec la trachée."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:24": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Dans le mésentère commun l’intestin grêle est à droite et le côlon à gauche."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:26": {
+      "answer": [
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le glaucome congénital tient à un défaut de résorption par fermeture de l’angle ; dépisté tôt, il ne condamne pas la vue."
+    },
+    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:27": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "Le tractus thyréoglosse descend du foramen caecum et donne des kystes médians du cou."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:1": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La macula porte la fovéa, riche en cônes, et donne la meilleure acuité ; le nerf optique naît de la papille."
+    },
+    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:7": {
+      "answer": [
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La membrane otolithique est gélatineuse, porte des otolithes de carbonate de calcium, coiffe les macules et sert l’équilibre linéaire."
+    },
+    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:16": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Les cellules germinales naissent dans la vésicule vitelline et migrent ; Sertoli vient de l’épithélium cœlomique, Leydig du mésenchyme."
+    },
+    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:17": {
+      "answer": [
+        2
+      ],
+      "by": "claude",
+      "why": "La proposition fausse : l’ébauche thyroïdienne naît au foramen caecum de la langue avant de descendre devant la trachée."
+    },
+    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:20": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "C’est la cupule optique qui naît de l’invagination ; la vésicule vient du diencéphale et induit cristallin et couches externes."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:2": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La chambre antérieure sépare la cornée de l’iris et contient l’humeur aqueuse."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:9": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’urètre masculin se divise en prostatique, membranacé et spongieux ; la fosse naviculaire siège dans le gland."
+    },
+    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:1": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le consensus retient striatum, pallidum, noyau sous-thalamique et substance noire ; le claustrum en est exclu."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1": {
+      "answer": [
+        3
+      ],
+      "by": "claude",
+      "why": "Le haut appareil urinaire, ce sont les deux reins et les deux uretères ; vessie et urètre forment le bas appareil."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5": {
+      "answer": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La veine rénale gauche est plus longue, passe dans la pince aorto-mésentérique et reçoit surrénalienne, gonadique et phrénique inférieure gauches ; elle naît du hile et se jette dans la cave."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1-2": {
+      "answer": [
+        4
+      ],
+      "by": "claude",
+      "why": "Le segment postérieur de l’œil comprend le vitré, la rétine et la choroïde."
+    },
+    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5-2": {
+      "answer": [
+        1
+      ],
+      "by": "claude",
+      "why": "Le droit inférieur abaisse, tourne en dehors et rapproche — abaissement, extorsion et adduction."
     }
   }
 }
