@@ -16,10 +16,8 @@
       "Afficher des résultats à l'écran",
       "Déterminer la vitesse d'un processeur"
      ],
-     "answer": [
-      3
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 2,
@@ -30,10 +28,8 @@
       "Fonction",
       "Variable"
      ],
-     "answer": [
-      3
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 3,
@@ -103,10 +99,8 @@
       "1101",
       "1001"
      ],
-     "answer": [
-      3
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 2,
@@ -117,10 +111,8 @@
       "loii1",
       "10010"
      ],
-     "answer": [
-      3
-     ],
-     "unanswered": false
+     "answer": [],
+     "unanswered": true
     },
     {
      "n": 4,

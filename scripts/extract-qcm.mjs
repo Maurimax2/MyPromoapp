@@ -184,11 +184,15 @@ for (const m of modules) {
       const whole = parseQcm(text);
       const qs = usable(whole).length > usable(beforeKey).length ? whole : beforeKey;
 
-      let key = parseAnswerKey(answered);
+      // An answer key read off a scan is not trustworthy. OCR turns `1 B` into
+      // `1 8`, drops a letter, invents one — and a wrong answer taught as right
+      // is worse than a question with no answer at all. Scanned papers give up
+      // their questions here; their answers are written by hand.
+      let key = ocred ? new Map() : parseAnswerKey(answered);
       // Sheets that answer themselves fiche by fiche keep the key inline
       // rather than at the end, so fall back to reading the whole document.
-      if (key.size === 0) key = parseAnswerKey(text);
-      if (key.size === 0 && src.correction) {
+      if (!ocred && key.size === 0) key = parseAnswerKey(text);
+      if (!ocred && key.size === 0 && src.correction) {
         try {
           await wait(250);
           key = parseAnswerKey(await textOf(await fetchFile(src.correction)));

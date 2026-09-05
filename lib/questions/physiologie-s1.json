@@ -1,5 +1,3255 @@
 {
  "module": "physiologie-s1",
  "name": "PHYSIOLOGIE S1",
- "banks": []
+ "banks": [
+  {
+   "fid": "15L2XTBvN3rAIiEMm_7eF0Mv8oeyNvtlS",
+   "title": "Session 2025",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "circulent dans le sang liées à des protéines",
+      "comportent toutes les hormones hypophysaires",
+      "interagissent au niveau des cellules cibles avec des récepteurs nucléaires",
+      "ont une durée d’action plus courte que celles des hormones peptidiques",
+      "sont synthétisées à partir des acides gras"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les hormones monoaminées peuvent",
+     "options": [
+      "agir sur des récepteurs membranaires",
+      "agir sur des récepteurs nucléaires",
+      "circuler dans le sang librement",
+      "être synthétisées par la posthypophyse",
+      "être synthétisées à partir de l’histidine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "L’hormone antidiurétique (ADH)",
+     "options": [
+      "agit sur le tube contourné proximal (TCP)",
+      "augmente la glycogénolyse",
+      "entraine est vasoconstriction",
+      "inhibe l’agrégation plaquettaire",
+      "stimule la sécrétion de l’ACTH hypophysaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La sécrétion de l’hormone de croissance (GH) est stimulée par",
+     "options": [
+      "l’augmentation des acides gras libres",
+      "l’exercice musculaire",
+      "l’hyperglycémie",
+      "le cortisol",
+      "les agents B adrénergiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "L'’hormone de croissance (GH)",
+     "options": [
+      "agit sur des récepteurs membranaires de la superfamille des cytokines",
+      "augmente l'excrétion des ions Na+ et K+",
+      "augmente la glycogénogenèse",
+      "stimule la croissance par l'intermédiaire des somatomédines (1GF)",
+      "stimule la lipogenèse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "La sécrétion de la prolactine est",
+     "options": [
+      "augmentée au cours de la grossesse",
+      "inhibée par l'exercice musculaire",
+      "plus élevée au cours du sommeil (30 minutes après l’endormissement)",
+      "sous le contrôle inhibiteur continu de l’hypothalamus",
+      "stimulée par la dopamine"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "105OHfPEMzoiW_sMmYfuiFCAeyE839BgP",
+   "title": "Session 2023",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Les hormones monoaminées peuvent",
+     "options": [
+      "agir sur des récepteurs membranaires de type ionotrope",
+      "circuler liées à des protéines",
+      "comporter dans leur structure un acide gras",
+      "être formées de l'histidine",
+      "être hydrophiles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La sécrétion de l'hormone antidiurétique est inhibée par :",
+     "options": [
+      "l’éthanol",
+      "l'hypotension",
+      "l'hypovolémie",
+      "le facteur atrial natriurétique (ANF)",
+      "les agents «a adrénergiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "L'hormone de croissance (GH)",
+     "options": [
+      "diminue la rétention des 1ons Nat el K+",
+      "peut exercer ses efiels par l'intermédiaire des somatomédines (IGF)",
+      "provoque l'hyperplasie de tous les organes",
+      "stimule la lipogenèse",
+      "stimule le métabolisme des chondrocytes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La sécrétion de la GH est augmentée sous l'effet",
+     "options": [
+      "d'une anesthésie",
+      "d’une augmentation des acides gras libres",
+      "d'une fièvre",
+      "de l'exercice physique",
+      "de l'hyperglycémie"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1i9Ls4zajgD3INBHCAnsCWRBvxdXivqbV",
+   "title": "Rattrapage 2024",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 21,
+     "q": "La zonc fasciculéc de la corticosurrénale peut sécréter",
+     "options": [
+      "la progestérone",
+      "les androgènes",
+      "les glucocorticoïdes",
+      "les minéralcorticoïdes",
+      "les œstrogènes 3 Scanned with CamScanner"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 22,
+     "q": "La synthèse des glucocorticoïdes",
+     "options": [
+      "commence par la transformation du cholestérol en prégnènolone",
+      "donne le cortisol comme produit final",
+      "peut se faire dans la couche glomérulée",
+      "se fait dans la couche fasciculée",
+      "se fait sans contrôle hypophysaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 24,
+     "q": "Le cortisol diminue",
+     "options": [
+      "l'élimination du K+ et de H+",
+      "l’incorporation des acides aminés dans le muscle",
+      "la protéolyse",
+      "la synthèse des immunoglobulines",
+      "les réponses immunitaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 26,
+     "q": "Les effets B adrénergiques sont",
+     "options": [
+      "une bronchodilatation",
+      "une relaxation du muscle utérin",
+      "une diminution la lipolyse",
+      "une vasoconstriction",
+      "une augmentation de la glycogénolyse musculaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 28,
+     "q": "Au cours de la puberté chez la fille les œstrogènes sont responsables de",
+     "options": [
+      "d’une modification de l'aspect du squelette (élargissement du bassin)",
+      "l'apparition de la pilosité pubienne losangique",
+      "l’augmentation de la croissance des seins",
+      "l'installation du cycle menstruel",
+      "la disposition particulière des graisses sur la face 4 Scanned with CamScanner"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "La circulation rénale",
+     "options": [
+      "est caractérisée par un prernier réseau au niveau glomérulaire",
+      "est caractérisée par une pression élevée au niveau des artérioles afférentes",
+      "est caractérisée un deuxième réseau au niveau péritubulaire",
+      "est une circulation nourricière",
+      "observe une chute importante au niveau des capillaires péritubulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 30,
+     "q": "Pour un débit plasmatique rénal (DPR) égal à de 660 ml/mn, une Hématocrite (Ht) égale à 45% le débit sanguin rénal (DSR) en ml/mn égal",
+     "options": [
+      "1000",
+      "1100",
+      "1200",
+      "1250",
+      "1300"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 31,
+     "q": "Unce substance exogène utilisée pour calculer la clairance doit être",
+     "options": [
+      "éliminée uniquement par voie rénale",
+      "librement filtrée",
+      "réabsorbée au niveau tubulaire",
+      "non toxique",
+      "totalement métabolisée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 32,
+     "q": "Pour un débit urinaire V = 1440 ml/24H, une concentration plasmatique d’une substance P = 0,2 mg/ml; une concentration urinaire U = 20 mg/mIl. La clairance de cette substance en ml/mn est égale",
+     "options": [
+      "50",
+      "100",
+      "150",
+      "200",
+      "250"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 33,
+     "q": "Le potassium (K+) est",
+     "options": [
+      "majoritairement réabsorbé au niveau du tube contourné proximal",
+      "réabsorbé grâce à l’aldostérone",
+      "toujours sécrêété au niveau du tube contourné distal",
+      "réabsorbé par un cotransport Na+-K+-2CI",
+      "sécrété en échange avec le Na+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "L'alcalose métabolique est",
+     "options": [
+      "est à l’origine d’une hypoventilation",
+      "est caractérisée par une augmentation du pH",
+      "est caractérisée par une diminution des bicarbonates dans le sang",
+      "peut être due à des diarrhées",
+      "peut être due à une charge alcaline exogène — Scanned with CamScanner"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 35,
+     "q": "Les hormones impliquées dans l’équilibre de la natrémie sont",
+     "options": [
+      "l’'ACTH",
+      "l’ADH",
+      "l’aldostérone",
+      "le cortisol",
+      "le facteur atrial natriurétique (FAN)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "Une activité motrice réflexe",
+     "options": [
+      "est commandée par le cortex cérébral",
+      "est composée d’un arc de quatre éléments",
+      "est stéréotypée",
+      "peut-être extéroceptive",
+      "peut-être proprioceptive"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 37,
+     "q": "L'arc reflexe myotatique inverse comporte",
+     "options": [
+      "des récepteurs tendineux de GOLGI",
+      "des fibres sensitive de type la",
+      "un centre de commande située au niveau de la moelle épinière",
+      "des fibres motrices de type motoncurone gamma",
+      "un cffecteur constitué du muscle strié squelettique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 38,
+     "q": "Le réflexe de flexion",
+     "options": [
+      "a point de départ des récepteurs cutanés tactiles",
+      "a comme voies afférentes des fibres de petit diamètre de type III et TV",
+      "a comme voies afférentes les motoneurones gamma",
+      "s’interprète comme une réaction de défense qui carte un membre",
+      "est monosynaptique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "Le tonus musculaire est stimulé par",
+     "options": [
+      "l’aire prémotrice (aire 6)",
+      "l’interneurone de RENSCHAW",
+      "la boucle gamma",
+      "le cervelet",
+      "les noyaux vestibulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 40,
+     "q": "Une hypertonie peut être observée",
+     "options": [
+      "au cours du sommeil",
+      "en cas de lésion du cervelet",
+      "en cas de lésion des motoneuronce alpha",
+      "dans le cas de la maladie de Parkinson",
+      "en cas de décortication"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 41,
+     "q": "La fonction d’équilibration",
+     "options": [
+      "se fait par un contrôle réflexe",
+      "est unimodale",
+      "assure l'orientation dans l’espace",
+      "utilise les informations visuelles",
+      "est altérée lors de la fermeture des yeux Scanned with CamScanner"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 42,
+     "q": "Les canaux semi-circulaires",
+     "options": [
+      "sont au nombre de trois de chaque côté",
+      "sont situés au niveau de l'oreille moyenne",
+      "interviennent dans la stabilisation du regard",
+      "interviennent dans l'équilibre dynamique",
+      "renseignent sur la position de la tête par rapport à la verticale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 43,
+     "q": "Les voies vestibulaires centrales",
+     "options": [
+      "ont pour origine les noyaux vestibulaires",
+      "forment avec les fibres cochléaires le nerf auditif",
+      "atteignent directement le cortex cérébral",
+      "atteignent les motoneurones spinaux par les faisceaux vestibulo-spinaux",
+      "atteignent les noyaux végétatifs du nerf vague (X)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 44,
+     "q": "Un syndrome cérébelleux associe les manifestations suivantes",
+     "options": [
+      "une hémiplégie",
+      "une hypotonie",
+      "des troubles de la statique et de l'équilibre",
+      "une baisse de l’acuité visuelle",
+      "des troubles de la coordination des mouvements"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 45,
+     "q": "Les afférences se projetant sur le striatum proviennent du",
+     "options": [
+      "cortex somesthésique",
+      "locus niger (substance noire)",
+      "néocortex",
+      "noyau vestibulaire",
+      "thalamus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 55,
+     "q": "Le rythme électroencéphalographique delta est",
+     "options": [
+      "de fréquence inférieure ou égale à 4 Hz",
+      "d'amplitude variable",
+      "présent chez l'adulte normal éveillé",
+      "présent au stade II du sommeil lent E — présent chez un sujet dans un coma profond"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1TOtG_owOOfiCeZzCEYpdCq5do7aULHMO",
+   "title": "Rattrapage 2019",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 3,
+     "q": "Les hormones suivantes font partie des hormones peptidiques",
+     "options": [
+      "laGH",
+      "l'ocytocine",
+      "la prolactine",
+      "la testostérone",
+      "le cortisol"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La GH stimule la",
+     "options": [
+      "croissance staturale",
+      "glycogenèse",
+      "lipogenèse",
+      "rétention du Na+",
+      "synthèse protidique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La 5 désiodase permet la conversion de T4 en",
+     "options": [
+      "MIT",
+      "DIT",
+      "T3 reverse € 24° ON A. lode"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1-iABvh_idZgdCv9HmlR-mIlOd9_Ly3HM",
+   "title": "Rattrapage 2016",
+   "section": "Examens",
+   "questions": [
+    {
+     "n": 20,
+     "q": "La sécrétion acide gastrique est inhibée par",
+     "options": [
+      "l’acidité elle-même",
+      "la somatostatine",
+      "— la sécrétine",
+      "la gastrine",
+      "l’histamine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 27,
+     "q": "Une hypoalgésie peut être obtenue par injection au niveau de la corne postérieure de la moelle épinière de",
+     "options": [
+      "Substance P",
+      "Métenképhaline",
+      "GABA (acide gamma-amino-butirique)",
+      "sérotonine",
+      "Acétylcholine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 29,
+     "q": "Lors d’une stimulation lumineuse",
+     "options": [
+      "les canaux ioniques à sodium s’ouvrent",
+      "le potentiel de membrane passe à -70 mV",
+      "le rétinal se détache de l’opsine",
+      "la transducine est activée",
+      "la concentration intracytoplasmique en Calcium (Ca**) augmente Scanned by CamsScanner say chu v44 LL 4 \\ ) = MN + : ; . Ff 6 Ë"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": ", Au cours du sommeil lent on observe",
+     "options": [
+      "un ralentissement du rythme cardiaque",
+      "des mouvements oculaires rapides",
+      "des rêves",
+      "une accélération de l'activité électrique cérébrale E — un pic de sécrétion d'hormone de croissance"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1Cag2qzVTxb5q5PzIwvjZb1USrKPQR21-",
+   "title": "Isolé — le rein (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les Paramètres suivants ont été mesurés chez un sujet : Débit urinaire V=2ml/mn; Concentration = plasmatique d'une substance P = 0,2 mg / ml; Concentration urinaire U=15 mg/ml. La clairance de cette substance est égale",
+     "options": [
+      "50 ml/mn",
+      "100 ml/mn",
+      "150 ml/mn",
+      "200 ml/mn",
+      "250 ml/mn"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Sachant que la concentration artérielle d'une substance (Ca) est de 10mg/ml, sa concentration veineuse (Cv) de 5 mg/ml et que le débit plasmatique est de 600 ml/m, sa clairance est égale",
+     "options": [
+      "500ml/mn",
+      "400m1/mn",
+      "300ml/mn",
+      "200m1/mn",
+      "100ml/mn ] II- Circulation rénale ISOLÉ DOU&HUI"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Pour une concentration plasmatique du PAH (Prau)=0,4 on RE rie (DPR) en Ne ë (Uran) = 200 mg/ml, un débit urinaire (V)=1,5 ml/mn. Le débit Plasmatiq égal à:",
+     "options": [
+      "300 =",
+      "450",
+      "600",
+      "750 F",
+      "900 Re : 4"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Dans le but de déterminer le débit plasmatique rénal, une quantité d'acide paraaminohippurique 1 (PAH) a été injecté par voie intraveineuse à un sujet. La concentration plasmatique du PAH (Pau = 0,4 mg/ml; une concentration urinaire de PAH (Upan) = 250 mg/ml, un débit urinaire (V) =1440 m1/24 : heures. Le débit plasmatique rénal (DPR) en ml/mn est égal",
+     "options": [
+      "525 !",
+      "575",
+      "600 É",
+      "625",
+      "650"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Pour une concentration plasmatique da PAH (Prau) = 0.4 mg/ml: une Concentration urinaire de PAI | (Uran)=200 mg/ml, un débit urinaire (V)= 1.5 ml/mn Le début Plasmatique Rénal (DPR) en ml/mn est égal",
+     "options": [
+      "300",
+      "450",
+      "600",
+      "750",
+      "900 Page 148 Médecin validé Page 146 bo"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Pour un débit plasmatique rénal (DPR) égal à de 660 ml/mn, une Hématocrite (Ht) égale à 45% le débit sanguin rénal (DSR) en ml/mn égal",
+     "options": [
+      "1000",
+      "1100",
+      "1200",
+      "1250",
+      "1300"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Dans la régulation du débit de filtration glomérulaire (DFG)",
+     "options": [
+      "l'augmentation de la pression de perfusion de l'artériole afférente produit sa vasodilatation",
+      "L'augmentation du débit de NaCI dans la macula-densa entraîne une diminution du DFG",
+      "Les prostaglandines PGI2 et PGE2 synthétisées par le rein augmentent le DFG",
+      "Le Facteur Atrial Natriurétique (ANF) augmente le DFG",
+      "Les kinines diminuent le DFG"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Parmi le S pro lomérulaire (DFG) indiquez cata suivantes se rapportant à l'autorégulation du débit de filtration g celles qui sont corre",
+     "options": [
+      "le DFG est stable rrectes",
+      "l'autoré LS Pour des variations de la pression artérielle entre 80 et 160 mm F8",
+      "1' B sUon est due à la mise en jeu du système rénine-angiotensine augmentation de | i ' iction l'artériole I afférente € la pression de perfusion du rein s'accompagne d'une vasoconstriction",
+      "l'augmentati i ' nait",
+      "ee. Nation du débit de fluide au niveau de la macula-densa s'accompagne d'une diminution du DFG d entati é : ï L I Nation du débit de NaCI dans la macula-densa entraine une augmentation du DFG"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "L'urine primitive",
+     "options": [
+      "contient des globules blancs",
+      "contient la même concentration en sodium (Na*) que le plasma",
+      "contient la même quantité de protéines que le plasma",
+      "est isotonique au plasma",
+      "résulte de la réabsorption tubulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "L'urine primitive",
+     "options": [
+      "contient la même concentration de glucose que le plasma",
+      "est iso-osmolaire au plasma",
+      "est riche en albumine",
+      "renferme des globules blancs",
+      "résulte de la réabsorption tubulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "La barrière glomérulaire est perméable",
+     "options": [
+      "à l'albumine",
+      "à la créatinine",
+      "au glucose",
+      "au potassium (K+)",
+      "aux cellules"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Parmi les propositions suivantes se rapportant à l'excrétion des ions H+ sous forme NH4+ indiquer L | | celle qui sont correctes",
+     "options": [
+      "le NH4+ est produit par le tube contourné proximal (TCP)",
+      "Le NH4+ est sécrété par la cellule dans la lumière tubulaire par contre-transport",
+      "Pour chaque mMole de NH4* excrétée, une mMole de HCO3: est générée",
+      "Le tube contourné distal est le lieu unique de réabsorption du NH4+",
+      "l'alcalose et l'hyperkaliémie stimulent la production de NH4+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Une clairance de l'eau libre positive peut s'observer en Ca",
+     "options": [
+      "de déshydratation",
+      "d'hydratation normale",
+      "d'hyperhydratation",
+      "d'absence d'effet de l'ADH",
+      "d'absence de récepteur a l'ADH au niveau du rein PRE. £ ité plasmatique (Pom)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Lors d'une épreuve de restriction hydrique on a trouve CE ie Éroiéanée mOsm/l, une osmolarité urinaire (Uosm)=600 mOsm/l et un débit u de l'eau libre (Cuzo) est alors égale en ml/mn",
+     "options": [
+      "2",
+      "1.5",
+      "1",
+      "(-1)",
+      "(-1,5) x iction indi ui sont correctes"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1BkJsu4HaFbDGYNIHC2fMu_lEHz1CNe1G",
+   "title": "Isolé — l'équilibre hydro-électrolytique (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Dans la régulation du bilan hydriq ke senation desié",
+     "options": [
+      "les entrées d'eau sont déterminées par la",
+      "le seuil osmotique de la soif est de 300 mOsm/ de la sensation de soif dans les conditions habituelles",
+      "les apports d'eau dépendent plus des D ë A ‘aldos al mar",
+      "les sorties rénales d'eau sont contrôlées par | a Le système nerveux végétatif",
+      "les pertes extrarénales d'eau sont contrôlées par le sy x la régulation de l'équilibre hydroélectrolytique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes se rapportant à la rég indiquer celles qui sont correctes sie",
+     "options": [
+      "le contenu en eau de l'organisme ÉRÉHICRGERENE Fu Ps nn",
+      "les variables régulées sont l'osmolarité du milieu in",
+      "les entrées d'eau sont déterminées par la sensation de soi",
+      "le seuil osmotique de la soif est de 300 mOsmol/1 d En",
+      "l'excrétion rénale d'eau est sous le contrôle de l'aldostérone"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les signes suivants indiquer ceux observés en cas de déshydratation extracellulaire isolée",
+     "options": [
+      "hypotension artérielle",
+      "soif",
+      "hypernatrémie",
+      "hyperprotidémie",
+      "baisse de l'activité rénine plasmatique ISOLE BEN CHEIKH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "L'excrétion rénale d'eau est le sous le contrôle direct de",
+     "options": [
+      "l'ACTH",
+      "l'aldostérone",
+      "l'hormone antidiurétique (ADH)",
+      "le cortisol",
+      "le facteur atrial natriurétique(FAN)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "L'excrétion rénale d'eau est sous le contrôle direct de",
+     "options": [
+      "l'ACTH",
+      "l'adrénaline",
+      "l'angiotensine I]",
+      "l'hormone antidiurétique(ADH)",
+      "le cortisol BL Page 162 Médecin validé E De"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les hormones impliquées dans l'équilibre de la natrémie sont",
+     "options": [
+      "l'ACTH",
+      "l'ADH",
+      "l'aldostérone",
+      "le cortisol",
+      "le facteur atrial natriurétique (FAN)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La natrémie peut être influencée par l'action de",
+     "options": [
+      "l'ACTH",
+      "l'ADH",
+      "l'aldostérone",
+      "le cortisol",
+      "le facteur atrial natriurétique (FAN)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La diminution du volume extracellulaire est à l'origine d'une",
+     "options": [
+      "accélération de la fréquence cardiaque",
+      "augmentation de la sécrétion de la rénine",
+      "inhibition de la sécrétion de l'ADH",
+      "sensation de soif",
+      "vasodilatation artériolaire » ]"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1ZjCQ_9cV9RIZ_uQYdC9WjHENfAGQya_E",
+   "title": "Isolé — l'axe hypothalamo-hypophysaire (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "i ti ’ ; ; * Parmi les propositions suivantes se rapportant aux relations hypothalamo-hypophysaires indiquer e— celles qui sont correctes",
+     "options": [
+      "l'hypothalamus communique avec la posthypophyse par un système vasculaire",
+      "les neurones h ; ï i PT à es hypothalamiques se terminent au niveau de] antéhypophyse",
+      "le réseau vasculaire hypothalamo-antéhypophysaire comporte deux réseaux capillaires",
+      "le réseau capillaire de la posthypophyse communique avec le plexus capillaire secondaire de l'antéhypophyse",
+      "le plexus Capillaire primaire du réseau vasculaire hypothalamo-antéhypophysaire communique avec le = plexus capillaire de la posthypophyse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Une hormone : EL",
+     "options": [
+      "est sécrétée par des cellules glandulaires",
+      "agit sur toutes les cellules de l'organisme",
+      "peut modifier l'expression génique d'une cellule",
+      "est véhiculée dans le sang",
+      "agit en se fixant uniquement sur des récepteurs membranaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les hormones stéroïdes: l",
+     "options": [
+      "circulent dans le sang librement",
+      "comportent l'ACTH",
+      "modifient la transcription du gène en ARN messager",
+      "se lient à des récepteurs intracytoplasmique",
+      "sont hydrophiles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "L'antéhypophyse sécrète",
+     "options": [
+      "l'ACTH",
+      "l'ADH",
+      "la FSH D, la GH E. la Gn-RH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "L'hormone de croissance(GH)",
+     "options": [
+      "diminue la rétention des ions Na*et K+",
+      "peut exercer ses effets par l'intermédiaire des somatomédines (IGF)",
+      "provoque l'hyperplasie de tous les organes",
+      "stimule la lipogenèse",
+      "E. stimule le métabolisme des chondrocytes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La GH stimule la",
+     "options": [
+      "croissance staturale",
+      "glycogenèse",
+      "lipogenèse",
+      "rétention du Na",
+      "synthèse protidique | Page 101 Médecin validé ES US à A à à “0 CS CN Fa"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les effets métaboliques suivants indiquer ceux de l'hormone de croissance (GH) pl",
+     "options": [
+      "catabolisme protidique",
+      "catabolisme des réserves lipidiques",
+      "augmentation de la sortie hépatique de glucose",
+      "augmentation de la pénétration du glucose dans les cellules",
+      "rétention de Na+ et K+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les Insulin Like Growth Factors (IGFs)",
+     "options": [
+      "sont libérés par l'antéhypophyse",
+      "sont les intermédiaires des effets métaboliques de la GH",
+      "stimulent la formation de cartilage",
+      "stimulent les divisions cellulaires",
+      "favorisent la pénétration du glucose dans les cellules musculaires et adipeuses"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1oI1iUHHySU78R2RcBSXE1fFfJcE9eabm",
+   "title": "Isolé — l'axe hypothalamo-hypophysaire (3)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 32,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "dérivent des acides gras",
+      "sont véhiculées dans le sang par des protéines de transport",
+      "comportent toutes Les hormones gonadiques",
+      "agissent en se fixant sur des récepteurs membranaires",
+      "modifient l'expression génique des cellules cibles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 34,
+     "q": "De la tyrosine dénivent les hormones suivantes",
+     "options": [
+      "les hormones thyroïdiennes",
+      "ia mélatonine",
+      "l'histamine",
+      "les catécholamines",
+      "l'ocytocine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 36,
+     "q": "La posthypophyse sécrète",
+     "options": [
+      "la GH",
+      "la FSH",
+      "l'ADH",
+      "l'ACTH",
+      "la Gn-RH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 39,
+     "q": "La sécrétion de la GH est augmentée dans les situations suivantes",
+     "options": [
+      "une surcharge en glucose",
+      "l'exercice physique",
+      "l'augmentation des acides gras libres",
+      "stimulation par des agents B-adrénergiques",
+      "une anesthésie"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1c5yB5UVHTvBBHIq2Q1WAtO6e-9BObXWp",
+   "title": "Isolé — la thyroïde (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 41,
+     "q": "Lu 5’ désiodase permet la conversion de T4 en",
+     "options": [
+      "MIT",
+      "DIT",
+      "T3 reverse",
+      "T3",
+      "iode"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 43,
+     "q": "Les hormones thyroïdiennes",
+     "options": [
+      "stimule la myélinisation des neurones du système nerveux central",
+      "stimule la mise en place des connexions neuronales",
+      "sont nécessaire à la croissance osseuse pendant la période fœtale",
+      "permettent la maturation et l'ossification du cartilage en période fœtale",
+      "agissent en synergie avec la GH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 44,
+     "q": "A propos de la régulation de la sécrétion des hormones thyroïdiennes",
+     "options": [
+      "la TSH stimule l'hydrolyse de thyroglobuline",
+      "les thyréocytes sont beaucoup plus sensibles à la TSH en cas d'excès en iode",
+      "la captation d'iode est beaucoup plus forte si la glande est riche en iode",
+      "en cas de jeune, il y a une diminution du taux sanguin de T3",
+      "la TSH inhibe l'action de thyroperoxidase"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1jiEGHD1ZwhXKvXiyEW-fiTAZu4Tbizml",
+   "title": "Isolé — la surrénale",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Les glandes corticosurrénales",
+     "options": [
+      "sécrètent la testostérone",
+      "sécrètent les glucocorticoïdes",
+      "sécrètent les minéralocorticoides",
+      "sont constituées de quatre couches",
+      "sont sous le contrôle de l'axe hypothalamo-hypophysaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La zone glomérulée de la corticosurrénale peut sécréter",
+     "options": [
+      "la progestérone",
+      "les androgènes",
+      "les glucocorticoïdes",
+      "les minéralcorticoïdes",
+      "les æstrogènes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La zone fasciculée de la corticosurrénale peut sécréter",
+     "options": [
+      "la progestérone",
+      "les androgènes",
+      "les glucocorticoides D, les minéralocorticoides E. les æœstrogènes ] r Page 113 Médecin validé EE"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "La synthèse des minéralocorticoïdes:",
+     "options": [
+      "commence par la transformation du cholestérol en prégnènolone",
+      "donne l'aldostérone comme hormone finale",
+      "est ACTH dépendant",
+      "passe par la progestérone comme étape intermédiaire",
+      "se fait dans la zone fasciculée de la glande corticosurrénale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Parmi les propositions suivantes se rapportant au mécanisme d'action des glucocorticoides indiquer ; celles qui sont correctes",
+     "options": [
+      "ils se fixent sur des récepteurs membranaires spécifiques",
+      "le complexe hormone-récepteur est véhiculé vers le noyau cellulaire",
+      "la liaison hormone - récepteur active le récepteur",
+      "les récepteurs activés reconnaissent des séquences spécialisées de la molécule d'ADN",
+      "l'activation aboutit à la synthèse de nouveaux ARNm codant les protéines"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les effets suivants indiquer ceux du cortisol",
+     "options": [
+      "augmente la sensibilité des vaisseaux aux agents vasodilatateurs",
+      "inhibe la rétention de sodium et la fuite de potassium au niveau du rein",
+      "participe à la maturation du système respiratoire (synthèse du surfactant)",
+      "stimule le système nerveux central",
+      "inhibe la sécrétion d'ADH à forte dose"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "La maladie de Cushing",
+     "options": [
+      "est due à une production excessive d'ACTH",
+      "provoque une hyperglycémie",
+      "provoque une hypertrophie musculaire",
+      "se manifeste par un aspect æœdémateux de la face",
+      "se manifeste par une hypotension artérielle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "l'hypocorticisme se manifeste par une",
+     "options": [
+      "augmentation des activités métaboliques",
+      "faiblesse musculaire",
+      "hypertension artérielle",
+      "sensibilité accrue aux infections",
+      "tendance a l’hypoglycémie sur tout entre les repas"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les manifestations suivantes indiquer celles observées en cas de maladie d'Addison",
+     "options": [
+      "l'hypotension artérielle",
+      "l'hyponatrémie",
+      "l'hypokaliémie",
+      "la mélanodermie",
+      "les accès de paralysie musculaire pe tté Médecin validé a RRE Due"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Les Blucocorticoïdes stimulent",
+     "options": [
+      "l'activité du récepteur à l'insuline",
+      "l'entrée du glucose dans les cellules",
+      "la lipogenèse",
+      "la néoglucogenèse",
+      "la sécrétion du glucagon"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Dans le contrôle hypothalamo-hypophysaire de la sécrétion de cortisol",
+     "options": [
+      "la CRH stimule la synthèse et la sécrétion d'ACTH En",
+      "l'ACTH stimule la sécrétion de cortisol",
+      "l'ADH inhibe la sécrétion d'ACTH",
+      "le cortisol inhibe par rétrocontrôle la sécrétion d'ACTH Em",
+      "l'ACTH inhibe par rétrocontrôle la libération de CRH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes se rapportant la régulation du cortisol indiquez celles qui sont En | correctes ssteribe",
+     "options": [
+      "le rythme circadien du cortisol se traduit par une augmentation de sa libération au Cours de la jou jusqu'à atteindre un taux maximal le soir EE",
+      "l'exposition au stress stimule la sécrétion d'ACTH et de cortisol",
+      "l'augmentation du taux sanguin de cortisol diminue la sécrétion hypothalamique de CRH",
+      "la diminution du taux sanguin de cortisol s'accompagne d'une diminution de la sécrétion d'ACTH EE",
+      "l'augmentation de la sécrétion d'ACTH entraine une diminution de celle de CRH par rétrocontrôle négatif"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les propositions suivantes se rapportant à la régulation de sécrétion du cortisol indiquer Cal qui sont correctes",
+     "options": [
+      "la CRH hypothalamique stimule la sécrétion d'ACTH hypophysaire",
+      "l'ACTH est synthétisée sous forme directement active par l'antéhypophyse",
+      "l'ACTH exerce un rétrocontrôle négatif au niveau de l'hypothalamus sur la CRH",
+      "l'ACTH active la desmolase qui convertit le cholestérol en Prégnénolone",
+      "le cortisol exerce un rétrocontrôle négatif au niveau de l'hypothalamus sur la CRH B_ ISOLÉ BEN CHEIKH [a"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La sécrétion du cortisol",
+     "options": [
+      "est augmentée par l'hyperglycémie",
+      "est augmentée par le stress",
+      "est maximale la nuit",
+      "suit le rythme de celle de l'ACTH (e",
+      "suit un rythme circadien Page 118 Médecin validé [e | Les minéralocorticoïdes ps) ISOLÉ DOUGHUI"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "L'action de l'aldostérone aboutit à une augmentation",
+     "options": [
+      "de la calcémie",
+      "de la kaliémie",
+      "de la natrémie BL",
+      "de la volémie",
+      "du taux ions H*dans le sang"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Le phénomène d'échappement à l'action de l'aldostérone est du",
+     "options": [
+      "l'ACTH B",
+      "l'ADH ss",
+      "l'enzyme de conversion",
+      "la rénine (",
+      "le FAN"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les androgènes surrénaliens",
+     "options": [
+      "comportent l'androsténodione",
+      "comportent la testostérone",
+      "sont ACTH dépendant ] D, sont synthétisées à partir de prégnènolone E. sont synthétisées dans la zone glomérulée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les androgènes surrénaliens",
+     "options": [
+      "comportent l'androsténodione",
+      "comportent la testostérone",
+      "sont synthétisées à partir de prégnénolone D, sont synthétisées dans la zone glomérulé E. sont synthétisés suite à une stimulation par l'ACTH ] Page 121 Médecin validé me f P ud Troubles de la sécrétion de la corticosurrénale ISOLÉ DOUGHUI"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les manifestations suivantes indiquer celles observées en cas d'excès de sécrétion d'aldostérone",
+     "options": [
+      "l'hyponatrémie",
+      "l'hypokaliémie",
+      "l'hypertension artérielle",
+      "la mélanodermie",
+      "l'asthénie ("
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Le précurseur des catécholamines est",
+     "options": [
+      "l'isoleucine",
+      "la leucine",
+      "la phénylalanine",
+      "la tyrosine",
+      "le tryptophane"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les catécholamines : _] À. agissent sur des récepteurs nucléaires B.ont une demi-vie longue (2 à 3 heures) C. sont sécrétées dans le sang par exocytose des granules D. sont stockées dans granules chromaffines E. sont synthétisées par la médullosurrénale L ] 4- Les catécholamines sont synthétisées dans l'ordre",
+     "options": [
+      "dopamine-dopa-tyrosine-noradrénaline-adrénaline",
+      "dopamine-tyrosine-dopa-adrénaline-noradrénaline",
+      "tyrosine-dopa-dopamine-noradrénaline-adrénaline",
+      "tyrosine-dopamine-dopa-adrénaline-noradrénaline",
+      "tyrosine-dopa-noradrénaline-dopamine-adrénaline"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "10rZuR9gtvyaB2j-en7jyeu8XpOSAtFA9",
+   "title": "Isolé — le pancréas endocrine (3)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 47,
+     "q": "La sécrétion d'insuline est stimulée par",
+     "options": [
+      "le Gastric Inhibitory Peptide (GIP)",
+      "le glucagon",
+      "la somatostatine",
+      "le système nerveux sympathique",
+      "les sulfamides"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 48,
+     "q": "['insuiine stimule",
+     "options": [
+      "la néoglucogenèse",
+      "l'entrée du glucose dans les cellules",
+      "la glycogenogenése D la lipoiyse E. les enzymes protéolytiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 50,
+     "q": "- La sécrétion du glucagon est stimulée par",
+     "options": [
+      "les acides gras libres",
+      "l'hypoglycémie",
+      "les acides aminés",
+      "la somatostatine",
+      "les catécholamines"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1cggbdne-_gAAUbUJfcdeT_LEtbAcYGQ-",
+   "title": "Isolé — les gonades (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Les éléments qui orientent les organes génitaux internes du fœtus dans le sens femelle sont",
+     "options": [
+      "la présence des chromosomes",
+      "la présence de progestérone",
+      "l'absence d'AMH « Anti-Mullerian-Hormone",
+      "l'absence de testostérone",
+      "la présence d'Insulin-Like Hormon3 PF J] 3. Un spermogramme normal est caractérisé par .Ayun volume d'éjaculation de 3 à 6 ml B- un nombre de spermatozoïdes > 120x106/ml | C- des Spermatozoïdes de morphologie normale > 50% - L Pre des spermatozoïdes mobiles > 10% E- un taux de testostérone >10ug/ml"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les æstrogènes peuvent être sécrétées par:",
+     "options": [
+      "la muqueuse utérine",
+      "le corps jaune",
+      "le placenta 1",
+      "les cellules de la granulosa du follicule",
+      "les glandes surrénales"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La somato-mammotrophine chorionique (HCS)",
+     "options": [
+      "ressembie à l'hormone de croissance (GH)",
+      "est secrétée par le syncytiotrophoblaste des villosités placentaires LL",
+      "a une concentration qui augmente progressivement durant les 9 mois de grossesse",
+      "favorise la lipogenèse F",
+      "favorise la synthèse protéique"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1vbxidNFXE797QXMg9YwTj8hx5fKe--Mq",
+   "title": "Isolé — le métabolisme phosphocalcique (2)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "La sécrétion de la parathormone est stimulée par",
+     "options": [
+      "l'hyperphosphorémie",
+      "la vitamine D",
+      "le déficit en magnésium",
+      "les récepteurs f-adrénergiques",
+      "une hypercalcémie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Au niveau de l'os, la parathormone",
+     "options": [
+      "augmente la résorption osseuse",
+      "augmente la formation osseuse",
+      "inhibe la synthèse de Receptor Activator of Nuclear Factor-K B Ligand (RANKL)",
+      "diminue la production d'ostéoprotégérine",
+      "diminue la libération des ions calcium dans la circulation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les effets suivants indiquer ceux de la parathormone (PTH) au niveau du rein",
+     "options": [
+      "stimulation de la synthèse de calbindine Re",
+      "stimulation de la réabsorption du calcium",
+      "diminution de la réabsorption des phosphates",
+      "inhibition de la synthèse de vitamine D",
+      "inhibition de l'action rénale de la calcitonine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "La parathormone (PTH) L",
+     "options": [
+      "stimule la résorption osseuse",
+      "stimule la réabsorption rénale de calcium",
+      "stimule la réabsorption rénale de phosphate",
+      "stimule la synthèse de vitamine",
+      "stimule indirectement l'absorption intestinale de phosphate na | | Vitamine D et calcitonine ISOLE BEN CHEIKH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La calcitonine a",
+     "options": [
+      "stimule la résorption osseuse par les ostéoclastes",
+      "inhibe la réabsorption rénale du phosphate fl",
+      "stimule l'élimination urinaire du calcium",
+      "inhibe l'absorption intestinale du calcium",
+      "inhibe la synthèse de vitamine"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1bgdOAQ_5wWAgUvpQsqCHCuU_MVcBcjR8",
+   "title": "Isolé — le métabolisme phosphocalcique (3)",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 54,
+     "q": "Concernant le métabolisme du calcium",
+     "options": [
+      "99% du calcium de l'organisme est contenue dans le squelette",
+      "le calcium ionisé représente 80% de la calcémie totale",
+      "les vanations des calcémies totale et ionisée sont parallèles D la fraction non diffusible du calcium est liée surtout à l'albumine E. l'excrétion du calcium se fait uniquement par voie urinaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 55,
+     "q": "Le calcium intracellulaire joue un rôle dans",
+     "options": [
+      "les échanges avec l'os",
+      "la sécrétion hormonale",
+      "l'excitabilité neuronale",
+      "la coagulation sanguine",
+      "la contraction musculaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 56,
+     "q": "La sécrétion de La PTH est stimulée par",
+     "options": [
+      "la calcitonine",
+      "la vitamine D",
+      "l'augmentation de la phosphorémie",
+      "le déficit en magnésium",
+      "La stimulation des récepteurs f-adrénergiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 58,
+     "q": "A propos de la vitamine",
+     "options": [
+      "elle est synthétisée par la peau sous l'effet des rayons solaires",
+      "sa synthèse augmente avec l'âge",
+      "subit une première hydroxylation en position 25 au niveau du foie",
+      "la forme biologiquement active est Le calcitriol",
+      "circule dans le sang sous une seule forme"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "15l9Bfp4hSq2udRX7F_lWLGxzO0-XklrP",
+   "title": "Isolés — recueil 2024",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Parmi les caractéristiques suivantes de la liaison 2.1- Les caractéristiques de la liaison hormone- e-récepteur indiquer celles qui protègent récepteur qui protègent du manque d'effet contre les excès de l'effet biologique hormonal",
+     "options": [
+      "la spécificité A- l'affinité",
+      "l'affinité B- la spécificité",
+      "la convertibilité C- la reproductibilité",
+      "la réversibilité D- la réversibilité",
+      "la saturabilité E- la saturabilité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les hormones suivantes indiquer celles ayant une action ubiquitaire",
+     "options": [
+      "les hormones thyroïdiennes",
+      "l'hormone de croissance",
+      "l'insuline",
+      "l'hormone antidiurétique (ADH)",
+      "la thyreotropin releasing hormon (TRH)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "activent des seconds messagers de type inositol triphosphate (1P3)",
+      "agissent en se fixant sur des récepteurs membranaires inotropes",
+      "comportent les androgènes",
+      "ont une demi-vie longue",
+      "peuvent comporter dans leurs structures du cholestérol et des acides aminés"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "dérivent des acides gras",
+      "sont véhiculées dans le sang par des protéines de transport",
+      "comportent toutes les hormones gonadiques",
+      "agissent en se fixant sur des récepteurs membranaires",
+      "modifient l'expression génique des cellules cibles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "agissent en se fixant sur des récepteurs membranaires",
+      "circulent dans le sang liées à des protéines",
+      "comportent toutes les hormones gonadiques",
+      "dérivent des acides gras",
+      "modifient l'expression génique des cellules cibles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Les hormones stéroïdes",
+     "options": [
+      "circulent dans le sang librement",
+      "comportent l'ACTH",
+      "modifient la transcription du gène en ARN messager",
+      "se lient à des récepteurs intracytoplasmiques",
+      "sont hydrophiles"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 12,
+     "q": "Les hormones peptidiques",
+     "options": [
+      "agissent sur les cellules cibles par des seconds messagers intracellulaires",
+      "comportent toutes les hormones corticosurrénaliennes",
+      "ont une demi-vie plasmatique longue",
+      "ont une sécrétion constante durant toute la journée",
+      "peuvent se lier à l'albumine pour circuler dans le sang"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Les hormones peptidiques",
+     "options": [
+      "se lient à des récepteurs membranaires",
+      "circulent dans le sang sous forme libre",
+      "ont une durée d'action plus longue que les hormones stéroïdes",
+      "exercent leurs effets par des seconds messagers cellulaires",
+      "compotent toutes les hormones glucocorticoïdes Page 88 Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "1. L'hypothalamus",
+     "options": [
+      "est relié à l'antéhypophyse par des voies nerveuses",
+      "est relié à l'hypophyse par la tige pituitaire",
+      "est souvent la cible d'une régulation par rétrocontrôle positif",
+      "est une structure du système nerveux central",
+      "exerce ces effets sur l'adénohypophyse par des releasing hormones"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes se rapportant aux relations hypothalamo-hypophysaires indiquer celles qui sont correctes",
+     "options": [
+      "l'hypothalamus communique avec la posthypophyse par un système vasculaire",
+      "les neurones hypothalamiques se terminent au niveau de l'antéhypophyse",
+      "le réseau vasculaire hypothalamo-antéhypophysaire comporte deux réseaux capillaires",
+      "le réseau capillaire de la posthypophyse communique avec le plexus capillaire secondaire de l'antéhypophyse",
+      "le plexus capillaire primaire du réseau vasculaire hypothalamo-antéhypophysaire communique avec le plexus capillaire de la posthypophyse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes se rapportant aux relations hypothalamo-hypophysaires indiquer celles qui sont correctes",
+     "options": [
+      "les axones des neurones des noyaux supra-optiques et paraventriculaires se terminent au niveau de la post-hypophyse",
+      "les sécrétions des neurones des noyaux supra-optiques et paraventriculaires sont déversées dans le sang du plexus vasculaire secondaire",
+      "les axones des neurones de l'hypothalamus hypophysiotrope se terminent au niveau de l’'antéhypophyse",
+      "les sécrétions des neurones de l'hypothalamus hypophysiotrope sont déversées dans le sang du plexus vasculaire primaire",
+      "la relation entre l'hypothalamus et l'antéhypophyse se fait par un système vasculaire La Post-hypophyse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "La posthypophyse 2. Parmi les propositions suivantes se rapportant au métabolisme de l'ADH et de e : l'ocytocine indiquer celles qui sont correctes",
+     "options": [
+      "la GH A. le noyau supraoptique synthétise surtout l'ocytocine et peu l'ADH",
+      "la FSH B. La neurophysine | est spécifique de l'ocytocine",
+      "l'ADH C. les neurophysines jouent un rôle dans le transport axonal des hormones",
+      "l'ACTH D. ces hormones sont transportées dans le sang sous forme liée aux neurophysines",
+      "la Gn-RH E. la demi-vie de ces hormones est courte (10 mn environ) Page 90 | Mednval ADH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "1 17. La sécrétion de l'hormone de croissance (GH) est stimulée pat",
+     "options": [
+      "l'arginine",
+      "l'excès en acides gras libres",
+      "l'hyperglycémie",
+      "le cortisol",
+      "les agents bêta adrénergiques | un"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La thyroglobuline",
+     "options": [
+      "donne naissance aux précurseurs des hormones thyroïdiennes",
+      "est hydrolysée au niveau lysosomial pour donner les hormones thyroïdiennes",
+      "estiodée au niveau basal de la thyréocyte",
+      "est synthétisée dans les cellules parafolliculaires de la thyroïde",
+      "est une glycoprotéine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "L'oxydation de l'iode",
+     "options": [
+      "est catalysée par la thyroperoxydase",
+      "est freinée par la TSH",
+      "est la première étape de la synthèse des hormones thyroïdiennes",
+      "peut se faire dans les cellules parafolliculaires",
+      "se fait dans la thyréocyte 3.1. L'iode : A. circule dans le sang sous forme oxydé B. entre dans la thyréocyte grâce à une pompe spécifique C. est nécessaire pour la synthèse des hormones thyroïdiennes D. provient surtout de la viande rouge E. se trouve en réserve dans la glande thyroïde"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les glandes corticosurrénales",
+     "options": [
+      "sécrètent la testostérone",
+      "sécrètent les glucocorticoïdes",
+      "sécrètent les minéralocorticoides",
+      "sont constituées de quatre couches",
+      "sont sous le contrôle de l'axe hypothalamo-hypophysaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La zone fasciculée de ta corticosurrénale",
+     "options": [
+      "est insensible à l'ACTH",
+      "est la couche la plus profonde de cette glande",
+      "peut sécréter l'aldostérone",
+      "peut sécréter les androgènes",
+      "sécrète le cortisol LU N ."
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La zone fasciculée de la corticosurrénale peut sécréter",
+     "options": [
+      "la progestérone",
+      "les androgènes",
+      "les glucocorticoïdes",
+      "les minéralocorticoïdes",
+      "les œstrogènes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La zone glomérulée de la corticosurrénale peut sécréter",
+     "options": [
+      "la progestérone",
+      "les androgènes",
+      "les glucocorticoïdes",
+      "les minéralocorticoïdes",
+      "les œstrogènes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions unies se rapportant à la synthèse des androgènes surrénaliens indiquer celles qui sont correctes",
+     "options": [
+      "La 17-hydroxyprégnènolone est coupée par une 17-20 desmolase donnant la déhydroépiandrostérone (DHEA)",
+      "la DHEA est estérifiée de façon réversible pour donner l’ester sulfate de déhydroépiandrostérone A-s)",
+      "la DHEA peut être oxydée donnant l'androstènedione",
+      "lL'androstènedione est oxydée donnant l’oxydéhydroépiandrostérone",
+      "L’oxydéhydroépiandrostérone est estérifiée donnant la testostérone Pave 1104"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les effets métaboliques suivants indiquer ceux du cortisol",
+     "options": [
+      "augmentation de la captation du glucose par les cellules",
+      "Effet permissif sur le glucagon et l’adrénaline",
+      "inhibition de la lipolyse",
+      "stimule la synthèse protéique",
+      "diminue l'absorption intestinale de calcium"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Parmi les effets suivant indiquez ceux du cortisol",
+     "options": [
+      "stimulation de l'entrée du glucose dans les cellules",
+      "stimulation de la synthèse de glycogène hépatique",
+      "stimulation de la lipolyse",
+      "stimulation de la protéolyse",
+      "diminution l'absorption intestinale de calcium"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Les glucocorticoïdes",
+     "options": [
+      "augmentent l'utilisation périphérique du glucose",
+      "inhibent la sécrétion de l'insuline",
+      "ont un effet permissif sur le glucagon",
+      "Stimulent la captation du glucose par les cellules",
+      "stimulent la néoglucogenèse : Pag } | | Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Parmi les manifestations suivantes indiquer celles observées en cas de maladie d'Addison",
+     "options": [
+      "l'hypotension artérielle",
+      "l'hyponatrémie",
+      "l'hypokaliémie",
+      "la mélanodermie",
+      "les accès de paralysie musculaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les manifestations suivantes indiquer celles observées en cas d'excès de sécrétion d'aldostérone",
+     "options": [
+      "l'hyponatrémie",
+      "l'hypokaliémie",
+      "l'hypertension artérielle",
+      "la mélanodermie",
+      "l'asthénie Page 109 Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les effets suivants indiquer ceux de l'aldostérone",
+     "options": [
+      "réabsorption active du sodium dans le colon",
+      "abaissement du rapport Na+/K+ dans la sécrétion salivaire",
+      "augmentation du contenu en sodium de la sueur",
+      "stimulation du passage d'eau vers l'intestin grêle",
+      "stimulation des cellules myocardiques quand elle est en excès"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "L'aldostérone provoque l'augmentation : 7- L'action de l'aldostérone aboutit à une augmentation",
+     "options": [
+      "De l'excrétion urinaire du K+ A. de la calcémie",
+      "de la réabsorption rénale du H+ B. de la kaliémie",
+      "de la réabsorption rénale du Na+ C. de la natrémie",
+      "du contenu en Na+ de la sueur D. de la volémie",
+      "du rapport Na+/K+ dans la salive E. du taux ions H+ dans le sang"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les androgènes surrénaliens",
+     "options": [
+      "comportent l'androsténodione",
+      "comportent la testostérone",
+      "sont ACTH dépendant",
+      "sont synthétisées à partir de prégnénolone",
+      "sont synthétisées dans la zone glomérulée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le déficit en 21-hydroxylase a pour conséquences",
+     "options": [
+      "un excès de cortisol",
+      "un déficit en minéralocorticoïdes",
+      "une déshydratation",
+      "une ambigüité sexuelle chez la fille",
+      "une diminution du volume de la corticosurrénale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Le déficit en 11-Bêta-Hydroxylase engendre",
+     "options": [
+      "un déficit en cortisol",
+      "un déficit en aldostérone",
+      "une hypertension artérielle",
+      "une ambiguïté sexuelle chez le garçon à la naissance",
+      "une hypoplasie de la corticosurrénale Page 111 Mednval LA MEDULLOSURRENALE"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Le précurseur des catécholamines est",
+     "options": [
+      "l'isoleucine",
+      "la leucine",
+      "la phénylalanine",
+      "la tyrosine",
+      "le tryptophane"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les catécholamines",
+     "options": [
+      "agissent sur des récepteurs nucléaires",
+      "ont une demi-vie longue (2 à 3 heures)",
+      "Sont sécrétées dans le sang par exocytose des granules",
+      "sont stockées dans granules chromaffines",
+      "sont synthétisées par la médullosurrénale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Les effets alpha adrénergiques sont",
+     "options": [
+      "unrelâchement du muscle utérin",
+      "une accélération de fréquence cardiaque",
+      "une contraction du muscle vésical",
+      "une diminution de la libération de l'acétylcholine",
+      "une vasoconstriction"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les effets suivants des catécholamines indiquer ceux de type Alpha (a)",
+     "options": [
+      "augmentation de la force de contraction cardiaque (effet inotrope+)",
+      "augmentation de la lipolyse",
+      "vasoconstriction",
+      "contraction de l'utérus",
+      "augmentation de la libération de l'acétyicholine des muscles squelettiques"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Les effets suivants sont des effets & adrénergiques :",
+     "options": [
+      "l'effet bathmotrope négatif",
+      "l'effet chronotrope positif",
+      "l'effet dromotrope positif",
+      "une bronchoconstriction",
+      "une vasoconstriction"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "La sécrétion d'adrénaline par la médullosurrénale est augmentée par",
+     "options": [
+      "l'hyperglycémie",
+      "l'exercice musculaire",
+      "les glucocorticoïdes",
+      "la chaleur",
+      "l'hypoxie Mednval Exam gonades isolé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les éléments suivants indiquez ceux qui orientent le fœtus dans le sens femelle",
+     "options": [
+      "présence des chromosomes",
+      "présence de progestérone",
+      "absence d'AMH « Anti-Mullerian-Hormone",
+      "absence de testostérone",
+      "la présence d'insulin-Like Hormon"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les effets suivants indiquer ceux de la testostérone",
+     "options": [
+      "évolution de la gonade primitive en testicule",
+      "maintien de la trophicité des organes génitaux accessoires mâles",
+      "contribution à la maturation des spermatozoïdes",
+      "diminution de la synthèse protéiques au niveau des muscles",
+      "stimulation de la lipolyse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions Suivantes se rapportant au contrôle de la sécrétion de testostérone indiquer celles qui sont correctes",
+     "options": [
+      "la horadrénaline stimule l'activité des neurones à GnRH",
+      "la LH inhibe l'activité des neurones à GnRH (rétrocontrôle négatif)",
+      "la FSH stimule la sécrétion de testostérone",
+      "l'inhibine B exerce un rétrocontrôle négatif sur la FSH",
+      "l'activine stimule la sécrétion de testostérone"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Un SRérmogramme normal est caractérisé par",
+     "options": [
+      "un volume d'éjaculation de 3 à 6 ml",
+      "Un nombre de Spermatozoïdes > 120 x 105/ml",
+      "des spermatozoïdes de morphologie normale> 50%",
+      "des spermatozoïdes mobiles > 10%",
+      "untaux de testostérone > 10 ug/ml L'OVAIRE"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Les œstrogènes peuvent être sécrétées par",
+     "options": [
+      "la muqueuse utérine",
+      "le corps jaune",
+      "le placenta",
+      "les cellules de la granulosa du follicule",
+      "les glandes surrénales"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Au cours de la puberté chez la fille les œstrogènes sont responsables de",
+     "options": [
+      "d'une modification de l'aspect du squelette (élargissement du bassin)",
+      "l'apparition de la pilosité pubienne losangique",
+      "l'augmentation de la croissance des seins",
+      "l'installation du cycle menstruel",
+      "la disposition particulière des graisses sur la face"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Les æstrogènes stimulent",
+     "options": [
+      "le catabolisme protidique",
+      "l'augmentation de la longueur des os",
+      "l'augmentation du cholestérol circulant",
+      "la contraction du muscle lisse des vaisseaux",
+      "la rétention d'eau et du Na+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les effets suivants indiquer ceux de la progestérone",
+     "options": [
+      "exerce un effet relaxant et sédatif",
+      "augmente la synthèse protidique",
+      "possède un effet glucocorticoïde modéré",
+      "auneffet hyperthermisant",
+      "augmente les triglycérides à fortes doses"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "La progestérone : ‘",
+     "options": [
+      "agit par l'activation des récepteurs membranaires",
+      "est Ée dans Je sang à la même protéine de liaison du cortisol",
+      "est métabolisée dans le rein",
+      "est sécrétée par les cellules lutéales du corps jaune",
+      "sa forme libre est la forme biologiquement active"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les propositions suivantes se rapportant à la puberté chez la fille indiquer celles qui sont correctes",
+     "options": [
+      "elle est déclenchée par une augmentation importante de sécrétion de progestérone",
+      "elle débute par une augmentation du volume de l'ovaire",
+      "elle est précédée par l'adrénarche",
+      "la sécrétion d'œstrogène augmente progressivement",
+      "elle se manifeste par le développement des caractères sexuels primaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 15,
+     "q": "Parmi les propositions suivantes se rapportant à la régulation des hormones sexuelles indiquer celles qui sont correctes",
+     "options": [
+      "la FSH stimule la sécrétion d'œstrogènes durant la phase folliculaire du cycle menstruel",
+      "La LH est responsable de la maturation du follicule",
+      "la FSH et la LH sont responsables de l'ovulation",
+      "la LH est responsable de la transformation du follicule lyse en corps jaune",
+      "l'œstradiol exerce un rétrocontrôle négatif sur la sécrétion de FSH et LH les premiers jours du cycle menstruel"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 16,
+     "q": "Parmi les propositions suivantes se rapportant au cycle ovarien indiquer celles qui sont correctes",
+     "options": [
+      "la menstruation est due à la baisse des taux de FSH et LH",
+      "le développement des follicules ovariens en début de cycle est dû à l'augmentation des taux d'œstrogènes",
+      "l'œstradiol exerce en début de cycle un rétrocontrôle positif sur l'antéhypophyse",
+      "le pic de FSH et LH est responsable de l'ovulation",
+      "la progestérone exerce un rétrocontrôle positif sur la sécrétion de FSH et LH à la phase lutéale du cycle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 17,
+     "q": "Durant la phase folliculaire du cycle ovarien",
+     "options": [
+      "la sécrétion de FSH et LH augmente au début de cette phase",
+      "la sécrétion des œstrogènes reconstituent la muqueuse utérine",
+      "l’œstradiol inhibe la sécrétion de FSH et LH à la fin de cette phase",
+      "la sécrétion de progestérone présente augmente brutalement à la fin de cette phase",
+      "la progestérone bloque les effets des œstrogènes au niveau de la muqueuse utérine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 18,
+     "q": "Durant la phase lutéale du cycle ovarien",
+     "options": [
+      "les œstrogènes bloquent les effets de la progestérone au niveau de la muqueuse utérine",
+      "l’œstradiol exerce un rétrocontrôle positif sur la sécrétion de FSH et LH",
+      "le corps jaune sécrète de l’œstradiol et de la progestérone",
+      "la progestérone freine la sécrétion de FSH et LH",
+      "si l'ovule est fécondé le corps jaune involue"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 19,
+     "q": "A propos du contrôle de la sécrétion des hormones gonadiques féminines",
+     "options": [
+      "à la fin du cycle menstruel, la concentration de ces hormones augmente",
+      "ces hormones exercent un rétrocontrôle négatif sur la FSH et la LH",
+      "la FSH stimule la maturation du follicule",
+      "la LH stimule la sécrétion aussi bien des œstrogènes que du progestérone",
+      "la sécrétion de la FSH et de la LH est inhibée par la GnRH hypothalamique Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Durant la grossesse",
+     "options": [
+      "le corps jaune persiste et s'hypertrophie après la fécondation",
+      "les sécrétions hormonales du corps jaune sont nécessaires au développement du placenta el de | l'embryon",
+      "les sécrétions placentaires sont nécessaires au maintien de la nature déciduale de l'endomètre",
+      "les sécrétions hormonales du corps jaune permettent le diagnostic précoce de la grossesse",
+      "la suppression du corps jaune ou l'insuffisance de sécrétion de HCG placentaire pendant les 3 premiers | mois entraine un avortement"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Au cours de la grossesse il y une augmentation de la sécrétion",
+     "options": [
+      "de l'ocytocine",
+      "de la progestérone",
+      "de la prolactine",
+      "des œstrogènes",
+      "du Luteinising Hormone (LH)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Parmi les propositions suivantes se rapportant à l'hormonologie de la grossesse indiquer celles qui sont | correctes",
+     "options": [
+      "le corps jaune est maintenu en cas de fécondation par la HCG (Hormone Chorionique Gonadotrope)",
+      "la HCG est sécrétée par les cellules embryonnaires",
+      "la concentration élevée de HCG chez la mère est à la base des réactions de diagnostic précoce de la grossesse",
+      "la HCG inhibe la sécrétion d'œstrogènes et de progestérone par le corps jaune",
+      "la HCG stimule la sécrétion de testostérone par le testicule du fœtus male"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La somato-mammotrophine chorionique (HCS)",
+     "options": [
+      "ressemble à l'hormone de croissance (GH)",
+      "est secrétée par le syncytiotrophoblaste des villosités placentaires",
+      "à une concentration qui augmente progressivement durant les 9 mois de grossesse",
+      "favorise la lipogenèse",
+      "favorise la synthèse protéique | Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La HCG (Hormone Chorionique Gonadotrope)",
+     "options": [
+      "est une hormone stéroïde",
+      "apparaît dans l'organisme maternel au 3ème mois de grossesse",
+      "à un taux stable du 4ème mois de grossesse à l'accouchement f£",
+      "est à la base des réactions de diagnostic précoce de la grossesse",
+      "empéche l'involution du corps jaune à la fin du cycle ovarien"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes concernant la HCG (Hormone Chorionique Gonadotrope) indiquer celles L qui sont correctes",
+     "options": [
+      "elle est sécrétée par le placenta",
+      "sa concentration augmente à partir du 3ème mois de grossesse",
+      "elle favorise la sécrétion d’œstrogène et de progestérone",
+      "elle stimule la sécrétion thyroïdienne",
+      "son dosage dans les urines est utilisé pour suivre la croissance et la vitalité du fœtus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Parmi les propositions suivantes se rapportant à l'unité fœto-placentaire indiquer celles correctes",
+     "options": [
+      "la HCG placentaire maintient l'activité du corps jaune après la fécondation",
+      "le dosage de HCG chez la mère est utilisé pour suivre la vitalité de l'unité fæto-placentaire",
+      "la HCS (HPL) placentaire favorise le développement du placenta et de l'utérus",
+      "l'œstriol est synthétisé à partir de précurseur d'origine fœtale",
+      "le dosage de l'œstriol dans les urines de 24 heures de la mère est utilisé pour suivre la croissance du fœtus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les propositions suivantes se rapportant aux hormones stéroïdes durant la grossesse indiquer celles qui sont correctes",
+     "options": [
+      "elles sont secrétées par le corps jaune en début de grossesse",
+      "elles sont produites à partir du 3ème mois de grossesse par le placenta et le fœtus",
+      "dans les 2 derniers trimestres elles sont exclusivement produites par le placenta",
+      "les précurseurs de leur synthèse placentaire proviennent du corps jaune",
+      "l'activité sécrétoire du corps jaune se maintient jusqu'au 3e trimestre de grossesse"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Parmi les propositions suivantes se rapportant aux œstrogènes durant la grossesse indiquer celles qui sont correctes",
+     "options": [
+      "L’œstradiol est l'œstrogène dominant",
+      "L'œstradiol et l'œstrone sont formés à partir des 17 cétostéroïdes du plasma maternel",
+      "L’œæstriol est synthétisé à partir de précurseurs provenant du placenta",
+      "le cholestérol est transformé en prégnanolone au niveau du placenta",
+      "la prégnanolone passe chez le fœtus où elle est transformée en précurseur de l'œstriol"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Parmi les propositions suivantes se rapportant à l'œstriol indiquer celles qui sont correctes",
+     "options": [
+      "ilest synthétisé à partir de précurseur d'origine maternelle",
+      "la première étape de sa synthèse est la transformation du cholestérol d'origine maternelle en prégnanolone au niveau du placenta",
+      "la Prégnénolone est transformée par le fœtus en 16 alpha-hydroxy-déhydro-épiandrostérone (S",
+      "la S. 16-a-OH-DHEA est transformé en œstriol chez la mère",
+      "une partie de l'æstrone et de l'œstradiol est transformée par le fœtus en œstriol Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 13,
+     "q": "Parmi les Propositions suivantes concernant la progestérone durant la grossesse indiquer celles qui sont Correctes",
+     "options": [
+      "durant les 6 premières semaines après l'ovulation elle est sécrétée par le placenta",
+      "la progestérone libérée par le placenta est transformée chez la mère en prégnandiol",
+      "elle est utilisée par les surrénales du fœtus comme précurseur pour la synthèse des corticoïdes",
+      "son taux diminue du début vers la fin de la grossesse",
+      "son taux renseigne sur la croissance et la vitalité du fœtus"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 14,
+     "q": "Parmi les effets Suivants indiquer ceux de la progestérone pendant la grossesse",
+     "options": [
+      "favoriser le développement des cellules déciduales de l'endomètre",
+      "contribuer au développement de l'embryon avant son implantation",
+      "augmenter le volume de l'utérus",
+      "augmenter le volume des voies génitales féminines",
+      "_ préparer la glande mammaire à la lactation"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les effets suivants indiquer ceux du glucagon",
+     "options": [
+      "inhibe la glycogenèse au niveau du foie",
+      "diminue l'utilisation des acides gras par le myocarde",
+      "diminue l'excrétion azotée urinaire",
+      "inhibe la motricité intestinale",
+      "_inhibe la sécrétion d'insuline Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La sécrétion du glucagon est stimulée par : 6.1. Le glucagon est stimulé par",
+     "options": [
+      "les acides gras libres A. la baisse de la glycémie",
+      "l'hypoglycémie B. la somatostatine",
+      "les acides aminés C. le système nerveux parasympathique",
+      "la somatostatine D. les acides gras libres",
+      "les catécholamines E. les récepteurs B adrénergique 6.2- La sécrétion de glucagon est stimulée par : A. l'hypoglycémie B. l'augmentation des acides gras libres (AGL) C. la stimulation du parasympathique D. les hormones digestives comme le Vaso-intestinal Peptid (VIP E. la somatostatine"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "La sécrétion de glucagon est inhibée par 8. Le glucagon est inhibé par",
+     "options": [
+      "l'insuline A. Les catécholamines",
+      "l'augmentation des acides aminés dans le sang B. la somatostatine",
+      "la stimulation du parasympathique C. le glucose",
+      "la somatostatine D. le jeune prolongé",
+      "le vaso intestinal peptid (VIP) E. les acides gras libres Régulation hormonale de la glycémie"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Au cours de la phase absorptive : 1.1. Au cours de la phase post-absorptive",
+     "options": [
+      "l'organisme est dirigé vers la voie du A. débute le catabolisme catabolisme B. la lipolyse est diminuée",
+      "la glycogénogenèse augmente C. la sécrétion d'insuline est augmentée",
+      "la lipolyse augmente . D. le glucose circulant est surtout d'origine",
+      "la sécrétion d'insuline augmente hépatique",
+      "la sécrétion du glucagon diminue E. le glucose est dévié surtout vers le cerveau"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "En phase absorptive",
+     "options": [
+      "30% du glucose circulant est capté par le cerveau",
+      "50% du glucose circulant est capté par le foie",
+      "la sécrétion d'insuline est stimulée",
+      "le glucose est stocké dans les tissus insulino-dépendants",
+      "le glucose se trouve quantité importante dans le sang"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Lors de la phase postabsorptive la",
+     "options": [
+      "captation du glucose est faite surtout par le cerveau",
+      "glycémie augmente",
+      "sécrétion d'insuline est diminuée",
+      "sécrétion du cortisol est inhibée",
+      "sécrétion du glucagon est augmentée Page 127"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les hormones suivantes indiquer celles qui interviennent dans la régulation de la glycémie pendant la période de jeûne prolongé",
+     "options": [
+      "l'insuline",
+      "l'entéroglucagon",
+      "l'hormone de croissance",
+      "l'adrénaline",
+      "le cortisol"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Lors de l'exercice musculaire",
+     "options": [
+      "la glycémie diminue peu même si l'exercice se prolonge",
+      "l'énergie est fournie par les réserves du muscle en ATP au début de l'exercice",
+      "la sécrétion d'insuline augmente",
+      "le glucose est fourni par glycogénolyse hépatique et musculaire",
+      "la lipolyse est inhibée Mednval EXam Métabo Phospho Ca** isolé"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les sites de régulation du métabolisme phosphocalcique se trouvent au niveau",
+     "options": [
+      "cardiaque",
+      "du tube digestif",
+      "hépatique",
+      "osseux",
+      "rénal La parathormone"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "La parathormone (PTH) est : 3. La parathormone (PTH) a une",
+     "options": [
+      "dégradée au niveau du foie et du rein action directe au niveau",
+      "sécrétée par les cellules parafolliculaires de la thyroïde A. de l'intestin",
+      "synthétisée sous forme d'un précurseur, la pré-pro-PTH B. del'os",
+      "transportée dans le sang liée à des protéines C. de la glande thyroïde",
+      "une hormone stéroïde D. du foie E. durein 4. La parathormone (PTH)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Une substance exogène utilisée pour calculer la clairance doit être",
+     "options": [
+      "éliminée uniquement par voie rénale",
+      "librement filtrée",
+      "réabsorbée au niveau tubulaire | oui",
+      "non toxique",
+      "totalement métabolisée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Pour un débit urinaire V = 1 mi/mn, une Concentration plasmatique d'une substance P = 0,2 mg/mli : une Concentration urinaire U = 20 mg/mil. La clairance de cette substance en ml/mn est égale",
+     "options": [
+      "50",
+      "100",
+      "150",
+      "200",
+      "250"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Sachant que la Concentration artérielle d'une substance (Ca) est de 10 mg/ml, sa concentration veineuse (CV) de 5 mg/mi et que le débit plasmatique est de 600 mi/mn, sa clairance est égale",
+     "options": [
+      "500 mi/mn",
+      "400 ml/mn",
+      "300 ml/mn",
+      "200 ml/mn",
+      "100 ml/mn"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Les paramètres suivants ont été mesurés chez un sujet : Débit urinaire V = 2 ml /mn, Concentration plasmatique d'une substance p = 0.2 mg /ml Concentration urinaire U = 15 mg/ml. La clairance de cette substance est égale",
+     "options": [
+      "50mi/mn",
+      "100 ml/mn",
+      "150m//mn",
+      "200 ml/mn",
+      "250mI//mn Mednval CIRCULATION RENALE"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Parmi les caractéristiques suivantes indiquer celles de la circulation rénale",
+     "options": [
+      "Est une circulation fonctionnelle",
+      "se répartit également entre la corticale et la médullaire rénale",
+      "possède deux systèmes capillaires",
+      "chute de pression à deux niveaux _ . tres capillaires systémiques",
+      "pression au niveau des capillaires glomérulaires inférieure à celle des autres Cap"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les caractéristiques suivantes indiquer celles de la circulation rénale",
+     "options": [
+      "c'est une circulation nourricière",
+      "elle se répartie également entre la corticale et la médullaire rénale",
+      "elle possède deux systèmes capillaires",
+      "sa pression chute de 100 à 45 mm Hg au niveau des artérioles efférentes",
+      "sa vitesse est lente au niveau des vaisseaux droits (vasa-recta)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "La circulation rénale est :",
+     "options": [
+      "Caractérisée par une chute importante de la pression au niveau des capillaires péritubulaires",
+      "caractérisée par une pression élevée au niveau des artérioles afférentes",
+      "composée de deux réseaux capillaires placés en séries",
+      "répartie de façon égale entre les parties corticale et médullaires du rein",
+      "une circulation nourricière"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "La circulation rénale",
+     "options": [
+      "est caractérisée par un premier réseau au niveau glomérulaire",
+      "est caractérisée par une pression élevée au niveau des artérioles afférentes",
+      "est caractérisée un deuxième réseau au niveau péritubulaire",
+      "est une circulation nourricière",
+      "observe une chute importante au niveau des capillaires péritubulaires"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Le débit sanguin rénal",
+     "options": [
+      "dépend de la pression de perfusion rénale",
+      "dépend des résistances artériolaires",
+      "est autorégulé",
+      "est de 600 ml/min",
+      "est très sensible aux modifications de la pression artérielle"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "Parmi les propositions suivantes se rapportant au débit sanguin rénal indiquer celles qui sont correctes",
+     "options": [
+      "la pression partielle systémique est son déterminant majeur dans les situations physiologiques",
+      "les résistances artériolaires jouent un rôle majeur dans son contrôle",
+      "sa mesure est effectuée par la clairance de l'acide para-amino-hippurique (PAH)",
+      "la concentration de PAH doit être supérieures à 5 mg/100 mi de sang pour le mesurer",
+      "ilest de de 1000 à 1200 ml/mn"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "Pour un débit plasmatique rénal (DPR) égal à de 660 ml/mn, une Hématocrite (Ht) égale à 45% le débit sanguin rénal (DSR) en ml/mn égal",
+     "options": [
+      "1000",
+      "1100",
+      "1200",
+      "1250",
+      "E 1300 Page 135 | | | - Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "On retrouve chez un sujet les résultats suivants : Concentration plasmatique du PAH (PPAH) = 0,1 mg/mil ; | Concentration urinaire de PAH (UPAH) = 20 mg/ml ; Débit urinaire (V) = 1.5 ml/mn. Le débit Plasmatique Rénal (DPR) est égal",
+     "options": [
+      "300 ml/mn",
+      "450 ml/min",
+      "600 ml/mn",
+      "750 ml/mn E, 900 ml/mn"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "Pour une concentration plasmatique du PAH (Ppan) = 0,4 mg/ml ; une concentration urinaire de PAH (Upan) = 200 mg/ml, un débit urinaire (V) = 1,5 ml/mn. Le débit Plasmatique Rénal (DPR) en ml/mn est égal",
+     "options": [
+      "300",
+      "450",
+      "600",
+      "750",
+      "900"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "Dans le but de déterminer le débit plasmatique rénal, une quantité d'acide para-amino-hippurique (PAH) a | | été injecté par voie intraveineuse a un sujet. La concentration plasmatique du PAH (Ppau = 0,4 mg/ml ; une | concentration urinaire de PAH (Upan) = 250 mg/ml, un débit urinaire (V) = 1440 m1/24 heures. Le débit | | plasmatique rénal (DPR) en ml/mn est égal",
+     "options": [
+      "525",
+      "575",
+      "600",
+      "625",
+      "650"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "En tenant compte des données de la question numéro 48, et en sachant que le taux d'hématocrite (Ht) | de ce sujet est 50%, son débit sanguin rénal (DSR) en ml/min est de",
+     "options": [
+      "1120",
+      "1150",
+      "1250",
+      "1275",
+      "1300 | FONCTION GLOMERULAIRE"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "La barrière glomérulaire est perméable : 2- La barrière glomérulaire est perméable",
+     "options": [
+      "à l'albumine A. l'urée",
+      "à la créatinine B. au glucose",
+      "au glucose C. au sodium (Na+)",
+      "au potassium (K+) D. aux cellules",
+      "aux cellules E. aux protéines"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Une diurèse de 3000 m1l/24 heures est appelée",
+     "options": [
+      "anurie",
+      "oligurie",
+      "pollakiurie",
+      "polyurie",
+      "protéinurie À Zn du glucose au niveau des tubules rénaux . a lieu au niveau du tube proximal B. se poursuit au niveau de l'anse de Henlé C. est limité par un taux maximum de réabsorption (TmG) D. est couplée à celle du K+ E. se fait en échange des ions H+"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Dans la création du gradient osmotique corticopapillaire (GCP)",
+     "options": [
+      "les branches de l'anse de Henlé (AH) réalisent un système de contrecourant multiplicateur de concentration",
+      "le mécanisme élémentaire transversal consiste en une réahsorption active d'eau par la branche ascendante de l'AH",
+      "l'urine de la branche ascendante quitte l'AH hypo-osmotique par rapport au plasma",
+      "Le GCP se traduit par l'augmentation progressive de la concentration des substances (et donc l'osmolarité) de la corticale vers la médullaire",
+      "le moteur de la création du GCP est l'effet élémentaire de réabsorption d'eau par la branche ascendante de l'AH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "1. Le gradient osmotique cortico-papillaire",
+     "options": [
+      "est généré par les anses de Henlé longues",
+      "se crée par deux mécanisme élémentaires l'un longitudinal l'autre transversal",
+      "est maintenu pat le tube contourné distal et le canal collecteur",
+      "nécessite la présence de l'ADH pour son maintien",
+      "est utilisé par les vasa recta (artères droites) Mednval"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le gradient osmotique cortico-papillaire | la médullaire rénale",
+     "options": [
+      "se traduit par une osmolarité décroissante de la corticale vers",
+      "est créé par les vaisseaux droits (vasa-recta)",
+      "est maintenu par les anses de Henlé",
+      "est utilisé par les tubes collecteurs",
+      "intervient dans la réabsorption facultative de l'eau : ntration"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Les paramètres suivants ont été mesurés chez un sujet : Débit urinaire V = 2 here de cette plasmatique d'une substance P = 0,2 mg/ml ; Concentration urinaire = --- mg/ml. substance est égale",
+     "options": [
+      "50ml/mn",
+      "100 ml/mn",
+      "150 mi/mn",
+      "200 ml/mn",
+      "250 ml/mn"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Une clairance de l'eau libre positive peut s'observer en cas",
+     "options": [
+      "de déshydratation",
+      "d'hydratation normale",
+      "d'hyperhydratation",
+      "d'absence d'effet de l'ADH",
+      "d'absence de récepteur à l'ADH au niveau du rein"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Parmi les propositions suivantes se rapportant à la miction indiquer celles qui one correctes",
+     "options": [
+      "elle est contrôlé par un réflexe médullaire et comportant une partie volontaire",
+      "les nerfs honteux internes assurent la motricité volontaire au cours de = mierion mr",
+      "la stimulation du parasympathique permet le remplissage vésical et la rétention MrHa Tee",
+      "la stimulation du sympathique intervient dans la vidange de la vessie lors de la rajetien",
+      "la sensation consciente du besoin d'uriner apparait quand le volume de la vessie atteint 200 à 400 mi Mednval . e Fe | A Equilibre acido basique isole ep cit ido-basique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "À propos de l'équilibre acido-ba L source principale de production des ions H+",
+     "options": [
+      "l'acide carbonique constitue là ar CHE À isme es! Ron",
+      "le pH ane mes (citrate lactate) consomment les ions H+",
+      "les anions métabolisa de",
+      "les poumons éliminent la charge acide BrEAn que",
+      "les reins éliminent les acides volatils"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Concernant les systèmes tampons",
+     "options": [
+      "l'albumine constitue le principal tampon protéine cars hulsire",
+      "l'hémoglobine est un système tampon protéine intracellulaire",
+      "le système bicarbonate/ acide carbonique est intracellulaire",
+      "le système bicarbonate / acide carbonique est l'unique système ouvert",
+      "le système phosphate est extracellulaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Le rein participe dans l'homéostasie du pH par",
+     "options": [
+      "l'excrétion d'acidité titrable",
+      "l'excrétion d'ammonium NH4+ | ti |",
+      "l'excrétion de CO: | Ÿ",
+      "la réabsorption de l'acide carbonique (H,C03)",
+      "la réabsorption des bicarbonates"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "A propos de l'intervention des poumons dans l'équilibre acido-basique",
+     "options": [
+      "elle est plus lente à se mettre en jeu que celle des reins",
+      "l'augmentation des ions H+ stimule les centres respiratoires",
+      "l'hyperventilation est l'origine d'une hypercapnie",
+      "la ventilation intervient sur le système tampon HCO3-/H2C03",
+      "la ventilation module l'élimination du CO2"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "La ventilation intervient dans la régulation du pH sanguin en",
+     "options": [
+      "en modulant l'élimination du CO",
+      "éliminant la charge acide volatile",
+      "en cas d'acidose elle compense totalement le trouble",
+      "l'acidose entraine une hyperventilation",
+      "elle élimine l'excès d'ions HCO3-, en excès en cas d'alcalose"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 7,
+     "q": "En cas d'alcalose",
+     "options": [
+      "l'acidité titrable est diminuée",
+      "l'äammoniurie est augmentée",
+      "le HCO3- urinaire est augmenté",
+      "Le pH urinaire est diminué",
+      "le HCO3., plasmatique est augmenté"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 8,
+     "q": "Parmi les modifications suivantes indiquer celles observées en cas d'alcalose",
+     "options": [
+      "diminution de l'acidité titrable",
+      "augmentation de l'ammoniurie",
+      "augmentation du HCO3- urinaire",
+      "augmentation du pH urinaire",
+      "diminution du HCO3- plasmatique"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 9,
+     "q": "L'intervention des reins dans l'équilibre acido-basique",
+     "options": [
+      "est plus rapide à se mettre en jeu que celle des poumons",
+      "se fait par la réabsorption des bicarbonates filtrés",
+      "met en jeu l'excrétion de la charge acide sous forme acidité ns e. Le",
+      "met en jeu l'excrétion de la charge acide sous forme d'acide carponiq",
+      "est liée au processus d'acidification des urines = des , . . _ PaCO2 = 45 mmHg"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1rI0UNG05mWLrfVATcLaq3LsgoOxO64nO",
+   "title": "Isolés — recueil complet",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Le déficit en 21-hydroxylase a pour conséquences",
+     "options": [
+      "un excès de cortisol",
+      "un déficit en minéralocorticoïdes",
+      "une déshydratation",
+      "une ambigüité sexuelle chez la fille",
+      "une diminution du volume de la corticosurrénale"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Le précurseur des catécholamines est",
+     "options": [
+      "l'isoleucine",
+      "la leucine",
+      "la phénylalanine",
+      "la tyrosine",
+      "le tryptophane / / LA"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "| 0 | + 30 Al 52e EE - D. à\" 12. L'insuline stimule : | FT",
+     "options": [
+      "l'oxydation des acides gras au niveau du foie",
+      "la formation des corps cétoniques Fe : in TE",
+      "la glycogénogenèse | | j",
+      "la lipolyse",
+      "le transport actif des acides aminé dans les muscles squelettiques A. augmentation de la captation de glucose B. diminution de la synthèse de glycogène C. diminution de glycogénolyse D. inhibition de la néoglucogenèse E. stimule la synthèse des triglycérides De"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "La sécrétion du glucagon est stimulée par :",
+     "options": [
+      "les acides gras libres +",
+      "l'hypoglycémie “28",
+      "les acides aminés 4",
+      "la somatostatine De",
+      "les catécholamines 0 A. l'insuline n. 14 B. l'augmentation des acides aminés dans le sang F3 C. la stimulation du parasympathique \"2 D. la somatostatine À 4 E. le vaso intestinal peptid (VIP) #7, 1 | EE . ES me | 444 jS L FA D Es D A or ÿ Here a A , 1 EE RER ERRE CNE HR nn. M MS dr"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "8. Le glucagon «. Re Ra LU mn SOmMatostatine : LEE s 7 © le glucose RE \"A 1,70 D. le jeune prolongé | 6e E. les acides gras libres À 0) e . A Régulation hormonale de la glycémie à. 1. Au cours de la phase absorptive :",
+     "options": [
+      "l'organisme est dirigé vers la voie du catabolisme",
+      "la glycogénogenèse augmente",
+      "la lipolyse augmente É",
+      "la sécrétion d'insuline augmente",
+      "la sécrétion du glucagon diminue"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Une substance exogène utilisée pour calculer la claira",
+     "options": [
+      "éliminée uniquement par voie rénale",
+      "librement filtrée",
+      "réabsorbée au niveau tubulaire",
+      "nontoxique L",
+      "totalement métabolisée | [ f c= 3"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "10BS1brsmO7g2tbTlQXdLEZFh75T-6v6h",
+   "title": "Isolés — recueil 1",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Parmi les caractéristiques suivantes de la liaison hormone-récepteur indiquer celles qui protègent contre les excès de l'effet biologique",
+     "options": [
+      "la spécificité",
+      "l'affinité",
+      "la convertibilité",
+      "la réversibilité",
+      "la saturabilité"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "= mot umnmh La Post-hypophyse F 1. La posthypoghyse secrète :",
+     "options": [
+      "la GH B",
+      "la FSH",
+      "l'ADH Le",
+      "l'ACTH",
+      "la Gn-RH La"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Parmi les propositions suivantes se rapportant au métabolisme de l'ADH et de l'ocytocine indiquer Le celles qui sont correctes",
+     "options": [
+      "le noyau supraoptique synthétise surtout l'ocytocine et peu l'ADH La",
+      "La neurophysine | est spécifique de l'ocytocine L=",
+      "les neurophysines jouent un rôle dans le transport axonal des hormones",
+      "ces hormones sont transportées dans le sang sous forme liée aux neurophysines ŒE",
+      "la demi-vie de ces hormones est courte (10 mn environ) EE — ADH"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "L'hormone de croissance (GH)",
+     "options": [
+      "à une demi vie de une à 3 heures",
+      "agit sur des récepteurs membranaires de type ionotropes",
+      "est sécrété par les cellules somatotropes de l’adénohypophyse",
+      "est sous le contrôle hypothalamique par la GH-RH",
+      "peut être liée dans le plasma 4 une protéine de liaison 10"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 6,
+     "q": "L'hormone de croissance (GH)",
+     "options": [
+      "diminue la rétention des ions Na+ et K+",
+      "peut exercer ses effets par l'intermédiaire des somatomédines (IGF)",
+      "provoque l'hyperplasie de tous les organes",
+      "stimule la lipogenèse",
+      "stimule le métabolisme des chondrocytes"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Exam surrénal isolé & 1- Les glandes corticosurrénales",
+     "options": [
+      "sécrètent la testostérone Ds",
+      "sécrètent les glucocorticoïdes",
+      "sécrètent les minéralocorticoides",
+      "sont constituées de quatre couches",
+      "sont sous le contrôle de l'axe hypothalamo-hypophysaire Peni 3 R indi les qui s"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les androgènes surrénaliens",
+     "options": [
+      "comportent l'androsténodione",
+      "comportent la testostérone",
+      "sont ACTH dépendant",
+      "sont synthétisées à partir de prégnénolone",
+      "sont synthétisées dans la zone glomérulée"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Le déficit en 21-hydroxylase a pour conséquences",
+     "options": [
+      "un excès de cortisol",
+      "un déficit en minéralocorticoïdes",
+      "une déshydratation",
+      "une ambigüité sexuelle chez la fille",
+      "une diminution du volume de la corticosurrénale LA MEDULLOSURRENALE"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  },
+  {
+   "fid": "1D_aVXse-mCfkJeZqi0zc42LzUpechp7D",
+   "title": "Isolés — recueil 2",
+   "section": "Isolés par chapitre",
+   "questions": [
+    {
+     "n": 2,
+     "q": "Parmi les éléments suivants indiquez ceux qui orientent le fœtus dans le sens femelle",
+     "options": [
+      "présence des chromosomes",
+      "présence de progestérone",
+      "absence d'AMH « Anti-Mullerian-Hormone",
+      "absence de testostérone",
+      "la présence d'Insulin-Like Hormon ue"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 10,
+     "q": "progestérone a un effet",
+     "options": [
+      "hypothermisant",
+      "sédatif sur le système nerveux",
+      "stimulant de la croissance osseuse",
+      "stimulant du catabolisme protidique",
+      "trophique sur la peau"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 11,
+     "q": "Dans la régulation de la sécrétion des hormones ovariennes",
+     "options": [
+      "l'hypothalamus sécrète la GnRH de façon stable et continue",
+      "FSH et LH sont secrétées en grande quantité au moment de l'ovulation",
+      "La FSH est responsable de la synthèse et la sécrétion des œstrogènes",
+      "la sécrétion de FSH et LH à l'origine du développement de plusieurs follicules",
+      "La chute de production des stéroïdes ovarienne en fin de cycle est à l'origine de la menstruation el"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Parmi les effets suivants indiquer ceux du glucagon",
+     "options": [
+      "inhibe la glycogenèse au niveau du foie",
+      "diminue l'utilisation des acides gras par le myocarde",
+      "diminue l'excrétion azotée urinaire",
+      "inhibe la motricité intestinale",
+      "inhibe la sécrétion d'insuline"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Au cours de la phase absorptive : (s=",
+     "options": [
+      "l'organisme est dirigé vers la voie du catabolisme",
+      "la glycogénogenèse augmente sn",
+      "la lipolyse augmente",
+      "la sécrétion d'insuline augmente",
+      "la sécrétion du glucagon diminue en"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "En phase absorptive : «",
+     "options": [
+      "30% du glucose circulant est capté par le cerveau",
+      "50% du glucose circulant est capté par le foie us",
+      "la sécrétion d'insuline est stimulée",
+      "le glucose est stocké dans les tissus insulino-dépendants",
+      "le glucose se trouve quantité importante dans le sang"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": "Lors de la phase postabsorptive la : El",
+     "options": [
+      "captation du glucose est faite surtout par le cerveau",
+      "glycémie augmente F3",
+      "sécrétion d'insuline est diminuée",
+      "sécrétion du cortisol est inhibée EF",
+      "sécrétion du glucagon est augmentée F FA = ="
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 2,
+     "q": "Concernant le métabolisme du calcium",
+     "options": [
+      "99% du calcium de l'organisme est contenue dans le squelette",
+      "le calcium ionisé représente 80% de la calcémie totale",
+      "les variations des calcémies totale et ionisée sont parallèles",
+      "la fraction non diffusible du calcium est liée surtout à l'albumine",
+      "l'excrétion du calcium se fait uniquement par voie urinaire"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Les sites de régulation du métabolisme phosphocalcique se trouvent au niveau :",
+     "options": [
+      "cardiaque",
+      "du tube digestif €",
+      "hépatique c",
+      "osseux",
+      "rénal £ La parathormone €"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Sachant que la concentration artérielle d'une substance (Ca) est de 10 mg/mil, sa concentration veineuse | (CV) de 5 mg/mIl et que le débit plasmatique est de 600 ml/mn, sa clairance est égale à :",
+     "options": [
+      "500 mi/mn =",
+      "400 ml/mn Ï",
+      "300 ml/mn FE",
+      "200 ml/mn",
+      "100 ml/mn EE ="
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
 }
