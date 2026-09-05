@@ -512,3 +512,53 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .quiz-verdict { font-size: 15px; color: var(--ink-2); }
 .quiz-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 14px; }
 .quiz-actions .btn { text-decoration: none; }
+
+/* ---------- inventory (the real Drive tree) ---------- */
+.inv-stats {
+  display: flex; gap: 8px;
+}
+.inv-stats > div {
+  flex: 1; background: var(--bg); border-radius: var(--r-tile);
+  padding: 10px 8px; text-align: center;
+}
+.inv-stats b { display: block; font-size: 15px; font-weight: 700; }
+.inv-stats span { font-size: 11px; color: var(--ink-3); }
+
+.inv-state {
+  font-size: 11px; color: var(--ink-3); text-align: center;
+}
+.inv-state.on { color: var(--orange); }
+
+.inv-tree {
+  background: var(--surface);
+  margin: 12px 12px calc(var(--nav-h) + 24px);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  padding: 6px 0;
+}
+.inv-row {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; text-align: start;
+  padding-block: 9px; padding-inline-end: 12px;
+  font-size: 13px; line-height: 1.35;
+  border-bottom: 1px solid var(--line-soft);
+}
+.inv-row:last-child { border-bottom: 0; }
+.inv-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.inv-caret { color: var(--ink-3); font-size: 11px; width: 10px; flex-shrink: 0; }
+.inv-folder { font-weight: 600; }
+.inv-count {
+  font-size: 11px; color: var(--ink-3); background: var(--bg);
+  border-radius: 999px; padding: 2px 8px; flex-shrink: 0;
+}
+.inv-file { color: var(--ink-2); }
+.inv-size { font-size: 11px; color: var(--ink-3); flex-shrink: 0; }
+.inv-wait { color: var(--ink-3); }
+.inv-err, .inv-fatal {
+  color: var(--orange); font-size: 12px;
+}
+.inv-fatal {
+  background: var(--orange-pale); margin: 12px; padding: 14px;
+  border-radius: var(--r-card); overflow-wrap: anywhere;
+}
