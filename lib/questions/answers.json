@@ -1039,6 +1039,315 @@
       ],
       "by": "claude",
       "why": "La lésion de S1 abolit la localisation fine et l’appréciation des pressions, des poids, des formes et des textures."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:26": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "La motricité sert la communication, la mobilisation du corps et la posture ; la détection des stimuli est sensorielle."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:27": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Un réflexe est involontaire, rapide, stéréotypé et simple — il n’est pas commandé par l’aire 4."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:28": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "On classe les réflexes par la situation du récepteur, le nombre de synapses et le type d’effecteur."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:29": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "L’afférence est de type Ia, non III, et l’effecteur est un muscle strié."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:30": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Le réflexe myotatique est proprioceptif, monosynaptique et monosegmentaire."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:31": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le myotatique inverse part de l’organe tendineux de Golgi, il est polysynaptique donc plus lent, et régule la tension."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:32": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Le réflexe de flexion part des nocicepteurs, il est polysynaptique et diffuse à plusieurs étages ; l’appui renforcé est le réflexe d’extension croisée."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:33": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Le tonus est d’origine réflexe, entretenu par les unités motrices toniques, et prédomine sur les extenseurs antigravitaires."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:34": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La boucle gamma, le cervelet et les noyaux vestibulaires facilitent le tonus ; Renshaw et le cortex l’inhibent."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:35": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Le sommeil et l’atteinte du motoneurone alpha donnent une hypotonie ; Parkinson et décérébration donnent une hypertonie."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:36": {
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "L’équilibration est automatique, non volontaire."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:37": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "Les canaux semi-circulaires détectent les accélérations angulaires ; la pesanteur est perçue par les otolithes, et l’ensemble siège dans l’oreille interne."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:38": {
+      "answer": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les voies vestibulaires font relais dans les noyaux vestibulaires avant d’atteindre le cortex."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:39": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Une atteinte vestibulaire gauche donne vertiges, ataxie et nystagmus battant vers le côté sain."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:40": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’aire motrice principale est l’aire 4, non l’aire 6."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:41": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le faisceau pyramidal ne fait aucun relais et décusse au bulbe."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:42": {
+      "answer": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "L’appareil vestibulaire sert l’équilibre, non l’exécution du mouvement volontaire."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:43": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "La représentation est croisée, inversée, somatotopique — et disproportionnée, non proportionnelle. Elle siège sur l’aire 4."
+    },
+    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:45": {
+      "answer": [
+        1,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les noyaux gris centraux planifient, règlent le tonus et les mouvements lents ; l’exécution passe par la voie pyramidale."
+    },
+    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:13": {
+      "answer": [
+        0,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Substance P, ions K+ et bradykinine sensibilisent le nocicepteur ; l’enképhaline et le GABA sont antalgiques."
+    },
+    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:14": {
+      "answer": [
+        0,
+        2
+      ],
+      "by": "claude",
+      "why": "La douleur projetée s’explique par la convergence des afférences viscérales et cutanées sur un même neurone médullaire."
+    },
+    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:15": {
+      "answer": [
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "H+, histamine et prostaglandines activent ou sensibilisent les nocicepteurs."
+    },
+    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:16": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La douleur viscérale naît des organes profonds, de l’ischémie et de la distension ou perforation d’un organe creux."
+    },
+    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:17": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "La douleur aiguë est rapide, bien localisée, en coup d’aiguille, et cesse avec le stimulus ; elle emprunte le faisceau néo-spinothalamique."
+    },
+    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:24": {
+      "answer": [
+        2,
+        3,
+        4
+      ],
+      "by": "paper",
+      "why": "Réponse portée par la correction de l’épreuve."
+    },
+    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:25": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "paper",
+      "why": "Réponse portée par la correction de l’épreuve."
+    },
+    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:27": {
+      "answer": [
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Le réflexe myotatique est monosynaptique, part du fuseau, et les motoneurones gamma le facilitent."
+    },
+    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:28": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "La phase dynamique met en jeu les fibres Ia, la phase statique les fibres II."
+    },
+    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:46": {
+      "answer": [
+        1,
+        3,
+        4
+      ],
+      "by": "paper",
+      "why": "Réponse portée par la correction de l’épreuve."
+    },
+    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:47": {
+      "answer": [
+        0
+      ],
+      "by": "paper",
+      "why": "Réponse portée par la correction de l’épreuve."
+    },
+    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:48": {
+      "answer": [
+        3,
+        4
+      ],
+      "by": "paper",
+      "why": "Réponse portée par la correction de l’épreuve."
+    },
+    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:1": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "Les projections corticales sensorielles sont controlatérales, et la décussation se fait selon la voie, non toujours dans la moelle."
+    },
+    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:2": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le récepteur code la durée, l’intensité et la localisation ; l’affect et la forme sont élaborés plus haut."
+    },
+    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:4": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "La voie lemniscale monte par le cordon postérieur, décusse au bulbe et fait relais dans un noyau thalamique spécifique."
+    },
+    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:5": {
+      "answer": [
+        0,
+        1
+      ],
+      "by": "claude",
+      "why": "La discrimination est d’autant meilleure que les récepteurs sont denses et les champs récepteurs petits."
     }
   }
 }
