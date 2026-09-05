@@ -562,3 +562,28 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--orange-pale); margin: 12px; padding: 14px;
   border-radius: var(--r-card); overflow-wrap: anywhere;
 }
+
+/* ---------- other versions of the same lecture, and corrections ---------- */
+.chapter-ic {
+  width: 26px; height: 26px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.alts { border-bottom: 1px solid var(--line-soft); }
+.alts > summary {
+  list-style: none; cursor: pointer;
+  padding: 9px 16px 9px 52px;
+  font-size: 11.5px; color: var(--purple); font-weight: 600;
+}
+.alts > summary::-webkit-details-marker { display: none; }
+.alts > summary::before { content: '▾ '; }
+.alts[open] > summary::before { content: '▴ '; }
+.alt {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px 10px 52px;
+  background: var(--bg);
+  border-top: 1px solid var(--line-soft);
+  min-height: 44px;
+}
+.alt-nm { display: block; font-size: 12.5px; color: var(--ink-2); }
+.corr { color: var(--orange); }
+.corr .alt-nm { color: var(--orange); font-weight: 600; }

@@ -1,22 +1,58 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { MODULES, moduleById, allFiles } from '@/lib/data';
+import { MODULES, moduleById, allFiles, allDocs } from '@/lib/data';
 
 export function generateStaticParams() {
   return MODULES.map((m) => ({ id: m.id }));
 }
 
-function Row({ n, title, ext, mb, fid }) {
+function Meta({ ext, mb, prof, year }) {
+  return (
+    <span className="lec-mt">
+      <span className="ext">{ext || 'PDF'}</span>
+      <span className="dot" /><span dir="ltr">{mb} MB</span>
+      {prof && <><span className="dot" />{prof}</>}
+      {year && <><span className="dot" />{year}</>}
+    </span>
+  );
+}
+
+function Doc({ title, ext, mb, prof, year, fid, n }) {
   return (
     <Link className="lec" href={`/file/${fid}`}>
-      <span className="num">{n}</span>
+      {n != null && <span className="num">{n}</span>}
       <span className="grow">
         <span className="lec-nm" style={{ display: 'block' }}>{title}</span>
-        <span className="lec-mt"><span className="ext">{ext}</span><span className="dot" />{mb} MB</span>
+        <Meta ext={ext} mb={mb} prof={prof} year={year} />
       </span>
       <span className="chev"><Icon name="chev" size={17} /></span>
     </Link>
+  );
+}
+
+// The same lecture given by another teacher is not another lecture. It hangs
+// off the one the student is looking at instead of competing with it in the list.
+function Lecture({ l }) {
+  const alts = l.versions || [];
+  return (
+    <>
+      <Doc {...l} />
+      {alts.length > 0 && (
+        <details className="alts">
+          <summary>{alts.length} نسخة أخرى</summary>
+          {alts.map((v) => (
+            <Link key={v.fid} className="alt" href={`/file/${v.fid}`}>
+              <span className="grow">
+                <span className="alt-nm">{v.title}</span>
+                <Meta ext={v.ext} mb={v.mb} prof={v.prof} year={v.year} />
+              </span>
+              <span className="chev"><Icon name="chev" size={15} /></span>
+            </Link>
+          ))}
+        </details>
+      )}
+    </>
   );
 }
 
@@ -24,6 +60,8 @@ export default async function Module({ params }) {
   const { id } = await params;
   const m = moduleById(id);
   if (!m) notFound();
+
+  const sections = m.sections || [];
 
   return (
     <>
@@ -33,7 +71,7 @@ export default async function Module({ params }) {
           <div className="grow">
             <div className="head-t" style={{ fontSize: 18 }}>{m.name}</div>
             <div className="head-s">
-              {m.semester} · {allFiles(m).length} محاضرة
+              {m.semester} · {allFiles(m).length} محاضرة · {allDocs(m).length} ملف
               {m.professors.length ? ` · ${m.professors.join(' · ')}` : ''}
             </div>
           </div>
@@ -60,13 +98,34 @@ export default async function Module({ params }) {
                 <div className="chapter-s">{ch.subtitle} · {ch.lectures.length} محاضرة</div>
               </div>
             </div>
-            {ch.lectures.map((l) => (
-              <Row key={String(l.n)} n={l.n} title={l.title} ext={l.ext} mb={l.mb} fid={l.fid} />
+            {ch.lectures.map((l) => <Lecture key={String(l.n)} l={l} />)}
+          </section>
+        ))}
+
+        {sections.map((s) => (
+          <section key={s.id} id={s.id} className="chapter">
+            <div className="chapter-head">
+              <span className={`chapter-ic tint-${m.tint}`}><Icon name={s.icon} size={16} /></span>
+              <div className="grow">
+                <div className="chapter-t">{s.title}</div>
+                <div className="chapter-s">{s.items.length} ملف</div>
+              </div>
+            </div>
+            {s.items.map((it) => (
+              <div key={it.fid}>
+                <Doc {...it} />
+                {it.correction && (
+                  <Link className="alt corr" href={`/file/${it.correction}`}>
+                    <span className="grow"><span className="alt-nm">Correction</span></span>
+                    <span className="chev"><Icon name="chev" size={15} /></span>
+                  </Link>
+                )}
+              </div>
             ))}
           </section>
         ))}
 
-        {m.chapters.length === 0 && (
+        {m.chapters.length === 0 && sections.length === 0 && (
           <div className="empty">
             <div className={`tile tint-${m.tint}`}><Icon name={m.icon} size={24} /></div>
             <div className="empty-t">{m.empty ? 'المجلد فارغ في Drive' : 'لم تُفهرس بعد'}</div>
