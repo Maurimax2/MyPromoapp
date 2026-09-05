@@ -22,7 +22,10 @@ export default function QuizIndex() {
               <div className={`tile tint-${m.tint}`}><Icon name={m.icon} size={22} /></div>
               <div className="grow">
                 <div className="nm">{m.name}</div>
-                <div className="mt">{m.quiz.questions.length} أسئلة</div>
+                <div className="mt">
+                  {m.quiz ? `${m.quiz.questions.length} سؤال · ` : ''}
+                  {m.bankCount} ملف أسئلة
+                </div>
               </div>
               <span className="chev"><Icon name="chev" size={18} /></span>
             </div>

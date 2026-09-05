@@ -587,3 +587,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .alt-nm { display: block; font-size: 12.5px; color: var(--ink-2); }
 .corr { color: var(--orange); }
 .corr .alt-nm { color: var(--orange); font-weight: 600; }
+
+/* A note that came out of the Drive has no author to show. */
+.note-ic {
+  width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
+  background: var(--purple-pale); color: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+}

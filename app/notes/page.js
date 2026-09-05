@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import Icon from '@/components/Icon';
 import { PROMOS, notesBySubject } from '@/lib/data';
 
@@ -14,7 +15,7 @@ export default function Notes() {
     .map((g) => ({
       ...g,
       items: g.items.filter(
-        (n) => !q || n.title.includes(q) || n.author.includes(q) || g.subject.includes(q.toUpperCase()),
+        (n) => !q || n.title.includes(q) || (n.author || '').includes(q) || g.subject.includes(q.toUpperCase()),
       ),
     }))
     .filter((g) => g.items.length);
@@ -56,25 +57,40 @@ export default function Notes() {
               <span>{g.subject}</span>
               <span className="note-subject-n">{g.items.length}</span>
             </div>
-            {g.items.map((n) => (
-              <article key={n.id} className="card note">
-                <div className="note-top">
-                  <div className="av" style={{ width: 38, height: 38, fontSize: 12.5, background: n.colour }}>
-                    {n.initials}
+            {g.items.map((n) => {
+              const body = (
+                <>
+                  <div className="note-top">
+                    {n.author ? (
+                      <div className="av" style={{ width: 38, height: 38, fontSize: 12.5, background: n.colour }}>
+                        {n.initials}
+                      </div>
+                    ) : (
+                      <div className="note-ic"><Icon name="file" size={17} /></div>
+                    )}
+                    <div className="grow">
+                      <div className="note-title">{n.title}</div>
+                      <div className="note-by">
+                        {n.author ? `${n.author} · ${n.when}` : n.source}
+                      </div>
+                    </div>
                   </div>
-                  <div className="grow">
-                    <div className="note-title">{n.title}</div>
-                    <div className="note-by">{n.author} · {n.when}</div>
+                  <div className="note-foot">
+                    <span className="pill grey">
+                      {n.kind === 'pdf' ? 'PDF' : 'نص'}
+                      {n.pages ? ` · ${n.pages} صفحات` : ''}
+                      {n.mb ? ` · ${n.mb} MB` : ''}
+                    </span>
+                    {n.saves != null
+                      ? <span className="note-saves"><Icon name="bookmark" size={15} />{n.saves}</span>
+                      : <span className="note-saves"><Icon name="chev" size={15} /></span>}
                   </div>
-                </div>
-                <div className="note-foot">
-                  <span className="pill grey">
-                    {n.kind === 'pdf' ? 'PDF' : 'نص'} · {n.pages} صفحات
-                  </span>
-                  <span className="note-saves"><Icon name="bookmark" size={15} />{n.saves}</span>
-                </div>
-              </article>
-            ))}
+                </>
+              );
+              return n.fid
+                ? <Link key={n.id} href={`/file/${n.fid}`} className="card note">{body}</Link>
+                : <article key={n.id} className="card note">{body}</article>;
+            })}
           </section>
         ))}
 

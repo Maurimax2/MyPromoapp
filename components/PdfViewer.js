@@ -55,6 +55,16 @@ export default function PdfViewer({ src, title }) {
           standardFontDataUrl: '/pdfjs/standard_fonts/',
           cMapUrl: '/pdfjs/cmaps/',
           cMapPacked: true,
+          // Scanners compress their pages with JBIG2 and JPEG 2000, and pdf.js
+          // decodes both in WebAssembly. Without this the scanned lectures —
+          // the CamScanner ones especially — come up blank or smeared.
+          wasmUrl: '/pdfjs/wasm/',
+          iccUrl: '/pdfjs/iccs/',
+          // Much of this material is exported from PowerPoint and names fonts
+          // (Calibri, Cambria) that no phone has. Left to itself pdf.js hands
+          // those to the device and the metrics fall apart differently on
+          // every phone; this makes it use its own substitution tables.
+          useSystemFonts: false,
           // Keep pdf.js from eagerly pulling the whole file down.
           disableAutoFetch: true,
           rangeChunkSize: 262144,

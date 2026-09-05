@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { MODULES, moduleById, allFiles, allDocs } from '@/lib/data';
+import { MODULES, moduleById, allFiles, allDocs, sectionsFor } from '@/lib/data';
 
 export function generateStaticParams() {
   return MODULES.map((m) => ({ id: m.id }));
@@ -61,7 +61,8 @@ export default async function Module({ params }) {
   const m = moduleById(id);
   if (!m) notFound();
 
-  const sections = m.sections || [];
+  // Only the material you read. Résumés live in الملخصات, questions in اختبر نفسك.
+  const sections = sectionsFor(m, 'archive');
 
   return (
     <>
