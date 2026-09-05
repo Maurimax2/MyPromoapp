@@ -1,5 +1,140 @@
 {
  "module": "module-sante",
  "name": "MODULE SANTÉ",
- "banks": []
+ "banks": [
+  {
+   "fid": "1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL",
+   "title": "Session 2025",
+   "section": "Examens — module complet",
+   "questions": [
+    {
+     "n": 1,
+     "q": "Quel est l'objectif principal d'un algorithme",
+     "options": [
+      "Calculer la mémoire d'un ordinateur",
+      "Résoudre un problème ou accomplir une tâche",
+      "Afficher des résultats à l'écran",
+      "Déterminer la vitesse d'un processeur"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 2,
+     "q": "Quel type de structure permet de répéter une action dans un algorithme",
+     "options": [
+      "Condition",
+      "Boucles",
+      "Fonction",
+      "Variable"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 3,
+     "q": "Quel est le rôle d'un algorithme de recherche",
+     "options": [
+      "Trier des données",
+      "Trouver une donnée spécifique dans une liste",
+      "Calculer la somme de plusieurs données",
+      "Réorganiser les éléments dans un ordre particulier"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": "Que signifie “optimiser un algorithme\"",
+     "options": [
+      "Le rendre plus complexe",
+      "Le rendre plus rapide et moins consommateur de ressources #7",
+      "Augmenter sa taille",
+      "Ajouter plus de fonctionnalités"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 5,
+     "q": "Quel est le but d'un algorithme de tri",
+     "options": [
+      "Organiser les données dans un ordre croissant ou décroissant",
+      "Supprimer des données",
+      "Ajouter des données",
+      "Convertir des données en un autre format Exercice 2 : Architecture du PC (7 minutes)"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 3,
+     "q": ", Quelle est la fonction du disque dur dans un ordinateur",
+     "options": [
+      "Exécuter les programmes",
+      "Fournir l'alimentation",
+      "Stocker des fichiers de manière permanentes o Dj)Refroidir l'ordinateur"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 4,
+     "q": ", Lequel des éléments suivants fait partie de l'unité centrale",
+     "options": [
+      "Le moniteur",
+      "Le clavier",
+      "Le processeur (CPU)",
+      "La souris"
+     ],
+     "answer": [],
+     "unanswered": true
+    },
+    {
+     "n": 1,
+     "q": "Quelle est la conversion binaire de 15 en base 10",
+     "options": [
+      "le",
+      "1010",
+      "1101",
+      "1001"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 2,
+     "q": "Quel est le résultat de l'addition binaire de 1011 et 1101",
+     "options": [
+      "10100",
+      "11000",
+      "loii1",
+      "10010"
+     ],
+     "answer": [
+      3
+     ],
+     "unanswered": false
+    },
+    {
+     "n": 4,
+     "q": ", Quelle est la conversion binaire de 28 en base 10",
+     "options": [
+      "11100 &",
+      "11010",
+      "101I1",
+      "11110"
+     ],
+     "answer": [],
+     "unanswered": true
+    }
+   ]
+  }
+ ]
 }
