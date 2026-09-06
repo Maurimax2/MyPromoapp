@@ -108,7 +108,12 @@ export default function Post({ post, me }) {
               and "قبل 19 دقيقة" against "قبل 20 دقيقة" is a hydration error
               on every feed load. The difference is the point of the label,
               so the mismatch is allowed rather than designed away. */}
-          <div className="post-meta" suppressHydrationWarning>{when(post.created_at)}</div>
+          <div className="post-meta" suppressHydrationWarning>
+            {when(post.created_at)}
+            {/* The subject stays in French, like everything that names study
+                material. */}
+            {post.subject && <> · <span dir="ltr">{post.subject}</span></>}
+          </div>
         </div>
 
         {/* Every post needs a way to be objected to. Apple requires it for an

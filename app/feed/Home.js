@@ -37,6 +37,7 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
   const router = useRouter();
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
+  const [module, setModule] = useState('');   // the subject it belongs to
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const picker = useRef(null);
@@ -85,6 +86,7 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         body,
+        module: module || null,
         media: files.filter((f) => !f.pending).map(({ kind, path, name, bytes }) =>
           ({ kind, path, name, bytes })),
       }),
@@ -92,7 +94,7 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     if (!res.ok) { setError(data.error || `تعذّر النشر (${res.status})`); return; }
-    setBody(''); setFiles([]);
+    setBody(''); setFiles([]); setModule('');
     router.refresh();
   };
 
@@ -150,6 +152,22 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
                 </div>
               ))}
             </div>
+          )}
+
+          {/* Which subject it belongs to. It appears only once there is
+              something to post, so an empty composer stays one line — and it
+              stays optional, because most of what a promo says is not about
+              a subject at all. */}
+          {(body.trim() || files.length > 0) && subjects.length > 0 && (
+            <select
+              className="admin-input sm"
+              value={module}
+              onChange={(e) => setModule(e.target.value)}
+              aria-label="المادة"
+            >
+              <option value="">بلا مادة</option>
+              {subjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+            </select>
           )}
 
           {error && <div className="admin-err">{error}</div>}

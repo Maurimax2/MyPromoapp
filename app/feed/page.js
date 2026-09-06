@@ -19,7 +19,7 @@ export default async function Feed() {
   // already liked — four things, one round trip each, all at once.
   const [{ data: rows }, { data: mine }] = await Promise.all([
     sb.from('posts')
-      .select(`id, body, kind, created_at, likes, comments,
+      .select(`id, body, kind, module, created_at, likes, comments,
                author:profiles(id, full_name, email, promo),
                post_media(kind, path, name, bytes, position)`)
       .eq('promo', promo).eq('removed', false)
@@ -35,9 +35,12 @@ export default async function Feed() {
     .from('notifications').select('id', { count: 'exact', head: true })
     .eq('person', profile.id).eq('seen', false);
 
+  const named = Object.fromEntries(MODULES.map((m) => [m.id, m.name]));
+
   const posts = (rows || []).map((p) => ({
     ...p,
     liked: liked.has(p.id),
+    subject: named[p.module] || null,
     media: (p.post_media || [])
       .sort((a, b) => a.position - b.position)
       .map((m) => ({ ...m, url: urlFor(m.path) })),
