@@ -100,6 +100,11 @@ function matches(row, key, spec) {
     const list = val.replace(/^\(|\)$/g, '').split(',').map((s) => s.replace(/^"|"$/g, ''));
     return list.includes(String(cell));
   }
+  // Paging a room's chat asks for anything newer than the last id it holds.
+  if (op === 'gt')  return Number(cell) >  Number(val);
+  if (op === 'gte') return Number(cell) >= Number(val);
+  if (op === 'lt')  return Number(cell) <  Number(val);
+  if (op === 'lte') return Number(cell) <= Number(val);
   return true;
 }
 
@@ -286,6 +291,15 @@ createServer(async (req, res) => {
       rows = rows.map((r) => ({
         ...r, post_media: db.post_media.filter((m) => m.post === r.id),
       }));
+    }
+    if (table === 'rooms' && select.includes('host:profiles')) {
+      rows = rows.map((r) => ({ ...r, host: db.profiles.find((p) => p.id === r.host) || null }));
+    }
+    if (table === 'room_members' && select.includes('person:profiles')) {
+      rows = rows.map((r) => ({ ...r, person: db.profiles.find((p) => p.id === r.person) || null }));
+    }
+    if (table === 'room_messages' && select.includes('author:profiles')) {
+      rows = rows.map((r) => ({ ...r, author: db.profiles.find((p) => p.id === r.author) || null }));
     }
 
     const headers = { 'content-range': `0-${Math.max(rows.length - 1, 0)}/${total}` };

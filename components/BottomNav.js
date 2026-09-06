@@ -14,7 +14,10 @@ export default function BottomNav() {
   const path = usePathname();
   // The panel is not the app: it has its own header and no use for the four
   // student tabs sitting over its buttons.
+  // A room has its own bar along the bottom, and the file viewer wants the
+  // whole screen. Neither has room for the four tabs as well.
   if (path === '/' || path.startsWith('/login') || path.startsWith('/admin')) return null;
+  if (/^\/rooms\/[^/]+$/.test(path)) return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">
