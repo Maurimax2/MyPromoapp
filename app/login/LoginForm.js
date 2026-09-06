@@ -1,26 +1,29 @@
 'use client';
 
-// The front door.
+// The front door — three ways through it.
 //
-// A link to your own inbox is the right door for a student: they forget
-// passwords and they lend them, and a link is harder to lend to somebody who
-// is not in the promo. But Supabase's built-in mailer sends a couple of
-// messages an hour, which is fine for a student signing up once and useless
-// for the four of us signing in twenty times a day while we build. So there
-// is a password door too, and staff use it.
+// A link to your own inbox is the right door for a student who forgets
+// passwords. It is the wrong door when Supabase's built-in mailer sends two
+// messages an hour, which is where this project spent an evening. So there is
+// also a password, and a way to make an account that needs no email at all.
 //
-// The form itself. Whether it is shown at all is decided on the server, in
-// page.js — somebody already signed in should never see it again.
+// Making an account does not let you in. A new profile is `pending` and every
+// policy is written against is_approved(), so a student sees nothing until
+// somebody on the team approves them. That is the gate — not the inbox.
 
 import { useState } from 'react';
 import Logo from '@/components/Logo';
+import Icon from '@/components/Icon';
 import { supabase } from '@/lib/supabase/browser';
+import { PROMOS } from '@/lib/data';
 
 export default function LoginForm() {
-  const [how, setHow] = useState('link');       // link | password
+  const [how, setHow] = useState('link');       // link | password | join
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [state, setState] = useState('idle');   // idle | sending | sent | error
+  const [name, setName] = useState('');
+  const [promo, setPromo] = useState('');
+  const [state, setState] = useState('idle');   // idle | busy | sent | waiting | error
   const [error, setError] = useState('');
 
   const sendLink = async () => {
@@ -42,89 +45,137 @@ export default function LoginForm() {
     window.location.href = '/admin';
   };
 
+  const join = async () => {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: email.trim(), password, full_name: name.trim(), promo }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `تعذّر إنشاء الحساب (${res.status})`);
+
+    await supabase().auth.signInWithPassword({ email: email.trim(), password });
+    setState('waiting');
+  };
+
+  const ready =
+    how === 'link' ? email.trim()
+    : how === 'password' ? email.trim() && password
+    : email.trim() && password.length >= 8 && name.trim() && promo;
+
   const submit = async (e) => {
     e.preventDefault();
-    if (!email.trim()) return;
-    if (how === 'password' && !password) return;
-    setState('sending'); setError('');
-
+    if (!ready || state === 'busy') return;
+    setState('busy'); setError('');
     try {
-      await (how === 'link' ? sendLink() : signIn());
+      await (how === 'link' ? sendLink() : how === 'password' ? signIn() : join());
     } catch (err) {
-      // The one people actually hit, and the message Supabase gives for it
-      // says nothing about what to do next.
       const rate = /rate limit|too many/i.test(err.message);
-      setError(rate
-        ? 'تجاوزنا حدّ الرسائل — جرّب كلمة السر بدل الرابط'
-        : err.message);
+      setError(rate ? 'تجاوزنا حدّ الرسائل — أنشئ حسابًا بكلمة سر بدل الرابط' : err.message);
       setState('error');
     }
   };
 
+  if (state === 'sent' || state === 'waiting') {
+    return (
+      <div className="login">
+        <Logo size={74} id="login" />
+        <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
+        <div className="login-sent">
+          <div className="login-sent-t">
+            {state === 'sent' ? 'تحقّق من بريدك' : 'أنشأنا حسابك'}
+          </div>
+          <div className="login-sent-b">
+            {state === 'sent'
+              ? <>أرسلنا رابط الدخول إلى<br /><span dir="ltr">{email}</span></>
+              : <>حسابك بانتظار موافقة أحد المشرفين.<br />سنفتح لك التطبيق فور الموافقة.</>}
+          </div>
+          <button className="btn g" onClick={() => { setState('idle'); setHow('link'); }}>
+            رجوع
+          </button>
+        </div>
+        <p className="login-terms">بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
+      </div>
+    );
+  }
+
   return (
     <div className="login">
       <Logo size={74} id="login" />
-      <div className="login-name">
-        <span>My</span><span className="login-name-b">Promo</span>
-      </div>
+      <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
 
-      {state === 'sent' ? (
-        <div className="login-sent">
-          <div className="login-sent-t">تحقّق من بريدك</div>
-          <div className="login-sent-b">
-            أرسلنا رابط الدخول إلى<br /><span dir="ltr">{email}</span>
-          </div>
-          <button className="btn g" onClick={() => setState('idle')}>عنوان آخر</button>
-        </div>
-      ) : (
-        <form className="login-form" onSubmit={submit}>
+      <form className="login-form" onSubmit={submit}>
+        {how === 'join' && (
           <input
-            className="login-input"
-            type="email"
-            dir="ltr"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-label="البريد الإلكتروني"
-          />
+            className="login-input" autoFocus placeholder="اسمك الكامل"
+            value={name} onChange={(e) => setName(e.target.value)} aria-label="الاسم" />
+        )}
 
-          {how === 'password' && (
-            <input
-              className="login-input"
-              type="password"
-              dir="ltr"
-              autoComplete="current-password"
-              placeholder="كلمة السر"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              aria-label="كلمة السر"
-            />
+        <input
+          className="login-input" type="email" dir="ltr" inputMode="email"
+          autoComplete="email" placeholder="you@example.com"
+          value={email} onChange={(e) => setEmail(e.target.value)}
+          aria-label="البريد الإلكتروني" />
+
+        {how !== 'link' && (
+          <input
+            className="login-input" type="password" dir="ltr"
+            autoComplete={how === 'join' ? 'new-password' : 'current-password'}
+            placeholder={how === 'join' ? 'كلمة سر — 8 أحرف على الأقل' : 'كلمة السر'}
+            value={password} onChange={(e) => setPassword(e.target.value)}
+            aria-label="كلمة السر" />
+        )}
+
+        {how === 'join' && (
+          <>
+            <div className="login-lbl">سنتك</div>
+            <div className="login-promos">
+              {PROMOS.map((p) => (
+                <button
+                  type="button" key={p.id}
+                  className={`imp-kind${promo === p.id ? ' on' : ''}`}
+                  style={promo === p.id ? { background: p.badge } : undefined}
+                  onClick={() => setPromo(p.id)}
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        <button className="btn p" disabled={!ready || state === 'busy'}>
+          {state === 'busy' ? '…'
+            : how === 'link' ? 'أرسل رابط الدخول'
+            : how === 'password' ? 'ادخل'
+            : 'أنشئ الحساب'}
+        </button>
+
+        {state === 'error' && <div className="login-err">{error}</div>}
+
+        <div className="login-alts">
+          {how !== 'password' && (
+            <button type="button" className="login-alt"
+              onClick={() => { setHow('password'); setState('idle'); }}>
+              ادخل بكلمة السر
+            </button>
           )}
+          {how !== 'join' && (
+            <button type="button" className="login-alt"
+              onClick={() => { setHow('join'); setState('idle'); }}>
+              <Icon name="plus" size={15} /> حساب جديد
+            </button>
+          )}
+          {how !== 'link' && (
+            <button type="button" className="login-alt"
+              onClick={() => { setHow('link'); setState('idle'); }}>
+              أرسل لي رابطًا
+            </button>
+          )}
+        </div>
+      </form>
 
-          <button
-            className="btn p"
-            disabled={state === 'sending' || !email.trim() || (how === 'password' && !password)}
-          >
-            {state === 'sending' ? '…' : how === 'link' ? 'أرسل رابط الدخول' : 'ادخل'}
-          </button>
-
-          {state === 'error' && <div className="login-err">{error}</div>}
-
-          <button
-            type="button"
-            className="login-alt"
-            onClick={() => { setHow(how === 'link' ? 'password' : 'link'); setState('idle'); }}
-          >
-            {how === 'link' ? 'ادخل بكلمة السر' : 'أرسل لي رابطًا بدل ذلك'}
-          </button>
-        </form>
-      )}
-
-      <p className="login-terms">
-        بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية
-      </p>
+      <p className="login-terms">بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
     </div>
   );
 }

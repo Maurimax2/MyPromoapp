@@ -939,10 +939,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   height: 100%; background: var(--purple);
   transition: width .3s ease; min-width: 3px;
 }
-.login-alt {
-  font-size: 14px; font-weight: 600; color: var(--purple);
-  min-height: 44px; width: 100%;
+.login-alts {
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+  justify-content: center; margin-top: 2px;
 }
+.login-alt {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 14px; font-weight: 600; color: var(--purple); min-height: 44px;
+}
+.login-lbl {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .05em;
+  color: var(--ink-3); margin: 4px 2px -4px; align-self: flex-start;
+}
+.login-promos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.login-promos .imp-kind { text-align: center; justify-content: center; min-height: 40px; }
 
 /* the panel header, with a way back */
 .admin-mark { font-size: 17px; font-weight: 700; letter-spacing: -.02em; flex-shrink: 0; }

@@ -63,6 +63,15 @@ const db = {
   ],
   audit_log: [],
   import_jobs: [],
+  posts: [],
+  post_media: [],
+  comments: [],
+  likes: [],
+  saves: [],
+  rooms: [],
+  room_members: [],
+  room_messages: [],
+  authUsers: [{ id: 'u-owner', email: 'owner@unem.mr' }],
 };
 
 const send = (res, code, body, headers = {}) => {
@@ -105,6 +114,25 @@ createServer(async (req, res) => {
 
   // ---- auth -------------------------------------------------------------
   if (path.startsWith('/auth/v1/')) {
+    // The service-key side: making and removing accounts.
+    if (path.startsWith('/auth/v1/admin/users')) {
+      if (req.method === 'POST') {
+        const body_ = await body(req);
+        const email = String(body_?.email || '').toLowerCase();
+        if (db.profiles.some((p) => p.email.toLowerCase() === email)) {
+          return send(res, 422, { message: 'User already registered' });
+        }
+        const user = { id: 'u-' + id(), email, user_metadata: body_?.user_metadata || {} };
+        db.authUsers.push(user);
+        return send(res, 200, { user });
+      }
+      if (req.method === 'DELETE') {
+        const uid = path.split('/').pop();
+        db.authUsers = db.authUsers.filter((u) => u.id !== uid);
+        return send(res, 200, {});
+      }
+    }
+
     if (path.endsWith('/token')) {
       return send(res, 200, {
         access_token: 'mock-access', refresh_token: 'mock-refresh',
