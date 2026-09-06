@@ -1294,3 +1294,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .rep-body b { font-size: 13px; font-weight: 700; }
 .rep-body p { font-size: 14px; line-height: 1.7; color: var(--ink-2); }
 .rep-why { font-size: 12.5px; color: var(--ink-3); }
+
+/* ---------- المراجعة ---------- */
+.rev-due {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 26px; text-align: center;
+}
+.rev-due-n {
+  font-size: 46px; font-weight: 700; color: var(--orange);
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.rev-due-l { font-size: 14px; color: var(--ink-3); margin-top: 7px; }
