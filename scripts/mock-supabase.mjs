@@ -249,6 +249,17 @@ createServer(async (req, res) => {
       return send(res, 200, { Key: key });
     }
 
+    // HEAD is how the app asks "do we already have this?", and answering 200
+    // to everything told it we had files we did not.
+    if (path.startsWith('/storage/v1/object/public/') && req.method === 'HEAD') {
+      const key = decodeURIComponent(path.slice('/storage/v1/object/public/'.length));
+      const obj = db.objects.get(key);
+      res.writeHead(obj ? 200 : 404, obj
+        ? { 'content-type': obj.type, 'content-length': obj.bytes.length }
+        : { 'content-type': 'application/json' });
+      return res.end();
+    }
+
     if (path.startsWith('/storage/v1/object/public/') && req.method === 'GET') {
       const key = decodeURIComponent(path.slice('/storage/v1/object/public/'.length));
       const obj = db.objects.get(key);

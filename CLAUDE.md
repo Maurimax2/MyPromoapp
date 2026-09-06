@@ -143,6 +143,19 @@ terms in Arabic — French is a necessity, not a preference.
 - It was a `<div>` for a while: the biggest, brightest thing on the screen,
   doing nothing at all.
 
+## Opening a file
+
+- **Drive is asked once per file, ever — not once per open.** The first
+  student to open a lecture gets it relayed; the file is then kept in our own
+  `archive` bucket and everybody after is redirected straight to the CDN.
+- **A copy is not a modification.** The Drive stays read-only and untouched;
+  this is a copy of a file already shared with every student by link.
+- Files over 60 MB are not kept — a 141 MB atlas would cost more in storage
+  than it saves. Those keep going to Drive.
+- **Never promise `Accept-Ranges` we do not have.** pdf.js asks in 256 KB
+  pieces and believes the header; if the upstream ignores Range, every piece
+  comes back as the whole file.
+
 ## The file viewer
 
 - pdf.js needs `standardFontDataUrl` and `cMapUrl`, both served from our own

@@ -7,25 +7,48 @@
 //
 // Range requests are passed straight through. That is what lets pdf.js fetch
 // the first pages and start drawing instead of waiting for all 10 MB.
+//
+// And it only asks Drive once. The first student to open a lecture gets it
+// relayed as before, and the file is kept in our own bucket afterwards;
+// everybody after them is sent straight to a CDN that serves ranges properly.
+// Drive is asked once per file, ever, instead of once per open.
 
+import { after } from 'next/server';
 import { relayHeaders } from '@/lib/file-headers';
+import { cachedUrl, keep } from '@/lib/archive-cache';
 
 export const runtime = 'nodejs';
+export const maxDuration = 60;
 
-const SOURCES = (fid) => [
+// A stand-in for Drive, so the caching can be driven end to end without
+// Google in the way. Never set in production.
+const FAKE = process.env.ARCHIVE_SOURCE_BASE;
+
+const SOURCES = (fid) => (FAKE ? [`${FAKE}/${fid}`] : [
   // `confirm=t` skips the "Google can't scan this file" interstitial, which
   // is otherwise returned as HTML instead of the file.
   `https://drive.usercontent.google.com/download?id=${fid}&export=download&confirm=t`,
   `https://drive.usercontent.google.com/download?id=${fid}&export=download`,
   `https://drive.google.com/uc?export=download&id=${fid}&confirm=t`,
   `https://drive.google.com/uc?export=download&id=${fid}`,
-];
+]);
 
 export async function GET(req, { params }) {
   const { fid } = await params;
 
   if (!/^[A-Za-z0-9_-]{10,80}$/.test(fid)) {
     return new Response('معرّف ملف غير صالح', { status: 400 });
+  }
+
+  // Our own copy, if we have one. A redirect rather than a relay: the phone
+  // then talks to the CDN directly and this function is out of the way for
+  // every byte range that follows.
+  const ours = await cachedUrl(fid);
+  if (ours) {
+    return new Response(null, {
+      status: 307,
+      headers: { Location: ours, 'Cache-Control': 'public, max-age=3600' },
+    });
   }
 
   const range = req.headers.get('range');
@@ -54,6 +77,10 @@ export async function GET(req, { params }) {
     // Which of those two answers Drive gave decides what we may promise the
     // viewer — see lib/file-headers.js.
     const headers = relayHeaders(res);
+
+    // Kept after the answer has gone out, so nobody waits for it. A copy
+    // that fails costs one more slow open, not a broken screen.
+    after(async () => { await keep(fid, SOURCES(fid)).catch(() => {}); });
 
     return new Response(res.body, { status: res.status === 206 ? 206 : 200, headers });
   }

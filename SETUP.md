@@ -27,7 +27,12 @@ policy that lets people in the same promo see each other.
 
 ## Storage
 
-Nothing to do. The first upload creates the `media` bucket itself, public,
+Nothing to do. Two buckets are made by the app itself the first time each is
+needed: `media` for what students upload, capped at 25 MB, and `archive` for
+MyPromo's own copy of a Drive file, capped at 60 MB. The second is what stops
+every open of a lecture going to Google — the first student to open one pays
+for it, everybody after is sent to the CDN.
+ The first upload creates the `media` bucket itself, public,
 capped at 25 MB, accepting images and PDFs only.
 
 Files live in Supabase Storage rather than R2 for now. R2 is paid for and its
