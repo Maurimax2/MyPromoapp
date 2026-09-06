@@ -17,7 +17,7 @@ export default function Filling() {
   const [done, setDone] = useState([]);
   const [failed, setFailed] = useState([]);
   const [at, setAt] = useState(null);
-  const [state, setState] = useState('starting');  // starting|running|done|error
+  const [state, setState] = useState('starting');  // starting|running|done|error|nothing
   const started = useRef(false);
 
   const run = useCallback(async () => {
@@ -26,6 +26,10 @@ export default function Filling() {
     const res = await fetch('/api/admin/seed/module');
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { setFailed([{ name: '—', error: data.error || res.status }]); setState('error'); return; }
+
+    // Nothing missing is not an event: the card takes itself off the screen
+    // rather than announcing that it had nothing to do.
+    if (!data.modules?.length) { setState('nothing'); return; }
 
     setList(data.modules);
     setState('running');
@@ -55,7 +59,9 @@ export default function Filling() {
     run();
   }, [run]);
 
-  const total = list.length || 9;
+  if (state === 'nothing') return null;
+
+  const total = list.length || 1;
   const seen = done.length + failed.length;
   const files = done.reduce((n, d) => n + d.documents, 0);
   const questions = done.reduce((n, d) => n + d.questions, 0);
@@ -65,6 +71,7 @@ export default function Filling() {
       <div className="admin-card-t">
         {state === 'done' && !failed.length ? 'المحتوى جاهز'
           : state === 'error' ? 'تعذّر النقل'
+          : state === 'starting' ? 'نبحث عمّا ينقص'
           : 'ننقل المحتوى إلى قاعدة البيانات'}
       </div>
 

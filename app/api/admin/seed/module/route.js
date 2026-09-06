@@ -22,11 +22,24 @@ export const maxDuration = 60;
 
 const bytesOf = (mb) => (mb ? Math.round(Number(mb) * 1048576) : null);
 
+// What the file has that the database does not.
+//
+// It used to answer with all nine subjects, which was right exactly once —
+// the first migration, into an empty database. A year catalogued afterwards
+// (PCEM1) had no way in at all: the panel only offered to migrate when there
+// was nothing at all to migrate into.
 export async function GET() {
   const gate = await requireStaff();
   if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
-  const profile = gate.profile;
-  return NextResponse.json({ modules: MODULES.map((m) => ({ id: m.id, name: m.name })) });
+
+  const { data: known } = await supabaseAdmin().from('modules').select('id');
+  const stored = new Set((known || []).map((m) => m.id));
+
+  return NextResponse.json({
+    modules: MODULES.filter((m) => !stored.has(m.id)).map((m) => ({
+      id: m.id, name: m.name, promo: m.promo,
+    })),
+  });
 }
 
 export async function POST(request) {

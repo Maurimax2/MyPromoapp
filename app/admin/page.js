@@ -30,7 +30,11 @@ export default async function AdminHome() {
 
   const failed = [pending, needAnswer, drafts, published, documents, reports]
     .map((c) => c.error).filter(Boolean);
-  const empty = documents.n === 0 && published.n === 0 && !failed.length;
+  // The panel offers to migrate whenever the file has a subject the database
+  // does not — a whole year catalogued after the first migration, not only an
+  // empty database. Filling asks the server what is missing and shows nothing
+  // when the answer is nothing.
+  const empty = !failed.length;
 
   return (
     <div className="admin-body">
