@@ -24,7 +24,10 @@ export default function BottomNav() {
   // bounce back to this screen would be four dead buttons.
   if (path === '/' || path.startsWith('/login') || path.startsWith('/admin')
       || path === '/waiting') return null;
-  if (/^\/(rooms|chat|qa)\/[^/]+$/.test(path)) return null;
+  // A file wants the whole screen — the comment above said so and the test
+  // did not: the bar sat over the last inch of every lecture, and over the
+  // control for switching how it opens.
+  if (/^\/(rooms|chat|qa|file)\/[^/]+$/.test(path)) return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">

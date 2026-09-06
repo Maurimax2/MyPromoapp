@@ -1425,3 +1425,15 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   object-fit: cover; object-position: top;
   background: var(--surface); border: 1px solid var(--line);
 }
+
+/* The quick view fills what is left of the screen under the header. */
+.pdf-frame {
+  flex: 1; width: 100%; border: 0; display: block;
+  background: var(--bg); min-height: 60vh;
+}
+.pdf-switch {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; min-height: 44px; flex-shrink: 0;
+  font-size: 12.5px; font-weight: 600; color: var(--purple);
+  background: var(--surface); border-bottom: 1px solid var(--line-soft);
+}

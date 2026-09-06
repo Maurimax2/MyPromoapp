@@ -1,6 +1,6 @@
 import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
-import PdfViewer from '@/components/PdfViewer';
+import Reader from './Reader';
 import { fileByFid } from '@/lib/data';
 
 // Files open here, inside MyPromo. The document is fetched through the app's
@@ -29,7 +29,12 @@ export default async function FileView({ params }) {
         </div>
       </header>
 
-      <PdfViewer src={src} title={file ? file.title : 'الملف'} />
+      <Reader
+        fid={fid}
+        src={src}
+        title={file ? file.title : 'الملف'}
+        bytes={file?.mb ? Math.round(Number(file.mb) * 1048576) : null}
+      />
     </>
   );
 }

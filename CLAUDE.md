@@ -156,6 +156,20 @@ terms in Arabic — French is a necessity, not a preference.
   pieces and believes the header; if the upstream ignores Range, every piece
   comes back as the whole file.
 
+## Two ways to read a file
+
+- **العرض السريع** is Google's own preview in a frame on our screen: Google
+  draws the pages and sends pictures, so a 40 MB scan starts at once instead
+  of arriving whole. Default for anything over 8 MB.
+- **Our renderer** for the rest — better typography, our fonts, our page
+  handling — and it must fetch the whole document first.
+- Either way the student stays on our screen. The rule was never "no iframe",
+  it was never handing them to the Drive app.
+- The choice is remembered per device, and if Google refuses to be framed the
+  fallback is one tap.
+- **The bottom bar is hidden on a file.** It used to cover the last inch of
+  every lecture, and the control for switching.
+
 ## The file viewer
 
 - **pdf.js is loaded through `lib/pdfjs.js`, never imported directly.** 6.3
