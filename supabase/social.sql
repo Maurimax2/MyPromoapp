@@ -31,6 +31,10 @@ create index if not exists posts_promo_idx on posts (promo, created_at desc);
 create index if not exists posts_author_idx on posts (author);
 create index if not exists posts_module_idx on posts (module);
 
+-- Questions waiting for an answer are the ones worth showing first.
+create index if not exists posts_question_idx
+  on posts (promo, answered, created_at desc) where kind = 'question';
+
 -- What is attached to a post: a photograph, or a PDF. Files live in storage;
 -- this is what the app needs to show them without fetching the object.
 create table if not exists post_media (
@@ -47,14 +51,23 @@ create table if not exists post_media (
 
 create index if not exists post_media_post_idx on post_media (post);
 
+-- A comment is also an answer: under a question, one of them can be marked
+-- by the asker as the one that settled it.
 create table if not exists comments (
   id         bigint generated always as identity primary key,
   post       bigint not null references posts on delete cascade,
   author     uuid   not null references profiles on delete cascade,
   body       text   not null,
   created_at timestamptz not null default now(),
-  removed    boolean not null default false
+  removed    boolean not null default false,
+  accepted   boolean not null default false
 );
+
+-- For a database created before answers could be accepted.
+alter table comments add column if not exists accepted boolean not null default false;
+alter table posts    add column if not exists answered boolean not null default false;
+
+create index if not exists comments_accepted_idx on comments (post) where accepted;
 
 create index if not exists comments_post_idx on comments (post, created_at);
 

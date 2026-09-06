@@ -1182,3 +1182,58 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: flex; align-items: center; justify-content: center;
 }
 .say-new button:disabled { opacity: .35; }
+
+/* ---------- سؤال وجواب ---------- */
+.seg-a {
+  flex: 1; text-align: center; font-size: 14.5px; font-weight: 600;
+  color: var(--ink-2); padding: 9px 0; border-radius: 9px;
+}
+.seg-a[data-on='true'] {
+  background: var(--surface); color: var(--purple);
+  box-shadow: 0 1px 3px rgba(26, 20, 36, .09);
+}
+
+.qa {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 13px; display: block; transition: transform .12s ease;
+}
+.qa:active { transform: scale(.985); }
+.qa-top { display: flex; align-items: flex-start; gap: 11px; }
+.qa-dot {
+  width: 28px; height: 28px; border-radius: 9px; flex-shrink: 0;
+  background: var(--orange-pale); color: #C2410C;
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.qa-dot.done { background: var(--right-bg); color: var(--right); }
+.qa-q {
+  font-size: 15px; font-weight: 600; line-height: 1.5; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.qa-m { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+.qa-write { height: auto; padding: 12px 14px; line-height: 1.7; resize: vertical; }
+
+.qa-full {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 14px; display: flex; flex-direction: column; gap: 11px;
+}
+.qa-body { font-size: 16px; line-height: 1.8; color: var(--ink); }
+
+.ans {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 13px; display: flex; flex-direction: column; gap: 9px;
+}
+/* The answer that settled it is the only green thing on the screen. */
+.ans.ok { border: 1.5px solid var(--right); }
+.ans-top { display: flex; align-items: center; gap: 9px; }
+.ans-top b { font-size: 13.5px; font-weight: 700; }
+.ans-tag {
+  background: var(--right-bg); color: var(--right); gap: 4px;
+  font-size: 11.5px; padding: 3px 9px;
+}
+.ans-body { font-size: 14.5px; line-height: 1.75; color: var(--ink-2); }
+.ans-pick {
+  align-self: flex-start; font-size: 12.5px; font-weight: 700; color: var(--purple);
+  min-height: 36px;
+}
+.scroll:has(+ .say-new) { padding-bottom: 86px; }
