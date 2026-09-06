@@ -13,20 +13,24 @@
 import { NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase/server';
 import { supabaseAdmin, staffEmails, syncStaffRole } from '@/lib/supabase/admin';
+import { originOf } from '@/lib/origin';
 
 const STAFF = ['owner', 'admin', 'editor'];
 
 export async function GET(request) {
   const url = new URL(request.url);
+  // See lib/origin.js: a redirect that changes host loses the session cookie
+  // that was just written.
+  const origin = originOf(request);
   const code = url.searchParams.get('code');
-  if (!code) return NextResponse.redirect(new URL('/login', url.origin));
+  if (!code) return NextResponse.redirect(new URL('/login', origin));
 
   const sb = await supabaseServer();
   const { error } = await sb.auth.exchangeCodeForSession(code);
-  if (error) return NextResponse.redirect(new URL('/login?e=1', url.origin));
+  if (error) return NextResponse.redirect(new URL('/login?e=1', origin));
 
   const { data: { user } } = await sb.auth.getUser();
-  if (!user) return NextResponse.redirect(new URL('/login?e=1', url.origin));
+  if (!user) return NextResponse.redirect(new URL('/login?e=1', origin));
 
   const admin = supabaseAdmin();
   const staff = staffEmails().includes((user.email || '').toLowerCase());
@@ -46,6 +50,9 @@ export async function GET(request) {
     profile = await syncStaffRole({ ...profile, id: user.id, email: user.email });
   }
 
-  const home = STAFF.includes(profile.role) ? '/admin' : '/feed';
-  return NextResponse.redirect(new URL(home, url.origin));
+  // Same three destinations as /auth/home: the panel, the app, or the one
+  // screen an account waiting for approval can reach.
+  const home = STAFF.includes(profile.role) ? '/admin'
+    : profile.status === 'approved' ? '/feed' : '/waiting';
+  return NextResponse.redirect(new URL(home, origin));
 }

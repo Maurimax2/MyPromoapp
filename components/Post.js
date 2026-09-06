@@ -104,7 +104,11 @@ export default function Post({ post, me }) {
               </span>
             )}
           </div>
-          <div className="post-meta">{when(post.created_at)}</div>
+          {/* The server renders this a few seconds before the browser does,
+              and "قبل 19 دقيقة" against "قبل 20 دقيقة" is a hydration error
+              on every feed load. The difference is the point of the label,
+              so the mismatch is allowed rather than designed away. */}
+          <div className="post-meta" suppressHydrationWarning>{when(post.created_at)}</div>
         </div>
 
         {/* Every post needs a way to be objected to. Apple requires it for an

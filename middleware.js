@@ -51,12 +51,17 @@ export async function middleware(request) {
 
   const staff = ['owner', 'admin', 'editor'].includes(profile.role);
   if (profile.status !== 'approved' && !staff) {
-    return NextResponse.redirect(new URL('/waiting', request.url));
+    const to = request.nextUrl.clone();
+    to.pathname = '/waiting';
+    to.search = '';
+    return NextResponse.redirect(to);
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|pdfjs|favicon.ico|.*\\.(?:png|jpg|svg|ico)$).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|.*\\.(?:png|jpg|svg|ico)$).*)',
+  ],
 };

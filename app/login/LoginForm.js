@@ -40,9 +40,10 @@ export default function LoginForm() {
       email: email.trim(), password,
     });
     if (error) throw error;
-    // The panel's own gate sends anyone who is not staff on to the app, so
-    // one destination is right for both.
-    window.location.href = '/admin';
+    // One destination for everybody; the server picks the screen, because it
+    // is the only side that can see whether you are staff, a student, or an
+    // account still waiting to be approved.
+    window.location.href = '/auth/home';
   };
 
   const join = async () => {
@@ -58,7 +59,7 @@ export default function LoginForm() {
     // account can reach. Saying "you are waiting" here as well would be a
     // second version of that screen to keep in step with the first.
     await supabase().auth.signInWithPassword({ email: email.trim(), password });
-    window.location.href = '/waiting';
+    window.location.href = '/auth/home';
   };
 
   const ready =

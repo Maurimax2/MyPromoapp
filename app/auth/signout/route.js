@@ -5,9 +5,10 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseServer } from '@/lib/supabase/server';
+import { originOf } from '@/lib/origin';
 
 export async function POST(request) {
   const sb = await supabaseServer();
   await sb.auth.signOut();
-  return NextResponse.redirect(new URL('/login', request.url), 303);
+  return NextResponse.redirect(new URL('/login', originOf(request)), 303);
 }
