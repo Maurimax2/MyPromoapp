@@ -1,111 +1,73 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import Icon from '@/components/Icon';
-import { PROMOS, notesBySubject } from '@/lib/data';
+import { redirect } from 'next/navigation';
+import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { MODULES, sectionsFor } from '@/lib/data';
+import { urlFor } from '@/lib/storage';
+import NoteList from './NoteList';
 
-// الملخصات — student notes, filed under the subject they cover, for every
-// promo. Each note shows who wrote it.
-export default function Notes() {
-  const [promo, setPromo] = useState('pcem2');
-  const [q, setQ] = useState('');
+export const dynamic = 'force-dynamic';
 
-  const chosen = PROMOS.find((p) => p.id === promo);
-  const groups = notesBySubject(promo)
-    .map((g) => ({
-      ...g,
-      items: g.items.filter(
-        (n) => !q || n.title.includes(q) || (n.author || '').includes(q) || g.subject.includes(q.toUpperCase()),
-      ),
-    }))
-    .filter((g) => g.items.length);
+// الملخصات — what students wrote, filed under the subject it covers.
+//
+// Two sources, deliberately shown together: the résumés that came out of the
+// Drive with the course material, and what a student uploads from their
+// phone. A student looking for a summary of Ostéologie does not care which
+// of the two it came from.
+export default async function Notes() {
+  const profile = await currentProfile();
+  if (!profile) redirect('/login');
 
-  const total = groups.reduce((n, g) => n + g.items.length, 0);
+  const promo = profile.promo || 'pcem2';
+  const sb = await supabaseServer();
+
+  const [{ data: rows }, { data: saved }] = await Promise.all([
+    sb.from('posts')
+      .select(`id, body, module, created_at,
+               author:profiles(id, full_name, email),
+               post_media(kind, path, name, bytes, position)`)
+      .eq('promo', promo).eq('kind', 'note').eq('removed', false)
+      .order('created_at', { ascending: false }).limit(120),
+    sb.from('saves').select('post').eq('person', profile.id),
+  ]);
+
+  const keeps = new Set((saved || []).map((s) => s.post));
+
+  const uploaded = (rows || []).map((n) => {
+    const file = (n.post_media || []).sort((a, b) => a.position - b.position)[0];
+    return {
+      id: `p${n.id}`, post: n.id, title: n.body || file?.name || 'ملخص',
+      module: n.module, author: n.author, at: n.created_at,
+      url: file ? urlFor(file.path) : null,
+      ext: file?.name?.split('.').pop()?.toUpperCase() || null,
+      bytes: file?.bytes ?? null,
+      saved: keeps.has(n.id),
+    };
+  });
+
+  // The résumés that shipped with the course, per subject.
+  const fromDrive = MODULES
+    .filter((m) => m.promo === promo)
+    .flatMap((m) => sectionsFor(m, 'notes').flatMap((s) => s.items.map((it) => ({
+      id: `d${it.fid}`, title: it.title, module: m.id, author: null,
+      href: `/file/${it.fid}`, ext: it.ext || 'PDF',
+      bytes: it.mb ? Math.round(it.mb * 1048576) : null,
+    }))));
+
+  const named = Object.fromEntries(MODULES.map((m) => [m.id, m.name]));
+
+  // Group by subject, the uploads first because they are the new thing.
+  const groups = [];
+  for (const n of [...uploaded, ...fromDrive]) {
+    const key = n.module || 'autre';
+    let g = groups.find((x) => x.id === key);
+    if (!g) groups.push((g = { id: key, name: named[key] || 'Autres', items: [] }));
+    g.items.push(n);
+  }
 
   return (
-    <>
-      <header className="head">
-        <div className="head-row">
-          <div className="grow">
-            <div className="head-t">الملخصات</div>
-            <div className="head-s">{chosen.name} · {total} ملخص</div>
-          </div>
-          <button className="icobtn" aria-label="ملخصاتي"><Icon name="bookmark" size={19} /></button>
-        </div>
-
-        <label className="srch">
-          <Icon name="search" size={18} />
-          <input value={q} onChange={(e) => setQ(e.target.value)}
-            placeholder="ابحث بالمادة أو باسم الطالب" type="search" aria-label="ابحث في الملخصات" />
-        </label>
-
-        <div className="chips">
-          {PROMOS.map((p) => (
-            <button key={p.id} onClick={() => setPromo(p.id)}
-              className={`pill${promo === p.id ? ' solid' : ' grey'}`}
-              style={promo === p.id ? { background: p.badge } : undefined}>
-              {p.name}
-            </button>
-          ))}
-        </div>
-      </header>
-
-      <div className="scroll">
-        {groups.map((g) => (
-          <section key={g.subject} className="note-group">
-            <div className="note-subject">
-              <span>{g.subject}</span>
-              <span className="note-subject-n">{g.items.length}</span>
-            </div>
-            {g.items.map((n) => {
-              const body = (
-                <>
-                  <div className="note-top">
-                    {n.author ? (
-                      <div className="av" style={{ width: 38, height: 38, fontSize: 12.5, background: n.colour }}>
-                        {n.initials}
-                      </div>
-                    ) : (
-                      <div className="note-ic"><Icon name="file" size={17} /></div>
-                    )}
-                    <div className="grow">
-                      <div className="note-title">{n.title}</div>
-                      <div className="note-by">
-                        {n.author ? `${n.author} · ${n.when}` : n.source}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="note-foot">
-                    <span className="pill grey">
-                      {n.kind === 'pdf' ? 'PDF' : 'نص'}
-                      {n.pages ? ` · ${n.pages} صفحات` : ''}
-                      {n.mb ? ` · ${n.mb} MB` : ''}
-                    </span>
-                    {n.saves != null
-                      ? <span className="note-saves"><Icon name="bookmark" size={15} />{n.saves}</span>
-                      : <span className="note-saves"><Icon name="chev" size={15} /></span>}
-                  </div>
-                </>
-              );
-              return n.fid
-                ? <Link key={n.id} href={`/file/${n.fid}`} className="card note">{body}</Link>
-                : <article key={n.id} className="card note">{body}</article>;
-            })}
-          </section>
-        ))}
-
-        {groups.length === 0 && (
-          <div className="empty">
-            <div className="tile tint-purple"><Icon name="book" size={24} /></div>
-            <div className="empty-t">
-              {q ? 'لا نتائج' : `لا ملخصات في ${chosen.name} بعد`}
-            </div>
-            <div className="empty-b">
-              {q ? `لا ملخص يطابق «${q}».` : 'كن أول من يشارك ملخصًا مع دفعتك.'}
-            </div>
-          </div>
-        )}
-      </div>
-    </>
+    <NoteList
+      groups={groups}
+      subjects={MODULES.filter((m) => m.promo === promo).map((m) => ({ id: m.id, name: m.name }))}
+      me={{ id: profile.id }}
+    />
   );
 }
