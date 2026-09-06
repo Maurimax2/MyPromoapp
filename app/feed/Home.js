@@ -35,7 +35,7 @@ const TOOLS = [
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, unseen = 0, readError = null }) {
+export default function Home({ me, posts, subjects, unseen = 0, readError = null, refused = 0 }) {
   const router = useRouter();
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
@@ -230,6 +230,16 @@ export default function Home({ me, posts, subjects, unseen = 0, readError = null
         {readError && (
           <div className="admin-err" style={{ padding: '0 2px' }}>
             تعذّرت قراءة المنشورات — {readError}
+          </div>
+        )}
+
+        {/* The posts are there and the database would not hand them over.
+            Saying so is the whole point: an empty screen looks like an empty
+            promo, and we lost an afternoon to that. */}
+        {!readError && refused > 0 && (
+          <div className="admin-err" style={{ padding: '0 2px' }}>
+            في دفعتك {refused} منشورًا لا يسمح لك الخادم بقراءتها — تحقّق من
+            حالة حسابك وسنتك في اللوحة.
           </div>
         )}
 

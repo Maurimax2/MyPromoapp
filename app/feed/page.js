@@ -27,11 +27,20 @@ export default async function Feed() {
     sb.from('likes').select('post').eq('person', profile.id),
   ]);
 
-  // A refused read used to be indistinguishable from an empty promo: the
-  // error was dropped on the floor and the screen drew nothing. A post that
-  // exists and cannot be read is a different problem from no posts, and the
-  // person looking at it is the only one who can tell us which.
   const liked = new Set((mine || []).map((l) => l.post));
+
+  // An empty feed has two very different causes and used to look identical
+  // either way: nobody has posted, or the database has posts and will not
+  // hand them to you. Row-level security does not raise an error when it
+  // refuses — it simply returns nothing — so the only way to tell is to ask
+  // again with the key that ignores policies and compare the two numbers.
+  let refused = 0;
+  if (!readError && !(rows || []).length) {
+    const { count } = await supabaseAdmin()
+      .from('posts').select('id', { count: 'exact', head: true })
+      .eq('promo', promo).eq('removed', false);
+    refused = count || 0;
+  }
 
   // Read with the service key: a student's own notifications are their own
   // rows, but the count is wanted on every load and this is one head request.
@@ -58,6 +67,7 @@ export default async function Feed() {
     <Home
       unseen={unseen || 0}
       readError={readError ? (readError.message || 'تعذّرت قراءة المنشورات') : null}
+      refused={refused}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             promo: profile.promo,
             approved: profile.status === 'approved'
