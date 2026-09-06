@@ -73,6 +73,8 @@ const db = {
   rooms: [],
   room_members: [],
   room_messages: [],
+  reviews: [],
+  reports: [],
   authUsers: [{ id: 'u-owner', email: 'owner@unem.mr' }],
   buckets: [],
   objects: new Map(),
@@ -354,6 +356,8 @@ createServer(async (req, res) => {
     room_members:  () => ({ joined_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     profiles: () => ({ created_at: new Date().toISOString() }),
     documents: () => ({ published: true }),
+    reviews:  () => ({ box: 0, wrong: 0, due_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
+    reports:  () => ({ state: 'open', created_at: new Date().toISOString() }),
   };
 
   if (req.method === 'POST') {
@@ -361,8 +365,9 @@ createServer(async (req, res) => {
     const list = Array.isArray(payload) ? payload : [payload];
     const made = list.map((r) => {
       const row = { ...(DEFAULTS[table]?.() || {}), ...r };
-      if (row.id === undefined && table !== 'likes' && table !== 'saves'
-          && table !== 'room_members') row.id = id();
+      // Tables whose primary key is the pair, not a serial of their own.
+      if (row.id === undefined
+          && !['likes', 'saves', 'room_members', 'reviews'].includes(table)) row.id = id();
       db[table].push(row);
       return row;
     });

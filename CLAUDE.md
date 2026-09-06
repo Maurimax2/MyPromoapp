@@ -82,6 +82,27 @@ terms in Arabic — French is a necessity, not a preference.
   its own badge colour, shown on every post. **Six was a fact, not a rule —
   the panel can add a year.** Only PCEM2 has content so far.
 
+## النقاط
+
+- Points are **computed, never stored**. Every total is read back from what
+  already happened — posts, likes, answers, accepted answers, the review
+  schedule — so no number can drift from the thing it counts and there is no
+  table to keep in step.
+- **Reading earns nothing.** A point is paid for something another student can
+  use: a résumé, an answer, an accepted answer. A counter that rewards opening
+  the app rewards the wrong thing.
+- Badges state their own condition. A locked badge with a hidden condition is
+  a taunt, not a goal.
+
+## The + in the bar
+
+- It is an **action, not a destination**. On الرئيسية it puts the cursor in
+  the composer, on الملخصات it opens the upload — both already on the screen,
+  never a second way to do the same thing. From anywhere else it goes to the
+  composer.
+- It was a `<div>` for a while: the biggest, brightest thing on the screen,
+  doing nothing at all.
+
 ## The file viewer
 
 - pdf.js needs `standardFontDataUrl` and `cMapUrl`, both served from our own
@@ -107,6 +128,11 @@ but heavy on mobile data — a later thing.
   but has no bucket name or public URL set, and a half-configured store fails
   at the moment a student is holding a photograph. `lib/storage.js` is the
   only file that knows — moving to R2 later is one file.
+- **People in the same promo can read each other's profile row.** They have to
+  — every screen names the author of something, and without it they all come
+  back blank. The row carries an email, so the app only ever prints the name,
+  or the part of the address before the @ when there is no name. Hiding the
+  column properly needs a view or column grants; both break `select *`.
 - **Never use `ON CONFLICT`/`upsert` against this schema.** Postgres infers a
   conflict target only from a unique CONSTRAINT, and several of ours are
   partial indexes. Look first, then insert what is missing.

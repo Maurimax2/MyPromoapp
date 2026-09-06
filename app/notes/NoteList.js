@@ -2,7 +2,7 @@
 
 // الملخصات, and adding one.
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
@@ -21,6 +21,13 @@ export default function NoteList({ groups, subjects, me }) {
   const [error, setError] = useState('');
   const [q, setQ] = useState('');
   const picker = useRef(null);
+
+  // The + in the bar opens the same form as the card below, never a second one.
+  useEffect(() => {
+    const open = () => setAdding(true);
+    window.addEventListener('mypromo:new', open);
+    return () => window.removeEventListener('mypromo:new', open);
+  }, []);
 
   const take = async (chosen) => {
     if (!chosen) return;

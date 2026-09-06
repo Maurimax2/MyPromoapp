@@ -8,7 +8,7 @@
 // The tools come before the pictures on purpose: a student who opened the app
 // to do questions should not scroll past four illustrations to reach them.
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
@@ -26,7 +26,7 @@ const TOOLS = [
   { id: 'rooms',     label: 'غرف الدراسة', icon: 'person', href: '/rooms', from: '#5B21B6', to: '#7C3AED' },
   { id: 'duel',      label: 'تحدّي زميلك', icon: 'flask' },
   { id: 'review',    label: 'المراجعة',    icon: 'clock', href: '/review', from: '#5B21B6', to: '#8B5CF6' },
-  { id: 'points',    label: 'النقاط',      icon: 'check' },
+  { id: 'points',    label: 'النقاط',      icon: 'check', href: '/points', from: '#9A3412', to: '#F97316' },
   { id: 'models',    label: 'نماذج 3D',    icon: 'atom' },
   { id: 'timetable', label: 'جدول الحصص',  icon: 'clock' },
 ];
@@ -40,6 +40,19 @@ export default function Home({ me, posts, subjects }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const picker = useRef(null);
+  const field = useRef(null);
+
+  // The + in the bar is the same action as the box at the top of this screen,
+  // so it puts the cursor in it rather than opening a second way to post.
+  useEffect(() => {
+    const write = () => {
+      field.current?.focus();
+      field.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+    if (new URLSearchParams(window.location.search).has('write')) write();
+    window.addEventListener('mypromo:new', write);
+    return () => window.removeEventListener('mypromo:new', write);
+  }, []);
 
   // Files go up as they are chosen, not when the post is sent — a student on
   // LTE should be waiting while they write, not after.
@@ -106,6 +119,7 @@ export default function Home({ me, posts, subjects }) {
               {me.name.slice(0, 2)}
             </div>
             <textarea
+              ref={field}
               className="composer-field"
               rows={body ? 3 : 1}
               placeholder="شارك شيئًا مع دفعتك…"

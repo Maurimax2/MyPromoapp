@@ -20,6 +20,11 @@ and messages, and private chats.
 Nothing on the social side works until this runs. The app will not crash — the
 screens will simply be empty and say so.
 
+It also carries one fix that is not about posts at all: `schema.sql` let a
+student read exactly one profile, their own, so every author's name on every
+screen would have come back empty with nothing to say why. This adds the
+policy that lets people in the same promo see each other.
+
 ## Storage
 
 Nothing to do. The first upload creates the `media` bucket itself, public,

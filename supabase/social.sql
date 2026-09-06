@@ -243,6 +243,28 @@ create or replace function my_promo() returns text
     select promo from profiles where id = auth.uid();
   $$;
 
+-- You can see the people you study with.
+--
+-- schema.sql let a student read exactly one profile: their own. Every screen
+-- here embeds the author of something — a post, a comment, a message, a room
+-- host — so under that policy alone the whole app renders with nameless
+-- people, and no error anywhere says why. A promo is a class of students who
+-- sit in the same room; they may read each other's row.
+--
+-- The row carries an email, so this makes a classmate's address readable to
+-- the promo. Everything on screen shows the name, or the part of the address
+-- before the @ when somebody has no name — never the address itself. Hiding
+-- the column properly needs a view or column grants, and both would break
+-- `select *` in ways nobody could debug from a phone; when there is a reason
+-- to, that is the change to make.
+drop policy if exists profiles_promo on profiles;
+create policy profiles_promo on profiles for select
+  using (
+    id = auth.uid()
+    or is_staff()
+    or (is_approved() and promo is not null and promo = my_promo())
+  );
+
 -- A student reads their own promo's posts; staff read everything. Nobody
 -- reads what moderation has removed except the staff who removed it.
 drop policy if exists posts_read on posts;
