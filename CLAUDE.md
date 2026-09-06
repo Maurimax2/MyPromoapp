@@ -63,6 +63,11 @@ terms in Arabic — French is a necessity, not a preference.
   every policy is written against `is_approved()`, so a new account reads
   nothing until somebody approves it in اللوحة ← الأعضاء.
 - The student picks their own promo at sign-up. An admin changes it if wrong.
+- **An unapproved account sees one screen: `/waiting`.** Enforced in the
+  middleware, in one place, because the screen somebody adds next month is
+  the one that would forget it. Row-level security alone produced an app that
+  looked normal and failed one button at a time — an empty feed and a
+  composer that took a photograph and then refused to post it.
 
 ## Shape of the app
 
@@ -93,6 +98,13 @@ terms in Arabic — French is a necessity, not a preference.
   the app rewards the wrong thing.
 - Badges state their own condition. A locked badge with a hidden condition is
   a taunt, not a goal.
+
+## Direction
+
+- **What a student types picks its own direction** (`dir="auto"`), everywhere
+  it is written and everywhere it is shown. Study content is French inside an
+  Arabic RTL interface, so without it every French sentence ends up with its
+  full stop on the wrong side.
 
 ## The + in the bar
 

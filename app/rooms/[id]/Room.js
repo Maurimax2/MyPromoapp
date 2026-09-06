@@ -95,7 +95,7 @@ export default function Room({ room, people, first, me }) {
         {messages.map((m) => (
           <div key={m.id} className={`say${m.author?.id === me.id ? ' mine' : ''}`}>
             {m.author?.id !== me.id && <b>{name(m.author)}</b>}
-            <div>{m.body}</div>
+            <div dir="auto">{m.body}</div>
           </div>
         ))}
         {!messages.length && (
@@ -111,7 +111,7 @@ export default function Room({ room, people, first, me }) {
 
       <div className="say-new">
         <input
-          value={draft} onChange={(e) => setDraft(e.target.value)}
+          value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && say()}
           placeholder="اكتب…" aria-label="رسالة" />
         <button disabled={!draft.trim() || busy} onClick={say} aria-label="أرسل">

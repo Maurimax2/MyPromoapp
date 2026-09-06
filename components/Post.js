@@ -126,7 +126,7 @@ export default function Post({ post, me }) {
         </div>
       </div>
 
-      {post.body && <div className="post-body">{post.body}</div>}
+      {post.body && <div className="post-body" dir="auto">{post.body}</div>}
 
       {post.media?.length > 0 && (
         <div className="post-media">
@@ -165,7 +165,7 @@ export default function Post({ post, me }) {
               </div>
               <div className="grow">
                 <b>{c.author?.full_name || c.author?.email?.split('@')[0] || 'طالب'}</b>
-                <div>{c.body}</div>
+                <div dir="auto">{c.body}</div>
               </div>
             </div>
           ))}

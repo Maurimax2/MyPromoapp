@@ -67,7 +67,7 @@ export default function Talk({ chat, person, first, me }) {
       <div className="scroll room-log">
         {messages.map((m) => (
           <div key={m.id} className={`say${m.author === me ? ' mine' : ''}`}>
-            <div>{m.body}</div>
+            <div dir="auto">{m.body}</div>
           </div>
         ))}
         {!messages.length && (
@@ -81,7 +81,7 @@ export default function Talk({ chat, person, first, me }) {
       </div>
 
       <div className="say-new">
-        <input value={draft} onChange={(e) => setDraft(e.target.value)}
+        <input value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && say()}
           placeholder="اكتب…" aria-label="رسالة" />
         <button disabled={!draft.trim() || busy} onClick={say} aria-label="أرسل">

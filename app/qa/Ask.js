@@ -58,7 +58,7 @@ export default function Ask({ questions, subjects, open, only, me }) {
           <form className="admin-card admin-seed" onSubmit={ask}>
             <div className="admin-card-t">سؤال جديد</div>
             <textarea
-              className="admin-input qa-write" autoFocus rows={4}
+              className="admin-input qa-write" autoFocus rows={4} dir="auto"
               placeholder="اكتب سؤالك…"
               value={body} onChange={(e) => setBody(e.target.value)} aria-label="سؤالك" />
             <select className="admin-input" value={module} onChange={(e) => setModule(e.target.value)}>
@@ -87,7 +87,7 @@ export default function Ask({ questions, subjects, open, only, me }) {
                 {q.answered ? <Icon name="check" size={13} /> : '؟'}
               </span>
               <div className="grow">
-                <div className="qa-q">{q.body}</div>
+                <div className="qa-q" dir="auto">{q.body}</div>
                 <div className="qa-m">
                   {name(q.author)}
                   {q.module ? ` · ${subject(q.module) || ''}` : ''}

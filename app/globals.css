@@ -1385,3 +1385,23 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pts-place.p1 { background: var(--orange); color: #fff; }
 .pts-place.p2 { background: var(--purple); color: #fff; }
 .pts-place.p3 { background: #A78BFA; color: #fff; }
+
+/* ---------- بانتظار الموافقة ---------- */
+.wait { align-items: center; justify-content: center; gap: 18px; text-align: center; }
+.wait-card {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 26px 20px; width: 100%; max-width: 340px;
+  display: flex; flex-direction: column; align-items: center; gap: 11px;
+}
+.wait-card .tile { width: 52px; height: 52px; }
+.wait-t { font-size: 19px; font-weight: 700; }
+.wait-b { font-size: 14px; line-height: 1.8; color: var(--ink-2); }
+.wait-rows { width: 100%; margin: 4px 0 2px; }
+.wait-rows > div {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  min-height: 42px; font-size: 13.5px;
+}
+.wait-rows > div + div { border-top: 1px solid var(--line-soft); }
+.wait-rows span { color: var(--ink-3); font-weight: 600; }
+.wait-rows b { font-weight: 700; overflow-wrap: anywhere; }
+.wait-card form { width: 100%; }

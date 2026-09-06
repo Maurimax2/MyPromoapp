@@ -16,6 +16,21 @@ const id = () => ++nextId;
 
 const USER = { id: 'u-owner', email: 'owner@unem.mr' };
 
+// Who the token belongs to.
+//
+// It used to be whoever the constant said, which meant the app could only
+// ever be driven as the owner — and the whole gate (a new account is
+// `pending` and reads nothing until somebody approves it) could not be
+// walked through end to end. The token now carries the id, so signing in as
+// a second person is signing in as a second person.
+const tokenFor = (uid) => `mock.${uid}`;
+const whoIs = (req) => {
+  const raw = String(req.headers.authorization || '').replace(/^Bearer /i, '');
+  const uid = raw.startsWith('mock.') ? raw.slice(5) : null;
+  const known = [...db.profiles, ...db.authUsers].find((p) => p.id === uid);
+  return known ? { id: known.id, email: known.email, user_metadata: {} } : USER;
+};
+
 const db = {
   profiles: [
     { id: 'u-owner', email: 'owner@unem.mr', full_name: 'Hamad', promo: 'pcem2',
@@ -181,13 +196,22 @@ createServer(async (req, res) => {
     }
 
     if (path.endsWith('/token')) {
+      const asked = await body(req);
+      const email = String(asked?.email || '').toLowerCase();
+      const found = email
+        ? [...db.profiles, ...db.authUsers].find((p) => (p.email || '').toLowerCase() === email)
+        : null;
+      if (email && !found) {
+        return send(res, 400, { error: 'invalid_grant', error_description: 'Invalid login credentials' });
+      }
+      const user = found ? { id: found.id, email: found.email, user_metadata: {} } : USER;
       return send(res, 200, {
-        access_token: 'mock-access', refresh_token: 'mock-refresh',
+        access_token: tokenFor(user.id), refresh_token: tokenFor(user.id),
         token_type: 'bearer', expires_in: 3600,
-        expires_at: Math.floor(Date.now() / 1000) + 3600, user: USER,
+        expires_at: Math.floor(Date.now() / 1000) + 3600, user,
       });
     }
-    if (path.endsWith('/user')) return send(res, 200, USER);
+    if (path.endsWith('/user')) return send(res, 200, whoIs(req));
     if (path.endsWith('/logout')) return send(res, 204);
     if (path.endsWith('/otp')) return send(res, 200, {});
     return send(res, 200, {});

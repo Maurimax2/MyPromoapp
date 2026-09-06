@@ -20,7 +20,10 @@ export default function BottomNav() {
   // student tabs sitting over its buttons.
   // A room has its own bar along the bottom, and the file viewer wants the
   // whole screen. Neither has room for the four tabs as well.
-  if (path === '/' || path.startsWith('/login') || path.startsWith('/admin')) return null;
+  // An account waiting for approval has nowhere to go; four tabs that all
+  // bounce back to this screen would be four dead buttons.
+  if (path === '/' || path.startsWith('/login') || path.startsWith('/admin')
+      || path === '/waiting') return null;
   if (/^\/(rooms|chat|qa)\/[^/]+$/.test(path)) return null;
   const on = (href) => path.startsWith(href);
   return (

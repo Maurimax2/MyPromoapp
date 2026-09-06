@@ -90,7 +90,7 @@ export default function RoomList({ rooms, subjects, me }) {
             <div className="room-top">
               <div className="grow">
                 <div className="room-t">{r.title}</div>
-                {r.topic && <div className="room-b">{r.topic}</div>}
+                {r.topic && <div className="room-b" dir="auto">{r.topic}</div>}
               </div>
               <span className="pill">{r.members}/{r.capacity}</span>
             </div>

@@ -67,7 +67,7 @@ export default function Question({ post, subject, answers: first, me }) {
               <div className="post-name"><b>{name(post.author)}</b></div>
             </div>
           </div>
-          <div className="qa-body">{post.body}</div>
+          <div className="qa-body" dir="auto">{post.body}</div>
         </div>
 
         <div className="eyebrow" style={{ margin: '4px 2px 0' }}>
@@ -83,7 +83,7 @@ export default function Question({ post, subject, answers: first, me }) {
               <b className="grow">{name(a.author)}</b>
               {a.accepted && <span className="pill ans-tag"><Icon name="check" size={13} /> الجواب</span>}
             </div>
-            <div className="ans-body">{a.body}</div>
+            <div className="ans-body" dir="auto">{a.body}</div>
             {me.asked && (
               <button className="ans-pick" onClick={() => accept(a.id)}>
                 {a.accepted ? 'ألغِ الاختيار' : 'هذا هو الجواب'}

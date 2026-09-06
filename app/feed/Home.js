@@ -121,6 +121,7 @@ export default function Home({ me, posts, subjects }) {
             <textarea
               ref={field}
               className="composer-field"
+              dir="auto"
               rows={body ? 3 : 1}
               placeholder="شارك شيئًا مع دفعتك…"
               value={body}

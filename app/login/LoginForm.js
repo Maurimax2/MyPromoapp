@@ -23,7 +23,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [promo, setPromo] = useState('');
-  const [state, setState] = useState('idle');   // idle | busy | sent | waiting | error
+  const [state, setState] = useState('idle');   // idle | busy | sent | error
   const [error, setError] = useState('');
 
   const sendLink = async () => {
@@ -54,8 +54,11 @@ export default function LoginForm() {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || `تعذّر إنشاء الحساب (${res.status})`);
 
+    // Signed in straight away, then sent to the one screen an unapproved
+    // account can reach. Saying "you are waiting" here as well would be a
+    // second version of that screen to keep in step with the first.
     await supabase().auth.signInWithPassword({ email: email.trim(), password });
-    setState('waiting');
+    window.location.href = '/waiting';
   };
 
   const ready =
@@ -76,19 +79,15 @@ export default function LoginForm() {
     }
   };
 
-  if (state === 'sent' || state === 'waiting') {
+  if (state === 'sent') {
     return (
       <div className="login">
         <Logo size={74} id="login" />
         <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
         <div className="login-sent">
-          <div className="login-sent-t">
-            {state === 'sent' ? 'تحقّق من بريدك' : 'أنشأنا حسابك'}
-          </div>
+          <div className="login-sent-t">تحقّق من بريدك</div>
           <div className="login-sent-b">
-            {state === 'sent'
-              ? <>أرسلنا رابط الدخول إلى<br /><span dir="ltr">{email}</span></>
-              : <>حسابك بانتظار موافقة أحد المشرفين.<br />سنفتح لك التطبيق فور الموافقة.</>}
+            أرسلنا رابط الدخول إلى<br /><span dir="ltr">{email}</span>
           </div>
           <button className="btn g" onClick={() => { setState('idle'); setHow('link'); }}>
             رجوع

@@ -52,7 +52,7 @@ export default function PostCard({ post }) {
         <button className="chev" aria-label="خيارات المنشور"><Icon name="dots" size={18} /></button>
       </div>
 
-      <p className="post-body">{post.body}</p>
+      <p className="post-body" dir="auto">{post.body}</p>
 
       <Media a={post.attachment} />
 
