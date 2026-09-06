@@ -1006,3 +1006,60 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--wrong);
 }
 .env.ok .env-state { color: var(--right); }
+
+/* ============================================================
+   الرئيسية — the tools, then the subjects.
+   ============================================================ */
+
+/* A run of tools pushed sideways with the thumb. Two rows, so most of the
+   app is visible without scrolling at all. */
+.rail {
+  display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto);
+  gap: 9px; overflow-x: auto; scrollbar-width: none;
+  margin: 0 -18px; padding: 2px 18px 4px;
+  overscroll-behavior-x: contain;
+}
+.rail::-webkit-scrollbar { display: none; }
+
+.tool-a {
+  width: 106px; min-height: 100px; border-radius: 16px; padding: 12px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  color: #fff; transition: transform .12s ease;
+}
+.tool-a:active { transform: scale(.965); }
+.tool-a b { font-size: 13px; font-weight: 700; line-height: 1.25; }
+.tool-a-ic { opacity: .92; }
+
+/* What does not exist yet says so, rather than being a button that lies. */
+.tool-a.off {
+  background: var(--surface); border: 1px dashed var(--line);
+  color: var(--ink-3); cursor: default;
+}
+.tool-a.off:active { transform: none; }
+.tool-a.off b { color: var(--ink-2); font-weight: 600; }
+.tool-a-soon {
+  align-self: flex-start;
+  font-size: 9.5px; font-weight: 700; color: #C2410C;
+  background: var(--orange-pale); border-radius: 5px; padding: 2px 6px;
+}
+
+/* Subjects, one banner at a time, the next one peeking so your thumb knows. */
+.subs {
+  display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none;
+  margin: 0 -18px; padding: 2px 18px 6px;
+  scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+}
+.subs::-webkit-scrollbar { display: none; }
+.sub {
+  flex: 0 0 auto; width: 82%; scroll-snap-align: center;
+  border-radius: 16px; overflow: hidden;
+  background: var(--surface); box-shadow: var(--shadow);
+  transition: transform .12s ease;
+}
+.sub:active { transform: scale(.985); }
+/* The banner carries the subject's name already — nothing is printed over it. */
+.sub img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.sub-none {
+  aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 700; padding: 0 16px; text-align: center;
+}
