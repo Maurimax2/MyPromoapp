@@ -1,5 +1,20 @@
 import './globals.css';
+import { IBM_Plex_Sans_Arabic } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
+
+// The typeface, served from our own domain.
+//
+// It used to be a <link> to fonts.googleapis.com, which a browser will not
+// paint the page without. On a good connection that is invisible; on mobile
+// data in Nouakchott it is the whole reason a screen takes seconds to appear.
+// Next fetches the files at build time, serves them from here, and inlines
+// the CSS, so there is no third-party request in the way of the first paint.
+const plex = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic', 'latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-plex',
+});
 
 export const metadata = {
   title: 'MyPromo',
@@ -20,15 +35,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
-        />
-      </head>
+    <html lang="ar" dir="rtl" className={plex.variable}>
       <body>
         <div className="app">
           {children}

@@ -49,6 +49,10 @@ terms in Arabic — French is a necessity, not a preference.
 - Cards direction: white cards on grey, soft shadows, generous spacing.
 - Typeface is **IBM Plex Sans Arabic**, chosen over the Cairo named on the
   identity sheet. The sheet is out of date on this one point.
+- **The font is served from our own domain**, through `next/font`. It was a
+  `<link>` to fonts.googleapis.com, and a browser will not paint a page until
+  a stylesheet answers — which on mobile data is most of why a screen took
+  seconds to appear. Never put a render-blocking third-party request back.
 - One icon set (Lucide paths, stroke 2), one radius, one shadow.
 - Orange is spent only where something needs attention — not decoration.
 - Light theme only. Dark mode is deliberately not designed yet.
@@ -160,6 +164,10 @@ but heavy on mobile data — a later thing.
 
 - Content lives in **Postgres**, not in `lib/data.js`. The files under
   `lib/modules/` are history the migration reads once.
+- **Read narrowly.** `subjectsOf` for a list of names, `notesOf` for الملخصات,
+  the whole catalogue only where the whole catalogue is shown. PCEM2 is 906
+  documents; sending those to a phone to draw nine names is how an app earns
+  a reputation for being slow.
 - **Every student screen reads the catalogue through `lib/catalogue.js`**,
   which reads Postgres and hands back the shape `lib/data.js` used to. Nothing
   student-facing imports `MODULES` any more. That file was why a subject added

@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { sectionsFor } from '@/lib/data';
-import { modulesOf } from '@/lib/catalogue';
+import { notesOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import NoteList from './NoteList';
 
@@ -44,15 +43,15 @@ export default async function Notes() {
     };
   });
 
-  // The résumés that shipped with the course, per subject.
-  const subjects = await modulesOf(promo);
+  // The résumés that shipped with the course, per subject — read on their own
+  // rather than by loading the whole catalogue and filtering it.
+  const { subjects, sections } = await notesOf(promo);
 
-  const fromDrive = subjects
-    .flatMap((m) => sectionsFor(m, 'notes').flatMap((s) => s.items.map((it) => ({
-      id: `d${it.fid}`, title: it.title, module: m.id, author: null,
-      href: `/file/${it.fid}`, ext: it.ext || 'PDF',
-      bytes: it.mb ? Math.round(it.mb * 1048576) : null,
-    }))));
+  const fromDrive = subjects.flatMap((m) => (sections.get(m.id) || []).map((it) => ({
+    id: `d${it.fid}`, title: it.title, module: m.id, author: null,
+    href: `/file/${it.fid}`, ext: it.ext || 'PDF',
+    bytes: it.mb ? Math.round(it.mb * 1048576) : null,
+  })));
 
   const named = Object.fromEntries(subjects.map((m) => [m.id, m.name]));
 

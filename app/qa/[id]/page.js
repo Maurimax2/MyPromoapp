@@ -1,6 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { modulesOf } from '@/lib/catalogue';
+import { subjectsOf } from '@/lib/catalogue';
 import Question from './Question';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +23,7 @@ export default async function QuestionPage({ params }) {
   if (!post) notFound();
 
   const subject = post.module
-    ? (await modulesOf(post.author?.promo || 'pcem2')).find((m) => m.id === post.module)?.name || null
+    ? (await subjectsOf(post.author?.promo || 'pcem2')).find((m) => m.id === post.module)?.name || null
     : null;
 
   // The one that settled it goes first; everything else in the order it came.

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { modulesOf } from '@/lib/catalogue';
+import { subjectsOf } from '@/lib/catalogue';
 import RoomList from './RoomList';
 
 export const dynamic = 'force-dynamic';
@@ -32,7 +32,7 @@ export default async function Rooms() {
   const count = {};
   for (const m of members || []) count[m.room] = (count[m.room] || 0) + 1;
 
-  const subjects = (await modulesOf(promo)).map((m) => ({ id: m.id, name: m.name }));
+  const subjects = (await subjectsOf(promo)).map((m) => ({ id: m.id, name: m.name }));
 
   return (
     <RoomList

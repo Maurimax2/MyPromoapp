@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { bannerFor } from '@/lib/data';
-import { modulesOf } from '@/lib/catalogue';
+import { subjectsOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
@@ -49,7 +49,7 @@ export default async function Feed() {
     .from('notifications').select('id', { count: 'exact', head: true })
     .eq('person', profile.id).eq('seen', false);
 
-  const subjectRows = await modulesOf(promo);
+  const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
   const posts = (rows || []).map((p) => ({
