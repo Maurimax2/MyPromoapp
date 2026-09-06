@@ -12,11 +12,11 @@ export default async function RoomPage({ params }) {
   const sb = await supabaseServer();
   const [{ data: room }, { data: members }, { data: messages }] = await Promise.all([
     sb.from('rooms')
-      .select('id, title, topic, module, capacity, closed, host:profiles(id, full_name, email)')
+      .select('id, title, topic, module, capacity, closed, host:profiles!rooms_host_fkey(id, full_name, email)')
       .eq('id', id).maybeSingle(),
-    sb.from('room_members').select('person:profiles(id, full_name, email)').eq('room', id),
+    sb.from('room_members').select('person:profiles!room_members_person_fkey(id, full_name, email)').eq('room', id),
     sb.from('room_messages')
-      .select('id, body, created_at, author:profiles(id, full_name, email)')
+      .select('id, body, created_at, author:profiles!room_messages_author_fkey(id, full_name, email)')
       .eq('room', id).order('created_at').limit(200),
   ]);
 

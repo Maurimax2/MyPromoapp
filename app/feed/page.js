@@ -20,7 +20,7 @@ export default async function Feed() {
   const [{ data: rows, error: readError }, { data: mine }] = await Promise.all([
     sb.from('posts')
       .select(`id, body, kind, module, created_at, likes, comments,
-               author:profiles(id, full_name, email, promo),
+               author:profiles!posts_author_fkey(id, full_name, email, promo),
                post_media(kind, path, name, bytes, position)`)
       .eq('promo', promo).eq('removed', false)
       .order('created_at', { ascending: false }).limit(30),

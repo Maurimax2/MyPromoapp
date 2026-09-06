@@ -17,7 +17,7 @@ export async function GET(request) {
 
   const sb = await supabaseServer();
   let q = sb.from('room_messages')
-    .select('id, body, created_at, author:profiles(id, full_name, email)')
+    .select('id, body, created_at, author:profiles!room_messages_author_fkey(id, full_name, email)')
     .eq('room', room).order('created_at').limit(200);
   if (after) q = q.gt('id', after);
 

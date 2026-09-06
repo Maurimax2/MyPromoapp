@@ -15,7 +15,7 @@ export default async function Rooms() {
 
   const [{ data: rows }, { data: mine }] = await Promise.all([
     sb.from('rooms')
-      .select('id, title, topic, module, capacity, closed, created_at, host:profiles(id, full_name, email)')
+      .select('id, title, topic, module, capacity, closed, created_at, host:profiles!rooms_host_fkey(id, full_name, email)')
       .eq('promo', promo).eq('closed', false)
       .order('created_at', { ascending: false }).limit(40),
     sb.from('room_members').select('room').eq('person', profile.id),

@@ -22,7 +22,7 @@ export default async function Saved() {
   const postIds = (rows || []).map((r) => r.post).filter(Boolean);
   const { data: posts } = postIds.length
     ? await sb.from('posts')
-        .select('id, body, kind, module, author:profiles(full_name, email), post_media(path, name, bytes, position)')
+        .select('id, body, kind, module, author:profiles!posts_author_fkey(full_name, email), post_media(path, name, bytes, position)')
         .in('id', postIds)
     : { data: [] };
 

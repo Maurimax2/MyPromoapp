@@ -14,7 +14,7 @@ export async function GET(request) {
 
   const sb = await supabaseServer();
   const { data, error } = await sb.from('comments')
-    .select('id, body, created_at, author:profiles(id, full_name, email)')
+    .select('id, body, created_at, author:profiles!comments_author_fkey(id, full_name, email)')
     .eq('post', post).eq('removed', false)
     .order('created_at').limit(100);
 

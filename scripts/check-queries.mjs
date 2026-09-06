@@ -39,6 +39,41 @@ for (const m of sql.matchAll(/alter table\s+(\w+)\s+add column if not exists\s+(
   tables.get(m[1])?.add(m[2]);
 }
 
+// ---- how the tables reach each other --------------------------------------
+//
+// PostgREST works out an embed from the foreign keys, and refuses when more
+// than one path exists — including the path through a table that points at
+// both ends, which is how `likes`, `saves`, `comments` and `notifications`
+// each made posts→profiles ambiguous the morning they were created. The
+// answer is to name the key: `author:profiles!posts_author_fkey(...)`.
+
+const fks = [];   // { from, column, to }
+for (const m of sql.matchAll(/create table if not exists\s+(\w+)\s*\(([\s\S]*?)\n\);/g)) {
+  const [, name, body] = m;
+  for (const line of body.split('\n')) {
+    const fk = /^\s*([a-z_][a-z0-9_]*)\s+[\w\[\]]+.*\breferences\s+([a-z_][a-z0-9_]*)/i.exec(line);
+    if (fk) fks.push({ from: name, column: fk[1], to: fk[2] });
+  }
+}
+
+/** Every way PostgREST could read a relationship between two tables. */
+function pathsBetween(a, b) {
+  let n = 0;
+  for (const fk of fks) {
+    if (fk.from === a && fk.to === b) n++;
+    if (fk.from === b && fk.to === a) n++;
+  }
+  // A junction: one table holding a key into each of them.
+  const junctions = new Set();
+  for (const x of fks) {
+    if (x.to !== a) continue;
+    for (const y of fks) {
+      if (y.from === x.from && y.to === b && y.column !== x.column) junctions.add(x.from);
+    }
+  }
+  return n + junctions.size;
+}
+
 // Supabase's own, which the app reads through the same client.
 tables.set('storage.objects', new Set(['id', 'name', 'bucket_id']));
 
@@ -87,7 +122,18 @@ for (const file of files) {
       // `question_banks!inner` — the modifier is not part of the name.
       const bare = (item.includes(':') ? item.split(':')[1] : item).replace(/!.*$/, '').trim();
       if (select.includes(`${bare}(`) || select.includes(`${bare}!`)) {   // an embed
-        if (!tables.has(bare)) problems.push(`${file}: ${table} → embeds unknown table "${bare}"`);
+        if (!tables.has(bare)) {
+          problems.push(`${file}: ${table} → embeds unknown table "${bare}"`);
+          continue;
+        }
+        // Ambiguous embeds are refused at runtime, and the screen goes blank.
+        const named = item.includes('!');
+        const ways = pathsBetween(table, bare);
+        if (!named && ways > 1) {
+          problems.push(
+            `${file}: ${table} → ${bare} is ambiguous (${ways} relationships) — name the key, `
+            + `e.g. ${bare}!${table}_<column>_fkey(...)`);
+        }
         continue;
       }
       const name = bare;

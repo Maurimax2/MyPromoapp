@@ -13,10 +13,10 @@ export default async function QuestionPage({ params }) {
   const sb = await supabaseServer();
   const [{ data: post }, { data: answers }] = await Promise.all([
     sb.from('posts')
-      .select('id, body, module, answered, created_at, author:profiles(id, full_name, email)')
+      .select('id, body, module, answered, created_at, author:profiles!posts_author_fkey(id, full_name, email)')
       .eq('id', id).eq('kind', 'question').maybeSingle(),
     sb.from('comments')
-      .select('id, body, accepted, created_at, author:profiles(id, full_name, email)')
+      .select('id, body, accepted, created_at, author:profiles!comments_author_fkey(id, full_name, email)')
       .eq('post', id).eq('removed', false).order('created_at').limit(100),
   ]);
 

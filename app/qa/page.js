@@ -19,7 +19,7 @@ export default async function QA({ searchParams }) {
   const sb = await supabaseServer();
 
   let q = sb.from('posts')
-    .select('id, body, module, answered, comments, created_at, author:profiles(id, full_name, email)')
+    .select('id, body, module, answered, comments, created_at, author:profiles!posts_author_fkey(id, full_name, email)')
     .eq('promo', promo).eq('kind', 'question').eq('removed', false);
   if (only) q = q.eq('answered', false);
 

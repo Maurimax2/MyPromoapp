@@ -22,7 +22,7 @@ export default async function Notes() {
   const [{ data: rows }, { data: saved }] = await Promise.all([
     sb.from('posts')
       .select(`id, body, module, created_at,
-               author:profiles(id, full_name, email),
+               author:profiles!posts_author_fkey(id, full_name, email),
                post_media(kind, path, name, bytes, position)`)
       .eq('promo', promo).eq('kind', 'note').eq('removed', false)
       .order('created_at', { ascending: false }).limit(120),
