@@ -165,6 +165,10 @@ but heavy on mobile data — a later thing.
 - Show pictures before HTML. Screenshots of the running app, not file dumps.
 - Small steps. Stop and show after each one.
 - Ask before deciding when there is more than one reasonable option.
+- **Run the SQL before sending it too** — `npm run check:sql` applies both
+  migrations to a real Postgres, twice, and then checks the policies by
+  asking them as four different people. The mock has no row-level security,
+  so until this existed the policies had never once been run.
 - **Run it before sending it.** `npm run mock` stands up a Supabase in memory
   and the app can then be driven in a browser. Compiling is not testing:
   "the button does nothing" only ever shows up when you click it.

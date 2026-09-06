@@ -48,6 +48,20 @@ all until somebody approves it in **اللوحة ← الأعضاء**. That is t
 Your own team still needs `ADMIN_EMAILS` on Vercel — comma-separated, then
 redeploy. Anyone in that list becomes staff on their next sign-in.
 
+## Checking the SQL before you paste it
+
+    npm run check:sql
+
+It stands up a real Postgres, applies both files to an empty database, applies
+them a second time to prove they are safe to repeat, and then asks the
+policies who can read what — that an approved student sees their promo's
+people and posts and nobody else's, that an account waiting for approval sees
+nothing at all, and that no year reads another year's.
+
+It caught the one thing that would have failed on your database: `social.sql`
+indexed a column three lines before adding it, so on a fresh run it stopped
+with an error and nothing after it ran.
+
 ## Running it locally
 
     npm run mock     # a stand-in Supabase on :54321

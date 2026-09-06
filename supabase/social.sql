@@ -24,8 +24,15 @@ create table if not exists posts (
   edited_at  timestamptz,
   removed    boolean not null default false,      -- moderation hides, never deletes
   likes      int    not null default 0,           -- kept in step by trigger
-  comments   int    not null default 0
+  comments   int    not null default 0,
+  answered   boolean not null default false       -- a question that got its answer
 );
+
+-- For a database created before a question could be answered. It has to come
+-- before the index below, which reads the column: on a fresh database the two
+-- run in file order, and an index over a column that does not exist yet stops
+-- the whole migration.
+alter table posts add column if not exists answered boolean not null default false;
 
 create index if not exists posts_promo_idx on posts (promo, created_at desc);
 create index if not exists posts_author_idx on posts (author);
@@ -65,7 +72,6 @@ create table if not exists comments (
 
 -- For a database created before answers could be accepted.
 alter table comments add column if not exists accepted boolean not null default false;
-alter table posts    add column if not exists answered boolean not null default false;
 
 create index if not exists comments_accepted_idx on comments (post) where accepted;
 
