@@ -1,72 +1,116 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { supabaseServer, currentProfile, isStaff } from '@/lib/supabase/server';
 import { promoById } from '@/lib/data';
+import Sign from './Sign';
 
-const ITEMS = [
-  { icon: 'bookmark', label: 'ملفاتي المحفوظة', n: '12' },
-  { icon: 'book2',    label: 'منشوراتي',        n: '8'  },
-  { icon: 'archive',  label: 'سجل التحميلات',   n: ''   },
-  { icon: 'settings', label: 'الإعدادات',       n: ''   },
-];
+export const dynamic = 'force-dynamic';
 
-function Stat({ n, label, colour }) {
-  return (
-    <div style={{ flex: 1, textAlign: 'center' }}>
-      <div style={{ fontSize: 19, fontWeight: 700, color: colour, fontVariantNumeric: 'tabular-nums' }}>{n}</div>
-      <div style={{ fontSize: 11.5, color: 'var(--ink-3)', marginTop: 2 }}>{label}</div>
-    </div>
-  );
-}
+const ROLE = {
+  owner: 'مالك', admin: 'مشرف', editor: 'محرّر',
+  marketing: 'تسويق', student: 'طالب',
+};
 
-export default function Profile() {
-  const promo = promoById('pcem2');
+export default async function Profile() {
+  const me = await currentProfile();
+  if (!me) redirect('/login');
+
+  const sb = await supabaseServer();
+
+  // Real numbers, or none at all — an invented "12 saved" is worse than a 0.
+  const [posts, saves, answers, rooms] = await Promise.all([
+    sb.from('posts').select('*', { count: 'exact', head: true })
+      .eq('author', me.id).eq('removed', false),
+    sb.from('saves').select('*', { count: 'exact', head: true }).eq('person', me.id),
+    sb.from('comments').select('*', { count: 'exact', head: true })
+      .eq('author', me.id).eq('accepted', true),
+    sb.from('room_members').select('*', { count: 'exact', head: true }).eq('person', me.id),
+  ]);
+
+  const promo = promoById(me.promo) || null;
+  const name = me.full_name || me.email.split('@')[0];
+
   return (
     <>
       <header className="head">
         <div className="head-row">
           <div className="head-t">الملف الشخصي</div>
-          <button className="icobtn" aria-label="الإعدادات"><Icon name="settings" size={19} /></button>
         </div>
       </header>
 
       <div className="scroll">
-        <div className="card" style={{ padding: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 11 }}>
-          <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--purple)' }}>ه ب</div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 17, fontWeight: 700 }}>هَمَد بشير</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 7, justifyContent: 'center', marginTop: 6 }}>
-              <span className="pill solid" style={{ background: promo.badge, fontSize: 11 }}>{promo.name}</span>
-              <span style={{ fontSize: 12.5, color: 'var(--ink-3)' }}>طب · UNEM</span>
-            </div>
+        <div className="me">
+          <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--purple)' }}>
+            {name.slice(0, 2)}
           </div>
-          <div style={{
-            display: 'flex', width: '100%', marginTop: 6, paddingTop: 14,
-            borderTop: '1px solid var(--line-soft)',
-          }}>
-            <Stat n="8" label="منشور" colour="var(--purple)" />
-            <Stat n="12" label="محفوظ" colour="var(--orange)" />
-            <Stat n="34" label="تعليق" colour="var(--purple-light)" />
+          <div className="me-name">{name}</div>
+          <div className="me-row">
+            {promo && (
+              <span className="pill solid" style={{ background: promo.badge, fontSize: 11 }}>
+                {promo.name}
+              </span>
+            )}
+            <span className="me-sub">{ROLE[me.role] || me.role} · UNEM</span>
+          </div>
+          <div className="me-mail" dir="ltr">{me.email}</div>
+
+          {me.status !== 'approved' && (
+            <div className="notice" style={{ width: '100%' }}>
+              <Icon name="alert" size={19} />
+              <div>
+                <div className="notice-t">حسابك بانتظار الموافقة</div>
+                <div className="notice-b">سيفتح لك التطبيق كاملًا فور موافقة أحد المشرفين.</div>
+              </div>
+            </div>
+          )}
+
+          <div className="me-stats">
+            {[[posts.count || 0, 'منشور'], [saves.count || 0, 'محفوظ'],
+              [answers.count || 0, 'جواب مقبول'], [rooms.count || 0, 'غرفة']].map(([n, l]) => (
+              <div key={l} className="me-stat">
+                <b>{n}</b><span>{l}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {ITEMS.map((it) => (
-          <div key={it.label} className="card">
+        {isStaff(me) && (
+          <Link href="/admin" className="card">
             <div className="card-row">
-              <div className="tile sm tint-grey"><Icon name={it.icon} size={18} /></div>
-              <div className="grow"><div className="nm" style={{ fontSize: 14 }}>{it.label}</div></div>
-              {it.n && <span className="cnt">{it.n}</span>}
+              <div className="tile tint-purple"><Icon name="settings" size={20} /></div>
+              <div className="grow">
+                <div className="nm">لوحة التحكم</div>
+                <div className="mt">المحتوى، الأعضاء، الأسئلة</div>
+              </div>
               <span className="chev"><Icon name="chev" size={18} /></span>
             </div>
-          </div>
-        ))}
+          </Link>
+        )}
 
-        <Link href="/login" className="card">
+        <Link href="/saved" className="card">
           <div className="card-row">
-            <div className="tile sm tint-grey"><Icon name="logout" size={18} /></div>
-            <div className="grow"><div className="nm" style={{ fontSize: 14 }}>تسجيل الخروج</div></div>
+            <div className="tile tint-orange"><Icon name="bookmark" size={20} /></div>
+            <div className="grow">
+              <div className="nm">المحفوظات</div>
+              <div className="mt">{saves.count || 0} عنصرًا</div>
+            </div>
             <span className="chev"><Icon name="chev" size={18} /></span>
           </div>
         </Link>
+
+        <Link href="/rooms" className="card">
+          <div className="card-row">
+            <div className="tile tint-purpleLight"><Icon name="person" size={20} /></div>
+            <div className="grow">
+              <div className="nm">غرف الدراسة</div>
+              <div className="mt">{rooms.count || 0} غرفة أنت فيها</div>
+            </div>
+            <span className="chev"><Icon name="chev" size={18} /></span>
+          </div>
+        </Link>
+
+        <Sign />
       </div>
     </>
   );
