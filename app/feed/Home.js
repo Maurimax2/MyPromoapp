@@ -35,7 +35,7 @@ const TOOLS = [
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, unseen = 0 }) {
+export default function Home({ me, posts, subjects, unseen = 0, readError = null }) {
   const router = useRouter();
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
@@ -223,6 +223,15 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
             </div>
           )))}
         </div>
+
+        {/* Silence here is what cost an afternoon: the feed came back refused
+            and drew an empty screen, which reads exactly like "nobody has
+            posted yet". */}
+        {readError && (
+          <div className="admin-err" style={{ padding: '0 2px' }}>
+            تعذّرت قراءة المنشورات — {readError}
+          </div>
+        )}
 
         <div className="eyebrow" style={{ margin: '0 2px' }}>موادك</div>
         <div className="subs">

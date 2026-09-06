@@ -17,7 +17,7 @@ export default async function Feed() {
 
   // The posts, their authors, their attachments, and which ones I have
   // already liked — four things, one round trip each, all at once.
-  const [{ data: rows }, { data: mine }] = await Promise.all([
+  const [{ data: rows, error: readError }, { data: mine }] = await Promise.all([
     sb.from('posts')
       .select(`id, body, kind, module, created_at, likes, comments,
                author:profiles(id, full_name, email, promo),
@@ -27,6 +27,10 @@ export default async function Feed() {
     sb.from('likes').select('post').eq('person', profile.id),
   ]);
 
+  // A refused read used to be indistinguishable from an empty promo: the
+  // error was dropped on the floor and the screen drew nothing. A post that
+  // exists and cannot be read is a different problem from no posts, and the
+  // person looking at it is the only one who can tell us which.
   const liked = new Set((mine || []).map((l) => l.post));
 
   // Read with the service key: a student's own notifications are their own
@@ -53,6 +57,7 @@ export default async function Feed() {
   return (
     <Home
       unseen={unseen || 0}
+      readError={readError ? (readError.message || 'تعذّرت قراءة المنشورات') : null}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             promo: profile.promo,
             approved: profile.status === 'approved'
