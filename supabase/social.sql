@@ -163,6 +163,37 @@ create table if not exists room_messages (
 create index if not exists room_messages_idx on room_messages (room, created_at);
 
 -- ---------------------------------------------------------------------------
+-- Chat
+-- ---------------------------------------------------------------------------
+
+-- A conversation between exactly two people. The pair is stored sorted, and
+-- unique, so opening a chat twice reaches the same one rather than making a
+-- second — which is how a chat list fills with duplicates nobody can explain.
+create table if not exists chats (
+  id         bigint generated always as identity primary key,
+  a          uuid not null references profiles on delete cascade,
+  b          uuid not null references profiles on delete cascade,
+  created_at timestamptz not null default now(),
+  last_at    timestamptz not null default now(),
+  check (a < b)
+);
+
+create unique index if not exists chats_pair_idx on chats (a, b);
+create index if not exists chats_a_idx on chats (a, last_at desc);
+create index if not exists chats_b_idx on chats (b, last_at desc);
+
+create table if not exists chat_messages (
+  id         bigint generated always as identity primary key,
+  chat       bigint not null references chats on delete cascade,
+  author     uuid   not null references profiles on delete cascade,
+  body       text   not null,
+  created_at timestamptz not null default now(),
+  seen       boolean not null default false
+);
+
+create index if not exists chat_messages_idx on chat_messages (chat, created_at);
+
+-- ---------------------------------------------------------------------------
 -- Who can see and touch what
 -- ---------------------------------------------------------------------------
 
@@ -174,6 +205,8 @@ alter table saves         enable row level security;
 alter table rooms         enable row level security;
 alter table room_members  enable row level security;
 alter table room_messages enable row level security;
+alter table chats         enable row level security;
+alter table chat_messages enable row level security;
 
 -- The promo you are in, as the database sees it.
 create or replace function my_promo() returns text
@@ -260,3 +293,31 @@ drop policy if exists messages_write on room_messages;
 create policy messages_write on room_messages for insert
   with check (author = auth.uid()
               and exists (select 1 from room_members m where m.room = room and m.person = auth.uid()));
+
+-- A chat is readable by exactly the two people in it. Nobody else, staff
+-- included: moderation reads reports, not private messages.
+drop policy if exists chats_mine on chats;
+create policy chats_mine on chats for select using (a = auth.uid() or b = auth.uid());
+
+drop policy if exists chats_open on chats;
+create policy chats_open on chats for insert
+  with check (is_approved() and (a = auth.uid() or b = auth.uid()));
+
+drop policy if exists chats_touch on chats;
+create policy chats_touch on chats for update using (a = auth.uid() or b = auth.uid());
+
+drop policy if exists chat_read on chat_messages;
+create policy chat_read on chat_messages for select
+  using (exists (select 1 from chats c where c.id = chat
+                 and (c.a = auth.uid() or c.b = auth.uid())));
+
+drop policy if exists chat_write on chat_messages;
+create policy chat_write on chat_messages for insert
+  with check (author = auth.uid()
+              and exists (select 1 from chats c where c.id = chat
+                          and (c.a = auth.uid() or c.b = auth.uid())));
+
+drop policy if exists chat_seen on chat_messages;
+create policy chat_seen on chat_messages for update
+  using (exists (select 1 from chats c where c.id = chat
+                 and (c.a = auth.uid() or c.b = auth.uid())));

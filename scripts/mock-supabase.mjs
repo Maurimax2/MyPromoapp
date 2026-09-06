@@ -64,6 +64,8 @@ const db = {
   audit_log: [],
   import_jobs: [],
   posts: [],
+  chats: [],
+  chat_messages: [],
   post_media: [],
   comments: [],
   likes: [],
@@ -244,9 +246,19 @@ createServer(async (req, res) => {
   const params = url.searchParams;
   const prefer = req.headers.prefer || '';
   const filters = [...params.entries()].filter(([k]) =>
-    !['select', 'order', 'limit', 'offset', 'on_conflict', 'columns'].includes(k));
+    !['select', 'order', 'limit', 'offset', 'on_conflict', 'columns', 'or'].includes(k));
 
-  const pick = () => db[table].filter((row) =>
+  // `.or('a.eq.x,b.eq.y')` comes through as a single `or` parameter.
+  const orClause = params.get('or');
+  const matchesOr = (row) => {
+    if (!orClause) return true;
+    return orClause.replace(/^\(|\)$/g, '').split(',').some((part) => {
+      const [col, op, val] = part.split('.');
+      return matches(row, col, `${op}.${val}`);
+    });
+  };
+
+  const pick = () => db[table].filter((row) => matchesOr(row) &&
     filters.every(([k, v]) => {
       // questions?question_banks.module=eq.x — a filter on an embedded table
       if (k.includes('.')) {
@@ -336,6 +348,8 @@ createServer(async (req, res) => {
     comments: () => ({ removed: false, created_at: new Date().toISOString() }),
     likes:    () => ({ created_at: new Date().toISOString() }),
     rooms:    () => ({ closed: false, capacity: 12, created_at: new Date().toISOString() }),
+    chats:    () => ({ created_at: new Date().toISOString(), last_at: new Date().toISOString() }),
+    chat_messages: () => ({ created_at: new Date().toISOString(), seen: false }),
     room_messages: () => ({ created_at: new Date().toISOString() }),
     room_members:  () => ({ joined_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     profiles: () => ({ created_at: new Date().toISOString() }),

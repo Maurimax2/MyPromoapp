@@ -22,7 +22,7 @@ const TOOLS = [
   { id: 'quiz',      label: 'اختبر نفسك', icon: 'quiz', href: '/quiz',     from: '#6B21B5', to: '#8B5CF6' },
   { id: 'lectures',  label: 'المحاضرات',  icon: 'book', href: '/lectures', from: '#F97316', to: '#FDBA74' },
   { id: 'qa',        label: 'سؤال وجواب',  icon: 'msg', href: '/qa', from: '#7C3AED', to: '#A78BFA' },
-  { id: 'chat',      label: 'المحادثات',   icon: 'send' },
+  { id: 'chat',      label: 'المحادثات',   icon: 'send', href: '/chat', from: '#C2410C', to: '#F97316' },
   { id: 'rooms',     label: 'غرف الدراسة', icon: 'person', href: '/rooms', from: '#5B21B6', to: '#7C3AED' },
   { id: 'duel',      label: 'تحدّي زميلك', icon: 'flask' },
   { id: 'review',    label: 'المراجعة',    icon: 'clock' },
