@@ -65,11 +65,15 @@ export default function Points({ total, rank, rows, badges, board, meId }) {
                 <span className="badge-w">{b.want}</span>
                 {!b.done && (
                   <>
+                    {/* Nothing drawn at zero: the bar has a minimum width, and
+                        a sliver of purple reads as progress you have not made. */}
                     <div className="fill-bar">
-                      <div
-                        className="fill-bar-in"
-                        style={{ width: `${Math.min(100, (b.have / b.need) * 100)}%` }}
-                      />
+                      {b.have > 0 && (
+                        <div
+                          className="fill-bar-in"
+                          style={{ width: `${Math.min(100, (b.have / b.need) * 100)}%` }}
+                        />
+                      )}
                     </div>
                     <span className="badge-n">{b.have} / {b.need}</span>
                   </>
