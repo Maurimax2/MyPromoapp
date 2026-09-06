@@ -25,7 +25,7 @@ const TOOLS = [
   { id: 'chat',      label: 'المحادثات',   icon: 'send', href: '/chat', from: '#C2410C', to: '#F97316' },
   { id: 'rooms',     label: 'غرف الدراسة', icon: 'person', href: '/rooms', from: '#5B21B6', to: '#7C3AED' },
   { id: 'duel',      label: 'تحدّي زميلك', icon: 'flask' },
-  { id: 'review',    label: 'المراجعة',    icon: 'clock' },
+  { id: 'review',    label: 'المراجعة',    icon: 'clock', href: '/quiz', from: '#5B21B6', to: '#8B5CF6' },
   { id: 'points',    label: 'النقاط',      icon: 'check' },
   { id: 'models',    label: 'نماذج 3D',    icon: 'atom' },
   { id: 'timetable', label: 'جدول الحصص',  icon: 'clock' },

@@ -162,6 +162,32 @@ create table if not exists room_messages (
 
 create index if not exists room_messages_idx on room_messages (room, created_at);
 
+-- ---------------------------------------------------------------------------
+-- What you got wrong comes back
+-- ---------------------------------------------------------------------------
+
+-- A Leitner schedule, per student per question. It lived in localStorage,
+-- which meant a student lost every wrong answer they had earned the day they
+-- changed phone — and the whole point of the thing is that it remembers
+-- longer than they do.
+create table if not exists reviews (
+  person   uuid   not null references profiles on delete cascade,
+  question bigint not null references questions on delete cascade,
+  box      int    not null default 0,           -- 0..4, how long until it returns
+  wrong    int    not null default 0,
+  due_at   timestamptz not null default now(),
+  seen_at  timestamptz not null default now(),
+  primary key (person, question)
+);
+
+create index if not exists reviews_due_idx on reviews (person, due_at);
+
+alter table reviews enable row level security;
+
+drop policy if exists reviews_own on reviews;
+create policy reviews_own on reviews for all
+  using (person = auth.uid()) with check (person = auth.uid());
+
 -- For a database created before moderation recorded when it acted.
 alter table reports add column if not exists handled_at timestamptz;
 
