@@ -98,6 +98,51 @@ for (const file of files) {
   }
 }
 
+// Writes too: the mock stores whatever object it is handed, so an insert
+// naming a column that is not there looks like it worked.
+
+/** The keys at the top level of an object literal — `a: 1, b, ...c` → a, b. */
+function keysOf(body) {
+  const keys = [];
+  let depth = 0, token = '', inValue = false, spread = false, quote = '';
+
+  const push = () => {
+    const t = token.trim();
+    token = '';
+    // A plain name only: a spread, a computed key or a quoted one is skipped
+    // rather than guessed at.
+    if (!spread && /^[a-z_][a-z0-9_]*$/i.test(t)) keys.push(t);
+  };
+
+  for (const ch of body) {
+    if (quote) { if (ch === quote) quote = ''; continue; }
+    if (ch === "'" || ch === '"' || ch === '`') { quote = ch; continue; }
+    if ('([{'.includes(ch)) { depth++; continue; }
+    if (')]}'.includes(ch)) { depth--; continue; }
+    if (depth > 0) continue;
+
+    if (ch === ',') { if (!inValue) push(); token = ''; inValue = false; spread = false; continue; }
+    if (inValue) continue;                  // up to that comma, it is the value
+    if (ch === ':') { push(); inValue = true; continue; }
+    if (ch === '.') { spread = true; token = ''; continue; }
+    token += ch;
+  }
+  if (!inValue) push();
+  return keys;
+}
+
+for (const file of files) {
+  const src = readFileSync(file, 'utf8');
+  for (const m of src.matchAll(/\.from\('([a-z_]+)'\)\s*\n?\s*\.(insert|update)\(\s*\{([\s\S]*?)\}\)/g)) {
+    const [, table, , body] = m;
+    const cols = tables.get(table);
+    if (!cols) { problems.push(`${file}: unknown table "${table}"`); continue; }
+    for (const key of keysOf(body)) {
+      if (!cols.has(key)) problems.push(`${file}: ${table} has no column "${key}" (written)`);
+    }
+  }
+}
+
 if (problems.length) {
   console.log(problems.join('\n'));
   console.log(`\n${problems.length} to look at`);
