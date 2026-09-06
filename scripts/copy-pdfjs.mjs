@@ -8,7 +8,7 @@
 // origin, rather than fetched from a CDN — same-origin is faster and means the
 // viewer has no external dependency.
 
-import { cp, mkdir, rm } from 'node:fs/promises';
+import { cp, mkdir, rm, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,7 +19,18 @@ const to = join(root, 'public', 'pdfjs');
 await rm(to, { recursive: true, force: true });
 await mkdir(to, { recursive: true });
 
-await cp(join(from, 'build', 'pdf.worker.min.mjs'), join(to, 'pdf.worker.min.mjs'));
+// The worker runs in its own realm, so a polyfill installed on the page does
+// not reach it — and it calls `Map.prototype.getOrInsertComputed` seventeen
+// times. That method is a proposal no browser ships yet; without it every
+// page throws and nothing is ever drawn, which on screen is indistinguishable
+// from a file that will not download. It is prepended here rather than
+// patched into node_modules.
+const POLYFILL = `if(!Map.prototype.getOrInsertComputed){Object.defineProperty(Map.prototype,"getOrInsertComputed",{value:function(k,f){if(!this.has(k))this.set(k,f(k));return this.get(k)},writable:true,configurable:true})}
+if(!Map.prototype.getOrInsert){Object.defineProperty(Map.prototype,"getOrInsert",{value:function(k,v){if(!this.has(k))this.set(k,v);return this.get(k)},writable:true,configurable:true})}
+`;
+
+const worker = await readFile(join(from, 'build', 'pdf.worker.min.mjs'), 'utf8');
+await writeFile(join(to, 'pdf.worker.min.mjs'), POLYFILL + worker);
 await cp(join(from, 'cmaps'), join(to, 'cmaps'), { recursive: true });
 await cp(join(from, 'standard_fonts'), join(to, 'standard_fonts'), { recursive: true });
 await cp(join(from, 'wasm'), join(to, 'wasm'), { recursive: true });

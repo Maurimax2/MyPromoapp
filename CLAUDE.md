@@ -158,6 +158,15 @@ terms in Arabic — French is a necessity, not a preference.
 
 ## The file viewer
 
+- **pdf.js is loaded through `lib/pdfjs.js`, never imported directly.** 6.3
+  calls `Map.prototype.getOrInsertComputed`, a proposal no browser ships yet;
+  without the polyfill the document loads, the page count appears, and every
+  page throws and is never drawn — which on screen is a viewer that spins for
+  ever, indistinguishable from a slow network. It cost most of a day looking
+  at Drive, at byte ranges, at caching, at everything except the browser
+  console.
+- The worker runs in its own realm and needs the polyfill too;
+  `scripts/copy-pdfjs.mjs` prepends it to the copied worker.
 - pdf.js needs `standardFontDataUrl` and `cMapUrl`, both served from our own
   origin. Without the first, standard fonts are substituted and the letter
   spacing collapses.

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
+import { pdfjs as load } from '@/lib/pdfjs';
 
 // Draws the PDF page by page onto canvases.
 //
@@ -45,8 +46,7 @@ export default function PdfViewer({ src, title }) {
 
     (async () => {
       try {
-        const pdfjs = await import('pdfjs-dist');
-        pdfjs.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
+        const pdfjs = await load();
 
         loadingTask = pdfjs.getDocument({
           url: src,
