@@ -8,6 +8,8 @@
 // Range requests are passed straight through. That is what lets pdf.js fetch
 // the first pages and start drawing instead of waiting for all 10 MB.
 
+import { relayHeaders } from '@/lib/file-headers';
+
 export const runtime = 'nodejs';
 
 const SOURCES = (fid) => [
@@ -49,17 +51,9 @@ export async function GET(req, { params }) {
     const type = res.headers.get('content-type') || '';
     if (type.includes('text/html')) continue;
 
-    const headers = new Headers({
-      'Content-Type': type || 'application/pdf',
-      'Content-Disposition': 'inline',
-      'Accept-Ranges': 'bytes',
-      // Cached hard at the edge: these files never change.
-      'Cache-Control': 'public, max-age=86400, s-maxage=31536000, immutable',
-    });
-    for (const h of ['content-length', 'content-range', 'etag', 'last-modified']) {
-      const v = res.headers.get(h);
-      if (v) headers.set(h, v);
-    }
+    // Which of those two answers Drive gave decides what we may promise the
+    // viewer — see lib/file-headers.js.
+    const headers = relayHeaders(res);
 
     return new Response(res.body, { status: res.status === 206 ? 206 : 200, headers });
   }
