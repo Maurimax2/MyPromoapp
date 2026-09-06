@@ -6,7 +6,7 @@
 // that is what a student reads on their timetable.
 
 import { NextResponse } from 'next/server';
-import { currentProfile, isStaff } from '@/lib/supabase/server';
+import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
@@ -21,8 +21,9 @@ function slug(name) {
 }
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { promo, semester, name } = await request.json();
   if (!promo) return NextResponse.json({ error: 'أي سنة؟' }, { status: 400 });
@@ -61,8 +62,9 @@ export async function POST(request) {
 }
 
 export async function PATCH(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { id, name, semester } = await request.json();
   if (!id) return NextResponse.json({ error: 'no subject' }, { status: 400 });

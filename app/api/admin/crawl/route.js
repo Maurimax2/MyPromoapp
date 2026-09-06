@@ -9,8 +9,8 @@
 // Drive what the id is before deciding how to read it.
 
 import { NextResponse } from 'next/server';
+import { requireStaff } from '@/lib/staff';
 import { walkFolder, cleanName, guessKind, driveIdFromUrl, getFile, isFolder } from '@/lib/drive';
-import { currentProfile, isStaff } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -26,8 +26,9 @@ const describe = (f, folder = '') => ({
 });
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const key = process.env.GOOGLE_API_KEY;
   if (!key) {

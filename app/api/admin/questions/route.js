@@ -5,14 +5,15 @@
 // student and teach them something wrong.
 
 import { NextResponse } from 'next/server';
-import { currentProfile, isStaff } from '@/lib/supabase/server';
+import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { id, answer, why, status } = await request.json();
   if (!id) return NextResponse.json({ error: 'no question' }, { status: 400 });

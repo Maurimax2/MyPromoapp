@@ -12,9 +12,9 @@
 // rather than the one I meant to write.
 
 import { NextResponse } from 'next/server';
+import { requireStaff } from '@/lib/staff';
 import { MODULES, PROMOS } from '@/lib/data';
 import { banksFor } from '@/lib/questions';
-import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
@@ -23,14 +23,16 @@ export const maxDuration = 60;
 const bytesOf = (mb) => (mb ? Math.round(Number(mb) * 1048576) : null);
 
 export async function GET() {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
   return NextResponse.json({ modules: MODULES.map((m) => ({ id: m.id, name: m.name })) });
 }
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { id } = await request.json();
   const m = MODULES.find((x) => x.id === id);

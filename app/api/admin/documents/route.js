@@ -8,14 +8,16 @@
 // first: what is already stored gets updated, the rest is inserted.
 
 import { NextResponse } from 'next/server';
-import { currentProfile, isStaff, isAdmin } from '@/lib/supabase/server';
+import { requireStaff } from '@/lib/staff';
+import { isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { module, items } = await request.json();
   if (!module || !Array.isArray(items) || !items.length) {
@@ -80,8 +82,9 @@ export async function POST(request) {
 // what kind of thing it is. The Drive original is never touched — only what
 // MyPromo says about it.
 export async function PATCH(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { id, title, where_shown, section, n, prof, year, published } = await request.json();
   if (!id) return NextResponse.json({ error: 'no file' }, { status: 400 });
@@ -113,8 +116,11 @@ export async function PATCH(request) {
 // Removing a file from MyPromo. Admins only, and only ever the row: the file
 // itself belongs to someone else's Drive and is not ours to delete.
 export async function DELETE(request) {
-  const profile = await currentProfile();
-  if (!isAdmin(profile)) return NextResponse.json({ error: 'admins only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  if (!isAdmin(gate.profile)) {
+    return NextResponse.json({ error: 'الحذف للمشرفين وحدهم' }, { status: 403 });
+  }
 
   const { id } = await request.json();
   if (!id) return NextResponse.json({ error: 'no file' }, { status: 400 });

@@ -5,7 +5,7 @@
 // make one.
 
 import { NextResponse } from 'next/server';
-import { currentProfile, isStaff } from '@/lib/supabase/server';
+import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
@@ -19,8 +19,9 @@ const slug = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30);
 
 export async function POST(request) {
-  const profile = await currentProfile();
-  if (!isStaff(profile)) return NextResponse.json({ error: 'staff only' }, { status: 403 });
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
 
   const { name, label } = await request.json();
   const short = String(name || '').trim().toUpperCase();
