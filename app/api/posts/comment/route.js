@@ -3,6 +3,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
 
@@ -22,6 +23,19 @@ export async function POST(request) {
     .select('id, body, created_at').single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // The person who wrote the thing being answered is told. A question gets a
+  // different word than a post, because "somebody answered you" and "somebody
+  // commented" are not the same event to the person waiting.
+  const { data: p } = await db.from('posts').select('author, kind').eq('id', post).maybeSingle();
+  if (p) {
+    await notify({
+      person: p.author, actor: profile.id,
+      kind: p.kind === 'question' ? 'answer' : 'comment',
+      post, comment: data.id, body: text,
+    });
+  }
+
   return NextResponse.json({ ...data, author: { full_name: profile.full_name, email: profile.email } });
 }
 

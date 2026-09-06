@@ -33,7 +33,7 @@ const TOOLS = [
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects }) {
+export default function Home({ me, posts, subjects, unseen = 0 }) {
   const router = useRouter();
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
@@ -105,7 +105,11 @@ export default function Home({ me, posts, subjects }) {
         <div className="head-row">
           <Logo size={34} id="feed" />
           <div className="head-t">الرئيسية</div>
-          <button className="icobtn" aria-label="الإشعارات"><Icon name="bell" size={19} /></button>
+          {/* It was a <button> with no handler for weeks. */}
+          <Link href="/notifications" className="icobtn bell" aria-label="الإشعارات">
+            <Icon name="bell" size={19} />
+            {unseen > 0 && <span className="bell-dot" />}
+          </Link>
           <div className="av" style={{ width: 38, height: 38, fontSize: 13, background: 'var(--purple)' }}>
             {me.name.slice(0, 2)}
           </div>

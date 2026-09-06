@@ -1405,3 +1405,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .wait-rows span { color: var(--ink-3); font-weight: 600; }
 .wait-rows b { font-weight: 700; overflow-wrap: anywhere; }
 .wait-card form { width: 100%; }
+
+/* An unread notification is marked, not coloured in: the whole list glowing
+   orange says nothing about which one is new. The mark sits on the right,
+   where a line of Arabic starts. */
+.notif-new { box-shadow: var(--shadow), inset -3px 0 0 var(--orange); }
+
+/* The bell says how many without printing a number nobody needs. */
+.bell { position: relative; }
+.bell-dot {
+  position: absolute; top: 7px; right: 7px;
+  width: 9px; height: 9px; border-radius: 999px;
+  background: var(--orange); box-shadow: 0 0 0 2px var(--surface);
+}

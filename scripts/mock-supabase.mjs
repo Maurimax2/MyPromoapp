@@ -90,6 +90,7 @@ const db = {
   room_messages: [],
   reviews: [],
   reports: [],
+  notifications: [],
   authUsers: [{ id: 'u-owner', email: 'owner@unem.mr' }],
   buckets: [],
   objects: new Map(),
@@ -382,6 +383,7 @@ createServer(async (req, res) => {
     documents: () => ({ published: true }),
     reviews:  () => ({ box: 0, wrong: 0, due_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     reports:  () => ({ state: 'open', created_at: new Date().toISOString() }),
+    notifications: () => ({ seen: false, created_at: new Date().toISOString() }),
   };
 
   if (req.method === 'POST') {

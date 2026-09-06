@@ -15,7 +15,7 @@ it now adds the unique **constraints** that were only indexes before, and
 
 Everything students do: posts with their photographs and PDFs, comments,
 likes, saves, questions and accepted answers, study rooms with their members
-and messages, and private chats.
+and messages, private chats, and the notifications the bell reads.
 
 Nothing on the social side works until this runs. The app will not crash — the
 screens will simply be empty and say so.

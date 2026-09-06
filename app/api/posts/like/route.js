@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
 
@@ -26,5 +27,12 @@ export async function POST(request) {
   if (error && !/duplicate|unique/i.test(error.message)) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  // Only on the way up: unliking is not news.
+  if (on && !error) {
+    const { data: p } = await db.from('posts').select('author, body').eq('id', post).maybeSingle();
+    if (p) await notify({ person: p.author, actor: profile.id, kind: 'like', post, body: p.body });
+  }
+
   return NextResponse.json({ ok: true });
 }

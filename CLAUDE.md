@@ -99,6 +99,17 @@ terms in Arabic — French is a necessity, not a preference.
 - Badges state their own condition. A locked badge with a hidden condition is
   a taunt, not a goal.
 
+## الإشعارات
+
+- A notification is **written when the thing happens**, not worked out later
+  by asking "what is new since I last looked" — that query gets slower every
+  week and cannot tell you what you have already read.
+- **Nobody is ever notified about their own doing.** Liking your own post
+  tells you nothing you did not just do.
+- Opening the screen marks them read. There is no button for that.
+- Writing a notification can fail without the thing itself failing: the like
+  matters, being told about it does not.
+
 ## Direction
 
 - **What a student types picks its own direction** (`dir="auto"`), everywhere

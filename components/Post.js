@@ -177,7 +177,7 @@ export default function Post({ post, me }) {
 
           <div className="reply-new">
             <input
-              value={draft} onChange={(e) => setDraft(e.target.value)}
+              value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && reply()}
               placeholder="اكتب ردًّا…" aria-label="ردّك" />
             <button disabled={!draft.trim() || busy} onClick={reply} aria-label="أرسل">

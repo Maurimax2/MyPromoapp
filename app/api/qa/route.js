@@ -6,6 +6,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
 
@@ -30,6 +31,18 @@ export async function POST(request) {
   await db.from('comments').update({ accepted: false }).eq('post', c.post);
   if (on) await db.from('comments').update({ accepted: true }).eq('id', comment);
   await db.from('posts').update({ answered: !!on }).eq('id', c.post);
+
+  // Having your answer accepted is the best thing that happens on this app.
+  if (on) {
+    const { data: ans } = await db.from('comments')
+      .select('author, body').eq('id', comment).maybeSingle();
+    if (ans) {
+      await notify({
+        person: ans.author, actor: profile.id, kind: 'accepted',
+        post: c.post, comment, body: ans.body,
+      });
+    }
+  }
 
   return NextResponse.json({ ok: true });
 }

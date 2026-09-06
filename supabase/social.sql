@@ -192,6 +192,42 @@ create policy reviews_own on reviews for all
 alter table reports add column if not exists handled_at timestamptz;
 
 -- ---------------------------------------------------------------------------
+-- Being told
+-- ---------------------------------------------------------------------------
+
+-- One row per thing that happened to you. Written by the server when it
+-- happens rather than worked out by asking "what is new since I last looked"
+-- — a query like that gets slower every week and cannot tell you what you
+-- have already read.
+--
+-- Nobody is ever notified about their own doing: liking your own post, or
+-- answering your own question, tells you nothing you did not just do.
+create table if not exists notifications (
+  id         bigint generated always as identity primary key,
+  person     uuid   not null references profiles on delete cascade,  -- who is told
+  actor      uuid   references profiles on delete cascade,           -- who did it
+  kind       text   not null,          -- like|comment|accepted|answer|approved
+  post       bigint references posts on delete cascade,
+  comment    bigint references comments on delete cascade,
+  body       text,                     -- a few words of what was said
+  created_at timestamptz not null default now(),
+  seen       boolean not null default false
+);
+
+create index if not exists notif_person_idx on notifications (person, created_at desc);
+create index if not exists notif_unseen_idx on notifications (person) where not seen;
+
+alter table notifications enable row level security;
+
+-- You read your own, and you may mark them read. Nothing writes them but the
+-- server, which uses the service key.
+drop policy if exists notif_own on notifications;
+create policy notif_own on notifications for select using (person = auth.uid());
+
+drop policy if exists notif_seen on notifications;
+create policy notif_seen on notifications for update using (person = auth.uid());
+
+-- ---------------------------------------------------------------------------
 -- Chat
 -- ---------------------------------------------------------------------------
 

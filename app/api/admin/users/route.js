@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
 
@@ -44,6 +45,10 @@ export async function POST(request) {
     action: status ? `user_${status}` : role ? 'user_role' : 'user_promo',
     target_type: 'profile', target_id: id,
   });
+
+  // Waiting to be let in is the one thing worth being told about without
+  // opening the app to check.
+  if (status === 'approved') await notify({ person: id, actor: me.id, kind: 'approved' });
 
   return NextResponse.json({ ok: true });
 }

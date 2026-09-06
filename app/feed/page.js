@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { MODULES, bannerFor, fileCount } from '@/lib/data';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
@@ -28,6 +29,12 @@ export default async function Feed() {
 
   const liked = new Set((mine || []).map((l) => l.post));
 
+  // Read with the service key: a student's own notifications are their own
+  // rows, but the count is wanted on every load and this is one head request.
+  const { count: unseen } = await supabaseAdmin()
+    .from('notifications').select('id', { count: 'exact', head: true })
+    .eq('person', profile.id).eq('seen', false);
+
   const posts = (rows || []).map((p) => ({
     ...p,
     liked: liked.has(p.id),
@@ -42,6 +49,7 @@ export default async function Feed() {
 
   return (
     <Home
+      unseen={unseen || 0}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
