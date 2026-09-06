@@ -54,6 +54,7 @@ export default async function Feed() {
     <Home
       unseen={unseen || 0}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
+            promo: profile.promo,
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
       posts={posts}

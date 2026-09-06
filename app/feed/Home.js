@@ -14,6 +14,8 @@ import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
 import Post from '@/components/Post';
+import PickPromo from './PickPromo';
+import { imageThumb, pdfThumb } from '@/lib/thumb';
 
 // Everything the app has or will have, EXCEPT what the bottom nav already
 // carries. الملخصات and الأرشيف are tabs; a tile for them would be a second
@@ -60,9 +62,18 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
   const take = async (list) => {
     setError('');
     for (const file of Array.from(list).slice(0, 6 - files.length)) {
-      const holding = { name: file.name, kind: file.type.startsWith('image/') ? 'image' : 'file',
-                        bytes: file.size, pending: true, id: crypto.randomUUID() };
+      const kind = file.type.startsWith('image/') ? 'image' : 'file';
+      const holding = { name: file.name, kind, bytes: file.size,
+                        pending: true, id: crypto.randomUUID(),
+                        thumb: kind === 'image' ? imageThumb(file) : null };
       setFiles((f) => [...f, holding]);
+
+      // The first page of a PDF, drawn while the bytes are still going up.
+      if (kind === 'file') {
+        pdfThumb(file).then((thumb) => {
+          if (thumb) setFiles((f) => f.map((x) => (x.id === holding.id ? { ...x, thumb } : x)));
+        });
+      }
 
       const form = new FormData();
       form.append('file', file);
@@ -74,7 +85,8 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
         setError(data.error || `تعذّر الرفع (${res.status})`);
         continue;
       }
-      setFiles((f) => f.map((x) => (x.id === holding.id ? { ...data, id: holding.id } : x)));
+      setFiles((f) => f.map((x) => (
+        x.id === holding.id ? { ...data, id: holding.id, thumb: x.thumb } : x)));
     }
   };
 
@@ -119,6 +131,9 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
       </header>
 
       <div className="scroll" style={{ gap: 14 }}>
+        {/* A profile made by a magic link has no year, and a post belongs to
+            one. Ask here rather than refusing at the moment of posting. */}
+        {!me.promo ? <PickPromo /> : (
         <div className="composer">
           <div className="composer-top">
             <div className="av" style={{ width: 40, height: 40, fontSize: 13, background: 'var(--purple)' }}>
@@ -140,7 +155,10 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
             <div className="draft">
               {files.map((f) => (
                 <div key={f.id} className={`draft-f${f.pending ? ' up' : ''}`}>
-                  <Icon name={f.kind === 'image' ? 'image' : 'file'} size={17} />
+                  {/* What it looks like, not what it is called. */}
+                  {f.thumb
+                    ? <img className="draft-thumb" src={f.thumb} alt="" />
+                    : <Icon name={f.kind === 'image' ? 'image' : 'file'} size={17} />}
                   <span className="grow" dir="ltr">{f.name}</span>
                   <span className="draft-mb">{f.pending ? '…' : mb(f.bytes)}</span>
                   {!f.pending && (
@@ -189,6 +207,7 @@ export default function Home({ me, posts, subjects, unseen = 0 }) {
             </button>
           </div>
         </div>
+        )}
 
         <div className="rail">
           {TOOLS.map((t) => (t.href ? (
