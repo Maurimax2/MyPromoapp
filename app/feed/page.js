@@ -1,113 +1,52 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { MODULES, bannerFor, fileCount } from '@/lib/data';
+import { urlFor } from '@/lib/storage';
+import Home from './Home';
 
-// الرئيسية — the front page.
-//
-// Three things in a fixed order, decided by looking at them side by side:
-// somewhere to post, then every tool the app has or will have, then your
-// subjects as pictures, then what your promo is saying.
-//
-// The tools come before the pictures on purpose. A student who opened the app
-// to do questions gets there without scrolling; the banners are big enough to
-// pull the eye anyway.
+export const dynamic = 'force-dynamic';
 
-import Link from 'next/link';
-import Icon from '@/components/Icon';
-import Logo from '@/components/Logo';
-import PostCard from '@/components/PostCard';
-import { POSTS, MODULES, bannerFor, fileCount } from '@/lib/data';
+// الرئيسية — what your promo is saying, and everything the app can do.
+export default async function Feed() {
+  const profile = await currentProfile();
+  if (!profile) redirect('/login');
 
-// Everything the app has or will have, EXCEPT what the bottom nav already
-// carries. الملخصات and الأرشيف are tabs; a tile for them as well would be a
-// second button to the same page.
-const TOOLS = [
-  { id: 'quiz',     label: 'اختبر نفسك', icon: 'quiz',  href: '/quiz',     from: '#6B21B5', to: '#8B5CF6' },
-  { id: 'lectures', label: 'المحاضرات',  icon: 'book',  href: '/lectures', from: '#F97316', to: '#FDBA74' },
-  { id: 'qa',       label: 'سؤال وجواب',  icon: 'msg' },
-  { id: 'chat',     label: 'المحادثات',   icon: 'send' },
-  { id: 'rooms',    label: 'غرف الدراسة', icon: 'person' },
-  { id: 'duel',     label: 'تحدّي زميلك', icon: 'flask' },
-  { id: 'review',   label: 'المراجعة',    icon: 'clock' },
-  { id: 'points',   label: 'النقاط',      icon: 'check' },
-  { id: 'models',   label: 'نماذج 3D',    icon: 'atom' },
-  { id: 'timetable',label: 'جدول الحصص',  icon: 'clock' },
-];
+  const promo = profile.promo || 'pcem2';
+  const sb = await supabaseServer();
 
-const PROMO = 'pcem2';
+  // The posts, their authors, their attachments, and which ones I have
+  // already liked — four things, one round trip each, all at once.
+  const [{ data: rows }, { data: mine }] = await Promise.all([
+    sb.from('posts')
+      .select(`id, body, kind, created_at, likes, comments,
+               author:profiles(id, full_name, email, promo),
+               post_media(kind, path, name, bytes, position)`)
+      .eq('promo', promo).eq('removed', false)
+      .order('created_at', { ascending: false }).limit(30),
+    sb.from('likes').select('post').eq('person', profile.id),
+  ]);
 
-export default function Feed() {
-  const subjects = MODULES.filter((m) => m.promo === PROMO && fileCount(m) > 0);
+  const liked = new Set((mine || []).map((l) => l.post));
+
+  const posts = (rows || []).map((p) => ({
+    ...p,
+    liked: liked.has(p.id),
+    media: (p.post_media || [])
+      .sort((a, b) => a.position - b.position)
+      .map((m) => ({ ...m, url: urlFor(m.path) })),
+  }));
+
+  const subjects = MODULES
+    .filter((m) => m.promo === promo && fileCount(m) > 0)
+    .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.id) }));
 
   return (
-    <>
-      <header className="head">
-        <div className="head-row">
-          <Logo size={34} id="feed" />
-          <div className="head-t">الرئيسية</div>
-          <button className="icobtn" aria-label="الإشعارات"><Icon name="bell" size={19} /></button>
-          <div className="av" style={{ width: 38, height: 38, fontSize: 13, background: 'var(--purple)' }}>ه ب</div>
-        </div>
-      </header>
-
-      <div className="scroll" style={{ gap: 14 }}>
-        <div className="composer">
-          <div className="composer-top">
-            <div className="av" style={{ width: 40, height: 40, fontSize: 13, background: 'var(--purple)' }}>ه ب</div>
-            <div className="composer-field">شارك شيئًا مع دفعتك…</div>
-          </div>
-          <div className="composer-acts">
-            <button><span className="ic-img"><Icon name="image" size={19} /></span>صورة</button>
-            <button><span className="ic-pdf"><Icon name="file" size={19} /></span>ملف</button>
-            <button><Icon name="msg" size={19} />سؤال</button>
-          </div>
-        </div>
-
-        <div className="rail">
-          {TOOLS.map((t) => (t.href ? (
-            <Link
-              key={t.id}
-              href={t.href}
-              className="tool-a"
-              style={{ background: `linear-gradient(140deg, ${t.from}, ${t.to})` }}
-            >
-              <span className="tool-a-ic"><Icon name={t.icon} size={24} /></span>
-              <b>{t.label}</b>
-            </Link>
-          ) : (
-            <div key={t.id} className="tool-a off" aria-disabled="true">
-              <span className="tool-a-soon">قريبًا</span>
-              <b>{t.label}</b>
-            </div>
-          )))}
-        </div>
-
-        <div className="eyebrow" style={{ margin: '0 2px' }}>موادك</div>
-        <div className="subs">
-          {subjects.map((m) => {
-            const banner = bannerFor(m.id);
-            return (
-              <Link key={m.id} href={`/archive/${m.id}`} className="sub">
-                {banner
-                  ? <img src={banner} alt={m.name} />
-                  : (
-                    <div className={`sub-none tint-${m.tint}`}>
-                      <span dir="ltr">{m.name}</span>
-                    </div>
-                  )}
-              </Link>
-            );
-          })}
-        </div>
-
-        {POSTS.length > 0
-          ? POSTS.map((p) => <PostCard key={p.id} post={p} />)
-          : (
-            <div className="empty">
-              <div className="tile tint-purple"><Icon name="msg" size={24} /></div>
-              <div className="empty-t">لا منشورات بعد</div>
-              <div className="empty-b">كن أول من ينشر في دفعتك.</div>
-            </div>
-          )}
-      </div>
-    </>
+    <Home
+      me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
+            approved: profile.status === 'approved'
+              || ['owner', 'admin', 'editor'].includes(profile.role) }}
+      posts={posts}
+      subjects={subjects}
+    />
   );
 }

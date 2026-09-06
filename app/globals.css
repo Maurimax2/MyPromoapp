@@ -1073,3 +1073,57 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;
   font-size: 19px; font-weight: 700; padding: 0 16px; text-align: center;
 }
+
+/* ---------- writing a post ---------- */
+.composer-field {
+  flex: 1; border: 0; resize: none; font: inherit; font-size: 14.5px;
+  line-height: 1.7; color: var(--ink);
+}
+.composer-field::placeholder { color: var(--ink-3); }
+.composer-field:focus { outline: none; }
+.composer-send {
+  flex: 0 0 auto !important; min-width: 84px;
+  background: var(--purple); color: #fff !important; border-radius: 11px;
+}
+.composer-send:disabled { opacity: .35; }
+.composer-send:hover { background: var(--purple) !important; }
+
+.draft { display: flex; flex-direction: column; gap: 6px; }
+.draft-f {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--bg); border-radius: 11px; padding: 9px 11px;
+  font-size: 13px; font-weight: 600; color: var(--ink-2);
+}
+.draft-f .grow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.draft-f.up { opacity: .55; }
+.draft-mb { font-size: 11.5px; color: var(--ink-3); flex-shrink: 0; }
+
+/* A photograph in the feed keeps its own shape rather than being cropped to
+   a band — a page of handwritten notes is useless cropped. */
+.post-photo-real {
+  display: block; width: 100%; max-height: 460px; object-fit: cover;
+  background: var(--bg);
+}
+.post-media > * + * { margin-top: 8px; }
+.post-acts button[data-on='true'] { color: var(--orange); }
+
+/* ---------- replies ---------- */
+.replies {
+  border-top: 1px solid var(--line-soft);
+  padding: 11px 14px 13px; display: flex; flex-direction: column; gap: 11px;
+}
+.replies-wait { font-size: 13px; color: var(--ink-3); }
+.reply { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; line-height: 1.6; }
+.reply b { font-size: 13.5px; font-weight: 700; display: block; }
+.reply-new { display: flex; align-items: center; gap: 8px; }
+.reply-new input {
+  flex: 1; height: 42px; border-radius: 21px; border: 1px solid var(--line);
+  background: var(--bg); padding: 0 14px; font: inherit; font-size: 14px; color: var(--ink);
+}
+.reply-new input:focus { outline: none; border-color: var(--purple-light); background: var(--surface); }
+.reply-new button {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  background: var(--purple); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.reply-new button:disabled { opacity: .35; }

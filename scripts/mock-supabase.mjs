@@ -72,6 +72,8 @@ const db = {
   room_members: [],
   room_messages: [],
   authUsers: [{ id: 'u-owner', email: 'owner@unem.mr' }],
+  buckets: [],
+  objects: new Map(),
 };
 
 const send = (res, code, body, headers = {}) => {
@@ -99,6 +101,42 @@ function matches(row, key, spec) {
     return list.includes(String(cell));
   }
   return true;
+}
+
+/**
+ * The file inside a multipart body.
+ *
+ * supabase-js uploads as multipart/form-data, so the raw request carries
+ * boundaries and part headers around the bytes. Two traps: storing the whole
+ * envelope gives an "image" no browser will paint, and the FIRST part is not
+ * the file — supabase sends `cacheControl` ahead of it. The part we want is
+ * the one whose headers carry a filename.
+ */
+function unwrap(raw, contentType) {
+  const m = /boundary=(.+)$/.exec(contentType || '');
+  if (!m) return { type: contentType || 'application/octet-stream', bytes: raw };
+
+  const boundary = Buffer.from(`--${m[1].trim()}`);
+  let at = raw.indexOf(boundary);
+
+  while (at >= 0) {
+    const headEnd = raw.indexOf('\r\n\r\n', at);
+    if (headEnd < 0) break;
+    const headers = raw.slice(at + boundary.length, headEnd).toString();
+    const next = raw.indexOf(boundary, headEnd);
+
+    if (/filename=/i.test(headers)) {
+      return {
+        type: (/content-type:\s*(\S+)/i.exec(headers)?.[1]) || 'application/octet-stream',
+        // -2 drops the CRLF that precedes the closing boundary.
+        bytes: raw.slice(headEnd + 4, next < 0 ? raw.length : next - 2),
+      };
+    }
+    if (next < 0) break;
+    at = next;
+  }
+
+  return { type: contentType, bytes: raw };
 }
 
 const body = (req) => new Promise((resolve) => {
@@ -146,6 +184,52 @@ createServer(async (req, res) => {
     return send(res, 200, {});
   }
 
+  // ---- storage ----------------------------------------------------------
+  // Enough of it to prove an upload reaches the server and comes back with a
+  // path the page can build a URL from. Nothing is kept on disk.
+  if (path.startsWith('/storage/v1/')) {
+    if (path.startsWith('/storage/v1/bucket')) {
+      const name = path.split('/').pop();
+      if (req.method === 'GET' && name !== 'bucket') {
+        return db.buckets.includes(name)
+          ? send(res, 200, { name, public: true })
+          : send(res, 404, { message: 'Bucket not found' });
+      }
+      if (req.method === 'POST') {
+        const b = await body(req);
+        if (b?.name && !db.buckets.includes(b.name)) db.buckets.push(b.name);
+        return send(res, 200, { name: b?.name });
+      }
+    }
+    // Keep the bytes, so an <img> pointing at a stored object actually paints.
+    // Without this the element exists with no height, which is invisible to a
+    // browser and to anything checking the page.
+    if (path.startsWith('/storage/v1/object/') && req.method === 'POST') {
+      const key = decodeURIComponent(path.slice('/storage/v1/object/'.length));
+      const chunks = [];
+      await new Promise((done) => {
+        req.on('data', (c) => chunks.push(c));
+        req.on('end', done);
+      });
+      db.objects.set(key, unwrap(Buffer.concat(chunks), req.headers['content-type']));
+      return send(res, 200, { Key: key });
+    }
+
+    if (path.startsWith('/storage/v1/object/public/') && req.method === 'GET') {
+      const key = decodeURIComponent(path.slice('/storage/v1/object/public/'.length));
+      const obj = db.objects.get(key);
+      if (!obj) return send(res, 404, { message: 'Object not found' });
+      res.writeHead(200, {
+        'content-type': obj.type,
+        'content-length': obj.bytes.length,
+        'access-control-allow-origin': '*',
+      });
+      return res.end(obj.bytes);
+    }
+
+    return send(res, 200, {});
+  }
+
   // ---- PostgREST --------------------------------------------------------
   if (!path.startsWith('/rest/v1/')) return send(res, 404, { message: 'not found' });
 
@@ -185,12 +269,22 @@ createServer(async (req, res) => {
     const limit = Number(params.get('limit') || 0);
     if (limit) rows = rows.slice(0, limit);
 
-    // Embedded selects: questions carry their bank.
+    // Embedded selects — the handful this app actually asks for.
     const select = params.get('select') || '*';
     if (table === 'questions' && select.includes('question_banks')) {
       rows = rows.map((r) => ({
         ...r,
         question_banks: db.question_banks.find((b) => b.id === r.bank) || null,
+      }));
+    }
+    if ((table === 'posts' || table === 'comments') && select.includes('author:profiles')) {
+      rows = rows.map((r) => ({
+        ...r, author: db.profiles.find((p) => p.id === r.author) || null,
+      }));
+    }
+    if (table === 'posts' && select.includes('post_media')) {
+      rows = rows.map((r) => ({
+        ...r, post_media: db.post_media.filter((m) => m.post === r.id),
       }));
     }
 
@@ -212,16 +306,46 @@ createServer(async (req, res) => {
     return send(res, 200, rows, headers);
   }
 
+  // Postgres keeps posts.likes and posts.comments true with a trigger; here
+  // it is done by hand so a feed row shows the same number it would live.
+  const recount = (post) => {
+    const p = db.posts.find((x) => x.id === Number(post) || x.id === post);
+    if (!p) return;
+    p.likes = db.likes.filter((l) => String(l.post) === String(p.id)).length;
+    p.comments = db.comments.filter((c) => String(c.post) === String(p.id)).length;
+  };
+
+  // Postgres fills a column's default on insert; without this the app's own
+  // `removed = false` filter drops every row it just wrote.
+  const DEFAULTS = {
+    posts:    () => ({ removed: false, likes: 0, comments: 0, created_at: new Date().toISOString() }),
+    comments: () => ({ removed: false, created_at: new Date().toISOString() }),
+    likes:    () => ({ created_at: new Date().toISOString() }),
+    rooms:    () => ({ closed: false, capacity: 12, created_at: new Date().toISOString() }),
+    room_messages: () => ({ created_at: new Date().toISOString() }),
+    room_members:  () => ({ joined_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
+    profiles: () => ({ created_at: new Date().toISOString() }),
+    documents: () => ({ published: true }),
+  };
+
   if (req.method === 'POST') {
     const payload = await body(req);
     const list = Array.isArray(payload) ? payload : [payload];
     const made = list.map((r) => {
-      const row = { ...r };
-      if (row.id === undefined) row.id = id();
+      const row = { ...(DEFAULTS[table]?.() || {}), ...r };
+      if (row.id === undefined && table !== 'likes' && table !== 'saves'
+          && table !== 'room_members') row.id = id();
       db[table].push(row);
       return row;
     });
-    return send(res, 201, prefer.includes('return=representation') ? made : null,
+    if (table === 'likes' || table === 'comments') made.forEach((r) => recount(r.post));
+
+    // .single() asks for one object, not an array of one. Returning the array
+    // makes `data.id` undefined, and the caller writes a row with a missing
+    // foreign key and no error to show for it.
+    const one = req.headers.accept?.includes('vnd.pgrst.object');
+    const out = one ? (made[0] ?? null) : made;
+    return send(res, 201, prefer.includes('return=representation') ? out : null,
       { 'content-range': `0-${made.length - 1}/${made.length}` });
   }
 
@@ -229,12 +353,15 @@ createServer(async (req, res) => {
     const payload = await body(req);
     const hit = pick();
     hit.forEach((row) => Object.assign(row, payload));
-    return send(res, 200, prefer.includes('return=representation') ? hit : null);
+    const one = req.headers.accept?.includes('vnd.pgrst.object');
+    return send(res, 200, prefer.includes('return=representation')
+      ? (one ? (hit[0] ?? null) : hit) : null);
   }
 
   if (req.method === 'DELETE') {
     const hit = new Set(pick());
     db[table] = db[table].filter((r) => !hit.has(r));
+    if (table === 'likes' || table === 'comments') [...hit].forEach((r) => recount(r.post));
     return send(res, 200, prefer.includes('return=representation') ? [...hit] : null);
   }
 
