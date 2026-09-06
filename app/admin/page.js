@@ -6,11 +6,14 @@ import { supabaseServer } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
+// A count that cannot be read comes back as a number anyway, and zero is a
+// perfectly believable number — which is how "the database refused me" spent
+// a morning looking like "there is nothing here". The error comes back too.
 const count = async (sb, table, filter) => {
   let q = sb.from(table).select('*', { count: 'exact', head: true });
   if (filter) q = filter(q);
-  const { count: n } = await q;
-  return n || 0;
+  const { count: n, error } = await q;
+  return { n: n || 0, error: error?.message || null };
 };
 
 export default async function AdminHome() {
@@ -25,44 +28,52 @@ export default async function AdminHome() {
     count(sb, 'reports', (q) => q.eq('state', 'open')),
   ]);
 
-  const empty = documents === 0 && published === 0;
+  const failed = [pending, needAnswer, drafts, published, documents, reports]
+    .map((c) => c.error).filter(Boolean);
+  const empty = documents.n === 0 && published.n === 0 && !failed.length;
 
   return (
     <div className="admin-body">
       <Settings />
+
+      {/* If a count could not be read, say so rather than printing a zero
+          that reads as "nothing here yet". */}
+      {failed.length > 0 && (
+        <div className="admin-err">تعذّرت قراءة الأرقام — {failed[0]}</div>
+      )}
 
       {empty && <Filling />}
 
       <div className="admin-grid">
         <Link href="/admin/users" className="admin-tile">
           <Icon name="user" size={19} />
-          <b>{pending}</b>
+          <b>{pending.n}</b>
           <span>طلب انضمام</span>
         </Link>
         <Link href="/admin/questions" className="admin-tile">
           <Icon name="quiz" size={19} />
-          <b>{drafts + needAnswer}</b>
+          <b>{drafts.n + needAnswer.n}</b>
           <span>سؤال بانتظار المراجعة</span>
         </Link>
         <Link href="/admin/content" className="admin-tile">
           <Icon name="archive" size={19} />
-          <b>{documents}</b>
+          <b>{documents.n}</b>
           <span>ملف</span>
         </Link>
         <Link href="/admin/questions?status=published" className="admin-tile">
           <Icon name="check" size={19} />
-          <b>{published}</b>
+          <b>{published.n}</b>
           <span>سؤال منشور</span>
         </Link>
       </div>
 
-      {reports > 0 && (
+      {reports.n > 0 && (
         <Link href="/admin/reports" className="admin-card admin-import">
           <div className="admin-import-ic" style={{ background: 'var(--wrong)' }}>
             <Icon name="alert" size={22} />
           </div>
           <div className="grow">
-            <div className="admin-card-t">{reports} بلاغ بانتظار المراجعة</div>
+            <div className="admin-card-t">{reports.n} بلاغ بانتظار المراجعة</div>
             <div className="admin-card-b">محتوى اعترض عليه طالب</div>
           </div>
           <Icon name="chev" size={18} />
