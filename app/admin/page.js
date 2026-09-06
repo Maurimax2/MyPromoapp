@@ -16,12 +16,13 @@ const count = async (sb, table, filter) => {
 export default async function AdminHome() {
   const sb = await supabaseServer();
 
-  const [pending, needAnswer, drafts, published, documents] = await Promise.all([
+  const [pending, needAnswer, drafts, published, documents, reports] = await Promise.all([
     count(sb, 'profiles', (q) => q.eq('status', 'pending')),
     count(sb, 'questions', (q) => q.eq('status', 'needs_answer')),
     count(sb, 'questions', (q) => q.eq('status', 'draft')),
     count(sb, 'questions', (q) => q.eq('status', 'published')),
     count(sb, 'documents'),
+    count(sb, 'reports', (q) => q.eq('state', 'open')),
   ]);
 
   const empty = documents === 0 && published === 0;
@@ -54,6 +55,19 @@ export default async function AdminHome() {
           <span>سؤال منشور</span>
         </Link>
       </div>
+
+      {reports > 0 && (
+        <Link href="/admin/reports" className="admin-card admin-import">
+          <div className="admin-import-ic" style={{ background: 'var(--wrong)' }}>
+            <Icon name="alert" size={22} />
+          </div>
+          <div className="grow">
+            <div className="admin-card-t">{reports} بلاغ بانتظار المراجعة</div>
+            <div className="admin-card-b">محتوى اعترض عليه طالب</div>
+          </div>
+          <Icon name="chev" size={18} />
+        </Link>
+      )}
 
       <Link href="/admin/import" className="admin-card admin-import">
         <div className="admin-import-ic"><Icon name="plus" size={22} /></div>

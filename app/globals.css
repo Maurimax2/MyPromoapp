@@ -1259,3 +1259,38 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-variant-numeric: tabular-nums;
 }
 .me-stat span { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; display: block; }
+
+/* ---------- reporting ---------- */
+.post-more { position: relative; flex-shrink: 0; }
+.post-more > button {
+  width: 36px; height: 36px; border-radius: 10px; color: var(--ink-3);
+  display: flex; align-items: center; justify-content: center;
+}
+.post-menu {
+  position: absolute; top: 38px; inset-inline-end: 0; z-index: 6;
+  background: var(--surface); border-radius: 12px; box-shadow: var(--shadow);
+  border: 1px solid var(--line); overflow: hidden; min-width: 168px;
+}
+.post-menu button {
+  display: block; width: 100%; text-align: start; padding: 12px 14px;
+  font-size: 13.5px; font-weight: 600; color: var(--ink);
+}
+.post-menu button:hover { background: var(--bg); }
+.post-menu button:disabled { color: var(--ink-3); }
+
+/* ---------- the moderation queue ---------- */
+.rep {
+  background: var(--surface); border-radius: var(--r-card); box-shadow: var(--shadow);
+  padding: 13px; display: flex; flex-direction: column; gap: 10px;
+  transition: opacity .15s ease;
+}
+.rep.off { opacity: .45; pointer-events: none; }
+.rep-top { display: flex; align-items: center; gap: 9px; }
+.rep-by { font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
+.rep-body {
+  background: var(--bg); border-radius: 12px; padding: 11px 13px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rep-body b { font-size: 13px; font-weight: 700; }
+.rep-body p { font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+.rep-why { font-size: 12.5px; color: var(--ink-3); }

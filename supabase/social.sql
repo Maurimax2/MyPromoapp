@@ -162,6 +162,9 @@ create table if not exists room_messages (
 
 create index if not exists room_messages_idx on room_messages (room, created_at);
 
+-- For a database created before moderation recorded when it acted.
+alter table reports add column if not exists handled_at timestamptz;
+
 -- ---------------------------------------------------------------------------
 -- Chat
 -- ---------------------------------------------------------------------------

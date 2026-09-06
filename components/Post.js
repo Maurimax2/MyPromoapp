@@ -33,6 +33,27 @@ export default function Post({ post, me }) {
   const [replies, setReplies] = useState(null);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
+  const [flagged, setFlagged] = useState(false);
+  const [menu, setMenu] = useState(false);
+
+  const report = async () => {
+    setMenu(false); setFlagged(true);
+    await fetch('/api/report', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ type: 'post', id: post.id }),
+    });
+  };
+
+  const remove = async () => {
+    setMenu(false);
+    const res = await fetch('/api/posts', {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: post.id }),
+    });
+    if (res.ok) window.location.reload();
+  };
 
   const like = async () => {
     const on = !liked;
@@ -84,6 +105,24 @@ export default function Post({ post, me }) {
             )}
           </div>
           <div className="post-meta">{when(post.created_at)}</div>
+        </div>
+
+        {/* Every post needs a way to be objected to. Apple requires it for an
+            app carrying what students write, and a promo needs it the first
+            time somebody posts something they should not have. */}
+        <div className="post-more">
+          <button onClick={() => setMenu((m) => !m)} aria-label="خيارات">
+            <Icon name="dots" size={18} />
+          </button>
+          {menu && (
+            <div className="post-menu">
+              {post.author?.id === me.id
+                ? <button onClick={remove}>احذف منشوري</button>
+                : <button onClick={report} disabled={flagged}>
+                    {flagged ? 'أُبلغ عنه' : 'أبلغ عن المنشور'}
+                  </button>}
+            </div>
+          )}
         </div>
       </div>
 
