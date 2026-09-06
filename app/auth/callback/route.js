@@ -50,9 +50,13 @@ export async function GET(request) {
     profile = await syncStaffRole({ ...profile, id: user.id, email: user.email });
   }
 
-  // Same three destinations as /auth/home: the panel, the app, or the one
-  // screen an account waiting for approval can reach.
-  const home = STAFF.includes(profile.role) ? '/admin'
-    : profile.status === 'approved' ? '/feed' : '/waiting';
+  // The app, or the one screen an account waiting for approval can reach.
+  // `next` is only honoured for staff and only as a path of our own, so a
+  // crafted link cannot send somebody somewhere else.
+  const next = url.searchParams.get('next');
+  const asked = next && /^\/[a-z0-9/-]*$/i.test(next) ? next : null;
+  const home = profile.status !== 'approved' && !STAFF.includes(profile.role) ? '/waiting'
+    : asked && STAFF.includes(profile.role) ? asked
+    : '/feed';
   return NextResponse.redirect(new URL(home, origin));
 }

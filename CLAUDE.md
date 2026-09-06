@@ -69,6 +69,19 @@ terms in Arabic — French is a necessity, not a preference.
   looked normal and failed one button at a time — an empty feed and a
   composer that took a photograph and then refused to post it.
 
+## Two doors
+
+- **The app and the panel are separate pages with separate sign-ins.** The
+  app's front door lands everybody in the app — staff included. The panel is
+  reached by going to `/admin` and signing in there with a staff email.
+- **Nothing in the student app links to the panel.** Not a card on الملف, not
+  a redirect after sign-in. It is reached by typing the address.
+- A magic link asked for at the panel door comes back to the panel; one asked
+  for at the app's door comes back to the app.
+- Being turned away still says who you are and why — that message exists
+  because a real staff account was once filed as a student and a silent
+  bounce read as "there is no admin page".
+
 ## Shape of the app
 
 - **Community first.** الرئيسية is a feed, not a comment list: posts carry

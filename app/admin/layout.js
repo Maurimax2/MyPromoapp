@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import AdminHeader from './AdminHeader';
-import { redirect } from 'next/navigation';
+import AdminLogin from './AdminLogin';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { staffEmails, syncStaffRole } from '@/lib/supabase/admin';
 
@@ -11,13 +11,19 @@ export const dynamic = 'force-dynamic';
 // single byte of the panel is sent — a student who guesses the URL never sees
 // a page that merely hides its buttons.
 //
+// It is also its own door. Nothing in the student app links here and the
+// app's own sign-in lands everybody, staff included, in the app: the panel is
+// reached by coming to this address and signing in with a staff email. So
+// somebody arriving with no session gets this form, not a bounce to /login
+// that would take them straight back to the app afterwards.
+//
 // What it must NOT do is bounce silently. It used to redirect anyone who was
 // not staff straight to the feed, which is indistinguishable from "there is no
 // admin page" — and that is exactly how it read when my own account was still
 // filed as a student. Being turned away now says who you are and why.
 export default async function AdminLayout({ children }) {
   const profile = await syncStaffRole(await currentProfile());
-  if (!profile) redirect('/login');
+  if (!profile) return <div className="admin"><AdminLogin /></div>;
 
   if (!isStaff(profile)) {
     const listed = staffEmails().includes((profile.email || '').toLowerCase());

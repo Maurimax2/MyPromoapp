@@ -26,9 +26,7 @@ export default function SignedIn({ profile, home }) {
         {waiting ? (
           <p className="login-terms">حسابك بانتظار موافقة مشرف.</p>
         ) : (
-          <Link className="btn p" href={home}>
-            {home === '/admin' ? 'ادخل إلى اللوحة' : 'ادخل'}
-          </Link>
+          <Link className="btn p" href={home}>ادخل</Link>
         )}
 
         <form action="/auth/signout" method="post" className="login-out">

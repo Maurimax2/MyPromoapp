@@ -15,6 +15,7 @@ import { useState } from 'react';
 import Logo from '@/components/Logo';
 import Icon from '@/components/Icon';
 import { supabase } from '@/lib/supabase/browser';
+import { authMessage } from '@/lib/auth-error';
 import { PROMOS } from '@/lib/data';
 
 export default function LoginForm() {
@@ -74,8 +75,12 @@ export default function LoginForm() {
     try {
       await (how === 'link' ? sendLink() : how === 'password' ? signIn() : join());
     } catch (err) {
+      // The link is the only door where the rate limit has a different way
+      // out, so that one sentence stays here.
       const rate = /rate limit|too many/i.test(err.message);
-      setError(rate ? 'تجاوزنا حدّ الرسائل — أنشئ حسابًا بكلمة سر بدل الرابط' : err.message);
+      setError(rate && how === 'link'
+        ? 'تجاوزنا حدّ الرسائل — أنشئ حسابًا بكلمة سر بدل الرابط'
+        : authMessage(err));
       setState('error');
     }
   };

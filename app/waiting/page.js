@@ -14,7 +14,7 @@ export default async function WaitingPage() {
   if (!me) redirect('/login');
 
   const staff = ['owner', 'admin', 'editor'].includes(me.role);
-  if (me.status === 'approved' || staff) redirect(staff ? '/admin' : '/feed');
+  if (me.status === 'approved' || staff) redirect('/feed');
 
   const sb = await supabaseServer();
   const { data: promo } = me.promo

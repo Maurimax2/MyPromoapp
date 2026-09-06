@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { supabaseServer, currentProfile, isStaff } from '@/lib/supabase/server';
+import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promoById } from '@/lib/data';
 import Sign from './Sign';
 
@@ -75,18 +75,9 @@ export default async function Profile() {
           </div>
         </div>
 
-        {isStaff(me) && (
-          <Link href="/admin" className="card">
-            <div className="card-row">
-              <div className="tile tint-purple"><Icon name="settings" size={20} /></div>
-              <div className="grow">
-                <div className="nm">لوحة التحكم</div>
-                <div className="mt">المحتوى، الأعضاء، الأسئلة</div>
-              </div>
-              <span className="chev"><Icon name="chev" size={18} /></span>
-            </div>
-          </Link>
-        )}
+        {/* No card to the panel, for anyone. It is a separate page with its
+            own sign-in, reached by going to /admin — not something the app
+            shows a way into, even to the six people who run it. */}
 
         <Link href="/saved" className="card">
           <div className="card-row">
