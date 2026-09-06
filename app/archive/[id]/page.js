@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { MODULES, moduleById, allFiles, allDocs, sectionsFor } from '@/lib/data';
+import { allFiles, allDocs, sectionsFor } from '@/lib/data';
+import { moduleOf } from '@/lib/catalogue';
 
-export function generateStaticParams() {
-  return MODULES.map((m) => ({ id: m.id }));
-}
+// Not prerendered any more: what a subject holds is a question for the
+// database, and the answer depends on who is asking.
+export const dynamic = 'force-dynamic';
 
 function Meta({ ext, mb, prof, year }) {
   return (
@@ -58,7 +59,7 @@ function Lecture({ l }) {
 
 export default async function Module({ params }) {
   const { id } = await params;
-  const m = moduleById(id);
+  const m = await moduleOf(id);
   if (!m) notFound();
 
   // Only the material you read. Résumés live in الملخصات, questions in اختبر نفسك.

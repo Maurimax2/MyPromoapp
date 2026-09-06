@@ -160,6 +160,15 @@ but heavy on mobile data — a later thing.
 
 - Content lives in **Postgres**, not in `lib/data.js`. The files under
   `lib/modules/` are history the migration reads once.
+- **Every student screen reads the catalogue through `lib/catalogue.js`**,
+  which reads Postgres and hands back the shape `lib/data.js` used to. Nothing
+  student-facing imports `MODULES` any more. That file was why a subject added
+  in the panel — a new year, DCEM1 — never appeared in the app: the panel
+  wrote to the database and every screen read the file.
+- The file is still the **fallback, per subject**: a module the database knows
+  but holds no files for falls back to the file's copy, so a half-finished
+  migration cannot blank the archive.
+- **A year is ready when it has subjects**, not when somebody ticks `indexed`.
 - What students upload goes to **Supabase Storage**, not R2. R2 is paid for
   but has no bucket name or public URL set, and a half-configured store fails
   at the moment a student is holding a photograph. `lib/storage.js` is the

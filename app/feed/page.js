@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { MODULES, bannerFor, fileCount } from '@/lib/data';
+import { bannerFor } from '@/lib/data';
+import { modulesOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
@@ -48,7 +49,8 @@ export default async function Feed() {
     .from('notifications').select('id', { count: 'exact', head: true })
     .eq('person', profile.id).eq('seen', false);
 
-  const named = Object.fromEntries(MODULES.map((m) => [m.id, m.name]));
+  const subjectRows = await modulesOf(promo);
+  const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
   const posts = (rows || []).map((p) => ({
     ...p,
@@ -59,8 +61,9 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
-  const subjects = MODULES
-    .filter((m) => m.promo === promo && fileCount(m) > 0)
+  // Every subject the promo has, including one a colleague added this
+  // morning that has no files in it yet.
+  const subjects = subjectRows
     .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.id) }));
 
   return (

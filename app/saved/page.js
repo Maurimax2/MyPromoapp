@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
-import { MODULES, sectionsFor } from '@/lib/data';
+import { modulesOf } from '@/lib/catalogue';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +26,8 @@ export default async function Saved() {
         .in('id', postIds)
     : { data: [] };
 
-  const named = Object.fromEntries(MODULES.map((m) => [m.id, m.name]));
+  const named = Object.fromEntries(
+    (await modulesOf(me.promo || 'pcem2')).map((m) => [m.id, m.name]));
 
   const items = (posts || []).map((p) => {
     const file = (p.post_media || []).sort((a, b) => a.position - b.position)[0];

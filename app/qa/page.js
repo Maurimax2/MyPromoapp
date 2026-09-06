@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { MODULES } from '@/lib/data';
+import { modulesOf } from '@/lib/catalogue';
 import Ask from './Ask';
 
 export const dynamic = 'force-dynamic';
@@ -29,9 +29,7 @@ export default async function QA({ searchParams }) {
     .select('*', { count: 'exact', head: true })
     .eq('promo', promo).eq('kind', 'question').eq('removed', false).eq('answered', false);
 
-  const subjects = MODULES
-    .filter((m) => m.promo === promo)
-    .map((m) => ({ id: m.id, name: m.name }));
+  const subjects = (await modulesOf(promo)).map((m) => ({ id: m.id, name: m.name }));
 
   return (
     <Ask

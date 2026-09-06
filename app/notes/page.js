@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { MODULES, sectionsFor } from '@/lib/data';
+import { sectionsFor } from '@/lib/data';
+import { modulesOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import NoteList from './NoteList';
 
@@ -44,15 +45,16 @@ export default async function Notes() {
   });
 
   // The résumés that shipped with the course, per subject.
-  const fromDrive = MODULES
-    .filter((m) => m.promo === promo)
+  const subjects = await modulesOf(promo);
+
+  const fromDrive = subjects
     .flatMap((m) => sectionsFor(m, 'notes').flatMap((s) => s.items.map((it) => ({
       id: `d${it.fid}`, title: it.title, module: m.id, author: null,
       href: `/file/${it.fid}`, ext: it.ext || 'PDF',
       bytes: it.mb ? Math.round(it.mb * 1048576) : null,
     }))));
 
-  const named = Object.fromEntries(MODULES.map((m) => [m.id, m.name]));
+  const named = Object.fromEntries(subjects.map((m) => [m.id, m.name]));
 
   // Group by subject, the uploads first because they are the new thing.
   const groups = [];
@@ -66,7 +68,7 @@ export default async function Notes() {
   return (
     <NoteList
       groups={groups}
-      subjects={MODULES.filter((m) => m.promo === promo).map((m) => ({ id: m.id, name: m.name }))}
+      subjects={subjects.map((m) => ({ id: m.id, name: m.name }))}
       me={{ id: profile.id }}
     />
   );

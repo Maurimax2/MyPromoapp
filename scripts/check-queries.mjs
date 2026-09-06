@@ -88,7 +88,15 @@ const files = [];
     else if (path.endsWith('.js')) files.push(path);
   }
 })('app');
-files.push('lib/notify.js', 'lib/supabase/server.js');
+function walkInto(dir) {
+  for (const entry of readdirSync(dir)) {
+    if (entry.startsWith('.')) continue;
+    const path = join(dir, entry);
+    if (statSync(path).isDirectory()) walkInto(path);
+    else if (path.endsWith('.js')) files.push(path);
+  }
+}
+walkInto('lib');
 
 /** `id, body, author:profiles(id, name), post_media(path)` → the top level only. */
 function topLevel(select) {
