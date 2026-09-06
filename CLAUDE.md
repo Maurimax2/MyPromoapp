@@ -34,6 +34,16 @@ terms in Arabic — French is a necessity, not a preference.
 - Files are shared `anyone with the link` — a server may fetch them.
 - Clean display names live in `lib/data.js` and point at untouched originals.
 
+## Subject pictures
+
+- A subject's banner is **used whole** — logo, name and drawing together. Never
+  cropped to a tile, and **never print the name over or under it**: the banner
+  already says it.
+- Banners scroll sideways, one at a time, the next one peeking so a thumb
+  knows there is more.
+- A subject with no banner yet falls back to its French name on a tinted
+  block, never a broken image.
+
 ## Design
 
 - Cards direction: white cards on grey, soft shadows, generous spacing.
@@ -44,16 +54,33 @@ terms in Arabic — French is a necessity, not a preference.
 - Light theme only. Dark mode is deliberately not designed yet.
 - Touch targets are never below 44px.
 
+## Accounts
+
+- **Sign-up takes an email, a password and a year — no confirmation email.**
+  Supabase's built-in mailer sends about two an hour; it cost us an evening.
+  The magic link stays as an option, it is just not the only door.
+- **Approval is the gate, not the inbox.** A new profile is `pending` and
+  every policy is written against `is_approved()`, so a new account reads
+  nothing until somebody approves it in اللوحة ← الأعضاء.
+- The student picks their own promo at sign-up. An admin changes it if wrong.
+
 ## Shape of the app
 
 - **Community first.** الرئيسية is a feed, not a comment list: posts carry
   media, have weight, and have a real action bar.
 - Sign-in is the front door — opening the site lands on `/login`.
-- Nav holds four: الرئيسية / الملخصات / الأرشيف / الملف. المحاضرات lives as
-  a card at the top of the feed.
+- Nav holds four: الرئيسية / الملخصات / الأرشيف / الملف.
+- **الرئيسية carries a rail of every feature**, live ones in colour and the
+  rest dashed and marked قريبًا — a student should see the whole app on day
+  one. **No tile may lead where the nav already leads**: two buttons to one
+  page is the thing to avoid, not an extra route.
+- **Never print a count under a subject banner.** The banner names the
+  subject; anything else is describing study material, and describing it in
+  Arabic breaks the language rule.
 - **Files open inside MyPromo**, never by handing the student to the Drive app.
-- Six promos: PCEM1, PCEM2, DCEM1, DCEM2, DCEM3, DCEM4. Each has its own badge
-  colour, shown on every post. Only PCEM2 is indexed so far.
+- Six promos to begin with: PCEM1, PCEM2, DCEM1, DCEM2, DCEM3, DCEM4. Each has
+  its own badge colour, shown on every post. **Six was a fact, not a rule —
+  the panel can add a year.** Only PCEM2 has content so far.
 
 ## The file viewer
 
@@ -72,8 +99,23 @@ Q&A, discussion, chat, study rooms, per-subject icons, badges students earn.
 3D anatomical models are possible with open assets (Z-Anatomy, BodyParts3D)
 but heavy on mobile data — a later thing.
 
+## Where things are kept
+
+- Content lives in **Postgres**, not in `lib/data.js`. The files under
+  `lib/modules/` are history the migration reads once.
+- What students upload goes to **Supabase Storage**, not R2. R2 is paid for
+  but has no bucket name or public URL set, and a half-configured store fails
+  at the moment a student is holding a photograph. `lib/storage.js` is the
+  only file that knows — moving to R2 later is one file.
+- **Never use `ON CONFLICT`/`upsert` against this schema.** Postgres infers a
+  conflict target only from a unique CONSTRAINT, and several of ours are
+  partial indexes. Look first, then insert what is missing.
+
 ## Working method
 
 - Show pictures before HTML. Screenshots of the running app, not file dumps.
 - Small steps. Stop and show after each one.
 - Ask before deciding when there is more than one reasonable option.
+- **Run it before sending it.** `npm run mock` stands up a Supabase in memory
+  and the app can then be driven in a browser. Compiling is not testing:
+  "the button does nothing" only ever shows up when you click it.
