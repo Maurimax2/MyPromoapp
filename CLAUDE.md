@@ -82,6 +82,12 @@ terms in Arabic — French is a necessity, not a preference.
   a redirect after sign-in. It is reached by typing the address.
 - A magic link asked for at the panel door comes back to the panel; one asked
   for at the app's door comes back to the app.
+- **A staff email with no profile row gets one.** Somebody can hold an account
+  in `auth.users` and no profile — made in Supabase's dashboard, or a sign-up
+  that fell over. `syncStaffRole` used to answer that with an UPDATE matching
+  zero rows, no error, and a patched object: the panel let them in on a role
+  that existed only in memory while the database had never heard of them, so
+  every count came back zero. It creates the row now.
 - Being turned away still says who you are and why — that message exists
   because a real staff account was once filed as a student and a silent
   bounce read as "there is no admin page".

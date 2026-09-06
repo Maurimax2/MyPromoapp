@@ -29,6 +29,13 @@ insert into posts (id, author, promo, body, kind) overriding system value values
   (902, '44444444-4444-4444-4444-444444444444', 'pcem1', 'Post de PCEM1', 'post')
 on conflict do nothing;
 
+insert into promos (id, name, label, badge) values ('pcem2x', 'X', 'x', '#000')
+  on conflict do nothing;
+insert into modules (id, promo, semester, name) values ('anat-x', 'pcem2', 'S1', 'ANATOMIE')
+  on conflict do nothing;
+insert into documents (module, title) values ('anat-x', 'Un cours')
+  on conflict do nothing;
+
 insert into chats (id, a, b) overriding system value values
   (801, '11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222')
 on conflict do nothing;
@@ -57,12 +64,30 @@ select must('she reads her promo''s posts only',
             (select count(*) from posts), 1);
 select must('she reads her own chat',
             (select count(*) from chat_messages), 1);
+-- So that a zero below means "refused" rather than "there is nothing there".
+select must('and the archive has something in it to read',
+            (select count(*) from documents), 1);
 
 -- An account nobody has approved yet.
 set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
 select must('waiting: sees only itself', (select count(*) from profiles), 1);
 select must('waiting: no posts',         (select count(*) from posts), 0);
 select must('waiting: no documents',     (select count(*) from documents), 0);
+
+-- Somebody who can sign in and has no profile row at all.
+--
+-- A real case, not a hypothetical: an account made in Supabase's own
+-- dashboard, or a sign-up that fell over halfway. Every policy is written
+-- against is_staff() and is_approved(), and both read the profiles table, so
+-- a person the table has never heard of reads nothing — while the app, which
+-- fell back to an invented profile in memory, showed them the panel. An
+-- admin looking at zeroes where his colleague sees nine hundred files.
+set request.jwt.claim.sub = '99999999-9999-9999-9999-999999999999';
+select must('a session with no profile row reads no documents',
+            (select count(*) from documents), 0);
+select must('…and no posts',  (select count(*) from posts), 0);
+select must('…and is not staff',    (select count(*) from profiles where is_staff()), 0);
+select must('…and is not approved', (select count(*) from profiles where is_approved()), 0);
 
 -- Somebody in another year.
 set request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
