@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "check:sql": "./scripts/check-sql.sh",
+    "check:queries": "node scripts/check-queries.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

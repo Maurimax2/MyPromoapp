@@ -62,6 +62,15 @@ It caught the one thing that would have failed on your database: `social.sql`
 indexed a column three lines before adding it, so on a fresh run it stopped
 with an error and nothing after it ran.
 
+And
+
+    npm run check:queries
+
+reads the same two files, works out what each table really has, and checks
+every query in the app against it. The mock answers from plain JavaScript
+objects, so it returns a row for a column that does not exist — a query like
+that only fails in front of a student.
+
 ## Running it locally
 
     npm run mock     # a stand-in Supabase on :54321
