@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { isAdmin } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
@@ -83,4 +84,73 @@ export async function PATCH(request) {
     actor: profile.id, action: 'module_edited', target_type: 'module', target_id: id,
   });
   return NextResponse.json({ ok: true });
+}
+
+/**
+ * Removing a subject, and everything filed under it.
+ *
+ * The schema cascades: the subject's chapters, its files, its question banks
+ * and every question in them go with it. That is a lot to lose to one tap, so
+ * a call without `confirm` deletes nothing and answers with the tally instead
+ * — the panel shows it and asks again.
+ */
+export async function DELETE(request) {
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  if (!isAdmin(gate.profile)) {
+    return NextResponse.json({ error: 'حذف المواد للمشرفين وحدهم' }, { status: 403 });
+  }
+  const profile = gate.profile;
+
+  const { id, confirm } = await request.json();
+  if (!id) return NextResponse.json({ error: 'لا مادة' }, { status: 400 });
+
+  const db = supabaseAdmin();
+  const { data: module, error: lookup } = await db.from('modules')
+    .select('id, name, promo').eq('id', id).maybeSingle();
+
+  // A refused read hands back no row, which reads exactly like a subject that
+  // is not there. Say which it was.
+  if (lookup) {
+    return NextResponse.json({ error: `تعذّرت قراءة المادة — ${lookup.message}` }, { status: 500 });
+  }
+  if (!module) return NextResponse.json({ error: 'لم نجد هذه المادة' }, { status: 404 });
+
+  const tally = async (table, column) => {
+    const { count, error } = await db.from(table)
+      .select('*', { count: 'exact', head: true }).eq(column, id);
+    // A count that could not be read must not be printed as a believable zero.
+    return error ? null : count || 0;
+  };
+
+  const [documents, chapters, banks] = await Promise.all([
+    tally('documents', 'module'),
+    tally('chapters', 'module'),
+    tally('question_banks', 'module'),
+  ]);
+
+  if (!confirm) {
+    return NextResponse.json({ preview: true, name: module.name, documents, chapters, banks });
+  }
+
+  // The rows come back, so that a delete which matched nothing is told apart
+  // from one that worked. Postgres calls both a success.
+  const { data: gone, error } = await db.from('modules').delete().eq('id', id).select('id');
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!gone?.length) {
+    return NextResponse.json({ error: 'لم تُحذف — لم نجد هذه المادة' }, { status: 404 });
+  }
+
+  try {
+    await db.from('audit_log').insert({
+      actor: profile.id, action: 'module_deleted',
+      target_type: 'module', target_id: String(id),
+      detail: { name: module.name, promo: module.promo, documents, chapters, banks },
+    });
+  } catch {
+    // The subject is already gone; a log that will not write must not say
+    // otherwise.
+  }
+
+  return NextResponse.json({ ok: true, name: module.name, documents, chapters, banks });
 }

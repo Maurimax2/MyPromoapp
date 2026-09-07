@@ -14,6 +14,21 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
 
+/**
+ * Write to the log, and carry on if it cannot be written.
+ *
+ * Keeping a record of who deleted what matters; it does not matter as much as
+ * the deletion itself, and it must never be able to report a deletion that
+ * happened as one that did not.
+ */
+async function note(db, row) {
+  try {
+    await db.from('audit_log').insert(row);
+  } catch {
+    // The thing itself already happened.
+  }
+}
+
 export async function POST(request) {
   const gate = await requireStaff();
   if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
@@ -69,7 +84,7 @@ export async function POST(request) {
 
   const count = rows.length;
 
-  await db.from('audit_log').insert({
+  await note(db, {
     actor: profile.id, action: 'imported_documents',
     target_type: 'module', target_id: module,
     detail: { added: fresh.length, updated: again.length },
@@ -105,7 +120,7 @@ export async function PATCH(request) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  await db.from('audit_log').insert({
+  await note(db, {
     actor: profile.id, action: 'document_edited',
     target_type: 'document', target_id: String(id),
   });
@@ -122,14 +137,28 @@ export async function DELETE(request) {
     return NextResponse.json({ error: 'الحذف للمشرفين وحدهم' }, { status: 403 });
   }
 
+  // `profile` was never taken out of the gate here, only in POST and PATCH.
+  // The file was deleted and then the log line threw, so the panel was told
+  // the deletion had failed while the file was already gone — an admin taps
+  // احذف, reads تعذّر الحذف, and concludes deleting does not work.
+  const profile = gate.profile;
+
   const { id } = await request.json();
   if (!id) return NextResponse.json({ error: 'no file' }, { status: 400 });
 
   const db = supabaseAdmin();
-  const { error } = await db.from('documents').delete().eq('id', id);
+  // Ask for the rows back. A delete that matched nothing is not an error to
+  // Postgres — it reports success having done nothing, which is how a row the
+  // policies refused, or an id that no longer exists, reads as a deletion that
+  // worked. The panel then removes it from the screen and it is back on the
+  // next refresh.
+  const { data: gone, error } = await db.from('documents').delete().eq('id', id).select('id');
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!gone?.length) {
+    return NextResponse.json({ error: 'لم يُحذف شيء — لم نجد هذا الملف' }, { status: 404 });
+  }
 
-  await db.from('audit_log').insert({
+  await note(db, {
     actor: profile.id, action: 'document_deleted',
     target_type: 'document', target_id: String(id),
   });

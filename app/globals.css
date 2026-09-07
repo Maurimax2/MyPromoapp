@@ -915,6 +915,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ctd-move { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 .ctd-move > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
 
+/* A row you can open, with a way to remove it beside — never on top of the
+   thing you tap to open it. */
+.ctm-row { display: flex; align-items: stretch; gap: 8px; }
+.ctm-row > .ctm { flex: 1; min-width: 0; }
+.ctm-del {
+  display: flex; align-items: center; justify-content: center;
+  width: 48px; min-height: 48px;
+  border: 0; border-radius: var(--r); background: #fff;
+  color: var(--wrong); box-shadow: var(--shadow); cursor: pointer;
+}
+.ctm-del:disabled { opacity: .5; }
+
+/* Asking before something irreversible. Orange is for attention, and losing a
+   year's worth of files is the most attention anything here needs. */
+.danger-card { border: 1.5px solid var(--orange); }
+
 /* Pulling questions out of a paper: the button, then what came back. */
 .ctd-qcm {
   display: flex; flex-direction: column; align-items: flex-start; gap: 8px;

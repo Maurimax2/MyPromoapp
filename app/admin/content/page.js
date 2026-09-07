@@ -71,7 +71,8 @@ export default async function ContentPage({ searchParams }) {
 
   // ---- one year's subjects ----------------------------------------------
   if (params?.promo) {
-    const [{ data: promo }, { data: modules }] = await Promise.all([
+    const [me, { data: promo }, { data: modules }] = await Promise.all([
+      currentProfile(),
       sb.from('promos').select('id, name, label').eq('id', params.promo).single(),
       sb.from('modules').select('id, name, semester').eq('promo', params.promo).order('position'),
     ]);
@@ -84,7 +85,7 @@ export default async function ContentPage({ searchParams }) {
     list.forEach((m, i) => { files[m.id] = tallies[i]?.count || 0; });
 
     return <ModuleScreen promo={promo || { id: params.promo, name: params.promo }}
-                         modules={list} files={files} />;
+                         modules={list} files={files} canDelete={isAdmin(me)} />;
   }
 
   // ---- the six years -----------------------------------------------------
@@ -113,5 +114,6 @@ export default async function ContentPage({ searchParams }) {
     files[p.id] = tallies[i]?.count || 0;
   });
 
-  return <PromoScreen promos={list} subjects={subjects} files={files} />;
+  return <PromoScreen promos={list} subjects={subjects} files={files}
+                      canDelete={isAdmin(await currentProfile())} />;
 }

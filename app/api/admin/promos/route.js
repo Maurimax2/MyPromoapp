@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { isAdmin } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
@@ -54,4 +55,75 @@ export async function POST(request) {
   });
 
   return NextResponse.json({ id, name: short, label: arabic });
+}
+
+/**
+ * Removing a year, and every subject in it.
+ *
+ * This is the largest thing anybody can delete here — the cascade reaches the
+ * year's subjects, their files and every question. Like a subject, a call
+ * without `confirm` only counts.
+ */
+export async function DELETE(request) {
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  if (!isAdmin(gate.profile)) {
+    return NextResponse.json({ error: 'حذف السنوات للمشرفين وحدهم' }, { status: 403 });
+  }
+  const profile = gate.profile;
+
+  const { id, confirm } = await request.json();
+  if (!id) return NextResponse.json({ error: 'لا سنة' }, { status: 400 });
+
+  const db = supabaseAdmin();
+  const { data: promo, error: lookup } = await db.from('promos')
+    .select('id, name').eq('id', id).maybeSingle();
+  if (lookup) {
+    return NextResponse.json({ error: `تعذّرت قراءة السنة — ${lookup.message}` }, { status: 500 });
+  }
+  if (!promo) return NextResponse.json({ error: 'لم نجد هذه السنة' }, { status: 404 });
+
+  const { data: modules, error: listed } = await db.from('modules')
+    .select('id').eq('promo', id);
+  if (listed) {
+    return NextResponse.json({ error: `تعذّرت قراءة مواد السنة — ${listed.message}` }, { status: 500 });
+  }
+
+  const ids = (modules || []).map((m) => m.id);
+  let documents = 0;
+  if (ids.length) {
+    const { count, error } = await db.from('documents')
+      .select('*', { count: 'exact', head: true }).in('module', ids);
+    documents = error ? null : count || 0;
+  }
+
+  // Somebody is in this year. Their profile survives — it is the year that
+  // goes — but they land in an app with nothing in it, so say so first.
+  const { count: people } = await db.from('profiles')
+    .select('*', { count: 'exact', head: true }).eq('promo', id);
+
+  if (!confirm) {
+    return NextResponse.json({
+      preview: true, name: promo.name, subjects: ids.length, documents, people: people || 0,
+    });
+  }
+
+  // As above: nothing deleted is not an error, so check what came back.
+  const { data: gone, error } = await db.from('promos').delete().eq('id', id).select('id');
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (!gone?.length) {
+    return NextResponse.json({ error: 'لم تُحذف — لم نجد هذه السنة' }, { status: 404 });
+  }
+
+  try {
+    await db.from('audit_log').insert({
+      actor: profile.id, action: 'promo_deleted',
+      target_type: 'promo', target_id: String(id),
+      detail: { name: promo.name, subjects: ids.length, documents, people: people || 0 },
+    });
+  } catch {
+    // Already gone.
+  }
+
+  return NextResponse.json({ ok: true, name: promo.name, subjects: ids.length, documents });
 }
