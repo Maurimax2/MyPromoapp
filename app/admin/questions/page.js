@@ -33,6 +33,10 @@ export default async function QuestionsPage({ searchParams }) {
 
   return (
     <ReviewScreen
+      // Same reason as the content screen: the queue is held in state, so
+      // changing the filter has to make it a different component or the old
+      // questions stay on screen.
+      key={`${status}:${moduleId || 'all'}`}
       questions={questions || []}
       modules={modules || []}
       status={status}

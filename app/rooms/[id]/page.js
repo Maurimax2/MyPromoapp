@@ -26,6 +26,9 @@ export default async function RoomPage({ params }) {
 
   return (
     <Room
+      // Held in state so new messages can be appended. Without a key,
+      // walking from one room to another kept the first room's messages.
+      key={id}
       room={room}
       people={people}
       first={messages || []}

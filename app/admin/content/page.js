@@ -36,8 +36,30 @@ export default async function ContentPage({ searchParams }) {
     const counts = { archive: 0, notes: 0, quiz: 0 };
     for (const d of rows) if (counts[d.where_shown] !== undefined) counts[d.where_shown] += 1;
 
+    // A subject the database does not have. It happens: a stale link, a
+    // subject deleted in another tab, a typed address. Say so — the screen
+    // used to render around a missing subject with an empty header and a
+    // back button that went nowhere.
+    if (!module) {
+      return (
+        <div className="admin-body">
+          <section className="admin-card admin-seed">
+            <div className="admin-card-t">لا توجد هذه المادة</div>
+            <p className="admin-card-b">ربما حُذفت، أو الرابط قديم.</p>
+            <Link className="btn p" href="/admin/content">كل المواد</Link>
+          </section>
+        </div>
+      );
+    }
+
     return (
       <ContentScreen
+        // The list lives in state inside there, so that it can be edited
+        // without a round trip. State survives a re-render, which meant
+        // switching from الأرشيف to اختبر نفسك changed the address and the
+        // counts and left the same files on screen. The key makes a different
+        // list a different component.
+        key={`${module.id}:${where}`}
         module={module}
         documents={rows.filter((d) => d.where_shown === where)}
         where={where}

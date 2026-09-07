@@ -31,6 +31,9 @@ export default async function QuestionPage({ params }) {
 
   return (
     <Question
+      // The answers live in state so a new one can be appended. Keyed so that
+      // opening a second question does not show the first one's answers.
+      key={post.id}
       post={post}
       subject={subject}
       answers={sorted}

@@ -28,6 +28,10 @@ export default async function UsersPage({ searchParams }) {
 
   return (
     <UsersScreen
+      // The list is held in state so a row can be approved without a round
+      // trip — which meant switching بانتظار → أعضاء changed the tab and left
+      // the same people on screen. A different list is a different component.
+      key={status}
       people={people || []}
       status={status}
       counts={counts}

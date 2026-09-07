@@ -43,6 +43,7 @@ export default async function Reports({ searchParams }) {
 
   return (
     <ReportQueue
+      key={state}
       reports={(rows || []).map((r) => ({ ...r, target: byId[`${r.target_type}:${r.target_id}`] || null }))}
       state={state}
       counts={counts}

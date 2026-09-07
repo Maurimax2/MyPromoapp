@@ -20,5 +20,7 @@ export default async function ChatPage({ params }) {
       .eq('chat', id).order('created_at').limit(300),
   ]);
 
-  return <Talk chat={chat.id} person={person} first={messages || []} me={me.id} />;
+  // Keyed for the same reason as the rooms: the messages live in state, and
+  // one chat must not open showing another's.
+  return <Talk key={chat.id} chat={chat.id} person={person} first={messages || []} me={me.id} />;
 }
