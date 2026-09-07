@@ -59,9 +59,23 @@ export async function POST(request) {
   if (!document) return NextResponse.json({ error: 'لا ملف' }, { status: 400 });
 
   const db = supabaseAdmin();
-  const { data: doc } = await db.from('documents')
+  const { data: doc, error: lookup } = await db.from('documents')
     .select('id, module, title, section, drive_id, correction, ocr_text')
     .eq('id', document).maybeSingle();
+
+  // A refused query hands back no row, which is indistinguishable from a file
+  // that is not there — and printing «لم نجد هذا الملف» over a file plainly on
+  // the screen sends everybody looking in the wrong place. It cost an evening
+  // once already: the query asks for `ocr_text`, and against a database that
+  // has not had the migration run the whole select is rejected.
+  if (lookup) {
+    const missing = /column .* does not exist|ocr_text/i.test(lookup.message || '');
+    return NextResponse.json({
+      error: missing
+        ? 'قاعدة البيانات ناقصة عمودًا — شغّل آخر SQL في Supabase ثم أعد المحاولة'
+        : `تعذّرت قراءة الملف من قاعدة البيانات — ${lookup.message}`,
+    }, { status: 500 });
+  }
 
   if (!doc) return NextResponse.json({ error: 'لم نجد هذا الملف' }, { status: 404 });
   if (!doc.drive_id) {
@@ -81,10 +95,17 @@ export async function POST(request) {
     text = normaliseOcr(pages.filter((p) => typeof p === 'string' && pageHasQuestions(p)).join('\n'));
     gaps = 3;
 
-    // Kept so the reading is done once, ever — by whoever asked first.
-    await db.from('documents')
+    // Kept so the reading is done once, ever — by whoever asked first. If it
+    // cannot be kept, say so: silently losing it means the next person reads
+    // the same paper again and never learns why.
+    const { error: keep } = await db.from('documents')
       .update({ ocr_text: pages.join('\n\f\n'), ocr_at: new Date().toISOString() })
       .eq('id', doc.id);
+    if (keep) {
+      return NextResponse.json({
+        error: `قرأنا الصور لكن تعذّر حفظ النص — ${keep.message}`,
+      }, { status: 500 });
+    }
 
     if (!text.trim()) {
       return NextResponse.json({ error: 'لم نقرأ شيئًا في هذه الصور' }, { status: 422 });

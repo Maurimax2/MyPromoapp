@@ -329,6 +329,20 @@ createServer(async (req, res) => {
 
     // Embedded selects — the handful this app actually asks for.
     const select = params.get('select') || '*';
+
+    // A database that has not had the latest SQL run. Postgres refuses the
+    // whole select, not just the column — and a refusal hands back no rows,
+    // which reads exactly like a file that is not there. Set
+    // MOCK_MISSING_COLUMN=ocr_text to stand in one of those databases and
+    // watch what the screen says.
+    const absent = process.env.MOCK_MISSING_COLUMN;
+    if (absent && select.includes(absent)) {
+      return send(res, 400, {
+        code: '42703',
+        message: `column ${table}.${absent} does not exist`,
+        hint: null, details: null,
+      });
+    }
     if (table === 'questions' && select.includes('question_banks')) {
       rows = rows.map((r) => ({
         ...r,
