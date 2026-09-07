@@ -66,6 +66,9 @@ const db = {
     { id: 3, module: 'anatomie', chapter: null, where_shown: 'quiz', section: 'exam', n: null,
       title: 'Examen ANATOMIE 2021', prof: null, year: 2021, ext: 'PDF', bytes: 2100000,
       drive_id: 'drv3', published: true, position: 0 },
+    { id: 4, module: 'anatomie', chapter: null, where_shown: 'quiz', section: 'exam', n: null,
+      title: 'Examen ANATOMIE 2025 (scan)', prof: null, year: 2025, ext: 'PDF', bytes: 2050000,
+      drive_id: 'drv4', published: true, position: 1 },
   ],
   question_banks: [{ id: 1, module: 'anatomie', document: 3, title: 'Examen ANATOMIE 2021', section: null, position: 0 }],
   questions: [

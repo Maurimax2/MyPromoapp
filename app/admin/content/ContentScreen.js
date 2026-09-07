@@ -46,6 +46,36 @@ export default function ContentScreen({ module, documents, where, counts, canDel
   const [open, setOpen] = useState(null);
   const [busy, setBusy] = useState(null);
   const [error, setError] = useState('');
+  const [pulled, setPulled] = useState({});
+
+  // Turning an exam paper into questions. It reads the file from Drive and
+  // parses it, which takes a few seconds — so the row says so, and says what
+  // came back rather than going quiet.
+  const extract = async (id) => {
+    setBusy(id); setError('');
+    setPulled((p) => ({ ...p, [id]: { working: true } }));
+
+    let res, data;
+    try {
+      res = await fetch('/api/admin/extract', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ document: id }),
+      });
+      data = await res.json().catch(() => ({}));
+    } catch {
+      setBusy(null);
+      setPulled((p) => ({ ...p, [id]: { error: 'لا اتصال بالخادم' } }));
+      return;
+    }
+    setBusy(null);
+
+    if (!res.ok) {
+      setPulled((p) => ({ ...p, [id]: { error: data.error || `تعذّر الاستخراج (${res.status})` } }));
+      return;
+    }
+    setPulled((p) => ({ ...p, [id]: { ...data } }));
+  };
 
   const patch = async (id, body) => {
     const before = rows.find((d) => d.id === id);
@@ -215,6 +245,35 @@ export default function ContentScreen({ module, documents, where, counts, canDel
                       <button className="btn g sm danger" onClick={() => remove(d.id)}>احذف</button>
                     )}
                   </div>
+
+                  {where === 'quiz' && d.drive_id && (
+                    <div className="ctd-qcm">
+                      <button
+                        className="btn p sm"
+                        disabled={pulled[d.id]?.working}
+                        onClick={() => extract(d.id)}
+                      >
+                        {pulled[d.id]?.working ? 'نقرأ الملف…' : 'استخرج الأسئلة'}
+                      </button>
+                      {pulled[d.id]?.error && (
+                        <p className="ctd-qcm-b bad">{pulled[d.id].error}</p>
+                      )}
+                      {pulled[d.id]?.found !== undefined && (
+                        <p className="ctd-qcm-b">
+                          {pulled[d.id].added} سؤالًا جديدًا من {pulled[d.id].found}
+                          {pulled[d.id].banks > 1 ? ` · ${pulled[d.id].banks} أقسام` : ''}
+                          {' · '}
+                          {pulled[d.id].answered} بإجابة
+                          {pulled[d.id].added > pulled[d.id].answered
+                            ? ` · ${pulled[d.id].added - pulled[d.id].answered} تحتاج مراجعة`
+                            : ''}
+                        </p>
+                      )}
+                      {pulled[d.id]?.added > 0 && (
+                        <Link className="btn g sm" href="/admin/questions">راجع الأسئلة</Link>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
