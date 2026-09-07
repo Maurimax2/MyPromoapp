@@ -16,6 +16,7 @@ import { pdfText } from '@/lib/pdf-text';
 import { parseQcm } from '@/lib/qcm/parse';
 import { parseAnswerKey, splitAtCorrection } from '@/lib/qcm/key';
 import { alignSections, runsOfKey } from '@/lib/qcm/sections';
+import { normaliseOcr, pageHasQuestions } from '@/lib/qcm/ocr';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -51,12 +52,15 @@ export async function POST(request) {
     return NextResponse.json({ error: 'GOOGLE_API_KEY غير مضبوط على الخادم' }, { status: 500 });
   }
 
-  const { document } = await request.json();
+  // `pages` arrives when the browser has just read a photographed paper: one
+  // string per page, so a page of figures can be told from a page of
+  // questions before any of it is parsed.
+  const { document, pages } = await request.json();
   if (!document) return NextResponse.json({ error: 'لا ملف' }, { status: 400 });
 
   const db = supabaseAdmin();
   const { data: doc } = await db.from('documents')
-    .select('id, module, title, section, drive_id, correction')
+    .select('id, module, title, section, drive_id, correction, ocr_text')
     .eq('id', document).maybeSingle();
 
   if (!doc) return NextResponse.json({ error: 'لم نجد هذا الملف' }, { status: 404 });
@@ -64,23 +68,51 @@ export async function POST(request) {
     return NextResponse.json({ error: 'هذا الملف ليس في Drive' }, { status: 400 });
   }
 
+  // A page the camera read is dented in ways a typed page never is, so the
+  // numbering is allowed to step over a hole the OCR left. On a paper with
+  // real text a number out of turn is a number inside a sentence, and no such
+  // allowance is made.
+  let gaps = 0;
   let text;
-  let scanned = false;
-  try {
-    const read = await pdfText(await fetchDrive(doc.drive_id, key));
-    text = read.text;
-    scanned = read.scanned;
-  } catch (err) {
-    return NextResponse.json({ error: `تعذّرت قراءة الملف — ${err.message}` }, { status: 502 });
-  }
 
-  // A photographed paper carries no text at all. Say so plainly rather than
-  // reporting nought questions as if the paper were empty.
-  if (scanned) {
-    return NextResponse.json({
-      error: 'هذا الملف صور ممسوحة، لا نص فيه — لا يمكن استخراج الأسئلة منه بعد',
-      scanned: true,
-    }, { status: 422 });
+  if (Array.isArray(pages) && pages.length) {
+    // A paper of figures and a paper of questions are bound together; only the
+    // pages carrying propositions are part of the QCM.
+    text = normaliseOcr(pages.filter((p) => typeof p === 'string' && pageHasQuestions(p)).join('\n'));
+    gaps = 3;
+
+    // Kept so the reading is done once, ever — by whoever asked first.
+    await db.from('documents')
+      .update({ ocr_text: pages.join('\n\f\n'), ocr_at: new Date().toISOString() })
+      .eq('id', doc.id);
+
+    if (!text.trim()) {
+      return NextResponse.json({ error: 'لم نقرأ شيئًا في هذه الصور' }, { status: 422 });
+    }
+  } else {
+    let scanned = false;
+    try {
+      const read = await pdfText(await fetchDrive(doc.drive_id, key));
+      text = read.text;
+      scanned = read.scanned;
+    } catch (err) {
+      return NextResponse.json({ error: `تعذّرت قراءة الملف — ${err.message}` }, { status: 502 });
+    }
+
+    // A photographed paper carries no text at all. If somebody has already had
+    // it read, use that; otherwise say what it is, and let the panel offer to
+    // read it here.
+    if (scanned) {
+      if (doc.ocr_text) {
+        text = normaliseOcr(doc.ocr_text.split('\f').filter(pageHasQuestions).join('\n'));
+        gaps = 3;
+      } else {
+        return NextResponse.json({
+          error: 'هذا الملف صور ممسوحة، لا نص فيه — اقرأه أولًا',
+          scanned: true,
+        }, { status: 422 });
+      }
+    }
   }
 
   // A paper often carries its own key at the end; some have it in a separate
@@ -108,7 +140,7 @@ export async function POST(request) {
     }
   }
 
-  const parsed = parseQcm(asked || text).filter((q) => q.options.length >= 2);
+  const parsed = parseQcm(asked || text, { gaps }).filter((q) => q.options.length >= 2);
   if (!parsed.length) {
     return NextResponse.json({ error: 'لم نجد أسئلة في هذا الملف' }, { status: 422 });
   }

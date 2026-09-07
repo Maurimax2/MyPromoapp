@@ -51,7 +51,7 @@ export default function ContentScreen({ module, documents, where, counts, canDel
   // Turning an exam paper into questions. It reads the file from Drive and
   // parses it, which takes a few seconds — so the row says so, and says what
   // came back rather than going quiet.
-  const extract = async (id) => {
+  const extract = async (id, pages) => {
     setBusy(id); setError('');
     setPulled((p) => ({ ...p, [id]: { working: true } }));
 
@@ -60,7 +60,7 @@ export default function ContentScreen({ module, documents, where, counts, canDel
       res = await fetch('/api/admin/extract', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ document: id }),
+        body: JSON.stringify({ document: id, pages }),
       });
       data = await res.json().catch(() => ({}));
     } catch {
@@ -71,10 +71,41 @@ export default function ContentScreen({ module, documents, where, counts, canDel
     setBusy(null);
 
     if (!res.ok) {
-      setPulled((p) => ({ ...p, [id]: { error: data.error || `تعذّر الاستخراج (${res.status})` } }));
+      setPulled((p) => ({
+        ...p,
+        [id]: { error: data.error || `تعذّر الاستخراج (${res.status})`, scanned: data.scanned },
+      }));
       return;
     }
     setPulled((p) => ({ ...p, [id]: { ...data } }));
+  };
+
+  // A photographed paper is read here, in this browser — a page takes seconds
+  // and five of them would run a serverless function past its limit. The text
+  // goes up once and is kept, so nobody reads the same paper twice.
+  const readScanned = async (d) => {
+    setBusy(d.id); setError('');
+    setPulled((p) => ({ ...p, [d.id]: { reading: true, done: 0, total: 0 } }));
+
+    let pages;
+    try {
+      const file = await fetch(`/api/file/${d.drive_id}`);
+      if (!file.ok) throw new Error(`الملف ${file.status}`);
+      const bytes = await file.arrayBuffer();
+
+      const { readScan } = await import('@/lib/ocr');
+      const read = await readScan(bytes, {
+        onPage: (done, total) =>
+          setPulled((p) => ({ ...p, [d.id]: { reading: true, done, total } })),
+      });
+      pages = read.pages;
+    } catch (err) {
+      setBusy(null);
+      setPulled((p) => ({ ...p, [d.id]: { error: `تعذّرت قراءة الصور — ${err?.message || err}` } }));
+      return;
+    }
+
+    await extract(d.id, pages);
   };
 
   const patch = async (id, body) => {
@@ -250,13 +281,31 @@ export default function ContentScreen({ module, documents, where, counts, canDel
                     <div className="ctd-qcm">
                       <button
                         className="btn p sm"
-                        disabled={pulled[d.id]?.working}
+                        disabled={pulled[d.id]?.working || pulled[d.id]?.reading}
                         onClick={() => extract(d.id)}
                       >
                         {pulled[d.id]?.working ? 'نقرأ الملف…' : 'استخرج الأسئلة'}
                       </button>
                       {pulled[d.id]?.error && (
                         <p className="ctd-qcm-b bad">{pulled[d.id].error}</p>
+                      )}
+                      {pulled[d.id]?.reading && (
+                        <p className="ctd-qcm-b">
+                          {pulled[d.id].total
+                            ? `نقرأ الصفحة ${pulled[d.id].done} من ${pulled[d.id].total}…`
+                            : 'نحضّر القارئ…'}
+                        </p>
+                      )}
+                      {pulled[d.id]?.scanned && !pulled[d.id]?.reading && (
+                        <>
+                          <button className="btn p sm" onClick={() => readScanned(d)}>
+                            اقرأ الصور
+                          </button>
+                          <p className="ctd-qcm-b">
+                            القراءة تجري في هذا الجهاز، بضع ثوانٍ لكل صفحة — ومرّة واحدة لهذا
+                            الملف، لا يعيدها أحد بعدك.
+                          </p>
+                        </>
                       )}
                       {pulled[d.id]?.found !== undefined && (
                         <p className="ctd-qcm-b">

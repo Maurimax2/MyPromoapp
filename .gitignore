@@ -8,3 +8,6 @@ design/mypromo-screens.html
 
 # copied out of node_modules by scripts/copy-pdfjs.mjs
 public/pdfjs/
+
+# copied out of node_modules by scripts/copy-tesseract.mjs
+public/tesseract/

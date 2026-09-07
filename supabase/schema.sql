@@ -243,6 +243,13 @@ begin
   end if;
 end $$;
 
+-- A photographed paper has no text in it. What the reader made of its pages is
+-- kept here so the reading is done once, ever, by whoever opened it first —
+-- and so the questions can be parsed again later without asking anybody to
+-- photograph anything twice.
+alter table documents add column if not exists ocr_text text;
+alter table documents add column if not exists ocr_at   timestamptz;
+
 -- ---------------------------------------------------------------------------
 -- Who can see and touch what
 -- ---------------------------------------------------------------------------

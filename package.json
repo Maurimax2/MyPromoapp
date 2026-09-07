@@ -8,17 +8,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prebuild": "node scripts/copy-pdfjs.mjs",
-    "predev": "node scripts/copy-pdfjs.mjs",
+    "prebuild": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
+    "predev": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
     "mock": "node scripts/mock-supabase.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.115.0",
+    "@tesseract.js-data/fra": "^1.0.0",
     "next": "^15.5.25",
     "pdfjs-dist": "^6.3.289",
     "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react-dom": "19.1.1",
+    "tesseract.js": "^7.0.0"
   },
   "type": "module"
 }
