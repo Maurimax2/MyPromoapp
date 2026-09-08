@@ -16,6 +16,7 @@
     "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.115.0",
     "@tesseract.js-data/fra": "^1.0.0",
+    "aws4fetch": "^1.0.20",
     "next": "^15.5.25",
     "pdfjs-dist": "^6.3.289",
     "react": "19.1.1",
