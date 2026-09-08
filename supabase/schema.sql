@@ -251,6 +251,25 @@ alter table documents add column if not exists ocr_text text;
 alter table documents add column if not exists ocr_at   timestamptz;
 
 -- ---------------------------------------------------------------------------
+-- How a screen is arranged
+-- ---------------------------------------------------------------------------
+
+-- الرئيسية is made of blocks — the composer, the row of tools, the subject
+-- banners, the feed — and which of them appear, and in what order, was decided
+-- in JavaScript. So every question about the layout became a question for
+-- whoever could deploy, and a week of «four tools or six, top or bottom»
+-- answered one at a time.
+--
+-- It is a row now. The panel writes it, the screen reads it, and nobody waits
+-- for a deploy to move a section.
+create table if not exists layouts (
+  screen     text primary key,                 -- 'home', and others as they come
+  blocks     jsonb not null default '[]',      -- [{ id, on, ...options }] in order
+  updated_at timestamptz not null default now(),
+  updated_by uuid references profiles(id)
+);
+
+-- ---------------------------------------------------------------------------
 -- Who can see and touch what
 -- ---------------------------------------------------------------------------
 
@@ -301,6 +320,16 @@ create policy questions_read on questions for select
 
 drop policy if exists questions_write on questions;
 create policy questions_write on questions for all
+  using (is_staff()) with check (is_staff());
+
+-- Anybody signed in reads how the screen is arranged; only staff arrange it.
+alter table layouts enable row level security;
+
+drop policy if exists layouts_read on layouts;
+create policy layouts_read on layouts for select using (true);
+
+drop policy if exists layouts_write on layouts;
+create policy layouts_write on layouts for all
   using (is_staff()) with check (is_staff());
 
 drop policy if exists jobs_staff on import_jobs;

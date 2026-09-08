@@ -84,6 +84,19 @@ export default async function AdminHome() {
         </Link>
       )}
 
+      <Link href="/admin/layout-editor" className="admin-card admin-import">
+        <div className="admin-import-ic" style={{ background: 'var(--purple)' }}>
+          <Icon name="settings" size={20} />
+        </div>
+        <div className="grow">
+          <div className="admin-card-t">ترتيب الرئيسية</div>
+          <div className="admin-card-b">
+            رتّب أقسام الشاشة، أخفِ ما لا تريد — يظهر للطلاب فورًا
+          </div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
+
       <Link href="/admin/import" className="admin-card admin-import">
         <div className="admin-import-ic"><Icon name="plus" size={22} /></div>
         <div className="grow">
