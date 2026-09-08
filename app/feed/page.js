@@ -4,7 +4,6 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 import { bannerFor } from '@/lib/data';
 import { subjectsOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
-import { layoutOf } from '@/lib/layout';
 import Home from './Home';
 
 export const dynamic = 'force-dynamic';
@@ -46,15 +45,9 @@ export default async function Feed() {
 
   // Read with the service key: a student's own notifications are their own
   // rows, but the count is wanted on every load and this is one head request.
-  // The arrangement of the screen and the count of what is due to be revised
-  // come along in the same breath.
-  const [{ count: unseen }, { count: dueNow }, layout] = await Promise.all([
-    supabaseAdmin().from('notifications').select('id', { count: 'exact', head: true })
-      .eq('person', profile.id).eq('seen', false),
-    supabaseAdmin().from('reviews').select('question', { count: 'exact', head: true })
-      .eq('person', profile.id).lte('due_at', new Date().toISOString()),
-    layoutOf('home'),
-  ]);
+  const { count: unseen } = await supabaseAdmin()
+    .from('notifications').select('id', { count: 'exact', head: true })
+    .eq('person', profile.id).eq('seen', false);
 
   const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
@@ -84,8 +77,6 @@ export default async function Feed() {
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
       posts={posts}
       subjects={subjects}
-      layout={layout}
-      due={dueNow || 0}
     />
   );
 }

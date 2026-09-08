@@ -79,7 +79,6 @@ const db = {
       options: ['sillon bulbo-pontique', 'mésencéphale', 'moelle spinale'],
       answer: [0], why: null, source: 'paper', status: 'published' },
   ],
-  layouts: [],
   audit_log: [],
   import_jobs: [],
   posts: [],
