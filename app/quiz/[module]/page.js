@@ -2,22 +2,24 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Icon from '@/components/Icon';
-import { MODULES, moduleById, sectionsFor } from '@/lib/data';
+import { moduleById, sectionsFor } from '@/lib/data';
 import QuizPicker from '@/components/QuizPicker';
-import { banksFor, questionCount, unansweredCount } from '@/lib/questions';
+// Read through the bridge, not the file: every question the panel extracts
+// lives in Postgres, and this screen used to show only what a script had
+// written into lib/questions/*.json months ago.
+import { unansweredCount } from '@/lib/questions';
+import { banksOf } from '@/lib/quiz-bank';
 
-export function generateStaticParams() {
-  return MODULES.filter((m) => banksFor(m.id).length || sectionsFor(m, 'quiz').length)
-    .map((m) => ({ module: m.id }));
-}
+// Not prerendered: which banks exist changes whenever a paper is extracted.
+export const dynamic = 'force-dynamic';
 
 export default async function QuizModule({ params }) {
   const { module: id } = await params;
   const m = moduleById(id);
   if (!m) notFound();
 
-  const banks = banksFor(id);
-  const total = questionCount(id);
+  const banks = await banksOf(id);
+  const total = banks.reduce((n, b) => n + b.questions.length, 0);
   const waiting = unansweredCount(id);
   const sources = sectionsFor(m, 'quiz');
   const sourceCount = sources.reduce((n, s) => n + s.items.length, 0);

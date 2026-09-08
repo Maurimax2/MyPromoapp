@@ -17,6 +17,7 @@ import { parseQcm } from '@/lib/qcm/parse';
 import { parseAnswerKey, splitAtCorrection } from '@/lib/qcm/key';
 import { alignSections, runsOfKey } from '@/lib/qcm/sections';
 import { normaliseOcr, pageHasQuestions } from '@/lib/qcm/ocr';
+import { readPaper } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -80,6 +81,43 @@ export async function POST(request) {
   if (!doc) return NextResponse.json({ error: 'لم نجد هذا الملف' }, { status: 404 });
   if (!doc.drive_id) {
     return NextResponse.json({ error: 'هذا الملف ليس في Drive' }, { status: 400 });
+  }
+
+  // --- the reading ------------------------------------------------------
+  //
+  // With a Gemini key the paper is read whole, photographs and all, and comes
+  // back already divided into its regions. Without one we fall back to the
+  // text layer and the parser, which works on typed papers and finds nothing
+  // in a photograph.
+  const gemini = process.env.GEMINI_API_KEY;
+  if (gemini) {
+    let sections;
+    try {
+      const paper = await fetchDrive(doc.drive_id, key);
+
+      // Some papers keep their key in a separate sheet the catalogue already
+      // points at; hand Gemini both and it can pair them itself.
+      let correctionBytes = null;
+      if (doc.correction) {
+        const { data: corr } = await db.from('documents')
+          .select('drive_id').eq('id', doc.correction).maybeSingle();
+        if (corr?.drive_id) {
+          correctionBytes = await fetchDrive(corr.drive_id, key).catch(() => null);
+        }
+      }
+
+      sections = await readPaper({ paper, correction: correctionBytes, title: doc.title }, gemini);
+    } catch (err) {
+      // Google's own words reach the screen. A model that has been renamed and
+      // an API that was never switched on both say so plainly, and neither is
+      // worth guessing at.
+      return NextResponse.json({ error: `${err.message}` }, { status: 502 });
+    }
+
+    if (!sections.length) {
+      return NextResponse.json({ error: 'لم نجد أسئلة في هذا الملف' }, { status: 422 });
+    }
+    return store(db, doc, sections, gate.profile.id);
   }
 
   // A page the camera read is dented in ways a typed page never is, so the
@@ -168,12 +206,43 @@ export async function POST(request) {
 
   // A paper bound out of several regions becomes one bank per region, each
   // keeping the numbering printed on the sheet.
-  const sections = alignSections(parsed, keyRuns);
+  const aligned = alignSections(parsed, keyRuns);
 
-  // ---- store it ----------------------------------------------------------
-  // Look first, then insert. Never ON CONFLICT against this schema.
+  // The parser hands back its answers in a Map beside the questions; put them
+  // on the questions themselves so that both readings arrive here the same
+  // shape.
+  const sections = aligned.map((section) => ({
+    title: section.title,
+    questions: section.questions.map((q) => {
+      // A key read region by region answers only its own region. The flat
+      // reading is for a paper with one run of numbers — reaching for it
+      // inside a sectioned paper hands question 4 of Le foie the answer to
+      // question 4 of Estomac.
+      const fromKey = section.title ? section.answers.get(q.n) : flat.get(q.n);
+      return {
+        n: q.n, q: q.q, options: q.options,
+        answer: q.answer?.length ? q.answer : (fromKey || []),
+        proposed: [],
+        source: 'paper',
+      };
+    }),
+  }));
+
+  return store(db, doc, sections, gate.profile.id);
+}
+
+/**
+ * Put the questions away.
+ *
+ * Look first, then insert — never ON CONFLICT against this schema. A question
+ * already stored under its number is left alone, so pressing the button twice
+ * adds nothing.
+ */
+async function store(db, doc, sections, actor) {
+  let found = 0;
   let added = 0;
   let answered = 0;
+  let proposed = 0;
 
   for (const [i, section] of sections.entries()) {
     const title = section.title ? `${doc.title} — ${section.title}` : doc.title;
@@ -193,24 +262,28 @@ export async function POST(request) {
     const { data: already } = await db.from('questions').select('n').eq('bank', bankId);
     const stored = new Set((already || []).map((r) => String(r.n)));
 
+    found += section.questions.length;
+
     const rows = section.questions
       .filter((q) => !stored.has(String(q.n)))
       .map((q) => {
-        // A key read region by region answers only its own region. The flat
-        // reading is for a paper that has one run of numbers — reaching for
-        // it inside a sectioned paper hands question 4 of Le foie the answer
-        // to question 4 of Estomac.
-        const fromKey = section.title ? section.answers.get(q.n) : flat.get(q.n);
-        const answer = q.answer?.length ? q.answer : (fromKey || []);
+        // What the paper stated is the faculty's answer and can be published.
+        // What a model worked out on its own is its opinion: it is kept, and
+        // marked, and nobody sees it until somebody has agreed with it.
+        const stated = q.answer?.length ? q.answer : [];
+        const guess = !stated.length && q.proposed?.length ? q.proposed : [];
         return {
           bank: bankId,
           n: String(q.n),
           stem: q.q,
           options: q.options,
-          answer,
-          source: 'paper',
-          status: answer.length ? 'published' : 'needs_answer',
-          created_by: gate.profile.id,
+          answer: stated.length ? stated : guess,
+          // `claude` means a model had an opinion. A question nobody has
+          // answered is not that — it is the paper's question, still waiting,
+          // and marking it otherwise claims a judgement no one made.
+          source: guess.length ? 'claude' : 'paper',
+          status: stated.length ? 'published' : 'needs_answer',
+          created_by: actor,
         };
       });
 
@@ -220,14 +293,16 @@ export async function POST(request) {
     }
 
     added += rows.length;
-    answered += rows.filter((r) => r.answer.length).length;
+    answered += rows.filter((r) => r.source === 'paper' && r.answer.length).length;
+    proposed += rows.filter((r) => r.source === 'claude').length;
   }
 
   return NextResponse.json({
-    found: parsed.length,
+    found,
     banks: sections.length,
     added,
     answered,
-    skipped: parsed.length - added,
+    proposed,
+    skipped: found - added,
   });
 }

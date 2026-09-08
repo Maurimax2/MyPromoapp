@@ -1,29 +1,22 @@
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Quiz from '@/components/Quiz';
-import { MODULES, moduleById } from '@/lib/data';
-import { banksFor, bankBySlug, allQuestions } from '@/lib/questions';
+import { moduleById } from '@/lib/data';
+import { bankOf, allOf } from '@/lib/quiz-bank';
 
-export function generateStaticParams() {
-  return MODULES.flatMap((m) => {
-    const banks = banksFor(m.id);
-    if (!banks.length) return [];
-    return [
-      { module: m.id, bank: 'tout' },
-      ...banks.map((b) => ({ module: m.id, bank: b.fid })),
-    ];
-  });
-}
+// Not prerendered any more: the banks live in the database now, and which
+// ones exist changes every time somebody extracts a paper.
+export const dynamic = 'force-dynamic';
 
 export default async function BankPage({ params }) {
   const { module: id, bank: slug } = await params;
   const m = moduleById(id);
   if (!m) notFound();
 
-  const bank = slug === 'tout' ? null : bankBySlug(id, slug);
+  const bank = slug === 'tout' ? null : await bankOf(id, slug);
   if (slug !== 'tout' && !bank) notFound();
 
-  const questions = bank ? bank.questions : allQuestions(id);
+  const questions = bank ? bank.questions : await allOf(id);
   if (!questions.length) notFound();
 
   return (
