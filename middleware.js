@@ -36,11 +36,33 @@ export async function middleware(request) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Signed out, or already where an unapproved account is allowed to be.
+  // Already where somebody without an account is allowed to be. The API is
+  // open here because every route behind it checks for itself, and a redirect
+  // would answer a fetch with a login page.
   const path = request.nextUrl.pathname;
+  //
+  // `/admin` is open here because the panel is its own door — a separate page
+  // with a separate sign-in, which is the whole point of having two. Sending a
+  // member of staff to the students' login instead would be the app linking to
+  // the panel backwards, and it is the layout there that decides who gets in:
+  // no profile shows the panel's own sign-in, a student is told plainly that
+  // they are not staff.
   const open = path === '/waiting' || path.startsWith('/login') || path.startsWith('/auth')
-    || path.startsWith('/api/');
-  if (!user || open) return response;
+    || path.startsWith('/admin') || path.startsWith('/api/');
+  if (open) return response;
+
+  // Signed out. This used to fall through, on the understanding that every
+  // screen sent people to the door itself — and اختبر نفسك did not, because
+  // for months it was a static page reading a file and had nothing to check.
+  // A stranger could open it and read the questions. Which is the whole
+  // reason this belongs here and not on each screen: the one somebody adds
+  // next month is the one that forgets.
+  if (!user) {
+    const to = request.nextUrl.clone();
+    to.pathname = '/login';
+    to.search = '';
+    return NextResponse.redirect(to);
+  }
 
   const { data: profile, error } = await supabase
     .from('profiles').select('status, role').eq('id', user.id).maybeSingle();
