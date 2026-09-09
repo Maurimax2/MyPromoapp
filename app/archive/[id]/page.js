@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { allFiles, allDocs, sectionsFor } from '@/lib/data';
-import { moduleOf } from '@/lib/catalogue';
+import { moduleOf, semestersOf } from '@/lib/catalogue';
+import { subjectName } from '@/lib/data';
 
 // Not prerendered any more: what a subject holds is a question for the
 // database, and the answer depends on who is asking.
@@ -62,6 +63,10 @@ export default async function Module({ params }) {
   const m = await moduleOf(id);
   if (!m) notFound();
 
+  // الرئيسية now shows one banner per subject, so this screen is where the
+  // two semesters part. A subject taught in one draws no switch at all.
+  const semesters = await semestersOf(m);
+
   // Only the material you read. Résumés live in الملخصات, questions in اختبر نفسك.
   const sections = sectionsFor(m, 'archive');
 
@@ -71,9 +76,12 @@ export default async function Module({ params }) {
         <div className="head-row">
           <Link href="/archive" className="icobtn" aria-label="رجوع"><Icon name="chevR" size={18} /></Link>
           <div className="grow">
-            <div className="head-t" style={{ fontSize: 18 }}>{m.name}</div>
+            <div className="head-t" style={{ fontSize: 18 }}>{subjectName(m.name)}</div>
             <div className="head-s">
-              {m.semester} · {allFiles(m).length} محاضرة · {allDocs(m).length} ملف
+              {/* The switch below says which semester when there is a choice;
+                  when there is not, this is the only place it is written. */}
+              {semesters.length > 1 ? '' : `${m.semester} · `}
+              {allFiles(m).length} محاضرة · {allDocs(m).length} ملف
               {m.professors.length ? ` · ${m.professors.join(' · ')}` : ''}
             </div>
           </div>
@@ -82,6 +90,17 @@ export default async function Module({ params }) {
       </header>
 
       <div className="scroll">
+        {semesters.length > 1 && (
+          <div className="seg" role="group" aria-label="السداسي">
+            {semesters.map((s) => (
+              <Link key={s.id} href={`/archive/${s.id}`}
+                data-on={s.id === m.id} dir="ltr">
+                {s.semester}
+              </Link>
+            ))}
+          </div>
+        )}
+
         <Link href={`/quiz/${m.id}`} className="card quizcard">
           <div className="quizcard-ic"><Icon name="quiz" size={19} /></div>
           <div className="grow">
@@ -97,7 +116,9 @@ export default async function Module({ params }) {
               <span className="chapter-n">{i + 1}</span>
               <div className="grow">
                 <div className="chapter-t">{ch.title}</div>
-                <div className="chapter-s">{ch.subtitle} · {ch.lectures.length} محاضرة</div>
+                <div className="chapter-s">
+                  {[ch.subtitle, `${ch.lectures.length} محاضرة`].filter(Boolean).join(' · ')}
+                </div>
               </div>
             </div>
             {ch.lectures.map((l) => <Lecture key={String(l.n)} l={l} />)}

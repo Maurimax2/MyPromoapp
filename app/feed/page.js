@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { bannerFor } from '@/lib/data';
-import { subjectsOf } from '@/lib/catalogue';
+import { subjectsOf, subjectRail } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
@@ -62,9 +62,9 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
-  // Every subject the promo has, including one a colleague added this
-  // morning that has no files in it yet.
-  const subjects = subjectRows
+  // Every subject the promo has — one banner each, not one per semester, and
+  // including one a colleague added this morning with no files in it yet.
+  const subjects = (await subjectRail(promo))
     .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.name) }));
 
   return (

@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { isAdmin } from '@/lib/supabase/server';
+import { subjectKey, subjectName } from '@/lib/data';
 
 export const runtime = 'nodejs';
 
@@ -33,7 +34,10 @@ export async function POST(request) {
   const title = String(name || '').trim();
   if (!title) return NextResponse.json({ error: 'اكتب اسم المادة' }, { status: 400 });
 
-  const base = slug(title);
+  // The semester is a field of its own, so it does not belong in the id even
+  // when somebody types it into the name: ANATOMIE S2 filed under S2 is the
+  // anatomy subject, and `subjectKey` is what the app groups by.
+  const base = slug(subjectName(title));
   if (!base) return NextResponse.json({ error: 'الاسم بالفرنسية' }, { status: 400 });
 
   const db = supabaseAdmin();
@@ -51,7 +55,8 @@ export async function POST(request) {
   // with half its subjects missing.
   const { data: here } = await db.from('modules')
     .select('id, semester, name').eq('promo', promo);
-  if ((here || []).some((m) => m.semester === semester && slug(m.name) === base)) {
+  const key = subjectKey(title);
+  if ((here || []).some((m) => m.semester === semester && subjectKey(m.name) === key)) {
     return NextResponse.json({ error: 'هذه المادة موجودة في هذا السداسي' }, { status: 409 });
   }
 

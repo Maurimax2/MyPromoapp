@@ -56,6 +56,11 @@ const db = {
     { id: 'biophysique', promo: 'pcem2', semester: 'S2', name: 'BIOPHYSIQUE', icon: 'atom', tint: 'purple', professors: [], position: 2 },
     { id: 'embryologie', promo: 'pcem2', semester: 'S1', name: 'EMBRYOLOGIE', icon: 'baby', tint: 'purple', professors: [], position: 3 },
     { id: 'histologie', promo: 'pcem2', semester: 'S1', name: 'HISTOLOGIE', icon: 'micro', tint: 'purple', professors: [], position: 4 },
+    // A subject taught across both semesters, which is two rows and one
+    // subject: الرئيسية draws it once, and its screen carries the switch.
+    { id: 'anatomie-s2', promo: 'pcem2', semester: 'S2', name: 'ANATOMIE S2', icon: 'person', tint: 'purple', professors: [], position: 6 },
+    { id: 'physiologie-s1', promo: 'pcem2', semester: 'S1', name: 'PHYSIOLOGIE S1', icon: 'atom', tint: 'purple', professors: [], position: 7 },
+    { id: 'physiologie-s2', promo: 'pcem2', semester: 'S2', name: 'PHYSIOLOGIE S2', icon: 'atom', tint: 'purple', professors: [], position: 8 },
     // No banner drawn for this one, so the tinted-block fallback is on screen
     // too rather than only in the code.
     { id: 'anatomie-pathologique', promo: 'pcem2', semester: 'S2', name: 'ANATOMIE PATHOLOGIQUE', icon: 'micro', tint: 'orange', professors: [], position: 5 },

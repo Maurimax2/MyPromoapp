@@ -88,11 +88,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .srch:focus-within { background: var(--surface); border-color: var(--purple-light); }
 
 .seg { display: flex; gap: 4px; background: var(--bg); border-radius: 12px; padding: 4px; }
-.seg button {
-  flex: 1; text-align: center; font-size: 14.5px; font-weight: 600;
-  color: var(--ink-2); padding: 9px 0; border-radius: 9px;
+/* Also an <a>: the semester switch on a subject is two links, because each
+   semester is its own page and one of them should be shareable. */
+.seg button, .seg a {
+  flex: 1; min-height: 44px; font-size: 14.5px; font-weight: 600;
+  color: var(--ink-2); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
 }
-.seg button[data-on='true'] {
+.seg button[data-on='true'], .seg a[data-on='true'] {
   background: var(--surface); color: var(--purple);
   box-shadow: 0 1px 3px rgba(26, 20, 36, .09);
 }
