@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { bannerFor } from '@/lib/data';
@@ -13,7 +14,9 @@ export default async function Feed() {
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
-  const promo = profile.promo || 'pcem2';
+  const cookieStore = await cookies();
+  const selectedPromo = cookieStore.get('selected-promo')?.value;
+  const promo = selectedPromo || profile.promo || 'pcem2';
   const sb = await supabaseServer();
 
   // The posts, their authors, their attachments, and which ones I have
@@ -76,6 +79,7 @@ export default async function Feed() {
             promo: profile.promo,
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
+      promo={promo}
       posts={posts}
       subjects={subjects}
     />

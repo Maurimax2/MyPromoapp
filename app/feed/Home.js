@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
 import Post from '@/components/Post';
+import PromoSelector from '@/components/PromoSelector';
 import PickPromo from './PickPromo';
 import { imageThumb, pdfThumb } from '@/lib/thumb';
 import { dueCount, trackedCount } from '@/lib/review';
@@ -77,7 +78,7 @@ function Today({ review }) {
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, unseen = 0,
+export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
                                readError = null, refused = 0 }) {
   const router = useRouter();
   // The review schedule lives in this browser, so the card can only be filled
@@ -169,6 +170,7 @@ export default function Home({ me, posts, subjects, unseen = 0,
           <Logo size={32} id="feed" white />
           <div className="hero-mark">My<i>Promo</i></div>
           <div className="grow" />
+          <PromoSelector current={promo} />
           {/* المحادثات is a tab in the bottom bar now, so there is no icon for
               it here: one door, not two. */}
           {/* It was a <button> with no handler for weeks. */}

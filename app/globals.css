@@ -1563,3 +1563,48 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--orange-pale); border-radius: 6px; padding: 2px 7px;
   display: inline-block;
 }
+
+/* ============================================================
+   Year/Promo selector in the header
+   ============================================================ */
+.promo-selector {
+  position: relative;
+}
+
+.promo-btn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 6px 10px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15); color: white;
+  font-size: 12px; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer; transition: all 150ms ease;
+}
+
+.promo-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.promo-btn span {
+  min-width: 45px;
+}
+
+.promo-menu {
+  position: absolute; top: 100%; right: 0; z-index: 1000;
+  margin-top: 6px; background: white; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden; min-width: 100px;
+}
+
+.promo-item {
+  display: block; width: 100%; text-align: right;
+  padding: 10px 12px; font-size: 13px; font-weight: 500;
+  color: var(--ink); background: white; border: none;
+  cursor: pointer; transition: background 100ms;
+}
+
+.promo-item:hover {
+  background: var(--surface);
+}
+
+.promo-item.active {
+  background: var(--purple-pale); color: var(--purple); font-weight: 600;
+}

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { currentProfile } from '@/lib/supabase/server';
 import { promosOf, allModules, moduleCounts } from '@/lib/catalogue';
 import ArchiveList from './ArchiveList';
@@ -10,6 +11,9 @@ export const dynamic = 'force-dynamic';
 export default async function Archive() {
   const me = await currentProfile();
   if (!me) redirect('/login');
+
+  const cookieStore = await cookies();
+  const selectedPromo = cookieStore.get('selected-promo')?.value;
 
   const [years, subjects, tally] = await Promise.all([
     promosOf(), allModules(), moduleCounts(),
@@ -26,7 +30,7 @@ export default async function Archive() {
       promos={years.promos}
       modules={subjects.modules}
       counts={Object.fromEntries(tally.counts)}
-      mine={me.promo || 'pcem2'}
+      mine={selectedPromo || me.promo || 'pcem2'}
       readError={trouble}
       fromFile={subjects.source === 'file'}
     />
