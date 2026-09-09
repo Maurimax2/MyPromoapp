@@ -1023,6 +1023,28 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .sk-tabs { height: 48px; border-radius: 999px; }
 .sk-row  { height: 74px; }
 
+/* Standing in for something on a white surface — inside a head, inside a
+   card — where a white block with a shadow is invisible. The whole point of
+   a skeleton is being seen. */
+.sk-flat { background: var(--bg); box-shadow: none; }
+
+/* A line where the skeleton stands in for words rather than a whole card.
+   Flat, because a line of text does not sit on its own card. */
+.sk-line { height: 14px; border-radius: 7px; box-shadow: none; background: var(--line-soft); }
+.sk-line.big { height: 21px; }
+
+/* A banner in الرئيسية's rail. The real one is 82% wide so the next one
+   peeks, and the skeleton has to peek too or the screen jumps sideways
+   the moment it loads. */
+.sk-sub { flex: 0 0 auto; width: 82%; height: 132px; border-radius: 16px; }
+
+/* On the violet head. The purple sweep is invisible there, and a white
+   card would be the brightest thing on the screen. */
+.sk-pale { background: rgba(255,255,255,.16); box-shadow: none; }
+.sk-pale::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+}
+
 /* which server variables are actually set */
 .env-rows { display: flex; flex-direction: column; gap: 2px; }
 .env {

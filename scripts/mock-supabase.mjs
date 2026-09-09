@@ -11,6 +11,15 @@
 import { createServer } from 'node:http';
 
 const PORT = 54321;
+
+// Every read made slow, on purpose. A loading screen cannot be looked at on a
+// database that answers in a millisecond, so there was no way to tell a
+// skeleton that works from one that never renders:
+//
+//   MOCK_DELAY=2500 npm run mock
+//
+// which is roughly what the real thing costs a phone on mobile data.
+const DELAY = Number(process.env.MOCK_DELAY || 0);
 let nextId = 1000;
 const id = () => ++nextId;
 
@@ -249,6 +258,8 @@ createServer(async (req, res) => {
   const path = url.pathname;
 
   if (req.method === 'OPTIONS') return send(res, 204);
+
+  if (DELAY) await new Promise((go) => setTimeout(go, DELAY));
 
   // ---- auth -------------------------------------------------------------
   if (path.startsWith('/auth/v1/')) {
