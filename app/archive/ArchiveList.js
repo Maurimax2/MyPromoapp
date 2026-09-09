@@ -103,13 +103,17 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
               </div>
               {total > 0
                 ? <><span className="cnt">{n || total}</span><span className="chev"><Icon name="chev" size={18} /></span></>
-                : <span className="pill grey">لا ملفات</span>}
+                : <span className="chev"><Icon name="chev" size={18} /></span>}
             </div>
           );
 
-          return total > 0
-            ? <Link key={m.id} href={`/archive/${m.id}`} className="card">{inner}</Link>
-            : <div key={m.id} className="card" style={{ opacity: .72 }}>{inner}</div>;
+          // Always a link. This used to draw a dead card whenever the count
+          // said zero, so a wrong count did not merely misinform — it put the
+          // subject out of reach, while the same subject opened fine from its
+          // banner on الرئيسية. A number worked out from another query is
+          // never allowed to decide whether real content can be opened; the
+          // subject's own screen knows what it holds and says so.
+          return <Link key={m.id} href={`/archive/${m.id}`} className="card">{inner}</Link>;
         })}
 
         {inPromo.length > 0 && modules.length === 0 && (

@@ -357,9 +357,19 @@ createServer(async (req, res) => {
         (a[col] > b[col] ? 1 : a[col] < b[col] ? -1 : 0) * (dir === 'desc' ? -1 : 1));
     }
 
+    // Supabase answers at most `db-max-rows` — a thousand by default — and
+    // says nothing about it: the response is a normal 200 with a short body
+    // and a content-range naming the real total. A `.limit(20000)` does not
+    // raise that ceiling. The mock used to hand back everything, which is why
+    // a screen that reads a whole table looked correct here and truncated in
+    // production. Set MOCK_MAX_ROWS to something else to test the paging.
+    const MAX = Number(process.env.MOCK_MAX_ROWS || 1000);
     const total = rows.length;
+    const offset = Number(params.get('offset') || 0);
+    if (offset) rows = rows.slice(offset);
     const limit = Number(params.get('limit') || 0);
     if (limit) rows = rows.slice(0, limit);
+    if (rows.length > MAX) rows = rows.slice(0, MAX);
 
     // Embedded selects — the handful this app actually asks for.
     const select = params.get('select') || '*';
