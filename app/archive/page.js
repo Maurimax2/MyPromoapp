@@ -11,16 +11,24 @@ export default async function Archive() {
   const me = await currentProfile();
   if (!me) redirect('/login');
 
-  const [promos, modules, counts] = await Promise.all([
+  const [years, subjects, tally] = await Promise.all([
     promosOf(), allModules(), moduleCounts(),
   ]);
 
+  // Three things can go wrong here and two of them used to look identical to
+  // a working app: the read fails, or it succeeds and is empty and the file
+  // stands in. Either way the archive draws last year's subjects and the
+  // panel looks like it never saved anything. The screen says which it is.
+  const trouble = years.error || subjects.error || tally.error || null;
+
   return (
     <ArchiveList
-      promos={promos}
-      modules={modules}
-      counts={Object.fromEntries(counts)}
+      promos={years.promos}
+      modules={subjects.modules}
+      counts={Object.fromEntries(tally.counts)}
       mine={me.promo || 'pcem2'}
+      readError={trouble}
+      fromFile={subjects.source === 'file'}
     />
   );
 }

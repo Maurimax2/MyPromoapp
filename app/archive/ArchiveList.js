@@ -12,7 +12,8 @@ const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g
 // The subjects and the years come from the database now — the panel is where
 // they are created, and a subject somebody adds for DCEM1 has to appear here
 // without anybody editing a file.
-export default function ArchiveList({ promos, modules: all, counts, mine }) {
+export default function ArchiveList({ promos, modules: all, counts, mine,
+                                      readError = null, fromFile = false }) {
   const [promo, setPromo] = useState(
     promos.some((p) => p.id === mine) ? mine : promos[0]?.id);
   const [sem, setSem] = useState('S1');
@@ -59,6 +60,22 @@ export default function ArchiveList({ promos, modules: all, counts, mine }) {
       </header>
 
       <div className="scroll">
+        {/* Silence here is what makes "the panel saved it and the app never
+            got it" impossible to tell apart from "nobody has catalogued it".
+            One of these is a bug and the other is a Tuesday. */}
+        {readError && (
+          <div className="admin-err" style={{ padding: '0 2px' }}>
+            تعذّرت قراءة الأرشيف — {readError}
+          </div>
+        )}
+
+        {!readError && fromFile && (
+          <div className="admin-err" style={{ padding: '0 2px' }}>
+            هذه المواد من نسخة التطبيق، لا من قاعدة البيانات — ما تضيفه في
+            اللوحة لن يظهر هنا حتى يُقرأ الجدول. أبلغ عن هذه الرسالة.
+          </div>
+        )}
+
         {/* A year is ready when it has subjects, not when somebody remembers
             to tick a box: whatever the panel creates shows up here. */}
         {inPromo.length === 0 && (
