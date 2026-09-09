@@ -56,19 +56,37 @@ export async function POST(request) {
 
   if (!rows.length) return NextResponse.json({ error: 'لا شيء لحفظه' }, { status: 400 });
 
-  // The same file can be imported twice — from a folder and again on its own —
-  // so a second save must correct the row rather than make another.
-  const known = new Map();
-  for (let i = 0; i < rows.length; i += 100) {
-    const slice = rows.slice(i, i + 100);
+  // One Drive file is one row in the whole database — `documents_drive_key`.
+  // A folder that lists the same file twice, a shortcut beside its original,
+  // a crawl re-run over a folder that overlaps another: all of it arrives
+  // here, and a single repeat used to take the entire batch down with it.
+  // Six files with one repeated saved nothing at all, which is what a subject
+  // with no files under a name that has thirty looks like.
+  const once = new Map();
+  for (const r of rows) if (!once.has(r.drive_id)) once.set(r.drive_id, r);
+  const wanted = [...once.values()];
+
+  // Who already holds these files. Asked across every subject, not just this
+  // one, because the answer changes what we are allowed to do.
+  const held = new Map();
+  for (let i = 0; i < wanted.length; i += 100) {
+    const slice = wanted.slice(i, i + 100);
     const { data, error } = await db.from('documents')
-      .select('id, drive_id').in('drive_id', slice.map((r) => r.drive_id));
+      .select('id, drive_id, module').in('drive_id', slice.map((r) => r.drive_id));
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    for (const d of data || []) known.set(d.drive_id, d.id);
+    for (const d of data || []) held.set(d.drive_id, d);
   }
 
-  const fresh = rows.filter((r) => !known.has(r.drive_id));
-  const again = rows.filter((r) => known.has(r.drive_id));
+  const fresh = wanted.filter((r) => !held.has(r.drive_id));
+  const again = wanted.filter((r) => held.get(r.drive_id)?.module === module);
+
+  // A file another subject already holds is left alone. This used to update
+  // the row's `module`, which does not add the file here — it takes it out of
+  // there. Cataloguing a second year that shares a lecture emptied the first
+  // year of it, silently, and the import reported it as saved.
+  const taken = wanted
+    .map((r) => held.get(r.drive_id))
+    .filter((d) => d && d.module !== module);
 
   if (fresh.length) {
     const { error } = await db.from('documents').insert(fresh);
@@ -78,19 +96,28 @@ export async function POST(request) {
   for (const r of again) {
     const { created_by, ...fields } = r;
     const { error } = await db.from('documents')
-      .update(fields).eq('id', known.get(r.drive_id));
+      .update(fields).eq('id', held.get(r.drive_id).id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
-  const count = rows.length;
 
   await note(db, {
     actor: profile.id, action: 'imported_documents',
     target_type: 'module', target_id: module,
-    detail: { added: fresh.length, updated: again.length },
+    detail: {
+      added: fresh.length, updated: again.length,
+      repeated: rows.length - wanted.length, elsewhere: taken.length,
+    },
   });
 
-  return NextResponse.json({ saved: count, added: fresh.length, updated: again.length });
+  return NextResponse.json({
+    saved: fresh.length + again.length,
+    added: fresh.length,
+    updated: again.length,
+    // What was asked for and not done, so the panel can say so rather than
+    // report a clean save over files it never touched.
+    repeated: rows.length - wanted.length,
+    elsewhere: taken.map((d) => ({ drive_id: d.drive_id, module: d.module })),
+  });
 }
 
 // Correcting one file after the fact: its name, the screen it appears on,

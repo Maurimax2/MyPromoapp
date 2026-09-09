@@ -40,6 +40,7 @@ export default function ImportScreen({ promos, modules, preset }) {
 
   const [url, setUrl] = useState('');
   const [state, setState] = useState('idle');       // idle|reading|ready|saving|saved
+  const [result, setResult] = useState(null);       // what the server actually did
   const [error, setError] = useState('');
   const [rows, setRows] = useState([]);
   const [truncated, setTruncated] = useState(false);
@@ -110,20 +111,49 @@ export default function ImportScreen({ promos, modules, preset }) {
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { setError(data.error || `تعذّر الحفظ (${res.status})`); setState('ready'); return; }
+    setResult(data);
     setState('saved');
   };
 
   if (state === 'saved') {
+    // What the server did, not what we asked it to. These used to be the same
+    // number — chosen.length — which said "حُفظ ٣٠ ملفًا" over an import that
+    // had quietly left some of them alone.
+    const kept = result?.elsewhere || [];
     return (
       <div className="admin-body">
         <section className="admin-card admin-seed">
-          <div className="admin-card-t">حُفظ {chosen.length} ملفًا</div>
+          <div className="admin-card-t">
+            حُفظ {result?.saved ?? chosen.length} ملفًا
+            {result?.added != null && result?.updated > 0
+              && ` — ${result.added} جديد، ${result.updated} مُحدَّث`}
+          </div>
           <p className="admin-card-b">
             في <span dir="ltr">{here?.name}</span> — {promos.find((p) => p.id === promo)?.name}
           </p>
+
+          {result?.repeated > 0 && (
+            <p className="admin-card-b">
+              {result.repeated} ملفًا مكرّرًا في المجلد نفسه — حُفظ مرّة واحدة.
+            </p>
+          )}
+
+          {/* Not an error: the file is catalogued, just not here. Saying which
+              subject holds it is the difference between "it worked" and
+              knowing where to go and look. */}
+          {kept.length > 0 && (
+            <div className="admin-err">
+              {kept.length} ملفًا موجود في مادة أخرى ولم يُنقل:
+              {' '}
+              <span dir="ltr">{[...new Set(kept.map((d) => d.module))].join('، ')}</span>
+            </div>
+          )}
+
           <button
             className="btn p"
-            onClick={() => { setRows([]); setUrl(''); setState('idle'); router.refresh(); }}
+            onClick={() => {
+              setRows([]); setUrl(''); setResult(null); setState('idle'); router.refresh();
+            }}
           >
             استورد مجلدًا آخر
           </button>

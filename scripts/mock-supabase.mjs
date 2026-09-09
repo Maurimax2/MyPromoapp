@@ -467,6 +467,33 @@ createServer(async (req, res) => {
       }
     }
 
+    // The unique indexes the schema actually carries. `documents.drive_id` is
+    // the one that bites: one Drive file is one row in the whole database, so
+    // an import that repeats a file inside its own batch takes the entire
+    // batch down with it — and Postgres checks the batch against itself, not
+    // only against what is stored.
+    const UNIQUE = {
+      documents: ['drive_id'],
+      chapters: ['module', 'title'],
+      question_banks: ['module', 'title'],
+    };
+    for (const cols of (UNIQUE[table] ? [UNIQUE[table]] : [])) {
+      const keyOf = (r) => cols.map((c) => r[c]).join('\u0000');
+      const skip = (r) => cols.some((c) => r[c] === null || r[c] === undefined);
+      const seen = new Map(db[table].filter((r) => !skip(r)).map((r) => [keyOf(r), r]));
+      for (const r of list) {
+        if (skip(r)) continue;
+        if (seen.has(keyOf(r))) {
+          return send(res, 409, {
+            code: '23505',
+            message: `duplicate key value violates unique constraint "${table}_${cols[0]}_key"`,
+            details: `Key (${cols.join(', ')})=(${cols.map((c) => r[c]).join(', ')}) already exists.`,
+          });
+        }
+        seen.set(keyOf(r), r);
+      }
+    }
+
     const made = list.map((r) => {
       const row = { ...(DEFAULTS[table]?.() || {}), ...r };
       // Tables whose primary key is the pair, not a serial of their own.
