@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Icon from '@/components/Icon';
-import { moduleById, sectionsFor } from '@/lib/data';
+import { sectionsFor } from '@/lib/data';
+import { moduleOf } from '@/lib/catalogue';
 import QuizPicker from '@/components/QuizPicker';
 // Read through the bridge, not the file: every question the panel extracts
 // lives in Postgres, and this screen used to show only what a script had
@@ -15,7 +16,11 @@ export const dynamic = 'force-dynamic';
 
 export default async function QuizModule({ params }) {
   const { module: id } = await params;
-  const m = moduleById(id);
+  // Read the subject from the catalogue, not from the copy bundled with the
+  // app. `moduleById` only knew the subjects that shipped, so a subject
+  // catalogued in the panel answered 404 here — the index could list it and
+  // tapping it went nowhere.
+  const m = await moduleOf(id);
   if (!m) notFound();
 
   const banks = await banksOf(id);

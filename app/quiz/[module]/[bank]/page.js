@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Quiz from '@/components/Quiz';
-import { moduleById } from '@/lib/data';
+import { moduleOf } from '@/lib/catalogue';
 import { bankOf, allOf } from '@/lib/quiz-bank';
 
 // Not prerendered any more: the banks live in the database now, and which
@@ -10,7 +10,9 @@ export const dynamic = 'force-dynamic';
 
 export default async function BankPage({ params }) {
   const { module: id, bank: slug } = await params;
-  const m = moduleById(id);
+  // The catalogue, not the bundled copy: a subject catalogued in the panel
+  // answered 404 here even when its questions were sitting in the database.
+  const m = await moduleOf(id);
   if (!m) notFound();
 
   const bank = slug === 'tout' ? null : await bankOf(id, slug);

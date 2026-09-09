@@ -80,7 +80,13 @@ const db = {
       title: 'Examen ANATOMIE 2025 (scan)', prof: null, year: 2025, ext: 'PDF', bytes: 2050000,
       drive_id: '1MockDriveIdScannedPaperDDDDDDDDD', published: true, position: 1 },
   ],
-  question_banks: [{ id: 1, module: 'anatomie', document: 3, title: 'Examen ANATOMIE 2021', section: null, position: 0 }],
+  question_banks: [
+    { id: 1, module: 'anatomie', document: 3, title: 'Examen ANATOMIE 2021', section: null, position: 0 },
+    // A subject the bundled catalogue has never heard of, with questions
+    // extracted in the panel. اختبر نفسك built its list from that catalogue,
+    // so this is what it could never show.
+    { id: 2, module: 'anatomie-pathologique', document: null, title: 'Examen ANAPATH 2024', section: null, position: 0 },
+  ],
   questions: [
     { id: 1, bank: 1, n: '1', stem: "Concernant les muscles masticateurs, quelle(s) proposition(s) est (sont) exacte(s) ?",
       options: ['Le temporal est innervé par le nerf mandibulaire', 'Le masséter est abaisseur', 'Le ptérygoïdien latéral est propulseur'],
@@ -88,6 +94,12 @@ const db = {
     { id: 2, bank: 1, n: '2', stem: "Le nerf facial émerge du…",
       options: ['sillon bulbo-pontique', 'mésencéphale', 'moelle spinale'],
       answer: [0], why: null, source: 'paper', status: 'published' },
+    { id: 3, bank: 2, n: '1', stem: "L'adénocarcinome se développe à partir…",
+      options: ['d\u2019un épithélium glandulaire', 'du tissu conjonctif', 'du muscle lisse'],
+      answer: [0], why: null, source: 'paper', status: 'published' },
+    { id: 4, bank: 2, n: '2', stem: 'La métaplasie est…',
+      options: ['réversible', 'toujours maligne', 'une nécrose'],
+      answer: [0], why: null, source: 'claude', status: 'published' },
   ],
   audit_log: [],
   import_jobs: [],
