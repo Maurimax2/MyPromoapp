@@ -54,6 +54,11 @@ const db = {
     { id: 'anatomie', promo: 'pcem2', semester: 'S1', name: 'ANATOMIE', icon: 'person', tint: 'purple', professors: [], position: 0 },
     { id: 'biochimie', promo: 'pcem2', semester: 'S1', name: 'BIOCHIMIE', icon: 'flask', tint: 'orange', professors: [], position: 1 },
     { id: 'biophysique', promo: 'pcem2', semester: 'S2', name: 'BIOPHYSIQUE', icon: 'atom', tint: 'purple', professors: [], position: 2 },
+    { id: 'embryologie', promo: 'pcem2', semester: 'S1', name: 'EMBRYOLOGIE', icon: 'baby', tint: 'purple', professors: [], position: 3 },
+    { id: 'histologie', promo: 'pcem2', semester: 'S1', name: 'HISTOLOGIE', icon: 'micro', tint: 'purple', professors: [], position: 4 },
+    // No banner drawn for this one, so the tinted-block fallback is on screen
+    // too rather than only in the code.
+    { id: 'anatomie-pathologique', promo: 'pcem2', semester: 'S2', name: 'ANATOMIE PATHOLOGIQUE', icon: 'micro', tint: 'orange', professors: [], position: 5 },
   ],
   chapters: [{ id: 1, module: 'anatomie', title: 'Tête et cou', subtitle: null, position: 0 }],
   documents: [
