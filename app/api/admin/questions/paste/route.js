@@ -32,8 +32,14 @@ export async function POST(request) {
 
   const { sections, how } = readPasted(text);
   if (!sections.length) {
+    // An empty list is a different failure from an unreadable paste, and the
+    // difference is the whole answer: a model that was handed a link instead
+    // of a file sees no document and dutifully returns the empty shape.
+    const empty = /"sections"\s*:\s*\[\s*\]|"questions"\s*:\s*\[\s*\]/.test(text);
     return NextResponse.json({
-      error: 'لم نفهم ما لُصق — اطلب من الذكاء الاصطناعي أن يردّ بصيغة JSON كما في النموذج، أو الصق الامتحان نفسه بنصّه',
+      error: empty
+        ? 'ردّ الذكاء الاصطناعي بقائمة فارغة — غالبًا لم يرَ الورقة. نزّل الملف من الأعلى وارفعه إليه كملف؛ رابط Drive لا يفتحه.'
+        : 'لم نفهم ما لُصق — اطلب منه أن يردّ بصيغة JSON كما في النموذج، أو الصق الامتحان نفسه بنصّه',
     }, { status: 422 });
   }
 

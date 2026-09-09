@@ -16,7 +16,7 @@ import Icon from '@/components/Icon';
 
 const SEMESTERS = ['S1', 'S2'];
 
-export default function PasteScreen({ promos, modules, prompt }) {
+export default function PasteScreen({ promos, modules, papers, prompt }) {
   const router = useRouter();
   const [promo, setPromo] = useState(promos[0]?.id);
   const [sem, setSem] = useState('S1');
@@ -34,6 +34,10 @@ export default function PasteScreen({ promos, modules, prompt }) {
     [modules, promo, sem],
   );
   const chosen = modules.find((m) => m.id === module);
+  const mine = useMemo(
+    () => (module ? papers.filter((d) => d.module === module) : []),
+    [papers, module],
+  );
 
   const ask = async (confirm) => {
     setBusy(true); setError('');
@@ -78,22 +82,8 @@ export default function PasteScreen({ promos, modules, prompt }) {
 
   return (
     <div className="admin-body">
-      {/* ---------------- the prompt ---------------- */}
-      <div className="admin-bar"><span>١ · اطلب من الذكاء الاصطناعي</span></div>
-      <section className="admin-card admin-seed">
-        <p className="admin-card-b">
-          افتح ChatGPT أو Claude أو Gemini، ارفع صورة الورقة أو ملفها، والصق هذا
-          الطلب معها. ثمّ انسخ ردّه كاملًا وضعه في الأسفل.
-        </p>
-        <button className="btn p" onClick={copy}>
-          <Icon name={copied ? 'check' : 'file'} size={17} />
-          {copied ? 'نُسخ' : 'انسخ الطلب'}
-        </button>
-        <pre className="paste-prompt">{prompt}</pre>
-      </section>
-
       {/* ---------------- where it goes ---------------- */}
-      <div className="admin-bar"><span>٢ · المادة</span></div>
+      <div className="admin-bar"><span>١ · المادة</span></div>
       <div className="imp-kinds">
         {promos.map((p) => (
           <button key={p.id} className={`imp-kind${promo === p.id ? ' on' : ''}`}
@@ -122,8 +112,55 @@ export default function PasteScreen({ promos, modules, prompt }) {
         )}
       </div>
 
+      {/* ---------------- the paper itself ---------------- */}
+      {/* A Drive link is no use to either of them: Gemini asks to be connected
+          to a Workspace, and ChatGPT sees no document and answers with an
+          empty list. The file has to be downloaded and attached, so it is
+          offered here rather than left as an instruction. */}
+      <div className="admin-bar"><span>٢ · نزّل الورقة</span></div>
+      <section className="admin-card admin-seed">
+        {!module && <p className="admin-card-b">اختر المادة أوّلًا.</p>}
+
+        {module && mine.length === 0 && (
+          <p className="admin-card-b">
+            لا أوراق امتحان مفهرسة في هذه المادة — نزّل الملف من الأرشيف أو من
+            جهازك، ثمّ ارفعه إلى الذكاء الاصطناعي.
+          </p>
+        )}
+
+        {mine.map((d) => (
+          <a
+            key={d.id}
+            className="paste-file"
+            href={`/api/file/${d.drive_id}`}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => { if (!title.trim()) setTitle(d.title); }}
+          >
+            <Icon name="download" size={18} />
+            <span className="grow" dir="auto">{d.title}</span>
+            <span className="paste-ext" dir="ltr">{d.ext || 'PDF'}</span>
+          </a>
+        ))}
+      </section>
+
+      {/* ---------------- the prompt ---------------- */}
+      <div className="admin-bar"><span>٣ · اطلب من الذكاء الاصطناعي</span></div>
+      <section className="admin-card admin-seed">
+        <p className="admin-card-b">
+          افتح ChatGPT أو Claude أو Gemini، و<b>ارفع الملف الذي نزّلته</b> — لا
+          تعطِه رابط Drive، فلا أحد منهما يفتحه. ثمّ الصق هذا الطلب معه، وانسخ
+          ردّه كاملًا.
+        </p>
+        <button className="btn p" onClick={copy}>
+          <Icon name={copied ? 'check' : 'file'} size={17} />
+          {copied ? 'نُسخ' : 'انسخ الطلب'}
+        </button>
+        <pre className="paste-prompt">{prompt}</pre>
+      </section>
+
       {/* ---------------- the paste ---------------- */}
-      <div className="admin-bar"><span>٣ · الصق</span></div>
+      <div className="admin-bar"><span>٤ · الصق</span></div>
       <section className="admin-card admin-seed">
         <input
           className="admin-input"
@@ -154,7 +191,7 @@ export default function PasteScreen({ promos, modules, prompt }) {
       {seen && (
         <>
           <div className="admin-bar">
-            <span>٤ · راجِع</span>
+            <span>٥ · راجِع</span>
             <span>{seen.found} سؤالًا</span>
           </div>
           <section className="admin-card admin-seed">

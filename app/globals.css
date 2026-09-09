@@ -1538,6 +1538,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .paste-box { min-height: 150px; resize: vertical; line-height: 1.7; font-size: 14px; }
 
+/* The paper itself, because a Drive link is no use to a model in a browser. */
+.paste-file {
+  display: flex; align-items: center; gap: 11px; min-height: 48px;
+  padding: 10px 12px; border-radius: 12px; background: var(--bg);
+  color: var(--ink); font-size: 14px; font-weight: 500;
+}
+.paste-file + .paste-file { margin-top: 8px; }
+.paste-file .grow { flex: 1; min-width: 0; }
+.paste-ext {
+  font-size: 11px; font-weight: 700; color: var(--purple);
+  background: var(--surface); border-radius: 6px; padding: 3px 7px;
+}
+
 .paste-q { padding: 11px 0; }
 .paste-q + .paste-q { border-top: 1px solid var(--line-soft); }
 .paste-q-t { font-size: 14px; line-height: 1.6; }
