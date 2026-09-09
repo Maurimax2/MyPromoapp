@@ -71,6 +71,7 @@ export default function Filling() {
   // to do rather than only what it has done so far.
   const strayed = list.reduce((n, m) => n + (m.strayed || 0), 0);
   const missing = list.reduce((n, m) => n + (m.missing || 0), 0);
+  const unasked = list.reduce((n, m) => n + (m.unasked || 0), 0);
 
   return (
     <section className="admin-card admin-seed">
@@ -79,16 +80,18 @@ export default function Filling() {
           : state === 'error' ? 'تعذّر النقل'
           : state === 'starting' ? 'نبحث عمّا ينقص'
           : strayed > 0 ? 'نُعيد الملفات إلى موادّها'
+          : missing === 0 && unasked > 0 ? 'نُضيف أسئلة جديدة'
           : 'ننقل المحتوى إلى قاعدة البيانات'}
       </div>
 
       {/* Said before the work starts, because "٤١٢ ملفًا في المادة الخطأ" is
           the answer to "where did everything go" and it should not have to
           wait for the run to finish. */}
-      {state === 'running' && (missing > 0 || strayed > 0) && (
+      {state === 'running' && (missing > 0 || strayed > 0 || unasked > 0) && (
         <div className="admin-card-b">
           {[missing > 0 && `${missing} ملفًا ناقصًا`,
-            strayed > 0 && `${strayed} ملفًا في مادة أخرى`].filter(Boolean).join(' · ')}
+            strayed > 0 && `${strayed} ملفًا في مادة أخرى`,
+            unasked > 0 && `${unasked} سؤالًا جديدًا`].filter(Boolean).join(' · ')}
         </div>
       )}
 

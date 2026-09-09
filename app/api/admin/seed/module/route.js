@@ -71,6 +71,27 @@ export async function GET() {
   const holder = new Map();
   for (const d of docs || []) if (d.drive_id) holder.set(d.drive_id, d.module);
 
+  // The same question for the questions. A paper transcribed into
+  // `lib/questions/` is content the database has never seen, and a subject
+  // whose files are all in place would otherwise never be looked at again —
+  // so the answers would sit in the repository and never reach a student.
+  const { data: bankRows } = await db.from('question_banks').select('id, module, title');
+  const bankOf = new Map();
+  for (const b of bankRows || []) bankOf.set(`${b.module}\u0000${b.title}`, b.id);
+
+  // Paged, and advancing by what came back: Supabase caps a response at
+  // `db-max-rows` and says nothing, so a fixed stride silently skips rows.
+  const asked = new Set();
+  for (let from = 0, turn = 0; turn < 500; turn += 1) {
+    const page = await db.from('questions').select('bank, n').order('id')
+      .range(from, from + 999);
+    if (page.error) break;
+    const got = page.data || [];
+    if (!got.length) break;
+    for (const q of got) asked.add(`${q.bank}\u0000${String(q.n)}`);
+    from += got.length;
+  }
+
   const wanted = MODULES.map((m) => {
     const mine = fileDocuments(m);
     let missing = 0;
@@ -80,11 +101,21 @@ export async function GET() {
       if (where === undefined) missing += 1;
       else if (where !== m.id) strayed += 1;
     }
-    return { id: m.id, name: m.name, promo: m.promo, missing, strayed, files: mine.length };
+
+    let unasked = 0;
+    for (const bank of banksFor(m.id)) {
+      const bid = bankOf.get(`${m.id}\u0000${bank.title}`);
+      for (const q of bank.questions) {
+        if (!bid || !asked.has(`${bid}\u0000${String(q.n)}`)) unasked += 1;
+      }
+    }
+
+    return { id: m.id, name: m.name, promo: m.promo,
+             missing, strayed, unasked, files: mine.length };
   });
 
   return NextResponse.json({
-    modules: wanted.filter((m) => !stored.has(m.id) || m.missing || m.strayed),
+    modules: wanted.filter((m) => !stored.has(m.id) || m.missing || m.strayed || m.unasked),
   });
 }
 
