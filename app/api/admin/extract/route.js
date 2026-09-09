@@ -20,7 +20,16 @@ import { normaliseOcr, pageHasQuestions } from '@/lib/qcm/ocr';
 import { readPaper } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
-export const maxDuration = 60;
+
+// Reading a photographed exam takes Gemini minutes, not seconds, and this
+// used to be capped at the platform's default sixty — so the function was
+// killed mid-answer, returned no JSON at all, and the panel could only show
+// its own fallback: «تعذّر الاستخراج», after a minute of watching nothing.
+//
+// 300 is what Vercel allows a function on this plan with fluid compute. If a
+// deployment ever refuses this number, the plan caps lower and the number
+// comes down with it — the previous deployment keeps serving meanwhile.
+export const maxDuration = 300;
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -28,13 +37,25 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // Google in the way. Never set in production.
 const FAKE = process.env.DRIVE_API_BASE;
 
+// A download that never finishes is the same failure as an answer that never
+// comes: the function is killed and the panel is left with nothing to say.
+const DRIVE_DEADLINE = Number(process.env.DRIVE_DEADLINE_MS || 45_000);
+
 /** The bytes of a Drive file. Drive answers a burst with 403, not 429. */
 async function fetchDrive(fid, key) {
   const url = FAKE
     ? `${FAKE}/${fid}`
     : `https://www.googleapis.com/drive/v3/files/${fid}?alt=media&key=${key}`;
   for (let attempt = 0; ; attempt++) {
-    const res = await fetch(url);
+    let res;
+    try {
+      res = await fetch(url, { signal: AbortSignal.timeout(DRIVE_DEADLINE) });
+    } catch (err) {
+      if (err?.name === 'TimeoutError' || err?.name === 'AbortError') {
+        throw new Error('تعذّر تنزيل الملف من Drive في الوقت المتاح — ربّما كان كبيرًا جدًا');
+      }
+      throw err;
+    }
     if (res.ok) return new Uint8Array(await res.arrayBuffer());
     if ((res.status === 403 || res.status === 429) && attempt < 4) {
       await wait(1500 * 2 ** attempt);
