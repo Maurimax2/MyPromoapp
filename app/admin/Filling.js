@@ -27,8 +27,8 @@ export default function Filling() {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { setFailed([{ name: '—', error: data.error || res.status }]); setState('error'); return; }
 
-    // Nothing missing is not an event: the card takes itself off the screen
-    // rather than announcing that it had nothing to do.
+    // Nothing missing and nothing out of place is not an event: the card
+    // takes itself off the screen rather than announcing it had nothing to do.
     if (!data.modules?.length) { setState('nothing'); return; }
 
     setList(data.modules);
@@ -64,7 +64,13 @@ export default function Filling() {
   const total = list.length || 1;
   const seen = done.length + failed.length;
   const files = done.reduce((n, d) => n + d.documents, 0);
+  const fixed = done.reduce((n, d) => n + (d.fixed || 0), 0);
   const questions = done.reduce((n, d) => n + d.questions, 0);
+
+  // What the panel found before it started, so the card says what it is here
+  // to do rather than only what it has done so far.
+  const strayed = list.reduce((n, m) => n + (m.strayed || 0), 0);
+  const missing = list.reduce((n, m) => n + (m.missing || 0), 0);
 
   return (
     <section className="admin-card admin-seed">
@@ -72,8 +78,19 @@ export default function Filling() {
         {state === 'done' && !failed.length ? 'المحتوى جاهز'
           : state === 'error' ? 'تعذّر النقل'
           : state === 'starting' ? 'نبحث عمّا ينقص'
+          : strayed > 0 ? 'نُعيد الملفات إلى موادّها'
           : 'ننقل المحتوى إلى قاعدة البيانات'}
       </div>
+
+      {/* Said before the work starts, because "٤١٢ ملفًا في المادة الخطأ" is
+          the answer to "where did everything go" and it should not have to
+          wait for the run to finish. */}
+      {state === 'running' && (missing > 0 || strayed > 0) && (
+        <div className="admin-card-b">
+          {[missing > 0 && `${missing} ملفًا ناقصًا`,
+            strayed > 0 && `${strayed} ملفًا في مادة أخرى`].filter(Boolean).join(' · ')}
+        </div>
+      )}
 
       <div className="fill-bar">
         <div className="fill-bar-in" style={{ width: `${(seen / total) * 100}%` }} />
@@ -81,7 +98,9 @@ export default function Filling() {
 
       <div className="admin-card-b">
         {at ? <span dir="ltr">{at}</span> : `${seen} / ${total}`}
-        {' · '}{files} ملف · {questions} سؤال
+        {' · '}{files} ملف مضاف
+        {fixed > 0 && ` · ${fixed} أُعيد إلى مادته`}
+        {' · '}{questions} سؤال
       </div>
 
       {failed.map((f) => (

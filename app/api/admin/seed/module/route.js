@@ -22,23 +22,69 @@ export const maxDuration = 60;
 
 const bytesOf = (mb) => (mb ? Math.round(Number(mb) * 1048576) : null);
 
-// What the file has that the database does not.
+/** Every document the file carries, keyed by its Drive id. */
+export function fileDocuments(m) {
+  const rows = [];
+  for (const ch of m.chapters || []) {
+    for (const [k, l] of ch.lectures.entries()) {
+      rows.push({ fid: l.fid, chapterTitle: ch.title, where_shown: 'archive',
+                  section: 'lecture', n: String(l.n), title: l.title, position: k });
+      for (const [j, v] of (l.versions || []).entries()) {
+        rows.push({ fid: v.fid, chapterTitle: ch.title, where_shown: 'archive',
+                    section: 'lecture', n: null, title: v.title, position: j, child: true });
+      }
+    }
+  }
+  for (const sec of m.sections || []) {
+    for (const [k, it] of sec.items.entries()) {
+      rows.push({ fid: it.fid, chapterTitle: null, where_shown: sec.where,
+                  section: sec.id, n: null, title: it.title, position: k });
+      for (const [j, v] of (it.versions || []).entries()) {
+        rows.push({ fid: v.fid, chapterTitle: null, where_shown: sec.where,
+                    section: sec.id, n: null, title: v.title, position: j, child: true });
+      }
+    }
+  }
+  return rows.filter((r) => r.fid);
+}
+
+// What the file has that the database does not have, or has in the wrong place.
 //
-// It used to answer with all nine subjects, which was right exactly once —
-// the first migration, into an empty database. A year catalogued afterwards
-// (PCEM1) had no way in at all: the panel only offered to migrate when there
-// was nothing at all to migrate into.
+// It used to compare module rows alone: `MODULES.filter(m => !stored.has(m.id))`.
+// Once a subject's own row existed the panel decided there was nothing to do
+// and never looked at its files again — so a subject whose name was in the
+// database and whose files were missing, or had been moved into another
+// subject by the old import, was invisible to the one flow that could have
+// repaired it. That is a catalogue of names with nothing under them.
 export async function GET() {
   const gate = await requireStaff();
   if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
 
-  const { data: known } = await supabaseAdmin().from('modules').select('id');
+  const db = supabaseAdmin();
+  const { data: known } = await db.from('modules').select('id');
   const stored = new Set((known || []).map((m) => m.id));
 
+  // Three small columns for the whole table: enough to say, for every file the
+  // file knows about, whether it is stored and which subject holds it.
+  const { data: docs } = await db.from('documents')
+    .select('id, module, drive_id').limit(20000);
+  const holder = new Map();
+  for (const d of docs || []) if (d.drive_id) holder.set(d.drive_id, d.module);
+
+  const wanted = MODULES.map((m) => {
+    const mine = fileDocuments(m);
+    let missing = 0;
+    let strayed = 0;
+    for (const r of mine) {
+      const where = holder.get(r.fid);
+      if (where === undefined) missing += 1;
+      else if (where !== m.id) strayed += 1;
+    }
+    return { id: m.id, name: m.name, promo: m.promo, missing, strayed, files: mine.length };
+  });
+
   return NextResponse.json({
-    modules: MODULES.filter((m) => !stored.has(m.id)).map((m) => ({
-      id: m.id, name: m.name, promo: m.promo,
-    })),
+    modules: wanted.filter((m) => !stored.has(m.id) || m.missing || m.strayed),
   });
 }
 
@@ -175,6 +221,41 @@ export async function POST(request) {
       documents += added;
     }
 
+    // ---- put back what drifted -----------------------------------------
+    //
+    // `reconcile` inserts what is missing and leaves alone anything it finds
+    // by drive_id — wherever it found it. That is how a file the old import
+    // moved into another subject stayed there through every migration: it
+    // existed, so nothing touched it. The file is the catalogue somebody
+    // built by hand; where it disagrees with a stored row, the file wins.
+    const FIELDS = ['module', 'chapter', 'where_shown', 'section', 'n', 'title', 'position'];
+    const all = [...parents, ...children];
+    let fixed = 0;
+
+    for (let i = 0; i < all.length; i += 100) {
+      const slice = all.slice(i, i + 100);
+      const look = await db.from('documents')
+        .select(`id, drive_id, ${FIELDS.join(', ')}`)
+        .in('drive_id', slice.map((r) => r.drive_id));
+      fail('documents recheck', look);
+
+      const stored = new Map((look.data || []).map((r) => [r.drive_id, r]));
+      for (const want of slice) {
+        const have = stored.get(want.drive_id);
+        if (!have) continue;
+
+        const change = {};
+        for (const f of FIELDS) {
+          const to = want[f] ?? null;
+          if ((have[f] ?? null) !== to) change[f] = to;
+        }
+        if (!Object.keys(change).length) continue;
+
+        fail('document fix', await db.from('documents').update(change).eq('id', have.id));
+        fixed += 1;
+      }
+    }
+
     // ---- questions ------------------------------------------------------
     const banks = banksFor(m.id);
     const { byKey: bankId } = await reconcile(
@@ -212,7 +293,7 @@ export async function POST(request) {
       questions += added;
     }
 
-    return NextResponse.json({ id: m.id, name: m.name, documents, questions });
+    return NextResponse.json({ id: m.id, name: m.name, documents, fixed, questions });
   } catch (err) {
     return NextResponse.json(
       { id: m.id, name: m.name, error: String(err.message) }, { status: 500 });
