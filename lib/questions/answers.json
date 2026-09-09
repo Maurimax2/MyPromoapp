@@ -2295,6 +2295,232 @@
       ],
       "by": "claude",
       "why": "Le droit inférieur abaisse, tourne en dehors et rapproche — abaissement, extorsion et adduction."
+    },
+    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:3": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Le globus pallidus et le noyau sous-thalamique dérivent du diencéphale ; le putamen et le claustrum sont télencéphaliques et la substantia nigra mésencéphalique, comme l'indique la question 4 de la même épreuve. La feuille du tutorat se lit « 3-BE », mais elle a placé le putamen dans les structures télencéphaliques à la question 2."
+    },
+    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:20": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
+    },
+    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:21": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Les colliculus supérieurs sont des relais des voies visuelles ; ce sont les colliculus inférieurs qui relaient les voies auditives."
+    },
+    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:23": {
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "by": "claude",
+      "why": "La gouttière basilaire est creusée sur la face ventrale du pont, non sur sa face dorsale, et l'espace perforé postérieur se voit sur une vue ventrale, dans la fosse interpédonculaire."
+    },
+    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:28": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "La veine de Labbé se jette dans le sinus transverse et non dans le sinus sagittal supérieur : seule la proposition C est fausse. La veine basale de Rosenthal est bien une veine profonde ; la feuille du tutorat se lit « 28-ABE » et paraît avoir perdu le D."
+    },
+    "anatomie:1WI4yotrtHZamhPqWm3sXBdI87oXzBaHt:21": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial, puis une portion horizontale ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum. La feuille du tutorat note « 21-B(D) », le D entre parenthèses."
+    },
+    "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:5": {
+      "answer": [
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "L'os zygomatique s'articule bien avec le maxillaire, le frontal, le temporal et le sphénoïde, et les empreintes de l'artère méningée moyenne sont endocrâniennes. La feuille du tutorat donne « BE » pour cette épreuve mais « BC » pour les mêmes propositions à la première session de la même année."
+    },
+    "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:13": {
+      "answer": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:3": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:4": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. L'aire de Broca est celle de l'élaboration de la parole : l'épreuve 2020, qui écrivait « exécution », comptait cette proposition fausse."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:5": {
+      "answer": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:6": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Le faisceau cortico-spinal traverse le bras postérieur de la capsule interne, non le bras antérieur."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:7": {
+      "answer": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "Sont commissuraux le corps calleux, les commissures antérieure et postérieure et la commissure hippocampique du fornix ; le faisceau longitudinal du fornix ne l'est pas (corrigés du tutorat 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:8": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Sont des faisceaux de projection le cortico-spinal, le cortico-nucléaire, les cortico-striés et les thalamo-corticaux ; le corps calleux est commissural (corrigés du tutorat 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:10": {
+      "answer": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le consensus retient le striatum — putamen et noyau caudé —, le globus pallidus, le noyau sous-thalamique et la substance noire, mais pas le claustrum (corrigés du tutorat 2018 et 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:13": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "L'inhibition GABAergique s'exerce sur le pallidum, le noyau sous-thalamique et le thalamus, non sur le striatum ni sur le cortex (corrigés du tutorat 2018 et 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:18": {
+      "answer": [
+        0,
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "L'artère cérébelleuse postéro-inférieure naît de la vertébrale ; les branches terminales du tronc basilaire sont les artères cérébrales postérieures, et les artères spinales ne sont pas des rameaux perforants du bulbe (corrigé du tutorat 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:19": {
+      "answer": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "by": "claude",
+      "why": "Le polygone de Willis ne comporte qu'une artère communicante antérieure et deux communicantes postérieures : seule la première proposition est fausse (corrigé du tutorat 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:20": {
+      "answer": [
+        1,
+        3
+      ],
+      "by": "claude",
+      "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:21": {
+      "answer": [
+        0,
+        3
+      ],
+      "by": "claude",
+      "why": "Le foramen rond livre passage au V2 et le foramen ovale au V3 ; le foramen lacerum n'est traversé par aucun des deux, les deux ailes du sphénoïde sont séparées par la fissure orbitaire supérieure et le conduit auditif interne appartient à l'étage postérieur (corrigés du tutorat 2020)."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:22": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La leptoméninge ne comprend que deux feuillets, l'arachnoïde et la pie-mère ; la face interne des ventricules est tapissée par l'épendyme."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:23": {
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "by": "claude",
+      "why": "Les tubercules mamillaires appartiennent au diencéphale et les deux hémisphères cérébraux forment le télencéphale."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:24": {
+      "answer": [
+        0,
+        2,
+        4
+      ],
+      "by": "claude",
+      "why": "La moelle présente deux renflements, cervical et lombaire ; la substance blanche est centrale dans l'encéphale et périphérique dans la moelle."
+    },
+    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:25": {
+      "answer": [
+        0,
+        1,
+        4
+      ],
+      "by": "claude",
+      "why": "Le névraxe est fait de l'encéphale et de la moelle épinière ; les nerfs périphériques n'en font pas partie."
     }
   }
 }
