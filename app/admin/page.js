@@ -94,6 +94,22 @@ export default async function AdminHome() {
         </div>
         <Icon name="chev" size={18} />
       </Link>
+
+      {/* Reading a photographed exam on the server needs a key, a Drive round
+          trip and a function that lives long enough to finish. This route
+          around it costs nothing and has no limits. */}
+      <Link href="/admin/paste" className="admin-card admin-import">
+        <div className="admin-import-ic" style={{ background: 'var(--purple)' }}>
+          <Icon name="quiz" size={22} />
+        </div>
+        <div className="grow">
+          <div className="admin-card-t">الصق أسئلة من أيّ ذكاء اصطناعي</div>
+          <div className="admin-card-b">
+            أعطِ الورقة لـ ChatGPT أو Claude أو Gemini، والصق ردّه هنا
+          </div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
     </div>
   );
 }

@@ -18,6 +18,7 @@ import { parseAnswerKey, splitAtCorrection } from '@/lib/qcm/key';
 import { alignSections, runsOfKey } from '@/lib/qcm/sections';
 import { normaliseOcr, pageHasQuestions } from '@/lib/qcm/ocr';
 import { readPaper } from '@/lib/gemini';
+import { storeQuestions } from '@/lib/qcm/store';
 
 export const runtime = 'nodejs';
 
@@ -32,6 +33,9 @@ export const runtime = 'nodejs';
 export const maxDuration = 300;
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** What storing came back with, as an HTTP answer. */
+const answer = (out) => NextResponse.json(out);
 
 // A stand-in for Drive, so the extraction can be driven end to end without
 // Google in the way. Never set in production.
@@ -138,7 +142,7 @@ export async function POST(request) {
     if (!sections.length) {
       return NextResponse.json({ error: 'لم نجد أسئلة في هذا الملف' }, { status: 422 });
     }
-    return store(db, doc, sections, gate.profile.id);
+    return answer(await storeQuestions(db, doc, sections, gate.profile.id));
   }
 
   // A page the camera read is dented in ways a typed page never is, so the
@@ -249,81 +253,5 @@ export async function POST(request) {
     }),
   }));
 
-  return store(db, doc, sections, gate.profile.id);
-}
-
-/**
- * Put the questions away.
- *
- * Look first, then insert — never ON CONFLICT against this schema. A question
- * already stored under its number is left alone, so pressing the button twice
- * adds nothing.
- */
-async function store(db, doc, sections, actor) {
-  let found = 0;
-  let added = 0;
-  let answered = 0;
-  let proposed = 0;
-
-  for (const [i, section] of sections.entries()) {
-    const title = section.title ? `${doc.title} — ${section.title}` : doc.title;
-
-    const { data: bank } = await db.from('question_banks')
-      .select('id').eq('module', doc.module).eq('title', title).maybeSingle();
-
-    let bankId = bank?.id;
-    if (!bankId) {
-      const { data: made, error } = await db.from('question_banks')
-        .insert({ module: doc.module, title, section: doc.section, document: doc.id, position: i })
-        .select('id').single();
-      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-      bankId = made.id;
-    }
-
-    const { data: already } = await db.from('questions').select('n').eq('bank', bankId);
-    const stored = new Set((already || []).map((r) => String(r.n)));
-
-    found += section.questions.length;
-
-    const rows = section.questions
-      .filter((q) => !stored.has(String(q.n)))
-      .map((q) => {
-        // What the paper stated is the faculty's answer and can be published.
-        // What a model worked out on its own is its opinion: it is kept, and
-        // marked, and nobody sees it until somebody has agreed with it.
-        const stated = q.answer?.length ? q.answer : [];
-        const guess = !stated.length && q.proposed?.length ? q.proposed : [];
-        return {
-          bank: bankId,
-          n: String(q.n),
-          stem: q.q,
-          options: q.options,
-          answer: stated.length ? stated : guess,
-          // `claude` means a model had an opinion. A question nobody has
-          // answered is not that — it is the paper's question, still waiting,
-          // and marking it otherwise claims a judgement no one made.
-          source: guess.length ? 'claude' : 'paper',
-          status: stated.length ? 'published' : 'needs_answer',
-          created_by: actor,
-        };
-      });
-
-    if (rows.length) {
-      const { error } = await db.from('questions').insert(rows);
-      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    added += rows.length;
-    answered += rows.filter((r) => r.source === 'paper' && r.answer.length).length;
-    proposed += rows.filter((r) => r.source === 'claude').length;
-  }
-
-  return NextResponse.json({
-    found,
-    banks: sections.length,
-    added,
-    answered,
-    proposed,
-    skipped: found - added,
-  });
+  return answer(await storeQuestions(db, doc, sections, gate.profile.id));
 }

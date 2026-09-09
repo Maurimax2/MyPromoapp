@@ -1523,3 +1523,30 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 12.5px; font-weight: 600; color: var(--purple);
   background: var(--surface); border-bottom: 1px solid var(--line-soft);
 }
+
+/* ============================================================
+   Pasting questions in from another model. The whole screen is
+   read before anything is written, so the review is the point.
+   ============================================================ */
+
+.paste-prompt {
+  margin: 0; padding: 12px 13px; border-radius: 12px;
+  background: var(--bg); color: var(--ink-2);
+  font-family: inherit; font-size: 12px; line-height: 1.75;
+  white-space: pre-wrap; direction: ltr; text-align: left;
+  max-height: 190px; overflow-y: auto;
+}
+.paste-box { min-height: 150px; resize: vertical; line-height: 1.7; font-size: 14px; }
+
+.paste-q { padding: 11px 0; }
+.paste-q + .paste-q { border-top: 1px solid var(--line-soft); }
+.paste-q-t { font-size: 14px; line-height: 1.6; }
+.paste-opts { margin: 7px 0 0; padding-inline-start: 20px; display: grid; gap: 4px; }
+.paste-opts li { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+/* The answer is the whole reason to look at this screen before saving. */
+.paste-opts li.right { color: var(--purple); font-weight: 600; }
+.paste-none {
+  margin-top: 6px; font-size: 12px; font-weight: 600; color: #C2410C;
+  background: var(--orange-pale); border-radius: 6px; padding: 2px 7px;
+  display: inline-block;
+}
