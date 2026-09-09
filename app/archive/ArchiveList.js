@@ -19,6 +19,18 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
   const [sem, setSem] = useState('S1');
   const [q, setQ] = useState('');
 
+  // The year chosen here is the same choice the head of الرئيسية shows and
+  // اختبر نفسك reads. It used to live only in this component's state, so
+  // picking DCEM1 here and going to the quiz put you back in your own year.
+  const choose = (id) => {
+    setPromo(id);
+    fetch('/api/promo', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ promo: id }),
+    }).catch(() => { /* the list on screen has already moved */ });
+  };
+
   const chosen = promos.find((p) => p.id === promo) || promos[0];
   const inPromo = all.filter((m) => m.promo === promo);
   const modules = inPromo
@@ -44,7 +56,7 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
 
         <div className="chips">
           {promos.map((p) => (
-            <button key={p.id} onClick={() => setPromo(p.id)}
+            <button key={p.id} onClick={() => choose(p.id)}
               className={`pill${promo === p.id ? ' solid' : ' grey'}`}
               style={promo === p.id ? { background: p.badge } : undefined}>
               {p.name}

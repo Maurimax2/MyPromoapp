@@ -1,47 +1,78 @@
 'use client';
 
-import { useState } from 'react';
+// Which year's material you are reading.
+//
+// Not who you are: your promo is still your promo, your feed is still your
+// feed, and this does not move you. It changes what الأرشيف, اختبر نفسك and
+// الملخصات are showing — the years are all one faculty's, and a student
+// revising ahead had no way to reach any of them.
+//
+// The years come from the database, never a list written here: six was a
+// fact, not a rule, and the panel can add one.
+
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from './Icon';
 
-const PROMOS = ['PCEM1', 'PCEM2', 'DCEM1', 'DCEM2', 'DCEM3', 'DCEM4'];
-
-export default function PromoSelector({ current }) {
-  const [open, setOpen] = useState(false);
+export default function PromoSelector({ promos, current, mine }) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const box = useRef(null);
 
-  const handleSelect = async (promo) => {
-    const lowered = promo.toLowerCase();
+  // A menu that only closes by choosing something is a trap on a phone.
+  useEffect(() => {
+    if (!open) return undefined;
+    const away = (e) => { if (!box.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', away);
+    return () => document.removeEventListener('pointerdown', away);
+  }, [open]);
 
-    await fetch('/api/promo/select', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ promo: lowered }),
-    });
+  if (!promos?.length) return null;
 
+  const choose = async (id) => {
     setOpen(false);
-    router.refresh();
+    if (id === current) return;
+    setBusy(true);
+    try {
+      await fetch('/api/promo', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ promo: id }),
+      });
+      router.refresh();
+    } finally { setBusy(false); }
   };
 
+  const here = promos.find((p) => p.id === current);
+
   return (
-    <div className="promo-selector">
+    <div className="yr" ref={box}>
       <button
-        className="promo-btn"
-        onClick={() => setOpen(!open)}
-        aria-label="اختر السنة"
+        className={`yr-btn${current !== mine ? ' away' : ''}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={`السنة المعروضة — ${here?.name || current}`}
+        disabled={busy}
       >
-        <span>{current.toUpperCase()}</span>
-        <Icon name="chev" size={16} />
+        <span dir="ltr">{here?.name || current.toUpperCase()}</span>
+        <Icon name="chev" size={15} />
       </button>
+
       {open && (
-        <div className="promo-menu">
-          {PROMOS.map((promo) => (
+        <div className="yr-menu" role="menu">
+          {promos.map((p) => (
             <button
-              key={promo}
-              className={`promo-item${current === promo.toLowerCase() ? ' active' : ''}`}
-              onClick={() => handleSelect(promo)}
+              key={p.id}
+              role="menuitem"
+              className={`yr-item${p.id === current ? ' on' : ''}`}
+              onClick={() => choose(p.id)}
             >
-              {promo}
+              <span className="yr-dot" style={{ background: p.badge }} />
+              <span className="grow" dir="ltr">{p.name}</span>
+              {/* Which one is actually yours, so leaving it is a deliberate
+                  act and coming back is one tap and no thinking. */}
+              {p.id === mine && <span className="yr-mine">دفعتك</span>}
             </button>
           ))}
         </div>

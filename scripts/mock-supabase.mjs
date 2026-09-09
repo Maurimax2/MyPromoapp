@@ -64,6 +64,14 @@ const db = {
     // No banner drawn for this one, so the tinted-block fallback is on screen
     // too rather than only in the code.
     { id: 'anatomie-pathologique', promo: 'pcem2', semester: 'S2', name: 'ANATOMIE PATHOLOGIQUE', icon: 'micro', tint: 'orange', professors: [], position: 5 },
+    // DCEM1 as it was actually catalogued: SEMIOLOGIE entered as one subject
+    // per system. It is one subject and those are its chapters, which is what
+    // the merge in the panel is for — deleting them would take their files.
+    { id: 'semiologie', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE CARDIOLOGIQUE', icon: 'book', tint: 'purple', professors: [], position: 0 },
+    { id: 'semiologie-respiratoire', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE RESPIRATOIRE', icon: 'book', tint: 'purple', professors: [], position: 1 },
+    { id: 'semiologie-digestive', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE DIGESTIVE', icon: 'book', tint: 'purple', professors: [], position: 2 },
+    { id: 'semiologie-neurologique', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE NEUROLOGIQUE', icon: 'book', tint: 'purple', professors: [], position: 3 },
+    { id: 'pharmacologie', promo: 'dcem1', semester: 'S1', name: 'PHARMACOLOGIE', icon: 'flask', tint: 'orange', professors: [], position: 4 },
   ],
   chapters: [{ id: 1, module: 'anatomie', title: 'Tête et cou', subtitle: null, position: 0 }],
   documents: [
@@ -79,6 +87,23 @@ const db = {
     { id: 4, module: 'anatomie', chapter: null, where_shown: 'quiz', section: 'exam', n: null,
       title: 'Examen ANATOMIE 2025 (scan)', prof: null, year: 2025, ext: 'PDF', bytes: 2050000,
       drive_id: '1MockDriveIdScannedPaperDDDDDDDDD', published: true, position: 1 },
+    // The lectures filed under the split semiology subjects. These are what a
+    // delete would destroy and a merge has to carry across.
+    { id: 5, module: 'semiologie', chapter: null, where_shown: 'archive', section: 'lecture', n: '1',
+      title: "Sémiologie de l'insuffisance cardiaque", prof: null, year: null, ext: 'PDF', bytes: 3100000,
+      drive_id: '1MockDriveIdSemioCardioAAAAAAAAA', published: true, position: 0 },
+    { id: 6, module: 'semiologie-respiratoire', chapter: null, where_shown: 'archive', section: 'lecture', n: '1',
+      title: 'La dyspnée', prof: null, year: null, ext: 'PDF', bytes: 2400000,
+      drive_id: '1MockDriveIdSemioRespBBBBBBBBBBB', published: true, position: 0 },
+    { id: 7, module: 'semiologie-respiratoire', chapter: null, where_shown: 'archive', section: 'lecture', n: '2',
+      title: "Les syndromes pleuraux", prof: null, year: null, ext: 'PDF', bytes: 2600000,
+      drive_id: '1MockDriveIdSemioRespCCCCCCCCCCC', published: true, position: 1 },
+    { id: 8, module: 'semiologie-digestive', chapter: null, where_shown: 'archive', section: 'lecture', n: '1',
+      title: "L'ictère", prof: null, year: null, ext: 'PDF', bytes: 1900000,
+      drive_id: '1MockDriveIdSemioDigestDDDDDDDDD', published: true, position: 0 },
+    { id: 9, module: 'semiologie-neurologique', chapter: null, where_shown: 'quiz', section: 'exam', n: null,
+      title: 'Examen SEMIOLOGIE 2024', prof: null, year: 2024, ext: 'PDF', bytes: 1500000,
+      drive_id: '1MockDriveIdSemioNeuroEEEEEEEEE', published: true, position: 0 },
   ],
   question_banks: [
     { id: 1, module: 'anatomie', document: 3, title: 'Examen ANATOMIE 2021', section: null, position: 0 },
@@ -86,6 +111,7 @@ const db = {
     // extracted in the panel. اختبر نفسك built its list from that catalogue,
     // so this is what it could never show.
     { id: 2, module: 'anatomie-pathologique', document: null, title: 'Examen ANAPATH 2024', section: null, position: 0 },
+    { id: 3, module: 'semiologie-neurologique', document: 9, title: 'Examen SEMIOLOGIE 2024', section: null, position: 0 },
   ],
   questions: [
     { id: 1, bank: 1, n: '1', stem: "Concernant les muscles masticateurs, quelle(s) proposition(s) est (sont) exacte(s) ?",

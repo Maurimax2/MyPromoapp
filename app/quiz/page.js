@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { quizzedModules } from '@/lib/data';
 import { currentProfile } from '@/lib/supabase/server';
-import { subjectsOf } from '@/lib/catalogue';
+import { subjectsOf, promosOf } from '@/lib/catalogue';
+import { browsingPromo } from '@/lib/promo';
 import { countOf, quizzedIds, bankCountOf } from '@/lib/quiz-bank';
 
 // The counts come from the database, so this cannot be prerendered — and
@@ -13,7 +14,12 @@ export const dynamic = 'force-dynamic';
 export default async function QuizIndex() {
   const me = await currentProfile();
   if (!me) redirect('/login');
-  const promo = me.promo || 'pcem2';
+  // The year being read, not the year you are in: this screen is the whole
+  // point of the papers being transcribed, and locking it to your own promo
+  // put every other year's questions out of reach of the people revising for
+  // them.
+  const years = await promosOf();
+  const promo = await browsingPromo(me, years.promos);
 
   // Which subjects have questions is a question for the database. It used to
   // be answered by the copy of the catalogue bundled with the app, so a

@@ -78,7 +78,8 @@ function Today({ review }) {
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
+export default function Home({ me, posts, subjects, mySubjects = [],
+                               promos = [], reading, unseen = 0,
                                readError = null, refused = 0 }) {
   const router = useRouter();
   // The review schedule lives in this browser, so the card can only be filled
@@ -170,7 +171,7 @@ export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
           <Logo size={32} id="feed" white />
           <div className="hero-mark">My<i>Promo</i></div>
           <div className="grow" />
-          <PromoSelector current={promo} />
+          <PromoSelector promos={promos} current={reading} mine={me.promo} />
           {/* المحادثات is a tab in the bottom bar now, so there is no icon for
               it here: one door, not two. */}
           {/* It was a <button> with no handler for weeks. */}
@@ -211,7 +212,10 @@ export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
 
         {subjects.length > 0 && (
           <>
-            <div className="eyebrow" style={{ margin: '0 2px' }}>موادك</div>
+            <div className="eyebrow" style={{ margin: '0 2px' }}>
+              {reading === me.promo ? 'موادك'
+                : `مواد ${(promos.find((p) => p.id === reading)?.name) || ''}`}
+            </div>
             <div className="subs">
               {subjects.map((m) => (
                 <Link key={m.id} href={`/archive/${m.id}`} className="sub">
@@ -269,7 +273,7 @@ export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
               something to post, so an empty composer stays one line — and it
               stays optional, because most of what a promo says is not about
               a subject at all. */}
-          {(body.trim() || files.length > 0) && subjects.length > 0 && (
+          {(body.trim() || files.length > 0) && mySubjects.length > 0 && (
             <select
               className="admin-input sm"
               value={module}
@@ -277,7 +281,9 @@ export default function Home({ me, posts, subjects, promo = 'pcem2', unseen = 0,
               aria-label="المادة"
             >
               <option value="">بلا مادة</option>
-              {subjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+              {/* Your own year's subjects, never the rail's: the rail can be
+                  showing another year, and the post is going into yours. */}
+              {mySubjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
           )}
 

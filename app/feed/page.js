@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { bannerFor } from '@/lib/data';
-import { subjectsOf, subjectRail } from '@/lib/catalogue';
+import { subjectsOf, subjectRail, promosOf } from '@/lib/catalogue';
+import { browsingPromo } from '@/lib/promo';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
@@ -14,9 +14,12 @@ export default async function Feed() {
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
-  const cookieStore = await cookies();
-  const selectedPromo = cookieStore.get('selected-promo')?.value;
-  const promo = selectedPromo || profile.promo || 'pcem2';
+  // Two different things, and conflating them is what makes a student post
+  // into a year they are not in: `promo` is who they are and whose feed this
+  // is; `reading` is the year whose subjects they are looking at.
+  const promo = profile.promo || 'pcem2';
+  const years = await promosOf();
+  const reading = await browsingPromo(profile, years.promos);
   const sb = await supabaseServer();
 
   // The posts, their authors, their attachments, and which ones I have
@@ -67,7 +70,7 @@ export default async function Feed() {
 
   // Every subject the promo has — one banner each, not one per semester, and
   // including one a colleague added this morning with no files in it yet.
-  const subjects = (await subjectRail(promo))
+  const subjects = (await subjectRail(reading))
     .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.name) }));
 
   return (
@@ -79,7 +82,9 @@ export default async function Feed() {
             promo: profile.promo,
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
-      promo={promo}
+      promos={years.promos}
+      reading={reading}
+      mySubjects={subjectRows.map((m) => ({ id: m.id, name: m.name }))}
       posts={posts}
       subjects={subjects}
     />
