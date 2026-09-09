@@ -446,6 +446,22 @@ createServer(async (req, res) => {
   if (req.method === 'POST') {
     const payload = await body(req);
     const list = Array.isArray(payload) ? payload : [payload];
+
+    // A primary key is a primary key. Without this the mock cheerfully kept a
+    // second row under an id another row already had, and the panel's "add a
+    // subject" bug — which on real Postgres is a duplicate-key 500 — read here
+    // as a clean 201. The mock exists to catch that class of thing, not to
+    // hide it.
+    for (const r of list) {
+      if (r.id !== undefined && db[table].some((x) => String(x.id) === String(r.id))) {
+        return send(res, 409, {
+          code: '23505',
+          message: `duplicate key value violates unique constraint "${table}_pkey"`,
+          details: `Key (id)=(${r.id}) already exists.`,
+        });
+      }
+    }
+
     const made = list.map((r) => {
       const row = { ...(DEFAULTS[table]?.() || {}), ...r };
       // Tables whose primary key is the pair, not a serial of their own.

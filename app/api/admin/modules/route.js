@@ -38,13 +38,31 @@ export async function POST(request) {
 
   const db = supabaseAdmin();
 
-  // Two years can teach ANATOMIE, so the id carries the promo when the plain
-  // one is taken. `anatomie`, then `anatomie-dcem1`.
-  const { data: taken } = await db.from('modules').select('id, promo').eq('id', base).maybeSingle();
-  if (taken?.promo === promo) {
-    return NextResponse.json({ error: 'هذه المادة موجودة' }, { status: 409 });
+  // A subject runs across both semesters, and is one row for each: ANATOMIE
+  // in S1 and ANATOMIE in S2 are two rows the app shows as one subject. So
+  // the only real duplicate is the same name, in the same year, in the same
+  // semester.
+  //
+  // This used to refuse the second semester outright, and — worse — it looked
+  // at the single row holding the plain id rather than at whether the id it
+  // was about to use was free. Adding ANATOMIE to both semesters of PCEM1
+  // therefore built `anatomie-pcem1` twice, and the second insert died on the
+  // primary key. That is why a year catalogued in the panel arrived in the app
+  // with half its subjects missing.
+  const { data: here } = await db.from('modules')
+    .select('id, semester, name').eq('promo', promo);
+  if ((here || []).some((m) => m.semester === semester && slug(m.name) === base)) {
+    return NextResponse.json({ error: 'هذه المادة موجودة في هذا السداسي' }, { status: 409 });
   }
-  const id = taken ? `${base}-${promo}` : base;
+
+  // The id says what distinguishes this row: first the plain name, then the
+  // year that also teaches it, then the semester within that year. Never a
+  // bare `-s1`, which on a second year reads as the first year's.
+  const { data: every } = await db.from('modules').select('id');
+  const used = new Set((every || []).map((m) => m.id));
+  const sem = semester.toLowerCase();
+  let id = [base, `${base}-${promo}`, `${base}-${promo}-${sem}`].find((c) => !used.has(c));
+  for (let n = 2; !id; n += 1) if (!used.has(`${base}-${n}`)) id = `${base}-${n}`;
 
   const { count } = await db.from('modules')
     .select('*', { count: 'exact', head: true }).eq('promo', promo);

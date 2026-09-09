@@ -65,7 +65,7 @@ export default async function Feed() {
   // Every subject the promo has, including one a colleague added this
   // morning that has no files in it yet.
   const subjects = subjectRows
-    .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.id) }));
+    .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.name) }));
 
   return (
     <Home
