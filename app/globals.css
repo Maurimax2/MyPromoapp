@@ -41,6 +41,34 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--purple-light); outline-offset: 2px; }
 
+/* Pressing things.
+   
+   Two defaults were doing the app harm on a phone. The browser paints its own
+   grey box over whatever you touch, which on a rounded card is a square with
+   corners sticking out and reads as a rendering fault; and without
+   `touch-action` a browser waits ~300ms after every tap to see whether a
+   second one is coming, so each press answered late. Both are turned off
+   here, which means every press state below is ours to draw — and has to be,
+   because with the highlight gone an element with no :active is genuinely
+   dead under the thumb. */
+a, button, [role='button'], label, input, select, textarea, summary {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Hover is a mouse. A phone has no pointer to hover with, so it fires hover
+   on touch and then leaves it stuck until you tap somewhere else — the button
+   you pressed a minute ago still lit. Every hover in this file is behind this,
+   and every one of them has an :active beside it for the thumb. */
+@media (hover: hover) and (pointer: fine) {
+  .icobtn:hover { background: var(--purple-pale); color: var(--purple); }
+  .composer-acts button:hover { background: var(--bg); }
+  .post-acts button:hover { background: var(--bg); color: var(--purple); }
+  .quiz-opt:not(:disabled):hover { border-color: var(--purple-light); }
+  .composer-send:hover { background: var(--purple) !important; }
+  .post-menu button:hover { background: var(--bg); }
+}
+
 /* The whole app lives in one phone-width column, centred on wider screens. */
 .app {
   width: 100%;
@@ -73,7 +101,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   color: var(--ink-2); display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.icobtn:hover { background: var(--purple-pale); color: var(--purple); }
 
 /* ---------- controls ---------- */
 .srch {
@@ -227,7 +254,20 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--surface); border-top: 1px solid var(--line-soft);
   box-shadow: var(--shadow-nav);
   display: flex; align-items: center; padding: 0 4px; z-index: 10;
+  /* It arrives a beat after the screen it belongs to — measured at about a
+     quarter of a second — and snapping into place afterwards is what made
+     the bar look finished while the page behind it was still empty. It
+     rises with the screen instead. The bar lives in the layout and mounts
+     once, so this plays on the first load and never again on a tab change:
+     a bar that re-animated every time you switched tabs would be far worse
+     than the thing it fixes. */
+  animation: navup .22s ease-out both;
 }
+@keyframes navup {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .nav { animation: none; } }
 .nav a, .nav .navsp {
   flex: 1; display: flex; flex-direction: column; align-items: center;
   justify-content: center; gap: 4px; min-height: 56px;
@@ -254,8 +294,76 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   margin-top: -14px; box-shadow: 0 6px 16px rgba(249, 115, 22, .4);
 }
 
+/* ============================================================
+   Life under the thumb.
+
+   The app had press states on cards and on the five tools, and on
+   almost nothing a student actually presses: not the purple button
+   at the foot of every form, not the four tabs, not the + , not the
+   year chips, not S1/S2. With the browser's own tap highlight turned
+   off above, those were not merely quiet — they were inert, and an
+   app that does not answer a press feels broken long before anybody
+   can say why.
+
+   One language throughout: a big surface sinks a little, a small
+   control sinks further, and anything with a fill darkens as well so
+   the press reads even mid-scroll. Fast — .09s — because feedback
+   that arrives late is worse than none.
+   ============================================================ */
+
+.btn, .nav a, .nav .fab, .icobtn, button.pill,
+.seg button, .seg a, .imp-kind, .quiz-opt,
+.composer-acts button, .post-acts button, .paste-file, .yr-item {
+  transition: transform .09s ease, background-color .12s ease, opacity .12s ease;
+}
+
+/* The purple button at the foot of every form, and its grey twin. */
+.btn:active:not(:disabled) { transform: scale(.97); filter: brightness(.93); }
+.btn:disabled { opacity: .5; }
+
+/* The four tabs. They are big targets with a small mark in them, so the
+   icon takes the press rather than the whole strip flashing. */
+.nav a:active .nav-ic { transform: scale(.86); }
+.nav-ic { transition: transform .09s ease; display: inline-flex; }
+
+/* The +. The biggest, brightest thing on the screen, and for a while it
+   was a <div> that did nothing at all; doing nothing when pressed is the
+   quieter version of the same fault. */
+.nav .fab:active {
+  transform: scale(.9);
+  box-shadow: 0 3px 10px rgba(249, 115, 22, .45);
+}
+
+.icobtn:active { transform: scale(.92); background: var(--purple-pale); color: var(--purple); }
+.hero-ic:active { transform: scale(.92); }
+
+/* Chips and switches — the year, S1/S2, the panel's kinds. */
+button.pill:active { transform: scale(.94); }
+.seg button:active, .seg a:active { transform: scale(.95); }
+.imp-kind:active { transform: scale(.95); }
+.yr-item:active { background: var(--purple-pale); }
+
+/* An answer being chosen. */
+.quiz-opt:not(:disabled):active { transform: scale(.99); border-color: var(--purple-light); }
+
+/* Liking, commenting, attaching — small round things that need to sink
+   further than a card to be felt at all. */
+.composer-acts button:active, .post-acts button:active {
+  transform: scale(.9); background: var(--bg);
+}
+
+.paste-file:active { transform: scale(.985); }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+  /* A press still has to answer. Movement is what was asked to stop, so
+     the state changes and does not travel. */
+  .btn:active:not(:disabled), .nav .fab:active, .icobtn:active,
+  .nav a:active .nav-ic, button.pill:active, .seg button:active,
+  .seg a:active, .imp-kind:active, .composer-acts button:active,
+  .post-acts button:active, .paste-file:active, .quiz-opt:not(:disabled):active {
+    transform: none;
+  }
 }
 
 /* ============================================================
@@ -294,7 +402,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   min-height: 44px; border-radius: 11px;
   font-size: 13.5px; font-weight: 600; color: var(--ink-2);
 }
-.composer-acts button:hover { background: var(--bg); }
 .composer-acts .ic-img { color: var(--purple-light); }
 .composer-acts .ic-pdf { color: var(--orange); }
 
@@ -365,7 +472,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   min-height: 48px;
   font-size: 13.5px; font-weight: 600; color: var(--ink-2);
 }
-.post-acts button:hover { background: var(--bg); color: var(--purple); }
 .post-acts button[data-on='true'] { color: var(--orange); }
 
 /* ============================================================
@@ -494,7 +600,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 15.5px; font-weight: 500; text-align: right; color: var(--ink);
   border: 1.5px solid transparent;
 }
-.quiz-opt:not(:disabled):hover { border-color: var(--purple-light); }
 .quiz-opt.right { background: var(--right-bg); border-color: var(--right); color: var(--right); font-weight: 700; }
 .quiz-opt.wrong { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); font-weight: 700; }
 .quiz-opt.dim { opacity: .5; }
@@ -1194,7 +1299,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--purple); color: #fff !important; border-radius: 11px;
 }
 .composer-send:disabled { opacity: .35; }
-.composer-send:hover { background: var(--purple) !important; }
 
 .draft { display: flex; flex-direction: column; gap: 6px; }
 .draft-f {
@@ -1383,7 +1487,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   display: block; width: 100%; text-align: start; padding: 12px 14px;
   font-size: 13.5px; font-weight: 600; color: var(--ink);
 }
-.post-menu button:hover { background: var(--bg); }
 .post-menu button:disabled { color: var(--ink-3); }
 
 /* ---------- the moderation queue ---------- */
