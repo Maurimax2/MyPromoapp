@@ -7,6 +7,7 @@
 // app feel dead. If the request fails, it goes back.
 
 import { useState } from 'react';
+import Sheet from './Sheet';
 import Icon from './Icon';
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
@@ -123,16 +124,26 @@ export default function Post({ post, me }) {
           <button onClick={() => setMenu((m) => !m)} aria-label="خيارات">
             <Icon name="dots" size={18} />
           </button>
-          {menu && (
-            <div className="post-menu">
-              {post.author?.id === me.id
-                ? <button onClick={remove}>احذف منشوري</button>
-                : <button onClick={report} disabled={flagged}>
-                    {flagged ? 'أُبلغ عنه' : 'أبلغ عن المنشور'}
-                  </button>}
-            </div>
-          )}
         </div>
+
+        {/* A sheet, not a popover under the dots.
+
+            It used to be a small menu with nothing behind it, which meant
+            tapping anywhere else did not close it — the only way out was to
+            find the same three dots again. A sheet comes up from the bottom
+            where a thumb already is, and the screen behind it is dimmed and
+            blurred, which is both what says "this is over everything" and
+            what gives the tap-to-dismiss somewhere to land. */}
+        {menu && (
+          <Sheet onClose={() => setMenu(false)}>
+            {post.author?.id === me.id
+              ? <button className="sheet-act warn" onClick={remove}>احذف منشوري</button>
+              : <button className="sheet-act" onClick={report} disabled={flagged}>
+                  {flagged ? 'أُبلغ عنه' : 'أبلغ عن المنشور'}
+                </button>}
+            <button className="sheet-act quiet" onClick={() => setMenu(false)}>إلغاء</button>
+          </Sheet>
+        )}
       </div>
 
       {post.body && <div className="post-body" dir="auto">{post.body}</div>}

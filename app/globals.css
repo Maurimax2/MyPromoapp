@@ -1753,3 +1753,159 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-3); background: var(--bg);
   border-radius: 5px; padding: 2px 6px;
 }
+
+
+/* ============================================================
+   Things arriving.
+
+   A list that appears all at once, fully formed, reads as a page
+   that was already there — which is exactly what it is, and exactly
+   what makes it feel like a document rather than an app. Cards rise
+   in order instead, a frame apart, so the eye is led down the screen
+   the way it is on a phone you paid for.
+
+   Short and shallow on purpose: 6px and .2s is felt rather than
+   watched. The stagger stops at the eighth row — a cascade down a
+   list of forty is a wait, not a flourish — and every row past it
+   arrives on the eighth's beat.
+   ============================================================ */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* `backwards`, never `both`. `both` holds the last keyframe forever, which
+   leaves transform: translateY(0) sitting on every card on the screen — and
+   an element with a transform becomes the containing block for anything
+   `position: fixed` inside it. That silently turns a full-screen backdrop
+   into a box the size of one post. `backwards` gives the same hidden start
+   through the delay and then hands the element back its own styles. */
+.scroll > .card,
+.scroll > .post,
+.scroll > .chapter,
+.scroll > .qa,
+.chapter > .lec {
+  animation: rise .2s ease-out backwards;
+}
+
+.scroll > :nth-child(1) { animation-delay: 0ms; }
+.scroll > :nth-child(2) { animation-delay: 40ms; }
+.scroll > :nth-child(3) { animation-delay: 80ms; }
+.scroll > :nth-child(4) { animation-delay: 120ms; }
+.scroll > :nth-child(5) { animation-delay: 160ms; }
+.scroll > :nth-child(6) { animation-delay: 200ms; }
+.scroll > :nth-child(7) { animation-delay: 240ms; }
+.scroll > :nth-child(n+8) { animation-delay: 280ms; }
+
+/* A lecture belongs to its chapter, so it counts from its own heading
+   rather than continuing the screen's count. */
+.chapter > .lec:nth-child(2) { animation-delay: 40ms; }
+.chapter > .lec:nth-child(3) { animation-delay: 80ms; }
+.chapter > .lec:nth-child(n+4) { animation-delay: 120ms; }
+
+/* The skeleton is the thing that stands in for a wait. It must not
+   also be waiting. */
+.scroll > .sk { animation: none; }
+
+/* ============================================================
+   Surfaces that float above the page.
+
+   A menu is not a card: it is over the screen rather than on it, so
+   it carries a hairline and a deeper shadow that the flat cards
+   never get. The cards direction is white on grey with one shadow —
+   this is the one exception, and it is what tells the two apart.
+   ============================================================ */
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(-6px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.post-menu, .yr-menu {
+  animation: pop .16s ease-out both;
+  transform-origin: top var(--pop-side, left);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 30px rgba(26, 20, 36, .18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll > .card, .scroll > .post, .scroll > .chapter, .scroll > .qa,
+  .chapter > .lec, .post-menu, .yr-menu { animation: none; }
+}
+
+
+/* ============================================================
+   The sheet.
+
+   What a phone does instead of a dialog: it comes up from the edge
+   the thumb is already at, rather than appearing in the middle of
+   the screen where a mouse would have put it.
+
+   The screen behind it is dimmed and blurred rather than merely
+   covered — the blur is what says the page is still there and still
+   yours, and it is the difference between "a layer above" and "a
+   different screen".
+   ============================================================ */
+
+.sheet-back {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(26, 20, 36, .32);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: fade .18s ease-out both;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.sheet {
+  width: 100%; max-width: 430px;
+  background: var(--surface);
+  border-radius: 22px 22px 0 0;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 40px rgba(26, 20, 36, .22);
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+  animation: sheetup .24s cubic-bezier(.32, .72, 0, 1) both;
+  /* A drag that stopped short springs back rather than snapping. The inline
+     style the drag writes turns this off while a finger is down. */
+  transition: transform .22s cubic-bezier(.32, .72, 0, 1);
+}
+/* The curve is the one iOS uses to bring a sheet up: quick away from the
+   edge, and settling rather than stopping. */
+@keyframes sheetup {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* The handle, and the part of the sheet that takes the gesture. A 4px bar
+   is a mark, not a target — the padding around it is what a thumb actually
+   lands on, and it clears the 44px the rest of the app holds to. */
+.sheet-grab {
+  display: block; width: 100%; padding: 10px 0 8px;
+  min-height: 44px; touch-action: none; cursor: grab;
+}
+.sheet-grab:active { cursor: grabbing; }
+.sheet-grip {
+  width: 38px; height: 4px; border-radius: 2px;
+  background: var(--line); margin: 0 auto;
+}
+
+/* On its way out. The sheet falls back to the edge it came from and the
+   dimming lifts with it, rather than the whole thing blinking off. */
+.sheet-back.going { opacity: 0; transition: opacity .2s ease-in; animation: none; }
+.sheet.going { transform: translateY(100%); transition: transform .2s ease-in; animation: none; }
+
+.sheet-act {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 52px; border-radius: 14px;
+  font-size: 15.5px; font-weight: 600; color: var(--ink);
+  transition: transform .09s ease, background-color .12s ease;
+}
+.sheet-act:active:not(:disabled) { transform: scale(.98); background: var(--bg); }
+.sheet-act:disabled { color: var(--ink-3); }
+/* Removing something is the one action here that cannot be undone. */
+.sheet-act.warn { color: var(--wrong); }
+.sheet-act.quiet { color: var(--ink-3); margin-top: 4px; background: var(--bg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-back, .sheet { animation: none; }
+}
