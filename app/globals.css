@@ -421,20 +421,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
 
-/* Lectures lost their nav slot to الملخصات, so the feed carries the way in. */
-.today {
-  display: flex; align-items: center; gap: 13px; padding: 13px 14px;
-  background: var(--purple); color: #fff;
-}
-.today .nm, .today .mt { color: #fff; }
-.today .mt { opacity: .75; }
-.today .chev { color: rgba(255, 255, 255, .7); }
-.today-ic {
-  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-  background: rgba(255, 255, 255, .18);
-  display: flex; align-items: center; justify-content: center;
-}
-
 /* ============================================================
    Chapters. Lectures belong to a chapter, numbered straight
    through the module.
@@ -1045,37 +1031,93 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    الرئيسية — the tools, then the subjects.
    ============================================================ */
 
-/* A run of tools pushed sideways with the thumb. Two rows, so most of the
-   app is visible without scrolling at all. */
-.rail {
-  display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto);
-  gap: 9px; overflow-x: auto; scrollbar-width: none;
-  margin: 0 -18px; padding: 2px 18px 4px;
-  overscroll-behavior-x: contain;
-}
-.rail::-webkit-scrollbar { display: none; }
+/* الرئيسية's head: the one coloured surface in the app.
 
-.tool-a {
-  width: 106px; min-height: 100px; border-radius: 16px; padding: 12px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  color: #fff; transition: transform .12s ease;
+   It carries the mark, the two counters, who you are, and the five things the
+   app can do — and the first white card is pulled up into its lower edge, so
+   the head reads as something the cards sit under rather than a band above
+   them. */
+.hero {
+  background: linear-gradient(150deg, #6B21B5 0%, #7C3AED 62%, #8B5CF6 100%);
+  color: #fff;
+  padding: 16px 18px 42px;
+  flex-shrink: 0;
 }
-.tool-a:active { transform: scale(.965); }
-.tool-a b { font-size: 13px; font-weight: 700; line-height: 1.25; }
-.tool-a-ic { opacity: .92; }
+.hero-row { display: flex; align-items: center; gap: 8px; }
+.hero-mark { font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+.hero-mark i { font-style: normal; opacity: .82; }
+.hero .grow { flex: 1; }
 
+.hero-ic {
+  width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255, 255, 255, .92);
+}
+.hero-ic:active { background: rgba(255, 255, 255, .14); }
+
+/* A count, not a dot: "there are messages" and "there are seven" are
+   different things to walk into. */
+.tally {
+  position: absolute; top: 1px; inset-inline-end: 0;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
+  background: var(--orange); color: #fff;
+  font-size: 10.5px; font-weight: 700; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 2px #7326BE;
+}
+
+.hero-av {
+  background: rgba(255, 255, 255, .2) !important; color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .5);
+}
+
+.hero-hi { margin: 12px 2px 16px; }
+.hero-hi b { display: block; font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+.hero-hi s { display: block; text-decoration: none; font-size: 13px; margin-top: 3px; color: rgba(255, 255, 255, .74); }
+
+/* Five, in one row, so the whole app is visible on the first screen without
+   a swipe. A sixth would not fit — which is the point: anything that has a
+   door elsewhere on this screen does not get one here too. */
+.tools { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.tool {
+  display: grid; gap: 6px; justify-items: center; align-content: start; min-width: 0;
+  transition: transform .12s ease;
+}
+.tool:active { transform: scale(.94); }
+.tool i {
+  width: 100%; height: 54px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .16); color: #fff;
+}
+.tool b {
+  font-size: 10.5px; font-weight: 500; line-height: 1.35; text-align: center;
+  color: rgba(255, 255, 255, .9);
+}
 /* What does not exist yet says so, rather than being a button that lies. */
-.tool-a.off {
-  background: var(--surface); border: 1px dashed var(--line);
-  color: var(--ink-3); cursor: default;
+.tool.soon { cursor: default; }
+.tool.soon:active { transform: none; }
+.tool.soon i {
+  background: none; border: 1.5px dashed rgba(255, 255, 255, .38);
+  color: rgba(255, 255, 255, .7);
 }
-.tool-a.off:active { transform: none; }
-.tool-a.off b { color: var(--ink-2); font-weight: 600; }
-.tool-a-soon {
-  align-self: flex-start;
-  font-size: 9.5px; font-weight: 700; color: #C2410C;
-  background: var(--orange-pale); border-radius: 5px; padding: 2px 6px;
+.tool.soon b { color: rgba(255, 255, 255, .6); }
+
+/* The cards begin inside the head's last few pixels. */
+.scroll.under { padding-top: 0; }
+.scroll.under > :first-child { margin-top: -30px; }
+
+/* ما عليك اليوم — one row, and the only way into المراجعة. */
+.today { display: flex; align-items: center; gap: 12px; padding: 14px; }
+.today-ic {
+  width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--purple-pale); color: var(--purple);
 }
+/* Orange is spent here and only here on this screen: something is owed. */
+.today-ic.due { background: var(--orange-pale); color: #C2410C; }
+.today b { display: block; font-size: 15px; font-weight: 600; }
+.today s { display: block; text-decoration: none; font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+.today-go { color: var(--ink-3); flex-shrink: 0; }
 
 /* Subjects, one banner at a time, the next one peeking so your thumb knows. */
 .subs {

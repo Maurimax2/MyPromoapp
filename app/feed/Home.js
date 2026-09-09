@@ -2,11 +2,12 @@
 
 // الرئيسية.
 //
-// Somewhere to post, then every tool the app has or will have, then your
-// subjects as their own banners, then what your promo is saying.
+// A violet head carrying who you are and what the app can do, then a white
+// card that says what today asks of you, then your subjects, then your promo.
 //
-// The tools come before the pictures on purpose: a student who opened the app
-// to do questions should not scroll past four illustrations to reach them.
+// The head is the only coloured surface in the app. It holds the tools
+// because five icons on violet do not compete with the white cards below
+// them, and because the screen then names itself at a glance.
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -16,27 +17,73 @@ import Logo from '@/components/Logo';
 import Post from '@/components/Post';
 import PickPromo from './PickPromo';
 import { imageThumb, pdfThumb } from '@/lib/thumb';
+import { dueCount, trackedCount } from '@/lib/review';
 
-// Everything the app has or will have, EXCEPT what the bottom nav already
-// carries. الملخصات and الأرشيف are tabs; a tile for them would be a second
-// button to the same page.
+// What the head offers. Everything left out of it has another door on the
+// same screen, and two buttons to one place is the thing to avoid:
+//
+//   المحاضرات   a lecture is opened from its subject, below
+//   نماذج 3D    a model belongs to the subject it explains, not to a rail
+//   المحادثات   the header icon, reachable from every screen
+//   المراجعة    the اليوم card, right under this head
+//   جدول الحصص  the same card
+//   الملخصات / الأرشيف / الملف   the bottom bar
 const TOOLS = [
-  { id: 'quiz',      label: 'اختبر نفسك', icon: 'quiz', href: '/quiz',     from: '#6B21B5', to: '#8B5CF6' },
-  { id: 'lectures',  label: 'المحاضرات',  icon: 'book', href: '/lectures', from: '#F97316', to: '#FDBA74' },
-  { id: 'qa',        label: 'سؤال وجواب',  icon: 'msg', href: '/qa', from: '#7C3AED', to: '#A78BFA' },
-  { id: 'chat',      label: 'المحادثات',   icon: 'send', href: '/chat', from: '#C2410C', to: '#F97316' },
-  { id: 'rooms',     label: 'غرف الدراسة', icon: 'person', href: '/rooms', from: '#5B21B6', to: '#7C3AED' },
-  { id: 'duel',      label: 'تحدّي زميلك', icon: 'flask' },
-  { id: 'review',    label: 'المراجعة',    icon: 'clock', href: '/review', from: '#5B21B6', to: '#8B5CF6' },
-  { id: 'points',    label: 'النقاط',      icon: 'check', href: '/points', from: '#9A3412', to: '#F97316' },
-  { id: 'models',    label: 'نماذج 3D',    icon: 'atom' },
-  { id: 'timetable', label: 'جدول الحصص',  icon: 'clock' },
+  { id: 'quiz',   label: 'اختبر نفسك',  icon: 'quiz',  href: '/quiz' },
+  { id: 'qa',     label: 'سؤال وجواب',  icon: 'msgs',  href: '/qa' },
+  { id: 'rooms',  label: 'غرف الدراسة', icon: 'video', href: '/rooms' },
+  { id: 'points', label: 'النقاط',      icon: 'award', href: '/points' },
+  { id: 'duel',   label: 'تحدّي زميلك', icon: 'swords' },
 ];
+
+const TODAY = new Intl.DateTimeFormat('ar', { weekday: 'long', day: 'numeric', month: 'long' });
+
+/**
+ * ما عليك اليوم.
+ *
+ * The one card under the head, and the only place المراجعة is reached from —
+ * which is why it has no tile of its own any more. It has something to say in
+ * every state, so the layout does not shift depending on how much a student
+ * has answered: a due count, a calm all-clear, or an invitation to start.
+ *
+ * جدول الحصص belongs here too and is not built yet; when it is, it is a
+ * second row in this card, not a sixth icon in the head.
+ */
+function Today({ review }) {
+  // Before the browser has read the schedule there is no honest number to
+  // print, so the card carries its own name and nothing else.
+  const due = review?.due ?? 0;
+  const started = (review?.tracked ?? 0) > 0;
+
+  const said = !review ? { text: 'المراجعة', hint: null, at: '/review' }
+    : due > 0 ? { text: `${due} ${due === 1 ? 'سؤال يستحقّ' : 'أسئلة تستحقّ'} المراجعة`,
+                  hint: 'ما أخطأت فيه يعود إليك', at: '/review', now: true }
+    : started ? { text: 'لا شيء للمراجعة الآن', hint: 'أحسنت — سنعيدها عليك في وقتها', at: '/review' }
+    : { text: 'ابدأ أوّل اختبار', hint: 'ما تخطئ فيه يعود إليك وحده', at: '/quiz' };
+
+  return (
+    <Link href={said.at} className="card today">
+      <span className={`today-ic${said.now ? ' due' : ''}`}>
+        <Icon name={said.now ? 'clock' : 'quiz'} size={20} />
+      </span>
+      <span className="grow">
+        <b>{said.text}</b>
+        {said.hint && <s>{said.hint}</s>}
+      </span>
+      <Icon name="chev" size={18} className="today-go" />
+    </Link>
+  );
+}
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, unseen = 0, readError = null, refused = 0 }) {
+export default function Home({ me, posts, subjects, unseen = 0, chatUnseen = 0,
+                               readError = null, refused = 0 }) {
   const router = useRouter();
+  // The review schedule lives in this browser, so the card can only be filled
+  // in once we are in one. Until then it renders its own quiet resting state
+  // rather than flashing a number that changes a tick later.
+  const [review, setReview] = useState(null);
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
   const [module, setModule] = useState('');   // the subject it belongs to
@@ -56,6 +103,8 @@ export default function Home({ me, posts, subjects, unseen = 0, readError = null
     window.addEventListener('mypromo:new', write);
     return () => window.removeEventListener('mypromo:new', write);
   }, []);
+
+  useEffect(() => { setReview({ due: dueCount(), tracked: trackedCount() }); }, []);
 
   // Files go up as they are chosen, not when the post is sent — a student on
   // LTE should be waiting while they write, not after.
@@ -115,22 +164,61 @@ export default function Home({ me, posts, subjects, unseen = 0, readError = null
 
   return (
     <>
-      <header className="head">
-        <div className="head-row">
-          <Logo size={34} id="feed" />
-          <div className="head-t">الرئيسية</div>
-          {/* It was a <button> with no handler for weeks. */}
-          <Link href="/notifications" className="icobtn bell" aria-label="الإشعارات">
-            <Icon name="bell" size={19} />
-            {unseen > 0 && <span className="bell-dot" />}
+      <header className="hero">
+        <div className="hero-row">
+          <Logo size={32} id="feed" white />
+          <div className="hero-mark">My<i>Promo</i></div>
+          <div className="grow" />
+          <Link href="/chat" className="hero-ic" aria-label={`المحادثات${chatUnseen ? ` — ${chatUnseen} غير مقروءة` : ''}`}>
+            <Icon name="msg" size={21} />
+            {chatUnseen > 0 && <span className="tally">{chatUnseen > 9 ? '+9' : chatUnseen}</span>}
           </Link>
-          <div className="av" style={{ width: 38, height: 38, fontSize: 13, background: 'var(--purple)' }}>
-            {me.name.slice(0, 2)}
-          </div>
+          {/* It was a <button> with no handler for weeks. */}
+          <Link href="/notifications" className="hero-ic" aria-label={`الإشعارات${unseen ? ` — ${unseen} جديدة` : ''}`}>
+            <Icon name="bell" size={21} />
+            {unseen > 0 && <span className="tally">{unseen > 9 ? '+9' : unseen}</span>}
+          </Link>
+          <div className="av hero-av">{me.name.slice(0, 2)}</div>
+        </div>
+
+        <div className="hero-hi">
+          <b>أهلًا {me.name}</b>
+          <s>{me.promo ? me.promo.toUpperCase() : 'دفعتك'} · {TODAY.format(new Date())}</s>
+        </div>
+
+        <div className="tools">
+          {TOOLS.map((t) => (t.href ? (
+            <Link key={t.id} href={t.href} className="tool">
+              <i><Icon name={t.icon} size={23} /></i>
+              <b>{t.label}</b>
+            </Link>
+          ) : (
+            <div key={t.id} className="tool soon" aria-disabled="true" title="قريبًا">
+              <i><Icon name={t.icon} size={23} /></i>
+              <b>{t.label}</b>
+            </div>
+          )))}
         </div>
       </header>
 
-      <div className="scroll" style={{ gap: 14 }}>
+      <div className="scroll under" style={{ gap: 14 }}>
+        <Today review={review} />
+
+        {subjects.length > 0 && (
+          <>
+            <div className="eyebrow" style={{ margin: '0 2px' }}>موادك</div>
+            <div className="subs">
+              {subjects.map((m) => (
+                <Link key={m.id} href={`/archive/${m.id}`} className="sub">
+                  {m.banner
+                    ? <img src={m.banner} alt={m.name} />
+                    : <div className={`sub-none tint-${m.tint}`}><span dir="ltr">{m.name}</span></div>}
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
+
         {/* A profile made by a magic link has no year, and a post belongs to
             one. Ask here rather than refusing at the moment of posting. */}
         {!me.promo ? <PickPromo /> : (
@@ -209,21 +297,6 @@ export default function Home({ me, posts, subjects, unseen = 0, readError = null
         </div>
         )}
 
-        <div className="rail">
-          {TOOLS.map((t) => (t.href ? (
-            <Link key={t.id} href={t.href} className="tool-a"
-              style={{ background: `linear-gradient(140deg, ${t.from}, ${t.to})` }}>
-              <span className="tool-a-ic"><Icon name={t.icon} size={24} /></span>
-              <b>{t.label}</b>
-            </Link>
-          ) : (
-            <div key={t.id} className="tool-a off" aria-disabled="true">
-              <span className="tool-a-soon">قريبًا</span>
-              <b>{t.label}</b>
-            </div>
-          )))}
-        </div>
-
         {/* Silence here is what cost an afternoon: the feed came back refused
             and drew an empty screen, which reads exactly like "nobody has
             posted yet". */}
@@ -242,17 +315,6 @@ export default function Home({ me, posts, subjects, unseen = 0, readError = null
             حالة حسابك وسنتك في اللوحة.
           </div>
         )}
-
-        <div className="eyebrow" style={{ margin: '0 2px' }}>موادك</div>
-        <div className="subs">
-          {subjects.map((m) => (
-            <Link key={m.id} href={`/archive/${m.id}`} className="sub">
-              {m.banner
-                ? <img src={m.banner} alt={m.name} />
-                : <div className={`sub-none tint-${m.tint}`}><span dir="ltr">{m.name}</span></div>}
-            </Link>
-          ))}
-        </div>
 
         {posts.length > 0
           ? posts.map((p) => <Post key={p.id} post={p} me={me} />)

@@ -81,10 +81,30 @@ const db = {
   ],
   audit_log: [],
   import_jobs: [],
-  posts: [],
-  chats: [],
-  chat_messages: [],
-  post_media: [],
+  // Enough of a promo to see الرئيسية as a student would: two posts, one of
+  // them with a file, messages waiting, and notifications unread. An empty
+  // feed and an empty feed that the database refused look identical, so the
+  // screen is only really being tested when there is something in it.
+  posts: [
+    { id: 501, promo: 'pcem2', author: 'u-1', module: 'anatomie', kind: 'note',
+      body: 'ملخّص العظام قبل امتحان الأربعاء — راجعوه معي.',
+      likes: 12, comments: 4, removed: false, created_at: '2026-09-08T08:10:00Z' },
+    { id: 502, promo: 'pcem2', author: 'u-3', module: null, kind: 'text',
+      body: 'TP Histologie تأجّل إلى الاثنين — أكّده المسؤول.',
+      likes: 5, comments: 1, removed: false, created_at: '2026-09-08T06:40:00Z' },
+  ],
+  chats: [{ id: 601, a: 'u-1', b: 'u-owner', created_at: '2026-09-07T20:00:00Z',
+            last_at: '2026-09-08T09:41:00Z' }],
+  chat_messages: [
+    { id: 701, chat: 601, author: 'u-1', body: 'بعثت لك ملخّص العظام',
+      seen: false, created_at: '2026-09-08T09:40:00Z' },
+    { id: 702, chat: 601, author: 'u-1', body: 'قوليلي إذا وصل',
+      seen: false, created_at: '2026-09-08T09:41:00Z' },
+  ],
+  post_media: [
+    { id: 801, post: 501, kind: 'file', path: 'posts/resume-osteologie.pdf',
+      name: 'Résumé ostéologie.pdf', bytes: 2202009, position: 0 },
+  ],
   comments: [],
   likes: [],
   saves: [],
@@ -93,7 +113,11 @@ const db = {
   room_messages: [],
   reviews: [],
   reports: [],
-  notifications: [],
+  notifications: [
+    { id: 901, person: 'u-owner', kind: 'like', seen: false, created_at: '2026-09-08T09:00:00Z' },
+    { id: 902, person: 'u-owner', kind: 'comment', seen: false, created_at: '2026-09-08T08:30:00Z' },
+    { id: 903, person: 'u-owner', kind: 'answer', seen: false, created_at: '2026-09-07T18:00:00Z' },
+  ],
   authUsers: [{ id: 'u-owner', email: 'owner@unem.mr' }],
   buckets: [],
   objects: new Map(),
