@@ -120,6 +120,55 @@ export async function POST(request) {
   });
 }
 
+/**
+ * Moving files that are catalogued under another subject into this one.
+ *
+ * The import will not do this on its own any more, because doing it on its
+ * own is what emptied subjects: one Drive file is one row, and "adding" it
+ * here took it out of there while reporting a clean save. So the import says
+ * which files are elsewhere and this is the deliberate answer to that —
+ * somebody looked at the list and said yes, these belong here.
+ *
+ * It is also the way back for anything the old import moved: re-read the
+ * subject's folder, and move home whatever drifted.
+ */
+export async function PUT(request) {
+  const gate = await requireStaff();
+  if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
+  const profile = gate.profile;
+
+  const { module, drive_ids: ids } = await request.json();
+  if (!module || !Array.isArray(ids) || !ids.length) {
+    return NextResponse.json({ error: 'لا شيء لنقله' }, { status: 400 });
+  }
+
+  const db = supabaseAdmin();
+  const { data: found, error: lookup } = await db.from('documents')
+    .select('id, module, drive_id').in('drive_id', ids.slice(0, 500));
+  if (lookup) return NextResponse.json({ error: lookup.message }, { status: 500 });
+
+  const moving = (found || []).filter((d) => d.module !== module);
+  if (!moving.length) return NextResponse.json({ moved: 0, from: [] });
+
+  // A chapter belongs to a subject, so a file that changes subject cannot
+  // keep the chapter it was filed under — it would point into the one it
+  // just left.
+  const { error } = await db.from('documents')
+    .update({ module, chapter: null }).in('id', moving.map((d) => d.id));
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  await note(db, {
+    actor: profile.id, action: 'moved_documents',
+    target_type: 'module', target_id: module,
+    detail: { moved: moving.length, from: [...new Set(moving.map((d) => d.module))] },
+  });
+
+  return NextResponse.json({
+    moved: moving.length,
+    from: [...new Set(moving.map((d) => d.module))],
+  });
+}
+
 // Correcting one file after the fact: its name, the screen it appears on,
 // what kind of thing it is. The Drive original is never touched — only what
 // MyPromo says about it.

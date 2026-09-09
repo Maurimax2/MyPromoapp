@@ -115,6 +115,30 @@ export default function ImportScreen({ promos, modules, preset }) {
     setState('saved');
   };
 
+  // The files the import found under another subject. Nothing was moved; this
+  // is where somebody says whether they should be.
+  const claim = async () => {
+    const ids = (result?.elsewhere || []).map((d) => d.drive_id);
+    if (!ids.length) return;
+    setState('saving'); setError('');
+    const res = await fetch('/api/admin/documents', {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ module, drive_ids: ids }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setState('saved');
+    if (!res.ok) { setError(data.error || `تعذّر النقل (${res.status})`); return; }
+    setResult((r) => ({
+      ...r,
+      saved: (r.saved || 0) + (data.moved || 0),
+      elsewhere: [],
+      moved: data.moved || 0,
+      movedFrom: data.from || [],
+    }));
+    router.refresh();
+  };
+
   if (state === 'saved') {
     // What the server did, not what we asked it to. These used to be the same
     // number — chosen.length — which said "حُفظ ٣٠ ملفًا" over an import that
@@ -138,14 +162,28 @@ export default function ImportScreen({ promos, modules, preset }) {
             </p>
           )}
 
-          {/* Not an error: the file is catalogued, just not here. Saying which
-              subject holds it is the difference between "it worked" and
-              knowing where to go and look. */}
-          {kept.length > 0 && (
-            <div className="admin-err">
-              {kept.length} ملفًا موجود في مادة أخرى ولم يُنقل:
+          {result?.moved > 0 && (
+            <p className="admin-card-b">
+              ونُقل {result.moved} ملفًا من
               {' '}
-              <span dir="ltr">{[...new Set(kept.map((d) => d.module))].join('، ')}</span>
+              <span dir="ltr">{(result.movedFrom || []).join('، ')}</span>
+              {' '}إلى هنا.
+            </p>
+          )}
+
+          {/* Not an error: the file is catalogued, just not here. Nothing was
+              moved on its own — moving on its own is what emptied subjects in
+              the first place — so this asks. */}
+          {kept.length > 0 && (
+            <div className="admin-err" style={{ display: 'grid', gap: 10 }}>
+              <span>
+                {kept.length} ملفًا موجود في مادة أخرى ولم يُنقل:
+                {' '}
+                <span dir="ltr">{[...new Set(kept.map((d) => d.module))].join('، ')}</span>
+              </span>
+              <button className="btn" onClick={claim} disabled={state === 'saving'}>
+                {state === 'saving' ? '…' : `انقلها إلى ${here?.name || 'هذه المادة'}`}
+              </button>
             </div>
           )}
 
