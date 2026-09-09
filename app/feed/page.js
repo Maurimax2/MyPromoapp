@@ -8,24 +8,6 @@ import Home from './Home';
 
 export const dynamic = 'force-dynamic';
 
-/**
- * How many messages are waiting for this person.
- *
- * Never throws: a counter beside an icon is not worth failing الرئيسية over,
- * so anything that goes wrong here reads as zero.
- */
-async function unreadMessages(me) {
-  const db = supabaseAdmin();
-  const { data: mine } = await db.from('chats').select('id').or(`a.eq.${me},b.eq.${me}`);
-  const ids = (mine || []).map((c) => c.id);
-  if (!ids.length) return 0;
-
-  const { count } = await db.from('chat_messages')
-    .select('id', { count: 'exact', head: true })
-    .in('chat', ids).eq('seen', false).neq('author', me);
-  return count || 0;
-}
-
 // الرئيسية — what your promo is saying, and everything the app can do.
 export default async function Feed() {
   const profile = await currentProfile();
@@ -67,11 +49,6 @@ export default async function Feed() {
     .from('notifications').select('id', { count: 'exact', head: true })
     .eq('person', profile.id).eq('seen', false);
 
-  // Unread messages, for the counter beside the bell. Two steps because a
-  // message knows its chat and not its reader: find my conversations, then
-  // count what is unseen in them that I did not write myself. Asked with the
-  // service key for the same reason as above — one head request per load.
-  const chatUnseen = await unreadMessages(profile.id);
 
   const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
@@ -93,7 +70,6 @@ export default async function Feed() {
   return (
     <Home
       unseen={unseen || 0}
-      chatUnseen={chatUnseen}
       readError={readError ? (readError.message || 'تعذّرت قراءة المنشورات') : null}
       refused={refused}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],

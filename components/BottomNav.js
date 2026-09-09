@@ -1,13 +1,18 @@
 'use client';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Icon from './Icon';
 
+// الملف left this bar for the picture of you in الرئيسية's head, which is
+// the same one tap and was doing nothing there. المحادثات took the slot: it
+// is the most opened screen of the four and the only one that can be waiting
+// for you, so the count belongs where you can see it from anywhere.
 const TABS = [
   { href: '/feed',    icon: 'home',    label: 'الرئيسية' },
   { href: '/notes',   icon: 'book',    label: 'الملخصات' },
   { href: '/archive', icon: 'archive', label: 'الأرشيف' },
-  { href: '/profile', icon: 'user',    label: 'الملف' },
+  { href: '/chat',    icon: 'msg',     label: 'المحادثات', counts: true },
 ];
 
 // Screens that can take something new without going anywhere.
@@ -16,6 +21,22 @@ const WRITES_HERE = ['/feed', '/notes'];
 export default function BottomNav() {
   const path = usePathname();
   const router = useRouter();
+  const [unread, setUnread] = useState(0);
+
+  // Asked for again on every change of screen, so reading your messages puts
+  // the number out straight away rather than at the next full load. Hooks run
+  // before the bar decides whether to draw itself at all — they have to.
+  const quiet = path === '/' || path.startsWith('/login')
+    || path.startsWith('/admin') || path === '/waiting';
+  useEffect(() => {
+    if (quiet) { setUnread(0); return undefined; }
+    let alive = true;
+    fetch('/api/chat/unread')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (alive && d) setUnread(d.unread || 0); })
+      .catch(() => { /* a counter is not worth a message about */ });
+    return () => { alive = false; };
+  }, [path, quiet]);
   // The panel is not the app: it has its own header and no use for the four
   // student tabs sitting over its buttons.
   // A room has its own bar along the bottom, and the file viewer wants the
@@ -33,7 +54,8 @@ export default function BottomNav() {
     <nav className="nav">
       {TABS.slice(0, 2).map((t) => (
         <Link key={t.href} href={t.href} data-on={on(t.href)}>
-          <Icon name={t.icon} size={21} /><span>{t.label}</span>
+          <span className="nav-ic"><Icon name={t.icon} size={21} /></span>
+          <span>{t.label}</span>
         </Link>
       ))}
       <div className="navsp">
@@ -54,7 +76,13 @@ export default function BottomNav() {
       </div>
       {TABS.slice(2).map((t) => (
         <Link key={t.href} href={t.href} data-on={on(t.href)}>
-          <Icon name={t.icon} size={21} /><span>{t.label}</span>
+          <span className="nav-ic">
+            <Icon name={t.icon} size={21} />
+            {t.counts && unread > 0 && (
+              <span className="nav-tally">{unread > 9 ? '+9' : unread}</span>
+            )}
+          </span>
+          <span>{t.label}</span>
         </Link>
       ))}
     </nav>

@@ -97,11 +97,24 @@ terms in Arabic — French is a necessity, not a preference.
 - **Community first.** الرئيسية is a feed, not a comment list: posts carry
   media, have weight, and have a real action bar.
 - Sign-in is the front door — opening the site lands on `/login`.
-- Nav holds four: الرئيسية / الملخصات / الأرشيف / الملف.
-- **الرئيسية carries a rail of every feature**, live ones in colour and the
-  rest dashed and marked قريبًا — a student should see the whole app on day
-  one. **No tile may lead where the nav already leads**: two buttons to one
-  page is the thing to avoid, not an extra route.
+- Nav holds four: الرئيسية / الملخصات / الأرشيف / المحادثات. الملف used to
+  hold the fourth slot and gave it up: it is reached by the picture of you in
+  الرئيسية's head, which is the same one tap, and المحادثات is the only one of
+  the four that can be waiting for you — so the count is where it is seen.
+- **الرئيسية is a violet head over white cards.** The head is the only
+  coloured surface in the app; the first card is pulled up into its lower edge.
+  It carries who you are, the notifications bell, and the tools.
+- **الرئيسية carries every feature that has no other door**, live ones in
+  colour and the rest dashed and marked قريبًا — a student should see the whole
+  app on day one, and five fit in one row without a swipe. **Nothing may lead
+  where something on the same screen already leads**: two buttons to one page
+  is the thing to avoid, not an extra route. What this has already cost:
+  المحاضرات (a lecture opens from its subject), نماذج 3D (a model belongs to
+  the subject it explains), المحادثات (a tab in the bar), المراجعة and
+  جدول الحصص (both the اليوم card).
+- **اليوم says something in every state** — a due count, a calm all-clear, or
+  an invitation to start — so the screen does not change shape depending on how
+  much a student has answered. It is the only way into المراجعة.
 - **Never print a count under a subject banner.** The banner names the
   subject; anything else is describing study material, and describing it in
   Arabic breaks the language rule.

@@ -77,7 +77,7 @@ function Today({ review }) {
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-export default function Home({ me, posts, subjects, unseen = 0, chatUnseen = 0,
+export default function Home({ me, posts, subjects, unseen = 0,
                                readError = null, refused = 0 }) {
   const router = useRouter();
   // The review schedule lives in this browser, so the card can only be filled
@@ -169,16 +169,19 @@ export default function Home({ me, posts, subjects, unseen = 0, chatUnseen = 0,
           <Logo size={32} id="feed" white />
           <div className="hero-mark">My<i>Promo</i></div>
           <div className="grow" />
-          <Link href="/chat" className="hero-ic" aria-label={`المحادثات${chatUnseen ? ` — ${chatUnseen} غير مقروءة` : ''}`}>
-            <Icon name="msg" size={21} />
-            {chatUnseen > 0 && <span className="tally">{chatUnseen > 9 ? '+9' : chatUnseen}</span>}
-          </Link>
+          {/* المحادثات is a tab in the bottom bar now, so there is no icon for
+              it here: one door, not two. */}
           {/* It was a <button> with no handler for weeks. */}
           <Link href="/notifications" className="hero-ic" aria-label={`الإشعارات${unseen ? ` — ${unseen} جديدة` : ''}`}>
             <Icon name="bell" size={21} />
             {unseen > 0 && <span className="tally">{unseen > 9 ? '+9' : unseen}</span>}
           </Link>
-          <div className="av hero-av">{me.name.slice(0, 2)}</div>
+          {/* الملف gave up its slot in the bottom bar to المحادثات, so this
+              picture is how you reach it — which is what a picture of you at
+              the top of a screen means everywhere else anyway. */}
+          <Link href="/profile" className="av hero-av" aria-label="الملف">
+            {me.name.slice(0, 2)}
+          </Link>
         </div>
 
         <div className="hero-hi">

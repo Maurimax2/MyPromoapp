@@ -231,6 +231,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   font-size: 12px; font-weight: 600; color: var(--ink-3);
 }
 .nav a[data-on='true'] { color: var(--purple); }
+
+/* A count on a tab, not a dot: "there are messages" and "there are seven"
+   are different things to walk into. It hangs off the icon, so it does not
+   push the label out of line with the other three. */
+.nav-ic { position: relative; display: flex; }
+.nav-tally {
+  position: absolute; top: -5px; inset-inline-end: -9px;
+  min-width: 17px; height: 17px; padding: 0 5px; border-radius: 9px;
+  background: var(--orange); color: #fff;
+  font-size: 10px; font-weight: 700; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 2px var(--surface);
+}
 .nav .fab {
   width: 52px; height: 52px; flex: none; border-radius: 17px;
   background: var(--orange); color: #fff;
@@ -1066,7 +1079,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   box-shadow: 0 0 0 2px #7326BE;
 }
 
+/* `.av` carries no size — every other use passes one inline, and this one
+   never did, so it drew at 21px: under the 44px floor, and it is the way to
+   الملف now that the bottom bar no longer carries it. */
 .hero-av {
+  width: 44px; height: 44px; font-size: 14px;
   background: rgba(255, 255, 255, .2) !important; color: #fff;
   box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .5);
 }
