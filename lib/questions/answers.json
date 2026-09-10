@@ -1,2526 +1,2778 @@
 {
-  "note": "Answers for questions whose own paper carried no readable correction. `by` says who decided: `paper` is the paper's own key, read by hand where the parser could not; `claude` is Claude's answer and is shown to the student as such. Never merged into the extracted files, so a real correction always wins.",
-  "answers": {
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:1": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le tegmen tympani appartient au rocher et regarde l’endocrâne. Les cellules aériques dépassent la mastoïde."
-    },
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:2": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Le cône lumineux est antéro-inférieur. Entre les deux replis malléolaires se trouve le processus latéral, non l’antérieur."
-    },
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:3": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "C’est la branche longue de l’incus qui s’articule avec la tête du stapes, et sa branche courte qui repose dans la fossa incudis. La tête du malleus s’articule en arrière."
-    },
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:4": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La fenêtre ronde amortit l’onde de la périlymphe, non de l’endolymphe."
-    },
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:5": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le plexus tympanique vient du nerf de Jacobson (IX), pas de la corde du tympan. La fenêtre ronde est postéro-inférieure au promontoire."
-    },
-    "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:6": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le semi-canal du muscle du marteau est au-dessus de celui de la trompe, et ce muscle est innervé par le V3 — c’est le muscle de l’étrier qui dépend du VII."
-    },
-    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:8": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "Le défaut de fusion entre bourgeon maxillaire supérieur et bourgeon nasal externe ouvre la fente faciale oblique, qui suit le trajet du canal lacrymo-nasal."
-    },
-    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:9": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Le bec-de-lièvre médian tient à l’absence de fusion des deux bourgeons nasaux internes sur la ligne médiane."
-    },
-    "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:10": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "1ère poche : oreille moyenne et trompe. 2ème : amygdale palatine. 3ème : thymus et parathyroïdes inférieures. 4ème : parathyroïdes supérieures."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:2": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Le stroma cornéen contient des kératocytes — non des kératinocytes — et aucun vaisseau : la cornée est avasculaire."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:4": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "De dehors en dedans : marteau, enclume, étrier. La proposition inverse l’ordre."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:5": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La fenêtre ronde s’ouvre sur l’oreille moyenne, non sur la trompe. Le labyrinthe osseux comprend aussi le limaçon."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:6": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les macules siègent dans l’utricule et le saccule, les crêtes ampullaires dans les ampoules des canaux semi-circulaires."
-    },
-    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:2": {
-      "answer": [
-        2
-      ],
-      "by": "paper",
-      "why": "Réponse du corrigé de la fiche : enzymes homogènes et hétérogènes."
-    },
-    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:3": {
-      "answer": [
-        2
-      ],
-      "by": "paper",
-      "why": "Réponse du corrigé de la fiche."
-    },
-    "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:4": {
-      "answer": [
-        2
-      ],
-      "by": "paper",
-      "why": "Réponse du corrigé de la fiche."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:1": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "La clairance est le volume de plasma totalement épuré d’une substance par unité de temps."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:2": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "La question demande la proposition fausse : la CK est d’origine musculaire et n’est pas un marqueur de cytolyse hépatique."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:3": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Le calcium ionisé représente environ la moitié du calcium total, c’est la fraction active, et son élévation freine la PTH. L’acidose augmente la fraction ionisée."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:4": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Les cellules bêta des îlots de Langerhans sécrètent l’insuline ; les alpha le glucagon, les delta la somatostatine."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:5": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Le bloc bêta-gamma à l’électrophorèse est le signe le plus spécifique de la cirrhose ; les autres anomalies se voient dans toute hépatopathie."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:6": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La cholestase élève la bilirubine conjuguée, les phosphatases alcalines et la GGT, et diminue la stercobiline dans les selles."
-    },
-    "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:7": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La PTH et la calcitonine sont hypophosphorémiantes ; la vitamine D est hyperphosphorémiante. L’os contient 85 % des phosphates, sous forme d’hydroxyapatite."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:2": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le noyau caudé, le claustrum et le putamen naissent du télencéphale ; le pallidum et le noyau sous-thalamique du diencéphale."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:3": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le globus pallidus et le noyau sous-thalamique sont diencéphaliques ; la substantia nigra est mésencéphalique."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:4": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Seule la substantia nigra vient du mésencéphale."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:5": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le striatum inhibe le pallidum externe, le pallidum externe inhibe le noyau sous-thalamique, et le pallidum interne inhibe le thalamus — trois cibles GABAergiques."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:6": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le cortex excite le striatum et le noyau sous-thalamique ; le thalamus excite le cortex en retour. Réponse à vérifier auprès du cours : les circuits glutamatergiques sont décrits différemment selon les enseignants."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:7": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "De crânial en caudal ce sont les pédoncules, le pont puis la moelle allongée. Les olives siègent dans les cordons latéraux."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:8": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La gouttière basilaire marque la face ventrale du pont, et l’espace perforé postérieur ne se voit que de face."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:9": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les colliculi crâniaux sont un relais visuel ; les caudaux sont auditifs."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:12": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Sillons cingulaire, pariéto-occipital et calcarin sont médiaux. Le sillon latéral sépare le frontal du temporal."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:13": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’insula est au fond du sillon latéral. Le sillon calcarin ne délimite aucun lobe. Le noyau lenticulaire — non « interposé » — associe pallidum et putamen."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:14": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le noyau caudé et le putamen sont télencéphaliques."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:15": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le pallidum, partie du noyau lenticulaire, est d’origine diencéphalique. L’insula est latérale au claustrum."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:16": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le noyau caudé est latéral au ventricule. Les ventricules latéraux communiquent chacun avec le 3ème, jamais entre eux."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:17": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Les cornes sont frontale, occipitale et temporale ; l’aqueduc relie V4 au V3 ; la capsule extrême — non externe — sépare claustrum et insula ; le noyau lenticulaire est latéral à la capsule interne."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:18": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le cortex cérébral compte six couches."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:19": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Le seul point de continuité entre télencéphale et diencéphale est ventral, et le cerveau dérive du prosencéphale seul."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:20": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le gyrus pré-central est moteur, le post-central sensitif. L’aire auditive primaire siège dans le gyrus temporal transverse."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:21": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’aire auditive est sous le sillon latéral, et la partie médiale du gyrus pré-central commande le membre inférieur, non la tête."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:22": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le septum pellucidum sépare les deux ventricules latéraux."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:23": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Wernicke est la compréhension, Broca l’élaboration ; Broca est en avant de Wernicke."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:24": {
-      "answer": [
-        0,
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "L’insula est au fond du sillon latéral."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:25": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les cinq propositions sont exactes."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:26": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Dans le tronc cérébral la substance grise est centrale, contrairement au cervelet."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:27": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Les pédoncules cérébelleux moyens relient le cervelet au pont ; les inférieurs à la moelle allongée."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:28": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le mésencéphale est limité en crânial par les voies optiques, et le tronc cérébral est oblique en bas et en avant."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:2": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Les mitochondries allongées siègent au pôle basal. Le tube contourné proximal est cortical."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:3": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres endothéliales glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:5": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "L’épithélium œsophagien est malpighien non kératinisé, les follicules lymphoïdes y sont isolés, et la couche externe est une adventice."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:7": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les glandes de Lieberkühn sont dans le chorion ; les cellules caliciformes augmentent vers le côlon ; les cellules de Paneth existent au duodénum."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:10": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:11": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités, et le centre du lobule est occupé par la veine centrolobulaire."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:12": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère (capillarisation des sinusoïdes)."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:13": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Les caliciformes sont grandes, peu nombreuses, sur le V lingual ; les fongiformes ont la forme d’un champignon, les filiformes sont les plus petites."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:14": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Les filiformes n’ont pas de bourgeons du goût ; les glandes de Von Ebner accompagnent les caliciformes."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:15": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’oropharynx est malpighien non kératinisé, la charpente du pharynx est fibro-musculaire, et la phonation est laryngée."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:20": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "La filtration mécanique tient aux vibrisses des narines et au tapis mucociliaire ; le surfactant et le macrophage agissent plus bas."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:21": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "La zone marginale est à la frontière des deux pulpes : sinus et cordons, comme l’hémolyse des hématies âgées, appartiennent à la pulpe rouge."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:26": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:27": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:28": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:29": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:30": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les glandes apocrines qui s’abouchent au follicule pileux ; la glande sébacée est alvéolaire ramifiée."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:31": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration ; les lamelles concentriques de Schwann les caractérisent, non le Meissner."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:32": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse, les kératinocytes de l’ectoderme."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:33": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:34": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; les cellules folliculaires sont de type protéique (REG, Golgi)."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:35": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:36": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons, non chaque cellule."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:37": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique alors que le cortex est mésodermique."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:38": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:39": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
-    },
-    "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:40": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
-    },
-    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:1": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "La parotide est une glande séreuse pure : pas de croissants de Gianuzzi, qui appartiennent aux glandes mixtes."
-    },
-    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:2": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
-    },
-    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:3": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités."
-    },
-    "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:4": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère."
-    },
-    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:1": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’appareil juxtaglomérulaire siège au pôle vasculaire, et ses barorécepteurs sont dans l’artériole afférente."
-    },
-    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:2": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Les mitochondries allongées siègent au pôle basal ; le tube contourné proximal est cortical."
-    },
-    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:3": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
-    },
-    "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:4": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Les pédicelles sont des prolongements du deuxième et du troisième ordre, et les pores endothéliaux mesurent environ 70 nm, non 7 µm."
-    },
-    "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:5": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
-    },
-    "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:6": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "La zone marginale est à la frontière des deux pulpes : sinus, cordons et hémolyse appartiennent à la pulpe rouge."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:1": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:2": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:3": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:4": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les apocrines qui s’abouchent au follicule pileux ; la sébacée est alvéolaire ramifiée."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:5": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:6": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse."
-    },
-    "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:7": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:1": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; ses cellules sont de type protéique."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:2": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:3": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:4": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:5": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:6": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
-    },
-    "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:7": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:17": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Rétine, appareil vestibulaire et corpuscule gustatif relèvent des sens spéciaux, non de la somesthésie."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:18": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:19": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La proprioception vient des récepteurs articulaires, des fuseaux neuromusculaires et de l’organe tendineux de Golgi."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:20": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Le diapason explore la sensibilité vibratoire, portée par les corpuscules de Pacini."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:21": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Les récepteurs articulaires renseignent sur la position des segments et le sens de position ; la vitesse et l’allongement relèvent du fuseau."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:22": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Trois neurones : le ganglion spinal, le noyau de Goll ou de Burdach, puis le thalamus."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:23": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Les fibres C sont amyéliniques : ce sont les plus lentes."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:24": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "L’astéréognosie est l’incapacité de reconnaître la forme d’un objet par le toucher."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:25": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La proprioception inconsciente emprunte les voies spino-cérébelleuses et converge sur le cervelet ; l’extralemniscal porte la douleur et la thermie."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:26": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Le premier relais extralemniscal est la corne postérieure, couche V de Rexed ; la voie croise ensuite."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:27": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Toutes les modalités passent par le thalamus, à la seule exception de l’olfaction."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:32": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "La sensibilité est mesurable ; la sensation et la perception sont subjectives."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:33": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Corpuscule de Ruffini et disques de Merkel sont somesthésiques ; goût, vestibule et olfaction sont des sens spéciaux."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:34": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:35": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Les cordons postérieurs sont homolatéraux : une lésion droite abolit à droite le tact fin, la proprioception et la vibration, en épargnant douleur et thermie."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:36": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La sensation thermique détecte bien et éveille, mais se localise mal."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:37": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Seule la sensibilité est une grandeur mesurable."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:38": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "Trois neurones, comme pour toute voie lemniscale."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:40": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "La transduction convertit l’énergie du stimulus en potentiel de récepteur ; le potentiel d’action ne naît qu’au-delà du seuil."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:41": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le fuseau répond à l’étirement, non à la tension — c’est l’organe tendineux de Golgi qui mesure la tension. Les fibres primaires ont une réponse dynamique."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:45": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Rétine, appareil vestibulaire et corpuscule gustatif sont hors du système somesthésique."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:46": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Merkel, Meissner et Ruffini sont cutanés ; bâtonnets et organe de Corti appartiennent à la vision et à l’audition."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:47": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La proprioception dynamique repose sur les récepteurs articulaires et l’organe tendineux de Golgi."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:48": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’organe tendineux de Golgi mesure la tension : forte lors d’une contraction active, faible lors d’un allongement passif."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:49": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
-    },
-    "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:50": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "La lésion de S1 abolit la localisation fine et l’appréciation des pressions, des poids, des formes et des textures."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:26": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "La motricité sert la communication, la mobilisation du corps et la posture ; la détection des stimuli est sensorielle."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:27": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Un réflexe est involontaire, rapide, stéréotypé et simple — il n’est pas commandé par l’aire 4."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:28": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "On classe les réflexes par la situation du récepteur, le nombre de synapses et le type d’effecteur."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:29": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’afférence est de type Ia, non III, et l’effecteur est un muscle strié."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:30": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le réflexe myotatique est proprioceptif, monosynaptique et monosegmentaire."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:31": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le myotatique inverse part de l’organe tendineux de Golgi, il est polysynaptique donc plus lent, et régule la tension."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:32": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Le réflexe de flexion part des nocicepteurs, il est polysynaptique et diffuse à plusieurs étages ; l’appui renforcé est le réflexe d’extension croisée."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:33": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Le tonus est d’origine réflexe, entretenu par les unités motrices toniques, et prédomine sur les extenseurs antigravitaires."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:34": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La boucle gamma, le cervelet et les noyaux vestibulaires facilitent le tonus ; Renshaw et le cortex l’inhibent."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:35": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Le sommeil et l’atteinte du motoneurone alpha donnent une hypotonie ; Parkinson et décérébration donnent une hypertonie."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:36": {
-      "answer": [
-        0,
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "L’équilibration est automatique, non volontaire."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:37": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Les canaux semi-circulaires détectent les accélérations angulaires ; la pesanteur est perçue par les otolithes, et l’ensemble siège dans l’oreille interne."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:38": {
-      "answer": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les voies vestibulaires font relais dans les noyaux vestibulaires avant d’atteindre le cortex."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:39": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Une atteinte vestibulaire gauche donne vertiges, ataxie et nystagmus battant vers le côté sain."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:40": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’aire motrice principale est l’aire 4, non l’aire 6."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:41": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le faisceau pyramidal ne fait aucun relais et décusse au bulbe."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:42": {
-      "answer": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’appareil vestibulaire sert l’équilibre, non l’exécution du mouvement volontaire."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:43": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "La représentation est croisée, inversée, somatotopique — et disproportionnée, non proportionnelle. Elle siège sur l’aire 4."
-    },
-    "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:45": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les noyaux gris centraux planifient, règlent le tonus et les mouvements lents ; l’exécution passe par la voie pyramidale."
-    },
-    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:13": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Substance P, ions K+ et bradykinine sensibilisent le nocicepteur ; l’enképhaline et le GABA sont antalgiques."
-    },
-    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:14": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "La douleur projetée s’explique par la convergence des afférences viscérales et cutanées sur un même neurone médullaire."
-    },
-    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:15": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "H+, histamine et prostaglandines activent ou sensibilisent les nocicepteurs."
-    },
-    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:16": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La douleur viscérale naît des organes profonds, de l’ischémie et de la distension ou perforation d’un organe creux."
-    },
-    "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:17": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "La douleur aiguë est rapide, bien localisée, en coup d’aiguille, et cesse avec le stimulus ; elle emprunte le faisceau néo-spinothalamique."
-    },
-    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:24": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "paper",
-      "why": "Réponse portée par la correction de l’épreuve."
-    },
-    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:25": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "paper",
-      "why": "Réponse portée par la correction de l’épreuve."
-    },
-    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:27": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le réflexe myotatique est monosynaptique, part du fuseau, et les motoneurones gamma le facilitent."
-    },
-    "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:28": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "La phase dynamique met en jeu les fibres Ia, la phase statique les fibres II."
-    },
-    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:46": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "paper",
-      "why": "Réponse portée par la correction de l’épreuve."
-    },
-    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:47": {
-      "answer": [
-        0
-      ],
-      "by": "paper",
-      "why": "Réponse portée par la correction de l’épreuve."
-    },
-    "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:48": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "paper",
-      "why": "Réponse portée par la correction de l’épreuve."
-    },
-    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:1": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les projections corticales sensorielles sont controlatérales, et la décussation se fait selon la voie, non toujours dans la moelle."
-    },
-    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:2": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le récepteur code la durée, l’intensité et la localisation ; l’affect et la forme sont élaborés plus haut."
-    },
-    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:4": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "La voie lemniscale monte par le cordon postérieur, décusse au bulbe et fait relais dans un noyau thalamique spécifique."
-    },
-    "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:5": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "La discrimination est d’autant meilleure que les récepteurs sont denses et les champs récepteurs petits."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:9": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "La somatostatine et la cholécystokinine freinent la motricité gastrique ; acétylcholine, gastrine et histamine la stimulent."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:10": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "La CCK est libérée par les produits de digestion des protides et des lipides dans le duodénum."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:11": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "La vidange gastrique est réglée par le système nerveux entérique ; mastication, déglutition, péristaltisme primaire et vomissement ont un centre bulbaire."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:13": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "La phase céphalique est vagale : acétylcholine directement, et gastrine libérée par la stimulation vagale."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:14": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "La cellule pariétale sécrète l’acide chlorhydrique et le facteur intrinsèque."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:15": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "La barrière muqueuse tient au mucus, aux bicarbonates et au renouvellement rapide de l’épithélium."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:16": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Les lipides quittent l’entérocyte sous forme de chylomicrons par la voie lymphatique."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:17": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Les micelles portent le cholestérol, les produits de la lipolyse et les vitamines liposolubles."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:18": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le glucose, les acides aminés et la vitamine C empruntent des cotransports sodium-dépendants."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:19": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les sels biliaires sont formés dans le foie, conjugués à la taurine ou à la glycine, et émulsionnent les lipides."
-    },
-    "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:20": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Sans bile les lipides ne sont plus émulsionnés : stéatorrhée et carence en vitamines A, D, E et K."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:3": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Tactile et proprioceptif se projettent sur des aires distinctes (3a, 3b, 1, 2) ; la main et la face occupent les plus grandes surfaces."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:5": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La thermo-algésie emprunte le faisceau spinothalamique croisé : une hémisection gauche ou une lésion du VPL gauche l’abolit à droite. Les cordons postérieurs portent le tact fin."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:9": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le système photopique est celui des cônes. La voie P oppose les couleurs, la voie M porte le mouvement, la voie K le bleu-jaune."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:11": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La lumière isomérise le rétinal, ferme les canaux sodiques, hyperpolarise le photorécepteur et diminue sa libération de glutamate."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:13": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les points correspondants sont nasal d’un œil et temporal de l’autre, et tout objet sur l’horoptère y tombe."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:14": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le K+ de l’endolymphe entre au pôle apical et dépolarise la cellule ; les canaux calciques du pôle basal s’ouvrent et le glutamate est libéré."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:15": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La motricité cinétique regroupe les mouvements réflexes, automatiques et volontaires."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:16": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "On classe les réflexes par le type de récepteur et le nombre de synapses."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:17": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le récepteur est le fuseau — non l’organe tendineux de Golgi — et la voie efférente le motoneurone alpha."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:18": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Le réflexe de flexion est nociceptif, polysynaptique et diffus ; l’appui renforcé est le réflexe d’extension croisée."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:19": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Renshaw, le cortex et la formation réticulée bulbaire inhibent le tonus ; la boucle gamma et le cervelet le facilitent."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:20": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Parkinson et décortication donnent une hypertonie."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:21": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’équilibration est réflexe et multimodale : vestibule, vision et proprioception."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:22": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les canaux semi-circulaires sont dans l’oreille interne et détectent les accélérations angulaires ; la verticale est perçue par les otolithes."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:23": {
-      "answer": [
-        0,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les voies centrales partent des noyaux vestibulaires ; le nerf VIII et les récepteurs sont périphériques, et le cortex n’est atteint qu’après relais thalamique."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:24": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Vertige, nystagmus et ataxie font le syndrome vestibulaire ; la surdité est cochléaire."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:25": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Gnosies et praxies sont pariéto-temporo-occipitales ; curiosité, persévérance et sociabilité sont préfrontales."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:26": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les aires 18 et 19 sont visuelles associatives : leur lésion gauche donne une cécité verbale."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:27": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Les aires praxiques sont gauches ; leur lésion donne une apraxie, dont l’agraphie, non une aphasie."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:28": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Dans l’aphasie de Wernicke le débit est normal mais le langage incompréhensible, et le sujet n’a pas conscience de son trouble."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:29": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le préfrontal porte le comportement : curiosité, persévérance, sociabilité."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:30": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le préfrontal planifie, coordonne et maintient l’attention ; l’exécution du mouvement est frontale motrice, l’image du corps pariétale."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:31": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "L’EEG naît des cellules pyramidales et somme des potentiels post-synaptiques ; les PPSE donnent la dépolarisation, les PPSI l’hyperpolarisation."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:32": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le delta est le rythme du sommeil lent profond et du coma, absent chez l’adulte éveillé."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:33": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Pointes et pointes-ondes signent une hyperexcitabilité corticale — l’épilepsie ; le coma et la mort cérébrale donnent d’autres tracés."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:34": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "Mouvements oculaires rapides et rêves appartiennent au sommeil paradoxal."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:35": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le sommeil lent occupe environ 80 % de la nuit, et chaque cycle commence par du sommeil lent."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:36": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le nouveau-né s’endort en sommeil agité, dort seize à vingt heures, et son sommeil agité s’accompagne de mouvements."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:37": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les noyaux suprachiasmatiques agissent par l’épiphyse et la mélatonine ; leur lésion désorganise le sommeil sans le raccourcir."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:38": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les neurones du raphé sont actifs à l’éveil ; leur lésion donne une insomnie."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:39": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’hypothalamus postérieur est éveillant — histamine et orexine — et sa lésion donne une hypersomnie."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:40": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le sommeil lent consolide la mémoire, sécrète les hormones anabolisantes et répare ; la maturation nerveuse revient au sommeil paradoxal."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:41": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Somnambulisme, terreurs nocturnes et crises épileptiques surviennent en sommeil lent ; érection et congestion génitale en sommeil paradoxal."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:42": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La mémorisation baisse avec l’âge ; elle s’améliore avec la vigilance, la motivation, l’association et la charge affective."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:43": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "La consolidation est la plus longue des étapes de la mémoire."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:44": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le syndrome général d’adaptation de Selye associe hypercorticisme, décharge adrénergique, hypertrophie surrénalienne, ulcères et atrophie lymphoïde."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:45": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "Le sympathique élève la glycémie et la pression artérielle, stimule la lipolyse et la ventilation."
-    },
-    "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:46": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le stress chronique fatigue, fait mal et déprime ; il augmente l’éveil plutôt qu’il ne le diminue."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:1": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "L’unité de masse atomique se rapporte au carbone 12, et le proton porte une charge positive."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:4": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’u.m.a est le douzième de la masse d’un atome de carbone 12 — non d’une mole. 0,511 MeV est l’équivalent de la masse de l’électron."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:7": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La bêta moins émet un électron et un antineutrino, son spectre est continu, et elle concerne les noyaux riches en neutrons."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:8": {
-      "answer": [
-        0,
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "L’annihilation produit deux photons gamma de 511 keV, non des rayons X."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:9": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le gamma naît d’une désexcitation du noyau, non du cortège électronique, et n’a rien à voir avec les ultrasons."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:10": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Les alpha ont un parcours de quelques micromètres, en ligne droite, avec un TEL très élevé ; l’émission alpha change le nombre de masse."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:11": {
-      "answer": [
-        0,
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La radioactivité vient du noyau, non du cortège électronique."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:14": {
-      "answer": [
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les protons suivent une trajectoire rectiligne de quelques centimètres, avec un TEL supérieur à celui des électrons."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:15": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le TEL est maximal en fin de parcours — c’est le pic de Bragg."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:16": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le technétium 99m est un émetteur gamma de six heures, obtenu par élution d’un générateur au molybdène, et sert au diagnostic."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:17": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’effet photoélectrique absorbe totalement le photon ; ce sont les photons Compton qui sont diffusés."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:18": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "À 250 MeV la création de paire domine, suivie d’annihilation ; la CDA dépend du matériau et varie comme l’inverse de μ."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:19": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le Compton met en jeu un photon et un électron peu lié, avec diffusion du photon ; l’électron Auger suit l’effet photoélectrique."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:20": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "La proposition fausse : les scintillateurs solides ne sont pas des plaques photographiques."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:21": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le semi-conducteur est plus sensible que le détecteur à gaz, non moins."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:22": {
-      "answer": [
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Le détecteur à gaz est rempli de gaz, non vidé, et n’a pas de place en IRM."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:23": {
-      "answer": [
-        0,
-        2
-      ],
-      "by": "claude",
-      "why": "L’activimètre est une chambre d’ionisation puits qui mesure l’activité à injecter ; le tube de Coolidge produit des rayons X."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:24": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "L’émulsion photographique sert à la dosimétrie passive et à l’image radiologique, jamais à mesurer une activité."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:25": {
-      "answer": [
-        0,
-        4
-      ],
-      "by": "claude",
-      "why": "Pour le patient, justification et optimisation. La limitation de dose vise le travailleur et le public."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:26": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Après dix périodes l’activité est divisée par 1024 : 3700 / 1024 ≈ 3,6 MBq, qui ne figure pas parmi les propositions."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:27": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Les effets stochastiques sont tardifs, aléatoires, sans seuil, et non obligatoires."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:28": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les effets déterministes sont obligatoires, précoces, caractéristiques, à seuil, et tiennent à la mort cellulaire."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:30": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Les effets biologiques dépendent du rayonnement, du tissu, de la dose et du débit de dose."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:31": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’accommodation diminue avec l’âge — c’est la presbytie."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:33": {
-      "answer": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le dioptre cornéen antérieur est le plus puissant de l’œil."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:34": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’hypermétropie est une amétropie sphérique par insuffisance de puissance, corrigée par un verre convergent."
-    },
-    "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:36": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
-    },
-    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:35": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
-    },
-    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:39": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "L’oreille externe met l’onde en forme, l’amplifie, la conduit au tympan et sert à localiser la source."
-    },
-    "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:40": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La trompe d’Eustache égalise les pressions de part et d’autre du tympan, non de la fenêtre ovale."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:3": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La plicature précède la convergence, le cloisonnement s’achève vers la 8e semaine, et la gelée cardiaque donne les coussins endocardiques."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:4": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’ostium primum est délimité par le septum primum et le septum intermedium ; le foramen ovale est une lacune du septum secundum, et une CIA donne un shunt gauche-droit non cyanogène."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:5": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "La tétralogie associe sténose pulmonaire, CIV, dextroposition de l’aorte et hypertrophie du ventricule droit ; elle est cyanogène."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:6": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "Le blastème métanéphrogène donne le néphron ; les tubes collecteurs et de Bellini viennent du bourgeon urétéral."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:7": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Le rhombencéphale se divise en métencéphale et myélencéphale."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:9": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "La couche manteau donne les lames fondamentale et alaire."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:10": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "L’humeur aqueuse est résorbée par le canal de Schlemm, dans l’angle irido-cornéen."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:12": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "La rétine nerveuse échange avec la choriocapillaire à travers l’épithélium pigmentaire."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:13": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Le bourgeon urétéral naît du canal de Wolff et donne les voies excrétrices, dont les tubes collecteurs."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:14": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Le rein polykystique est une malformation héréditaire par défaut de jonction entre tubes collecteurs et néphrons."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:16": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "Le rein définitif naît de la rencontre du bourgeon urétéral, issu du canal de Wolff, et du blastème ; son urine forme le liquide amniotique."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:17": {
-      "answer": [
-        0
-      ],
-      "by": "claude",
-      "why": "L’extrophie vésicale tient à un défaut de mésenchymatisation de la paroi abdominale ; elle s’associe à un épispadias, non à un hypospadias."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:18": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le canal de Wolff donne l’épididyme, le déférent, les vésicules séminales et le canal éjaculateur."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:19": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La vésicule optique induit la placode cristallinienne sans lui donner naissance."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:20": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Le stomodaeum est limité par le bourgeon frontal en haut et les bourgeons maxillaires et mandibulaires latéralement."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:21": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Une fente atteignant l’arcade dentaire supérieure est une fente labio-alvéolaire."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:22": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Les canalicules efférents viennent des tubules mésonéphrotiques et relient le rete testis à l’épididyme."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:23": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "La proposition fausse : l’atrésie tient à un défaut de recanalisation et de séparation d’avec la trachée."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:24": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Dans le mésentère commun l’intestin grêle est à droite et le côlon à gauche."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:26": {
-      "answer": [
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le glaucome congénital tient à un défaut de résorption par fermeture de l’angle ; dépisté tôt, il ne condamne pas la vue."
-    },
-    "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:27": {
-      "answer": [
-        0,
-        1
-      ],
-      "by": "claude",
-      "why": "Le tractus thyréoglosse descend du foramen caecum et donne des kystes médians du cou."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:1": {
-      "answer": [
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La macula porte la fovéa, riche en cônes, et donne la meilleure acuité ; le nerf optique naît de la papille."
-    },
-    "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:7": {
-      "answer": [
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La membrane otolithique est gélatineuse, porte des otolithes de carbonate de calcium, coiffe les macules et sert l’équilibre linéaire."
-    },
-    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:16": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Les cellules germinales naissent dans la vésicule vitelline et migrent ; Sertoli vient de l’épithélium cœlomique, Leydig du mésenchyme."
-    },
-    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:17": {
-      "answer": [
-        2
-      ],
-      "by": "claude",
-      "why": "La proposition fausse : l’ébauche thyroïdienne naît au foramen caecum de la langue avant de descendre devant la trachée."
-    },
-    "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:20": {
-      "answer": [
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "C’est la cupule optique qui naît de l’invagination ; la vésicule vient du diencéphale et induit cristallin et couches externes."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:2": {
-      "answer": [
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La chambre antérieure sépare la cornée de l’iris et contient l’humeur aqueuse."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:9": {
-      "answer": [
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "L’urètre masculin se divise en prostatique, membranacé et spongieux ; la fosse naviculaire siège dans le gland."
-    },
-    "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:1": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "Le consensus retient striatum, pallidum, noyau sous-thalamique et substance noire ; le claustrum en est exclu."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1": {
-      "answer": [
-        3
-      ],
-      "by": "claude",
-      "why": "Le haut appareil urinaire, ce sont les deux reins et les deux uretères ; vessie et urètre forment le bas appareil."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5": {
-      "answer": [
-        0,
-        1,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La veine rénale gauche est plus longue, passe dans la pince aorto-mésentérique et reçoit surrénalienne, gonadique et phrénique inférieure gauches ; elle naît du hile et se jette dans la cave."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1-2": {
-      "answer": [
-        4
-      ],
-      "by": "claude",
-      "why": "Le segment postérieur de l’œil comprend le vitré, la rétine et la choroïde."
-    },
-    "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5-2": {
-      "answer": [
-        1
-      ],
-      "by": "claude",
-      "why": "Le droit inférieur abaisse, tourne en dehors et rapproche — abaissement, extorsion et adduction."
-    },
-    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:3": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Le globus pallidus et le noyau sous-thalamique dérivent du diencéphale ; le putamen et le claustrum sont télencéphaliques et la substantia nigra mésencéphalique, comme l'indique la question 4 de la même épreuve. La feuille du tutorat se lit « 3-BE », mais elle a placé le putamen dans les structures télencéphaliques à la question 2."
-    },
-    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:20": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
-    },
-    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:21": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Les colliculus supérieurs sont des relais des voies visuelles ; ce sont les colliculus inférieurs qui relaient les voies auditives."
-    },
-    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:23": {
-      "answer": [
-        0,
-        2,
-        3
-      ],
-      "by": "claude",
-      "why": "La gouttière basilaire est creusée sur la face ventrale du pont, non sur sa face dorsale, et l'espace perforé postérieur se voit sur une vue ventrale, dans la fosse interpédonculaire."
-    },
-    "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:28": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "La veine de Labbé se jette dans le sinus transverse et non dans le sinus sagittal supérieur : seule la proposition C est fausse. La veine basale de Rosenthal est bien une veine profonde ; la feuille du tutorat se lit « 28-ABE » et paraît avoir perdu le D."
-    },
-    "anatomie:1WI4yotrtHZamhPqWm3sXBdI87oXzBaHt:21": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial, puis une portion horizontale ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum. La feuille du tutorat note « 21-B(D) », le D entre parenthèses."
-    },
-    "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:5": {
-      "answer": [
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "L'os zygomatique s'articule bien avec le maxillaire, le frontal, le temporal et le sphénoïde, et les empreintes de l'artère méningée moyenne sont endocrâniennes. La feuille du tutorat donne « BE » pour cette épreuve mais « BC » pour les mêmes propositions à la première session de la même année."
-    },
-    "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:13": {
-      "answer": [
-        0,
-        1,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:3": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:4": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. L'aire de Broca est celle de l'élaboration de la parole : l'épreuve 2020, qui écrivait « exécution », comptait cette proposition fausse."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:5": {
-      "answer": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:6": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Le faisceau cortico-spinal traverse le bras postérieur de la capsule interne, non le bras antérieur."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:7": {
-      "answer": [
-        0,
-        1,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "Sont commissuraux le corps calleux, les commissures antérieure et postérieure et la commissure hippocampique du fornix ; le faisceau longitudinal du fornix ne l'est pas (corrigés du tutorat 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:8": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Sont des faisceaux de projection le cortico-spinal, le cortico-nucléaire, les cortico-striés et les thalamo-corticaux ; le corps calleux est commissural (corrigés du tutorat 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:10": {
-      "answer": [
-        0,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le consensus retient le striatum — putamen et noyau caudé —, le globus pallidus, le noyau sous-thalamique et la substance noire, mais pas le claustrum (corrigés du tutorat 2018 et 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:13": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "L'inhibition GABAergique s'exerce sur le pallidum, le noyau sous-thalamique et le thalamus, non sur le striatum ni sur le cortex (corrigés du tutorat 2018 et 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:18": {
-      "answer": [
-        0,
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "L'artère cérébelleuse postéro-inférieure naît de la vertébrale ; les branches terminales du tronc basilaire sont les artères cérébrales postérieures, et les artères spinales ne sont pas des rameaux perforants du bulbe (corrigé du tutorat 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:19": {
-      "answer": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "by": "claude",
-      "why": "Le polygone de Willis ne comporte qu'une artère communicante antérieure et deux communicantes postérieures : seule la première proposition est fausse (corrigé du tutorat 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:20": {
-      "answer": [
-        1,
-        3
-      ],
-      "by": "claude",
-      "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:21": {
-      "answer": [
-        0,
-        3
-      ],
-      "by": "claude",
-      "why": "Le foramen rond livre passage au V2 et le foramen ovale au V3 ; le foramen lacerum n'est traversé par aucun des deux, les deux ailes du sphénoïde sont séparées par la fissure orbitaire supérieure et le conduit auditif interne appartient à l'étage postérieur (corrigés du tutorat 2020)."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:22": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La leptoméninge ne comprend que deux feuillets, l'arachnoïde et la pie-mère ; la face interne des ventricules est tapissée par l'épendyme."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:23": {
-      "answer": [
-        0,
-        1,
-        2
-      ],
-      "by": "claude",
-      "why": "Les tubercules mamillaires appartiennent au diencéphale et les deux hémisphères cérébraux forment le télencéphale."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:24": {
-      "answer": [
-        0,
-        2,
-        4
-      ],
-      "by": "claude",
-      "why": "La moelle présente deux renflements, cervical et lombaire ; la substance blanche est centrale dans l'encéphale et périphérique dans la moelle."
-    },
-    "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:25": {
-      "answer": [
-        0,
-        1,
-        4
-      ],
-      "by": "claude",
-      "why": "Le névraxe est fait de l'encéphale et de la moelle épinière ; les nerfs périphériques n'en font pas partie."
-    }
+ "note": "Answers for questions whose own paper carried no readable correction. `by` says who decided: `paper` is the paper's own key, read by hand where the parser could not; `claude` is Claude's answer and is shown to the student as such. Never merged into the extracted files, so a real correction always wins.",
+ "answers": {
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:1": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le tegmen tympani appartient au rocher et regarde l’endocrâne. Les cellules aériques dépassent la mastoïde."
+  },
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:2": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Le cône lumineux est antéro-inférieur. Entre les deux replis malléolaires se trouve le processus latéral, non l’antérieur."
+  },
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:3": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "C’est la branche longue de l’incus qui s’articule avec la tête du stapes, et sa branche courte qui repose dans la fossa incudis. La tête du malleus s’articule en arrière."
+  },
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:4": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La fenêtre ronde amortit l’onde de la périlymphe, non de l’endolymphe."
+  },
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:5": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le plexus tympanique vient du nerf de Jacobson (IX), pas de la corde du tympan. La fenêtre ronde est postéro-inférieure au promontoire."
+  },
+  "anatomie-s2:1BTeu3q3dXroJWCZXLAdrv8FFin24zMgo:6": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le semi-canal du muscle du marteau est au-dessus de celui de la trompe, et ce muscle est innervé par le V3 — c’est le muscle de l’étrier qui dépend du VII."
+  },
+  "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:8": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "Le défaut de fusion entre bourgeon maxillaire supérieur et bourgeon nasal externe ouvre la fente faciale oblique, qui suit le trajet du canal lacrymo-nasal."
+  },
+  "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:9": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Le bec-de-lièvre médian tient à l’absence de fusion des deux bourgeons nasaux internes sur la ligne médiane."
+  },
+  "embryologie:1A65iibnwFyTho4-KBUwuVOLTsti-ds1F:10": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "1ère poche : oreille moyenne et trompe. 2ème : amygdale palatine. 3ème : thymus et parathyroïdes inférieures. 4ème : parathyroïdes supérieures."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:2": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le stroma cornéen contient des kératocytes — non des kératinocytes — et aucun vaisseau : la cornée est avasculaire."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:4": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "De dehors en dedans : marteau, enclume, étrier. La proposition inverse l’ordre."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:5": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La fenêtre ronde s’ouvre sur l’oreille moyenne, non sur la trompe. Le labyrinthe osseux comprend aussi le limaçon."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:6": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les macules siègent dans l’utricule et le saccule, les crêtes ampullaires dans les ampoules des canaux semi-circulaires."
+  },
+  "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:2": {
+   "answer": [
+    2
+   ],
+   "by": "paper",
+   "why": "Réponse du corrigé de la fiche : enzymes homogènes et hétérogènes."
+  },
+  "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:3": {
+   "answer": [
+    2
+   ],
+   "by": "paper",
+   "why": "Réponse du corrigé de la fiche."
+  },
+  "biochimie:1Id02v5SG9KjqevfYR5uF8mAW9jEk9hll:4": {
+   "answer": [
+    2
+   ],
+   "by": "paper",
+   "why": "Réponse du corrigé de la fiche."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:1": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "La clairance est le volume de plasma totalement épuré d’une substance par unité de temps."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:2": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "La question demande la proposition fausse : la CK est d’origine musculaire et n’est pas un marqueur de cytolyse hépatique."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:3": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Le calcium ionisé représente environ la moitié du calcium total, c’est la fraction active, et son élévation freine la PTH. L’acidose augmente la fraction ionisée."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:4": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Les cellules bêta des îlots de Langerhans sécrètent l’insuline ; les alpha le glucagon, les delta la somatostatine."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:5": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Le bloc bêta-gamma à l’électrophorèse est le signe le plus spécifique de la cirrhose ; les autres anomalies se voient dans toute hépatopathie."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:6": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La cholestase élève la bilirubine conjuguée, les phosphatases alcalines et la GGT, et diminue la stercobiline dans les selles."
+  },
+  "biochimie:1nq9IU19KvCBh5Huho0MrgRB-clIt3bB1:7": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La PTH et la calcitonine sont hypophosphorémiantes ; la vitamine D est hyperphosphorémiante. L’os contient 85 % des phosphates, sous forme d’hydroxyapatite."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:2": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le noyau caudé, le claustrum et le putamen naissent du télencéphale ; le pallidum et le noyau sous-thalamique du diencéphale."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:3": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le globus pallidus et le noyau sous-thalamique sont diencéphaliques ; la substantia nigra est mésencéphalique."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:4": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Seule la substantia nigra vient du mésencéphale."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:5": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le striatum inhibe le pallidum externe, le pallidum externe inhibe le noyau sous-thalamique, et le pallidum interne inhibe le thalamus — trois cibles GABAergiques."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:6": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le cortex excite le striatum et le noyau sous-thalamique ; le thalamus excite le cortex en retour. Réponse à vérifier auprès du cours : les circuits glutamatergiques sont décrits différemment selon les enseignants."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:7": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "De crânial en caudal ce sont les pédoncules, le pont puis la moelle allongée. Les olives siègent dans les cordons latéraux."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:8": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La gouttière basilaire marque la face ventrale du pont, et l’espace perforé postérieur ne se voit que de face."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:9": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les colliculi crâniaux sont un relais visuel ; les caudaux sont auditifs."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:12": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Sillons cingulaire, pariéto-occipital et calcarin sont médiaux. Le sillon latéral sépare le frontal du temporal."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:13": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’insula est au fond du sillon latéral. Le sillon calcarin ne délimite aucun lobe. Le noyau lenticulaire — non « interposé » — associe pallidum et putamen."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:14": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le noyau caudé et le putamen sont télencéphaliques."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:15": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le pallidum, partie du noyau lenticulaire, est d’origine diencéphalique. L’insula est latérale au claustrum."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:16": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le noyau caudé est latéral au ventricule. Les ventricules latéraux communiquent chacun avec le 3ème, jamais entre eux."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:17": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Les cornes sont frontale, occipitale et temporale ; l’aqueduc relie V4 au V3 ; la capsule extrême — non externe — sépare claustrum et insula ; le noyau lenticulaire est latéral à la capsule interne."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:18": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le cortex cérébral compte six couches."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:19": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Le seul point de continuité entre télencéphale et diencéphale est ventral, et le cerveau dérive du prosencéphale seul."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:20": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le gyrus pré-central est moteur, le post-central sensitif. L’aire auditive primaire siège dans le gyrus temporal transverse."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:21": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’aire auditive est sous le sillon latéral, et la partie médiale du gyrus pré-central commande le membre inférieur, non la tête."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:22": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le septum pellucidum sépare les deux ventricules latéraux."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:23": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Wernicke est la compréhension, Broca l’élaboration ; Broca est en avant de Wernicke."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:24": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "L’insula est au fond du sillon latéral."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:25": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les cinq propositions sont exactes."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:26": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Dans le tronc cérébral la substance grise est centrale, contrairement au cervelet."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:27": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Les pédoncules cérébelleux moyens relient le cervelet au pont ; les inférieurs à la moelle allongée."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:28": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le mésencéphale est limité en crânial par les voies optiques, et le tronc cérébral est oblique en bas et en avant."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:2": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Les mitochondries allongées siègent au pôle basal. Le tube contourné proximal est cortical."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:3": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres endothéliales glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:5": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "L’épithélium œsophagien est malpighien non kératinisé, les follicules lymphoïdes y sont isolés, et la couche externe est une adventice."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:7": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les glandes de Lieberkühn sont dans le chorion ; les cellules caliciformes augmentent vers le côlon ; les cellules de Paneth existent au duodénum."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:10": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:11": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités, et le centre du lobule est occupé par la veine centrolobulaire."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:12": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère (capillarisation des sinusoïdes)."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:13": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Les caliciformes sont grandes, peu nombreuses, sur le V lingual ; les fongiformes ont la forme d’un champignon, les filiformes sont les plus petites."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:14": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Les filiformes n’ont pas de bourgeons du goût ; les glandes de Von Ebner accompagnent les caliciformes."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:15": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’oropharynx est malpighien non kératinisé, la charpente du pharynx est fibro-musculaire, et la phonation est laryngée."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:20": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La filtration mécanique tient aux vibrisses des narines et au tapis mucociliaire ; le surfactant et le macrophage agissent plus bas."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:21": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La zone marginale est à la frontière des deux pulpes : sinus et cordons, comme l’hémolyse des hématies âgées, appartiennent à la pulpe rouge."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:26": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:27": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:28": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:29": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:30": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les glandes apocrines qui s’abouchent au follicule pileux ; la glande sébacée est alvéolaire ramifiée."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:31": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration ; les lamelles concentriques de Schwann les caractérisent, non le Meissner."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:32": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse, les kératinocytes de l’ectoderme."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:33": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:34": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; les cellules folliculaires sont de type protéique (REG, Golgi)."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:35": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:36": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons, non chaque cellule."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:37": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique alors que le cortex est mésodermique."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:38": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:39": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:40": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
+  },
+  "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:1": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "La parotide est une glande séreuse pure : pas de croissants de Gianuzzi, qui appartiennent aux glandes mixtes."
+  },
+  "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:2": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le sang circule de façon centripète dans les sinusoïdes ; le lobule portal est centré sur un espace porte."
+  },
+  "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:3": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’unité biliaire est le lobule portal. Chez l’homme les lobules sont mal limités."
+  },
+  "histologie:1fcfQnyZAR0o_nDAMn9tGwskwmxnuvGj0:4": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "L’espace de Disse borde le pôle vasculaire de l’hépatocyte ; la fibrose collagène l’altère."
+  },
+  "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:1": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’appareil juxtaglomérulaire siège au pôle vasculaire, et ses barorécepteurs sont dans l’artériole afférente."
+  },
+  "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:2": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Les mitochondries allongées siègent au pôle basal ; le tube contourné proximal est cortical."
+  },
+  "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:3": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "Le glycocalix des pédicelles est chargé négativement, les fenêtres glomérulaires n’ont pas de diaphragme, et les protéines sont retenues."
+  },
+  "histologie:1bxBoNO9dNKfrU6xSIR31s-A3iJlmg-3A:4": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Les pédicelles sont des prolongements du deuxième et du troisième ordre, et les pores endothéliaux mesurent environ 70 nm, non 7 µm."
+  },
+  "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:5": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "La sélection positive se fait dans le cortex, la prolifération sous la capsule, et le thymus n’a pas de lymphatiques afférents."
+  },
+  "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:6": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La zone marginale est à la frontière des deux pulpes : sinus, cordons et hémolyse appartiennent à la pulpe rouge."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:1": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La mélanine est surtout basale, les desmosomes surtout dans la couche épineuse, et le mélanocyte n’a pas de desmosomes."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:2": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Les granules de Birbeck appartiennent aux cellules de Langerhans, et la couche cornée est pauvre en mélanosomes."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:3": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "Le mélanocyte stocke la mélanine dans des mélanosomes et n’a pas de rôle immunitaire."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:4": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le canal excréteur sudoripare n’est pas ramifié ; ce sont les apocrines qui s’abouchent au follicule pileux ; la sébacée est alvéolaire ramifiée."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:5": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "Les corpuscules de Pacini siègent en profondeur et répondent à la pression et à la vibration."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:6": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La mélanine est phagocytée par les kératinocytes ; les cellules de Langerhans viennent de la moelle osseuse."
+  },
+  "histologie:1pcLkz123qBREzR4mBDvTtq_m1kL33fkK:7": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les canaux galactophores se mettent en place pendant la vie intra-utérine."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:1": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Une thyroïde hyperactive a de petits follicules et peu de colloïde ; ses cellules sont de type protéique."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:2": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "La CRH est une neurohormone hypothalamique ; les quatre autres viennent de l’antéhypophyse."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:3": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Les chromophobes sont peu sécrétantes, les somatotropes sont les plus nombreuses, et la lame basale entoure les cordons."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:4": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "La médullosurrénale est plus foncée, adhérente, et d’origine neurectodermique."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:5": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "La glomérulée est faite de petites cellules en amas sphériques ; comme toute cellule stéroïdogène elle est riche en REL, non en REG. La réticulée s’organise en réseau anastomosé et sécrète des androgènes dans les deux sexes."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:6": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le pancréas exocrine occupe près de 98 % de la glande ; les îlots sont des cordons anastomosés, non parallèles."
+  },
+  "histologie:1ooP9TbXTlh3XRjIQQTzjfGYuByhmIyUR:7": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’adrénaline et la noradrénaline viennent de deux types cellulaires distincts, que seule la microscopie électronique sépare. Les cellules chromaffines forment des amas."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:17": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Rétine, appareil vestibulaire et corpuscule gustatif relèvent des sens spéciaux, non de la somesthésie."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:18": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:19": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La proprioception vient des récepteurs articulaires, des fuseaux neuromusculaires et de l’organe tendineux de Golgi."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:20": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Le diapason explore la sensibilité vibratoire, portée par les corpuscules de Pacini."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:21": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Les récepteurs articulaires renseignent sur la position des segments et le sens de position ; la vitesse et l’allongement relèvent du fuseau."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:22": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Trois neurones : le ganglion spinal, le noyau de Goll ou de Burdach, puis le thalamus."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:23": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Les fibres C sont amyéliniques : ce sont les plus lentes."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:24": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "L’astéréognosie est l’incapacité de reconnaître la forme d’un objet par le toucher."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:25": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La proprioception inconsciente emprunte les voies spino-cérébelleuses et converge sur le cervelet ; l’extralemniscal porte la douleur et la thermie."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:26": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Le premier relais extralemniscal est la corne postérieure, couche V de Rexed ; la voie croise ensuite."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:27": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Toutes les modalités passent par le thalamus, à la seule exception de l’olfaction."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:32": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "La sensibilité est mesurable ; la sensation et la perception sont subjectives."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:33": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Corpuscule de Ruffini et disques de Merkel sont somesthésiques ; goût, vestibule et olfaction sont des sens spéciaux."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:34": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:35": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Les cordons postérieurs sont homolatéraux : une lésion droite abolit à droite le tact fin, la proprioception et la vibration, en épargnant douleur et thermie."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:36": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La sensation thermique détecte bien et éveille, mais se localise mal."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:37": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Seule la sensibilité est une grandeur mesurable."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:38": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Trois neurones, comme pour toute voie lemniscale."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:40": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "La transduction convertit l’énergie du stimulus en potentiel de récepteur ; le potentiel d’action ne naît qu’au-delà du seuil."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:41": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le fuseau répond à l’étirement, non à la tension — c’est l’organe tendineux de Golgi qui mesure la tension. Les fibres primaires ont une réponse dynamique."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:45": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Rétine, appareil vestibulaire et corpuscule gustatif sont hors du système somesthésique."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:46": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Merkel, Meissner et Ruffini sont cutanés ; bâtonnets et organe de Corti appartiennent à la vision et à l’audition."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:47": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La proprioception dynamique repose sur les récepteurs articulaires et l’organe tendineux de Golgi."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:48": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’organe tendineux de Golgi mesure la tension : forte lors d’une contraction active, faible lors d’un allongement passif."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:49": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le système somesthésique extrait quatre attributs de toute stimulation : sa modalité, son intensité, sa durée et sa localisation."
+  },
+  "physiologie-s2:1VrD9mBdLtmTThaolSrbsyXmY5lQNShMv:50": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La lésion de S1 abolit la localisation fine et l’appréciation des pressions, des poids, des formes et des textures."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:26": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "La motricité sert la communication, la mobilisation du corps et la posture ; la détection des stimuli est sensorielle."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:27": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Un réflexe est involontaire, rapide, stéréotypé et simple — il n’est pas commandé par l’aire 4."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:28": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "On classe les réflexes par la situation du récepteur, le nombre de synapses et le type d’effecteur."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:29": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’afférence est de type Ia, non III, et l’effecteur est un muscle strié."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:30": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le réflexe myotatique est proprioceptif, monosynaptique et monosegmentaire."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:31": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le myotatique inverse part de l’organe tendineux de Golgi, il est polysynaptique donc plus lent, et régule la tension."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:32": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le réflexe de flexion part des nocicepteurs, il est polysynaptique et diffuse à plusieurs étages ; l’appui renforcé est le réflexe d’extension croisée."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:33": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Le tonus est d’origine réflexe, entretenu par les unités motrices toniques, et prédomine sur les extenseurs antigravitaires."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:34": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La boucle gamma, le cervelet et les noyaux vestibulaires facilitent le tonus ; Renshaw et le cortex l’inhibent."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:35": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le sommeil et l’atteinte du motoneurone alpha donnent une hypotonie ; Parkinson et décérébration donnent une hypertonie."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:36": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "L’équilibration est automatique, non volontaire."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:37": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Les canaux semi-circulaires détectent les accélérations angulaires ; la pesanteur est perçue par les otolithes, et l’ensemble siège dans l’oreille interne."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:38": {
+   "answer": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les voies vestibulaires font relais dans les noyaux vestibulaires avant d’atteindre le cortex."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:39": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Une atteinte vestibulaire gauche donne vertiges, ataxie et nystagmus battant vers le côté sain."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:40": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’aire motrice principale est l’aire 4, non l’aire 6."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:41": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le faisceau pyramidal ne fait aucun relais et décusse au bulbe."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:42": {
+   "answer": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’appareil vestibulaire sert l’équilibre, non l’exécution du mouvement volontaire."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:43": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "La représentation est croisée, inversée, somatotopique — et disproportionnée, non proportionnelle. Elle siège sur l’aire 4."
+  },
+  "physiologie-s2:1fmqcQ5Y2sr_XMChxcs9EmHAgLmAYtuOe:45": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les noyaux gris centraux planifient, règlent le tonus et les mouvements lents ; l’exécution passe par la voie pyramidale."
+  },
+  "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:13": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Substance P, ions K+ et bradykinine sensibilisent le nocicepteur ; l’enképhaline et le GABA sont antalgiques."
+  },
+  "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:14": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "La douleur projetée s’explique par la convergence des afférences viscérales et cutanées sur un même neurone médullaire."
+  },
+  "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:15": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "H+, histamine et prostaglandines activent ou sensibilisent les nocicepteurs."
+  },
+  "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:16": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La douleur viscérale naît des organes profonds, de l’ischémie et de la distension ou perforation d’un organe creux."
+  },
+  "physiologie-s2:15jmOL-kasqT1f526XUdvL0n5-4Qs2jL5:17": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "La douleur aiguë est rapide, bien localisée, en coup d’aiguille, et cesse avec le stimulus ; elle emprunte le faisceau néo-spinothalamique."
+  },
+  "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:24": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "paper",
+   "why": "Réponse portée par la correction de l’épreuve."
+  },
+  "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:25": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "paper",
+   "why": "Réponse portée par la correction de l’épreuve."
+  },
+  "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:27": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le réflexe myotatique est monosynaptique, part du fuseau, et les motoneurones gamma le facilitent."
+  },
+  "physiologie-s2:1w6lzWDNZeaZJwpq1W3atSeqDsDYNmgAD:28": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "La phase dynamique met en jeu les fibres Ia, la phase statique les fibres II."
+  },
+  "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:46": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "paper",
+   "why": "Réponse portée par la correction de l’épreuve."
+  },
+  "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:47": {
+   "answer": [
+    0
+   ],
+   "by": "paper",
+   "why": "Réponse portée par la correction de l’épreuve."
+  },
+  "physiologie-s2:1uLd1d2feX67cB1_6M7NT8X5URKfZPlmZ:48": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "paper",
+   "why": "Réponse portée par la correction de l’épreuve."
+  },
+  "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:1": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les projections corticales sensorielles sont controlatérales, et la décussation se fait selon la voie, non toujours dans la moelle."
+  },
+  "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:2": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le récepteur code la durée, l’intensité et la localisation ; l’affect et la forme sont élaborés plus haut."
+  },
+  "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:4": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La voie lemniscale monte par le cordon postérieur, décusse au bulbe et fait relais dans un noyau thalamique spécifique."
+  },
+  "physiologie-s2:1yQEtRsOEVPOlBr7RzZNeIyCS0OPW5SvK:5": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La discrimination est d’autant meilleure que les récepteurs sont denses et les champs récepteurs petits."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:9": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "La somatostatine et la cholécystokinine freinent la motricité gastrique ; acétylcholine, gastrine et histamine la stimulent."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:10": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La CCK est libérée par les produits de digestion des protides et des lipides dans le duodénum."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:11": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "La vidange gastrique est réglée par le système nerveux entérique ; mastication, déglutition, péristaltisme primaire et vomissement ont un centre bulbaire."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:13": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La phase céphalique est vagale : acétylcholine directement, et gastrine libérée par la stimulation vagale."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:14": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "La cellule pariétale sécrète l’acide chlorhydrique et le facteur intrinsèque."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:15": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La barrière muqueuse tient au mucus, aux bicarbonates et au renouvellement rapide de l’épithélium."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:16": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Les lipides quittent l’entérocyte sous forme de chylomicrons par la voie lymphatique."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:17": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Les micelles portent le cholestérol, les produits de la lipolyse et les vitamines liposolubles."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:18": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le glucose, les acides aminés et la vitamine C empruntent des cotransports sodium-dépendants."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:19": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les sels biliaires sont formés dans le foie, conjugués à la taurine ou à la glycine, et émulsionnent les lipides."
+  },
+  "physiologie-s2:18t4YkGmsrHO3OEKyrOYtP00dv-AftYt0:20": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Sans bile les lipides ne sont plus émulsionnés : stéatorrhée et carence en vitamines A, D, E et K."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:3": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Tactile et proprioceptif se projettent sur des aires distinctes (3a, 3b, 1, 2) ; la main et la face occupent les plus grandes surfaces."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:5": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La thermo-algésie emprunte le faisceau spinothalamique croisé : une hémisection gauche ou une lésion du VPL gauche l’abolit à droite. Les cordons postérieurs portent le tact fin."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:9": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le système photopique est celui des cônes. La voie P oppose les couleurs, la voie M porte le mouvement, la voie K le bleu-jaune."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:11": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La lumière isomérise le rétinal, ferme les canaux sodiques, hyperpolarise le photorécepteur et diminue sa libération de glutamate."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:13": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les points correspondants sont nasal d’un œil et temporal de l’autre, et tout objet sur l’horoptère y tombe."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:14": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le K+ de l’endolymphe entre au pôle apical et dépolarise la cellule ; les canaux calciques du pôle basal s’ouvrent et le glutamate est libéré."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:15": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La motricité cinétique regroupe les mouvements réflexes, automatiques et volontaires."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:16": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "On classe les réflexes par le type de récepteur et le nombre de synapses."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:17": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le récepteur est le fuseau — non l’organe tendineux de Golgi — et la voie efférente le motoneurone alpha."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:18": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Le réflexe de flexion est nociceptif, polysynaptique et diffus ; l’appui renforcé est le réflexe d’extension croisée."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:19": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Renshaw, le cortex et la formation réticulée bulbaire inhibent le tonus ; la boucle gamma et le cervelet le facilitent."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:20": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Parkinson et décortication donnent une hypertonie."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:21": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’équilibration est réflexe et multimodale : vestibule, vision et proprioception."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:22": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les canaux semi-circulaires sont dans l’oreille interne et détectent les accélérations angulaires ; la verticale est perçue par les otolithes."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:23": {
+   "answer": [
+    0,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les voies centrales partent des noyaux vestibulaires ; le nerf VIII et les récepteurs sont périphériques, et le cortex n’est atteint qu’après relais thalamique."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:24": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Vertige, nystagmus et ataxie font le syndrome vestibulaire ; la surdité est cochléaire."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:25": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Gnosies et praxies sont pariéto-temporo-occipitales ; curiosité, persévérance et sociabilité sont préfrontales."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:26": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les aires 18 et 19 sont visuelles associatives : leur lésion gauche donne une cécité verbale."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:27": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Les aires praxiques sont gauches ; leur lésion donne une apraxie, dont l’agraphie, non une aphasie."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:28": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Dans l’aphasie de Wernicke le débit est normal mais le langage incompréhensible, et le sujet n’a pas conscience de son trouble."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:29": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le préfrontal porte le comportement : curiosité, persévérance, sociabilité."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:30": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le préfrontal planifie, coordonne et maintient l’attention ; l’exécution du mouvement est frontale motrice, l’image du corps pariétale."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:31": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "L’EEG naît des cellules pyramidales et somme des potentiels post-synaptiques ; les PPSE donnent la dépolarisation, les PPSI l’hyperpolarisation."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:32": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le delta est le rythme du sommeil lent profond et du coma, absent chez l’adulte éveillé."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:33": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Pointes et pointes-ondes signent une hyperexcitabilité corticale — l’épilepsie ; le coma et la mort cérébrale donnent d’autres tracés."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:34": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "Mouvements oculaires rapides et rêves appartiennent au sommeil paradoxal."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:35": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le sommeil lent occupe environ 80 % de la nuit, et chaque cycle commence par du sommeil lent."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:36": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le nouveau-né s’endort en sommeil agité, dort seize à vingt heures, et son sommeil agité s’accompagne de mouvements."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:37": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les noyaux suprachiasmatiques agissent par l’épiphyse et la mélatonine ; leur lésion désorganise le sommeil sans le raccourcir."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:38": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les neurones du raphé sont actifs à l’éveil ; leur lésion donne une insomnie."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:39": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’hypothalamus postérieur est éveillant — histamine et orexine — et sa lésion donne une hypersomnie."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:40": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le sommeil lent consolide la mémoire, sécrète les hormones anabolisantes et répare ; la maturation nerveuse revient au sommeil paradoxal."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:41": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Somnambulisme, terreurs nocturnes et crises épileptiques surviennent en sommeil lent ; érection et congestion génitale en sommeil paradoxal."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:42": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La mémorisation baisse avec l’âge ; elle s’améliore avec la vigilance, la motivation, l’association et la charge affective."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:43": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "La consolidation est la plus longue des étapes de la mémoire."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:44": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le syndrome général d’adaptation de Selye associe hypercorticisme, décharge adrénergique, hypertrophie surrénalienne, ulcères et atrophie lymphoïde."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:45": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "Le sympathique élève la glycémie et la pression artérielle, stimule la lipolyse et la ventilation."
+  },
+  "physiologie-s2:1OkYGhkI6EPw-UiwhDsEqfr1hkH0y0Q1w:46": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le stress chronique fatigue, fait mal et déprime ; il augmente l’éveil plutôt qu’il ne le diminue."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:1": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "L’unité de masse atomique se rapporte au carbone 12, et le proton porte une charge positive."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:4": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’u.m.a est le douzième de la masse d’un atome de carbone 12 — non d’une mole. 0,511 MeV est l’équivalent de la masse de l’électron."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:7": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La bêta moins émet un électron et un antineutrino, son spectre est continu, et elle concerne les noyaux riches en neutrons."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:8": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "L’annihilation produit deux photons gamma de 511 keV, non des rayons X."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:9": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le gamma naît d’une désexcitation du noyau, non du cortège électronique, et n’a rien à voir avec les ultrasons."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:10": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Les alpha ont un parcours de quelques micromètres, en ligne droite, avec un TEL très élevé ; l’émission alpha change le nombre de masse."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:11": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La radioactivité vient du noyau, non du cortège électronique."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:14": {
+   "answer": [
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les protons suivent une trajectoire rectiligne de quelques centimètres, avec un TEL supérieur à celui des électrons."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:15": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le TEL est maximal en fin de parcours — c’est le pic de Bragg."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:16": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le technétium 99m est un émetteur gamma de six heures, obtenu par élution d’un générateur au molybdène, et sert au diagnostic."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:17": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’effet photoélectrique absorbe totalement le photon ; ce sont les photons Compton qui sont diffusés."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:18": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "À 250 MeV la création de paire domine, suivie d’annihilation ; la CDA dépend du matériau et varie comme l’inverse de μ."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:19": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le Compton met en jeu un photon et un électron peu lié, avec diffusion du photon ; l’électron Auger suit l’effet photoélectrique."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:20": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "La proposition fausse : les scintillateurs solides ne sont pas des plaques photographiques."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:21": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le semi-conducteur est plus sensible que le détecteur à gaz, non moins."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:22": {
+   "answer": [
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le détecteur à gaz est rempli de gaz, non vidé, et n’a pas de place en IRM."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:23": {
+   "answer": [
+    0,
+    2
+   ],
+   "by": "claude",
+   "why": "L’activimètre est une chambre d’ionisation puits qui mesure l’activité à injecter ; le tube de Coolidge produit des rayons X."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:24": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "L’émulsion photographique sert à la dosimétrie passive et à l’image radiologique, jamais à mesurer une activité."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:25": {
+   "answer": [
+    0,
+    4
+   ],
+   "by": "claude",
+   "why": "Pour le patient, justification et optimisation. La limitation de dose vise le travailleur et le public."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:26": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Après dix périodes l’activité est divisée par 1024 : 3700 / 1024 ≈ 3,6 MBq, qui ne figure pas parmi les propositions."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:27": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Les effets stochastiques sont tardifs, aléatoires, sans seuil, et non obligatoires."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:28": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les effets déterministes sont obligatoires, précoces, caractéristiques, à seuil, et tiennent à la mort cellulaire."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:30": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Les effets biologiques dépendent du rayonnement, du tissu, de la dose et du débit de dose."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:31": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’accommodation diminue avec l’âge — c’est la presbytie."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:33": {
+   "answer": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le dioptre cornéen antérieur est le plus puissant de l’œil."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:34": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’hypermétropie est une amétropie sphérique par insuffisance de puissance, corrigée par un verre convergent."
+  },
+  "biophysique:1HkdNkl5UcPZZGRkBnz7GVDOAtYdcLjUV:36": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
+  },
+  "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:35": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Le parcours d’accommodation sépare le punctum proximum du punctum remotum."
+  },
+  "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:39": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "L’oreille externe met l’onde en forme, l’amplifie, la conduit au tympan et sert à localiser la source."
+  },
+  "biophysique:1__zidyKkFmlNh_8CxI6SOfx7zaHl7gqD:40": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La trompe d’Eustache égalise les pressions de part et d’autre du tympan, non de la fenêtre ovale."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:3": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La plicature précède la convergence, le cloisonnement s’achève vers la 8e semaine, et la gelée cardiaque donne les coussins endocardiques."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:4": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’ostium primum est délimité par le septum primum et le septum intermedium ; le foramen ovale est une lacune du septum secundum, et une CIA donne un shunt gauche-droit non cyanogène."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:5": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "La tétralogie associe sténose pulmonaire, CIV, dextroposition de l’aorte et hypertrophie du ventricule droit ; elle est cyanogène."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:6": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "Le blastème métanéphrogène donne le néphron ; les tubes collecteurs et de Bellini viennent du bourgeon urétéral."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:7": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Le rhombencéphale se divise en métencéphale et myélencéphale."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:9": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "La couche manteau donne les lames fondamentale et alaire."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:10": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "L’humeur aqueuse est résorbée par le canal de Schlemm, dans l’angle irido-cornéen."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:12": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "La rétine nerveuse échange avec la choriocapillaire à travers l’épithélium pigmentaire."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:13": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Le bourgeon urétéral naît du canal de Wolff et donne les voies excrétrices, dont les tubes collecteurs."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:14": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Le rein polykystique est une malformation héréditaire par défaut de jonction entre tubes collecteurs et néphrons."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:16": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Le rein définitif naît de la rencontre du bourgeon urétéral, issu du canal de Wolff, et du blastème ; son urine forme le liquide amniotique."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:17": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "L’extrophie vésicale tient à un défaut de mésenchymatisation de la paroi abdominale ; elle s’associe à un épispadias, non à un hypospadias."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:18": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le canal de Wolff donne l’épididyme, le déférent, les vésicules séminales et le canal éjaculateur."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:19": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La vésicule optique induit la placode cristallinienne sans lui donner naissance."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:20": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le stomodaeum est limité par le bourgeon frontal en haut et les bourgeons maxillaires et mandibulaires latéralement."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:21": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Une fente atteignant l’arcade dentaire supérieure est une fente labio-alvéolaire."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:22": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Les canalicules efférents viennent des tubules mésonéphrotiques et relient le rete testis à l’épididyme."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:23": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "La proposition fausse : l’atrésie tient à un défaut de recanalisation et de séparation d’avec la trachée."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:24": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Dans le mésentère commun l’intestin grêle est à droite et le côlon à gauche."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:26": {
+   "answer": [
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le glaucome congénital tient à un défaut de résorption par fermeture de l’angle ; dépisté tôt, il ne condamne pas la vue."
+  },
+  "embryologie:1iaj0Qjw1UzaUr0Vddj9aD2JtbzOVTYju:27": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "Le tractus thyréoglosse descend du foramen caecum et donne des kystes médians du cou."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:1": {
+   "answer": [
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La macula porte la fovéa, riche en cônes, et donne la meilleure acuité ; le nerf optique naît de la papille."
+  },
+  "embryologie:1svHHO3BylvjVBiVcizBr2i_iiNRsWX55:7": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La membrane otolithique est gélatineuse, porte des otolithes de carbonate de calcium, coiffe les macules et sert l’équilibre linéaire."
+  },
+  "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:16": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Les cellules germinales naissent dans la vésicule vitelline et migrent ; Sertoli vient de l’épithélium cœlomique, Leydig du mésenchyme."
+  },
+  "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:17": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "La proposition fausse : l’ébauche thyroïdienne naît au foramen caecum de la langue avant de descendre devant la trachée."
+  },
+  "embryologie:1In9M5prwUbJJQDOKBFmGQPDM3oHViy7t:20": {
+   "answer": [
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "C’est la cupule optique qui naît de l’invagination ; la vésicule vient du diencéphale et induit cristallin et couches externes."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:2": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La chambre antérieure sépare la cornée de l’iris et contient l’humeur aqueuse."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:9": {
+   "answer": [
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "L’urètre masculin se divise en prostatique, membranacé et spongieux ; la fosse naviculaire siège dans le gland."
+  },
+  "anatomie:1HLGjAZkOqNAdv5b7upYGL83N33Gi-KBy:1": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le consensus retient striatum, pallidum, noyau sous-thalamique et substance noire ; le claustrum en est exclu."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1": {
+   "answer": [
+    3
+   ],
+   "by": "claude",
+   "why": "Le haut appareil urinaire, ce sont les deux reins et les deux uretères ; vessie et urètre forment le bas appareil."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La veine rénale gauche est plus longue, passe dans la pince aorto-mésentérique et reçoit surrénalienne, gonadique et phrénique inférieure gauches ; elle naît du hile et se jette dans la cave."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:1-2": {
+   "answer": [
+    4
+   ],
+   "by": "claude",
+   "why": "Le segment postérieur de l’œil comprend le vitré, la rétine et la choroïde."
+  },
+  "anatomie-s2:13WupKTmm-gPoj0bfnVD-vqA95C9vl4RG:5-2": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Le droit inférieur abaisse, tourne en dehors et rapproche — abaissement, extorsion et adduction."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:3": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le globus pallidus et le noyau sous-thalamique dérivent du diencéphale ; le putamen et le claustrum sont télencéphaliques et la substantia nigra mésencéphalique, comme l'indique la question 4 de la même épreuve. La feuille du tutorat se lit « 3-BE », mais elle a placé le putamen dans les structures télencéphaliques à la question 2."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:20": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:21": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Les colliculus supérieurs sont des relais des voies visuelles ; ce sont les colliculus inférieurs qui relaient les voies auditives."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:23": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La gouttière basilaire est creusée sur la face ventrale du pont, non sur sa face dorsale, et l'espace perforé postérieur se voit sur une vue ventrale, dans la fosse interpédonculaire."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:28": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "La veine de Labbé se jette dans le sinus transverse et non dans le sinus sagittal supérieur : seule la proposition C est fausse. La veine basale de Rosenthal est bien une veine profonde ; la feuille du tutorat se lit « 28-ABE » et paraît avoir perdu le D."
+  },
+  "anatomie:1WI4yotrtHZamhPqWm3sXBdI87oXzBaHt:21": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial, puis une portion horizontale ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum. La feuille du tutorat note « 21-B(D) », le D entre parenthèses."
+  },
+  "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:5": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "L'os zygomatique s'articule bien avec le maxillaire, le frontal, le temporal et le sphénoïde, et les empreintes de l'artère méningée moyenne sont endocrâniennes. La feuille du tutorat donne « BE » pour cette épreuve mais « BC » pour les mêmes propositions à la première session de la même année."
+  },
+  "anatomie:1HCdph2qdKznGM380OD_07eXhDw4-J18b:13": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "En vue ventrale les trois pièces se succèdent, de crânial en caudal : pédoncules cérébraux, pont, moelle allongée — la proposition C les énonce dans l'ordre inverse."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:3": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:4": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. L'aire de Broca est celle de l'élaboration de la parole : l'épreuve 2020, qui écrivait « exécution », comptait cette proposition fausse."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:5": {
+   "answer": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Les cinq propositions y sont toutes exactes."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:6": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Réponse établie à partir des corrigés du tutorat des sessions 2018 et 2020, où les mêmes propositions sont posées. Le faisceau cortico-spinal traverse le bras postérieur de la capsule interne, non le bras antérieur."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:7": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Sont commissuraux le corps calleux, les commissures antérieure et postérieure et la commissure hippocampique du fornix ; le faisceau longitudinal du fornix ne l'est pas (corrigés du tutorat 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:8": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Sont des faisceaux de projection le cortico-spinal, le cortico-nucléaire, les cortico-striés et les thalamo-corticaux ; le corps calleux est commissural (corrigés du tutorat 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:10": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le consensus retient le striatum — putamen et noyau caudé —, le globus pallidus, le noyau sous-thalamique et la substance noire, mais pas le claustrum (corrigés du tutorat 2018 et 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:13": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "L'inhibition GABAergique s'exerce sur le pallidum, le noyau sous-thalamique et le thalamus, non sur le striatum ni sur le cortex (corrigés du tutorat 2018 et 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:18": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "L'artère cérébelleuse postéro-inférieure naît de la vertébrale ; les branches terminales du tronc basilaire sont les artères cérébrales postérieures, et les artères spinales ne sont pas des rameaux perforants du bulbe (corrigé du tutorat 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:19": {
+   "answer": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Le polygone de Willis ne comporte qu'une artère communicante antérieure et deux communicantes postérieures : seule la première proposition est fausse (corrigé du tutorat 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:20": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "La carotide interne décrit d'abord une portion verticale, puis un coude antéro-médial ; elle gagne la fosse cérébrale moyenne au-dessus du foramen lacerum."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:21": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le foramen rond livre passage au V2 et le foramen ovale au V3 ; le foramen lacerum n'est traversé par aucun des deux, les deux ailes du sphénoïde sont séparées par la fissure orbitaire supérieure et le conduit auditif interne appartient à l'étage postérieur (corrigés du tutorat 2020)."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:22": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La leptoméninge ne comprend que deux feuillets, l'arachnoïde et la pie-mère ; la face interne des ventricules est tapissée par l'épendyme."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:23": {
+   "answer": [
+    0,
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Les tubercules mamillaires appartiennent au diencéphale et les deux hémisphères cérébraux forment le télencéphale."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:24": {
+   "answer": [
+    0,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La moelle présente deux renflements, cervical et lombaire ; la substance blanche est centrale dans l'encéphale et périphérique dans la moelle."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:25": {
+   "answer": [
+    0,
+    1,
+    4
+   ],
+   "by": "claude",
+   "why": "Le névraxe est fait de l'encéphale et de la moelle épinière ; les nerfs périphériques n'en font pas partie."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:1": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Un algorithme est une suite finie d'instructions destinée à résoudre un problème ou à accomplir une tâche."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:2": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Les boucles (for, while) répètent une action ; la condition ne fait que choisir."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:3": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Un algorithme de recherche localise une donnée précise ; le tri, lui, réorganise."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:4": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "Optimiser, c'est réduire le temps d'exécution et la consommation de ressources, pas ajouter des fonctionnalités."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:5": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "Un tri range les données selon un ordre croissant ou décroissant."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:3-2": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Le disque dur est la mémoire de masse : il conserve les fichiers même hors tension."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:4-2": {
+   "answer": [
+    2
+   ],
+   "by": "claude",
+   "why": "Le processeur est dans l'unité centrale ; moniteur, clavier et souris sont des périphériques."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:1-2": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "15 = 8+4+2+1 = 1111. Les autres propositions valent 10, 13 et 9."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:2-2": {
+   "answer": [
+    1
+   ],
+   "by": "claude",
+   "why": "1011 + 1101 = 11 + 13 = 24, soit 11000 en binaire."
+  },
+  "module-sante:1Lzi1pF5oQ1UJ8zCP1UpGkuo501jJCLHL:4-3": {
+   "answer": [
+    0
+   ],
+   "by": "claude",
+   "why": "28 = 16+8+4 = 11100."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:1": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Les lobes frontal et pariétal sont au-dessus du sillon latéral, non en dessous. Les lignes de D et E portent des noms inversés : la ligne qui limite le lobe occipital est occipito-temporale, celle qui sépare temporal et pariétal est temporo-pariétale."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:2": {
+   "answer": [
+    0,
+    1,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "Un opercule recouvre l'insula par définition ; le lobule paracentral est sur la face médiale et n'en est donc pas un."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:9": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le fornix relie l'hippocampe au corps mamillaire ipsilatéral, non controlatéral."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:11": {
+   "answer": [
+    0,
+    2,
+    3,
+    4
+   ],
+   "by": "claude",
+   "why": "C'est la partie supérieure de la face médiale du thalamus qui forme la paroi latérale du 3e ventricule, l'hypothalamus en formant la partie inférieure ; ce ne sont pas ses parties antérieures."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:14": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Le glutamate agit sur la substance noire (afférence du noyau sous-thalamique) et sur le cortex (afférence thalamique). Le pallidum externe, le noyau sous-thalamique et le thalamus reçoivent eux une afférence GABAergique."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:15": {
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "La paroi latérale de la corne frontale est la tête du noyau caudé, le corps calleux en formant le toit. Le calcar avis est sur la paroi médiale de la corne occipitale, non sur son plancher."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:16": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "L'atrium répond en avant au corps du ventricule latéral, non à la corne frontale."
+  },
+  "anatomie:1fY2mlw6h_nvnKgkh3SoFMZHLjZifyJRl:17": {
+   "answer": [
+    0,
+    1,
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "Le toit du 3e ventricule est formé par la toile choroïdienne surmontée du fornix ; le corps calleux est plus haut et n'en fait pas partie."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:22": {
+   "answer": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le cervelet est rattaché au tronc cérébral par trois paires de pédoncules cérébelleux, non cérébraux."
+  },
+  "anatomie:1TkAw2Iu9LF486hm8hbQwijf7OnF1OqGw:24": {
+   "answer": [
+    0,
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le bras conjonctival inférieur relie le colliculus inférieur au corps genouillé médial. Et les foramens sont inversés : Magendie est médian, Luschka sont latéraux."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:16": {
+   "answer": [
+    0,
+    3
+   ],
+   "by": "claude",
+   "why": "Sur le schéma, la cellule 1 est le pneumocyte I et la cellule 4 la cellule endothéliale du capillaire : ce sont les deux seules traversées par la barrière alvéolo-capillaire."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:17": {
+   "answer": [
+    0,
+    1
+   ],
+   "by": "claude",
+   "why": "La cellule 2 est le pneumocyte II : il est uni au pneumocyte I par des jonctions serrées et contient les corps lamellaires du surfactant. L'épuration de l'air revient au macrophage et les vésicules de micropinocytose à l'endothélium."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:18": {
+   "answer": [
+    2,
+    4
+   ],
+   "by": "claude",
+   "why": "La cellule 3 est le macrophage alvéolaire : il épure l'air et contient des phagolysosomes. Les 95 % du revêtement sont le fait du pneumocyte I et les corps lamellaires du pneumocyte II."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:19": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La cellule 4 borde le capillaire : c'est une cellule endothéliale de type continu dont les prolongements forment le versant vasculaire de la barrière alvéolo-capillaire."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:22": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Réponse reprise de la correction de l'isolé du système lymphoïde (16e promo). Le corpuscule de Hassal est propre au thymus, jamais au ganglion, et la capsule ganglionnaire n'a pas de cellules musculaires lisses — c'est celle de la rate qui en possède."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:23": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La cellule 1 est la cellule épithélio-réticulaire : elle forme la charpente et la barrière sang-thymus. Elle est d'origine épithéliale et ne synthétise pas de réticuline, contrairement aux cellules réticulaires des autres organes lymphoïdes."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:24": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "La cellule 2 est le thymocyte. La prolifération a lieu dans le cortex sous-capsulaire et non dans la médullaire, et le thymus ne reçoit aucun lymphatique afférent."
+  },
+  "histologie:1dhYa3yS8dTMXlqpLO6IA8JmQFEOpl5JC:25": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "La structure 4 est le corpuscule de Hassal : fortement éosinophile et propre au thymus. Il provient de la dégénérescence des cellules épithélio-réticulaires (cellule 1), non des thymocytes."
+  },
+  "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:1": {
+   "answer": [
+    1,
+    3
+   ],
+   "by": "claude",
+   "why": "Réponse reprise de la correction de l'isolé du système lymphoïde (16e promo). Le corpuscule de Hassal est propre au thymus et la capsule du ganglion ne contient pas de cellules musculaires lisses."
+  },
+  "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:3": {
+   "answer": [
+    1,
+    2
+   ],
+   "by": "claude",
+   "why": "Le thymocyte prolifère dans le cortex sous-capsulaire, non dans la médullaire, et le thymus n'a pas de lymphatiques afférents. Il subit bien la sélection par les cellules dendritiques et quitte l'organe par les veinules post-capillaires."
+  },
+  "histologie:1OZvWU0qwohyIHye8t8wH9MkqSpxyH614:4": {
+   "answer": [
+    2,
+    3
+   ],
+   "by": "claude",
+   "why": "Le corpuscule de Hassal est fortement éosinophile et spécifique du thymus ; il dérive des cellules épithélio-réticulaires, pas des thymocytes."
   }
+ }
 }
