@@ -24,6 +24,21 @@ insert into profiles (id, email, full_name, promo, role, status) values
   ('44444444-4444-4444-4444-444444444444', 'other@unem.mr', 'Other', 'pcem1', 'student', 'approved')
 on conflict (id) do nothing;
 
+-- Three more, for the question the panel asks: who is waiting to be let in?
+-- An admin, a student who never picked a year, and one waiting in another
+-- year. The last two are the ones a promo-scoped policy would hide.
+insert into auth.users (id, email) values
+  ('55555555-5555-5555-5555-555555555555', 'boss@unem.mr'),
+  ('66666666-6666-6666-6666-666666666666', 'noyear@unem.mr'),
+  ('77777777-7777-7777-7777-777777777777', 'pcem1new@unem.mr')
+on conflict do nothing;
+
+insert into profiles (id, email, full_name, promo, role, status) values
+  ('55555555-5555-5555-5555-555555555555', 'boss@unem.mr',     'Boss',   'pcem2', 'admin',   'approved'),
+  ('66666666-6666-6666-6666-666666666666', 'noyear@unem.mr',   'NoYear',  null,   'student', 'pending'),
+  ('77777777-7777-7777-7777-777777777777', 'pcem1new@unem.mr', 'P1New',  'pcem1', 'student', 'pending')
+on conflict (id) do nothing;
+
 insert into posts (id, author, promo, body, kind) overriding system value values
   (901, '11111111-1111-1111-1111-111111111111', 'pcem2', 'Post de PCEM2', 'post'),
   (902, '44444444-4444-4444-4444-444444444444', 'pcem1', 'Post de PCEM1', 'post')
@@ -56,10 +71,12 @@ set role authenticated;
 
 -- An approved student in PCEM2.
 set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+-- Four now, not three: the admin is in PCEM2 too, and staff are classmates
+-- like anybody else as far as this policy is concerned.
 select must('she reads her promo''s profiles, and no others',
-            (select count(*) from profiles), 3);
+            (select count(*) from profiles), 4);
 select must('so her classmates have names on screen',
-            (select count(*) from profiles where full_name is not null and id <> auth.uid()), 2);
+            (select count(*) from profiles where full_name is not null and id <> auth.uid()), 3);
 select must('she reads her promo''s posts only',
             (select count(*) from posts), 1);
 select must('she reads her own chat',
@@ -94,6 +111,29 @@ set request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
 select must('another year sees its own posts',   (select count(*) from posts), 1);
 select must('another year sees no PCEM2 people', (select count(*) from profiles where promo = 'pcem2'), 0);
 select must('nobody reads somebody else''s chat', (select count(*) from chat_messages), 0);
+
+-- The panel's own question: everybody waiting, whatever year they picked.
+--
+-- اللوحة ← الأعضاء reads `profiles` as the signed-in admin, so what it can
+-- show is decided here and nowhere else. Three people are waiting: one in
+-- his own year, one in another, and one who never picked a year at all. If
+-- the policy scoped this to his promo, the last two would be invisible on
+-- that screen — a student who signed up and is never approved, with nothing
+-- on any screen to say why.
+set request.jwt.claim.sub = '55555555-5555-5555-5555-555555555555';
+select must('an admin sees everyone waiting, whatever their year',
+            (select count(*) from profiles where status = 'pending'), 3);
+select must('including the one who never picked a year',
+            (select count(*) from profiles where status = 'pending' and promo is null), 1);
+
+-- A student whose profile has no year.
+--
+-- The feed falls back to 'pcem2' when a profile carries no promo, so the
+-- query asks for PCEM2's posts — but every policy compares against
+-- my_promo(), which is NULL here, and `promo = NULL` is never true. The
+-- screen asks for posts that exist and is handed nothing, with no error.
+set request.jwt.claim.sub = '66666666-6666-6666-6666-666666666666';
+select must('no year: reads no posts at all', (select count(*) from posts), 0);
 
 reset role;
 drop function must(text, bigint, bigint);

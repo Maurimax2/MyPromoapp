@@ -1083,7 +1083,7 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-3); margin: 4px 2px -4px; align-self: flex-start;
 }
 .login-promos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.login-promos .imp-kind { text-align: center; justify-content: center; min-height: 40px; }
+.login-promos .imp-kind { text-align: center; justify-content: center; min-height: 44px; }
 
 /* the panel header, with a way back */
 .admin-mark { font-size: 17px; font-weight: 700; letter-spacing: -.02em; flex-shrink: 0; }

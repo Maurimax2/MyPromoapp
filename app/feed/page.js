@@ -17,6 +17,15 @@ export default async function Feed() {
   // Two different things, and conflating them is what makes a student post
   // into a year they are not in: `promo` is who they are and whose feed this
   // is; `reading` is the year whose subjects they are looking at.
+  //
+  // No year at all is a third thing, and falling back to 'pcem2' here was a
+  // lie the policies do not tell: the query asked for PCEM2's posts while
+  // my_promo() stayed NULL, so row-level security refused every one of them
+  // and the student was left reading an empty feed that looked like a quiet
+  // day. /waiting is where a year gets chosen.
+  if (!profile.promo && !['owner', 'admin', 'editor'].includes(profile.role)) {
+    redirect('/waiting');
+  }
   const promo = profile.promo || 'pcem2';
   const years = await promosOf();
   const reading = await browsingPromo(profile, years.promos);

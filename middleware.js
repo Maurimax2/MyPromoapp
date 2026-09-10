@@ -67,9 +67,23 @@ export async function middleware(request) {
   const { data: profile, error } = await supabase
     .from('profiles').select('status, role').eq('id', user.id).maybeSingle();
 
-  // Anything unexpected lets the request through. A failed lookup must never
-  // be the reason somebody cannot open the app they were using a minute ago.
-  if (error || !profile) return response;
+  // A failed lookup lets the request through. It must never be the reason
+  // somebody cannot open the app they were using a minute ago.
+  if (error) return response;
+
+  // No row is not a failed lookup, it is a definite answer, and it used to
+  // be treated as one of those "anything unexpected" cases and waved past.
+  // Nobody without a profile is approved — that is what approval is written
+  // in — so waving them past put them in an app where row-level security
+  // answers every screen with nothing and no screen says why. /waiting is
+  // where they belong, and reaching it is what writes their row and so puts
+  // them in front of an admin.
+  if (!profile) {
+    const to = request.nextUrl.clone();
+    to.pathname = '/waiting';
+    to.search = '';
+    return NextResponse.redirect(to);
+  }
 
   const staff = ['owner', 'admin', 'editor'].includes(profile.role);
   if (profile.status !== 'approved' && !staff) {

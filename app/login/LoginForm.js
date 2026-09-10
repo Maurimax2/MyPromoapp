@@ -27,10 +27,22 @@ export default function LoginForm() {
   const [state, setState] = useState('idle');   // idle | busy | sent | error
   const [error, setError] = useState('');
 
+  // The link signs you in. It does not sign you up.
+  //
+  // Supabase creates the account for an unknown address unless it is told
+  // not to, so typing any address here used to make a student — with no name
+  // and, worse, no year. Every policy compares against the year, so that
+  // account read an empty feed and was refused at the composer, and nothing
+  // on screen connected either to the door they came through. Signing up
+  // takes an email, a password and a year; this is the other way in for
+  // somebody who already did that.
   const sendLink = async () => {
     const { error } = await supabase().auth.signInWithOtp({
       email: email.trim(),
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        shouldCreateUser: false,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
     if (error) throw error;
     setState('sent');
@@ -78,8 +90,15 @@ export default function LoginForm() {
       // The link is the only door where the rate limit has a different way
       // out, so that one sentence stays here.
       const rate = /rate limit|too many/i.test(err.message);
+      // Supabase's answer for an address it has never seen, now that the link
+      // no longer creates one. It is the commonest thing a new student will
+      // do here, so it says where to go instead of showing them the raw
+      // "Signups not allowed for otp".
+      const unknown = /signups? not allowed|user not found/i.test(err.message);
       setError(rate && how === 'link'
         ? 'تجاوزنا حدّ الرسائل — أنشئ حسابًا بكلمة سر بدل الرابط'
+        : unknown && how === 'link'
+        ? 'لا حساب بهذا البريد — أنشئ حسابًا أولًا'
         : authMessage(err));
       setState('error');
     }
