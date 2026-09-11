@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 import { pdfjs as load } from '@/lib/pdfjs';
 
@@ -18,22 +18,114 @@ import { pdfjs as load } from '@/lib/pdfjs';
 //   drawing anything stalls a long lecture. Page one is measured and drawn
 //   immediately, and its shape sizes the placeholders for the rest.
 
-const KEEP = 4;          // rendered pages retained either side of the viewport
-const KEEP_BIG = 2;      // …fewer of them when each one is a tablet-sized bitmap
-const MAX_WIDTH = 1400;  // a page fills a phone, and fills a tablet up to here
 const MAX_DPR = 1.5;     // 2x doubles memory for very little visible gain
-// A drawn page is a bitmap the browser holds until it is thrown away, and
-// keeping every page drawn is what crashed Safari on a long lecture. A wider
-// page is therefore drawn at a lower density rather than at a larger size:
-// this is the widest a canvas is ever made, whatever the screen, so a page on
-// a 1280px tablet costs about what one on a phone always did.
-const MAX_PIXELS = 1500;
 
-export default function PdfViewer({ src, title }) {
-  const holder = useRef(null);
+// How many pixels across a page may ever be drawn.
+//
+// A drawn page is a bitmap the browser holds until it is thrown away, and
+// keeping every page drawn is what crashed Safari on a long lecture. So a
+// wider page is drawn at a lower density rather than at a larger size, and a
+// page on a 1280px tablet costs about what one on a phone always did.
+//
+// A student who has pinched in has asked for detail and gets more of it —
+// paid for by holding fewer pages at once, which is what `keepFor` is doing
+// below. Without this, zooming would only enlarge the same bitmap: bigger
+// letters made of the same number of pixels, which is not what anybody zooms
+// a lecture for.
+const BUDGET = 1500;
+const BUDGET_ZOOM = 2200;
+
+// Pages retained either side of the viewport, against the size of one.
+const keepFor = (px) => (px > 1800 ? 1 : px > 800 ? 2 : 4);
+
+export default function PdfViewer({ src, title, zoom = 1, onZoom }) {
+  const holder = useRef(null);        // .pdf-pages
   const [status, setStatus] = useState('loading');
   const [pages, setPages] = useState(0);
   const [percent, setPercent] = useState(0);
+
+  const zoomRef = useRef(zoom);
+  const rescale = useRef(null);       // filled in once the document is open
+
+  // What is actually scrolling.
+  //
+  // Normally the window: the reader is just a long page. In ملء الشاشة the
+  // reader becomes its own scrolling surface, because a page zoomed wider
+  // than the screen has to pan and the window would not take it.
+  const surface = () => {
+    const el = holder.current?.parentElement;
+    if (el && getComputedStyle(el).overflowY !== 'visible') return el;
+    return document.scrollingElement || document.documentElement;
+  };
+
+  // Where you are in the document, as a fraction of its height.
+  //
+  // A zoom changes the size of every page, so the pixel you were parked at
+  // means nothing afterwards. Without this, pinching while reading page 30
+  // puts you back at the top of page 1.
+  const at = useRef(0);
+  useEffect(() => {
+    const note = () => {
+      const s = surface();
+      const run = s.scrollHeight - s.clientHeight;
+      if (run > 0) at.current = s.scrollTop / run;
+    };
+    // Captured rather than bubbled: a scroll inside an element does not
+    // bubble, and which of the two is scrolling changes with ملء الشاشة.
+    window.addEventListener('scroll', note, { capture: true, passive: true });
+    return () => window.removeEventListener('scroll', note, { capture: true });
+  }, []);
+
+  // The width has already changed in the DOM by the time this runs, so the
+  // page is the right size and only the drawing is stale. Put the reader back
+  // where they were before the browser paints, then redraw.
+  useLayoutEffect(() => {
+    zoomRef.current = zoom;
+    const s = surface();
+    const run = s.scrollHeight - s.clientHeight;
+    if (run > 0) s.scrollTop = at.current * run;
+    rescale.current?.();
+  }, [zoom]);
+
+  // Two fingers.
+  //
+  // The browser's own pinch zooms the whole page — the header, the bar, the
+  // button you would need to get back — and inside a fullscreen document it
+  // does nothing at all, which is what a student sees as "it will not let
+  // me". This zooms the document instead, and the pages are drawn again at
+  // the new size rather than stretched.
+  useEffect(() => {
+    const el = holder.current?.parentElement;
+    if (!el || !onZoom) return undefined;
+
+    let apart = 0;
+    let from = 1;
+    const span = (t) => Math.hypot(
+      t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+
+    const start = (e) => {
+      if (e.touches.length !== 2) return;
+      apart = span(e.touches);
+      from = zoomRef.current;
+    };
+    const move = (e) => {
+      if (e.touches.length !== 2 || !apart) return;
+      e.preventDefault();          // or the page scrolls under the fingers
+      onZoom(from * (span(e.touches) / apart));
+    };
+    const done = () => { apart = 0; };
+
+    el.addEventListener('touchstart', start, { passive: true });
+    el.addEventListener('touchmove', move, { passive: false });
+    el.addEventListener('touchend', done);
+    el.addEventListener('touchcancel', done);
+    return () => {
+      el.removeEventListener('touchstart', start);
+      el.removeEventListener('touchmove', move);
+      el.removeEventListener('touchend', done);
+      el.removeEventListener('touchcancel', done);
+    };
+  }, [onZoom]);
 
   useEffect(() => {
     let dead = false;
@@ -88,16 +180,20 @@ export default function PdfViewer({ src, title }) {
         if (!el) return;
         el.replaceChildren();
 
-        // The widest this page will ever be *shown* at, which is not the
-        // width of the box it is in right now: ملء الشاشة takes the document
-        // from `--doc-w` out to the whole screen without redrawing anything,
-        // and a canvas drawn for the narrower one is stretched and soft from
-        // the moment the button is pressed. Drawn for the screen, it is only
-        // ever scaled down, which costs nothing to look at.
-        const shown = Math.max(el.clientWidth || 0, window.innerWidth || 0, 390);
-        const width = Math.min(shown, MAX_WIDTH);
-        const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR, MAX_PIXELS / width);
-        const keep = width > 800 ? KEEP_BIG : KEEP;
+        // How wide to draw a page, worked out afresh every time rather than
+        // once: the answer changes when a student zooms, and it changes when
+        // ملء الشاشة takes the document from `--doc-w` out to the whole
+        // screen. A canvas drawn for the narrower of the two is stretched and
+        // soft the moment either happens, so the wider one always wins — a
+        // page scaled down costs nothing to look at.
+        const measure = () => {
+          const z = zoomRef.current;
+          const width = Math.max(el.clientWidth || 0, (window.innerWidth || 390) * z);
+          const dpr = Math.min(
+            window.devicePixelRatio || 1, MAX_DPR,
+            (z > 1.05 ? BUDGET_ZOOM : BUDGET) / width);
+          return { width, dpr, keep: keepFor(width * dpr) };
+        };
 
         // Measure page one only. Its shape stands in for the rest until each
         // is actually drawn, which is what makes the first page appear fast.
@@ -121,6 +217,8 @@ export default function PdfViewer({ src, title }) {
           const n = Number(slot.dataset.page);
           if (dead || drawn.has(n)) return;
           drawn.add(n);
+          const { width, dpr } = measure();
+          slot.dataset.drawnAt = String(Math.round(width));
           try {
             const page = n === 1 ? first : await doc.getPage(n);
             if (dead) return;
@@ -157,6 +255,7 @@ export default function PdfViewer({ src, title }) {
         observer = new IntersectionObserver((entries) => {
           entries.forEach((e) => {
             const slot = e.target;
+            const { keep } = measure();
             if (e.isIntersecting) {
               drawPage(slot);
             } else {
@@ -167,6 +266,25 @@ export default function PdfViewer({ src, title }) {
           });
         }, { rootMargin: '600px 0px' });
         slots.forEach((s) => observer.observe(s));
+
+        // A zoom happened. Throw away every page drawn at the old size and
+        // draw the ones on screen again at the new one; the observer picks up
+        // the rest as the student scrolls into them.
+        rescale.current = () => {
+          if (dead) return;
+          const { width } = measure();
+          const want = String(Math.round(width));
+          slots.forEach((s) => {
+            if (drawn.has(Number(s.dataset.page)) && s.dataset.drawnAt !== want) {
+              cleanupSlot(s);
+            }
+          });
+          const tall = window.innerHeight;
+          slots.forEach((s) => {
+            const box = s.getBoundingClientRect();
+            if (box.bottom > -400 && box.top < tall + 400) drawPage(s);
+          });
+        };
       } catch (err) {
         if (!dead) {
           console.error('PDF viewer:', err);
@@ -177,6 +295,7 @@ export default function PdfViewer({ src, title }) {
 
     return () => {
       dead = true;
+      rescale.current = null;
       if (observer) observer.disconnect();
       tasks.forEach((t) => { try { t.cancel(); } catch {} });
       tasks.clear();
@@ -186,7 +305,7 @@ export default function PdfViewer({ src, title }) {
   }, [src]);
 
   return (
-    <div className="pdf">
+    <div className="pdf" style={{ '--zoom': zoom }}>
       {status === 'loading' && (
         <div className="pdf-msg">
           <div className="spinner" />

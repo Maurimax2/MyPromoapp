@@ -531,7 +531,14 @@ button.pill:active { transform: scale(.94); }
   min-height: calc(100dvh - 96px - var(--nav-h));
   padding: 14px 12px calc(var(--nav-h) + 24px);
 }
-.pdf-pages { display: flex; flex-direction: column; gap: 12px; }
+.pdf-pages {
+  display: flex; flex-direction: column; gap: 12px;
+  /* `--zoom` is written on `.pdf` by the reader and is 1 until somebody
+     pinches. The page is made bigger rather than magnified: pdf.js draws it
+     again at this width, so the letters gain pixels instead of losing them. */
+  width: calc(100% * var(--zoom, 1));
+  margin-inline: auto;
+}
 .pdf-page {
   display: block; width: 100%;
   border-radius: 10px;
@@ -1695,23 +1702,73 @@ button.pill:active { transform: scale(.94); }
 /* The page takes the screen: no width held back for it, no card around it,
    and a hairline between one page and the next so they are still two pages. */
 .only-pages .pdf-pages { max-width: none; gap: 2px; }
+/* A page zoomed past the screen has to have somewhere to go.
+   The window will not take it. `overflow-x` is hidden on html and body — a
+   stray scrollable strip beside the app is worse than anything it would show
+   — and lifting it there is not enough anyway: the overflow never reaches
+   them. So the reader becomes its own scrolling surface for as long as it is
+   open, and the page pans inside it.
+
+   Laid out left to right, for the scrolling alone. A block wider than its
+   container spills towards the inline end, which in this RTL page is the
+   left, and the left is the side a scroll does not go. The pages are pictures
+   and do not care which way the box around them runs; the messages drawn
+   among them keep their own direction.
+
+   `touch-action` leaves panning to the browser, where it is smooth, and keeps
+   the pinch for us — the browser's own pinch would zoom this bar and the
+   button out of here along with the page. */
+/* The column has to be told how tall it is, or the reader inside it is not a
+   window onto a long document — it *is* the long document, nine thousand
+   pixels of it, and there is nothing to scroll. `flex-basis: 0` on the reader
+   means its own `height` is never consulted; the height has to come from
+   here. */
+.only-pages .app { height: 100dvh; min-height: 0; }
+.only-pages .pdf {
+  direction: ltr;
+  min-height: 0;
+  overflow: auto; overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+.pdf-msg, .pdf-count { direction: rtl; }
 .only-pages .pdf-page,
 .only-pages .pdf-page canvas { border-radius: 0; box-shadow: none; }
 
-/* The way back. It is the only thing drawn over the pages, so it has to be
-   legible on a white page and on a dark scan alike, and it does not fade out
-   after a few seconds onto a screen that would then look like a dead end. */
-.pdf-out {
+/* The size, and the way back. The only things drawn over the pages, so they
+   have to be legible on a white page and on a dark scan alike, and they do
+   not fade out after a few seconds onto a screen that would then look like a
+   dead end. Fixed, so they stay put while a zoomed page is panned around
+   underneath them. */
+.pdf-tools {
   position: fixed; z-index: 40;
   inset-block-end: calc(18px + env(safe-area-inset-bottom));
   inset-inline-start: 18px;
-  width: 48px; height: 48px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; gap: 10px;
+}
+.pdf-out, .pdf-zoom {
   background: rgba(26, 20, 36, .72); color: #fff;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, .38);
 }
+.pdf-out {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
 .pdf-out:active { transform: scale(.94); }
+
+.pdf-zoom { height: 48px; border-radius: 24px; display: flex; align-items: center; }
+.pdf-zoom button {
+  width: 46px; height: 48px; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.pdf-zoom button:active { color: var(--orange-light); }
+/* A limit that is reached says so rather than going quiet under the thumb. */
+.pdf-zoom button:disabled { color: rgba(255, 255, 255, .34); }
+.pdf-zoom-n {
+  width: auto !important; min-width: 62px; padding: 0 4px;
+  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+  border-inline: 1px solid rgba(255, 255, 255, .18);
+}
 
 /* ============================================================
    Pasting questions in from another model. The whole screen is
@@ -2081,8 +2138,10 @@ button.pill:active { transform: scale(.94); }
    up a metre from the button that downloads it. */
 .file-wide { display: none; }
 @media (min-width: 700px) {
-  .pdf-pages,
   .app:has(.file-wide) .head-row {
     max-width: var(--doc-w); margin-inline: auto; width: 100%;
   }
+  /* The cap grows with the zoom. Held at `--doc-w` it would swallow the
+     first press of + and answer with nothing happening. */
+  .pdf-pages { max-width: calc(var(--doc-w) * var(--zoom, 1)); }
 }

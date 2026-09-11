@@ -21,9 +21,18 @@ const REMEMBER = 'mypromo.reader';
 // its page handling are worth the wait.
 const BIG = 8 * 1024 * 1024;
 
+// How far a page may be taken. Below 1 it is smaller than the screen, which
+// is how you see a whole page at once; above it, it is drawn again bigger
+// rather than stretched, which is how you read the small print on a scan.
+const NEAREST = 0.6;
+const FURTHEST = 3;
+const STEP = 1.25;
+const hold = (z) => Math.min(FURTHEST, Math.max(NEAREST, z));
+
 export default function Reader({ fid, src, title, bytes }) {
   const [mode, setMode] = useState(null);   // null until the device is read
   const [full, setFull] = useState(false);  // الصفحات وحدها
+  const [zoom, setZoom] = useState(1);
 
   useEffect(() => {
     let saved = null;
@@ -80,6 +89,10 @@ export default function Reader({ fid, src, title, bytes }) {
 
   const leave = () => {
     setFull(false);
+    // Back to the size of the screen. A document left at 240% would come back
+    // to a header and a bar with the pages running off the side of both, and
+    // nothing on that screen says why.
+    setZoom(1);
     if (document.fullscreenElement) settle(document.exitFullscreen());
   };
 
@@ -99,15 +112,41 @@ export default function Reader({ fid, src, title, bytes }) {
 
       {mode === 'quick'
         ? <QuickView fid={fid} onFallback={() => choose('app')} />
-        : <PdfViewer src={src} title={title} />}
+        : <PdfViewer
+            src={src} title={title} zoom={zoom}
+            /* Two fingers only where there is a way back out of what they
+               do. Outside ملء الشاشة the width is the column's to decide. */
+            onZoom={full ? (z) => setZoom(hold(z)) : undefined} />}
 
-      {/* The only thing drawn over the pages, and the only way back to the
-          rest of the screen — so it stays put rather than fading out after a
-          few seconds onto a page that then looks like a dead end. */}
+      {/* The only things drawn over the pages, and among them the only way
+          back to the rest of the screen — so they stay put rather than fading
+          out after a few seconds onto a page that then looks like a dead
+          end. */}
       {full && (
-        <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
-          <Icon name="shrink" size={20} />
-        </button>
+        <div className="pdf-tools">
+          {/* العرض السريع is Google's viewer in a frame: it has its own
+              zoom inside it, and nothing out here can reach into it. */}
+          {mode === 'app' && (
+            <div className="pdf-zoom">
+              <button onClick={() => setZoom((z) => hold(z / STEP))}
+                disabled={zoom <= NEAREST + 0.001} aria-label="تصغير">
+                <Icon name="minus" size={18} />
+              </button>
+              {/* The number is the way back to the size of the screen. */}
+              <button className="pdf-zoom-n" onClick={() => setZoom(1)}
+                aria-label="ملء عرض الشاشة">
+                {Math.round(zoom * 100)}%
+              </button>
+              <button onClick={() => setZoom((z) => hold(z * STEP))}
+                disabled={zoom >= FURTHEST - 0.001} aria-label="تكبير">
+                <Icon name="plus" size={18} />
+              </button>
+            </div>
+          )}
+          <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
+            <Icon name="shrink" size={20} />
+          </button>
+        </div>
       )}
     </>
   );
