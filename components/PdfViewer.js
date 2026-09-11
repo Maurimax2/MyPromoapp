@@ -19,8 +19,14 @@ import { pdfjs as load } from '@/lib/pdfjs';
 //   immediately, and its shape sizes the placeholders for the rest.
 
 const KEEP = 4;          // rendered pages retained either side of the viewport
-const MAX_WIDTH = 820;   // no point rendering wider than a phone can show
+const MAX_WIDTH = 1100;  // a page fills a phone and stops here on a tablet
 const MAX_DPR = 1.5;     // 2x doubles memory for very little visible gain
+// A drawn page is a bitmap the browser holds until it is thrown away, and
+// keeping every page drawn is what crashed Safari on a long lecture. A wider
+// page must therefore be drawn at a lower density rather than a larger one:
+// this is the widest a canvas is ever made, whatever the screen. It is what
+// 820px at 1.5 already came to, so nothing changes on a phone.
+const MAX_PIXELS = 1400;
 
 export default function PdfViewer({ src, title }) {
   const holder = useRef(null);
@@ -82,7 +88,7 @@ export default function PdfViewer({ src, title }) {
         el.replaceChildren();
 
         const width = Math.min(el.clientWidth || 390, MAX_WIDTH);
-        const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+        const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR, MAX_PIXELS / width);
 
         // Measure page one only. Its shape stands in for the rest until each
         // is actually drawn, which is what makes the first page appear fast.

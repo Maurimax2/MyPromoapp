@@ -8,11 +8,17 @@
      column, the bottom bar, the chat composer and the sheet. Three of them
      are `position: fixed` and centred by hand, so a column that grew without
      them would leave the bar hanging off to one side. They read it from here
-     now, and the breakpoints below move all four at once. */
+     now, and the tablet block at the end of this file moves all four at
+     once — to the full width of the screen. */
   --app-w: 430px;
-  /* How wide a document is allowed to get once it has the whole tablet. A
-     page drawn wider than this is not more readable, only larger. */
-  --doc-w: 980px;
+  /* A sheet is a thing that comes up over the screen, not the screen. It
+     keeps a width of its own so it does not become a band across a metre of
+     glass with three rows in it. */
+  --sheet-w: 430px;
+  /* How wide a page of a document is drawn. It fills a phone; on a tablet it
+     stops here, because past this a page is not more readable, only larger —
+     and every pixel of it is a bitmap the browser has to hold. */
+  --doc-w: 1100px;
   --purple: #6B21B5;
   --purple-light: #8B5CF6;
   --purple-pale: #EDE9FE;
@@ -90,47 +96,6 @@ a, button, [role='button'], label, input, select, textarea, summary {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-/* ---------- a tablet ----------
-
-   Most students read on a tablet, and the phone column left two thirds of the
-   glass empty — a lecture drawn 430px wide on a 1280px screen.
-
-   The column grows in two steps. The bottom bar, the chat composer and the
-   sheet all read `--app-w`, so they grow with it rather than staying 430px
-   and drifting off to one side of the column they belong to.
-
-   It stops at 680px on purpose. A card in the feed is a paragraph, and a
-   paragraph that runs the full width of a landscape tablet is harder to read
-   than the phone column was, not easier. A document is the one exception. */
-@media (min-width: 700px) {
-  :root { --app-w: 600px; }
-}
-@media (min-width: 1024px) {
-  :root { --app-w: 680px; }
-}
-
-/* A lecture takes the whole screen.
-
-   The reader sits inside `.app` like every other screen, so it inherited the
-   column: the single most painful thing on a tablet, and exactly the reason
-   students asked. `.file-wide` is printed by the file screen and by nothing
-   else. A browser with no `:has()` keeps the column — which is what it does
-   today, so nothing there gets worse. */
-.file-wide { display: none; }
-@media (min-width: 700px) {
-  .app:has(.file-wide) { max-width: none; }
-  /* Past this a page is just a large picture of a page, and a title a metre
-     away from the button that downloads it is two separate things rather than
-     one header. Both are held to the width of a document and centred. */
-  .pdf-pages,
-  .app:has(.file-wide) .head-row { max-width: var(--doc-w); margin-inline: auto; width: 100%; }
-}
-
-/* The front door is a form, not a screen: it stays the width of a form. */
-@media (min-width: 700px) {
-  .login-form, .login-sent { max-width: 380px; }
 }
 
 /* ---------- header ---------- */
@@ -1524,6 +1489,11 @@ button.pill:active { transform: scale(.94); }
 }
 .me-stat span { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; display: block; }
 
+/* The button sits inside the card rather than welded across its corners.
+   `.card` carries no padding of its own — every other one puts it on the row
+   inside — so this one had to say so too. */
+.find-go { width: calc(100% - 28px); margin: 0 14px 14px; }
+
 /* ---------- reporting ---------- */
 .post-more { position: relative; flex-shrink: 0; }
 .post-more > button {
@@ -1910,7 +1880,7 @@ button.pill:active { transform: scale(.94); }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
 .sheet {
-  width: 100%; max-width: var(--app-w);
+  width: 100%; max-width: var(--sheet-w);
   background: var(--surface);
   border-radius: 22px 22px 0 0;
   border-top: 1px solid var(--line);
@@ -1960,4 +1930,117 @@ button.pill:active { transform: scale(.94); }
 
 @media (prefers-reduced-motion: reduce) {
   .sheet-back, .sheet { animation: none; }
+}
+
+/* ---------- a tablet ----------
+
+   Edge to edge, in either orientation.
+
+   The app used to be one 430px column with the page showing down both sides
+   of it. On a tablet that grey band was most of the glass — two thirds of a
+   1280px screen in landscape — and it is where students actually read. There
+   is no column above 700px any more: every surface reaches both edges, and
+   turning the tablet over changes nothing but how many fit.
+
+   Filling the width is not the same as stretching one card across it. From
+   820px the body lays its cards into as many columns as fit, and the things
+   that are a band rather than a card keep the whole row.
+
+   All of it last in the file on purpose: a media query carries no weight of
+   its own, so a rule here that means to replace one above it has to come
+   after it. Written higher up, the grid below simply never happened — the
+   phone's `display: flex` was further down the file and won. */
+@media (min-width: 700px) {
+  :root { --app-w: 100%; --sheet-w: 560px; }
+
+  /* The bar reaches both edges. Its four tabs stay together in the middle
+     instead of being flung into the corners, where they are two hand
+     movements apart. */
+  .nav { justify-content: center; }
+  .nav a, .nav .navsp { max-width: 132px; }
+
+  /* One banner at a time is a phone's problem. Here two fit with the third
+     peeking, which is the same promise — there is more, keep going. */
+  .sub { width: 46%; }
+
+  /* A message is a message, not a line across the room. */
+  .say { max-width: 560px; }
+
+  /* The front door is a form, not a screen: it stays the width of a form. */
+  .login-form, .login-sent { max-width: 380px; }
+
+  /* Five tools spread over a metre stop reading as a row. */
+  .tools { max-width: 760px; margin-inline: auto; }
+}
+
+/* The violet head, side by side.
+   Who you are on one side and the tools on the other, instead of a greeting
+   pinned to one edge and a row of buttons floating under it. It also gives
+   back about 70px of height, which is the thing a tablet held sideways has
+   least of. */
+@media (min-width: 900px) {
+  .hero {
+    display: grid;
+    /* The greeting takes what it needs and the tools take the rest. Sized
+       the other way round — the tools capped and the greeting on `1fr` —
+       the greeting swallowed the row and squeezed five tools into 290px. */
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 28px;
+    padding-bottom: 34px;
+  }
+  .hero-row { grid-column: 1 / -1; }
+  .hero-hi { margin: 10px 2px; }
+  /* The row spans the band; the tiles stay tiles. Five buttons stretched to
+     200px each read as five panels, not as a row of tools.
+
+     `margin-inline` has to go back to 0 as well: an auto margin on a grid
+     item beats the stretch it would otherwise do, so the row kept shrinking
+     to its own content and sitting in the middle of a track three times its
+     width. */
+  .tools { max-width: none; margin-inline: 0; }
+  .tool i { max-width: 150px; }
+}
+
+@media (min-width: 1100px) {
+  .sub { width: 31%; }
+}
+
+/* As many columns of cards as fit. `auto-fill` rather than a number, because
+   the number is different in portrait, in landscape, and on the phone this
+   was written for. */
+@media (min-width: 820px) {
+  .scroll {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    align-content: start;
+  }
+  /* A band, not a card. These either say something about everything under
+     them or are the one thing on the screen, so they take the row. */
+  .scroll > .eyebrow, .scroll > .subs, .scroll > .composer,
+  .scroll > .today, .scroll > .empty, .scroll > .notice,
+  .scroll > .seg, .scroll > .quizcard, .scroll > .admin-import,
+  .scroll > .me, .scroll > .rev-tabs, .scroll > .pts-hero,
+  .scroll > .badges, .scroll > .pts-note, .scroll > form:not(.card),
+  .scroll > .srch, .scroll > .tabs {
+    grid-column: 1 / -1;
+  }
+
+  /* Four counts under a name, not four counts across a room. */
+  .me-stats { max-width: 520px; margin-inline: auto; }
+  /* A conversation is read down, not across. */
+  .room-log { display: flex; }
+}
+
+/* A lecture had the worst of it: a page drawn 430px wide on a 1280px screen.
+   The reader fills the screen like everything else now, and the page is held
+   to `--doc-w` on the reader's own dark ground — which is the reader, not an
+   empty edge. The header is held to the same width, so the title does not end
+   up a metre from the button that downloads it. */
+.file-wide { display: none; }
+@media (min-width: 700px) {
+  .pdf-pages,
+  .app:has(.file-wide) .head-row {
+    max-width: var(--doc-w); margin-inline: auto; width: 100%;
+  }
 }

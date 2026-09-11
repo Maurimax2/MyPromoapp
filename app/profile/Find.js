@@ -33,14 +33,14 @@ export default function Find() {
         <div className="grow">
           <div className="nm">ابحث عن زميل</div>
           <input
-            className="login-input" dir="ltr" style={{ marginTop: 6 }}
+            className="login-input" dir="ltr" style={{ marginTop: 6, width: '100%' }}
             placeholder="D04458" inputMode="text"
             value={value}
             onChange={(e) => setValue(e.target.value.toUpperCase())}
             aria-label="الرقم الجامعي" />
         </div>
       </div>
-      <button className="btn p" disabled={!ready}>اذهب</button>
+      <button className="btn p find-go" disabled={!ready}>اذهب</button>
     </form>
   );
 }
