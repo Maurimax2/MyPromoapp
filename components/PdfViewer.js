@@ -19,14 +19,15 @@ import { pdfjs as load } from '@/lib/pdfjs';
 //   immediately, and its shape sizes the placeholders for the rest.
 
 const KEEP = 4;          // rendered pages retained either side of the viewport
-const MAX_WIDTH = 1100;  // a page fills a phone and stops here on a tablet
+const KEEP_BIG = 2;      // …fewer of them when each one is a tablet-sized bitmap
+const MAX_WIDTH = 1400;  // a page fills a phone, and fills a tablet up to here
 const MAX_DPR = 1.5;     // 2x doubles memory for very little visible gain
 // A drawn page is a bitmap the browser holds until it is thrown away, and
 // keeping every page drawn is what crashed Safari on a long lecture. A wider
-// page must therefore be drawn at a lower density rather than a larger one:
-// this is the widest a canvas is ever made, whatever the screen. It is what
-// 820px at 1.5 already came to, so nothing changes on a phone.
-const MAX_PIXELS = 1400;
+// page is therefore drawn at a lower density rather than at a larger size:
+// this is the widest a canvas is ever made, whatever the screen, so a page on
+// a 1280px tablet costs about what one on a phone always did.
+const MAX_PIXELS = 1500;
 
 export default function PdfViewer({ src, title }) {
   const holder = useRef(null);
@@ -87,8 +88,16 @@ export default function PdfViewer({ src, title }) {
         if (!el) return;
         el.replaceChildren();
 
-        const width = Math.min(el.clientWidth || 390, MAX_WIDTH);
+        // The widest this page will ever be *shown* at, which is not the
+        // width of the box it is in right now: ملء الشاشة takes the document
+        // from `--doc-w` out to the whole screen without redrawing anything,
+        // and a canvas drawn for the narrower one is stretched and soft from
+        // the moment the button is pressed. Drawn for the screen, it is only
+        // ever scaled down, which costs nothing to look at.
+        const shown = Math.max(el.clientWidth || 0, window.innerWidth || 0, 390);
+        const width = Math.min(shown, MAX_WIDTH);
         const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR, MAX_PIXELS / width);
+        const keep = width > 800 ? KEEP_BIG : KEEP;
 
         // Measure page one only. Its shape stands in for the rest until each
         // is actually drawn, which is what makes the first page appear fast.
@@ -152,8 +161,8 @@ export default function PdfViewer({ src, title }) {
               drawPage(slot);
             } else {
               const n = Number(slot.dataset.page);
-              const near = [...drawn].some((d) => Math.abs(d - n) <= KEEP && d !== n);
-              if (drawn.has(n) && drawn.size > KEEP * 2 && !near) cleanupSlot(slot);
+              const near = [...drawn].some((d) => Math.abs(d - n) <= keep && d !== n);
+              if (drawn.has(n) && drawn.size > keep * 2 && !near) cleanupSlot(slot);
             }
           });
         }, { rootMargin: '600px 0px' });

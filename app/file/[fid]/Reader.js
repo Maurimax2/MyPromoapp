@@ -1,6 +1,6 @@
 'use client';
 
-// Which way to read this file.
+// Which way to read this file, and how much of the screen it gets.
 //
 // Quick view first for anything big: Google draws the pages and sends
 // pictures, so a 40 MB scan starts immediately instead of arriving in full.
@@ -13,6 +13,7 @@
 import { useEffect, useState } from 'react';
 import PdfViewer from '@/components/PdfViewer';
 import QuickView from '@/components/QuickView';
+import Icon from '@/components/Icon';
 
 const REMEMBER = 'mypromo.reader';
 
@@ -22,6 +23,7 @@ const BIG = 8 * 1024 * 1024;
 
 export default function Reader({ fid, src, title, bytes }) {
   const [mode, setMode] = useState(null);   // null until the device is read
+  const [full, setFull] = useState(false);  // الصفحات وحدها
 
   useEffect(() => {
     let saved = null;
@@ -36,18 +38,77 @@ export default function Reader({ fid, src, title, bytes }) {
     try { localStorage.setItem(REMEMBER, next); } catch {}
   };
 
+  // Two things happen at once, because neither is enough on its own.
+  //
+  // The class is ours. It takes away the header and this bar, drops the width
+  // the page is held to, and works in every browser — which matters, because
+  // the one that refuses the other half must still end up with a full screen
+  // of pages rather than nothing having happened.
+  //
+  // Fullscreen is the browser's, and it takes away the address bar too. On a
+  // tablet held sideways that is the inch that decides whether a page fits.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('only-pages', full);
+    return () => root.classList.remove('only-pages');
+  }, [full]);
+
+  // Our button is not the only way out. Escape, the back gesture and the
+  // browser's own control all end fullscreen without telling React, and a
+  // screen still wearing the class after that has no header and no way back.
+  useEffect(() => {
+    const sync = () => { if (!document.fullscreenElement) setFull(false); };
+    const key = (e) => { if (e.key === 'Escape') setFull(false); };
+    document.addEventListener('fullscreenchange', sync);
+    document.addEventListener('keydown', key);
+    return () => {
+      document.removeEventListener('fullscreenchange', sync);
+      document.removeEventListener('keydown', key);
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    };
+  }, []);
+
+  // A browser that has never heard of it returns nothing rather than a
+  // promise, and a browser that refuses rejects one. Both are fine: the class
+  // has already done the half that always works.
+  const settle = (p) => { if (p && p.catch) p.catch(() => {}); };
+
+  const enter = () => {
+    setFull(true);
+    settle(document.documentElement.requestFullscreen?.());
+  };
+
+  const leave = () => {
+    setFull(false);
+    if (document.fullscreenElement) settle(document.exitFullscreen());
+  };
+
   if (!mode) return <div className="pdf-msg"><div className="spinner" /></div>;
 
   return (
     <>
       {/* At the top, where a thumb reaches it and nothing covers it. */}
-      <button className="pdf-switch" onClick={() => choose(mode === 'quick' ? 'app' : 'quick')}>
-        {mode === 'quick' ? 'افتحه داخل التطبيق بدل ذلك' : 'العرض السريع — أسرع للملفات الكبيرة'}
-      </button>
+      <div className="pdf-bar">
+        <button className="pdf-switch" onClick={() => choose(mode === 'quick' ? 'app' : 'quick')}>
+          {mode === 'quick' ? 'افتحه داخل التطبيق بدل ذلك' : 'العرض السريع — أسرع للملفات الكبيرة'}
+        </button>
+        <button className="pdf-full" onClick={enter} aria-label="ملء الشاشة" title="ملء الشاشة">
+          <Icon name="expand" size={19} />
+        </button>
+      </div>
 
       {mode === 'quick'
         ? <QuickView fid={fid} onFallback={() => choose('app')} />
         : <PdfViewer src={src} title={title} />}
+
+      {/* The only thing drawn over the pages, and the only way back to the
+          rest of the screen — so it stays put rather than fading out after a
+          few seconds onto a page that then looks like a dead end. */}
+      {full && (
+        <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
+          <Icon name="shrink" size={20} />
+        </button>
+      )}
     </>
   );
 }
