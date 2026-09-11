@@ -42,9 +42,27 @@ export default function Reader({ fid, src, title, bytes }) {
       : (bytes && bytes > BIG ? 'quick' : 'app'));
   }, [bytes]);
 
-  const choose = (next) => {
+  const choose = (next, size = 1) => {
     setMode(next);
+    setZoom(size);
     try { localStorage.setItem(REMEMBER, next); } catch {}
+  };
+
+  // Bigger, or smaller.
+  //
+  // In العرض السريع there is nothing here to resize: the pages are drawn by
+  // Google inside a frame this page is not allowed to reach into, and every
+  // trick from outside it cancels out — a narrower frame makes Google fit the
+  // page smaller by exactly as much as the frame is then scaled up by, which
+  // is a control that visibly does nothing. Measured, not assumed.
+  //
+  // So asking for a bigger page is asking for the reader that can draw one,
+  // and the press does that. The pill beside these says which reader you are
+  // in and takes you back.
+  const step = (dir) => {
+    const out = dir > 0 ? STEP : 1 / STEP;
+    if (mode === 'quick') { choose('app', hold(out)); return; }
+    setZoom((z) => hold(z * out));
   };
 
   // Two things happen at once, because neither is enough on its own.
@@ -111,7 +129,7 @@ export default function Reader({ fid, src, title, bytes }) {
       </div>
 
       {mode === 'quick'
-        ? <QuickView fid={fid} onFallback={() => choose('app')} />
+        ? <QuickView fid={fid} onFallback={() => choose('app')} zoom={zoom} />
         : <PdfViewer
             src={src} title={title} zoom={zoom}
             /* Two fingers only where there is a way back out of what they
@@ -124,25 +142,32 @@ export default function Reader({ fid, src, title, bytes }) {
           end. */}
       {full && (
         <div className="pdf-tools">
-          {/* العرض السريع is Google's viewer in a frame: it has its own
-              zoom inside it, and nothing out here can reach into it. */}
-          {mode === 'app' && (
-            <div className="pdf-zoom">
-              <button onClick={() => setZoom((z) => hold(z / STEP))}
-                disabled={zoom <= NEAREST + 0.001} aria-label="تصغير">
-                <Icon name="minus" size={18} />
-              </button>
-              {/* The number is the way back to the size of the screen. */}
-              <button className="pdf-zoom-n" onClick={() => setZoom(1)}
-                aria-label="ملء عرض الشاشة">
-                {Math.round(zoom * 100)}%
-              </button>
-              <button onClick={() => setZoom((z) => hold(z * STEP))}
-                disabled={zoom >= FURTHEST - 0.001} aria-label="تكبير">
-                <Icon name="plus" size={18} />
-              </button>
-            </div>
-          )}
+          <div className="pdf-zoom">
+            <button onClick={() => step(-1)}
+              disabled={mode === 'app' && zoom <= NEAREST + 0.001} aria-label="تصغير">
+              <Icon name="minus" size={18} />
+            </button>
+            {/* The number is the way back to the size of the screen. */}
+            <button className="pdf-zoom-n" onClick={() => setZoom(1)}
+              aria-label="ملء عرض الشاشة">
+              {Math.round(zoom * 100)}%
+            </button>
+            <button onClick={() => step(1)}
+              disabled={mode === 'app' && zoom >= FURTHEST - 0.001} aria-label="تكبير">
+              <Icon name="plus" size={18} />
+            </button>
+          </div>
+
+          {/* The way out of one reader and into the other.
+              It used to live only in the bar at the top, which ملء الشاشة
+              hides — so a student who had opened a lecture in العرض السريع
+              and gone fullscreen was left with Google's pages, Google's
+              speed, and no way to reach the renderer that draws them
+              properly without first leaving the screen they wanted. */}
+          <button className="pdf-mode" onClick={() => choose(mode === 'quick' ? 'app' : 'quick')}>
+            {mode === 'quick' ? 'داخل التطبيق' : 'العرض السريع'}
+          </button>
+
           <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
             <Icon name="shrink" size={20} />
           </button>

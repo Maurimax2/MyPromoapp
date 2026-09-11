@@ -1757,6 +1757,16 @@ button.pill:active { transform: scale(.94); }
 .pdf-out:active { transform: scale(.94); }
 
 .pdf-zoom { height: 48px; border-radius: 24px; display: flex; align-items: center; }
+/* Named rather than drawn: an icon for "the other way of reading this" is a
+   guess every time, and there are only two of them. */
+.pdf-mode {
+  height: 48px; border-radius: 24px; padding: 0 16px; color: #fff;
+  font-size: 12.5px; font-weight: 700;
+  background: rgba(26, 20, 36, .72);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .38);
+}
+.pdf-mode:active { transform: scale(.96); }
 .pdf-zoom button {
   width: 46px; height: 48px; color: #fff;
   display: flex; align-items: center; justify-content: center;
