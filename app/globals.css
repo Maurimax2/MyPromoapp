@@ -2,6 +2,17 @@
    Tokens first; every component reads from them. */
 
 :root {
+  /* The width of the app.
+
+     One phone column, and four places used to write 430px themselves: the
+     column, the bottom bar, the chat composer and the sheet. Three of them
+     are `position: fixed` and centred by hand, so a column that grew without
+     them would leave the bar hanging off to one side. They read it from here
+     now, and the breakpoints below move all four at once. */
+  --app-w: 430px;
+  /* How wide a document is allowed to get once it has the whole tablet. A
+     page drawn wider than this is not more readable, only larger. */
+  --doc-w: 980px;
   --purple: #6B21B5;
   --purple-light: #8B5CF6;
   --purple-pale: #EDE9FE;
@@ -42,7 +53,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 :focus-visible { outline: 2px solid var(--purple-light); outline-offset: 2px; }
 
 /* Pressing things.
-   
+
    Two defaults were doing the app harm on a phone. The browser paints its own
    grey box over whatever you touch, which on a rounded card is a square with
    corners sticking out and reads as a rendering fault; and without
@@ -72,13 +83,54 @@ a, button, [role='button'], label, input, select, textarea, summary {
 /* The whole app lives in one phone-width column, centred on wider screens. */
 .app {
   width: 100%;
-  max-width: 430px;
+  max-width: var(--app-w);
   margin: 0 auto;
   min-height: 100dvh;
   background: var(--bg);
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+/* ---------- a tablet ----------
+
+   Most students read on a tablet, and the phone column left two thirds of the
+   glass empty — a lecture drawn 430px wide on a 1280px screen.
+
+   The column grows in two steps. The bottom bar, the chat composer and the
+   sheet all read `--app-w`, so they grow with it rather than staying 430px
+   and drifting off to one side of the column they belong to.
+
+   It stops at 680px on purpose. A card in the feed is a paragraph, and a
+   paragraph that runs the full width of a landscape tablet is harder to read
+   than the phone column was, not easier. A document is the one exception. */
+@media (min-width: 700px) {
+  :root { --app-w: 600px; }
+}
+@media (min-width: 1024px) {
+  :root { --app-w: 680px; }
+}
+
+/* A lecture takes the whole screen.
+
+   The reader sits inside `.app` like every other screen, so it inherited the
+   column: the single most painful thing on a tablet, and exactly the reason
+   students asked. `.file-wide` is printed by the file screen and by nothing
+   else. A browser with no `:has()` keeps the column — which is what it does
+   today, so nothing there gets worse. */
+.file-wide { display: none; }
+@media (min-width: 700px) {
+  .app:has(.file-wide) { max-width: none; }
+  /* Past this a page is just a large picture of a page, and a title a metre
+     away from the button that downloads it is two separate things rather than
+     one header. Both are held to the width of a document and centred. */
+  .pdf-pages,
+  .app:has(.file-wide) .head-row { max-width: var(--doc-w); margin-inline: auto; width: 100%; }
+}
+
+/* The front door is a form, not a screen: it stays the width of a form. */
+@media (min-width: 700px) {
+  .login-form, .login-sent { max-width: 380px; }
 }
 
 /* ---------- header ---------- */
@@ -250,7 +302,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
 /* ---------- bottom nav ---------- */
 .nav {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 430px; height: var(--nav-h);
+  width: 100%; max-width: var(--app-w); height: var(--nav-h);
   background: var(--surface); border-top: 1px solid var(--line-soft);
   box-shadow: var(--shadow-nav);
   display: flex; align-items: center; padding: 0 4px; z-index: 10;
@@ -1378,7 +1430,7 @@ button.pill:active { transform: scale(.94); }
 }
 .say-new {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 430px; z-index: 11;
+  width: 100%; max-width: var(--app-w); z-index: 11;
   background: var(--surface); border-top: 1px solid var(--line-soft);
   box-shadow: var(--shadow-nav);
   display: flex; align-items: center; gap: 9px; padding: 11px 14px 14px;
@@ -1858,7 +1910,7 @@ button.pill:active { transform: scale(.94); }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
 .sheet {
-  width: 100%; max-width: 430px;
+  width: 100%; max-width: var(--app-w);
   background: var(--surface);
   border-radius: 22px 22px 0 0;
   border-top: 1px solid var(--line);

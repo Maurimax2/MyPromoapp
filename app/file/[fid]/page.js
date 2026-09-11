@@ -12,6 +12,10 @@ export default async function FileView({ params }) {
 
   return (
     <>
+      {/* Read by the stylesheet, drawn by nobody: it tells the column around
+          this screen to let a document have the whole tablet. */}
+      <span className="file-wide" aria-hidden="true" />
+
       <header className="head" style={{ paddingBottom: 14 }}>
         <div className="head-row">
           <BackButton />
