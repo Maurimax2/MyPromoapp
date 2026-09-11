@@ -48,9 +48,17 @@ export async function POST(request) {
   const { data: known } = await db.from('modules').select('id').eq('id', module).maybeSingle();
   if (!known) return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
 
+  // A written answer counts as answered when there are words in it, not when
+  // there is an index in an array it will never have.
+  const isAnswered = (q) => (q.kind === 'qroc' ? Boolean(q.model) : q.answer.length > 0);
+
   const counted = sections.reduce((n, s) => n + s.questions.length, 0);
   const withAnswer = sections.reduce(
-    (n, s) => n + s.questions.filter((q) => q.answer.length).length, 0);
+    (n, s) => n + s.questions.filter(isAnswered).length, 0);
+  const written = sections.reduce(
+    (n, s) => n + s.questions.filter((q) => q.kind === 'qroc').length, 0);
+  const guessed = sections.reduce(
+    (n, s) => n + s.questions.filter((q) => q.guessed).length, 0);
 
   // What it read, before anything is written.
   if (!confirm) {
@@ -61,10 +69,13 @@ export async function POST(request) {
       found: counted,
       answered: withAnswer,
       waiting: counted - withAnswer,
+      written,
+      guessed,
       sections: sections.map((s) => ({
         title: s.title,
         questions: s.questions.map((q) => ({
-          n: q.n, stem: q.q, options: q.options, answer: q.answer,
+          n: q.n, stem: q.q, kind: q.kind, options: q.options, answer: q.answer,
+          model: q.model, guessed: q.guessed,
         })),
       })),
     });

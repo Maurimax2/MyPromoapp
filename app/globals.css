@@ -746,6 +746,18 @@ button.pill:active { transform: scale(.94); }
 .quiz-why.ok { color: var(--right); }
 .quiz-why.no { color: var(--wrong); }
 .btn:disabled { opacity: .4; }
+/* A written answer. The question, then what the correction said, then the
+   only two buttons a self-marked answer needs. */
+.quiz-ask {
+  font-size: 13.5px; color: var(--ink-3); text-align: center;
+  line-height: 1.8; margin: 2px 0 4px;
+}
+.quiz-model {
+  padding: 15px 16px; font-size: 15px; line-height: 1.9; color: var(--ink);
+  border-inline-start: 3px solid var(--purple);
+}
+.quiz-mark { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+
 .quiz-src { font-size: 12.5px; color: var(--ink-3); text-align: center; }
 
 .quiz-note {
@@ -1792,6 +1804,16 @@ button.pill:active { transform: scale(.94); }
   white-space: pre-wrap; direction: ltr; text-align: left;
   max-height: 190px; overflow-y: auto;
 }
+/* What the correction said, in the review before anything is written. */
+.paste-model {
+  margin-top: 6px; padding: 9px 11px; border-radius: 10px;
+  background: var(--bg); color: var(--ink-2);
+  font-size: 13px; line-height: 1.8;
+  border-inline-start: 3px solid var(--purple-light);
+}
+.paste-ai {
+  margin-top: 5px; font-size: 12px; font-weight: 700; color: var(--orange);
+}
 .paste-box { min-height: 150px; resize: vertical; line-height: 1.7; font-size: 14px; }
 
 /* The paper itself, because a Drive link is no use to a model in a browser. */
@@ -2131,8 +2153,23 @@ button.pill:active { transform: scale(.94); }
   .scroll > .seg, .scroll > .quizcard, .scroll > .admin-import,
   .scroll > .me, .scroll > .rev-tabs, .scroll > .pts-hero,
   .scroll > .badges, .scroll > .pts-note, .scroll > form:not(.card),
-  .scroll > .srch, .scroll > .tabs {
+  .scroll > .srch, .scroll > .tabs,
+  /* A quiz is one question at a time, read down. Every piece of it is a
+     direct child of the body, so the card grid laid the propositions in one
+     column and the answer in the other — the answer beside the question it
+     was meant to be hidden from until you asked. */
+  .scroll > .quiz-bar, .scroll > .quiz-step, .scroll > .quiz-q,
+  .scroll > .quiz-options, .scroll > .quiz-why, .scroll > .quiz-by,
+  .scroll > .quiz-model, .scroll > .quiz-ask, .scroll > .quiz-mark,
+  .scroll > .quiz-result, .scroll > .quiz-src, .scroll > .btn {
     grid-column: 1 / -1;
+  }
+
+  /* …and held to the width of something you read a sentence of, rather than
+     run across a metre of tablet. The rule above already stacks it for a
+     browser with no `:has()`; this is the better version of the same thing. */
+  .scroll:has(.quiz-bar), .scroll:has(.quiz-result) {
+    display: flex; width: 100%; max-width: 680px; margin-inline: auto;
   }
 
   /* Four counts under a name, not four counts across a room. */

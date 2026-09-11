@@ -12,7 +12,7 @@ export default async function QuestionsPage({ searchParams }) {
 
   let query = sb
     .from('questions')
-    .select('id, n, stem, options, answer, why, status, source, question_banks!inner(title, module)')
+    .select('id, n, kind, stem, options, answer, model_answer, why, status, source, question_banks!inner(title, module)')
     .eq('status', status)
     .order('id')
     .limit(60);

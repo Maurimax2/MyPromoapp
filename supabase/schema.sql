@@ -161,6 +161,31 @@ create table if not exists questions (
   reviewed_at timestamptz
 );
 
+-- A question that is not multiple choice.
+--
+-- The clinical years are not examined the way PCEM2 is. Their papers are
+-- QROC — write the answer — and clinical cases, and only the most recent year
+-- carries any QCM at all. اختبر نفسك assumed propositions and an index into
+-- them, so those promos opened it and found an empty screen.
+--
+-- `kind` says which. A `qroc` carries its answer in `model_answer` as words;
+-- `options` and `answer` stay empty for it, and the student marks themselves
+-- against what the paper's correction said. The schedule in `reviews` never
+-- asked how an answer was judged, so it takes these unchanged.
+alter table questions add column if not exists kind text not null default 'qcm';
+alter table questions add column if not exists model_answer text;
+-- A QROC has no propositions, and the column was written when every question
+-- had some.
+alter table questions alter column options set default '{}';
+
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'questions_kind_shape') then
+    alter table questions add constraint questions_kind_shape
+      check (kind in ('qcm', 'qroc'));
+  end if;
+end $$;
+
 create index if not exists questions_bank_idx   on questions (bank);
 create index if not exists questions_status_idx on questions (status);
 create unique index if not exists questions_bank_n_idx on questions (bank, n);

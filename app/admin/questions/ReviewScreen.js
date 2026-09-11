@@ -22,16 +22,19 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
   const router = useRouter();
   const [queue, setQueue] = useState(questions);
   const [ticked, setTicked] = useState(questions[0]?.answer || []);
+  const [model, setModel] = useState(questions[0]?.model_answer || '');
   const [why, setWhy] = useState(questions[0]?.why || '');
   const [busy, setBusy] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [error, setError] = useState('');
   const current = queue[0];
   const whyRef = useRef(null);
+  const modelRef = useRef(null);
 
   useEffect(() => {
     setQueue(questions);
     setTicked(questions[0]?.answer || []);
+    setModel(questions[0]?.model_answer || '');
     setWhy(questions[0]?.why || '');
   }, [questions]);
 
@@ -41,6 +44,7 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
       setQueue((q) => {
         const rest = q.slice(1);
         setTicked(rest[0]?.answer || []);
+        setModel(rest[0]?.model_answer || '');
         setWhy(rest[0]?.why || '');
         return rest;
       });
@@ -50,14 +54,17 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
 
   const send = useCallback(async (next) => {
     if (!current || busy) return;
-    if (next === 'published' && !ticked.length) return;
+    // A written question is answered by words. Held to the propositions it
+    // has none of, it could never leave this queue.
+    const written = current.kind === 'qroc';
+    if (next === 'published' && !(written ? model.trim() : ticked.length)) return;
     setBusy(true); setError('');
     let res, data;
     try {
       res = await fetch('/api/admin/questions', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ id: current.id, answer: ticked, why, status: next }),
+        body: JSON.stringify({ id: current.id, answer: ticked, model, why, status: next }),
       });
       data = await res.json().catch(() => ({}));
     } catch {
@@ -69,7 +76,7 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
     // would lose the answer and nobody would know.
     if (!res.ok) { setError(data.error || `تعذّر الحفظ (${res.status})`); return; }
     advance();
-  }, [current, ticked, why, busy, advance]);
+  }, [current, ticked, model, why, busy, advance]);
 
   const toggle = useCallback((i) => {
     setTicked((t) => (t.includes(i) ? t.filter((x) => x !== i) : [...t, i].sort((a, b) => a - b)));
@@ -79,9 +86,10 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
   useEffect(() => {
     const onKey = (e) => {
       if (document.activeElement === whyRef.current) return;
+      if (document.activeElement === modelRef.current) return;
       if (e.key >= '1' && e.key <= '9') {
         const i = Number(e.key) - 1;
-        if (current && i < current.options.length) { toggle(i); e.preventDefault(); }
+        if (current && i < (current.options?.length || 0)) { toggle(i); e.preventDefault(); }
       } else if (e.key === 'Enter') { send('published'); e.preventDefault(); }
       else if (e.key === 'Escape') { advance(); e.preventDefault(); }
     };
@@ -157,20 +165,34 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
           <div className={`rev-card${leaving ? ' out' : ''}`}>
             <div className="rev-stem" dir="ltr">{current.stem}</div>
 
-            <div className="rev-options">
-              {current.options.map((o, i) => (
-                <button
-                  key={i}
-                  className={`rev-opt${ticked.includes(i) ? ' on' : ''}`}
-                  dir="ltr"
-                  onClick={() => toggle(i)}
-                >
-                  <span className="rev-letter">{LETTER(i)}</span>
-                  <span className="grow">{o}</span>
-                  {ticked.includes(i) && <Icon name="check" size={17} />}
-                </button>
-              ))}
-            </div>
+            {current.kind === 'qroc' ? (
+              /* No propositions on the paper, so none here. What the
+                 correction said goes in, in the language of the paper. */
+              <textarea
+                ref={modelRef}
+                className="rev-why"
+                dir="ltr"
+                rows={4}
+                placeholder="La réponse attendue, telle que la correction la donne"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+              />
+            ) : (
+              <div className="rev-options">
+                {current.options.map((o, i) => (
+                  <button
+                    key={i}
+                    className={`rev-opt${ticked.includes(i) ? ' on' : ''}`}
+                    dir="ltr"
+                    onClick={() => toggle(i)}
+                  >
+                    <span className="rev-letter">{LETTER(i)}</span>
+                    <span className="grow">{o}</span>
+                    {ticked.includes(i) && <Icon name="check" size={17} />}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <textarea
               ref={whyRef}
@@ -184,8 +206,13 @@ export default function ReviewScreen({ questions, modules, status, moduleId, cou
           </div>
 
           <div className="rev-actions">
-            <button className="btn p" disabled={!ticked.length || busy} onClick={() => send('published')}>
-              انشر {ticked.length ? `(${ticked.map(LETTER).join('')})` : ''}
+            <button
+              className="btn p"
+              disabled={busy || !(current.kind === 'qroc' ? model.trim() : ticked.length)}
+              onClick={() => send('published')}
+            >
+              انشر {current.kind === 'qroc' ? ''
+                : ticked.length ? `(${ticked.map(LETTER).join('')})` : ''}
             </button>
             <div className="rev-minor">
               <button className="pill grey" onClick={advance}>تخطَّ</button>

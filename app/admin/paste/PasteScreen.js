@@ -199,8 +199,15 @@ export default function PasteScreen({ promos, modules, papers, prompt }) {
               {seen.how === 'json' ? 'قُرئ كـ JSON' : 'قُرئ كنصّ امتحان'}
               {' · '}{seen.answered} بإجابة
               {seen.waiting > 0 && ` · ${seen.waiting} بلا إجابة، لن تُعرض للطلاب`}
+              {seen.written > 0 && ` · ${seen.written} سؤالًا مكتوبًا`}
               {seen.banks > 1 && ` · ${seen.banks} أقسام`}
             </p>
+            {seen.guessed > 0 && (
+              <p className="admin-card-b" style={{ color: 'var(--orange)' }}>
+                {seen.guessed} إجابة كتبها الذكاء الاصطناعي، لا ورقة التصحيح —
+                اقرأها قبل أن تضيفها. ستظهر للطالب موسومة بذلك.
+              </p>
+            )}
           </section>
 
           {seen.sections.map((s, i) => (
@@ -209,14 +216,25 @@ export default function PasteScreen({ promos, modules, papers, prompt }) {
               {s.questions.slice(0, 40).map((q) => (
                 <div key={q.n} className="paste-q">
                   <div className="paste-q-t" dir="auto"><b>{q.n}.</b> {q.stem}</div>
-                  <ol className="paste-opts">
-                    {q.options.map((o, k) => (
-                      <li key={o} className={q.answer.includes(k) ? 'right' : undefined} dir="auto">
-                        {o}
-                      </li>
-                    ))}
-                  </ol>
-                  {!q.answer.length && <div className="paste-none">بلا إجابة</div>}
+                  {q.kind === 'qroc' ? (
+                    <>
+                      {q.model
+                        ? <div className="paste-model" dir="auto">{q.model}</div>
+                        : <div className="paste-none">بلا إجابة</div>}
+                      {q.guessed && <div className="paste-ai">كتبها الذكاء الاصطناعي</div>}
+                    </>
+                  ) : (
+                    <>
+                      <ol className="paste-opts">
+                        {q.options.map((o, k) => (
+                          <li key={o} className={q.answer.includes(k) ? 'right' : undefined} dir="auto">
+                            {o}
+                          </li>
+                        ))}
+                      </ol>
+                      {!q.answer.length && <div className="paste-none">بلا إجابة</div>}
+                    </>
+                  )}
                 </div>
               ))}
               {s.questions.length > 40 && (

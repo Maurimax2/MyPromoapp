@@ -135,6 +135,25 @@ const db = {
     { id: 4, bank: 2, n: '2', stem: 'La métaplasie est…',
       options: ['réversible', 'toujours maligne', 'une nécrose'],
       answer: [0], why: null, source: 'claude', status: 'published' },
+
+    // The clinical years, which are not examined with propositions. One
+    // answered off the correction sheet, one the model wrote itself and the
+    // student is told so, one nobody has answered at all — which is the row
+    // that has to stay out of اختبر نفسك and turn up in the panel's queue.
+    { id: 5, bank: 3, n: '1', kind: 'qroc',
+      stem: 'Citez trois signes cliniques du syndrome méningé.',
+      options: [], answer: [],
+      model_answer: 'Céphalées, raideur de nuque, vomissements en jet.',
+      why: null, source: 'paper', status: 'published' },
+    { id: 6, bank: 3, n: '2', kind: 'qroc',
+      stem: 'Définissez l’aphasie de Broca.',
+      options: [], answer: [],
+      model_answer: 'Aphasie non fluente, à compréhension conservée, par atteinte du pied de F3 gauche.',
+      why: null, source: 'claude', status: 'published' },
+    { id: 7, bank: 3, n: '3', kind: 'qroc',
+      stem: 'Décrivez la conduite à tenir devant une crise convulsive inaugurale.',
+      options: [], answer: [], model_answer: null,
+      why: null, source: 'paper', status: 'needs_answer' },
   ],
   audit_log: [],
   import_jobs: [],

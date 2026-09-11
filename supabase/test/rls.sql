@@ -166,6 +166,39 @@ select must('including the one who never picked a year',
 set request.jwt.claim.sub = '66666666-6666-6666-6666-666666666666';
 select must('no year: reads no posts at all', (select count(*) from posts), 0);
 
+-- A question that is not multiple choice.
+--
+-- `options` was declared `not null` back when every question had some. A
+-- QROC has none, and the column only takes an empty array because a default
+-- was added beside the `kind` column — which is exactly the sort of thing
+-- that compiles, passes review, and then refuses the first row somebody
+-- actually writes.
+reset role;
+reset request.jwt.claim.sub;
+
+insert into promos (id, name, label, badge) values ('dcem3', 'DCEM3', 'الخامسة', '#0E7490')
+  on conflict (id) do nothing;
+insert into modules (id, promo, semester, name) values ('gyneco', 'dcem3', 'S1', 'GYNÉCOLOGIE')
+  on conflict (id) do nothing;
+insert into question_banks (module, title) values ('gyneco', 'Examen 2024')
+  returning id \gset bank_
+
+insert into questions (bank, n, kind, stem, model_answer, status)
+  values (:bank_id, '1', 'qroc',
+          'Citez trois signes cliniques de la pré-éclampsie sévère.',
+          'HTA ≥ 160/110, protéinurie massive, signes neurosensoriels.',
+          'published');
+
+select must('a written question stores with no propositions at all',
+            (select count(*) from questions where kind = 'qroc' and options = '{}'), 1);
+select must('…and is published on the strength of its words',
+            (select count(*) from questions
+              where kind = 'qroc' and status = 'published' and model_answer is not null), 1);
+
+select rejects('a kind nobody has built is refused',
+  $$insert into questions (bank, n, kind, stem) values
+      ((select id from question_banks where title = 'Examen 2024'), '2', 'cas', 'x')$$);
+
 reset role;
 drop function must(text, bigint, bigint);
 drop function rejects(text, text);
