@@ -5,6 +5,7 @@
   "scripts": {
     "check:sql": "./scripts/check-sql.sh",
     "check:queries": "node scripts/check-queries.mjs",
+    "check:matricule": "node scripts/check-matricule.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

@@ -12,7 +12,7 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { normalise, matriculeError } from '@/lib/matricule';
+import { normalise, matriculeError, writeFailure } from '@/lib/matricule';
 
 export const runtime = 'nodejs';
 
@@ -76,14 +76,12 @@ export async function POST(request) {
   // wall nobody can explain, so undo rather than leave that behind.
   if (profileError) {
     await db.auth.admin.deleteUser(made.user.id);
-    // The one failure worth naming: somebody already holds that number. Told
-    // plainly, because the student who typed it either mistyped a digit or is
-    // looking at a classmate's card, and "23505" tells them neither.
-    const taken = profileError.code === '23505'
-      || /duplicate key|matricule/i.test(profileError.message || '');
-    return NextResponse.json(
-      { error: taken ? 'هذا الرقم الجامعي مسجَّل بالفعل' : profileError.message },
-      { status: taken ? 409 : 500 });
+    // Classified by SQLSTATE, in one place shared with /api/me/matricule:
+    // "somebody already holds that number" is a thing to tell the student,
+    // and every other failure is a thing to tell us.
+    const failed = writeFailure(profileError);
+    if (failed.log) console.error('register:', failed.log);
+    return NextResponse.json({ error: failed.error }, { status: failed.status });
   }
 
   return NextResponse.json({ ok: true });

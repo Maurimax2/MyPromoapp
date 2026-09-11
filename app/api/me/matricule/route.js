@@ -11,11 +11,9 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { normalise, matriculeError } from '@/lib/matricule';
+import { normalise, matriculeError, writeFailure } from '@/lib/matricule';
 
 export const runtime = 'nodejs';
-
-const TAKEN = 'هذا الرقم الجامعي مسجَّل بالفعل';
 
 export async function POST(request) {
   const me = await currentProfile();
@@ -38,10 +36,9 @@ export async function POST(request) {
     .select('matricule').maybeSingle();
 
   if (error) {
-    // The unique index doing its job: somebody already holds that number.
-    const taken = error.code === '23505' || /duplicate key/i.test(error.message || '');
-    return NextResponse.json({ error: taken ? TAKEN : error.message },
-      { status: taken ? 409 : 500 });
+    const failed = writeFailure(error);
+    if (failed.log) console.error('matricule:', failed.log);
+    return NextResponse.json({ error: failed.error }, { status: failed.status });
   }
   if (!saved) {
     return NextResponse.json(
