@@ -4,6 +4,7 @@ import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promoById } from '@/lib/data';
 import Sign from './Sign';
+import Find from './Find';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,6 +55,10 @@ export default async function Profile() {
             <span className="me-sub">{ROLE[me.role] || me.role} · UNEM</span>
           </div>
           <div className="me-mail" dir="ltr">{me.email}</div>
+          {/* The number classmates find you by — yours to read off and give. */}
+          {me.matricule && (
+            <div className="me-mail" dir="ltr" style={{ fontWeight: 700 }}>{me.matricule}</div>
+          )}
 
           {me.status !== 'approved' && (
             <div className="notice" style={{ width: '100%' }}>
@@ -78,6 +83,8 @@ export default async function Profile() {
         {/* No card to the panel, for anyone. It is a separate page with its
             own sign-in, reached by going to /admin — not something the app
             shows a way into, even to the six people who run it. */}
+
+        <Find />
 
         <Link href="/saved" className="card">
           <div className="card-row">

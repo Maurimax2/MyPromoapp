@@ -12,13 +12,14 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { normalise, matriculeError } from '@/lib/matricule';
 
 export const runtime = 'nodejs';
 
 const PROMOS = ['pcem1', 'pcem2', 'dcem1', 'dcem2', 'dcem3', 'dcem4'];
 
 export async function POST(request) {
-  const { email, password, full_name, promo } = await request.json();
+  const { email, password, full_name, promo, matricule } = await request.json();
 
   const address = String(email || '').trim().toLowerCase();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(address)) {
@@ -30,6 +31,12 @@ export async function POST(request) {
   if (!String(full_name || '').trim()) {
     return NextResponse.json({ error: 'اكتب اسمك' }, { status: 400 });
   }
+
+  // The faculty's number. Checked here as well as in the browser, because a
+  // form is a suggestion and this one is unique for the whole school.
+  const number = normalise(matricule);
+  const wrong = matriculeError(number);
+  if (wrong) return NextResponse.json({ error: wrong }, { status: 400 });
 
   const db = supabaseAdmin();
 
@@ -60,6 +67,7 @@ export async function POST(request) {
     email: address,
     full_name: String(full_name).trim(),
     promo,
+    matricule: number,
     role: 'student',
     status: 'pending',
   });
@@ -68,7 +76,14 @@ export async function POST(request) {
   // wall nobody can explain, so undo rather than leave that behind.
   if (profileError) {
     await db.auth.admin.deleteUser(made.user.id);
-    return NextResponse.json({ error: profileError.message }, { status: 500 });
+    // The one failure worth naming: somebody already holds that number. Told
+    // plainly, because the student who typed it either mistyped a digit or is
+    // looking at a classmate's card, and "23505" tells them neither.
+    const taken = profileError.code === '23505'
+      || /duplicate key|matricule/i.test(profileError.message || '');
+    return NextResponse.json(
+      { error: taken ? 'هذا الرقم الجامعي مسجَّل بالفعل' : profileError.message },
+      { status: taken ? 409 : 500 });
   }
 
   return NextResponse.json({ ok: true });

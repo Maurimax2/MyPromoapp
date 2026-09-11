@@ -67,6 +67,37 @@ begin
   raise notice 'ok  %  (%)', label, got;
 end $$;
 
+-- The faculty's number: one per student, and never two students to one.
+--
+-- The uniqueness is not a nicety, it is the whole reason the number can be
+-- typed to find somebody. A partial index, so that the accounts which have
+-- no number yet — every account that existed before this column — do not
+-- collide with each other.
+create or replace function rejects(label text, stmt text) returns void
+  language plpgsql as $$
+begin
+  begin
+    execute stmt;
+  exception when others then
+    raise notice 'ok  %  (refused)', label;
+    return;
+  end;
+  raise exception '%: was accepted and should not have been', label;
+end $$;
+
+update profiles set matricule = 'D04458'
+  where id = '11111111-1111-1111-1111-111111111111';
+
+select rejects('a second student cannot take the same number',
+  $$update profiles set matricule = 'D04458'
+      where id = '22222222-2222-2222-2222-222222222222'$$);
+select rejects('a lower-case number never reaches the column',
+  $$update profiles set matricule = 'd04459'
+      where id = '22222222-2222-2222-2222-222222222222'$$);
+select rejects('nor does something that is not a number at all',
+  $$update profiles set matricule = 'PAS UN MATRICULE'
+      where id = '22222222-2222-2222-2222-222222222222'$$);
+
 set role authenticated;
 
 -- An approved student in PCEM2.
@@ -137,3 +168,4 @@ select must('no year: reads no posts at all', (select count(*) from posts), 0);
 
 reset role;
 drop function must(text, bigint, bigint);
+drop function rejects(text, text);

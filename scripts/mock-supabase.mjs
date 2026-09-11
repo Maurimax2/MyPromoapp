@@ -43,13 +43,13 @@ const whoIs = (req) => {
 const db = {
   profiles: [
     { id: 'u-owner', email: 'owner@unem.mr', full_name: 'Hamad', promo: 'pcem2',
-      role: 'owner', status: 'approved', created_at: '2026-09-01' },
+      matricule: 'D04458', role: 'owner', status: 'approved', created_at: '2026-09-01' },
     { id: 'u-1', email: 'mohamedvall@gmail.com', full_name: 'Mohamed Vall', promo: null,
-      role: 'student', status: 'pending', created_at: '2026-09-04' },
+      matricule: null, role: 'student', status: 'pending', created_at: '2026-09-04' },
     { id: 'u-2', email: 'aichetou.b@gmail.com', full_name: null, promo: null,
-      role: 'student', status: 'pending', created_at: '2026-09-04' },
+      matricule: null, role: 'student', status: 'pending', created_at: '2026-09-04' },
     { id: 'u-3', email: 'sidi@gmail.com', full_name: 'Sidi Ahmed', promo: 'pcem2',
-      role: 'editor', status: 'approved', created_at: '2026-09-02' },
+      matricule: 'D04102', role: 'editor', status: 'approved', created_at: '2026-09-02' },
   ],
   promos: [
     { id: 'pcem1', name: 'PCEM1', label: 'السنة الأولى', badge: '#8B5CF6', position: 1, indexed: false },
@@ -507,6 +507,17 @@ createServer(async (req, res) => {
     notifications: () => ({ seen: false, created_at: new Date().toISOString() }),
   };
 
+  // The unique indexes the schema actually carries. Read by both the insert
+  // and the update below: `profiles.matricule` is claimed far more often by
+  // an UPDATE than an INSERT — a student filling it in on /waiting — and a
+  // mock that checks it in only one of the two says a stolen number is fine.
+  const UNIQUE = {
+    documents: ['drive_id'],
+    chapters: ['module', 'title'],
+    question_banks: ['module', 'title'],
+    profiles: ['matricule'],
+  };
+
   if (req.method === 'POST') {
     const payload = await body(req);
     const list = Array.isArray(payload) ? payload : [payload];
@@ -531,11 +542,6 @@ createServer(async (req, res) => {
     // an import that repeats a file inside its own batch takes the entire
     // batch down with it — and Postgres checks the batch against itself, not
     // only against what is stored.
-    const UNIQUE = {
-      documents: ['drive_id'],
-      chapters: ['module', 'title'],
-      question_banks: ['module', 'title'],
-    };
     for (const cols of (UNIQUE[table] ? [UNIQUE[table]] : [])) {
       const keyOf = (r) => cols.map((c) => r[c]).join('\u0000');
       const skip = (r) => cols.some((c) => r[c] === null || r[c] === undefined);
@@ -575,6 +581,23 @@ createServer(async (req, res) => {
   if (req.method === 'PATCH') {
     const payload = await body(req);
     const hit = pick();
+
+    const cols = UNIQUE[table];
+    if (cols && cols.some((c) => payload[c] !== undefined && payload[c] !== null)) {
+      const keyOf = (r) => cols.map((c) => r[c] ?? null).join('\u0000');
+      const after = { ...payload };
+      const taken = db[table].find(
+        (r) => !hit.includes(r) && keyOf(r) === keyOf(after)
+          && cols.every((c) => r[c] !== null && r[c] !== undefined));
+      if (taken) {
+        return send(res, 409, {
+          code: '23505',
+          message: `duplicate key value violates unique constraint "${table}_${cols[0]}_key"`,
+          details: `Key (${cols.join(', ')})=(${cols.map((c) => after[c]).join(', ')}) already exists.`,
+        });
+      }
+    }
+
     hit.forEach((row) => Object.assign(row, payload));
     const one = req.headers.accept?.includes('vnd.pgrst.object');
     return send(res, 200, prefer.includes('return=representation')

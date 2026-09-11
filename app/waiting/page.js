@@ -20,7 +20,10 @@ export default async function WaitingPage() {
   // to الرئيسية means an empty feed and a composer that refuses them. Staff
   // are exempt: the panel is not a year.
   const needsYear = !me.promo && !staff;
-  if ((me.status === 'approved' || staff) && !needsYear) redirect('/feed');
+  // The faculty's number is asked of students only: staff are not students
+  // and many of them have none.
+  const needsNumber = !me.matricule && !staff;
+  if ((me.status === 'approved' || staff) && !needsYear && !needsNumber) redirect('/feed');
 
   const sb = await supabaseServer();
   const [{ data: promo }, { data: years }] = await Promise.all([
@@ -41,6 +44,8 @@ export default async function WaitingPage() {
       promo={promo?.name || me.promo || null}
       refused={me.status === 'refused'}
       years={needsYear ? (years || []) : null}
+      needsNumber={needsNumber}
+      matricule={me.matricule || null}
       approved={me.status === 'approved'}
     />
   );

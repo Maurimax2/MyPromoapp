@@ -250,6 +250,36 @@ end $$;
 alter table documents add column if not exists ocr_text text;
 alter table documents add column if not exists ocr_at   timestamptz;
 
+-- The number the faculty gave them.
+--
+-- D04458, and no two students in the school share one — which makes it the
+-- thing a student actually knows a classmate by. The email is how they sign
+-- in; this is who they are to each other, and it is what you type to find
+-- somebody.
+--
+-- Nullable because every account that already exists has none, and because a
+-- member of staff is not a student and may never have one. Unique among the
+-- rows that have it: a partial index, so the nulls do not collide with each
+-- other. Stored upper-case, and the app upper-cases before it writes, so
+-- d04458 and D04458 cannot both be taken.
+--
+-- The format check is deliberately looser than D0 plus four digits. A cohort
+-- whose prefix changes must not find sign-up closed to them on the morning of
+-- registration; a wrong number is caught by the person approving it, who has
+-- the faculty's own list in front of them.
+alter table profiles add column if not exists matricule text;
+
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'profiles_matricule_shape') then
+    alter table profiles add constraint profiles_matricule_shape
+      check (matricule is null or matricule ~ '^[A-Z]{1,2}[0-9]{3,8}$');
+  end if;
+end $$;
+
+create unique index if not exists profiles_matricule_key
+  on profiles (matricule) where matricule is not null;
+
 -- ---------------------------------------------------------------------------
 -- Who can see and touch what
 -- ---------------------------------------------------------------------------

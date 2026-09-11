@@ -23,6 +23,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [matricule, setMatricule] = useState('');
   const [promo, setPromo] = useState('');
   const [state, setState] = useState('idle');   // idle | busy | sent | error
   const [error, setError] = useState('');
@@ -63,7 +64,9 @@ export default function LoginForm() {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: email.trim(), password, full_name: name.trim(), promo }),
+      body: JSON.stringify({
+        email: email.trim(), password, full_name: name.trim(), promo, matricule,
+      }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || `تعذّر إنشاء الحساب (${res.status})`);
@@ -78,7 +81,7 @@ export default function LoginForm() {
   const ready =
     how === 'link' ? email.trim()
     : how === 'password' ? email.trim() && password
-    : email.trim() && password.length >= 8 && name.trim() && promo;
+    : email.trim() && password.length >= 8 && name.trim() && promo && matricule.trim();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -133,6 +136,16 @@ export default function LoginForm() {
           <input
             className="login-input" autoFocus placeholder="اسمك الكامل"
             value={name} onChange={(e) => setName(e.target.value)} aria-label="الاسم" />
+        )}
+
+        {/* Upper-cased as it is typed, so the field shows what will be stored
+            and D04458 is never two different students. */}
+        {how === 'join' && (
+          <input
+            className="login-input" dir="ltr" placeholder="الرقم الجامعي — D04458"
+            value={matricule}
+            onChange={(e) => setMatricule(e.target.value.toUpperCase())}
+            aria-label="الرقم الجامعي" />
         )}
 
         <input
