@@ -31,7 +31,7 @@ export default async function ModelPage({ params }) {
         </div>
       </header>
 
-      <Model3D id={bundle.id} title={bundle.title} />
+      <Model3D id={bundle.id} title={bundle.title} hidden={bundle.hidden || []} />
     </>
   );
 }

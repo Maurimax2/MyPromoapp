@@ -16,7 +16,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { BUNDLES, boneOf } from '../lib/anatomy/bundles.js';
+import { BUNDLES, boneOf, familyOf } from '../lib/anatomy/bundles.js';
 import { partsOf, PART_TINTS } from '../lib/anatomy/parts.js';
 
 const arg = (name, fallback) => {
@@ -97,14 +97,17 @@ for (const bundle of BUNDLES) {
       hi[i] = Math.max(hi[i], p.bounds[1][i]);
     }
 
-    const tint = bundle.tints[boneOf(name)];
+    // Colour is per family where the bundle names families — one colour for
+    // all the sous-hyoïdiens — and per structure where it does not.
+    const family = familyOf(bundle, name);
+    const tint = bundle.tints[family];
     if (!tint) {
-      console.error(`${bundle.id}: no colour for ${boneOf(name)} (${name})`);
+      console.error(`${bundle.id}: no colour for ${family} (${name})`);
       process.exit(1);
     }
 
     parts.push({
-      id: p.id, name, tint, fma: p.conceptId, source: p.name,
+      id: p.id, name, tint, family, fma: p.conceptId, source: p.name,
       positions, normals, indices,
       vertexCount: p.vertexCount, indexCount: p.indexCount,
       bounds: p.bounds,

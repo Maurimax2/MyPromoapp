@@ -16,14 +16,14 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Icon from '@/components/Icon';
-import { CREDIT } from '@/lib/anatomy/bundles';
+import { CREDIT, boneOf } from '@/lib/anatomy/bundles';
 import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 
 const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
 const BONE = 0xe6e0d3;
 
-export default function Model3D({ id, title }) {
+export default function Model3D({ id, title, hidden = [] }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
   const [parts, setParts] = useState([]);
@@ -462,6 +462,12 @@ export default function Model3D({ id, title }) {
         setParts(meta.parts.map((p) => ({
           id: p.id, name: p.name, tint: p.tint, fma: p.fma, groups: p.groups || null,
         })));
+        // A model may start with something taken off — the platysma over the
+        // neck. It is in the list like any other, marked off, one tap back.
+        if (hidden.length) {
+          const away = new Set(hidden);
+          setGone(meta.parts.filter((p) => away.has(boneOf(p.name))).map((p) => p.id));
+        }
         setLoading(false);
         api.current = { paint, focusOn, faceTo, home: () => focusOn(null) };
         // Face-on and upright, the way it is drawn in every textbook.

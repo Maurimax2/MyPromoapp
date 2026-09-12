@@ -8,7 +8,7 @@
 // the browser reads it and asserts the things the browser cannot.
 
 import { readFileSync, existsSync } from 'node:fs';
-import { BUNDLES, CREDIT, boneOf } from '../lib/anatomy/bundles.js';
+import { BUNDLES, CREDIT, boneOf, familyOf } from '../lib/anatomy/bundles.js';
 import { LANDMARKS } from '../lib/anatomy/landmarks.js';
 import { NOTES, noteFor, SECTIONS } from '../lib/anatomy/notes.js';
 import { partsOf } from '../lib/anatomy/parts.js';
@@ -47,16 +47,16 @@ for (const bundle of BUNDLES) {
   // be able to drift apart, and the app's orange must not turn up on a bone.
   const shades = new Map();
   for (const p of meta.parts) {
-    const bone = boneOf(p.name);
+    const family = familyOf(bundle, p.name);
     if (!/^#[0-9A-Fa-f]{6}$/.test(p.tint || '')) { no(`${p.name}: no colour`); continue; }
     if (p.tint.toUpperCase() === '#F97316') no(`${p.name} is painted the app's orange`);
-    const seen = shades.get(bone);
-    if (seen && seen !== p.tint) no(`${bone} is two colours: ${seen} and ${p.tint}`);
-    shades.set(bone, p.tint);
+    const seen = shades.get(family);
+    if (seen && seen !== p.tint) no(`${family} is two colours: ${seen} and ${p.tint}`);
+    shades.set(family, p.tint);
   }
   const spread = new Set(shades.values());
-  if (spread.size !== shades.size) no('two different bones share a colour');
-  else ok(`${shades.size} bones, ${shades.size} colours`);
+  if (spread.size !== shades.size) no('two different groups share a colour');
+  else ok(`${shades.size} groups, ${shades.size} colours`);
 
   let triangles = 0;
   for (const p of meta.parts) {

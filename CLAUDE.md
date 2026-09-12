@@ -230,6 +230,17 @@ terms in Arabic — French is a necessity, not a preference.
   skull to point at one bone turns the whole thing into an X-ray, and an X-ray
   of twenty-two overlapping bones is a picture of none of them. The bone you
   touched takes its colour; the others stay bone.
+- **Muscles are coloured by the group they are taught in**, not one colour
+  each. Twenty-six colours tell a student nothing, and « les muscles
+  sous-hyoïdiens » is how the question is asked. A bundle names its groups in
+  `families`; a bundle that names none, like the skull, is one colour per
+  structure.
+- **A muscle is read differently from a bone**: Origine, Insertion,
+  Innervation, Action, Rapports. Same file, different sections.
+- **A model may start with something taken off.** The platysma is a sheet
+  under the skin covering the whole neck: left on, the first thing a student
+  sees is a pink curtain with everything behind it. It is in the list like any
+  other, marked off, one tap back.
 - **One colour per bone, not per mesh.** The left and right parietal are the
   same bone and every plate in every textbook colours them the same. The list
   carries the same colours, because fourteen colours on a skull say nothing
