@@ -263,6 +263,25 @@ terms in Arabic — French is a necessity, not a preference.
 - **A bone can be taken off to see behind it** — the mandible over the base of
   the skull, the parietal over the temporal. The list says which are off and
   puts them back; so does إعادة الضبط.
+- **A bone is divided into its parts, and colour means the same thing at both
+  levels.** With no bone chosen the colours separate the bones; with one chosen
+  they separate that bone's parts. Les parties de l'os temporal is an exam
+  question and the atlas drew the temporal as one piece.
+- **The division is approximate, and that is stated rather than hidden.** Each
+  part gets an anchor written like a landmark — a direction, and the point of
+  the bone furthest that way — and every triangle goes to the anchor it is
+  nearest. The boundaries fall where the parts meet, not along a suture the
+  geometry does not contain.
+- **A part also has a reach (`pull`).** Nearest-anchor alone gave the styloid
+  process, a spike the width of a pencil, as much of the temporal as the
+  mastoid: territory is decided by the gap between anchors, not by the size of
+  the thing.
+- **Anchors are measured inside the bone's own box, not in metres.** A maxilla
+  is three times as deep as it is wide, so in raw coordinates "forward and a
+  little to the side" is just "forward" — and the two sides of a nearly
+  symmetrical pair came out divided differently.
+- Touching a divided bone names the part you touched, not just the bone, and
+  the part's description is the bone's: that is where its parts are listed.
 - **A model without descriptions is a picture.** What is revised is the parts,
   the articulations, the insertions and what runs through — so every structure
   carries them, in `lib/anatomy/notes.js`, and `check:anatomy` fails on one
@@ -283,6 +302,16 @@ terms in Arabic — French is a necessity, not a preference.
 - `npm run check:anatomy` reads the files the way the browser reads them. A
   wrong offset does not throw — it draws a cloud of triangles, which on a
   phone is indistinguishable from a model that never loaded.
+
+## Which region belongs to which semester
+
+The order the models are built in, because it is the order they are taught.
+
+- **PCEM1 S1** — appareil locomoteur: membre supérieur and membre inférieur,
+  the hand and the foot above all.
+- **PCEM1 S2** — thorax et abdomen.
+- **PCEM2 S1** — tête et cou, and neuroanatomie.
+- **PCEM2 S2** — appareil urinaire and région uro-génitale.
 
 ## Still to build
 

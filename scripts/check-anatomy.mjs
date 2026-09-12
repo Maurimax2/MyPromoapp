@@ -11,6 +11,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { BUNDLES, CREDIT, boneOf } from '../lib/anatomy/bundles.js';
 import { LANDMARKS } from '../lib/anatomy/landmarks.js';
 import { NOTES, noteFor, SECTIONS } from '../lib/anatomy/notes.js';
+import { partsOf } from '../lib/anatomy/parts.js';
 
 let bad = 0;
 const no = (why) => { bad++; console.log(`  FAIL ${why}`); };
@@ -139,6 +140,28 @@ for (const bundle of BUNDLES) {
       else if (value.some((t) => /[؀-ۿ]/.test(t))) no(`${n}: ${key} written in Arabic`);
     }
   }
+
+  // A bone divided into parts. The division is approximate by construction,
+  // but it must at least cover the bone exactly once and leave no part empty:
+  // a part with no triangles is a name in the list that colours nothing.
+  let divided = 0;
+  for (const q of meta.parts) {
+    const wanted = partsOf(bundle.id, boneOf(q.name));
+    if (!wanted) { if (q.groups) no(`${q.name} is divided but nothing asked for it`); continue; }
+    if (!q.groups) { no(`${q.name} has named parts but was never divided`); continue; }
+    divided += 1;
+    if (q.groups.length !== wanted.length) no(`${q.name}: ${q.groups.length} parts, ${wanted.length} named`);
+    let next = 0;
+    for (const g of q.groups) {
+      if (g.start !== next) no(`${q.name}: ${g.name} does not carry on from the part before it`);
+      if (!g.count) no(`${q.name}: ${g.name} holds no triangles at all`);
+      if (g.count % 3) no(`${q.name}: ${g.name} is not whole triangles`);
+      if (/[؀-ۿ]/.test(g.name)) no(`${q.name}: ${g.name} is named in Arabic`);
+      next = g.start + g.count;
+    }
+    if (next !== q.indexCount) no(`${q.name}: the parts cover ${next} of ${q.indexCount} indices`);
+  }
+  if (divided) ok(`${divided} bones divided into parts, each covered exactly once`);
 
   const mb = (raw.length / 1048576).toFixed(2);
   ok(`${triangles} triangles, ${mb} MB`);

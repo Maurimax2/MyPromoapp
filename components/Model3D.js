@@ -36,6 +36,7 @@ export default function Model3D({ id, title }) {
   const [pin, setPin] = useState(null);        // …and which one is being read
   const [gone, setGone] = useState([]);        // bones taken off to see behind
   const [open, setOpen] = useState(false);     // the description, read or not
+  const [sub, setSub] = useState(null);        // which part of the bone
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -48,6 +49,7 @@ export default function Model3D({ id, title }) {
   const showing = useRef(false);
   const reading = useRef(null);
   const off = useRef(new Set());
+  const piece = useRef(null);
   useEffect(() => {
     chosen.current = picked;
     all.current = plate;
@@ -56,9 +58,10 @@ export default function Model3D({ id, title }) {
     // made the one screen that is pure text unreadable.
     showing.current = pins && !listing && !open;
     off.current = new Set(gone);
+    piece.current = sub;
     reading.current = pin;
     api.current?.paint();
-  }, [picked, plate, only, pins, pin, listing, gone, open]);
+  }, [picked, plate, only, pins, pin, listing, gone, open, sub]);
 
   // Showing one bone by itself re-aims the camera at it, and putting the rest
   // back re-aims at the skull. Only on those two moves: re-framing every time
@@ -225,11 +228,22 @@ export default function Model3D({ id, title }) {
         // are looking at stays whatever else is hidden.
         const away = off.current.has(m.userData.id) && !on;
         m.visible = !away && !(alone.current && chosen.current != null && !on);
-        m.material.color.set(all.current || on ? m.userData.tint : BONE);
-        // In the coloured plate every bone already has a colour of its own, so
-        // the one you picked is lifted rather than recoloured.
-        m.material.emissive.set(m.userData.tint);
-        m.material.emissiveIntensity = on && all.current ? 0.45 : 0;
+
+        // Colour means the same thing at both levels. With no bone chosen it
+        // separates the bones; with one chosen it separates that bone's parts,
+        // which is how the squama, the rocher and the mastoïde are told apart
+        // on a bone the atlas drew as one piece.
+        const bits = m.userData.groups;
+        const split = on && all.current && bits;
+        const coats = Array.isArray(m.material) ? m.material : [m.material];
+        coats.forEach((coat, g) => {
+          coat.color.set(split ? bits[g].tint : (all.current || on ? m.userData.tint : BONE));
+          // In the coloured plate everything already has a colour of its own,
+          // so what you picked is lifted rather than recoloured.
+          coat.emissive.set(split ? bits[g].tint : m.userData.tint);
+          const lifted = split ? bits[g].name === piece.current : on && all.current;
+          coat.emissiveIntensity = lifted ? 0.45 : 0;
+        });
       }
       movePins();
       draw();
@@ -356,6 +370,13 @@ export default function Model3D({ id, title }) {
       raycaster.setFromCamera(pointer, camera);
       const hit = raycaster.intersectObjects(meshes.filter((m) => m.visible), false)[0];
       setPicked(hit ? hit.object.userData.id : null);
+      // …and which part of it, on a bone that has been divided. One tap gives
+      // both: the temporal, and the mastoid you actually touched.
+      const bits = hit?.object.userData.groups;
+      if (bits && hit.faceIndex != null) {
+        const first = hit.faceIndex * 3;
+        setSub(bits.find((q) => first >= q.start && first < q.start + q.count)?.name || null);
+      } else setSub(null);
       // Touching the background puts everything back: leaving the skull with
       // one bone in it and no way to tell why is worse than losing a choice.
       if (!hit) setOnly(false);
@@ -393,14 +414,22 @@ export default function Model3D({ id, title }) {
           g.setIndex(new THREE.BufferAttribute(
             new Uint32Array(bin, p.indices, p.indexCount), 1));
 
-          const mesh = new THREE.Mesh(g, new THREE.MeshStandardMaterial({
+          const coat = () => new THREE.MeshStandardMaterial({
             color: BONE, roughness: 0.82, metalness: 0.02,
             side: THREE.DoubleSide,
-          }));
+          });
+          // One draw group per part, so a bone can be coloured by its parts
+          // without the geometry being cut into separate objects.
+          if (p.groups) {
+            p.groups.forEach((q, gi) => g.addGroup(q.start, q.count, gi));
+          }
+          const mesh = new THREE.Mesh(g,
+            p.groups ? p.groups.map(coat) : coat());
           mesh.position.sub(mid);
           mesh.userData.id = p.id;
           mesh.userData.tint = new THREE.Color(p.tint);
           mesh.userData.box = p.bounds.map((v) => v.map((n, i) => n - mid.getComponent(i)));
+          mesh.userData.groups = p.groups || null;
           group.add(mesh);
           meshes.push(mesh);
         }
@@ -425,7 +454,9 @@ export default function Model3D({ id, title }) {
         }
         setPoints(marks.map((m, i) => ({ i, name: m.name })));
 
-        setParts(meta.parts.map((p) => ({ id: p.id, name: p.name, tint: p.tint, fma: p.fma })));
+        setParts(meta.parts.map((p) => ({
+          id: p.id, name: p.name, tint: p.tint, fma: p.fma, groups: p.groups || null,
+        })));
         setLoading(false);
         api.current = { paint, focusOn, faceTo, home: () => focusOn(null) };
         // Face-on and upright, the way it is drawn in every textbook.
@@ -448,7 +479,10 @@ export default function Model3D({ id, title }) {
       renderer.domElement.removeEventListener('pointerdown', start);
       renderer.domElement.removeEventListener('pointerup', end);
       controls.dispose();
-      for (const m of meshes) { m.geometry.dispose(); m.material.dispose(); }
+      for (const m of meshes) {
+        m.geometry.dispose();
+        for (const c of [m.material].flat()) c.dispose();
+      }
       renderer.dispose();
       renderer.domElement.remove();
       api.current = null;
@@ -458,13 +492,19 @@ export default function Model3D({ id, title }) {
   // The card along the bottom says one thing at a time: the landmark you
   // touched, or the bone. A landmark is the finer answer so it wins.
   const spot = pin != null ? points.find((q) => q.i === pin)?.name : null;
-  const name = spot || parts.find((p) => p.id === picked)?.name || null;
-  const clear = () => { setPin(null); setPicked(null); setOnly(false); setOpen(false); };
+  const bone = parts.find((p) => p.id === picked)?.name || null;
+  const name = spot || sub || bone;
+  const bits = (picked && parts.find((p) => p.id === picked)?.groups) || [];
+  const clear = () => {
+    setPin(null); setPicked(null); setSub(null); setOnly(false); setOpen(false);
+  };
 
   // What the thing you touched actually is. This is the reason a model is
   // worth opening at all: the name alone is a picture, and what is revised is
   // the parts, the attachments and what runs through it.
-  const note = name ? noteFor(id, name) : null;
+  // A part's description lives on its bone: touching the mastoïde opens what
+  // is written about the temporal, which is where its parts are listed.
+  const note = (spot || bone) ? noteFor(id, spot || bone) : null;
 
   return (
     <div className="m3d">
@@ -594,7 +634,10 @@ export default function Model3D({ id, title }) {
                 <div key={p.id} className={`m3d-line${gone.includes(p.id) ? ' away' : ''}`}>
                   <button
                     className={`m3d-row${picked === p.id ? ' on' : ''}`}
-                    onClick={() => setPicked(picked === p.id ? null : p.id)}
+                    onClick={() => {
+                      setSub(null);
+                      setPicked(picked === p.id ? null : p.id);
+                    }}
                     dir="auto"
                   >
                     {/* The list is the key to the coloured plate. Fourteen
@@ -614,6 +657,25 @@ export default function Model3D({ id, title }) {
                   </button>
                 </div>
               ))}
+
+              {bits.length > 0 && (
+                <>
+                  {/* The key to the colours on the bone you have chosen. */}
+                  <div className="m3d-head" dir="auto">{bone}</div>
+                  {bits.map((q) => (
+                    <div key={q.name} className="m3d-line">
+                      <button
+                        className={`m3d-row${sub === q.name ? ' on' : ''}`}
+                        onClick={() => { setSub(sub === q.name ? null : q.name); setPlate(true); }}
+                        dir="auto"
+                      >
+                        <span className="m3d-swatch" style={{ background: q.tint }} />
+                        {q.name}
+                      </button>
+                    </div>
+                  ))}
+                </>
+              )}
 
               {points.length > 0 && (
                 <>
