@@ -16,20 +16,27 @@ import Icon from '@/components/Icon';
 
 const SEMESTERS = ['S1', 'S2'];
 
-/** What to hand the model: the lectures, then the questions still unplaced. */
-function promptFor(name, lectures, questions) {
-  // A number two lectures share is left out entirely. Offering it would get
-  // back answers nothing can act on, and the screen says separately that it
-  // needs fixing.
+/**
+ * The lectures a question can actually be sent to.
+ *
+ * A number two lectures share is left out of everything the screen offers —
+ * the prompt and the dropdown both — because the route refuses it. Offering
+ * it would mean a model answering with a number nothing can act on, or an
+ * admin picking one from a list and being told no.
+ */
+function usable(lectures) {
   const twice = new Set();
   const once = new Set();
   for (const l of lectures) {
     if (!l.n) continue;
     if (once.has(l.n)) twice.add(l.n); else once.add(l.n);
   }
+  return lectures.filter((l) => l.n && !twice.has(l.n));
+}
 
-  const list = lectures
-    .filter((l) => l.n && !twice.has(l.n))
+/** What to hand the model: the lectures, then the questions still unplaced. */
+function promptFor(name, lectures, questions) {
+  const list = usable(lectures)
     .map((l) => `${l.n}. ${l.title}${l.chapter ? ` [${l.chapter}]` : ''}`)
     .join('\n');
 
@@ -98,6 +105,24 @@ export default function LectureScreen({ promos, modules }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch { setError('انسخ النصّ يدويًا من الأسفل'); }
+  };
+
+  // A whole paper onto one lecture. Nothing is sent but the paper and the
+  // number; the route decides which of its questions are still unplaced.
+  const [openPaper, setOpenPaper] = useState(null);
+  const assignPaper = async (id, n) => {
+    setBusy(true); setError('');
+    const res = await fetch('/api/admin/questions/lectures', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ module, paper: id, lecture: n }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setBusy(false);
+    if (!res.ok) { setError(data.error || `تعذّر (${res.status})`); return; }
+    setOpenPaper(null);
+    setDone({ ...data, shared: [] });
+    load(module, true);
   };
 
   const apply = async () => {
@@ -176,7 +201,17 @@ export default function LectureScreen({ promos, modules }) {
         </section>
       )}
 
-      {state && (
+      {state && state.ready === false && (
+        <section className="admin-card admin-seed">
+          <div className="admin-card-t">قاعدة البيانات لا تعرف المحاضرات بعد</div>
+          <p className="admin-card-b" style={{ color: 'var(--orange)' }}>
+            الصق <b dir="ltr">supabase/schema.sql</b> في Supabase → SQL Editor،
+            ثمّ عُد. لا شيء هنا يمكن حفظه قبل ذلك.
+          </p>
+        </section>
+      )}
+
+      {state && state.ready !== false && (
         <>
           <div className="admin-bar">
             <span>٢ · ما تبقّى</span>
@@ -222,9 +257,46 @@ export default function LectureScreen({ promos, modules }) {
             </section>
           )}
 
+          {/* The quick half of the job. A paper whose title names one lecture
+              is one lecture, and tapping it is faster and more certain than
+              anything a model will say about its questions one by one. */}
           {state.left > 0 && state.lectures.some((l) => l.n) && (
             <>
-              <div className="admin-bar"><span>٣ · اطلب من الذكاء الاصطناعي</span></div>
+              <div className="admin-bar">
+                <span>٣ · ورقة كاملة على محاضرة واحدة</span>
+              </div>
+              <section className="admin-card admin-seed">
+                <p className="admin-card-b">
+                  بعض الأوراق كلّها عن محاضرة واحدة — «QCM — la moelle épinière»
+                  مثلًا. أسندها مرّة واحدة بدل سؤالًا سؤالًا.
+                </p>
+                {state.papers.filter((b) => b.left > 0).map((b) => (
+                  <div key={b.id} className="paper-row">
+                    <button
+                      className="paper-name"
+                      onClick={() => setOpenPaper(openPaper === b.id ? null : b.id)}
+                    >
+                      <span className="grow" dir="auto">{b.title}</span>
+                      <span className="num">{b.left}</span>
+                    </button>
+                    {openPaper === b.id && (
+                      <select
+                        className="admin-input"
+                        defaultValue=""
+                        disabled={busy}
+                        onChange={(e) => e.target.value && assignPaper(b.id, e.target.value)}
+                      >
+                        <option value="">اختر المحاضرة…</option>
+                        {usable(state.lectures).map((l) => (
+                          <option key={l.id} value={l.n}>{l.n} — {l.title}</option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+                ))}
+              </section>
+
+              <div className="admin-bar"><span>٤ · الباقي: اطلب من الذكاء الاصطناعي</span></div>
               <section className="admin-card admin-seed">
                 <p className="admin-card-b">
                   انسخ هذا وأعطه لـ ChatGPT أو Claude أو Gemini، ثمّ الصق ردّه هنا.
@@ -237,7 +309,7 @@ export default function LectureScreen({ promos, modules }) {
                 <pre className="paste-prompt">{prompt}</pre>
               </section>
 
-              <div className="admin-bar"><span>٤ · الصق ردّه</span></div>
+              <div className="admin-bar"><span>٥ · الصق ردّه</span></div>
               <section className="admin-card admin-seed">
                 <textarea
                   className="admin-input paste-box"

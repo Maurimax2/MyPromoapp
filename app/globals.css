@@ -780,6 +780,16 @@ button.pill:active { transform: scale(.94); }
 }
 .pick-box.on { background: var(--purple); border-color: var(--purple); }
 .pick .num { background: var(--bg); color: var(--ink-3); }
+/* One paper in the classify screen: its name, how many of its questions are
+   still unplaced, and the lecture to send them to once it is opened. */
+.paper-row { border-top: 1px solid var(--line-soft); padding: 4px 0; }
+.paper-row:first-of-type { border-top: 0; }
+.paper-name {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  min-height: 44px; text-align: start; font-size: 13.5px; color: var(--ink);
+}
+.paper-name .num { background: var(--bg); color: var(--ink-3); }
+
 /* How far through a job that is done over several sittings. A sentence
    saying "97 of 242" is read; a bar is seen. */
 .admin-fill {

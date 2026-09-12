@@ -66,20 +66,29 @@ function numbering(lectures) {
   return { byNumber, shared };
 }
 
-/** Its questions, with what has already been said about them. */
+/**
+ * Its questions, with what has already been said about them.
+ *
+ * `ready` is whether this database has the column at all. Without it the
+ * screen would offer a whole workflow that cannot end in anything being
+ * saved — the paste would go through, the model would spend its time, and
+ * the write at the end would be the first thing to say the column is
+ * missing. Better to say so on arrival.
+ */
 async function questionsOf(db, module) {
   const { data: banks } = await db.from('question_banks')
     .select('id, title').eq('module', module).order('position');
-  if (!banks || !banks.length) return { banks: [], rows: [] };
+  if (!banks || !banks.length) return { banks: [], rows: [], ready: true };
 
   const ask = (columns) => db.from('questions')
     .select(columns).in('bank', banks.map((b) => b.id)).order('id');
 
+  let ready = true;
   const { data: rows } = await readingQuestions(
     () => ask('id, bank, n, stem, lecture'),
-    () => ask('id, bank, n, stem'),
+    () => { ready = false; return ask('id, bank, n, stem'); },
   );
-  return { banks, rows: rows || [] };
+  return { banks, rows: rows || [], ready };
 }
 
 export async function GET(request) {
@@ -90,7 +99,7 @@ export async function GET(request) {
   if (!module) return NextResponse.json({ error: 'أيّ مادة؟' }, { status: 400 });
 
   const db = supabaseAdmin();
-  const [lectures, { banks, rows }] = await Promise.all([
+  const [lectures, { banks, rows, ready }] = await Promise.all([
     lecturesOf(db, module), questionsOf(db, module),
   ]);
 
@@ -98,8 +107,24 @@ export async function GET(request) {
   const done = rows.filter((q) => q.lecture != null).length;
   const { shared } = numbering(lectures);
 
+  // How many questions each paper holds, and how many of them are placed.
+  // A paper called "QCM — la moelle épinière" is one lecture from end to
+  // end, and asking a model to decide that ten times over is work nobody
+  // needs to do.
+  const papers = banks.map((b) => {
+    const mine = rows.filter((q) => q.bank === b.id);
+    return {
+      id: b.id,
+      title: b.title,
+      total: mine.length,
+      left: mine.filter((q) => q.lecture == null).length,
+    };
+  }).filter((b) => b.total);
+
   return NextResponse.json({
+    ready,
     lectures,
+    papers,
     // Named on the screen rather than quietly dropped: a lecture nobody can
     // send a question to is a hole in the subject, and the person looking at
     // this screen is the one who can close it.
@@ -120,15 +145,57 @@ export async function POST(request) {
   const gate = await requireStaff();
   if (gate.error) return NextResponse.json({ error: gate.error }, { status: gate.status });
 
-  const { module, map } = await request.json().catch(() => ({}));
+  const { module, map, paper, lecture: whole } = await request.json().catch(() => ({}));
   if (!module) return NextResponse.json({ error: 'أيّ مادة؟' }, { status: 400 });
-  if (!Array.isArray(map) || !map.length) {
-    return NextResponse.json({ error: 'لا شيء في ما لُصق' }, { status: 400 });
-  }
 
   const db = supabaseAdmin();
   const lectures = await lecturesOf(db, module);
   const { byNumber } = numbering(lectures);
+
+  // A whole paper at once. Half the banks in a subject are already one
+  // lecture from end to end — QCM — la moelle épinière, Isolé — neuro-
+  // anatomie — and handing those to a model question by question is asking
+  // it to rediscover what the title already says.
+  if (paper) {
+    const to = byNumber.get(String(whole).trim());
+    if (!to) return NextResponse.json({ error: 'لا محاضرة بهذا الرقم' }, { status: 400 });
+
+    // The bank has to be this subject's, whatever was posted.
+    const { data: bank } = await db.from('question_banks')
+      .select('id').eq('id', paper).eq('module', module).maybeSingle();
+    if (!bank) return NextResponse.json({ error: 'لا ورقة بهذا الرقم' }, { status: 404 });
+
+    // Only the ones nobody has placed: a paper mostly classified by hand
+    // must not be flattened onto one lecture by a later tap.
+    const { data: loose, error: reading } = await db.from('questions')
+      .select('id').eq('bank', bank.id).is('lecture', null);
+    if (reading) {
+      const behind = reading.code === '42703';
+      return NextResponse.json({
+        error: behind
+          ? 'قاعدة البيانات لا تحتوي عمود المحاضرة — الصق supabase/schema.sql أولًا'
+          : reading.message,
+      }, { status: behind ? 503 : 500 });
+    }
+
+    const ids = (loose || []).map((r) => r.id);
+    if (ids.length) {
+      const { error } = await db.from('questions').update({ lecture: to }).in('id', ids);
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    await db.from('audit_log').insert({
+      actor: gate.profile.id, action: 'classified_paper',
+      target_type: 'module', target_id: module,
+      detail: { paper: bank.id, lecture: to, set: ids.length },
+    }).then(() => {}, () => {});
+
+    return NextResponse.json({ set: ids.length, lectures: ids.length ? 1 : 0, unknown: [], foreign: 0 });
+  }
+
+  if (!Array.isArray(map) || !map.length) {
+    return NextResponse.json({ error: 'لا شيء في ما لُصق' }, { status: 400 });
+  }
 
   // Only this subject's questions may be touched, whatever the paste says.
   // An id is a number a model can be wrong about, and being wrong about one
