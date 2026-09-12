@@ -169,6 +169,9 @@ const db = {
   ],
   audit_log: [],
   import_jobs: [],
+  // One duel already sent and not yet answered, so the screen that says
+  // "your turn" has something to say the first time it is opened.
+  duels: [],
   // Enough of a promo to see الرئيسية as a student would: two posts, one of
   // them with a file, messages waiting, and notifications unread. An empty
   // feed and an empty feed that the database refused look identical, so the
@@ -486,6 +489,15 @@ createServer(async (req, res) => {
     if (table === 'rooms' && select.includes('host:profiles')) {
       rows = rows.map((r) => ({ ...r, host: db.profiles.find((p) => p.id === r.host) || null }));
     }
+    // Two references to the same table, so PostgREST is told which by the
+    // constraint name. The app asks for both halves of a duel at once.
+    if (table === 'duels' && select.includes('duels_challenger_fkey')) {
+      rows = rows.map((r) => ({
+        ...r,
+        a: db.profiles.find((p) => p.id === r.challenger) || null,
+        b: db.profiles.find((p) => p.id === r.opponent) || null,
+      }));
+    }
     if (table === 'room_members' && select.includes('person:profiles')) {
       rows = rows.map((r) => ({ ...r, person: db.profiles.find((p) => p.id === r.person) || null }));
     }
@@ -533,6 +545,8 @@ createServer(async (req, res) => {
     room_members:  () => ({ joined_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     profiles: () => ({ created_at: new Date().toISOString() }),
     documents: () => ({ published: true }),
+    duels:    () => ({ created_at: new Date().toISOString(),
+                       opponent_score: null, opponent_at: null }),
     reviews:  () => ({ box: 0, wrong: 0, due_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     reports:  () => ({ state: 'open', created_at: new Date().toISOString() }),
     notifications: () => ({ seen: false, created_at: new Date().toISOString() }),

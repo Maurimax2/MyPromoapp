@@ -780,6 +780,38 @@ button.pill:active { transform: scale(.94); }
 }
 .pick-box.on { background: var(--purple); border-color: var(--purple); }
 .pick .num { background: var(--bg); color: var(--ink-3); }
+/* ---------- تحدّي زميلك ---------- */
+
+.duel-set { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.duel-set .login-input { height: 52px; }
+
+/* The score on a row in the list: yours, then theirs, at a glance. */
+.duel-score {
+  font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--ink-2); flex-shrink: 0;
+}
+.duel-score.won  { color: var(--orange); }
+.duel-score.lost { color: var(--ink-3); }
+
+/* And the whole of it, on the duel's own screen. */
+.duel-result {
+  padding: 26px 20px; display: flex; flex-direction: column;
+  align-items: center; gap: 8px; text-align: center;
+}
+.duel-verdict { font-size: 19px; font-weight: 700; }
+.duel-result.won .duel-verdict  { color: var(--orange); }
+.duel-result.lost .duel-verdict { color: var(--ink-2); }
+.duel-pair {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums;
+  line-height: 1.1; color: var(--ink-3);
+}
+.duel-pair .win { color: var(--purple); }
+.duel-dash { color: var(--line); font-size: 30px; }
+.duel-of { font-size: 13px; color: var(--ink-3); }
+
+.duel-row .nm { font-size: 14.5px; }
+
 /* One paper in the classify screen: its name, how many of its questions are
    still unplaced, and the lecture to send them to once it is opened. */
 .paper-row { border-top: 1px solid var(--line-soft); padding: 4px 0; }

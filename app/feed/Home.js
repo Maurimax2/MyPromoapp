@@ -34,7 +34,7 @@ const TOOLS = [
   { id: 'qa',     label: 'سؤال وجواب',  icon: 'msgs',  href: '/qa' },
   { id: 'rooms',  label: 'غرف الدراسة', icon: 'video', href: '/rooms' },
   { id: 'points', label: 'النقاط',      icon: 'award', href: '/points' },
-  { id: 'duel',   label: 'تحدّي زميلك', icon: 'swords' },
+  { id: 'duel',   label: 'تحدّي زميلك', icon: 'swords', href: '/duel' },
 ];
 
 const TODAY = new Intl.DateTimeFormat('ar', { weekday: 'long', day: 'numeric', month: 'long' });

@@ -111,7 +111,11 @@ export default async function PersonPage({ params }) {
               </div>
             </div>
 
-            {/* الصداقة والتحدّي لاحقًا — ما يظهر هنا يجب أن يعمل. */}
+            {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
+            <Link href={`/duel/new?to=${person.matricule}`} className="btn p">
+              <Icon name="swords" size={18} />
+              تحدَّ {name.split(' ')[0]}
+            </Link>
           </>
         )}
       </div>

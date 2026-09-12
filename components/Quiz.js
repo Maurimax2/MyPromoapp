@@ -25,12 +25,20 @@ const LETTER = (n) => String.fromCharCode(65 + n);
 const sameSet = (a, b) =>
   a.length === b.length && [...a].sort().every((v, i) => v === [...b].sort()[i]);
 
-export default function Quiz({ questions, moduleId, moduleName, source, onFinish }) {
+export default function Quiz({
+  questions, moduleId, moduleName, source, onFinish,
+  // A duel needs what was ticked, not what the browser thought of it: the
+  // score is worked out on the server, against the questions it stored.
+  // Given this, the run ends by handing the answers over instead of drawing
+  // a result of its own.
+  onAnswers,
+}) {
   const [i, setI] = useState(0);
   const [ticked, setTicked] = useState([]);
   const [shown, setShown] = useState(false);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
+  const [given, setGiven] = useState([]);
 
   const q = questions[i];
   const last = i === questions.length - 1;
@@ -52,8 +60,16 @@ export default function Quiz({ questions, moduleId, moduleName, source, onFinish
     if (q.id) record(q.id, right);
   };
 
-  const next = () => {
-    if (last) { setDone(true); return; }
+  const next = (mine = ticked) => {
+    const all = [...given];
+    all[i] = mine;
+    setGiven(all);
+
+    if (last) {
+      if (onAnswers) { onAnswers(all); return; }
+      setDone(true);
+      return;
+    }
     setI((n) => n + 1);
     setTicked([]);
     setShown(false);
@@ -66,10 +82,14 @@ export default function Quiz({ questions, moduleId, moduleName, source, onFinish
   const mark = (knew) => {
     if (knew) setScore((n) => n + 1);
     if (q.id) record(q.id, knew);
-    next();
+    // A written answer has nothing to send: it was marked by the person who
+    // wrote it, which is why a duel never contains one.
+    next([]);
   };
 
-  const restart = () => { setI(0); setTicked([]); setShown(false); setScore(0); setDone(false); };
+  const restart = () => {
+    setI(0); setTicked([]); setShown(false); setScore(0); setDone(false); setGiven([]);
+  };
 
   if (done) {
     const pct = Math.round((score / questions.length) * 100);
@@ -165,7 +185,9 @@ export default function Quiz({ questions, moduleId, moduleName, source, onFinish
               : `الجواب: ${answer.map(LETTER).join(' · ') || '—'}`}
             {q.why ? ` — ${q.why}` : ''}
           </div>
-          <button className="btn p" onClick={next}>{last ? 'إنهاء' : 'السؤال التالي'}</button>
+          <button className="btn p" onClick={() => next()}>
+            {last ? (onAnswers ? 'أرسِل' : 'إنهاء') : 'السؤال التالي'}
+          </button>
         </>
       )}
       </>

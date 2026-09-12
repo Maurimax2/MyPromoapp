@@ -414,3 +414,54 @@ drop policy if exists chat_seen on chat_messages;
 create policy chat_seen on chat_messages for update
   using (exists (select 1 from chats c where c.id = chat
                  and (c.a = auth.uid() or c.b = auth.uid())));
+
+-- ---------------------------------------------------------------------------
+-- تحدّي زميلك
+-- ---------------------------------------------------------------------------
+
+-- Two students, the same questions, two scores.
+--
+-- Not live. The one worth having is the one you can send at midnight to
+-- somebody who is asleep: you take it, it goes to them, they take it when
+-- they wake up, and both of you see the result. A duel that needs both
+-- people on the screen at once is a duel that almost never happens.
+--
+-- `questions` is the exact list, in order, chosen when the duel is made. It
+-- is stored rather than re-picked, because a comparison between two people
+-- who answered different questions is not a comparison. A question deleted
+-- from the subject afterwards leaves the duel as it was — the ids are kept
+-- flat rather than as foreign keys for exactly that reason.
+--
+-- Only multiple-choice questions go into one. A written answer is marked by
+-- the student who wrote it, and two people marking themselves is not a score
+-- either of them can stand behind.
+create table if not exists duels (
+  id          bigint generated always as identity primary key,
+  promo       text   not null,
+  module      text   not null references modules on delete cascade,
+  lecture     bigint references documents on delete set null,
+  title       text   not null,                -- what it says on the card
+  questions   bigint[] not null,
+  challenger  uuid   not null references profiles on delete cascade,
+  opponent    uuid   not null references profiles on delete cascade,
+  challenger_score int,
+  opponent_score   int,
+  challenger_at    timestamptz,
+  opponent_at      timestamptz,
+  created_at  timestamptz not null default now()
+);
+
+create index if not exists duels_challenger_idx on duels (challenger, created_at desc);
+create index if not exists duels_opponent_idx   on duels (opponent, created_at desc);
+-- The one query the badge asks: how many are waiting for me.
+create index if not exists duels_waiting_idx on duels (opponent)
+  where opponent_at is null;
+
+alter table duels enable row level security;
+
+-- The two people in it, and nobody else. Written only by the server, which
+-- holds the service key — a student who could write their own row could write
+-- their own score.
+drop policy if exists duels_mine on duels;
+create policy duels_mine on duels for select
+  using (challenger = auth.uid() or opponent = auth.uid());
