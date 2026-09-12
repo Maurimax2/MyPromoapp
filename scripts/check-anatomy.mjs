@@ -9,6 +9,7 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { BUNDLES, CREDIT, boneOf } from '../lib/anatomy/bundles.js';
+import { LANDMARKS } from '../lib/anatomy/landmarks.js';
 
 let bad = 0;
 const no = (why) => { bad++; console.log(`  FAIL ${why}`); };
@@ -83,6 +84,31 @@ for (const bundle of BUNDLES) {
 
     if (p.indexCount % 3) no(`${where}: ${p.indexCount} indices is not whole triangles`);
     triangles += p.indexCount / 3;
+  }
+
+  // The landmarks. A label that has slipped off its bone is the worst kind of
+  // mistake this file can make: it does not look broken, it looks like an
+  // answer, and a student would learn it.
+  const wanted = LANDMARKS[bundle.id] || [];
+  const marks = existsSync(`public/anatomy/${bundle.id}.points.json`)
+    ? JSON.parse(readFileSync(`public/anatomy/${bundle.id}.points.json`, 'utf8')).points
+    : [];
+  if (marks.length !== wanted.length) {
+    no(`${marks.length} landmarks placed, ${wanted.length} named — run scripts/place-landmarks.mjs`);
+  } else if (marks.length) {
+    const where = new Map(meta.parts.map((q) => [q.id, q]));
+    for (const m of marks) {
+      const host = where.get(m.part);
+      if (!host) { no(`${m.name} points at ${m.part}, which is not in this model`); continue; }
+      if (/[؀-ۿ]/.test(m.name)) no(`landmark named in Arabic: ${m.name}`);
+      const off = m.at.some((v, k) => v < host.bounds[0][k] - 1e-3 || v > host.bounds[1][k] + 1e-3);
+      if (off) no(`${m.name} is not on ${host.name}`);
+      const len = Math.hypot(...m.out);
+      if (Math.abs(len - 1) > 0.02) no(`${m.name} faces nowhere in particular`);
+    }
+    const twice = marks.map((m) => m.name).filter((n, i, a) => a.indexOf(n) !== i);
+    if (twice.length) no(`named twice: ${[...new Set(twice)].join(', ')}`);
+    ok(`${marks.length} landmarks, each on its own bone`);
   }
 
   const mb = (raw.length / 1048576).toFixed(2);

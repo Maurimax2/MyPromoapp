@@ -2162,7 +2162,7 @@ button.pill:active { transform: scale(.94); }
 /* The name sits over the model rather than under it, because the thing you
    want to look at while reading the name is the bone you just touched. */
 .m3d-name {
-  position: absolute; inset-inline: 12px; bottom: 46px;
+  position: absolute; inset-inline: 12px; bottom: 46px; z-index: 3;
   min-height: 48px;
   display: flex; align-items: center; gap: 6px;
   padding: 10px 14px;
@@ -2181,7 +2181,7 @@ button.pill:active { transform: scale(.94); }
    span the full width, which left the way out of it underneath itself. */
 .m3d-list {
   position: absolute; inset-inline-start: 12px; inset-inline-end: 68px;
-  bottom: 104px; top: 12px;
+  bottom: 104px; top: 12px; z-index: 3;
   overflow-y: auto; -webkit-overflow-scrolling: touch;
   background: var(--surface); border-radius: var(--r-card);
   box-shadow: var(--shadow); padding: 6px;
@@ -2199,6 +2199,41 @@ button.pill:active { transform: scale(.94); }
   width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0;
   box-shadow: inset 0 0 0 1px rgba(26, 20, 36, .12);
 }
+.m3d-dot { border-radius: 50%; background: var(--purple); }
+.m3d-head {
+  padding: 10px 12px 6px; font-size: 12px; font-weight: 600;
+  color: var(--ink-3); letter-spacing: .2px;
+}
+.m3d-head + .m3d-row { border-top: 0; }
+
+/* A named place on a bone.
+   The dot is small on purpose: thirty of them at a comfortable thumb's width
+   would cover the skull and overlap each other, and picking one would be
+   luck. The list is the target that keeps its full height — every landmark is
+   a 44px row there, and the dot is the shortcut, not the only way in. */
+.m3d-pin {
+  /* left, not inset-inline-start: the page is RTL and the number the render
+     loop hands over is measured from the left edge of the canvas. */
+  position: absolute; top: 0; left: 0;
+  /* Parked off screen until the render loop has somewhere to put it, so a
+     label can never be seen sitting in the corner. */
+  transform: translate(-9999px, -9999px);
+  width: 26px; height: 26px; padding: 0; border: 0; background: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 1;
+}
+.m3d-pin::before {
+  content: ''; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--ink-2); border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(26, 20, 36, .35);
+  transition: none;
+}
+.m3d-pin.on { z-index: 2; }
+.m3d-pin.on::before {
+  width: 17px; height: 17px; background: var(--purple);
+  box-shadow: 0 0 0 4px rgba(107, 33, 181, .22), 0 1px 3px rgba(26, 20, 36, .35);
+}
+.m3d-spot { color: var(--purple); }
 
 /* The licence asks for this wherever the geometry is drawn, so it is part of
    the screen and not a line in a settings page nobody opens. */

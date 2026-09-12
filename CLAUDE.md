@@ -238,8 +238,24 @@ terms in Arabic — French is a necessity, not a preference.
   buried — the sphenoid, the vomer, the ethmoid — and those are exactly the
   ones worth looking at alone. Leaving the camera where the whole head was put
   a maxilla in the corner at the size of a stamp.
+- **A foramen and a process are labelled points, not pieces.** BodyParts3D is
+  one mesh per whole bone; the only thing it calls a foramen in the entire
+  body is in the brain. The shapes are all there at full detail — the foramen
+  magnum is a real hole — so a landmark is a point on the surface with a name
+  over it, the way a printed plate does it.
+- **A landmark is written as a rule, not as coordinates.** `lib/anatomy/
+  landmarks.js` says which direction to look: the mastoid is the lowest point
+  of the temporal, the glabelle the frontmost point of the frontal. Re-cutting
+  the geometry then moves the labels with the bone instead of leaving them
+  hanging in the air.
+- **Choosing a landmark turns the model to face it.** Half of them are
+  underneath or behind, and being left looking at the face is choosing nothing.
+- The dots are smaller than a thumb on purpose. Thirty at a comfortable width
+  would cover the skull and overlap; the list is the target that keeps its full
+  height, and the dot is the shortcut.
 - `scripts/carve-anatomy.mjs` cuts a bundle out of a checkout of the atlas and
   the result is committed. Nobody needs the atlas to build the app.
+- `scripts/place-landmarks.mjs` turns the rules into points beside it.
 - `npm run check:anatomy` reads the files the way the browser reads them. A
   wrong offset does not throw — it draws a cloud of triangles, which on a
   phone is indistinguishable from a model that never loaded.

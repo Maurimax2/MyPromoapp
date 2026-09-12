@@ -30,6 +30,9 @@ export default function Model3D({ id, title }) {
   const [listing, setListing] = useState(false);
   const [plate, setPlate] = useState(false);   // every bone its own colour
   const [only, setOnly] = useState(false);     // the one you picked, by itself
+  const [points, setPoints] = useState([]);    // the named places on the bones
+  const [pins, setPins] = useState(true);      // …drawn or not
+  const [pin, setPin] = useState(null);        // …and which one is being read
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -39,12 +42,18 @@ export default function Model3D({ id, title }) {
   const chosen = useRef(null);
   const all = useRef(false);
   const alone = useRef(false);
+  const showing = useRef(true);
+  const reading = useRef(null);
   useEffect(() => {
     chosen.current = picked;
     all.current = plate;
     alone.current = only;
+    // …and never while the list is open: the labels floated over its rows and
+    // made the one screen that is pure text unreadable.
+    showing.current = pins && !listing;
+    reading.current = pin;
     api.current?.paint();
-  }, [picked, plate, only]);
+  }, [picked, plate, only, pins, pin, listing]);
 
   // Showing one bone by itself re-aims the camera at it, and putting the rest
   // back re-aims at the skull. Only on those two moves: re-framing every time
@@ -92,6 +101,43 @@ export default function Model3D({ id, title }) {
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
 
+    // The named places on the bones. They are not geometry — a foramen is a
+    // hole and a process is a bump, and the atlas has no separate piece for
+    // either — so each one is a point on the surface with a label over it,
+    // drawn as ordinary HTML above the canvas rather than as something in the
+    // scene. That way the text is our own font at our own size and stays
+    // crisp, and tapping one is a button press rather than a ray cast.
+    const marks = [];
+    let badges = [];
+    const flat = new THREE.Vector3();
+    const away = new THREE.Vector3();
+
+    const movePins = () => {
+      if (!marks.length) return;
+      if (badges.length !== marks.length) {
+        badges = [...el.parentElement.querySelectorAll('.m3d-pin')];
+        if (badges.length !== marks.length) return;
+      }
+      const w = el.clientWidth, h = el.clientHeight;
+      const on = showing.current;
+      marks.forEach((mark, i) => {
+        const tag = badges[i];
+        // A label on the far side of the head would otherwise be drawn through
+        // the bone, naming something you cannot see. Normalised, because the
+        // unnormalised version scaled the test by how far away the camera was
+        // and quietly hid two thirds of them.
+        away.copy(mark.at).sub(camera.position).normalize();
+        const behind = away.dot(mark.out) > 0.15;
+        if (!on || behind || !mark.mesh.visible) { tag.hidden = true; return; }
+        flat.copy(mark.at).project(camera);
+        const x = (flat.x * 0.5 + 0.5) * w;
+        const y = (-flat.y * 0.5 + 0.5) * h;
+        if (flat.z > 1 || x < 0 || y < 0 || x > w || y > h) { tag.hidden = true; return; }
+        tag.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+        tag.hidden = false;
+      });
+    };
+
     // Nothing is ever made see-through. Ghosting the rest of the skull to
     // point at one bone turned the whole thing into an X-ray, and an X-ray of
     // twenty-two overlapping bones is not a picture of any of them. The bone
@@ -106,20 +152,27 @@ export default function Model3D({ id, title }) {
         m.material.emissive.set(m.userData.tint);
         m.material.emissiveIntensity = on && all.current ? 0.45 : 0;
       }
+      movePins();
       draw();
     };
 
     let frame = 0;
     const draw = () => {
       if (frame || dead) return;
-      frame = requestAnimationFrame(() => { frame = 0; renderer.render(scene, camera); });
+      frame = requestAnimationFrame(() => {
+        frame = 0; renderer.render(scene, camera); movePins();
+      });
     };
 
     let live = true;
     const loop = () => {
       if (!live) return;
       requestAnimationFrame(loop);
-      if (controls.update()) renderer.render(scene, camera);
+      if (controls.update()) { renderer.render(scene, camera); movePins(); }
+      // React draws the labels a tick after the geometry arrives, so the first
+      // placement has nothing to place. Without this they stay where they were
+      // born — the corner of the screen — until the first drag.
+      else if (badges.length !== marks.length) movePins();
     };
 
     // How far back the camera has to stand for the whole thing to be on
@@ -163,6 +216,26 @@ export default function Model3D({ id, title }) {
       controls.target.set(middle.x, middle.y + drop, middle.z);
       controls.minDistance = d * 0.35;
       controls.maxDistance = d * 2.2;
+      controls.update();
+      draw();
+    };
+
+    /**
+     * Turn the skull so a landmark is facing you.
+     *
+     * Half of them are underneath or behind — the foramen magnum is on the
+     * base and the occipital protuberance is at the back — so choosing one
+     * from the list and being left looking at the face is choosing nothing.
+     */
+    const faceTo = (i) => {
+      const mark = marks[i];
+      if (!mark) return;
+      const d = camera.position.distanceTo(controls.target);
+      // Nudged off the vertical: straight underneath is the one place an
+      // orbit has no sideways left, and the view snaps as soon as you drag.
+      const from = mark.out.clone();
+      if (Math.abs(from.y) > 0.94) from.z += from.y > 0 ? -0.3 : 0.3;
+      camera.position.copy(controls.target).addScaledVector(from.normalize(), d);
       controls.update();
       draw();
     };
@@ -221,6 +294,11 @@ export default function Model3D({ id, title }) {
             return r.arrayBuffer();
           }),
         ]);
+        // Landmarks are a separate small file and a model is allowed to have
+        // none: a bundle with no names on it yet still draws.
+        const named = await fetch(`/anatomy/${id}.points.json`)
+          .then((r) => (r.ok ? r.json() : { points: [] }))
+          .catch(() => ({ points: [] }));
         if (dead) return;
 
         const [lo, hi] = meta.bounds;
@@ -255,9 +333,22 @@ export default function Model3D({ id, title }) {
         whole = [lo, hi].map((v) => v.map((n, i) => n - mid.getComponent(i)));
         look(whole);
 
+        const byPart = new Map(meshes.map((m) => [m.userData.id, m]));
+        for (const q of named.points || []) {
+          const mesh = byPart.get(q.part);
+          if (!mesh) continue;
+          marks.push({
+            name: q.name,
+            mesh,
+            at: new THREE.Vector3(...q.at).sub(mid),
+            out: new THREE.Vector3(...q.out),
+          });
+        }
+        setPoints(marks.map((m, i) => ({ i, name: m.name })));
+
         setParts(meta.parts.map((p) => ({ id: p.id, name: p.name, tint: p.tint, fma: p.fma })));
         setLoading(false);
-        api.current = { paint, focusOn, home: () => focusOn(null) };
+        api.current = { paint, focusOn, faceTo, home: () => focusOn(null) };
         // Face-on and upright, the way it is drawn in every textbook.
         fit();
         reframe();
@@ -285,11 +376,28 @@ export default function Model3D({ id, title }) {
     };
   }, [id]);
 
-  const name = parts.find((p) => p.id === picked)?.name || null;
+  // The card along the bottom says one thing at a time: the landmark you
+  // touched, or the bone. A landmark is the finer answer so it wins.
+  const spot = pin != null ? points.find((q) => q.i === pin)?.name : null;
+  const name = spot || parts.find((p) => p.id === picked)?.name || null;
+  const clear = () => { setPin(null); setPicked(null); setOnly(false); };
 
   return (
     <div className="m3d">
       <div className="m3d-stage" ref={host} />
+
+      {/* Positioned from the render loop, not from React: these move with
+          every frame of a drag and re-rendering thirty nodes at sixty hertz
+          is how a phone starts dropping frames. */}
+      {points.map((q) => (
+        <button
+          key={q.i}
+          className={`m3d-pin${pin === q.i ? ' on' : ''}`}
+          hidden
+          onClick={() => setPin(pin === q.i ? null : q.i)}
+          aria-label={q.name}
+        />
+      ))}
 
       {loading && <div className="m3d-msg">…</div>}
       {error && <div className="m3d-msg m3d-bad">{error}</div>}
@@ -308,6 +416,13 @@ export default function Model3D({ id, title }) {
               onClick={() => setOnly((v) => !v)} aria-label="إظهار المحدَّد وحده">
               <Icon name="focus" size={18} />
             </button>
+            {points.length > 0 && (
+              <button className={`icobtn${pins ? ' on' : ''}`}
+                onClick={() => { setPins((v) => !v); setPin(null); }}
+                aria-label="أسماء المعالم">
+                <Icon name="pin" size={18} />
+              </button>
+            )}
             <button className={`icobtn${listing ? ' on' : ''}`}
               onClick={() => setListing((v) => !v)} aria-label="القائمة">
               <Icon name="list" size={18} />
@@ -321,12 +436,10 @@ export default function Model3D({ id, title }) {
 
           <div className="m3d-name">
             {name
-              ? <span className="m3d-nm" dir="auto">{name}</span>
-              : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
+              ? <span className={`m3d-nm${spot ? ' m3d-spot' : ''}`} dir="auto">{name}</span>
+              : <span className="m3d-hint">أدر النموذج، والمس عظمًا أو نقطة لمعرفة اسمها</span>}
             {name && (
-              <button className="m3d-clear"
-                onClick={() => { setPicked(null); setOnly(false); }}
-                aria-label="إلغاء التحديد">
+              <button className="m3d-clear" onClick={clear} aria-label="إلغاء التحديد">
                 <Icon name="x" size={16} />
               </button>
             )}
@@ -334,6 +447,7 @@ export default function Model3D({ id, title }) {
 
           {listing && (
             <div className="m3d-list">
+              <div className="m3d-head">العظام</div>
               {parts.map((p) => (
                 <button
                   key={p.id}
@@ -347,6 +461,26 @@ export default function Model3D({ id, title }) {
                   {p.name}
                 </button>
               ))}
+
+              {points.length > 0 && (
+                <>
+                  <div className="m3d-head">المعالم</div>
+                  {points.map((q) => (
+                    <button
+                      key={q.i}
+                      className={`m3d-row${pin === q.i ? ' on' : ''}`}
+                      onClick={() => {
+                        setPin(q.i); setPins(true);
+                        api.current?.faceTo(q.i);
+                      }}
+                      dir="auto"
+                    >
+                      <span className="m3d-swatch m3d-dot" />
+                      {q.name}
+                    </button>
+                  ))}
+                </>
+              )}
             </div>
           )}
         </>
