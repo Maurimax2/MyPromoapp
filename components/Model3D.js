@@ -23,7 +23,7 @@ const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
 const BONE = 0xe6e0d3;
 
-export default function Model3D({ id, title, hidden = [] }) {
+export default function Model3D({ id, title, hidden = [], credit = CREDIT }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
   const [parts, setParts] = useState([]);
@@ -714,7 +714,7 @@ export default function Model3D({ id, title, hidden = [] }) {
         </>
       )}
 
-      <div className="m3d-credit" dir="auto">{CREDIT}</div>
+      <div className="m3d-credit" dir="auto">{credit}</div>
     </div>
   );
 }

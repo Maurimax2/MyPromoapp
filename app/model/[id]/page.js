@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Model3D from '@/components/Model3D';
 import { currentProfile } from '@/lib/supabase/server';
-import { bundleOf } from '@/lib/anatomy/bundles';
+import { bundleOf, CREDIT } from '@/lib/anatomy/bundles';
 
 // Nothing here is read from the database — the geometry is a file served from
 // our own origin — but the screen is still behind a sign-in like every other,
@@ -31,7 +31,12 @@ export default async function ModelPage({ params }) {
         </div>
       </header>
 
-      <Model3D id={bundle.id} title={bundle.title} hidden={bundle.hidden || []} />
+      <Model3D
+        id={bundle.id}
+        title={bundle.title}
+        hidden={bundle.hidden || []}
+        credit={bundle.credit || CREDIT}
+      />
     </>
   );
 }

@@ -216,6 +216,28 @@ terms in Arabic — French is a necessity, not a preference.
   database's own current licence, which permits redistribution and adaptation.
   The credit is printed on the screen the model is drawn on, not filed away
   in a settings page.
+- **There are two sources, and each model says which.** BodyParts3D as the
+  Database Center ships it, **CC BY 4.0**, has no muscles of mastication and no
+  muscles of the face at all. **Z-Anatomy**, which is BodyParts3D with
+  structures added by a medical illustrator, has every one of them — and the
+  twelve cranial nerves, the lungs, 289 ligaments and the intervertebral discs.
+  It is **CC BY-SA 4.0**: commercial use is fine, share-alike is not. **The
+  credit line is per model** and `check:anatomy` refuses a Z-Anatomy model
+  whose credit does not say CC BY-SA.
+- **Never take a NonCommercial source.** Some of the AnatomyTOOL collections
+  are CC BY-NC-SA. The app is going to be commercial, so those are out — not a
+  judgement call, a licence.
+- **Z-Anatomy is read straight out of its FBX.** `scripts/read-fbx.mjs` and
+  `scripts/fbx-meshes.mjs` do it without Blender and without a 3D engine. Two
+  things that file will not tell you unless you ask: a geometry is drawn around
+  its own origin and where it really sits is on the Model above it, so the
+  transforms have to be walked or the masseter and the temporal end up inside
+  one another; and it is in centimetres where everything else here is metres.
+- **Z-Anatomy ships only the left of each pair.** The right is a mirror
+  modifier the FBX export did not bake, so it is made at carve time by flipping
+  x — and reversing the winding, or the whole side is lit from inside.
+- The two sources are the same body about a centimetre apart in z. Close
+  enough to mix one day; not mixed yet, so no model draws from both.
 - **A model belongs to the lecture it explains.** It opens from the subject
   and nowhere else. That is why نماذج 3D came off الرئيسية.
 - **A model is a named handful of structures, never the whole atlas.** The

@@ -17,10 +17,17 @@ let bad = 0;
 const no = (why) => { bad++; console.log(`  FAIL ${why}`); };
 const ok = (what) => console.log(`  ok   ${what}`);
 
-if (!CREDIT.includes('CC BY 4.0')) no('the credit line no longer names the licence');
+if (!CREDIT.includes('CC BY 4.0')) no('the default credit line no longer names the licence');
 
 for (const bundle of BUNDLES) {
   console.log(`— ${bundle.id}`);
+  // Z-Anatomy is share-alike and BodyParts3D is not; a bundle that carries the
+  // wrong credit is the one mistake here with a legal edge to it.
+  const said = bundle.credit || CREDIT;
+  if (!/CC BY/.test(said)) no(`${bundle.id}: the credit line names no licence`);
+  if (bundle.source === 'zanatomy' && !/CC BY-SA/.test(said)) {
+    no(`${bundle.id} comes from Z-Anatomy but its credit does not say CC BY-SA`);
+  }
   const json = `public/anatomy/${bundle.id}.json`;
   const bin = `public/anatomy/${bundle.id}.bin`;
   if (!existsSync(json) || !existsSync(bin)) {
@@ -32,9 +39,13 @@ for (const bundle of BUNDLES) {
   const raw = readFileSync(bin);
   const buf = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length);
 
-  const named = Object.keys(bundle.parts);
-  if (meta.parts.length !== named.length) {
-    no(`${meta.parts.length} structures in the file, ${named.length} named in bundles.js`);
+  // A bundle either lists its structures outright or lists the files it takes
+  // them from, and a mirrored file gives two for every one it names.
+  const listed = bundle.parts
+    ? Object.keys(bundle.parts).length
+    : bundle.files.reduce((n, f) => n + Object.keys(f.parts).length * (f.mirrored ? 2 : 1), 0);
+  if (meta.parts.length !== listed) {
+    no(`${meta.parts.length} structures in the file, ${listed} named in bundles.js`);
   } else ok(`${meta.parts.length} structures, all named`);
 
   // A name in Arabic would break the language rule in the one place a
