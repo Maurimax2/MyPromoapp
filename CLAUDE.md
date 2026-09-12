@@ -226,6 +226,18 @@ terms in Arabic — French is a necessity, not a preference.
   bundle honest: a region cut by coordinates quietly includes whatever else
   sat in the same box — their `skull` holds the corneas and the lacrimal
   glands.
+- **Nothing in a model is ever made see-through.** Ghosting the rest of the
+  skull to point at one bone turns the whole thing into an X-ray, and an X-ray
+  of twenty-two overlapping bones is a picture of none of them. The bone you
+  touched takes its colour; the others stay bone.
+- **One colour per bone, not per mesh.** The left and right parietal are the
+  same bone and every plate in every textbook colours them the same. The list
+  carries the same colours, because fourteen colours on a skull say nothing
+  without the names beside them.
+- **A bone shown by itself re-aims the camera at it.** Half the skull is
+  buried — the sphenoid, the vomer, the ethmoid — and those are exactly the
+  ones worth looking at alone. Leaving the camera where the whole head was put
+  a maxilla in the corner at the size of a stamp.
 - `scripts/carve-anatomy.mjs` cuts a bundle out of a checkout of the atlas and
   the result is committed. Nobody needs the atlas to build the app.
 - `npm run check:anatomy` reads the files the way the browser reads them. A

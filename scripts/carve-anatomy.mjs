@@ -16,7 +16,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { BUNDLES } from '../lib/anatomy/bundles.js';
+import { BUNDLES, boneOf } from '../lib/anatomy/bundles.js';
 
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);
@@ -87,8 +87,14 @@ for (const bundle of BUNDLES) {
       hi[i] = Math.max(hi[i], p.bounds[1][i]);
     }
 
+    const tint = bundle.tints[boneOf(name)];
+    if (!tint) {
+      console.error(`${bundle.id}: no colour for ${boneOf(name)} (${name})`);
+      process.exit(1);
+    }
+
     parts.push({
-      id: p.id, name, fma: p.conceptId, source: p.name,
+      id: p.id, name, tint, fma: p.conceptId, source: p.name,
       positions, normals, indices,
       vertexCount: p.vertexCount, indexCount: p.indexCount,
       bounds: p.bounds,

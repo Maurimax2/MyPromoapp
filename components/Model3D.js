@@ -19,7 +19,8 @@ import Icon from '@/components/Icon';
 import { CREDIT } from '@/lib/anatomy/bundles';
 
 const MAX_DPR = 2;
-const BONE = 0x1a1424;
+/** Unpainted bone. Everything that is not the answer to the question. */
+const BONE = 0xe6e0d3;
 
 export default function Model3D({ id, title }) {
   const host = useRef(null);
@@ -27,6 +28,8 @@ export default function Model3D({ id, title }) {
   const [parts, setParts] = useState([]);
   const [picked, setPicked] = useState(null);
   const [listing, setListing] = useState(false);
+  const [plate, setPlate] = useState(false);   // every bone its own colour
+  const [only, setOnly] = useState(false);     // the one you picked, by itself
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +37,25 @@ export default function Model3D({ id, title }) {
   // list, so it lives in a ref as well — the render loop must not close over
   // a stale one.
   const chosen = useRef(null);
-  useEffect(() => { chosen.current = picked; api.current?.paint(); }, [picked]);
+  const all = useRef(false);
+  const alone = useRef(false);
+  useEffect(() => {
+    chosen.current = picked;
+    all.current = plate;
+    alone.current = only;
+    api.current?.paint();
+  }, [picked, plate, only]);
+
+  // Showing one bone by itself re-aims the camera at it, and putting the rest
+  // back re-aims at the skull. Only on those two moves: re-framing every time
+  // a bone is touched would throw away the zoom the student just set.
+  const framed = useRef(null);
+  useEffect(() => {
+    const want = only && picked ? picked : null;
+    if (framed.current === want) return;
+    framed.current = want;
+    api.current?.focusOn(want);
+  }, [only, picked]);
 
   useEffect(() => {
     const el = host.current;
@@ -71,14 +92,19 @@ export default function Model3D({ id, title }) {
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
 
+    // Nothing is ever made see-through. Ghosting the rest of the skull to
+    // point at one bone turned the whole thing into an X-ray, and an X-ray of
+    // twenty-two overlapping bones is not a picture of any of them. The bone
+    // you touched takes its colour and the others stay bone.
     const paint = () => {
       for (const m of meshes) {
         const on = chosen.current === m.userData.id;
-        const none = chosen.current == null;
-        m.material.color.setHex(on ? 0x6b21b5 : 0xe6e0d3);
-        m.material.opacity = none || on ? 1 : 0.22;
-        m.material.transparent = !(none || on);
-        m.material.depthWrite = none || on;
+        m.visible = !(alone.current && chosen.current != null && !on);
+        m.material.color.set(all.current || on ? m.userData.tint : BONE);
+        // In the coloured plate every bone already has a colour of its own, so
+        // the one you picked is lifted rather than recoloured.
+        m.material.emissive.set(m.userData.tint);
+        m.material.emissiveIntensity = on && all.current ? 0.45 : 0;
       }
       draw();
     };
@@ -103,6 +129,17 @@ export default function Model3D({ id, title }) {
     // radius is the model's half-diagonal so that turning it never pushes a
     // corner off the edge.
     let wide = 1, tall = 1, drop = 0;
+    const middle = new THREE.Vector3();
+    // What the camera is framing: the whole skull, or the one bone left on
+    // screen. Showing a bone by itself and leaving the camera where the whole
+    // head was put a maxilla in the corner at the size of a stamp.
+    let whole = null;
+    const look = (box) => {
+      const [lo, hi] = box;
+      wide = Math.max(hi[0] - lo[0], hi[2] - lo[2]) / 2;
+      tall = Math.max(hi[1] - lo[1], hi[2] - lo[2]) / 2;
+      middle.set((lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2);
+    };
     const MARGIN = 1.06;
     // The name of what you touched, and the credit under it, float over the
     // canvas. Framing against the whole canvas therefore puts the mandible
@@ -122,12 +159,19 @@ export default function Model3D({ id, title }) {
       const d = place();
       // The name of what you touched sits along the bottom, so the model is
       // drawn a little above the middle rather than under it.
-      camera.position.set(0, drop, d);
-      controls.target.set(0, drop, 0);
+      camera.position.set(middle.x, middle.y + drop, middle.z + d);
+      controls.target.set(middle.x, middle.y + drop, middle.z);
       controls.minDistance = d * 0.35;
       controls.maxDistance = d * 2.2;
       controls.update();
       draw();
+    };
+
+    /** Frame one structure, or the whole model again when given nothing. */
+    const focusOn = (id) => {
+      const one = id && meshes.find((m) => m.userData.id === id);
+      look(one ? one.userData.box : whole);
+      reframe();
     };
 
     const fit = () => {
@@ -158,8 +202,11 @@ export default function Model3D({ id, title }) {
       pointer.x = ((e.clientX - box.left) / box.width) * 2 - 1;
       pointer.y = -((e.clientY - box.top) / box.height) * 2 + 1;
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(meshes, false)[0];
+      const hit = raycaster.intersectObjects(meshes.filter((m) => m.visible), false)[0];
       setPicked(hit ? hit.object.userData.id : null);
+      // Touching the background puts everything back: leaving the skull with
+      // one bone in it and no way to tell why is worse than losing a choice.
+      if (!hit) setOnly(false);
     };
 
     (async () => {
@@ -190,11 +237,13 @@ export default function Model3D({ id, title }) {
             new Uint32Array(bin, p.indices, p.indexCount), 1));
 
           const mesh = new THREE.Mesh(g, new THREE.MeshStandardMaterial({
-            color: 0xe6e0d3, roughness: 0.82, metalness: 0.02,
+            color: BONE, roughness: 0.82, metalness: 0.02,
             side: THREE.DoubleSide,
           }));
           mesh.position.sub(mid);
           mesh.userData.id = p.id;
+          mesh.userData.tint = new THREE.Color(p.tint);
+          mesh.userData.box = p.bounds.map((v) => v.map((n, i) => n - mid.getComponent(i)));
           group.add(mesh);
           meshes.push(mesh);
         }
@@ -203,13 +252,12 @@ export default function Model3D({ id, title }) {
         // whole thing is too careful: the skull is orbited sideways, so what
         // can arrive at the left and right is its width or its depth,
         // whichever is greater, and the same again for tilting it.
-        const dx = hi[0] - lo[0], dy = hi[1] - lo[1], dz = hi[2] - lo[2];
-        wide = Math.max(dx, dz) / 2;
-        tall = Math.max(dy, dz) / 2;
+        whole = [lo, hi].map((v) => v.map((n, i) => n - mid.getComponent(i)));
+        look(whole);
 
-        setParts(meta.parts.map((p) => ({ id: p.id, name: p.name, fma: p.fma })));
+        setParts(meta.parts.map((p) => ({ id: p.id, name: p.name, tint: p.tint, fma: p.fma })));
         setLoading(false);
-        api.current = { paint, home: reframe };
+        api.current = { paint, focusOn, home: () => focusOn(null) };
         // Face-on and upright, the way it is drawn in every textbook.
         fit();
         reframe();
@@ -249,13 +297,25 @@ export default function Model3D({ id, title }) {
       {!loading && !error && (
         <>
           <div className="m3d-acts">
-            <button className="icobtn" onClick={() => api.current?.home()}
-              aria-label="إعادة الضبط">
-              <Icon name="rotate" size={18} />
+            <button className={`icobtn${plate ? ' on' : ''}`}
+              onClick={() => setPlate((v) => !v)} aria-label="تلوين كل العظام">
+              <Icon name="palette" size={18} />
+            </button>
+            {/* Some of these are buried: the sphenoid and the vomer are behind
+                everything else, and picking one out of the list would change
+                nothing you can see without this. */}
+            <button className={`icobtn${only ? ' on' : ''}`} disabled={!picked}
+              onClick={() => setOnly((v) => !v)} aria-label="إظهار المحدَّد وحده">
+              <Icon name="focus" size={18} />
             </button>
             <button className={`icobtn${listing ? ' on' : ''}`}
               onClick={() => setListing((v) => !v)} aria-label="القائمة">
               <Icon name="list" size={18} />
+            </button>
+            <button className="icobtn"
+              onClick={() => { setOnly(false); api.current?.home(); }}
+              aria-label="إعادة الضبط">
+              <Icon name="rotate" size={18} />
             </button>
           </div>
 
@@ -264,7 +324,8 @@ export default function Model3D({ id, title }) {
               ? <span className="m3d-nm" dir="auto">{name}</span>
               : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
             {name && (
-              <button className="m3d-clear" onClick={() => setPicked(null)}
+              <button className="m3d-clear"
+                onClick={() => { setPicked(null); setOnly(false); }}
                 aria-label="إلغاء التحديد">
                 <Icon name="x" size={16} />
               </button>
@@ -280,6 +341,9 @@ export default function Model3D({ id, title }) {
                   onClick={() => setPicked(picked === p.id ? null : p.id)}
                   dir="auto"
                 >
+                  {/* The list is the key to the coloured plate. Fourteen
+                      colours on a skull say nothing without the names. */}
+                  <span className="m3d-swatch" style={{ background: p.tint }} />
                   {p.name}
                 </button>
               ))}
