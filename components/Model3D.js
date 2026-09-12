@@ -443,7 +443,11 @@ export default function Model3D({ id, title, hidden = [], credit = CREDIT }) {
         // whole thing is too careful: the skull is orbited sideways, so what
         // can arrive at the left and right is its width or its depth,
         // whichever is greater, and the same again for tilting it.
-        whole = [lo, hi].map((v) => v.map((n, i) => n - mid.getComponent(i)));
+        // A model may say which box to open on: a nerve that runs the length
+        // of the body is still part of the model, but it is not what the
+        // screen is for.
+        const [flo, fhi] = meta.frame || meta.bounds;
+        whole = [flo, fhi].map((v) => v.map((n, i) => n - mid.getComponent(i)));
         look(whole);
 
         const byPart = new Map(meshes.map((m) => [m.userData.id, m]));

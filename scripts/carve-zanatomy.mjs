@@ -45,6 +45,54 @@ function mirror(positions, indices) {
   return { positions: p, indices: idx };
 }
 
+/**
+ * Fewer triangles, by snapping vertices onto a grid.
+ *
+ * Z-Anatomy draws a nerve as a smooth tube: the vagus alone arrives as
+ * forty-six thousand triangles, which is more resolution than a nerve has
+ * shape. Every vertex is moved to the middle of the cell it falls in, vertices
+ * that land in the same cell become one, and triangles that collapse to a line
+ * are dropped. Crude next to a proper edge-collapse, and for a tube it is
+ * indistinguishable.
+ */
+function fewer(positions, indices, cell) {
+  const key = new Map();
+  const remap = new Uint32Array(positions.length / 3);
+  const kept = [];
+  for (let v = 0; v < positions.length / 3; v++) {
+    const o = v * 3;
+    const id = Math.round(positions[o] / cell) + ',' +
+      Math.round(positions[o + 1] / cell) + ',' +
+      Math.round(positions[o + 2] / cell);
+    let at = key.get(id);
+    if (at === undefined) {
+      at = kept.length / 3;
+      key.set(id, at);
+      kept.push(positions[o], positions[o + 1], positions[o + 2]);
+    }
+    remap[v] = at;
+  }
+  const tris = [];
+  for (let t = 0; t < indices.length; t += 3) {
+    const a = remap[indices[t]], b = remap[indices[t + 1]], c = remap[indices[t + 2]];
+    if (a === b || b === c || a === c) continue;
+    tris.push(a, b, c);
+  }
+  return { positions: new Float32Array(kept), indices: new Uint32Array(tris) };
+}
+
+/** Two meshes as one, with the second's indices moved along. */
+function weld(a, b) {
+  const positions = new Float32Array(a.positions.length + b.positions.length);
+  positions.set(a.positions, 0);
+  positions.set(b.positions, a.positions.length);
+  const shift = a.positions.length / 3;
+  const indices = new Uint32Array(a.indices.length + b.indices.length);
+  indices.set(a.indices, 0);
+  for (let i = 0; i < b.indices.length; i++) indices[a.indices.length + i] = b.indices[i] + shift;
+  return { positions, indices };
+}
+
 for (const bundle of BUNDLES) {
   if (bundle.source !== 'zanatomy') continue;
   if (!existsSync(root)) {
@@ -78,10 +126,19 @@ for (const bundle of BUNDLES) {
       const metres = new Float32Array(found.positions.length);
       for (let i = 0; i < found.positions.length; i++) metres[i] = found.positions[i] * CM;
 
-      const sides = group.mirrored
-        ? [[french + ' gauche', { positions: metres, indices: found.indices }],
-           [french + ' droit', mirror(metres, found.indices)]]
-        : [[french, { positions: metres, indices: found.indices }]];
+      // Three ways a mesh becomes structures. `mirrored` makes a left and a
+      // right from a left-only mesh. `both` makes one structure of the two
+      // halves, for a midline thing like the pons that the file happens to
+      // hold as a half. Otherwise the mesh is the structure.
+      const thinned = group.simplify
+        ? fewer(metres, found.indices, group.simplify)
+        : { positions: metres, indices: found.indices };
+      const other = mirror(thinned.positions, thinned.indices);
+      const sides = group.both
+        ? [[french, weld(thinned, other)]]
+        : group.mirrored
+          ? [[french + ' gauche', thinned], [french + ' droit', other]]
+          : [[french, thinned]];
 
       for (const [name, mesh] of sides) {
         const family = familyOf(bundle, name);
@@ -126,7 +183,11 @@ for (const bundle of BUNDLES) {
   writeFileSync(join(out, bundle.id + '.bin'), buf);
   writeFileSync(join(out, bundle.id + '.json'), JSON.stringify({
     id: bundle.id, title: bundle.title, bytes: buf.length,
-    bounds: [lo.map(near), hi.map(near)], parts,
+    bounds: [lo.map(near), hi.map(near)],
+    // Where to open. The vagus runs to the abdomen, so framing les nerfs
+    // crâniens on everything it holds puts the head in the corner.
+    ...(bundle.frame ? { frame: bundle.frame } : {}),
+    parts,
   }) + '\n');
 
   console.log(bundle.id + ': ' + parts.length + ' structures, ' +
