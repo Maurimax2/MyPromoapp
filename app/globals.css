@@ -2152,7 +2152,7 @@ button.pill:active { transform: scale(.94); }
 .m3d-bad { color: var(--orange); }
 
 .m3d-acts {
-  position: absolute; top: 12px; inset-inline-end: 12px; z-index: 2;
+  position: absolute; top: 12px; inset-inline-end: 12px; z-index: 4;
   display: flex; flex-direction: column; gap: 8px;
 }
 .m3d-acts .icobtn { background: var(--surface); box-shadow: var(--shadow); }
@@ -2193,6 +2193,16 @@ button.pill:active { transform: scale(.94); }
   background: none; border: 0; border-radius: 11px;
   font: inherit; font-size: 14.5px; color: var(--ink-2); cursor: pointer;
 }
+.m3d-line { display: flex; align-items: center; }
+.m3d-line + .m3d-line { border-top: 1px solid var(--line-soft); }
+.m3d-line .m3d-row { flex: 1; min-width: 0; }
+.m3d-off {
+  width: 40px; min-height: 44px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 0; color: var(--line); cursor: pointer;
+}
+.m3d-line.away .m3d-row { opacity: .45; }
+.m3d-line.away .m3d-off { color: var(--purple); }
 .m3d-row + .m3d-row { border-top: 1px solid var(--line-soft); }
 .m3d-row.on { background: var(--purple-pale); color: var(--purple); font-weight: 600; }
 .m3d-swatch {
@@ -2234,6 +2244,33 @@ button.pill:active { transform: scale(.94); }
   box-shadow: 0 0 0 4px rgba(107, 33, 181, .22), 0 1px 3px rgba(26, 20, 36, .35);
 }
 .m3d-spot { color: var(--purple); }
+
+/* `hidden` is a user-agent rule, and a class beats it: a dot given
+   display:flex stayed on the skull however hidden it claimed to be. Thirteen
+   unlabelled dots sat over a bone that had been narrowed down to three. */
+.m3d-pin[hidden], .m3d-tag[hidden] { display: none; }
+
+/* The leader lines. One svg for all of them, behind the names and the dots,
+   never in the way of a finger. */
+.m3d-lines {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+.m3d-rule { stroke: var(--ink-3); stroke-width: 1; opacity: .5; }
+
+/* The name at the end of the line. Down the side, the way a plate in a book
+   sets them, because a name printed where it lands covers what it names. */
+.m3d-tag {
+  position: absolute; top: 0; left: 0;
+  transform: translate(-9999px, -9999px);
+  min-height: 28px; padding: 4px 7px;
+  display: flex; align-items: center;
+  background: rgba(255, 255, 255, .92); border: 0; border-radius: 8px;
+  font: inherit; font-size: 11px; line-height: 1.22; color: var(--ink-2);
+  text-align: start; cursor: pointer; z-index: 2;
+}
+.m3d-tag[data-at='left'] { justify-content: flex-end; text-align: end; }
+.m3d-tag.on { color: var(--purple); font-weight: 600; background: var(--purple-pale); }
 
 /* The licence asks for this wherever the geometry is drawn, so it is part of
    the screen and not a line in a settings page nobody opens. */

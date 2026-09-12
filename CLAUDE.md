@@ -250,9 +250,19 @@ terms in Arabic — French is a necessity, not a preference.
   hanging in the air.
 - **Choosing a landmark turns the model to face it.** Half of them are
   underneath or behind, and being left looking at the face is choosing nothing.
+- **The names are off until they are asked for.** Thirty labelled points on
+  the first open is somebody else's diagram, not a skull.
+- **A name goes in a column down the side with a line to the place it names**,
+  the way a plate in a book sets them. A name printed where it lands covers
+  the thing it is naming.
+- **Choosing a bone narrows the names to that bone.** Seventeen at once is a
+  wall of text; the same screen with a bone chosen is a plate.
 - The dots are smaller than a thumb on purpose. Thirty at a comfortable width
   would cover the skull and overlap; the list is the target that keeps its full
   height, and the dot is the shortcut.
+- **A bone can be taken off to see behind it** — the mandible over the base of
+  the skull, the parietal over the temporal. The list says which are off and
+  puts them back; so does إعادة الضبط.
 - `scripts/carve-anatomy.mjs` cuts a bundle out of a checkout of the atlas and
   the result is committed. Nobody needs the atlas to build the app.
 - `scripts/place-landmarks.mjs` turns the rules into points beside it.

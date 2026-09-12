@@ -31,8 +31,9 @@ export default function Model3D({ id, title }) {
   const [plate, setPlate] = useState(false);   // every bone its own colour
   const [only, setOnly] = useState(false);     // the one you picked, by itself
   const [points, setPoints] = useState([]);    // the named places on the bones
-  const [pins, setPins] = useState(true);      // …drawn or not
+  const [pins, setPins] = useState(false);     // …named on screen or not
   const [pin, setPin] = useState(null);        // …and which one is being read
+  const [gone, setGone] = useState([]);        // bones taken off to see behind
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -42,8 +43,9 @@ export default function Model3D({ id, title }) {
   const chosen = useRef(null);
   const all = useRef(false);
   const alone = useRef(false);
-  const showing = useRef(true);
+  const showing = useRef(false);
   const reading = useRef(null);
+  const off = useRef(new Set());
   useEffect(() => {
     chosen.current = picked;
     all.current = plate;
@@ -51,9 +53,10 @@ export default function Model3D({ id, title }) {
     // …and never while the list is open: the labels floated over its rows and
     // made the one screen that is pure text unreadable.
     showing.current = pins && !listing;
+    off.current = new Set(gone);
     reading.current = pin;
     api.current?.paint();
-  }, [picked, plate, only, pins, pin, listing]);
+  }, [picked, plate, only, pins, pin, listing, gone]);
 
   // Showing one bone by itself re-aims the camera at it, and putting the rest
   // back re-aims at the skull. Only on those two moves: re-framing every time
@@ -108,34 +111,102 @@ export default function Model3D({ id, title }) {
     // scene. That way the text is our own font at our own size and stays
     // crisp, and tapping one is a button press rather than a ray cast.
     const marks = [];
-    let badges = [];
+    let dots = [], tags = [], rules = [];
     const flat = new THREE.Vector3();
     const away = new THREE.Vector3();
 
+    // How a plate in a book does it: the name sits in a column down the side
+    // and a line runs from it to the place it names. Thirty names printed
+    // where they land would cover the skull and each other.
+    const COLUMN = 210;   // how wide a name is allowed to be
+    const PITCH = 32;     // …and how much room one takes, wrapped to two lines
+    const EDGE = 8;
+    const PARKED = 'translate(-9999px, -9999px)';
+    const GUTTER = 56;    // the column of buttons, which nothing may sit under
+
+    const stack = (list, top, bottom) => {
+      // Each name wants to be level with its own point and has to give way to
+      // the one above it. Pushed down first, then squeezed back up if the run
+      // has fallen off the bottom.
+      let y = top;
+      for (const s of list) { s.ly = Math.max(s.y, y); y = s.ly + PITCH; }
+      if (y - PITCH > bottom) {
+        let cur = bottom;
+        for (let k = list.length - 1; k >= 0; k--) {
+          // Clamped at the top as well: without it a long run pushed the first
+          // few names up off the canvas and into the header.
+          list[k].ly = Math.max(top, Math.min(list[k].ly, cur));
+          cur = list[k].ly - PITCH;
+        }
+      }
+    };
+
     const movePins = () => {
       if (!marks.length) return;
-      if (badges.length !== marks.length) {
-        badges = [...el.parentElement.querySelectorAll('.m3d-pin')];
-        if (badges.length !== marks.length) return;
+      if (dots.length !== marks.length) {
+        const host = el.parentElement;
+        dots = [...host.querySelectorAll('.m3d-pin')];
+        tags = [...host.querySelectorAll('.m3d-tag')];
+        rules = [...host.querySelectorAll('.m3d-rule')];
+        if (dots.length !== marks.length || tags.length !== marks.length) return;
       }
       const w = el.clientWidth, h = el.clientHeight;
       const on = showing.current;
+      // With one bone chosen, only that bone is named. Seventeen names at once
+      // is a wall of text; the same screen with a bone picked is a plate.
+      const just = chosen.current;
+
+      const seen = [];
       marks.forEach((mark, i) => {
-        const tag = badges[i];
-        // A label on the far side of the head would otherwise be drawn through
-        // the bone, naming something you cannot see. Normalised, because the
-        // unnormalised version scaled the test by how far away the camera was
-        // and quietly hid two thirds of them.
+        // Parked as well as hidden: a name that is hidden without being moved
+        // will show at the top corner of the canvas the moment anything else
+        // makes it visible again.
+        dots[i].hidden = true;
+        tags[i].hidden = true;
+        tags[i].style.transform = PARKED;
+        // All four ends, not just one: a line with a fresh start and a stale
+        // finish is still a line, and sixteen of them fan across the screen.
+        const line = rules[i];
+        line.setAttribute('x1', -99); line.setAttribute('y1', -99);
+        line.setAttribute('x2', -99); line.setAttribute('y2', -99);
+        if (!on || !mark.mesh.visible) return;
+        if (just && mark.mesh.userData.id !== just) return;
+        // A name on the far side of the head would otherwise be drawn through
+        // the bone. Normalised, because the unnormalised version scaled the
+        // test by how far away the camera was and hid two thirds of them.
         away.copy(mark.at).sub(camera.position).normalize();
-        const behind = away.dot(mark.out) > 0.15;
-        if (!on || behind || !mark.mesh.visible) { tag.hidden = true; return; }
+        if (away.dot(mark.out) > 0.15) return;
         flat.copy(mark.at).project(camera);
         const x = (flat.x * 0.5 + 0.5) * w;
         const y = (-flat.y * 0.5 + 0.5) * h;
-        if (flat.z > 1 || x < 0 || y < 0 || x > w || y > h) { tag.hidden = true; return; }
-        tag.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
-        tag.hidden = false;
+        if (flat.z > 1 || x < 0 || y < 0 || x > w || y > h) return;
+        seen.push({ i, x, y });
       });
+
+      // The buttons run down one side, so the names on that side start after
+      // them rather than underneath them.
+      const near = GUTTER + EDGE;
+      const side = Math.min(COLUMN, Math.max((w - near - EDGE * 2) * 0.42, 116));
+      const left = seen.filter((s) => s.x < w / 2).sort((a, b) => a.y - b.y);
+      const right = seen.filter((s) => s.x >= w / 2).sort((a, b) => a.y - b.y);
+      stack(left, EDGE + PITCH / 2, h - EDGE - PITCH / 2);
+      stack(right, EDGE + PITCH / 2, h - EDGE - PITCH / 2);
+
+      for (const s of seen) {
+        const at = s.x < w / 2 ? 'left' : 'right';
+        const from = at === 'left' ? near : w - EDGE - side;
+        const edge = at === 'left' ? near + side : w - EDGE - side;
+        dots[s.i].hidden = false;
+        dots[s.i].style.transform = `translate(-50%, -50%) translate(${s.x}px, ${s.y}px)`;
+        const tag = tags[s.i];
+        tag.hidden = false;
+        tag.dataset.at = at;
+        tag.style.width = `${side}px`;
+        tag.style.transform = `translate(${from}px, ${s.ly - PITCH / 2}px)`;
+        const line = rules[s.i];
+        line.setAttribute('x1', edge); line.setAttribute('y1', s.ly);
+        line.setAttribute('x2', s.x); line.setAttribute('y2', s.y);
+      }
     };
 
     // Nothing is ever made see-through. Ghosting the rest of the skull to
@@ -145,7 +216,11 @@ export default function Model3D({ id, title }) {
     const paint = () => {
       for (const m of meshes) {
         const on = chosen.current === m.userData.id;
-        m.visible = !(alone.current && chosen.current != null && !on);
+        // A bone can be taken off to see what is behind it — the parietal over
+        // the temporal, the mandible over the base of the skull. The one you
+        // are looking at stays whatever else is hidden.
+        const away = off.current.has(m.userData.id) && !on;
+        m.visible = !away && !(alone.current && chosen.current != null && !on);
         m.material.color.set(all.current || on ? m.userData.tint : BONE);
         // In the coloured plate every bone already has a colour of its own, so
         // the one you picked is lifted rather than recoloured.
@@ -172,7 +247,7 @@ export default function Model3D({ id, title }) {
       // React draws the labels a tick after the geometry arrives, so the first
       // placement has nothing to place. Without this they stay where they were
       // born — the corner of the screen — until the first drag.
-      else if (badges.length !== marks.length) movePins();
+      else if (dots.length !== marks.length) movePins();
     };
 
     // How far back the camera has to stand for the whole thing to be on
@@ -389,6 +464,11 @@ export default function Model3D({ id, title }) {
       {/* Positioned from the render loop, not from React: these move with
           every frame of a drag and re-rendering thirty nodes at sixty hertz
           is how a phone starts dropping frames. */}
+      <svg className="m3d-lines" aria-hidden="true">
+        {points.map((q) => (
+          <line key={q.i} className="m3d-rule" x1="-99" y1="-99" x2="-99" y2="-99" />
+        ))}
+      </svg>
       {points.map((q) => (
         <button
           key={q.i}
@@ -397,6 +477,17 @@ export default function Model3D({ id, title }) {
           onClick={() => setPin(pin === q.i ? null : q.i)}
           aria-label={q.name}
         />
+      ))}
+      {points.map((q) => (
+        <button
+          key={`t${q.i}`}
+          className={`m3d-tag${pin === q.i ? ' on' : ''}`}
+          hidden
+          onClick={() => setPin(pin === q.i ? null : q.i)}
+          dir="auto"
+        >
+          {q.name}
+        </button>
       ))}
 
       {loading && <div className="m3d-msg">…</div>}
@@ -416,6 +507,8 @@ export default function Model3D({ id, title }) {
               onClick={() => setOnly((v) => !v)} aria-label="إظهار المحدَّد وحده">
               <Icon name="focus" size={18} />
             </button>
+            {/* Off to begin with. Thirty labelled points on the first open is
+                somebody else's diagram, not a skull. */}
             {points.length > 0 && (
               <button className={`icobtn${pins ? ' on' : ''}`}
                 onClick={() => { setPins((v) => !v); setPin(null); }}
@@ -428,7 +521,7 @@ export default function Model3D({ id, title }) {
               <Icon name="list" size={18} />
             </button>
             <button className="icobtn"
-              onClick={() => { setOnly(false); api.current?.home(); }}
+              onClick={() => { setOnly(false); setGone([]); api.current?.home(); }}
               aria-label="إعادة الضبط">
               <Icon name="rotate" size={18} />
             </button>
@@ -437,7 +530,13 @@ export default function Model3D({ id, title }) {
           <div className="m3d-name">
             {name
               ? <span className={`m3d-nm${spot ? ' m3d-spot' : ''}`} dir="auto">{name}</span>
-              : <span className="m3d-hint">أدر النموذج، والمس عظمًا أو نقطة لمعرفة اسمها</span>}
+              : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
+            {picked && !spot && (
+              <button className="m3d-clear" aria-label="أخفِ هذا العظم"
+                onClick={() => { setGone((g) => [...g, picked]); setPicked(null); setOnly(false); }}>
+                <Icon name="eyeOff" size={17} />
+              </button>
+            )}
             {name && (
               <button className="m3d-clear" onClick={clear} aria-label="إلغاء التحديد">
                 <Icon name="x" size={16} />
@@ -449,17 +548,28 @@ export default function Model3D({ id, title }) {
             <div className="m3d-list">
               <div className="m3d-head">العظام</div>
               {parts.map((p) => (
-                <button
-                  key={p.id}
-                  className={`m3d-row${picked === p.id ? ' on' : ''}`}
-                  onClick={() => setPicked(picked === p.id ? null : p.id)}
-                  dir="auto"
-                >
-                  {/* The list is the key to the coloured plate. Fourteen
-                      colours on a skull say nothing without the names. */}
-                  <span className="m3d-swatch" style={{ background: p.tint }} />
-                  {p.name}
-                </button>
+                <div key={p.id} className={`m3d-line${gone.includes(p.id) ? ' away' : ''}`}>
+                  <button
+                    className={`m3d-row${picked === p.id ? ' on' : ''}`}
+                    onClick={() => setPicked(picked === p.id ? null : p.id)}
+                    dir="auto"
+                  >
+                    {/* The list is the key to the coloured plate. Fourteen
+                        colours on a skull say nothing without the names. */}
+                    <span className="m3d-swatch" style={{ background: p.tint }} />
+                    {p.name}
+                  </button>
+                  {/* The other way to put a bone back, and the only way to see
+                      which ones are off without closing the list. */}
+                  <button
+                    className="m3d-off"
+                    aria-label={gone.includes(p.id) ? 'أظهر' : 'أخفِ'}
+                    onClick={() => setGone((g) => (
+                      g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id]))}
+                  >
+                    <Icon name={gone.includes(p.id) ? 'eyeOff' : 'eye'} size={16} />
+                  </button>
+                </div>
               ))}
 
               {points.length > 0 && (
