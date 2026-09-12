@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { allFiles, allDocs, sectionsFor } from '@/lib/data';
 import { moduleOf, semestersOf } from '@/lib/catalogue';
+import { bundlesOf } from '@/lib/anatomy/bundles';
 import { subjectName } from '@/lib/data';
 
 // Not prerendered any more: what a subject holds is a question for the
@@ -109,6 +110,19 @@ export default async function Module({ params }) {
           </div>
           <span className="chev"><Icon name="chev" size={18} /></span>
         </Link>
+
+        {/* A model belongs to the subject it explains — that is why نماذج 3D
+            came off الرئيسية. A subject with none shows nothing here. */}
+        {bundlesOf(m.id).map((b) => (
+          <Link key={b.id} href={`/model/${b.id}`} className="card quizcard model">
+            <div className="quizcard-ic"><Icon name="box" size={19} /></div>
+            <div className="grow">
+              <div className="nm" style={{ fontSize: 14 }} dir="auto">{b.title}</div>
+              <div className="mt" dir="auto">{b.subtitle}</div>
+            </div>
+            <span className="chev"><Icon name="chev" size={18} /></span>
+          </Link>
+        ))}
 
         {m.chapters.map((ch, i) => (
           <section key={ch.title} className="chapter">

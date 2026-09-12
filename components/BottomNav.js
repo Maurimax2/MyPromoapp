@@ -48,7 +48,9 @@ export default function BottomNav() {
   // A file wants the whole screen — the comment above said so and the test
   // did not: the bar sat over the last inch of every lecture, and over the
   // control for switching how it opens.
-  if (/^\/(rooms|chat|qa|file)\/[^/]+$/.test(path)) return null;
+  // A model is the same case as a file: it is drawn to the height of the
+  // screen, and four tabs across the bottom take the skull's jaw with them.
+  if (/^\/(rooms|chat|qa|file|model)\/[^/]+$/.test(path)) return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">

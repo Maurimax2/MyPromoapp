@@ -1,0 +1,82 @@
+// What is in public/anatomy, checked against what says it is there.
+//
+//   npm run check:anatomy
+//
+// The geometry is a binary blob read straight into GPU buffers, so a wrong
+// offset does not throw — it draws a cloud of triangles, or nothing, and the
+// screen looks like a model that failed to load. This reads the file the way
+// the browser reads it and asserts the things the browser cannot.
+
+import { readFileSync, existsSync } from 'node:fs';
+import { BUNDLES, CREDIT } from '../lib/anatomy/bundles.js';
+
+let bad = 0;
+const no = (why) => { bad++; console.log(`  FAIL ${why}`); };
+const ok = (what) => console.log(`  ok   ${what}`);
+
+if (!CREDIT.includes('CC BY 4.0')) no('the credit line no longer names the licence');
+
+for (const bundle of BUNDLES) {
+  console.log(`— ${bundle.id}`);
+  const json = `public/anatomy/${bundle.id}.json`;
+  const bin = `public/anatomy/${bundle.id}.bin`;
+  if (!existsSync(json) || !existsSync(bin)) {
+    no(`${bundle.id} has not been carved — run scripts/carve-anatomy.mjs`);
+    continue;
+  }
+
+  const meta = JSON.parse(readFileSync(json, 'utf8'));
+  const raw = readFileSync(bin);
+  const buf = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.length);
+
+  const named = Object.keys(bundle.parts);
+  if (meta.parts.length !== named.length) {
+    no(`${meta.parts.length} structures in the file, ${named.length} named in bundles.js`);
+  } else ok(`${meta.parts.length} structures, all named`);
+
+  // A name in Arabic would break the language rule in the one place a
+  // student is reading anatomy, so it is checked rather than trusted.
+  const arabic = meta.parts.filter((p) => /[؀-ۿ]/.test(p.name));
+  if (arabic.length) no(`named in Arabic: ${arabic.map((p) => p.name).join(', ')}`);
+  else ok('every name is French');
+
+  let triangles = 0;
+  for (const p of meta.parts) {
+    const where = `${bundle.id}/${p.name}`;
+    for (const [field, size] of [['positions', 4], ['normals', 2], ['indices', 4]]) {
+      if (p[field] % size) no(`${where}: ${field} is not ${size}-byte aligned`);
+    }
+    const end = p.indices + p.indexCount * 4;
+    if (end > buf.byteLength) { no(`${where}: runs past the end of the file`); continue; }
+
+    const idx = new Uint32Array(buf, p.indices, p.indexCount);
+    let top = 0;
+    for (const i of idx) if (i > top) top = i;
+    if (top >= p.vertexCount) no(`${where}: an index points at vertex ${top} of ${p.vertexCount}`);
+
+    const pos = new Float32Array(buf, p.positions, p.vertexCount * 3);
+    let loose = 0;
+    for (let i = 0; i < pos.length; i += 3) {
+      for (let k = 0; k < 3; k++) {
+        if (pos[i + k] < p.bounds[0][k] - 1e-3 || pos[i + k] > p.bounds[1][k] + 1e-3) loose++;
+      }
+    }
+    if (loose) no(`${where}: ${loose} coordinates outside the box the manifest gives`);
+
+    const nrm = new Int16Array(buf, p.normals, p.vertexCount * 3);
+    if (!nrm.some((v) => v !== 0)) no(`${where}: every normal is zero, it would draw black`);
+
+    if (p.indexCount % 3) no(`${where}: ${p.indexCount} indices is not whole triangles`);
+    triangles += p.indexCount / 3;
+  }
+
+  const mb = (raw.length / 1048576).toFixed(2);
+  ok(`${triangles} triangles, ${mb} MB`);
+  // Mobile data is the reason this is a handful of structures and not the
+  // whole atlas. A bundle that has quietly grown past a lecture's worth of
+  // PDF should be noticed here rather than on somebody's phone.
+  if (raw.length > 6 * 1048576) no(`${bundle.id} is ${mb} MB — too much to open on mobile data`);
+}
+
+console.log(bad ? `\n${bad} to look at` : '\nall good');
+process.exit(bad ? 1 : 0);

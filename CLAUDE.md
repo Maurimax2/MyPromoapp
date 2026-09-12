@@ -209,11 +209,34 @@ terms in Arabic — French is a necessity, not a preference.
 - Never measure every page before drawing. Page one is measured, drawn, and
   its shape sizes the placeholders for the rest.
 
+## The models
+
+- Geometry is **BodyParts3D, CC BY 4.0** — attribution, no share-alike. The
+  CC BY-SA 2.1 Japan line inside the old source files is superseded by the
+  database's own current licence, which permits redistribution and adaptation.
+  The credit is printed on the screen the model is drawn on, not filed away
+  in a settings page.
+- **A model belongs to the lecture it explains.** It opens from the subject
+  and nowhere else. That is why نماذج 3D came off الرئيسية.
+- **A model is a named handful of structures, never the whole atlas.** The
+  complete body is 33 MB of geometry; the skull is 1.3 MB, which is less than
+  the lecture it goes with. A student opening the skull pays for the skull.
+- **Every structure is named in French, by hand, in `lib/anatomy/bundles.js`.**
+  The source names are English. Listing them one by one is also what keeps a
+  bundle honest: a region cut by coordinates quietly includes whatever else
+  sat in the same box — their `skull` holds the corneas and the lacrimal
+  glands.
+- `scripts/carve-anatomy.mjs` cuts a bundle out of a checkout of the atlas and
+  the result is committed. Nobody needs the atlas to build the app.
+- `npm run check:anatomy` reads the files the way the browser reads them. A
+  wrong offset does not throw — it draws a cloud of triangles, which on a
+  phone is indistinguishable from a model that never loaded.
+
 ## Still to build
 
 Q&A, discussion, chat, study rooms, per-subject icons, badges students earn.
-3D anatomical models are possible with open assets (Z-Anatomy, BodyParts3D)
-but heavy on mobile data — a later thing.
+More models: muscles and vessels of the head and neck are the next two, and
+the same file says how.
 
 ## Where things are kept
 

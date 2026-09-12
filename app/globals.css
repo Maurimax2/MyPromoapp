@@ -597,6 +597,15 @@ button.pill:active { transform: scale(.94); }
   display: flex; align-items: center; justify-content: center;
 }
 
+/* A model is not an alarm. Orange is spent on the one thing on this screen
+   that wants doing before the exam; a second orange card beside it makes
+   both of them decoration. */
+.quizcard.model { background: var(--surface); color: var(--ink); }
+.quizcard.model .nm { color: var(--ink); }
+.quizcard.model .mt { color: var(--ink-3); opacity: 1; }
+.quizcard.model .chev { color: var(--ink-3); }
+.quizcard.model .quizcard-ic { background: var(--purple-pale); color: var(--purple); }
+
 /* ============================================================
    Quizzes. Right and wrong are semantic colours, deliberately
    separate from the brand accent.
@@ -2119,6 +2128,77 @@ button.pill:active { transform: scale(.94); }
 @media (prefers-reduced-motion: reduce) {
   .sheet-back, .sheet { animation: none; }
 }
+
+/* ---------- a model ----------
+
+   The canvas takes whatever height is left under the header, the way a file
+   does. Everything else floats over it: a model with a panel beside it is a
+   model the size of a stamp on a phone. */
+.m3d {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  background: radial-gradient(120% 90% at 50% 18%, #FFFFFF 0%, var(--bg) 68%);
+}
+.m3d-stage { position: absolute; inset: 0; touch-action: none; }
+.m3d-stage canvas { display: block; width: 100%; height: 100%; }
+
+.m3d-msg {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center;
+  color: var(--ink-3); font-size: 15px;
+}
+.m3d-bad { color: var(--orange); }
+
+.m3d-acts {
+  position: absolute; top: 12px; inset-inline-end: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.m3d-acts .icobtn { background: var(--surface); box-shadow: var(--shadow); }
+.m3d-acts .icobtn.on { background: var(--purple); color: #fff; }
+
+/* The name sits over the model rather than under it, because the thing you
+   want to look at while reading the name is the bone you just touched. */
+.m3d-name {
+  position: absolute; inset-inline: 12px; bottom: 46px;
+  min-height: 48px;
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+}
+.m3d-nm { flex: 1; font-size: 16px; font-weight: 600; color: var(--ink); }
+.m3d-hint { flex: 1; font-size: 13.5px; color: var(--ink-3); }
+.m3d-clear {
+  width: 44px; height: 44px; margin: -10px -8px -10px 0;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: 0; color: var(--ink-3); cursor: pointer;
+}
+
+.m3d-list {
+  position: absolute; inset-inline: 12px; bottom: 104px; top: 12px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--shadow); padding: 6px;
+}
+.m3d-row {
+  display: block; width: 100%; min-height: 44px;
+  padding: 11px 12px; text-align: start;
+  background: none; border: 0; border-radius: 11px;
+  font: inherit; font-size: 14.5px; color: var(--ink-2); cursor: pointer;
+}
+.m3d-row + .m3d-row { border-top: 1px solid var(--line-soft); }
+.m3d-row.on { background: var(--purple-pale); color: var(--purple); font-weight: 600; }
+
+/* The licence asks for this wherever the geometry is drawn, so it is part of
+   the screen and not a line in a settings page nobody opens. */
+.m3d-credit {
+  position: absolute; inset-inline: 0; bottom: 0;
+  padding: 6px 14px calc(6px + env(safe-area-inset-bottom));
+  font-size: 10.5px; color: var(--ink-3); opacity: .8; text-align: center;
+}
+
 
 /* ---------- a tablet ----------
 
