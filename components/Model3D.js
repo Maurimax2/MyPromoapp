@@ -196,8 +196,12 @@ export default function Model3D({ id, title }) {
       const side = Math.min(COLUMN, Math.max((w - near - EDGE * 2) * 0.42, 116));
       const left = seen.filter((s) => s.x < w / 2).sort((a, b) => a.y - b.y);
       const right = seen.filter((s) => s.x >= w / 2).sort((a, b) => a.y - b.y);
-      stack(left, EDGE + PITCH / 2, h - EDGE - PITCH / 2);
-      stack(right, EDGE + PITCH / 2, h - EDGE - PITCH / 2);
+      // The bottom of the column is above the name card, not the bottom of the
+      // canvas: a long run of names ran on underneath it and the last two were
+      // unreadable.
+      const floor = h - RESERVE + PITCH / 2;
+      stack(left, EDGE + PITCH / 2, floor);
+      stack(right, EDGE + PITCH / 2, floor);
 
       for (const s of seen) {
         const at = s.x < w / 2 ? 'left' : 'right';

@@ -41,15 +41,46 @@ for (const bundle of BUNDLES) {
   for (const rule of rules) {
     const g = geometry.get(rule.part);
     if (!g) { console.error(`no part ${rule.part} for ${rule.name}`); process.exit(1); }
-    const found = rule.hole ? throughHole(g, rule.hole) : furthest(g, rule);
+    const found = rule.at ? nearestTo(g, rule.at)
+      : rule.hole ? throughHole(g, rule.hole)
+      : furthest(g, rule);
     if (!found) { console.error(`could not place ${rule.name}`); process.exit(1); }
     placed.push({ name: rule.name, part: rule.part, at: found.at.map(near), out: found.out.map(near) });
-    console.log(`  ${rule.name.padEnd(42)} ${found.at.map((n) => n.toFixed(3)).join(' ')}`);
+    // How far the bone was from where the rule asked for it. A foramen asked
+    // for in the wrong place lands somewhere plausible and silently wrong, so
+    // the distance is printed and anything past a few millimetres is a guess
+    // that needs looking at.
+    const slip = found.slip != null ? `  ${(found.slip * 1000).toFixed(1)} mm off` : '';
+    console.log(`  ${rule.name.padEnd(42)} ${found.at.map((n) => n.toFixed(3)).join(' ')}${slip}`);
   }
 
   writeFileSync(`public/anatomy/${bundle.id}.points.json`,
     `${JSON.stringify({ id: bundle.id, points: placed })}\n`);
   console.log(`${bundle.id}: ${placed.length} landmarks`);
+}
+
+/**
+ * The point of the bone nearest a place named outright.
+ *
+ * For the foramina. Most of them are not holes in this geometry — a two
+ * millimetre scan simplified for the browser closed all but the largest — and
+ * none of them is an extreme of anything, so the only way to say where the
+ * foramen ovale is, is to say where it is. Snapped to the surface so the
+ * label never floats inside the bone or off it.
+ */
+function nearestTo(g, want) {
+  const { pos, nrm, part } = g;
+  let best = Infinity, o = 0;
+  for (let i = 0; i < part.vertexCount; i++) {
+    const k = i * 3;
+    const d = (pos[k] - want[0]) ** 2 + (pos[k + 1] - want[1]) ** 2 + (pos[k + 2] - want[2]) ** 2;
+    if (d < best) { best = d; o = k; }
+  }
+  return {
+    at: [pos[o], pos[o + 1], pos[o + 2]],
+    out: unit([nrm[o] / 32767, nrm[o + 1] / 32767, nrm[o + 2] / 32767]),
+    slip: Math.sqrt(best),
+  };
 }
 
 /** The vertex furthest along a direction, within an optional slice of the bone. */

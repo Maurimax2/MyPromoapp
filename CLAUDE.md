@@ -248,6 +248,20 @@ terms in Arabic — French is a necessity, not a preference.
   of the temporal, the glabelle the frontmost point of the frontal. Re-cutting
   the geometry then moves the labels with the bone instead of leaving them
   hanging in the air.
+- **The foramina are named outright, not found.** A two millimetre scan
+  simplified for the browser closed every opening but the largest: of the
+  whole skull only the foramen magnum and two pairs in the sphenoid survive as
+  real holes. So a foramen's rule says where it is, and the point is snapped to
+  the surface of its bone. The placement script prints how far the bone was
+  from where the rule asked, and anything past a few millimetres is a guess
+  that needs looking at.
+- **Ask for a foramen on the face it opens through.** The ovale and the épineux
+  asked for at mid-height of the greater wing snapped to the endocranial
+  surface, so from under the skull — the only place you look for them — they
+  faced away and were never drawn.
+- **What runs through an orifice is the reason it is named.** Every one carries
+  its contents: the jugular foramen gives IX, X, XI, the inferior petrosal
+  sinus and the jugular bulb.
 - **Choosing a landmark turns the model to face it.** Half of them are
   underneath or behind, and being left looking at the face is choosing nothing.
 - **The names are off until they are asked for.** Thirty labelled points on
