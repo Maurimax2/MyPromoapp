@@ -263,6 +263,20 @@ terms in Arabic — French is a necessity, not a preference.
 - **A bone can be taken off to see behind it** — the mandible over the base of
   the skull, the parietal over the temporal. The list says which are off and
   puts them back; so does إعادة الضبط.
+- **A model without descriptions is a picture.** What is revised is the parts,
+  the articulations, the insertions and what runs through — so every structure
+  carries them, in `lib/anatomy/notes.js`, and `check:anatomy` fails on one
+  that does not.
+- **The descriptions are written, not scraped.** Standard descriptive anatomy
+  is the same in every atlas and has not moved in a century, so it is written
+  here directly in French, under Terminologia Anatomica with the older French
+  term in brackets where a teacher still uses it. Nothing is copied out of a
+  book.
+- One description per bone, not per mesh, like the colours: the left and right
+  temporal have the same description.
+- The sections are fixed — Parties, Reliefs, Articulations, Insertions
+  musculaires, Éléments qui le traversent — and the check refuses a section
+  the screen does not know how to draw.
 - `scripts/carve-anatomy.mjs` cuts a bundle out of a checkout of the atlas and
   the result is committed. Nobody needs the atlas to build the app.
 - `scripts/place-landmarks.mjs` turns the rules into points beside it.

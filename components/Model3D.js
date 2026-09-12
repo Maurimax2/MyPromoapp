@@ -17,6 +17,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Icon from '@/components/Icon';
 import { CREDIT } from '@/lib/anatomy/bundles';
+import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 
 const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
@@ -34,6 +35,7 @@ export default function Model3D({ id, title }) {
   const [pins, setPins] = useState(false);     // …named on screen or not
   const [pin, setPin] = useState(null);        // …and which one is being read
   const [gone, setGone] = useState([]);        // bones taken off to see behind
+  const [open, setOpen] = useState(false);     // the description, read or not
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -52,16 +54,18 @@ export default function Model3D({ id, title }) {
     alone.current = only;
     // …and never while the list is open: the labels floated over its rows and
     // made the one screen that is pure text unreadable.
-    showing.current = pins && !listing;
+    showing.current = pins && !listing && !open;
     off.current = new Set(gone);
     reading.current = pin;
     api.current?.paint();
-  }, [picked, plate, only, pins, pin, listing, gone]);
+  }, [picked, plate, only, pins, pin, listing, gone, open]);
 
   // Showing one bone by itself re-aims the camera at it, and putting the rest
   // back re-aims at the skull. Only on those two moves: re-framing every time
   // a bone is touched would throw away the zoom the student just set.
   const framed = useRef(null);
+  useEffect(() => { setOpen(false); }, [picked, pin]);
+
   useEffect(() => {
     const want = only && picked ? picked : null;
     if (framed.current === want) return;
@@ -455,7 +459,12 @@ export default function Model3D({ id, title }) {
   // touched, or the bone. A landmark is the finer answer so it wins.
   const spot = pin != null ? points.find((q) => q.i === pin)?.name : null;
   const name = spot || parts.find((p) => p.id === picked)?.name || null;
-  const clear = () => { setPin(null); setPicked(null); setOnly(false); };
+  const clear = () => { setPin(null); setPicked(null); setOnly(false); setOpen(false); };
+
+  // What the thing you touched actually is. This is the reason a model is
+  // worth opening at all: the name alone is a picture, and what is revised is
+  // the parts, the attachments and what runs through it.
+  const note = name ? noteFor(id, name) : null;
 
   return (
     <div className="m3d">
@@ -495,7 +504,9 @@ export default function Model3D({ id, title }) {
 
       {!loading && !error && (
         <>
-          <div className="m3d-acts">
+          {/* While a description is open the model controls are in the way of
+              reading it, and the column sat over the panel's own close. */}
+          <div className="m3d-acts" hidden={open}>
             <button className={`icobtn${plate ? ' on' : ''}`}
               onClick={() => setPlate((v) => !v)} aria-label="تلوين كل العظام">
               <Icon name="palette" size={18} />
@@ -529,7 +540,17 @@ export default function Model3D({ id, title }) {
 
           <div className="m3d-name">
             {name
-              ? <span className={`m3d-nm${spot ? ' m3d-spot' : ''}`} dir="auto">{name}</span>
+              ? (
+                <button
+                  className={`m3d-nm${spot ? ' m3d-spot' : ''}`}
+                  dir="auto"
+                  disabled={!note}
+                  onClick={() => setOpen(true)}
+                >
+                  {name}
+                  {note && <Icon name="chev" size={15} />}
+                </button>
+              )
               : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
             {picked && !spot && (
               <button className="m3d-clear" aria-label="أخفِ هذا العظم"
@@ -543,6 +564,28 @@ export default function Model3D({ id, title }) {
               </button>
             )}
           </div>
+
+          {open && note && (
+            <div className="m3d-note">
+              <div className="m3d-note-top">
+                <div className="m3d-note-t" dir="auto">{name}</div>
+                <button className="m3d-clear" onClick={() => setOpen(false)}
+                  aria-label="إغلاق">
+                  <Icon name="x" size={17} />
+                </button>
+              </div>
+              <div className="m3d-note-body" dir="auto">
+                <p className="m3d-what">{note.what}</p>
+                {SECTIONS.map(([key, title]) => (note[key]?.length ? (
+                  <section key={key} className="m3d-part">
+                    <h3>{title}</h3>
+                    <ul>{note[key].map((t) => <li key={t}>{t}</li>)}</ul>
+                  </section>
+                ) : null))}
+                {note.note && <p className="m3d-aside">{note.note}</p>}
+              </div>
+            </div>
+          )}
 
           {listing && (
             <div className="m3d-list">

@@ -10,6 +10,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { BUNDLES, CREDIT, boneOf } from '../lib/anatomy/bundles.js';
 import { LANDMARKS } from '../lib/anatomy/landmarks.js';
+import { NOTES, noteFor, SECTIONS } from '../lib/anatomy/notes.js';
 
 let bad = 0;
 const no = (why) => { bad++; console.log(`  FAIL ${why}`); };
@@ -109,6 +110,34 @@ for (const bundle of BUNDLES) {
     const twice = marks.map((m) => m.name).filter((n, i, a) => a.indexOf(n) !== i);
     if (twice.length) no(`named twice: ${[...new Set(twice)].join(', ')}`);
     ok(`${marks.length} landmarks, each on its own bone`);
+  }
+
+  // The descriptions. A model whose structures have no description is a
+  // picture, and a structure that has one in Arabic breaks the language rule
+  // in the one place a student is reading anatomy.
+  const described = [...new Set(
+    [...meta.parts.map((q) => q.name), ...marks.map((m) => m.name)].map(boneOf))];
+  const written = Object.keys(NOTES[bundle.id] || {});
+  const blank = described.filter((n) => !noteFor(bundle.id, n));
+  const spare = written.filter((n) => !described.includes(n));
+  if (blank.length) no(`nothing written about: ${blank.join(', ')}`);
+  if (spare.length) no(`written about something this model does not hold: ${spare.join(', ')}`);
+  if (!blank.length && !spare.length) ok(`${described.length} structures, every one described`);
+
+  const keys = new Set(SECTIONS.map(([k]) => k));
+  for (const n of described) {
+    const d = noteFor(bundle.id, n);
+    if (!d) continue;
+    if (!d.what || d.what.length < 30) no(`${n}: the description says almost nothing`);
+    for (const [key, value] of Object.entries(d)) {
+      if (key === 'what' || key === 'note') {
+        if (/[؀-ۿ]/.test(value || '')) no(`${n}: written in Arabic`);
+        continue;
+      }
+      if (!keys.has(key)) { no(`${n}: "${key}" is not a section the screen knows`); continue; }
+      if (!Array.isArray(value) || !value.length) no(`${n}: ${key} is empty`);
+      else if (value.some((t) => /[؀-ۿ]/.test(t))) no(`${n}: ${key} written in Arabic`);
+    }
   }
 
   const mb = (raw.length / 1048576).toFixed(2);

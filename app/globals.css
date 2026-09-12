@@ -2155,6 +2155,8 @@ button.pill:active { transform: scale(.94); }
   position: absolute; top: 12px; inset-inline-end: 12px; z-index: 4;
   display: flex; flex-direction: column; gap: 8px;
 }
+/* `hidden` is a user-agent rule and this class beats it. */
+.m3d-acts[hidden] { display: none; }
 .m3d-acts .icobtn { background: var(--surface); box-shadow: var(--shadow); }
 .m3d-acts .icobtn.on { background: var(--purple); color: #fff; }
 .m3d-acts .icobtn:disabled { opacity: .4; cursor: default; }
@@ -2169,7 +2171,16 @@ button.pill:active { transform: scale(.94); }
   background: var(--surface); border-radius: var(--r-card);
   box-shadow: var(--shadow);
 }
-.m3d-nm { flex: 1; font-size: 16px; font-weight: 600; color: var(--ink); }
+/* The name is the way in to the description, so it is a button. Disabled
+   where nothing has been written about the structure yet. */
+.m3d-nm {
+  flex: 1; min-height: 28px; padding: 0; border: 0; background: none;
+  display: flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 16px; font-weight: 600; color: var(--ink);
+  text-align: start; cursor: pointer;
+}
+.m3d-nm:disabled { cursor: default; }
+.m3d-nm svg { color: var(--ink-3); flex-shrink: 0; }
 .m3d-hint { flex: 1; font-size: 13.5px; color: var(--ink-3); }
 .m3d-clear {
   width: 44px; height: 44px; margin: -10px -8px -10px 0;
@@ -2271,6 +2282,41 @@ button.pill:active { transform: scale(.94); }
 }
 .m3d-tag[data-at='left'] { justify-content: flex-end; text-align: end; }
 .m3d-tag.on { color: var(--purple); font-weight: 600; background: var(--purple-pale); }
+
+/* What the structure is. Over the model rather than on a screen of its own:
+   you read it with the bone still in front of you, and close it to keep
+   turning. */
+.m3d-note {
+  position: absolute; inset-inline: 12px; bottom: 46px; top: 12px;
+  z-index: 3; display: flex; flex-direction: column;
+  background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.m3d-note-top {
+  display: flex; align-items: center; gap: 6px;
+  padding: 12px 8px 10px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.m3d-note-t { flex: 1; font-size: 16px; font-weight: 600; color: var(--ink); }
+.m3d-note-body {
+  flex: 1; min-height: 0; overflow-y: auto;
+  -webkit-overflow-scrolling: touch; padding: 12px 14px 18px;
+}
+.m3d-what { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+.m3d-part { margin-top: 15px; }
+.m3d-part h3 {
+  margin: 0 0 5px; font-size: 12px; font-weight: 600;
+  color: var(--purple); letter-spacing: .2px;
+}
+.m3d-part ul { margin: 0; padding-inline-start: 17px; }
+.m3d-part li {
+  font-size: 13.5px; line-height: 1.5; color: var(--ink-2); margin-bottom: 3px;
+}
+.m3d-aside {
+  margin: 16px 0 0; padding: 10px 12px;
+  background: var(--bg); border-radius: 11px;
+  font-size: 13px; line-height: 1.5; color: var(--ink-2);
+}
 
 /* The licence asks for this wherever the geometry is drawn, so it is part of
    the screen and not a line in a settings page nobody opens. */
