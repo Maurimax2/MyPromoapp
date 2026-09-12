@@ -372,11 +372,12 @@ export default function Model3D({ id, title }) {
       setPicked(hit ? hit.object.userData.id : null);
       // …and which part of it, on a bone that has been divided. One tap gives
       // both: the temporal, and the mastoid you actually touched.
+      // Which group was hit comes from the renderer, not from arithmetic on
+      // the face number: it knows which draw group it was walking, and working
+      // it out here named the wrong part of the bone.
       const bits = hit?.object.userData.groups;
-      if (bits && hit.faceIndex != null) {
-        const first = hit.faceIndex * 3;
-        setSub(bits.find((q) => first >= q.start && first < q.start + q.count)?.name || null);
-      } else setSub(null);
+      const which = hit?.face?.materialIndex;
+      setSub(bits && which != null ? bits[which]?.name || null : null);
       // Touching the background puts everything back: leaving the skull with
       // one bone in it and no way to tell why is worse than losing a choice.
       if (!hit) setOnly(false);
@@ -493,7 +494,7 @@ export default function Model3D({ id, title }) {
   // touched, or the bone. A landmark is the finer answer so it wins.
   const spot = pin != null ? points.find((q) => q.i === pin)?.name : null;
   const bone = parts.find((p) => p.id === picked)?.name || null;
-  const name = spot || sub || bone;
+  const name = spot || bone;
   const bits = (picked && parts.find((p) => p.id === picked)?.groups) || [];
   const clear = () => {
     setPin(null); setPicked(null); setSub(null); setOnly(false); setOpen(false);
@@ -581,13 +582,15 @@ export default function Model3D({ id, title }) {
           <div className="m3d-name">
             {name
               ? (
-                <button
-                  className={`m3d-nm${spot ? ' m3d-spot' : ''}`}
-                  dir="auto"
-                  disabled={!note}
-                  onClick={() => setOpen(true)}
-                >
-                  {name}
+                <button className="m3d-nm" disabled={!note} onClick={() => setOpen(true)}>
+                  <span className="m3d-nm-lines">
+                    <span className={`m3d-nm-t${spot ? ' m3d-spot' : ''}`} dir="auto">
+                      {name}
+                    </span>
+                    {/* Which part of it, under the bone rather than instead of
+                        it: touching the temporal must still say « temporal ». */}
+                    {sub && !spot && <span className="m3d-nm-s" dir="auto">{sub}</span>}
+                  </span>
                   {note && <Icon name="chev" size={15} />}
                 </button>
               )

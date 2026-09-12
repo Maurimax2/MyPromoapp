@@ -280,8 +280,14 @@ terms in Arabic — French is a necessity, not a preference.
   is three times as deep as it is wide, so in raw coordinates "forward and a
   little to the side" is just "forward" — and the two sides of a nearly
   symmetrical pair came out divided differently.
-- Touching a divided bone names the part you touched, not just the bone, and
-  the part's description is the bone's: that is where its parts are listed.
+- **Touching a divided bone names the bone first and the part under it.** The
+  part replaced the bone for a while and the bone was gone from the screen
+  altogether: you could no longer touch the temporal and be told it was the
+  temporal.
+- **Which part was touched comes from the renderer**, through the hit face's
+  material index. Working it out from the face number and the group ranges
+  named the wrong part of the bone.
+- A part's description is its bone's: that is where its parts are listed.
 - **A model without descriptions is a picture.** What is revised is the parts,
   the articulations, the insertions and what runs through — so every structure
   carries them, in `lib/anatomy/notes.js`, and `check:anatomy` fails on one
