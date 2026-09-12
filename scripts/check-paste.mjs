@@ -1,4 +1,4 @@
-// What an admin pasted, read without a database.
+// Questions going in, and coming back out.
 //
 //   npm run check:paste
 //
@@ -7,8 +7,13 @@
 // running app: a QROC silently dropped, an AI-written answer stored as though
 // the faculty had signed it. Both are quiet, and both are wrong in a way a
 // student only finds out at the exam.
+//
+// And at the other end, what happens when the database is a migration behind
+// the code reading it — which emptied اختبر نفسك of fifteen hundred questions
+// that were still sitting in the table.
 
 import { readPasted } from '../lib/qcm/paste.js';
+import { readingQuestions, MIGRATION_BEHIND } from '../lib/qcm/read.js';
 
 let bad = 0;
 const is = (label, got, want) => {
@@ -71,6 +76,44 @@ const mixed = readPasted(JSON.stringify({ sections: [{ title: 'Examen 2024', que
 is('both survive the same paste',
   mixed.sections[0].questions.map((q) => q.kind), ['qcm', 'qroc']);
 is('and it was read as JSON', mixed.how, 'json');
+
+console.log('— reading back from a database that is a migration behind');
+{
+  const refusal = { code: MIGRATION_BEHIND, message: 'column questions.kind does not exist' };
+
+  // The whole outage in three lines: ask for a column the database has not
+  // got, get a refusal rather than the other columns, and — before this —
+  // show the student an empty subject.
+  let asked = [];
+  const r1 = await readingQuestions(
+    async () => { asked.push('full'); return { data: null, error: refusal }; },
+    async () => { asked.push('plain'); return { data: [{ id: 1 }], error: null }; },
+  );
+  is('it asks again without the new columns', asked, ['full', 'plain']);
+  is('…and the questions come back', r1.data, [{ id: 1 }]);
+  is('…with no error left over', r1.error, null);
+
+  asked = [];
+  const r2 = await readingQuestions(
+    async () => { asked.push('full'); return { data: [{ id: 2, kind: 'qroc' }], error: null }; },
+    async () => { asked.push('plain'); return { data: [], error: null }; },
+  );
+  is('a database that has the columns is asked once', asked, ['full']);
+  is('…and keeps them', r2.data, [{ id: 2, kind: 'qroc' }]);
+
+  // The distinction the fix turns on. Row-level security saying "not for
+  // you" must never be retried into a narrower read that might answer: the
+  // one is a database that has nothing to say about a column, the other is a
+  // database withholding rows on purpose.
+  asked = [];
+  const denied = { code: '42501', message: 'permission denied for table questions' };
+  const r3 = await readingQuestions(
+    async () => { asked.push('full'); return { data: null, error: denied }; },
+    async () => { asked.push('plain'); return { data: [{ id: 3 }], error: null }; },
+  );
+  is('a refusal is not retried', asked, ['full']);
+  is('…and is handed back as the refusal it is', r3.error.code, '42501');
+}
 
 console.log(bad ? `\n${bad} to look at` : '\nall good');
 process.exit(bad ? 1 : 0);
