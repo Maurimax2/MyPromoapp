@@ -10,6 +10,7 @@ import QuizPicker from '@/components/QuizPicker';
 // written into lib/questions/*.json months ago.
 import { unansweredCount } from '@/lib/questions';
 import { banksOf } from '@/lib/quiz-bank';
+import { groupByLecture } from '@/lib/quiz-lectures';
 
 // Not prerendered: which banks exist changes whenever a paper is extracted.
 export const dynamic = 'force-dynamic';
@@ -25,6 +26,10 @@ export default async function QuizModule({ params }) {
 
   const banks = await banksOf(id);
   const total = banks.reduce((n, b) => n + b.questions.length, 0);
+  // The same questions by what they are about. Built from the subject already
+  // read above rather than from a second trip, and null until at least one
+  // question has been given a lecture.
+  const lectures = groupByLecture(m.chapters, banks.flatMap((b) => b.questions));
   const waiting = unansweredCount(id);
   const sources = sectionsFor(m, 'quiz');
   const sourceCount = sources.reduce((n, s) => n + s.items.length, 0);
@@ -46,7 +51,8 @@ export default async function QuizModule({ params }) {
 
       <div className="scroll">
         {total > 0 && (
-          <QuizPicker banks={banks} moduleId={id} moduleName={m.name} />
+          <QuizPicker
+            banks={banks} lectures={lectures} moduleId={id} moduleName={m.name} />
         )}
 
         {total === 0 && (

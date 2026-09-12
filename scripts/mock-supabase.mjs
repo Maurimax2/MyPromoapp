@@ -129,6 +129,18 @@ const db = {
     { id: 2, bank: 1, n: '2', stem: "Le nerf facial émerge du…",
       options: ['sillon bulbo-pontique', 'mésencéphale', 'moelle spinale'],
       answer: [0], why: null, source: 'paper', status: 'published' },
+    // Three more in the same paper, so a subject has enough questions to be
+    // worth splitting: two belong to one lecture and one to another, which is
+    // the whole point — a paper covers the course, a lecture does not.
+    { id: 10, bank: 1, n: '3', stem: "La carotide interne traverse le canal carotidien.",
+      options: ['Vrai', 'Faux'], answer: [0],
+      why: null, source: 'paper', status: 'published' },
+    { id: 11, bank: 1, n: '4', stem: "L'artère vertébrale chemine dans les foramens transversaires.",
+      options: ['Vrai', 'Faux'], answer: [0],
+      why: null, source: 'paper', status: 'published' },
+    { id: 12, bank: 1, n: '5', stem: "L'os pariétal est un os pair de la calvaria.",
+      options: ['Vrai', 'Faux'], answer: [0],
+      why: null, source: 'paper', status: 'published' },
     { id: 3, bank: 2, n: '1', stem: "L'adénocarcinome se développe à partir…",
       options: ['d\u2019un épithélium glandulaire', 'du tissu conjonctif', 'du muscle lisse'],
       answer: [0], why: null, source: 'paper', status: 'published' },

@@ -186,6 +186,25 @@ begin
   end if;
 end $$;
 
+-- Which lecture a question belongs to.
+--
+-- A bank is the paper a question was printed on — Examen ANATOMIE 2021 — and
+-- that is where it came from, not what it is about. A student revising does
+-- not revise the 2021 paper; they revise the vessels of the head and neck,
+-- and they want the questions on the vessels of the head and neck from every
+-- paper at once. The paper stays, because a student sitting a past paper
+-- whole is also a real thing; this is the other axis.
+--
+-- It points at the lecture itself — the `documents` row, the file they open
+-- in the archive — so a question and the lecture it revises are the same
+-- object, and the lecture's own chapter comes with it. `set null` because a
+-- lecture re-uploaded under a new row must not take its questions with it.
+alter table questions add column if not exists lecture bigint
+  references documents(id) on delete set null;
+
+create index if not exists questions_lecture_idx on questions (lecture)
+  where lecture is not null;
+
 create index if not exists questions_bank_idx   on questions (bank);
 create index if not exists questions_status_idx on questions (status);
 create unique index if not exists questions_bank_n_idx on questions (bank, n);

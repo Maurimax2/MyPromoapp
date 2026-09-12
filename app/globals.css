@@ -780,6 +780,21 @@ button.pill:active { transform: scale(.94); }
 }
 .pick-box.on { background: var(--purple); border-color: var(--purple); }
 .pick .num { background: var(--bg); color: var(--ink-3); }
+/* How far through a job that is done over several sittings. A sentence
+   saying "97 of 242" is read; a bar is seen. */
+.admin-fill {
+  height: 6px; border-radius: 3px; background: var(--bg);
+  overflow: hidden; margin-top: 10px;
+}
+.admin-fill span {
+  display: block; height: 100%; background: var(--purple);
+  transition: width .3s ease;
+}
+
+/* The lecture's own number, the one the archive prints beside it. Coloured
+   apart from the count at the other end of the row, which is a different
+   number about a different thing. */
+.pick .pick-n { background: var(--purple-pale); color: var(--purple); font-weight: 700; }
 .quizcard.review { background: var(--orange-pale); }
 .quizcard.review .quizcard-ic { background: var(--orange); color: #fff; }
 

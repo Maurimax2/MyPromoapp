@@ -110,6 +110,22 @@ export default async function AdminHome() {
         </div>
         <Icon name="chev" size={18} />
       </Link>
+
+      {/* A question knows the paper it was printed on, which is where it came
+          from rather than what it is about. Until somebody says which lecture
+          each one revises, اختبر نفسك can only offer a student a year. */}
+      <Link href="/admin/lectures" className="admin-card admin-import">
+        <div className="admin-import-ic" style={{ background: 'var(--purple-light)' }}>
+          <Icon name="book" size={22} />
+        </div>
+        <div className="grow">
+          <div className="admin-card-t">صنّف الأسئلة حسب المحاضرة</div>
+          <div className="admin-card-b">
+            حتى يختار الطالب محاضرة بدل ورقة امتحان
+          </div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
     </div>
   );
 }
