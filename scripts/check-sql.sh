@@ -58,6 +58,12 @@ echo "— and again, because it is pasted twice as often as not"
 apply "$HERE/supabase/schema.sql"
 apply "$HERE/supabase/social.sql"
 
+# The short form handed out when the whole file is too much to select on a
+# phone. It says the same things, so on a database that already has schema.sql
+# it must do nothing at all rather than fail.
+echo "— the short form, on a database that is already up to date"
+apply "$HERE/supabase/catch-up.sql"
+
 echo "— who can read what"
 if psql -q -v ON_ERROR_STOP=1 -d mypromo -f "$HERE/supabase/test/rls.sql" >/dev/null 2>"$DATA/rls"; then
   sed -n 's/.*NOTICE:  ok  /  ok  /p' "$DATA/rls"
