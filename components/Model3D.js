@@ -23,7 +23,7 @@ const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
 const BONE = 0xe6e0d3;
 
-export default function Model3D({ id, title, hidden = [], credit = CREDIT }) {
+export default function Model3D({ id, title, hidden = [], facing = null, credit = CREDIT }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
   const [parts, setParts] = useState([]);
@@ -305,11 +305,16 @@ export default function Model3D({ id, title, hidden = [], credit = CREDIT }) {
       drop = -((h - free) / 2) * ((2 * d * up) / h);
       return d;
     };
+    // Which way a model opens. Face-on is right for a skull, which is how
+    // every textbook draws one; a brain is drawn from the side, and opening a
+    // brain on its frontal poles shows the one view that says least. A bundle
+    // may say which way to look from; the default is straight at the front.
+    const from = new THREE.Vector3(...(facing || [0, 0, 1])).normalize();
     const reframe = () => {
       const d = place();
       // The name of what you touched sits along the bottom, so the model is
       // drawn a little above the middle rather than under it.
-      camera.position.set(middle.x, middle.y + drop, middle.z + d);
+      camera.position.set(middle.x, middle.y + drop, middle.z).addScaledVector(from, d);
       controls.target.set(middle.x, middle.y + drop, middle.z);
       controls.minDistance = d * 0.35;
       controls.maxDistance = d * 2.2;
@@ -474,7 +479,7 @@ export default function Model3D({ id, title, hidden = [], credit = CREDIT }) {
         }
         setLoading(false);
         api.current = { paint, focusOn, faceTo, home: () => focusOn(null) };
-        // Face-on and upright, the way it is drawn in every textbook.
+        // Upright, and facing the way this model asks to be opened.
         fit();
         reframe();
         loop();

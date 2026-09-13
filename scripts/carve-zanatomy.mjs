@@ -141,9 +141,13 @@ for (const bundle of BUNDLES) {
       for (let i = 0; i < found.positions.length; i++) metres[i] = found.positions[i] * CM;
 
       // Three ways a mesh becomes structures. `mirrored` makes a left and a
-      // right from a left-only mesh. `both` makes one structure of the two
+      // right from a one-sided mesh. `both` makes one structure of the two
       // halves, for a midline thing like the pons that the file happens to
       // hold as a half. Otherwise the mesh is the structure.
+      //
+      // Which side the file holds is not always the left. Most of Z-Anatomy is
+      // left-only, but the cortical parcellation is right-only — so a group
+      // says `side` and the mirror takes the other name.
       const thinned = group.simplify
         ? fewer(metres, found.indices, group.simplify)
         : { positions: metres, indices: found.indices };
@@ -151,7 +155,9 @@ for (const bundle of BUNDLES) {
       const sides = group.both
         ? [[french, weld(thinned, other)]]
         : group.mirrored
-          ? [[french + ' gauche', thinned], [french + ' droit', other]]
+          ? (group.side === 'r'
+            ? [[french + ' droit', thinned], [french + ' gauche', other]]
+            : [[french + ' gauche', thinned], [french + ' droit', other]])
           : [[french, thinned]];
 
       for (const [name, mesh] of sides) {

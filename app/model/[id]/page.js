@@ -35,6 +35,7 @@ export default async function ModelPage({ params }) {
         id={bundle.id}
         title={bundle.title}
         hidden={bundle.hidden || []}
+        facing={bundle.facing || null}
         credit={bundle.credit || CREDIT}
       />
     </>
