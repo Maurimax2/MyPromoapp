@@ -299,11 +299,16 @@ terms in Arabic — French is a necessity, not a preference.
   underneath or behind, and being left looking at the face is choosing nothing.
 - **The names are off until they are asked for.** Thirty labelled points on
   the first open is somebody else's diagram, not a skull.
+- **A landmark is a dot, and only the one you choose is named.** Turning the
+  names on turns the points on; the name appears when you touch a dot or pick
+  its row. Thirty names printed at once covers the skull with somebody else's
+  diagram, and the whole point of a labelled point is that you ask it what it
+  is.
 - **A name goes in a column down the side with a line to the place it names**,
   the way a plate in a book sets them. A name printed where it lands covers
   the thing it is naming.
-- **Choosing a bone narrows the names to that bone.** Seventeen at once is a
-  wall of text; the same screen with a bone chosen is a plate.
+- **Choosing a bone narrows the points to that bone.** Seventeen dots at once
+  is a rash; the same screen with a bone chosen is a plate.
 - The dots are smaller than a thumb on purpose. Thirty at a comfortable width
   would cover the skull and overlap; the list is the target that keeps its full
   height, and the dot is the shortcut.

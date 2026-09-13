@@ -190,25 +190,36 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
         seen.push({ i, x, y });
       });
 
-      // The buttons run down one side, so the names on that side start after
+      // Every landmark that is facing you gets its dot. Only the one being read
+      // gets its name: thirty names printed at once is somebody else's diagram
+      // covering the skull, and the whole point of a labelled point is that you
+      // ask it what it is. Choose one — a dot or a row in the list — and that
+      // name appears in the column with its line.
+      for (const s of seen) {
+        dots[s.i].hidden = false;
+        dots[s.i].style.transform =
+          `translate(-50%, -50%) translate(${s.x}px, ${s.y}px)`;
+      }
+
+      const read = seen.filter((s) => s.i === reading.current);
+      if (!read.length) return;
+
+      // The buttons run down one side, so the name on that side starts after
       // them rather than underneath them.
       const near = GUTTER + EDGE;
       const side = Math.min(COLUMN, Math.max((w - near - EDGE * 2) * 0.42, 116));
-      const left = seen.filter((s) => s.x < w / 2).sort((a, b) => a.y - b.y);
-      const right = seen.filter((s) => s.x >= w / 2).sort((a, b) => a.y - b.y);
+      const left = read.filter((s) => s.x < w / 2).sort((a, b) => a.y - b.y);
+      const right = read.filter((s) => s.x >= w / 2).sort((a, b) => a.y - b.y);
       // The bottom of the column is above the name card, not the bottom of the
-      // canvas: a long run of names ran on underneath it and the last two were
-      // unreadable.
+      // canvas: a name that landed low ran on underneath it and was unreadable.
       const floor = h - RESERVE + PITCH / 2;
       stack(left, EDGE + PITCH / 2, floor);
       stack(right, EDGE + PITCH / 2, floor);
 
-      for (const s of seen) {
+      for (const s of read) {
         const at = s.x < w / 2 ? 'left' : 'right';
         const from = at === 'left' ? near : w - EDGE - side;
         const edge = at === 'left' ? near + side : w - EDGE - side;
-        dots[s.i].hidden = false;
-        dots[s.i].style.transform = `translate(-50%, -50%) translate(${s.x}px, ${s.y}px)`;
         const tag = tags[s.i];
         tag.hidden = false;
         tag.dataset.at = at;
