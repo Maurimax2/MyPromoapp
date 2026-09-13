@@ -17,7 +17,8 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { BUNDLES, boneOf, familyOf } from '../lib/anatomy/bundles.js';
-import { partsOf, PART_TINTS } from '../lib/anatomy/parts.js';
+import { partsOf } from '../lib/anatomy/parts.js';
+import { divide } from './divide-bone.mjs';
 
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);
@@ -55,7 +56,13 @@ const round4 = (n) => (n + 3) & ~3;
 
 mkdirSync(out, { recursive: true });
 
+const only = arg('only', null);
+
 for (const bundle of BUNDLES) {
+  // The Z-Anatomy bundles are cut by scripts/carve-zanatomy.mjs, out of FBX
+  // rather than out of this atlas. They name files, not part ids.
+  if (bundle.source === 'zanatomy') continue;
+  if (only && bundle.id !== only) continue;
   const pieces = [];
   let at = 0;
   const parts = [];
@@ -87,7 +94,17 @@ for (const bundle of BUNDLES) {
     // group. Nothing is duplicated: it is the same triangles in a different
     // order.
     const seeds = partsOf(bundle.id, boneOf(name));
-    const sorted = seeds && divide(bin, p, seeds, /\s+droite?$/.test(name));
+    // The atlas is read out of the chunk rather than viewed in place: a file
+    // read is not guaranteed to land on a four-byte boundary and a typed array
+    // over it would throw.
+    let sorted = null;
+    if (seeds) {
+      const raw = new Float32Array(p.vertexCount * 3);
+      const tri = new Uint32Array(p.indexCount);
+      for (let i = 0; i < raw.length; i++) raw[i] = bin.readFloatLE(p.positions + i * 4);
+      for (let i = 0; i < tri.length; i++) tri[i] = bin.readUInt32LE(p.indices + i * 4);
+      sorted = divide(raw, tri, p.bounds, seeds, /\s+droite?$/.test(name));
+    }
     const indices = sorted
       ? take(null, p.indexCount * 4, Buffer.from(sorted.order.buffer))
       : take(p.indices, p.indexCount * 4);
@@ -133,91 +150,3 @@ for (const bundle of BUNDLES) {
   console.log(`${bundle.id}: ${parts.length} structures, ${mb} MB`);
 }
 
-
-/**
- * Cut one bone's triangles into its named parts.
- *
- * Each part gets an anchor — the point of the bone furthest in the direction
- * the rule gives — and every triangle goes to the anchor its middle is nearest
- * to. The result is the same triangles in a new order, plus the run each part
- * occupies.
- */
-function divide(bin, p, seeds, mirrored) {
-  const pos = new Float32Array(p.vertexCount * 3);
-  const idx = new Uint32Array(p.indexCount);
-  // Copied rather than viewed: a file read is not guaranteed to land on a
-  // four-byte boundary, and a typed array over it would throw.
-  for (let i = 0; i < pos.length; i++) pos[i] = bin.readFloatLE(p.positions + i * 4);
-  for (let i = 0; i < idx.length; i++) idx[i] = bin.readUInt32LE(p.indices + i * 4);
-
-  const anchors = seeds.map((seed) => {
-    const d = [...seed.dir];
-    if (mirrored) d[0] = -d[0];
-    const len = Math.hypot(...d) || 1;
-    const unit = d.map((n) => n / len);
-
-    let lo = -Infinity, hi = Infinity, axis = 0;
-    if (seed.band) {
-      const [name, from, to] = seed.band;
-      axis = { x: 0, y: 1, z: 2 }[name];
-      const a = p.bounds[0][axis], b = p.bounds[1][axis];
-      lo = a + (b - a) * from;
-      hi = a + (b - a) * to;
-    }
-
-    // Measured inside the bone's own box rather than in metres. A maxilla is
-    // three times as deep as it is wide, so in raw coordinates "forward and a
-    // little to the side" is simply "forward", and the anchors for the two
-    // sides landed in different places on bones that are nearly mirrors.
-    const span = [0, 1, 2].map((k) => (p.bounds[1][k] - p.bounds[0][k]) || 1);
-    let best = -Infinity, at = 0;
-    for (let v = 0; v < p.vertexCount; v++) {
-      const o = v * 3;
-      if (seed.band) { const on = pos[o + axis]; if (on < lo || on > hi) continue; }
-      let score = 0;
-      for (let k = 0; k < 3; k++) score += unit[k] * ((pos[o + k] - p.bounds[0][k]) / span[k]);
-      if (score > best) { best = score; at = o; }
-    }
-    return [pos[at], pos[at + 1], pos[at + 2]];
-  });
-
-  const mine = new Uint8Array(p.indexCount / 3);
-  for (let t = 0; t < p.indexCount; t += 3) {
-    let cx = 0, cy = 0, cz = 0;
-    for (let k = 0; k < 3; k++) {
-      const o = idx[t + k] * 3;
-      cx += pos[o]; cy += pos[o + 1]; cz += pos[o + 2];
-    }
-    cx /= 3; cy /= 3; cz /= 3;
-    let near = Infinity, who = 0;
-    anchors.forEach((a, i) => {
-      // `pull` is how far a part reaches. Nearest-anchor alone gives a thin
-      // spike like the styloid process the same territory as the mastoid it
-      // sits beside, because territory is decided by the gap between anchors
-      // and not by the size of the thing.
-      const reach = seeds[i].pull || 1;
-      const d = ((cx - a[0]) ** 2 + (cy - a[1]) ** 2 + (cz - a[2]) ** 2) / (reach * reach);
-      if (d < near) { near = d; who = i; }
-    });
-    mine[t / 3] = who;
-  }
-
-  const order = new Uint32Array(p.indexCount);
-  const groups = [];
-  let cursor = 0;
-  seeds.forEach((seed, i) => {
-    const start = cursor;
-    for (let t = 0; t < mine.length; t++) {
-      if (mine[t] !== i) continue;
-      order[cursor] = idx[t * 3];
-      order[cursor + 1] = idx[t * 3 + 1];
-      order[cursor + 2] = idx[t * 3 + 2];
-      cursor += 3;
-    }
-    groups.push({
-      name: seed.name, tint: PART_TINTS[i % PART_TINTS.length],
-      start, count: cursor - start,
-    });
-  });
-  return { order, groups };
-}

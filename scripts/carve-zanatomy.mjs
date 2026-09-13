@@ -17,7 +17,9 @@
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { BUNDLES, boneOf, familyOf } from '../lib/anatomy/bundles.js';
+import { partsOf } from '../lib/anatomy/parts.js';
 import { meshesOf, normalsOf } from './fbx-meshes.mjs';
+import { divide } from './divide-bone.mjs';
 
 const arg = (name, fallback) => {
   const i = process.argv.indexOf('--' + name);
@@ -169,15 +171,25 @@ for (const bundle of BUNDLES) {
             hi[k] = Math.max(hi[k], box[1][k]);
           }
         }
+        // A bone with named parts has its triangles sorted so that each part
+        // is a run of the index buffer, handed to the browser as a draw group.
+        // Nothing is duplicated: the same triangles in a different order.
+        const seeds = partsOf(bundle.id, boneOf(name));
+        const sorted = seeds
+          ? divide(mesh.positions, mesh.indices, box, seeds, /\s+droite?$/.test(name))
+          : null;
+
         const positions = keep(Buffer.from(mesh.positions.buffer, mesh.positions.byteOffset, mesh.positions.byteLength));
         const normalsAt = keep(Buffer.from(normals.buffer, normals.byteOffset, normals.byteLength));
-        const indices = keep(Buffer.from(mesh.indices.buffer, mesh.indices.byteOffset, mesh.indices.byteLength));
+        const order = sorted ? sorted.order : mesh.indices;
+        const indices = keep(Buffer.from(order.buffer, order.byteOffset, order.byteLength));
         parts.push({
           id: name, name, tint, family, source,
           positions, normals: normalsAt, indices,
           vertexCount: mesh.positions.length / 3,
           indexCount: mesh.indices.length,
           bounds: box.map((v) => v.map(near)),
+          ...(sorted ? { groups: sorted.groups } : {}),
         });
       }
     }
