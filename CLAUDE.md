@@ -374,8 +374,21 @@ The order the models are built in, because it is the order they are taught.
 ## Still to build
 
 Q&A, discussion, chat, study rooms, per-subject icons, badges students earn.
-More models: muscles and vessels of the head and neck are the next two, and
-the same file says how.
+
+The models now cover every region of the curriculum map. What is genuinely
+missing from both sources, and is not faked:
+
+- **Female anatomy.** BodyParts3D and Z-Anatomy are both a male reference
+  body. The uro-genital model says so on its face rather than presenting a
+  male pelvis as the pelvis.
+- **The ileum, the caecum and the rectum** are not separate meshes in
+  Z-Anatomy: the gut it holds runs duodenum, jejunum, then the colon. The
+  descriptions name what is absent instead of relabelling a neighbour.
+- **The lateral sulcus** is a fissure, not a surface, so there is no mesh for
+  it. The central, parieto-occipital and calcarine sulci are real and drawn.
+- **The superior thyroid, lingual and posterior auricular arteries** are not
+  in the cardiovascular file. They are named in the external carotid's
+  description, because the six branches are the answer to the question.
 
 ## Where things are kept
 
