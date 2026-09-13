@@ -1,6 +1,7 @@
 // Cut a model out of the Z-Anatomy FBX files.
 //
 //   node scripts/carve-zanatomy.mjs --z ../zanat
+//   node scripts/carve-zanatomy.mjs --z ../zanat --only vaisseaux
 //
 // Same output as scripts/carve-anatomy.mjs and the same viewer reads it. The
 // difference is the source: BodyParts3D as the Database Center ships it has no
@@ -26,6 +27,16 @@ const arg = (name, fallback) => {
 const CM = 0.01;
 const out = resolve('public/anatomy');
 const root = resolve(arg('z', '../zanat'), 'Resources/Models/FBX');
+
+const only = arg('only', null);
+
+// The cardiovascular file alone is 64 MB and several bundles come out of the
+// same one. Reading it once per bundle was most of the time this script took.
+const opened = new Map();
+const readOnce = (path) => {
+  if (!opened.has(path)) opened.set(path, meshesOf(path));
+  return opened.get(path);
+};
 
 const round4 = (n) => (n + 3) & ~3;
 const near = (v) => Math.round(v * 1e5) / 1e5;
@@ -95,6 +106,7 @@ function weld(a, b) {
 
 for (const bundle of BUNDLES) {
   if (bundle.source !== 'zanatomy') continue;
+  if (only && bundle.id !== only) continue;
   if (!existsSync(root)) {
     console.error('No Z-Anatomy at ' + root + '\n\nGet one with:\n' +
       '  git clone --depth 1 https://github.com/moueza/Z-Anatomy.git\n' +
@@ -116,7 +128,7 @@ for (const bundle of BUNDLES) {
   };
 
   for (const group of bundle.files) {
-    const all = meshesOf(join(root, group.file));
+    const all = readOnce(join(root, group.file));
     for (const [source, french] of Object.entries(group.parts)) {
       const found = all.get(source);
       if (!found) {
