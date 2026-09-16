@@ -54,6 +54,9 @@ export default function BottomNav() {
   // …and a region of the body is a model with several layers in it, at the
   // same full height. The path is deeper, so it needs saying separately.
   if (path.startsWith('/anatomie/')) return null;
+  // The pre-launch page is read by somebody who has no account: four tabs into
+  // an app they cannot open yet is a row of dead ends.
+  if (path === '/feedback') return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">

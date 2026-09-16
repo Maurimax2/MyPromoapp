@@ -2503,3 +2503,266 @@ button.pill:active { transform: scale(.94); }
   color: var(--purple); background: var(--purple-pale);
   border-radius: 999px; padding: 3px 9px;
 }
+
+/* ---------------------------------------------------------------- pre-launch
+   The page a student opens from a WhatsApp message, before they have an
+   account. It is the only screen in the app that is not the app: it is read
+   once, by somebody deciding whether this is worth their time. So it is wider
+   than the phone column on a desktop, it has its own rhythm — but every
+   colour, radius, shadow and the typeface are the app's own, because the
+   product is the thing being shown.
+
+   Everything here is prefixed `pl-`. Nothing above is touched. */
+.pl {
+  --gut: 20px;
+  background: var(--surface);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+.pl-in { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 var(--gut); }
+
+/* The head. Small on purpose: the page is not an app and the bar is not a nav. */
+.pl-head {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255, 255, 255, .88);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.pl-head[data-stuck='true'] { border-color: var(--line); }
+.pl-head .pl-in {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 60px;
+}
+.pl-mark { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; }
+.pl-mark span { letter-spacing: -.2px; }
+.pl-grow { flex: 1; }
+
+/* Buttons. The app's own shape; orange is the one action on the page. */
+.pl-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 22px; border-radius: 14px;
+  font-size: 15.5px; font-weight: 600; cursor: pointer;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+}
+.pl-btn.p {
+  background: var(--orange); color: #fff;
+  box-shadow: 0 6px 18px rgba(249, 115, 22, .28);
+}
+.pl-btn.p:active { transform: translateY(1px) scale(.99); }
+.pl-btn.g { background: var(--purple); color: #fff; box-shadow: 0 6px 18px rgba(107, 33, 181, .22); }
+.pl-btn.g:active { transform: translateY(1px) scale(.99); }
+.pl-btn.q { background: var(--bg); color: var(--ink-2); }
+.pl-btn.q:active { transform: translateY(1px); }
+.pl-btn.sm { min-height: 44px; padding: 0 16px; font-size: 14.5px; border-radius: 12px; }
+.pl-btn[disabled] { opacity: .5; cursor: default; box-shadow: none; }
+
+/* Sections */
+.pl-sec { padding: 64px 0; }
+.pl-sec.grey { background: var(--bg); }
+.pl-kicker {
+  display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: .3px;
+  color: var(--purple); background: var(--purple-pale);
+  border-radius: 999px; padding: 6px 13px; margin-bottom: 14px;
+}
+.pl-h2 { font-size: 27px; line-height: 1.35; letter-spacing: -.3px; margin-bottom: 10px; }
+.pl-sub { font-size: 16px; line-height: 1.75; color: var(--ink-2); max-width: 54ch; }
+
+/* ---- hero */
+.pl-hero { position: relative; padding: 40px 0 8px; text-align: center; overflow: hidden; }
+.pl-hero h1 {
+  font-size: 34px; line-height: 1.3; letter-spacing: -.6px; margin: 16px 0 0;
+}
+.pl-hero h1 em { font-style: normal; color: var(--purple); }
+.pl-hero p { font-size: 17px; line-height: 1.8; color: var(--ink-2); margin: 14px auto 0; max-width: 40ch; }
+.pl-cta { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 26px; }
+.pl-cta small { font-size: 13.5px; color: var(--ink-3); }
+/* One soft violet wash behind the hero. Not a gradient soup: one shape. */
+.pl-glow {
+  position: absolute; inset-inline-start: 50%; top: -220px;
+  width: 620px; height: 620px; transform: translateX(50%);
+  background: radial-gradient(closest-side, rgba(139, 92, 246, .18), rgba(139, 92, 246, 0));
+  pointer-events: none;
+}
+
+/* ---- a phone */
+.pl-phone {
+  position: relative; flex-shrink: 0;
+  width: 232px; padding: 7px; border-radius: 36px;
+  background: linear-gradient(160deg, #2B2338, #14101C);
+  box-shadow: 0 18px 44px rgba(26, 20, 36, .22), 0 2px 6px rgba(26, 20, 36, .14);
+}
+.pl-phone img { display: block; width: 100%; height: auto; border-radius: 29px; background: var(--bg); }
+/* The speaker slot, drawn rather than photographed. */
+.pl-phone::before {
+  content: ''; position: absolute; top: 15px; inset-inline-start: 50%;
+  transform: translateX(50%);
+  width: 62px; height: 5px; border-radius: 3px;
+  background: rgba(255, 255, 255, .16); z-index: 2;
+}
+.pl-phone.lg { width: 268px; }
+.pl-phone.sm { width: 196px; }
+
+.pl-stage {
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  margin-top: 34px; padding-bottom: 8px;
+}
+.pl-stage .pl-phone:nth-child(1) { transform: rotate(-7deg) translateY(16px); margin-inline-end: -34px; z-index: 1; }
+.pl-stage .pl-phone:nth-child(2) { z-index: 3; }
+.pl-stage .pl-phone:nth-child(3) { transform: rotate(7deg) translateY(16px); margin-inline-start: -34px; z-index: 1; }
+
+/* On a phone the three become one row you push sideways — the same gesture as
+   the subject banners in the app. */
+.pl-rail {
+  display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 26px var(--gut) 10px; margin: 0 calc(var(--gut) * -1);
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.pl-rail::-webkit-scrollbar { display: none; }
+.pl-rail > * { scroll-snap-align: center; }
+.pl-cap { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); text-align: center; }
+
+/* ---- anatomy */
+.pl-split { display: grid; gap: 30px; align-items: center; }
+.pl-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+.pl-tile {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-tile); padding: 14px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.pl-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.pl-tile-ic {
+  width: 34px; height: 34px; border-radius: 10px; margin-bottom: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--purple-pale); color: var(--purple);
+}
+.pl-tile b { display: block; font-size: 14.5px; font-weight: 600; }
+.pl-tile span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ink-3); line-height: 1.6; }
+
+/* ---- built by students */
+.pl-purple {
+  background: linear-gradient(165deg, #7B2CC9, var(--purple) 55%, #5A1A99);
+  color: #fff; padding: 66px 0;
+}
+.pl-purple h2 { font-size: 27px; line-height: 1.4; letter-spacing: -.3px; }
+.pl-purple p { font-size: 16.5px; line-height: 1.9; color: rgba(255, 255, 255, .84); margin-top: 14px; max-width: 46ch; }
+.pl-purple .pl-line {
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .22);
+  font-size: 17px; font-weight: 600; line-height: 1.7;
+}
+
+/* ---- the form */
+.pl-form-wrap { padding: 60px 0 80px; background: var(--bg); }
+.pl-card {
+  background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--shadow); padding: 22px 18px 18px; max-width: 620px; margin: 0 auto;
+}
+.pl-steps { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.pl-steps b { font-size: 16px; }
+.pl-count { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.pl-bar { height: 6px; border-radius: 3px; background: var(--bg); overflow: hidden; margin: 12px 0 22px; }
+.pl-bar i {
+  display: block; height: 100%; border-radius: 3px; background: var(--purple);
+  transition: width .45s cubic-bezier(.4, 0, .2, 1);
+}
+.pl-q { font-size: 19px; line-height: 1.5; margin-bottom: 4px; }
+.pl-hint { font-size: 13.5px; color: var(--ink-3); margin-bottom: 16px; }
+.pl-opts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.pl-opts.one { grid-template-columns: 1fr; }
+.pl-opt {
+  display: flex; align-items: center; gap: 10px; text-align: start;
+  min-height: 52px; padding: 12px 14px; border-radius: 13px;
+  border: 1.5px solid var(--line); background: var(--surface);
+  font-size: 15px; color: var(--ink); cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .12s ease;
+}
+.pl-opt:active { transform: scale(.985); }
+.pl-opt[aria-pressed='true'], .pl-opt[data-on='true'] {
+  border-color: var(--purple); background: var(--purple-pale); font-weight: 600;
+}
+.pl-box {
+  width: 44px; height: 44px; flex-shrink: 0; /* the tick keeps its own target */
+  display: none;
+}
+.pl-tick {
+  width: 20px; height: 20px; flex-shrink: 0; border-radius: 6px;
+  border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center;
+  color: #fff;
+}
+.pl-opt[aria-pressed='true'] .pl-tick { background: var(--purple); border-color: var(--purple); }
+.pl-ta {
+  width: 100%; min-height: 128px; resize: vertical;
+  padding: 14px; border-radius: 13px; border: 1.5px solid var(--line);
+  background: var(--surface); font: inherit; font-size: 15px; line-height: 1.7; color: var(--ink);
+}
+.pl-ta:focus, .pl-inp:focus { outline: none; border-color: var(--purple-light); }
+.pl-inp {
+  width: 100%; min-height: 50px; padding: 0 14px; border-radius: 13px;
+  border: 1.5px solid var(--line); background: var(--surface);
+  font: inherit; font-size: 15px; color: var(--ink);
+}
+.pl-field { margin-top: 12px; }
+.pl-field label { display: block; font-size: 13.5px; color: var(--ink-2); margin-bottom: 6px; }
+.pl-nav { display: flex; gap: 10px; margin-top: 22px; }
+.pl-nav .pl-btn { flex: 1; }
+.pl-err {
+  margin-top: 12px; padding: 11px 14px; border-radius: 12px;
+  background: var(--orange-pale); color: #9A3412; font-size: 14px;
+}
+/* Each step arrives from the side it came from. */
+.pl-step { animation: pl-in .32s cubic-bezier(.2, .7, .3, 1) both; }
+@keyframes pl-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* ---- done */
+.pl-done { text-align: center; padding: 26px 8px 14px; }
+.pl-done h2 { font-size: 25px; margin: 18px 0 8px; }
+.pl-done p { font-size: 15.5px; line-height: 1.8; color: var(--ink-2); max-width: 34ch; margin: 0 auto; }
+.pl-done .pl-btn { margin-top: 22px; }
+.pl-pop { display: inline-flex; animation: pl-pop .5s cubic-bezier(.2, 1.2, .4, 1) both; }
+@keyframes pl-pop { from { opacity: 0; transform: scale(.7); } }
+
+/* ---- footer */
+.pl-foot { background: var(--surface); padding: 34px 0 40px; text-align: center; color: var(--ink-3); }
+.pl-foot .pl-mark { justify-content: center; color: var(--ink); margin-bottom: 10px; }
+.pl-foot p { font-size: 14px; line-height: 1.8; }
+.pl-foot small { display: block; margin-top: 8px; font-size: 12.5px; letter-spacing: .4px; }
+
+/* ---- motion, and the right to refuse it */
+.pl-rev { opacity: 0; transform: translateY(18px); }
+.pl-rev.on { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .3, 1); }
+.pl-float { animation: pl-float 7s ease-in-out infinite; }
+@keyframes pl-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-rev { opacity: 1; transform: none; transition: none; }
+  .pl-float, .pl-step, .pl-pop { animation: none; }
+  .pl-bar i { transition: none; }
+  .pl *, .pl *::before, .pl *::after { scroll-behavior: auto !important; }
+}
+
+@media (min-width: 760px) {
+  .pl-sec { padding: 84px 0; }
+  .pl-hero { padding: 56px 0 10px; }
+  .pl-hero h1 { font-size: 46px; }
+  .pl-hero p { font-size: 18.5px; max-width: 46ch; }
+  .pl-h2 { font-size: 33px; }
+  .pl-purple h2 { font-size: 33px; }
+  .pl-split { grid-template-columns: 1fr 1fr; gap: 52px; }
+  .pl-tiles { gap: 14px; }
+  .pl-card { padding: 30px 28px 24px; }
+  .pl-phone { width: 258px; }
+  .pl-phone.lg { width: 300px; }
+}
+
+/* The three phones stand together on a wide screen and become one row you
+   push sideways on a phone — the same gesture as the subject banners. */
+.pl-stage { display: none; }
+.pl-rail .pl-rev { display: flex; flex-direction: column; }
+.pl-dotc { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+/* Only this page scrolls smoothly, and only when nobody has asked otherwise. */
+html:has(.pl) { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html:has(.pl) { scroll-behavior: auto; } }
+@media (min-width: 760px) {
+  .pl-stage { display: flex; }
+  .pl-hero .pl-rail { display: none; }
+}

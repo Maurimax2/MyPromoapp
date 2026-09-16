@@ -47,7 +47,13 @@ export async function middleware(request) {
   // the panel backwards, and it is the layout there that decides who gets in:
   // no profile shows the panel's own sign-in, a student is told plainly that
   // they are not staff.
-  const open = path === '/waiting' || path.startsWith('/login') || path.startsWith('/auth')
+  //
+  // `/feedback` is the pre-launch page: it is opened from a WhatsApp message
+  // by students who have no account at all, which is the entire point of it.
+  // Sending them to the door would be asking them to sign up before they are
+  // allowed to say whether they want the thing.
+  const open = path === '/waiting' || path === '/feedback'
+    || path.startsWith('/login') || path.startsWith('/auth')
     || path.startsWith('/admin') || path.startsWith('/api/');
   if (open) return response;
 
@@ -98,6 +104,9 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|.*\\.(?:png|jpg|svg|ico)$).*)',
+    // `webp` and `jpeg` were missing, which is why the pre-launch page's
+    // screenshots came back as a redirect to the door: a picture asked for by
+    // somebody signed out went through the gate like a screen would.
+    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|.*\\.(?:png|jpg|jpeg|webp|svg|ico)$).*)',
   ],
 };
