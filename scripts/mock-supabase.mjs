@@ -144,6 +144,9 @@ const db = {
     // so this is what it could never show.
     { id: 2, module: 'anatomie-pathologique', document: null, title: 'Examen ANAPATH 2024', section: null, position: 0 },
     { id: 3, module: 'semiologie-neurologique', document: 9, title: 'Examen SEMIOLOGIE 2024', section: null, position: 0 },
+    // A DCEM1 QCM with several right answers, so the screen that draws one can
+    // be looked at. The question is one of the bank's own.
+    { id: 4, module: 'semio', document: null, title: 'Sémiologie — QCM', section: null, position: 0 },
   ],
   questions: [
     { id: 1, bank: 1, n: '1', stem: "Concernant les muscles masticateurs, quelle(s) proposition(s) est (sont) exacte(s) ?",
@@ -189,6 +192,16 @@ const db = {
       stem: 'Décrivez la conduite à tenir devant une crise convulsive inaugurale.',
       options: [], answer: [], model_answer: null,
       why: null, source: 'paper', status: 'needs_answer' },
+
+    { id: 20, bank: 4, n: '1',
+      stem: 'Quelles sont les caractéristiques de la douleur de la colique hépatique simple ?',
+      options: [
+        "Douleur épigastrique et/ou HCD, violente, irradiant vers la pointe de l'omoplate droite et le rachis",
+        'Durée de croissance rapide (max 15 à 60 min) et régression en 1 à 6h',
+        'Entraînant une inhibition respiratoire',
+        'Toujours calmée par la position allongée stricte sans aucun autre traitement',
+      ],
+      answer: [0, 1, 2], why: null, source: 'paper', status: 'published' },
   ],
   audit_log: [],
   import_jobs: [],

@@ -39,12 +39,9 @@ async function promosFor() {
   return PROMOS.map(({ id, name, badge }) => ({ id, name, badge }));
 }
 
-// A phone with a screenshot in it.
-//
-// `h` is the screenshot's own height at 390 wide. Most are a whole screen —
-// 844 — but one was sent in already cropped, and a frame that forces every
-// picture to the same shape either stretches it or pads it with dead grey.
-// A shorter screenshot simply gets a shorter phone.
+// A phone with a screenshot in it. Every one is a whole screen, top to
+// bottom bar — a screenshot that stops early leaves either a stretched
+// picture or a band of dead grey inside the frame.
 function Phone({ src, alt, size = '', priority = false, h = 844 }) {
   return (
     <div className={`pl-phone ${size}`}>
@@ -53,9 +50,6 @@ function Phone({ src, alt, size = '', priority = false, h = 844 }) {
     </div>
   );
 }
-
-// The QCM screenshot, as it was taken: 1290 × 1985.
-const MCQ = Math.round((390 * 1985) / 1290);
 
 /**
  * One feature: what it is, and the screen it is.
@@ -87,14 +81,6 @@ export default async function Feedback() {
 
   return (
     <div className="pl">
-      <header className="pl-head">
-        <div className="pl-in">
-          <span className="pl-mark"><Logo size={28} /><span>MyPromo</span></span>
-          <span className="pl-grow" />
-          <a className="pl-btn p sm" href="#form">شاركنا رأيك</a>
-        </div>
-      </header>
-
       {/* ---------------------------------------------------------- hero */}
       <section className="pl-hero">
         <span className="pl-glow" aria-hidden="true" />
@@ -117,7 +103,7 @@ export default async function Feedback() {
               subject banners inside the app. */}
           <Reveal delay={120}>
             <div className="pl-stage">
-              <Phone src="/preview/mcq.webp" h={MCQ} alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
+              <Phone src="/preview/mcq.webp" alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
               <Phone src="/preview/feed.webp" alt="الشاشة الرئيسية في MyPromo" size="lg" priority />
               <Phone src="/preview/crane3d.webp" alt="نموذج الجمجمة ثلاثي الأبعاد مع معالمه" />
             </div>
@@ -125,7 +111,7 @@ export default async function Feedback() {
           <Reveal delay={120}>
             <div className="pl-rail top">
               <Phone src="/preview/feed.webp" alt="الشاشة الرئيسية في MyPromo" priority />
-              <Phone src="/preview/mcq.webp" h={MCQ} alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
+              <Phone src="/preview/mcq.webp" alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
               <Phone src="/preview/crane3d.webp" alt="نموذج الجمجمة ثلاثي الأبعاد مع معالمه" />
             </div>
           </Reveal>
@@ -158,7 +144,7 @@ export default async function Feedback() {
         title="اختبر نفسك قبل الامتحان"
         body="أسئلة مرتّبة حسب المادة والمحاضرة، مع الجواب وسببه. وما تُخطئ فيه يعود إليك وحده في المراجعة."
         src="/preview/mcq.webp"
-        h={MCQ}
+       
         alt="سؤال QCM مع الأجوبة الصحيحة في MyPromo"
         flip
       />
