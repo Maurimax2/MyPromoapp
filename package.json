@@ -9,6 +9,7 @@
     "check:paste": "node scripts/check-paste.mjs",
     "check:duel": "node scripts/check-duel.mjs",
     "check:anatomy": "node scripts/check-anatomy.mjs",
+    "check:reading": "node scripts/check-reading.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
