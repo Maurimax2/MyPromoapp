@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'شاركنا رأيك — MyPromo',
-  description: 'تطبيق من طلبة الطب، لطلبة الطب. ساعدنا نبني MyPromo لطلبة FMPOS.',
+  description: 'منّا ولنا — تطبيق من طلبة الطب، لطلبة الطب. ساعدنا نبني MyPromo لطلبة FMPOS.',
 };
 
 /**
@@ -39,12 +39,46 @@ async function promosFor() {
   return PROMOS.map(({ id, name, badge }) => ({ id, name, badge }));
 }
 
-function Phone({ src, alt, size = '', priority = false }) {
+// A phone with a screenshot in it.
+//
+// `h` is the screenshot's own height at 390 wide. Most are a whole screen —
+// 844 — but one was sent in already cropped, and a frame that forces every
+// picture to the same shape either stretches it or pads it with dead grey.
+// A shorter screenshot simply gets a shorter phone.
+function Phone({ src, alt, size = '', priority = false, h = 844 }) {
   return (
     <div className={`pl-phone ${size}`}>
-      <Image src={src} alt={alt} width={390} height={844} priority={priority}
+      <Image src={src} alt={alt} width={390} height={h} priority={priority}
         sizes="(max-width: 760px) 70vw, 300px" />
     </div>
+  );
+}
+
+// The QCM screenshot, as it was taken: 1290 × 1985.
+const MCQ = Math.round((390 * 1985) / 1290);
+
+/**
+ * One feature: what it is, and the screen it is.
+ *
+ * Alternating sides on a wide screen, stacked on a phone — and the picture
+ * comes first in the markup so that on a phone you see the thing before you
+ * read about it.
+ */
+function Feature({ kicker, title, body, src, alt, h, flip = false, children }) {
+  return (
+    <section className="pl-sec">
+      <div className={`pl-in pl-split${flip ? ' flip' : ''}`}>
+        <Reveal>
+          <div className="pl-shot"><Phone src={src} alt={alt} h={h} /></div>
+        </Reveal>
+        <Reveal delay={100}>
+          <span className="pl-kicker">{kicker}</span>
+          <h2 className="pl-h2">{title}</h2>
+          <p className="pl-sub">{body}</p>
+          {children}
+        </Reveal>
+      </div>
+    </section>
   );
 }
 
@@ -67,7 +101,7 @@ export default async function Feedback() {
         <div className="pl-in">
           <Reveal>
             <span className="pl-float" style={{ display: 'inline-flex' }}><Logo size={58} /></span>
-            <h1>نحن طلبة طب <em>مثلكم.</em></h1>
+            <h1>منّا <em>ولنا.</em></h1>
             <p>نعرف صعوبة الدراسة، كثرة الدروس، وضغط الامتحانات.</p>
             <p style={{ marginTop: 6 }}>
               لذلك بنينا <b>MyPromo</b> — تطبيقًا من طلبة الطب، لطلبة الطب.
@@ -78,59 +112,76 @@ export default async function Feedback() {
             </div>
           </Reveal>
 
+          {/* Three phones. Side by side where there is room, and one row you
+              push sideways where there is not — the same gesture as the
+              subject banners inside the app. */}
           <Reveal delay={120}>
             <div className="pl-stage">
-              <Phone src="/preview/archive.webp" alt="شاشة الأرشيف في MyPromo" />
+              <Phone src="/preview/mcq.webp" h={MCQ} alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
               <Phone src="/preview/feed.webp" alt="الشاشة الرئيسية في MyPromo" size="lg" priority />
-              <Phone src="/preview/crane.webp" alt="نموذج ثلاثي الأبعاد لقاعدة الجمجمة في MyPromo" />
+              <Phone src="/preview/crane3d.webp" alt="نموذج الجمجمة ثلاثي الأبعاد مع معالمه" />
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="pl-rail">
+            <div className="pl-rail top">
               <Phone src="/preview/feed.webp" alt="الشاشة الرئيسية في MyPromo" priority />
-              <Phone src="/preview/archive.webp" alt="شاشة الأرشيف في MyPromo" />
-              <Phone src="/preview/crane.webp" alt="نموذج ثلاثي الأبعاد لقاعدة الجمجمة في MyPromo" />
+              <Phone src="/preview/mcq.webp" h={MCQ} alt="سؤال QCM في مادة Sémiologie داخل MyPromo" />
+              <Phone src="/preview/crane3d.webp" alt="نموذج الجمجمة ثلاثي الأبعاد مع معالمه" />
             </div>
           </Reveal>
           <p className="pl-cap">صور حقيقية من التطبيق — لا رسوم توضيحية.</p>
         </div>
       </section>
 
-      {/* ------------------------------------------------------- screens */}
-      <section className="pl-sec grey">
+      {/* --------------------------------------------------- the features */}
+      <div className="pl-sec grey" style={{ paddingBottom: 0 }}>
         <div className="pl-in">
           <Reveal>
-            <span className="pl-kicker">التطبيق</span>
-            <h2 className="pl-h2">شوف MyPromo كما هو</h2>
-            <p className="pl-sub">
-              كل شيء في مكان واحد: محاضرات دفعتك، الملخصات، الأرشيف، والاختبارات —
-              مرتّبة حسب المادة والسداسي.
+            <h2 className="pl-h2" style={{ textAlign: 'center' }}>شوف MyPromo كما هو</h2>
+            <p className="pl-sub" style={{ textAlign: 'center', margin: '0 auto' }}>
+              ما بُني حتى الآن، شاشة بشاشة.
             </p>
           </Reveal>
-
-          <div className="pl-rail">
-            <Reveal delay={60}>
-              <Phone src="/preview/feed.webp" alt="الشاشة الرئيسية" />
-              <p className="pl-cap">الرئيسية — دفعتك، وكل الأدوات</p>
-            </Reveal>
-            <Reveal delay={140}>
-              <Phone src="/preview/archive.webp" alt="الأرشيف" />
-              <p className="pl-cap">الأرشيف — المواد والملفات</p>
-            </Reveal>
-            <Reveal delay={220}>
-              <Phone src="/preview/regions.webp" alt="مناطق الجسم في التشريح" />
-              <p className="pl-cap">التشريح — مناطق الجسم حسب البرنامج</p>
-            </Reveal>
-            <Reveal delay={300}>
-              <Phone src="/preview/genou.webp" alt="نموذج الركبة مع معالم العظم" />
-              <p className="pl-cap">معالم العظم، على النموذج نفسه</p>
-            </Reveal>
-          </div>
         </div>
-      </section>
+      </div>
+
+      <Feature
+        kicker="المجتمع"
+        title="دفعتك، في مكان واحد"
+        body="ما يُنشر يصل إلى دفعتك وحدها: ملخّص قبل الامتحان، تأجيل حصة، سؤال في مادة — مع الملفات، لا روابط تضيع في مجموعة."
+        src="/preview/posts.webp"
+        alt="منشورات الدفعة في MyPromo مع ملف PDF مرفق"
+      />
+
+      <Feature
+        kicker="QCM"
+        title="اختبر نفسك قبل الامتحان"
+        body="أسئلة مرتّبة حسب المادة والمحاضرة، مع الجواب وسببه. وما تُخطئ فيه يعود إليك وحده في المراجعة."
+        src="/preview/mcq.webp"
+        h={MCQ}
+        alt="سؤال QCM مع الأجوبة الصحيحة في MyPromo"
+        flip
+      />
+
+      <Feature
+        kicker="تحدّي زميلك"
+        title="نفس الأسئلة، ونتيجتان"
+        body="اختر مادة، أجب على عشرة أسئلة، وأرسلها إلى زميل برقمه الجامعي. يجيب على الأسئلة نفسها، وتريان النتيجتين."
+        src="/preview/duel.webp"
+        alt="شاشة تحدّي زميلك مع نتيجة 9–7"
+      />
+
+      <Feature
+        kicker="غرف الدراسة"
+        title="ادرسوا معًا في نفس الوقت"
+        body="غرفة لمادة أو لمحاضرة، يفتحها أي طالب وينضم إليها من يريد المراجعة الآن."
+        src="/preview/rooms.webp"
+        alt="غرف الدراسة المفتوحة في MyPromo"
+        flip
+      />
 
       {/* ------------------------------------------------------- anatomy */}
-      <section className="pl-sec">
+      <section className="pl-sec grey">
         <div className="pl-in pl-split">
           <Reveal>
             <span className="pl-kicker">Anatomie</span>
@@ -164,10 +215,12 @@ export default async function Feedback() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Phone src="/preview/crane.webp" alt="قاعدة الجمجمة، مع تسمية الثقبة البيضية" size="lg" />
+            <div className="pl-rail">
+              <Phone src="/preview/crane.webp" alt="قاعدة الجمجمة، مع تسمية الثقبة البيضية" />
+              <Phone src="/preview/genou.webp" alt="نموذج الركبة مع معالم العظم" />
+              <Phone src="/preview/regions.webp" alt="مناطق الجسم في التشريح" />
             </div>
-            <p className="pl-cap">Base du crâne — le foramen ovale, nommé sur le modèle</p>
+            <p className="pl-cap">Base du crâne · Genou · Les régions du programme</p>
           </Reveal>
         </div>
       </section>

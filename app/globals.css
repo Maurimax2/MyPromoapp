@@ -2766,3 +2766,12 @@ html:has(.pl) { scroll-behavior: smooth; }
   .pl-stage { display: flex; }
   .pl-hero .pl-rail { display: none; }
 }
+
+/* A feature and its screen: the picture first in the markup so a phone shows
+   the thing before the words, and the sides swapped every other row. */
+.pl-shot { display: flex; justify-content: center; }
+.pl-rail.top { padding-top: 26px; }
+@media (min-width: 760px) {
+  .pl-split.flip > *:first-child { order: 2; }
+  .pl-sec + .pl-sec { padding-top: 0; }
+}

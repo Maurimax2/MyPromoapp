@@ -20,8 +20,7 @@ const ENDPOINT = '/api/feedback';
 // things it holds — the same names the screens use — so an answer here points
 // at something real.
 const NEEDS = [
-  'QCM', 'Cours', 'Résumés', 'Anatomie', 'Archives / Examens',
-  'Questions & Réponses', "Groupes d'étude", 'Défis entre étudiants', 'Autre',
+  'QCM', 'Flashcards', 'Résumés', 'IA', "Groupes d'étude", 'Autre',
 ];
 
 const STEPS = 6;

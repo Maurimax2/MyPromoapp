@@ -42,7 +42,7 @@ const whoIs = (req) => {
 
 const db = {
   profiles: [
-    { id: 'u-owner', email: 'owner@unem.mr', full_name: 'Hamad', promo: 'pcem2',
+    { id: 'u-owner', email: 'owner@unem.mr', full_name: 'محمد', promo: 'pcem2',
       matricule: 'D04458', role: 'owner', status: 'approved', created_at: '2026-09-01' },
     { id: 'u-1', email: 'mohamedvall@gmail.com', full_name: 'Mohamed Vall', promo: null,
       matricule: null, role: 'student', status: 'pending', created_at: '2026-09-04' },
@@ -194,7 +194,22 @@ const db = {
   import_jobs: [],
   // One duel already sent and not yet answered, so the screen that says
   // "your turn" has something to say the first time it is opened.
-  duels: [],
+  duels: [
+    // One waiting for you and one already played, because the screen is about
+    // two scores side by side and one of each is the only way to see that.
+    { id: 981, promo: 'pcem2', module: 'anatomie', lecture: null,
+      title: 'Ostéologie du crâne', questions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      challenger: 'u-1', opponent: 'u-owner',
+      challenger_score: 8, opponent_score: null,
+      challenger_at: '2026-09-16T10:12:00Z', opponent_at: null,
+      created_at: '2026-09-16T10:12:00Z' },
+    { id: 982, promo: 'pcem2', module: 'physiologie-s1', lecture: null,
+      title: 'Le potentiel d’action', questions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      challenger: 'u-owner', opponent: 'u-3',
+      challenger_score: 9, opponent_score: 7,
+      challenger_at: '2026-09-15T19:02:00Z', opponent_at: '2026-09-15T20:30:00Z',
+      created_at: '2026-09-15T19:00:00Z' },
+  ],
   // Enough of a promo to see الرئيسية as a student would: two posts, one of
   // them with a file, messages waiting, and notifications unread. An empty
   // feed and an empty feed that the database refused look identical, so the
@@ -222,9 +237,26 @@ const db = {
   comments: [],
   likes: [],
   saves: [],
-  rooms: [],
-  room_members: [],
-  room_messages: [],
+  // Two rooms and a duel in play: غرف الدراسة and تحدّي زميلك are screens
+  // whose empty state says nothing at all about what they are for.
+  rooms: [
+    { id: 901, promo: 'pcem2', module: 'anatomie', title: 'مراجعة العظام قبل الامتحان',
+      topic: 'Ostéologie du crâne — les foramens', host: 'u-1', capacity: 12,
+      closed: false, created_at: '2026-09-15T18:00:00Z' },
+    { id: 902, promo: 'pcem2', module: 'physiologie-s1', title: 'Physiologie — QCM ensemble',
+      topic: 'Le potentiel d’action', host: 'u-3', capacity: 8,
+      closed: false, created_at: '2026-09-16T09:30:00Z' },
+  ],
+  room_members: [
+    { id: 951, room: 901, member: 'u-1', created_at: '2026-09-15T18:00:00Z' },
+    { id: 952, room: 901, member: 'u-3', created_at: '2026-09-15T18:20:00Z' },
+    { id: 953, room: 901, member: 'u-owner', created_at: '2026-09-15T18:30:00Z' },
+    { id: 954, room: 902, member: 'u-3', created_at: '2026-09-16T09:30:00Z' },
+  ],
+  room_messages: [
+    { id: 961, room: 901, author: 'u-1', body: 'نبدأ بالثقبة البيضية — من يجاوب؟',
+      created_at: '2026-09-15T18:32:00Z' },
+  ],
   reviews: [],
   reports: [],
   notifications: [
