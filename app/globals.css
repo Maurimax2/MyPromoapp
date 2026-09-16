@@ -1106,10 +1106,35 @@ button.pill:active { transform: scale(.94); }
 }
 .ctd.off { opacity: .45; pointer-events: none; }
 .ctd.hidden .ctd-t { color: var(--ink-3); }
+/* The arrows sit beside the head button rather than inside it: a button
+   within a button is not valid HTML, and tapping an arrow would also open the
+   row it was trying to move. */
+.ctd-row { display: flex; align-items: stretch; }
 .ctd-head {
-  width: 100%; padding: 13px; display: flex; align-items: center; gap: 11px;
+  flex: 1; min-width: 0; padding: 13px; display: flex; align-items: center; gap: 11px;
   color: var(--ink-3); text-align: start;
 }
+.ctd-arrows {
+  flex-shrink: 0; display: flex; flex-direction: column; justify-content: center;
+  border-inline-end: 1px solid var(--line-soft);
+}
+/* 44px is the floor for anything a thumb has to hit, and these are two to a
+   row — so each one is a full 44 wide and the pair is 44 tall together, with
+   the touch area reaching past the icon. */
+.ctd-arrow {
+  width: 44px; height: 30px; display: flex; align-items: center; justify-content: center;
+  color: var(--ink-3);
+}
+.ctd-arrow:first-child { padding-top: 7px; }
+.ctd-arrow:last-child { padding-bottom: 7px; }
+.ctd-arrow svg { transform: rotate(90deg); }
+.ctd-arrow.down svg { transform: rotate(-90deg); }
+.ctd-arrow:disabled { opacity: .25; }
+.ctd-sort {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 9px; padding: 0 2px 2px;
+}
+.ctd-sort > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
 .ctd-n {
   flex-shrink: 0; min-width: 27px; height: 27px; border-radius: 9px;
   background: var(--purple-pale); color: var(--purple);

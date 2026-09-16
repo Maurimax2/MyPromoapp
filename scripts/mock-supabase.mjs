@@ -68,6 +68,8 @@ const db = {
     // A subject taught across both semesters, which is two rows and one
     // subject: الرئيسية draws it once, and its screen carries the switch.
     { id: 'anatomie-s2', promo: 'pcem2', semester: 'S2', name: 'ANATOMIE S2', icon: 'person', tint: 'purple', professors: [], position: 6 },
+    // DCEM1, added through the panel rather than migrated from lib/data.js.
+    { id: 'semio', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE', icon: 'person', tint: 'purple', professors: [], position: 0 },
     { id: 'physiologie-s1', promo: 'pcem2', semester: 'S1', name: 'PHYSIOLOGIE S1', icon: 'atom', tint: 'purple', professors: [], position: 7 },
     { id: 'physiologie-s2', promo: 'pcem2', semester: 'S2', name: 'PHYSIOLOGIE S2', icon: 'atom', tint: 'purple', professors: [], position: 8 },
     // No banner drawn for this one, so the tinted-block fallback is on screen
@@ -82,7 +84,10 @@ const db = {
     { id: 'semiologie-neurologique', promo: 'dcem1', semester: 'S1', name: 'SEMIOLOGIE NEUROLOGIQUE', icon: 'book', tint: 'purple', professors: [], position: 3 },
     { id: 'pharmacologie', promo: 'dcem1', semester: 'S1', name: 'PHARMACOLOGIE', icon: 'flask', tint: 'orange', professors: [], position: 4 },
   ],
-  chapters: [{ id: 1, module: 'anatomie', title: 'Tête et cou', subtitle: null, position: 0 }],
+  chapters: [
+    { id: 1, module: 'anatomie', title: 'Tête et cou', subtitle: null, position: 0 },
+    { id: 2, module: 'semio', title: 'Sémiologie générale', subtitle: null, position: 0 },
+  ],
   documents: [
     { id: 1, module: 'anatomie', chapter: 1, where_shown: 'archive', section: 'lecture', n: '4',
       title: 'Ostéologie du crâne', prof: null, year: 2021, ext: 'PDF', bytes: 8800000,
@@ -90,6 +95,24 @@ const db = {
     { id: 2, module: 'anatomie', chapter: 1, where_shown: 'archive', section: 'lecture', n: '5',
       title: 'Les vaisseaux tête et cou', prof: null, year: null, ext: 'PDF', bytes: 12700000,
       drive_id: '1MockDriveIdBBBBBBBBBBBBBBBBBBBBB', published: true, position: 1 },
+    // A subject added through the panel: no `n` on any row, and the positions
+    // are the order somebody's file picker handed them over. This is DCEM1's
+    // shape, and it is the case that made تصنيف الأسئلة report that a module
+    // full of lectures had none. `Cours 10` before `Cours 2` is here on
+    // purpose — string order gets that pair wrong.
+    { id: 101, module: 'semio', chapter: 2, where_shown: 'archive', section: 'lecture', n: null,
+      title: 'Cours 10 - Sémiologie neurologique', prof: null, year: null, ext: 'PDF',
+      bytes: 3100000, drive_id: '1MockSemioJJJJJJJJJJJJJJJJJJJJJJJ', published: true, position: 0 },
+    { id: 102, module: 'semio', chapter: 2, where_shown: 'archive', section: 'lecture', n: null,
+      title: 'Cours 2 - Sémiologie cardiaque', prof: null, year: null, ext: 'PDF',
+      bytes: 2600000, drive_id: '1MockSemioKKKKKKKKKKKKKKKKKKKKKKK', published: true, position: 1 },
+    { id: 103, module: 'semio', chapter: 2, where_shown: 'archive', section: 'lecture', n: null,
+      title: 'Cours 1 - Introduction à la sémiologie', prof: null, year: null, ext: 'PDF',
+      bytes: 1900000, drive_id: '1MockSemioLLLLLLLLLLLLLLLLLLLLLLL', published: true, position: 2 },
+    { id: 104, module: 'semio', chapter: 2, where_shown: 'archive', section: 'lecture', n: null,
+      title: 'Cours 3 - Sémiologie respiratoire', prof: null, year: null, ext: 'PDF',
+      bytes: 2400000, drive_id: '1MockSemioMMMMMMMMMMMMMMMMMMMMMMM', published: true, position: 3 },
+
     { id: 3, module: 'anatomie', chapter: null, where_shown: 'quiz', section: 'exam', n: null,
       title: 'Examen ANATOMIE 2021', prof: null, year: 2021, ext: 'PDF', bytes: 2100000,
       drive_id: '1MockDriveIdQcmTextPaperCCCCCCCCC', published: true, position: 0 },

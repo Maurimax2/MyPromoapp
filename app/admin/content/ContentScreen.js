@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { numberLectures } from '@/lib/lectures';
 
 const WHERE = [
   { id: 'archive', label: 'الأرشيف' },
@@ -39,6 +40,14 @@ const SECTIONS = {
 };
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
+
+// Sorting by name, the way a person reads a list of lectures.
+//
+// Plain string order puts `Cours 10` before `Cours 2`, because it compares the
+// `1` against the `2` and stops. Every number in the name is compared as a
+// number instead, so the list comes out the way it is taught.
+const byName = (a, b) =>
+  String(a.title).localeCompare(String(b.title), 'fr', { numeric: true, sensitivity: 'base' });
 
 export default function ContentScreen({ module, documents, where, counts, canDelete }) {
   const router = useRouter();
@@ -163,8 +172,68 @@ export default function ContentScreen({ module, documents, where, counts, canDel
     router.refresh();
   };
 
+  // Moving a lecture. The list is what the archive's numbering is derived
+  // from, so this is not decoration: an upload order is a wrong set of lecture
+  // numbers, and تصنيف الأسئلة files a question by its number.
+  //
+  // The whole order is sent, not the pair that swapped, because the position
+  // of every row after the move has changed too.
+  const reorder = async (next) => {
+    const before = rows;
+    setRows(next);              // move it on screen first; the list is the point
+    setBusy('order'); setError('');
+    let res, data;
+    try {
+      res = await fetch('/api/admin/documents/order', {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ module: module.id, order: next.map((d) => d.id) }),
+      });
+      data = await res.json().catch(() => ({}));
+    } catch {
+      setBusy(null); setRows(before); setError('لا اتصال بالخادم'); return;
+    }
+    setBusy(null);
+    if (!res.ok) {
+      setRows(before);
+      setError(data.error || `تعذّر الترتيب (${res.status})`);
+      return;
+    }
+    router.refresh();
+  };
+
+  const move = (id, by) => {
+    const at = rows.findIndex((d) => d.id === id);
+    const to = at + by;
+    if (at < 0 || to < 0 || to >= rows.length) return;
+    const next = rows.slice();
+    [next[at], next[to]] = [next[to], next[at]];
+    reorder(next);
+  };
+
+  const sortByName = () => {
+    const next = rows.slice().sort(byName);
+    if (next.every((d, i) => d.id === rows[i].id)) return;
+    reorder(next);
+  };
+
   const go = (w) =>
     router.push(`/admin/content?promo=${module.promo}&module=${module.id}&where=${w}`);
+
+  // The number each lecture will carry, counted off the order on screen.
+  //
+  // It cannot come from the row: the server numbered the list it rendered, and
+  // the moment an arrow moves something that number is a number for an order
+  // nobody is looking at any more. The screen that sets the order has to show
+  // what the order produces, or the numbers read 2, 1, 3, 4 down a list that
+  // is plainly 1, 2, 3, 4.
+  const numbers = new Map(
+    numberLectures(
+      rows
+        .filter((d) => where === 'archive' && d.section === 'lecture')
+        .map((d) => ({ id: d.id, n: d.n })),
+    ).map((l) => [l.id, l.n]),
+  );
 
   return (
     <div className="admin-body">
@@ -211,12 +280,46 @@ export default function ContentScreen({ module, documents, where, counts, canDel
         </section>
       ) : null}
 
+      {/* The order this list is in is the order the archive shows, and the
+          numbers تصنيف الأسئلة uses are counted off it. One button does the
+          whole subject when the names already say the order. */}
+      {rows.length > 1 && (
+        <div className="ctd-sort">
+          <span>ترتيب المحاضرات</span>
+          <button className="btn g sm" onClick={sortByName} disabled={busy === 'order'}>
+            رتّب حسب الاسم
+          </button>
+        </div>
+      )}
+
       {!rows.length ? null : (
         <div className="admin-rows">
-          {rows.map((d) => (
+          {rows.map((d, i) => (
             <div key={d.id} className={`ctd${busy === d.id ? ' off' : ''}${!d.published ? ' hidden' : ''}`}>
+              {/* Outside the head button, not inside it: a button within a
+                  button is not valid, and tapping an arrow would also open
+                  the row it was trying to move. */}
+              <div className="ctd-row">
+                <div className="ctd-arrows">
+                  <button
+                    className="ctd-arrow"
+                    onClick={() => move(d.id, -1)}
+                    disabled={i === 0 || busy === 'order'}
+                    aria-label={`انقل ${d.title} لأعلى`}
+                  >
+                    <Icon name="chev" size={15} />
+                  </button>
+                  <button
+                    className="ctd-arrow down"
+                    onClick={() => move(d.id, 1)}
+                    disabled={i === rows.length - 1 || busy === 'order'}
+                    aria-label={`انقل ${d.title} لأسفل`}
+                  >
+                    <Icon name="chev" size={15} />
+                  </button>
+                </div>
               <button className="ctd-head" onClick={() => setOpen(open === d.id ? null : d.id)}>
-                {d.n && <span className="ctd-n">{d.n}</span>}
+                {numbers.get(d.id) && <span className="ctd-n">{numbers.get(d.id)}</span>}
                 <div className="grow">
                   <div className="ctd-t" dir="ltr">{d.title}</div>
                   <div className="ctd-b">
@@ -227,6 +330,7 @@ export default function ContentScreen({ module, documents, where, counts, canDel
                 </div>
                 <Icon name="chev" size={17} />
               </button>
+              </div>
 
               {open === d.id && (
                 <div className="ctd-edit">
