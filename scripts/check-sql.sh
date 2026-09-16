@@ -53,10 +53,12 @@ echo "— on an empty database"
 apply "$HERE/supabase/test/stub.sql"
 apply "$HERE/supabase/schema.sql"
 apply "$HERE/supabase/social.sql"
+apply "$HERE/supabase/feedback.sql"
 
 echo "— and again, because it is pasted twice as often as not"
 apply "$HERE/supabase/schema.sql"
 apply "$HERE/supabase/social.sql"
+apply "$HERE/supabase/feedback.sql"
 
 # The short form handed out when the whole file is too much to select on a
 # phone. It says the same things, so on a database that already has schema.sql

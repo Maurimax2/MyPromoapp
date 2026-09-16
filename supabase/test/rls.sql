@@ -199,6 +199,39 @@ select rejects('a kind nobody has built is refused',
   $$insert into questions (bank, n, kind, stem) values
       ((select id from question_banks where title = 'Examen 2024'), '2', 'cas', 'x')$$);
 
+-- ---------------------------------------------------------------------------
+-- شاركنا رأيك: written by people with no account, read only by staff.
+--
+-- The rows arrive through a server route holding the service key, which is
+-- above these policies by design. So what has to be true here is the other
+-- half: that nobody reaches the table from a browser — not a student, not an
+-- approved student, not even staff, who read it and never write it.
+-- ---------------------------------------------------------------------------
+reset role;
+
+insert into feedback (promo, needs, pain, wish, reach, name, phone)
+  values ('pcem2', array['QCM', 'Flashcards'], 'كثرة الملفات', 'بحث أسرع', true, 'Sidi', '+222…');
+
+set role authenticated;
+
+-- An approved student. Her own year, her own promo — and none of this.
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select must('a student reads no feedback at all', (select count(*) from feedback), 0);
+select rejects('and cannot write one either',
+  $$insert into feedback (promo, pain) values ('pcem2', 'depuis le navigateur')$$);
+
+-- Somebody with no profile row: whoever opens the pre-launch page.
+set request.jwt.claim.sub = '00000000-0000-0000-0000-000000000000';
+select must('a stranger reads none', (select count(*) from feedback), 0);
+select rejects('and writes none',
+  $$insert into feedback (promo, pain) values ('pcem2', 'anonyme')$$);
+
+-- Staff, who are the reason it is collected.
+set request.jwt.claim.sub = '55555555-5555-5555-5555-555555555555';
+select must('staff read every answer', (select count(*) from feedback), 1);
+select rejects('and still cannot write one from a browser',
+  $$insert into feedback (promo, pain) values ('pcem2', 'depuis le panneau')$$);
+
 reset role;
 drop function must(text, bigint, bigint);
 drop function rejects(text, text);

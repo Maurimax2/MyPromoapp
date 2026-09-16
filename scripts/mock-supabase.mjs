@@ -205,6 +205,8 @@ const db = {
   ],
   audit_log: [],
   import_jobs: [],
+  // What students said on شاركنا رأيك, before there was an app to say it in.
+  feedback: [],
   // One duel already sent and not yet answered, so the screen that says
   // "your turn" has something to say the first time it is opened.
   duels: [
@@ -306,12 +308,30 @@ function matches(row, key, spec) {
     const list = val.replace(/^\(|\)$/g, '').split(',').map((s) => s.replace(/^"|"$/g, ''));
     return list.includes(String(cell));
   }
-  // Paging a room's chat asks for anything newer than the last id it holds.
-  if (op === 'gt')  return Number(cell) >  Number(val);
-  if (op === 'gte') return Number(cell) >= Number(val);
-  if (op === 'lt')  return Number(cell) <  Number(val);
-  if (op === 'lte') return Number(cell) <= Number(val);
+  // Paging a room's chat asks for anything newer than the last id it holds —
+  // and asking "since two minutes ago" asks the same of a timestamp. Both
+  // sides were run through Number(), so every ISO date became NaN and every
+  // comparison on one came back false: a filter that silently matched nothing,
+  // which is the one kind of bug a stand-in must not invent.
+  if (op === 'gt' || op === 'gte' || op === 'lt' || op === 'lte') {
+    const pair = order(cell, val);
+    if (pair == null) return false;
+    const [a, b] = pair;
+    if (op === 'gt') return a > b;
+    if (op === 'gte') return a >= b;
+    if (op === 'lt') return a < b;
+    return a <= b;
+  }
   return true;
+}
+
+/** Two values as numbers, or as instants when they are written like dates. */
+function order(cell, val) {
+  const n = [Number(cell), Number(val)];
+  if (!Number.isNaN(n[0]) && !Number.isNaN(n[1]) && String(cell).trim() !== '') return n;
+  const d = [Date.parse(cell), Date.parse(val)];
+  if (!Number.isNaN(d[0]) && !Number.isNaN(d[1])) return d;
+  return null;
 }
 
 /**
@@ -607,6 +627,8 @@ createServer(async (req, res) => {
     comments: () => ({ removed: false, created_at: new Date().toISOString() }),
     likes:    () => ({ created_at: new Date().toISOString() }),
     rooms:    () => ({ closed: false, capacity: 12, created_at: new Date().toISOString() }),
+    feedback: () => ({ needs: [], pain: '', wish: '', reach: false, name: '', phone: '',
+                       source: '', created_at: new Date().toISOString() }),
     chats:    () => ({ created_at: new Date().toISOString(), last_at: new Date().toISOString() }),
     chat_messages: () => ({ created_at: new Date().toISOString(), seen: false }),
     room_messages: () => ({ created_at: new Date().toISOString() }),

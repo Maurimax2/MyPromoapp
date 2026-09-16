@@ -84,6 +84,15 @@ export default async function AdminHome() {
         </Link>
       )}
 
+      <Link href="/admin/feedback" className="admin-card admin-import">
+        <div className="admin-import-ic"><Icon name="msgs" size={22} /></div>
+        <div className="grow">
+          <div className="admin-card-t">آراء الطلبة</div>
+          <div className="admin-card-b">ما كتبه الطلبة في صفحة شاركنا رأيك</div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
+
       <Link href="/admin/import" className="admin-card admin-import">
         <div className="admin-import-ic"><Icon name="plus" size={22} /></div>
         <div className="grow">

@@ -160,7 +160,6 @@ export default function Form({ promos }) {
       {step === 5 && (
         <div className="pl-step" key="s5">
           <h3 className="pl-q">هل تريد أن نخبرك عند إطلاق MyPromo؟</h3>
-          <p className="pl-hint">اختياري تمامًا — رأيك يصلنا في كل الحالات.</p>
           <div className="pl-opts">
             <button type="button" className="pl-opt" data-on={reach === true}
               onClick={() => setReach(true)}>نعم، أخبروني</button>
