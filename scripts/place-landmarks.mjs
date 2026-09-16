@@ -79,6 +79,7 @@ function nearestTo(g, want) {
   let best = Infinity, o = 0;
   for (let i = 0; i < part.vertexCount; i++) {
     const k = i * 3;
+    if (!nrm[k] && !nrm[k + 1] && !nrm[k + 2]) continue;
     const d = (pos[k] - want[0]) ** 2 + (pos[k + 1] - want[1]) ** 2 + (pos[k + 2] - want[2]) ** 2;
     if (d < best) { best = d; o = k; }
   }
@@ -141,6 +142,11 @@ function furthest(g, rule) {
     if (box && (x < box[0][0] || x > box[1][0]
       || y < box[0][1] || y > box[1][1]
       || z < box[0][2] || z > box[1][2])) continue;
+    // A vertex no triangle uses has a zero normal, and a landmark placed on
+    // one can never be drawn: the reader decides whether a label is facing you
+    // by that normal, and a zero faces nowhere. Z-Anatomy leaves a few of
+    // these, and the posterior tubercle of the atlas landed on one.
+    if (!nrm[i3] && !nrm[i3 + 1] && !nrm[i3 + 2]) continue;
     const score = x * d[0] + y * d[1] + z * d[2];
     if (score > best) { best = score; at = i; }
   }
