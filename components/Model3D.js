@@ -12,25 +12,41 @@
 // And the device pixel ratio is capped, because a retina tablet asked for
 // four times the pixels will render a skull at a slideshow.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Icon from '@/components/Icon';
-import { CREDIT, boneOf } from '@/lib/anatomy/bundles';
+import { CREDIT, boneOf, bundleOf, familyOf } from '@/lib/anatomy/bundles';
 import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
+import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
 
 const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
 const BONE = 0xe6e0d3;
 
-export default function Model3D({ id, title, hidden = [], facing = null, credit = CREDIT }) {
+export default function Model3D({
+  id, title, hidden = [], facing = null, credit = CREDIT,
+  // A composed scene. `layers` is every bundle drawn, in order; `lead` is the
+  // one whose list opens first; `frame` is the box the camera opens on.
+  //
+  // A structure is not understood by seeing it alone. The median nerve on a
+  // white background answers none of the four questions a student is actually
+  // asking — where is it, what is it next to, where does it come from, where
+  // does it go — and all four are answered by drawing the arm around it.
+  layers = null, lead = null, frame = null,
+}) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
   const [parts, setParts] = useState([]);
   const [picked, setPicked] = useState(null);
   const [listing, setListing] = useState(false);
   const [plate, setPlate] = useState(false);   // every bone its own colour
-  const [only, setOnly] = useState(false);     // the one you picked, by itself
+  // CONTEXT · FOCUS · ISOLATE. Everything is opaque at every level — nothing
+  // is ever ghosted — so moving between them takes structures off the screen
+  // rather than making them see-through. An X-ray of twenty overlapping
+  // structures is a picture of none of them.
+  const [mode, setMode] = useState('context');
+  const only = mode === 'isolate';     // the one you picked, by itself
   const [points, setPoints] = useState([]);    // the named places on the bones
   const [pins, setPins] = useState(false);     // …named on screen or not
   const [pin, setPin] = useState(null);        // …and which one is being read
@@ -46,6 +62,9 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
   const chosen = useRef(null);
   const all = useRef(false);
   const alone = useRef(false);
+  // At FOCUS, what stays on screen beside the thing you picked.
+  const near = useRef(new Set());
+  const level = useRef('context');
   const showing = useRef(false);
   const reading = useRef(null);
   const off = useRef(new Set());
@@ -54,6 +73,7 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
     chosen.current = picked;
     all.current = plate;
     alone.current = only;
+    level.current = mode;
     // …and never while the list is open: the labels floated over its rows and
     // made the one screen that is pure text unreadable.
     showing.current = pins && !listing && !open;
@@ -61,7 +81,7 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
     piece.current = sub;
     reading.current = pin;
     api.current?.paint();
-  }, [picked, plate, only, pins, pin, listing, gone, open, sub]);
+  }, [picked, plate, mode, only, pins, pin, listing, gone, open, sub]);
 
   // Showing one bone by itself re-aims the camera at it, and putting the rest
   // back re-aims at the skull. Only on those two moves: re-framing every time
@@ -242,7 +262,15 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
         // the temporal, the mandible over the base of the skull. The one you
         // are looking at stays whatever else is hidden.
         const away = off.current.has(m.userData.id) && !on;
-        m.visible = !away && !(alone.current && chosen.current != null && !on);
+        // CONTEXT shows everything. ISOLATE shows the one you picked. FOCUS
+        // shows it with the group it is taught in and the bones of the region,
+        // which is what "immediately relevant" means when the data says so:
+        // the biceps with the rest of the anterior compartment, on the humerus
+        // it pulls on. Nothing is made see-through at any level.
+        const kept = level.current === 'context' || chosen.current == null
+          || on
+          || (level.current === 'focus' && near.current.has(m.userData.id));
+        m.visible = !away && kept;
 
         // Colour means the same thing at both levels. With no bone chosen it
         // separates the bones; with one chosen it separates that bone's parts,
@@ -264,11 +292,15 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
       draw();
     };
 
-    let frame = 0;
+    // Named `pending`, not `frame`: there is a `frame` prop now — the box the
+    // camera opens on — and a local of the same name shadowed it, so a region
+    // that said exactly where to look was framed on everything instead. It
+    // looked like the frame had been ignored, because it had.
+    let pending = 0;
     const draw = () => {
-      if (frame || dead) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0; renderer.render(scene, camera); movePins();
+      if (pending || dead) return;
+      pending = requestAnimationFrame(() => {
+        pending = 0; renderer.render(scene, camera); movePins();
       });
     };
 
@@ -400,32 +432,27 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
       setSub(bits && which != null ? bits[which]?.name || null : null);
       // Touching the background puts everything back: leaving the skull with
       // one bone in it and no way to tell why is worse than losing a choice.
-      if (!hit) setOnly(false);
+      if (!hit) setMode('context');
     };
 
     (async () => {
       try {
-        const [meta, bin] = await Promise.all([
-          fetch(`/anatomy/${id}.json`).then((r) => {
-            if (!r.ok) throw new Error('manifest');
-            return r.json();
-          }),
-          fetch(`/anatomy/${id}.bin`).then((r) => {
-            if (!r.ok) throw new Error('geometry');
-            return r.arrayBuffer();
-          }),
-        ]);
-        // Landmarks are a separate small file and a model is allowed to have
-        // none: a bundle with no names on it yet still draws.
-        const named = await fetch(`/anatomy/${id}.points.json`)
-          .then((r) => (r.ok ? r.json() : { points: [] }))
-          .catch(() => ({ points: [] }));
+        const want = layers && layers.length ? layers : [id];
+        const stack = await loadScene(want);
         if (dead) return;
+        if (!stack.length) throw new Error('geometry');
 
-        const [lo, hi] = meta.bounds;
+        // Every bundle is carved in the same world frame, so the scene is
+        // centred once on everything in it rather than each layer on itself.
+        // Centring per bundle is what would pull a hand off the end of its own
+        // forearm.
+        const [lo, hi] = boundsOf(stack);
         const mid = new THREE.Vector3(
           (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2);
 
+        const catalogue = [];
+        for (const layer of stack) {
+        const { meta, bin } = layer;
         for (const p of meta.parts) {
           const g = new THREE.BufferGeometry();
           g.setAttribute('position', new THREE.BufferAttribute(
@@ -447,12 +474,22 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
           const mesh = new THREE.Mesh(g,
             p.groups ? p.groups.map(coat) : coat());
           mesh.position.sub(mid);
-          mesh.userData.id = p.id;
+          // Two bundles can each hold a `Corps (diaphyse)`. Addressing a
+          // structure by its name alone would light up the wrong bone, so the
+          // bundle is part of the address and is carried on the mesh, which is
+          // also how its description is looked up in the right book.
+          mesh.userData.id = keyOf(layer.id, p.id);
+          mesh.userData.bundle = layer.id;
           mesh.userData.tint = new THREE.Color(p.tint);
           mesh.userData.box = p.bounds.map((v) => v.map((n, i) => n - mid.getComponent(i)));
           mesh.userData.groups = p.groups || null;
           group.add(mesh);
           meshes.push(mesh);
+          catalogue.push({
+            id: mesh.userData.id, bundle: layer.id, name: p.name, tint: p.tint,
+            fma: p.fma, groups: p.groups || null,
+          });
+        }
         }
 
         // Turning it must not push it off the edge, but a sphere around the
@@ -462,31 +499,32 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
         // A model may say which box to open on: a nerve that runs the length
         // of the body is still part of the model, but it is not what the
         // screen is for.
-        const [flo, fhi] = meta.frame || meta.bounds;
+        const [flo, fhi] = frame || frameOf(stack, null, lead || want[0]);
         whole = [flo, fhi].map((v) => v.map((n, i) => n - mid.getComponent(i)));
         look(whole);
 
         const byPart = new Map(meshes.map((m) => [m.userData.id, m]));
-        for (const q of named.points || []) {
-          const mesh = byPart.get(q.part);
-          if (!mesh) continue;
-          marks.push({
-            name: q.name,
-            mesh,
-            at: new THREE.Vector3(...q.at).sub(mid),
-            out: new THREE.Vector3(...q.out),
-          });
+        for (const layer of stack) {
+          for (const q of layer.points) {
+            const mesh = byPart.get(keyOf(layer.id, q.part));
+            if (!mesh) continue;
+            marks.push({
+              name: q.name,
+              bundle: layer.id,
+              mesh,
+              at: new THREE.Vector3(...q.at).sub(mid),
+              out: new THREE.Vector3(...q.out),
+            });
+          }
         }
-        setPoints(marks.map((m, i) => ({ i, name: m.name })));
+        setPoints(marks.map((m, i) => ({ i, name: m.name, bundle: m.bundle })));
 
-        setParts(meta.parts.map((p) => ({
-          id: p.id, name: p.name, tint: p.tint, fma: p.fma, groups: p.groups || null,
-        })));
+        setParts(catalogue);
         // A model may start with something taken off — the platysma over the
         // neck. It is in the list like any other, marked off, one tap back.
         if (hidden.length) {
           const away = new Set(hidden);
-          setGone(meta.parts.filter((p) => away.has(boneOf(p.name))).map((p) => p.id));
+          setGone(catalogue.filter((p) => away.has(boneOf(p.name))).map((p) => p.id));
         }
         setLoading(false);
         api.current = { paint, focusOn, faceTo, home: () => focusOn(null) };
@@ -518,16 +556,54 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
       renderer.domElement.remove();
       api.current = null;
     };
-  }, [id]);
+    // Stringified because the deps are arrays: a parent that rebuilds the
+    // same list on every render would otherwise tear the scene down and
+    // reload thirty megabytes of geometry to draw exactly what was already
+    // on the screen.
+  }, [id, lead, JSON.stringify(layers), JSON.stringify(frame)]);
+
+  // What FOCUS keeps on screen: the group the picked structure is taught in —
+  // « les muscles sous-hyoïdiens » is how the question is asked, and the
+  // bundle already names its groups — together with the bones of the region,
+  // so a muscle is never shown without what it pulls on.
+  const kin = useMemo(() => {
+    const set = new Set();
+    const me = parts.find((p) => p.id === picked);
+    if (!me) return set;
+    const book = bundleOf(me.bundle);
+    const mine = book ? familyOf(book, me.name) : null;
+    const bones = lead || id;
+    for (const p of parts) {
+      if (p.bundle === bones) { set.add(p.id); continue; }
+      if (!mine || p.bundle !== me.bundle) continue;
+      const theirs = book ? familyOf(book, p.name) : null;
+      if (theirs === mine) set.add(p.id);
+    }
+    return set;
+  }, [parts, picked, lead, id]);
+  useEffect(() => { near.current = kin; api.current?.paint(); }, [kin]);
+
+  // The rows, under the model each came from and in the order the scene draws
+  // them, so the list reads the way the screen looks.
+  const groups = useMemo(() => {
+    const out = [];
+    for (const p of parts) {
+      let g = out.find((x) => x.id === p.bundle);
+      if (!g) out.push((g = { id: p.bundle, title: bundleOf(p.bundle)?.title || p.bundle, rows: [] }));
+      g.rows.push(p);
+    }
+    return out;
+  }, [parts]);
 
   // The card along the bottom says one thing at a time: the landmark you
   // touched, or the bone. A landmark is the finer answer so it wins.
   const spot = pin != null ? points.find((q) => q.i === pin)?.name : null;
-  const bone = parts.find((p) => p.id === picked)?.name || null;
+  const held = parts.find((p) => p.id === picked) || null;
+  const bone = held?.name || null;
   const name = spot || bone;
   const bits = (picked && parts.find((p) => p.id === picked)?.groups) || [];
   const clear = () => {
-    setPin(null); setPicked(null); setSub(null); setOnly(false); setOpen(false);
+    setPin(null); setPicked(null); setSub(null); setMode('context'); setOpen(false);
   };
 
   // What the thing you touched actually is. This is the reason a model is
@@ -535,7 +611,11 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
   // the parts, the attachments and what runs through it.
   // A part's description lives on its bone: touching the mastoïde opens what
   // is written about the temporal, which is where its parts are listed.
-  const note = (spot || bone) ? noteFor(id, spot || bone) : null;
+  // Looked up in the book the structure came from. In a composed scene the
+  // humerus and the biceps are in different bundles, and asking one book about
+  // the other's structure comes back blank.
+  const from = (pin != null ? points.find((q) => q.i === pin)?.bundle : held?.bundle) || id;
+  const note = (spot || bone) ? noteFor(from, spot || bone) : null;
 
   return (
     <div className="m3d">
@@ -585,8 +665,15 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
             {/* Some of these are buried: the sphenoid and the vomer are behind
                 everything else, and picking one out of the list would change
                 nothing you can see without this. */}
-            <button className={`icobtn${only ? ' on' : ''}`} disabled={!picked}
-              onClick={() => setOnly((v) => !v)} aria-label="إظهار المحدَّد وحده">
+            {/* CONTEXT → FOCUS → ISOLATE, on one button. Where is it, what is
+                it next to, and then the thing by itself — and back in a tap.
+                Disabled until something is picked, because all three are the
+                same screen when nothing is. */}
+            <button className={`icobtn${mode !== 'context' ? ' on' : ''}`} disabled={!picked}
+              onClick={() => setMode(
+                mode === 'context' ? 'focus' : mode === 'focus' ? 'isolate' : 'context')}
+              aria-label={mode === 'context' ? 'المحيط القريب'
+                : mode === 'focus' ? 'إظهار المحدَّد وحده' : 'أظهِر المنطقة كاملة'}>
               <Icon name="focus" size={18} />
             </button>
             {/* Off to begin with. Thirty labelled points on the first open is
@@ -603,7 +690,7 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
               <Icon name="list" size={18} />
             </button>
             <button className="icobtn"
-              onClick={() => { setOnly(false); setGone([]); api.current?.home(); }}
+              onClick={() => { setMode('context'); setGone([]); api.current?.home(); }}
               aria-label="إعادة الضبط">
               <Icon name="rotate" size={18} />
             </button>
@@ -627,7 +714,7 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
               : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
             {picked && !spot && (
               <button className="m3d-clear" aria-label="أخفِ هذا العظم"
-                onClick={() => { setGone((g) => [...g, picked]); setPicked(null); setOnly(false); }}>
+                onClick={() => { setGone((g) => [...g, picked]); setPicked(null); setMode('context'); }}>
                 <Icon name="eyeOff" size={17} />
               </button>
             )}
@@ -662,8 +749,13 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
 
           {listing && (
             <div className="m3d-list">
-              <div className="m3d-head">العظام</div>
-              {parts.map((p) => (
+              {/* Grouped by the model each structure came from, because a
+                  composed scene holds bones and muscles and nerves at once and
+                  one flat list of ninety rows is a wall. */}
+              {groups.map((g) => (
+                <div key={g.id}>
+                <div className="m3d-head" dir="auto">{g.title}</div>
+                {g.rows.map((p) => (
                 <div key={p.id} className={`m3d-line${gone.includes(p.id) ? ' away' : ''}`}>
                   <button
                     className={`m3d-row${picked === p.id ? ' on' : ''}`}
@@ -688,6 +780,8 @@ export default function Model3D({ id, title, hidden = [], facing = null, credit 
                   >
                     <Icon name={gone.includes(p.id) ? 'eyeOff' : 'eye'} size={16} />
                   </button>
+                </div>
+                ))}
                 </div>
               ))}
 

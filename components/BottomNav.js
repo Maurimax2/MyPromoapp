@@ -51,6 +51,9 @@ export default function BottomNav() {
   // A model is the same case as a file: it is drawn to the height of the
   // screen, and four tabs across the bottom take the skull's jaw with them.
   if (/^\/(rooms|chat|qa|file|model)\/[^/]+$/.test(path)) return null;
+  // …and a region of the body is a model with several layers in it, at the
+  // same full height. The path is deeper, so it needs saying separately.
+  if (path.startsWith('/anatomie/')) return null;
   const on = (href) => path.startsWith(href);
   return (
     <nav className="nav">
