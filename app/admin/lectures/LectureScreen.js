@@ -13,6 +13,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import Icon from '@/components/Icon';
+import { parsePasted } from '@/lib/json-paste';
 
 const SEMESTERS = ['S1', 'S2'];
 
@@ -127,16 +128,11 @@ export default function LectureScreen({ promos, modules }) {
 
   const apply = async () => {
     setBusy(true); setError('');
-    let map;
-    try {
-      // A model fences its JSON, or explains it first. The same latitude the
-      // question paste gives, for the same reason.
-      const raw = /```(?:json)?\s*([\s\S]*?)```/i.exec(text)?.[1] ?? text;
-      const from = raw.search(/[[{]/);
-      const last = Math.max(raw.lastIndexOf(']'), raw.lastIndexOf('}'));
-      map = JSON.parse(raw.slice(from, last + 1));
-      if (!Array.isArray(map)) map = map.map || map.questions || [];
-    } catch {
+    // A model fences its JSON or explains it first, and a phone turns every
+    // quote in it curly on the way through. Both are read.
+    let map = parsePasted(text);
+    if (map && !Array.isArray(map)) map = map.map || map.questions || null;
+    if (!Array.isArray(map) || !map.length) {
       setBusy(false);
       setError('لم نفهم ما لُصق — اطلب منه أن يردّ بصيغة JSON كما في النموذج');
       return;
