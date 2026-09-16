@@ -44,7 +44,13 @@ for (const bundle of BUNDLES) {
     const found = rule.at ? nearestTo(g, rule.at)
       : rule.hole ? throughHole(g, rule.hole)
       : furthest(g, rule);
-    if (!found) { console.error(`could not place ${rule.name}`); process.exit(1); }
+    if (!found) {
+      // A box that catches no vertex is a box in the wrong place, and saying
+      // so is the whole point of it failing rather than landing somewhere
+      // plausible and silently wrong.
+      console.error(`could not place ${rule.name} — the box catches no part of ${rule.part}`);
+      process.exit(1);
+    }
     placed.push({ name: rule.name, part: rule.part, at: found.at.map(near), out: found.out.map(near) });
     // How far the bone was from where the rule asked for it. A foramen asked
     // for in the wrong place lands somewhere plausible and silently wrong, so
@@ -102,16 +108,29 @@ function furthest(g, rule) {
     hi = a + (b - a) * to;
   }
 
-  // A box does the same in three directions at once, in metres, and it is
-  // what a landmark on the base of the skull needs. The mandibular fossa is
-  // the lowest point of the temporal in one small region and nothing like the
+  // A box does the same in three directions at once, and it is what a
+  // landmark on the base of the skull needs. The mandibular fossa is the
+  // lowest point of the temporal in one small region and nothing like the
   // lowest point of the temporal, which is the mastoid two centimetres away.
   //
-  // Written as a region and a direction rather than as a coordinate on
-  // purpose: a coordinate is a guess that stops being true the moment the
-  // geometry is re-cut, and this one is still a rule — it just says where to
-  // look as well as which way.
-  const box = rule.box || null;
+  // Written in FRACTIONS of the bone's own box, the way `band` is, so a rule
+  // never has to know where in the body the bone happens to sit. Writing them
+  // in metres meant knowing the answer before asking the question, and the
+  // first draft put six boxes off the bone entirely — the forearm does not
+  // hang the way I pictured it.
+  //
+  // A region and a direction is still a rule. A coordinate is a guess that
+  // stops being true the moment the geometry is re-cut.
+  let box = null;
+  if (rule.box) {
+    const [f0, f1] = rule.box;
+    box = [[0, 0, 0], [0, 0, 0]];
+    for (let k = 0; k < 3; k++) {
+      const a = part.bounds[0][k], b = part.bounds[1][k];
+      box[0][k] = a + (b - a) * f0[k];
+      box[1][k] = a + (b - a) * f1[k];
+    }
+  }
 
   let best = -Infinity, at = null, i3 = 0;
   for (let i = 0; i < part.vertexCount; i++) {
