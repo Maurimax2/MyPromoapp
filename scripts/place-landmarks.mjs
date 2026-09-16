@@ -102,12 +102,26 @@ function furthest(g, rule) {
     hi = a + (b - a) * to;
   }
 
+  // A box does the same in three directions at once, in metres, and it is
+  // what a landmark on the base of the skull needs. The mandibular fossa is
+  // the lowest point of the temporal in one small region and nothing like the
+  // lowest point of the temporal, which is the mastoid two centimetres away.
+  //
+  // Written as a region and a direction rather than as a coordinate on
+  // purpose: a coordinate is a guess that stops being true the moment the
+  // geometry is re-cut, and this one is still a rule — it just says where to
+  // look as well as which way.
+  const box = rule.box || null;
+
   let best = -Infinity, at = null, i3 = 0;
   for (let i = 0; i < part.vertexCount; i++) {
     i3 = i * 3;
     const x = pos[i3], y = pos[i3 + 1], z = pos[i3 + 2];
     const on = [x, y, z][axis];
     if (rule.band && (on < lo || on > hi)) continue;
+    if (box && (x < box[0][0] || x > box[1][0]
+      || y < box[0][1] || y > box[1][1]
+      || z < box[0][2] || z > box[1][2])) continue;
     const score = x * d[0] + y * d[1] + z * d[2];
     if (score > best) { best = score; at = i; }
   }
