@@ -31,6 +31,16 @@ const MAX_DPR = 2;
 // toy. Made once, in code, rather than shipped as an image — it is noise, and
 // noise costs nothing to generate and a download to fetch.
 let grain = null;
+// Accent- and case-blind, for matching a name that arrived in a URL. The
+// search module has its own copy; importing it here would drag its whole
+// index into every screen that draws a model.
+const same = (a, b) => !!a && !!b && String(a)
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u2019']/g, ' ')
+  .toLowerCase().trim()
+  === String(b)
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u2019']/g, ' ')
+    .toLowerCase().trim();
+
 function boneGrain() {
   if (grain || typeof document === 'undefined') return grain;
   const N = 256;
@@ -71,6 +81,9 @@ export default function Model3D({
   layers = null, lead = null, frame = null,
   // Which groups of a bundle this region takes, if not all of them.
   takes = null,
+  // Arriving from a search: a structure (or a named part of a bone) to hold,
+  // or a landmark to read. Applied once, after the geometry is up.
+  pick = null, point = null,
 }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
@@ -132,6 +145,63 @@ export default function Model3D({
     framed.current = want;
     api.current?.focusOn(want);
   }, [only, picked]);
+
+  /**
+   * Arriving from a search, once the scene is up.
+   *
+   * A hit has to land ON the thing, not merely in the region that holds it:
+   * the foramen ovale opens the base of the skull with the point named and
+   * the model turned to look at it from underneath, which is the only place
+   * it can be seen. Everything else stays drawn — this chooses a structure,
+   * it does not isolate one.
+   */
+  const arrived = useRef(false);
+  useEffect(() => {
+    if (arrived.current || loading || (!pick && !point)) return;
+    if (!parts.length) return;
+    arrived.current = true;
+
+    if (point) {
+      // A point on a paired bone is placed twice — « Foramen ovale gauche »
+      // and « … droit ». The search names the pair; either dot answers.
+      const q = points.find((p) => same(p.name, point))
+        || points.find((p) => same(boneOf(p.name), point));
+      if (!q) return;
+      setPins(true);
+      setPin(q.i);
+      // The dot belongs to a bone; holding it narrows the points to that bone
+      // and gives the panel something to read.
+      if (q.part) { setPicked(q.part); setMode('focus'); }
+      api.current?.faceTo(q.i);
+      return;
+    }
+
+    // A whole structure, by its own name or the name of the bone it is a
+    // copy of — « Os frontal » matches « Os frontal gauche ».
+    const one = parts.find((p) => same(p.name, pick))
+      || parts.find((p) => same(boneOf(p.name), pick));
+    if (one) {
+      setPicked(one.id);
+      setMode('focus');
+      api.current?.focusOn(one.id);
+      return;
+    }
+    // …or one named part of a divided bone: the acetabulum is a territory of
+    // the hip bone, so the bone is held and the part within it is named.
+    for (const p of parts) {
+      const bit = (p.groups || []).find((g) => same(g.name, pick));
+      if (!bit) continue;
+      setPicked(p.id);
+      setSub(bit.name);
+      // The parts of a bone only tell themselves apart in the coloured plate,
+      // so arriving at one turns it on: otherwise the acetabulum is named in
+      // the bar and nothing on the screen has moved.
+      setPlate(true);
+      setMode('focus');
+      api.current?.focusOn(p.id);
+      return;
+    }
+  }, [loading, parts, points, pick, point]);
 
   useEffect(() => {
     const el = host.current;
@@ -576,7 +646,11 @@ export default function Model3D({
             });
           }
         }
-        setPoints(marks.map((m, i) => ({ i, name: m.name, bundle: m.bundle })));
+        // The bone a point sits on travels with it: arriving at a landmark
+        // holds that bone, which is what narrows the dots to it.
+        setPoints(marks.map((m, i) => ({
+          i, name: m.name, bundle: m.bundle, part: m.mesh.userData.id,
+        })));
 
         setParts(catalogue);
         // A model may start with something taken off — the platysma over the

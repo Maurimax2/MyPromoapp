@@ -1,0 +1,125 @@
+// The anatomy search index, built from the carved files.
+//
+//   npm run build:search
+//
+// Where a search result opens matters. The humerus is drawn in épaule, bras
+// AND coude, so a result has to choose — and choosing by "the first region
+// that leads with that bundle" sent Gerdy's tubercle to la hanche, which is
+// three joints away from where it is.
+//
+// The models know better than any list would: every landmark has a placed
+// coordinate and every structure has a bounding box, and every region says
+// which box of the body it opens on. So the home of a thing is the region
+// whose frame actually contains it, and the smallest such region wins —
+// le genou over la cuisse, because both contain the tibial plateau and only
+// one of them is about it.
+//
+// Written out rather than computed in the browser because the coordinates
+// live in public/, which a bundle cannot import.
+
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { BUNDLES, boneOf } from '../lib/anatomy/bundles.js';
+import { PARTS } from '../lib/anatomy/parts.js';
+import { LANDMARKS } from '../lib/anatomy/landmarks.js';
+import { REGIONS } from '../lib/anatomy/curriculum.js';
+
+const fold = (s) => String(s)
+  .normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/[’']/g, ' ')
+  .toLowerCase().trim();
+
+const inside = (box, at) =>
+  at.every((n, k) => n >= box[0][k] - 0.005 && n <= box[1][k] + 0.005);
+
+const volume = (box) =>
+  (box[1][0] - box[0][0]) * (box[1][1] - box[0][1]) * (box[1][2] - box[0][2]);
+
+/**
+ * The region a thing is best reached through.
+ *
+ * The smallest region that both draws the bundle and contains the point. A
+ * region with no frame of its own — le crâne — counts as containing anything
+ * its bundles hold, and sorts last on size so a framed region wins.
+ */
+function homeOf(bundle, at) {
+  const able = REGIONS.filter((r) => r.bundles.includes(bundle));
+  if (!able.length) return null;
+  const fits = at
+    ? able.filter((r) => !r.frame || inside(r.frame, at))
+    : able;
+  const pick = (fits.length ? fits : able).slice().sort((a, b) => {
+    // The region that LEADS with this bundle first. Le foramen ovale sits
+    // inside the frame of les nerfs crâniens as well as that of la base du
+    // crâne, and the two boxes are within a tenth of each other in size — but
+    // it is a hole in a bone, and la base du crâne is the region about that
+    // bone. A region that merely draws the bundle as its backdrop never wins
+    // over one that is about it.
+    const la = (b.lead === bundle) - (a.lead === bundle);
+    if (la) return la;
+    const sa = a.frame ? volume(a.frame) : Infinity;
+    const sb = b.frame ? volume(b.frame) : Infinity;
+    return sa - sb;
+  });
+  return pick[0];
+}
+
+const rows = [];
+const seen = new Set();
+const add = (name, bundle, kind, at, extra = {}) => {
+  const key = `${bundle}/${kind}/${name}`;
+  if (!name || seen.has(key)) return;
+  const home = homeOf(bundle, at);
+  if (!home) return;
+  seen.add(key);
+  rows.push({
+    name, kind, bundle,
+    region: home.id,
+    promo: home.promo.toLowerCase(),
+    semester: home.semesterId,
+    where: home.title,
+    find: fold(name),
+    ...extra,
+  });
+};
+
+for (const b of BUNDLES) {
+  const file = `public/anatomy/${b.id}.json`;
+  if (!existsSync(file)) continue;
+  const meta = JSON.parse(readFileSync(file, 'utf8'));
+  const middle = (p) => [0, 1, 2].map((k) => (p.bounds[0][k] + p.bounds[1][k]) / 2);
+  const boxOf = new Map(meta.parts.map((p) => [p.id, p]));
+
+  for (const p of meta.parts) add(boneOf(p.name), b.id, 'structure', middle(p));
+
+  // The named parts of a divided bone — where the greater tubercle and the
+  // acetabulum live, as coloured regions rather than points.
+  for (const [bone, parts] of Object.entries(PARTS[b.id] || {})) {
+    const host = meta.parts.find((p) => boneOf(p.name) === bone);
+    for (const q of parts) add(q.name, b.id, 'part', host && middle(host), { on: bone });
+  }
+
+  // The landmarks, at the coordinate the placer actually found.
+  const marks = existsSync(`public/anatomy/${b.id}.points.json`)
+    ? JSON.parse(readFileSync(`public/anatomy/${b.id}.points.json`, 'utf8')).points
+    : [];
+  for (const m of marks) {
+    add(boneOf(m.name), b.id, 'landmark', m.at,
+      // The bone it sits on, named as the bone rather than as one of the pair:
+      // « Foramen jugulaire · Os temporal », not « … · Os temporal gauche ».
+      { on: boneOf(boxOf.get(m.part)?.name || m.part) });
+  }
+  for (const l of LANDMARKS[b.id] || []) {
+    // A rule whose point was never placed still deserves to be findable.
+    add(boneOf(l.name), b.id, 'landmark', null, { on: l.part });
+  }
+}
+
+rows.sort((a, b) => a.find.localeCompare(b.find, 'fr'));
+// A .js module rather than a .json file: both webpack and plain node read it
+// without an import attribute, and `check:anatomy` runs in node.
+writeFileSync('lib/anatomy/search-index.js',
+  `// Generated by scripts/build-search.mjs — do not edit.\n`
+  + `export default ${JSON.stringify(rows)};\n`);
+const kinds = rows.reduce((t, r) => ({ ...t, [r.kind]: (t[r.kind] || 0) + 1 }), {});
+console.log(`${rows.length} names indexed —`,
+  Object.entries(kinds).map(([k, n]) => `${n} ${k}`).join(', '));

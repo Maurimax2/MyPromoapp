@@ -12,11 +12,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prebuild": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
+    "prebuild": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs && node scripts/build-search.mjs",
     "predev": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
     "mock": "node scripts/mock-supabase.mjs",
     "check:lectures": "node scripts/check-lectures.mjs",
-    "check:paste-json": "node scripts/check-paste-json.mjs"
+    "check:paste-json": "node scripts/check-paste-json.mjs",
+    "build:search": "node scripts/build-search.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.6",

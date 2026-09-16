@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { allFiles, allDocs, sectionsFor } from '@/lib/data';
 import { moduleOf, semestersOf } from '@/lib/catalogue';
-import { bundlesOf } from '@/lib/anatomy/bundles';
+import { regionsFor } from '@/lib/anatomy/curriculum';
 import { subjectName } from '@/lib/data';
 
 // Not prerendered any more: what a subject holds is a question for the
@@ -68,6 +68,10 @@ export default async function Module({ params }) {
   // two semesters part. A subject taught in one draws no switch at all.
   const semesters = await semestersOf(m);
 
+  // The regions of the body this subject covers, from the curriculum rather
+  // than from the list of carved files.
+  const regions = regionsFor(m.promo, m.semester);
+
   // Only the material you read. Résumés live in الملخصات, questions in اختبر نفسك.
   const sections = sectionsFor(m, 'archive');
 
@@ -112,17 +116,37 @@ export default async function Module({ params }) {
         </Link>
 
         {/* A model belongs to the subject it explains — that is why نماذج 3D
-            came off الرئيسية. A subject with none shows nothing here. */}
-        {bundlesOf(m.id).map((b) => (
-          <Link key={b.id} href={`/model/${b.id}`} className="card quizcard model">
-            <div className="quizcard-ic"><Icon name="box" size={19} /></div>
-            <div className="grow">
-              <div className="nm" style={{ fontSize: 14 }} dir="auto">{b.title}</div>
-              <div className="mt" dir="auto">{b.subtitle}</div>
+            came off الرئيسية. A subject with none shows nothing here.
+            
+            What is offered is the REGIONS of the body this subject covers,
+            not the files the app happens to hold. A student opening ANATOMIE
+            is studying the head and the neck; that there are ten carved
+            bundles behind it is our problem, not theirs. */}
+        {regions.length > 0 && (
+          <section className="chapter">
+            <div className="chapter-head">
+              <span className="chapter-n"><Icon name="box" size={15} /></span>
+              <div className="grow">
+                <div className="chapter-t">نماذج ثلاثية الأبعاد</div>
+                <div className="chapter-s" dir="auto">{regions[0].semesterTitle}</div>
+              </div>
             </div>
-            <span className="chev"><Icon name="chev" size={18} /></span>
-          </Link>
-        ))}
+            {regions.map((r) => (
+              <Link
+                key={r.id}
+                href={`/anatomie/${r.promo.toLowerCase()}/${r.semesterId}/${r.id}`}
+                className="card quizcard model"
+              >
+                <div className="quizcard-ic"><Icon name="box" size={19} /></div>
+                <div className="grow">
+                  <div className="nm" style={{ fontSize: 14 }} dir="auto">{r.title}</div>
+                  <div className="mt" dir="auto">{r.subtitle}</div>
+                </div>
+                <span className="chev"><Icon name="chev" size={18} /></span>
+              </Link>
+            ))}
+          </section>
+        )}
 
         {m.chapters.map((ch, i) => (
           <section key={ch.title} className="chapter">

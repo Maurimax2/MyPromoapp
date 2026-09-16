@@ -2483,3 +2483,23 @@ button.pill:active { transform: scale(.94); }
      first press of + and answer with nothing happening. */
   .pdf-pages { max-width: calc(var(--doc-w) * var(--zoom, 1)); }
 }
+
+/* ---------- anatomy search ---------- */
+/* The results of looking a structure up. `.m3d-list` could not be reused: it
+   is pinned over the model, and here the rows are part of the page. */
+.anat-hits {
+  margin-top: 10px; background: var(--surface); border-radius: var(--r-card);
+  box-shadow: var(--shadow); padding: 6px; overflow: hidden;
+}
+.anat-hits .m3d-row { color: var(--ink); }
+.anat-hit-n { display: block; font-size: 14.5px; }
+.anat-hit-w {
+  display: block; margin-top: 2px; font-size: 12.5px; color: var(--ink-3);
+}
+/* Chrome, so Arabic, and it sits at the end of the row whichever way the
+   name beside it runs. */
+.anat-hit-k {
+  flex-shrink: 0; font-size: 11.5px; font-weight: 600;
+  color: var(--purple); background: var(--purple-pale);
+  border-radius: 999px; padding: 3px 9px;
+}
