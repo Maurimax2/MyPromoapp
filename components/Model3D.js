@@ -19,10 +19,45 @@ import Icon from '@/components/Icon';
 import { CREDIT, boneOf, bundleOf, familyOf } from '@/lib/anatomy/bundles';
 import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
+import { tissueOf, colourOf } from '@/lib/anatomy/tissue';
 
 const MAX_DPR = 2;
 /** Unpainted bone. Everything that is not the answer to the question. */
-const BONE = 0xe6e0d3;
+// The grain of bone.
+//
+// A single flat ivory reads as plastic: bone is not one colour, it is a
+// mottled surface with a visible grain, and at the size a phone draws a skull
+// the difference between those two is the difference between a specimen and a
+// toy. Made once, in code, rather than shipped as an image — it is noise, and
+// noise costs nothing to generate and a download to fetch.
+let grain = null;
+function boneGrain() {
+  if (grain || typeof document === 'undefined') return grain;
+  const N = 256;
+  const can = document.createElement('canvas');
+  can.width = can.height = N;
+  const ctx = can.getContext('2d');
+  const img = ctx.createImageData(N, N);
+  for (let i = 0; i < N * N; i++) {
+    // Two scales of noise: a fine speck for the grain, a broad drift for the
+    // patches a real bone has. A normal map, so it catches the light rather
+    // than dirtying the colour.
+    const x = i % N, y = (i / N) | 0;
+    const fine = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+    const broad = Math.sin(x * 0.07) * Math.cos(y * 0.09);
+    const n = (fine - Math.floor(fine)) * 0.55 + (broad * 0.5 + 0.5) * 0.45;
+    const k = i * 4;
+    img.data[k] = 128 + (n - 0.5) * 34;
+    img.data[k + 1] = 128 + (n - 0.5) * 34;
+    img.data[k + 2] = 255;
+    img.data[k + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+  grain = new THREE.CanvasTexture(can);
+  grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
+  grain.repeat.set(3, 3);
+  return grain;
+}
 
 export default function Model3D({
   id, title, hidden = [], facing = null, credit = CREDIT,
@@ -34,6 +69,8 @@ export default function Model3D({
   // asking — where is it, what is it next to, where does it come from, where
   // does it go — and all four are answered by drawing the arm around it.
   layers = null, lead = null, frame = null,
+  // Which groups of a bundle this region takes, if not all of them.
+  takes = null,
 }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
@@ -280,7 +317,7 @@ export default function Model3D({
         const split = on && all.current && bits;
         const coats = Array.isArray(m.material) ? m.material : [m.material];
         coats.forEach((coat, g) => {
-          coat.color.set(split ? bits[g].tint : (all.current || on ? m.userData.tint : BONE));
+          coat.color.set(split ? bits[g].tint : (all.current || on ? m.userData.tint : m.userData.skin));
           // In the coloured plate everything already has a colour of its own,
           // so what you picked is lifted rather than recoloured.
           coat.emissive.set(split ? bits[g].tint : m.userData.tint);
@@ -453,7 +490,17 @@ export default function Model3D({
         const catalogue = [];
         for (const layer of stack) {
         const { meta, bin } = layer;
+        const book = bundleOf(layer.id);
+        // A region may take only part of a bundle. « Bras » wants the two
+        // compartments of the arm, not the whole shoulder girdle that lives in
+        // the same file: framed on the arm, the latissimus dorsi is a red
+        // curtain across the screen and the humerus is behind it.
+        //
+        // Named by the groups the bundle already declares, because those are
+        // the groups the subject is taught in.
+        const keep = takes?.[layer.id] ? new Set(takes[layer.id]) : null;
         for (const p of meta.parts) {
+          if (keep && !keep.has(p.family)) continue;
           const g = new THREE.BufferGeometry();
           g.setAttribute('position', new THREE.BufferAttribute(
             new Float32Array(bin, p.positions, p.vertexCount * 3), 3));
@@ -462,8 +509,19 @@ export default function Model3D({
           g.setIndex(new THREE.BufferAttribute(
             new Uint32Array(bin, p.indices, p.indexCount), 1));
 
+          // The plate convention: muscle red, tendon pearl, bone ivory, nerve
+          // yellow, artery red, vein blue. Colour is how a student reads which
+          // tissue they are looking at before they have read a label, so it
+          // cannot be one default for everything.
+          const kind = tissueOf(book, p.name, p.family);
+          const skin = colourOf(book, p.name, p.family);
           const coat = () => new THREE.MeshStandardMaterial({
-            color: BONE, roughness: 0.82, metalness: 0.02,
+            color: skin,
+            // Bone is dry and matt, muscle is wet and catches a highlight.
+            roughness: kind === 'bone' || kind === 'tendon' ? 0.86 : 0.62,
+            metalness: 0.02,
+            ...(kind === 'bone' ? { normalMap: boneGrain(),
+              normalScale: new THREE.Vector2(0.45, 0.45) } : {}),
             side: THREE.DoubleSide,
           });
           // One draw group per part, so a bone can be coloured by its parts
@@ -481,6 +539,7 @@ export default function Model3D({
           mesh.userData.id = keyOf(layer.id, p.id);
           mesh.userData.bundle = layer.id;
           mesh.userData.tint = new THREE.Color(p.tint);
+          mesh.userData.skin = new THREE.Color(skin);
           mesh.userData.box = p.bounds.map((v) => v.map((n, i) => n - mid.getComponent(i)));
           mesh.userData.groups = p.groups || null;
           group.add(mesh);
@@ -560,7 +619,7 @@ export default function Model3D({
     // same list on every render would otherwise tear the scene down and
     // reload thirty megabytes of geometry to draw exactly what was already
     // on the screen.
-  }, [id, lead, JSON.stringify(layers), JSON.stringify(frame)]);
+  }, [id, lead, JSON.stringify(layers), JSON.stringify(frame), JSON.stringify(takes)]);
 
   // What FOCUS keeps on screen: the group the picked structure is taught in —
   // « les muscles sous-hyoïdiens » is how the question is asked, and the

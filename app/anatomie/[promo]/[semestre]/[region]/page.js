@@ -46,6 +46,7 @@ export default async function RegionPage({ params }) {
         layers={region.bundles}
         lead={region.lead || region.bundles[0]}
         frame={region.frame || null}
+        takes={region.takes || null}
         credit={credit}
       />
     </>
