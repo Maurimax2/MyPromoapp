@@ -14,7 +14,8 @@
     "start": "next start",
     "prebuild": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
     "predev": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
-    "mock": "node scripts/mock-supabase.mjs"
+    "mock": "node scripts/mock-supabase.mjs",
+    "check:lectures": "node scripts/check-lectures.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.6",

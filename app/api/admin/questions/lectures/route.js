@@ -16,6 +16,7 @@ import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { readingQuestions } from '@/lib/qcm/read';
+import { numberLectures } from '@/lib/lectures';
 
 export const runtime = 'nodejs';
 
@@ -29,15 +30,30 @@ async function lecturesOf(db, module) {
   ]);
 
   const chapterOf = new Map((chapters || []).map((c) => [c.id, c.title]));
-  return (docs || [])
+  // Where each chapter sits, so the lectures can be put in the order the
+  // module is taught rather than the order the files were uploaded. A chapter
+  // a document does not name goes last.
+  const rank = new Map((chapters || []).map((c, i) => [c.id, i]));
+  const placeOf = (id) => (rank.has(id) ? rank.get(id) : Number.MAX_SAFE_INTEGER);
+
+  const lectures = (docs || [])
     // A lecture, not a past paper and not another teacher's copy of one.
     .filter((d) => d.where_shown === 'archive' && d.section === 'lecture' && !d.parent)
-    .map((d) => ({
+    .map((d, i) => ({
       id: d.id,
       n: d.n == null ? null : String(d.n),
       title: d.title,
       chapter: chapterOf.get(d.chapter) || null,
-    }));
+      place: [placeOf(d.chapter), d.position ?? 0, i],
+    }))
+    .sort((a, b) =>
+      a.place[0] - b.place[0] || a.place[1] - b.place[1] || a.place[2] - b.place[2]);
+
+  // The same numbering the archive draws, worked out the same way. Without it
+  // a subject added through the panel has no numbered lecture at all and this
+  // screen has nothing to offer.
+  numberLectures(lectures);
+  return lectures.map(({ place, ...l }) => l);
 }
 
 /**
