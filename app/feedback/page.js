@@ -115,7 +115,7 @@ export default async function Feedback() {
               <Phone src="/preview/crane3d.webp" alt="نموذج الجمجمة ثلاثي الأبعاد مع معالمه" />
             </div>
           </Reveal>
-          <p className="pl-cap">صور حقيقية من التطبيق — لا رسوم توضيحية.</p>
+          <p className="pl-cap">صور حقيقية من التطبيق</p>
         </div>
       </section>
 
@@ -123,9 +123,9 @@ export default async function Feedback() {
       <div className="pl-sec grey" style={{ paddingBottom: 0 }}>
         <div className="pl-in">
           <Reveal>
-            <h2 className="pl-h2" style={{ textAlign: 'center' }}>شوف MyPromo كما هو</h2>
+            <h2 className="pl-h2" style={{ textAlign: 'center' }}>ميزات MyPromo</h2>
             <p className="pl-sub" style={{ textAlign: 'center', margin: '0 auto' }}>
-              ما بُني حتى الآن، شاشة بشاشة.
+              و المزيد في الطريق.
             </p>
           </Reveal>
         </div>
@@ -133,15 +133,15 @@ export default async function Feedback() {
 
       <Feature
         kicker="المجتمع"
-        title="دفعتك، في مكان واحد"
-        body="ما يُنشر يصل إلى دفعتك وحدها: ملخّص قبل الامتحان، تأجيل حصة، سؤال في مادة — مع الملفات، لا روابط تضيع في مجموعة."
+        title="شارك، استفد، وخلِّ غيرك يستفيد"
+        body="شارك الملفات، الملخصات، الأسئلة والمعلومات المفيدة مع زملائك، في مكان واحد."
         src="/preview/posts.webp"
         alt="منشورات الدفعة في MyPromo مع ملف PDF مرفق"
       />
 
       <Feature
         kicker="QCM"
-        title="اختبر نفسك قبل الامتحان"
+        title="اختبر نفسك بعد الدراسة"
         body="أسئلة مرتّبة حسب المادة والمحاضرة، مع الجواب وسببه. وما تُخطئ فيه يعود إليك وحده في المراجعة."
         src="/preview/mcq.webp"
        
@@ -151,15 +151,15 @@ export default async function Feedback() {
 
       <Feature
         kicker="تحدّي زميلك"
-        title="نفس الأسئلة، ونتيجتان"
-        body="اختر مادة، أجب على عشرة أسئلة، وأرسلها إلى زميل برقمه الجامعي. يجيب على الأسئلة نفسها، وتريان النتيجتين."
+        title="من فيكم يعرف أكثر؟"
+        body="أرسل التحدّي لزميلك، أجيبوا عن نفس الأسئلة، وشوفوا من يحقّق النتيجة الأعلى."
         src="/preview/duel.webp"
         alt="شاشة تحدّي زميلك مع نتيجة 9–7"
       />
 
       <Feature
         kicker="غرف الدراسة"
-        title="ادرسوا معًا في نفس الوقت"
+        title="ادرسوا معًا كأنكم في نفس القاعة"
         body="غرفة لمادة أو لمحاضرة، يفتحها أي طالب وينضم إليها من يريد المراجعة الآن."
         src="/preview/rooms.webp"
         alt="غرف الدراسة المفتوحة في MyPromo"
@@ -171,7 +171,7 @@ export default async function Feedback() {
         <div className="pl-in pl-split">
           <Reveal>
             <span className="pl-kicker">Anatomie</span>
-            <h2 className="pl-h2">وحتى التشريح… بطريقة مختلفة</h2>
+            <h2 className="pl-h2" dir="auto">مجسمات ANATOMIE ثلاثية الأبعاد</h2>
             <p className="pl-sub">
               استكشف البنى التشريحية وتعلّمها بطريقة أكثر وضوحًا: نموذج تدور حوله،
               تلمس العظم فيه فيخبرك باسمه، ومعالم مُسمّاة على العظم نفسه — لا صورة
@@ -206,7 +206,6 @@ export default async function Feedback() {
               <Phone src="/preview/genou.webp" alt="نموذج الركبة مع معالم العظم" />
               <Phone src="/preview/regions.webp" alt="مناطق الجسم في التشريح" />
             </div>
-            <p className="pl-cap">Base du crâne · Genou · Les régions du programme</p>
           </Reveal>
         </div>
       </section>
@@ -238,7 +237,6 @@ export default async function Feedback() {
       <footer className="pl-foot">
         <div className="pl-in">
           <span className="pl-mark"><Logo size={26} /><span>MyPromo</span></span>
-          <p>صنعه طلبة الطب… لطلبة الطب.</p>
           <small>FMPOS</small>
         </div>
       </footer>

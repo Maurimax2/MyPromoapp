@@ -2623,21 +2623,39 @@ button.pill:active { transform: scale(.94); }
 .pl-cap { margin-top: 12px; font-size: 13.5px; color: var(--ink-3); text-align: center; }
 
 /* ---- anatomy */
+/* A grid item is `min-width: auto`, which means it refuses to be narrower
+   than its own contents: the tiles below pushed this column wider than the
+   screen and took the section with them. */
 .pl-split { display: grid; gap: 30px; align-items: center; }
+.pl-split > *, .pl-tiles > *, .pl-tile > * { min-width: 0; }
 .pl-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+/* The icon sits ON the name's line, not above it in a gap of its own.
+   Stacked, it left a hole between the two whenever the four names were of
+   different lengths — four cards each empty in a different place. */
 .pl-tile {
+  display: grid; grid-template-columns: auto 1fr;
+  column-gap: 10px; row-gap: 7px; align-items: center; align-content: start;
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r-tile); padding: 14px;
-  transition: transform .18s ease, box-shadow .18s ease;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.pl-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.pl-tile:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--purple-pale);
+}
 .pl-tile-ic {
-  width: 34px; height: 34px; border-radius: 10px; margin-bottom: 10px;
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--purple-pale); color: var(--purple);
 }
-.pl-tile b { display: block; font-size: 14.5px; font-weight: 600; }
-.pl-tile span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ink-3); line-height: 1.6; }
+.pl-tile b { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+/* The line under it runs the width of the card, under the icon as well: two
+   columns of prose in a 160px card is four words to a line.
+   `:not(.pl-tile-ic)` because the icon is a span as well — without it the icon
+   took the whole first row and pushed the name onto a line of its own, which
+   is exactly the hole this layout was meant to close. */
+.pl-tile span:not(.pl-tile-ic) {
+  grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); line-height: 1.65;
+}
 
 /* ---- built by students */
 .pl-purple {

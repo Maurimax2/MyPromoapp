@@ -23,7 +23,7 @@ const NEEDS = [
   'QCM', 'Flashcards', 'Résumés', 'IA', "Groupes d'étude", 'Autre',
 ];
 
-const STEPS = 6;
+const STEPS = 5;
 
 export default function Form({ promos }) {
   const [step, setStep] = useState(1);
@@ -31,7 +31,6 @@ export default function Form({ promos }) {
   const [needs, setNeeds] = useState([]);
   const [pain, setPain] = useState('');
   const [wish, setWish] = useState('');
-  const [change, setChange] = useState('');
   const [reach, setReach] = useState(null);       // true | false | null
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -69,7 +68,6 @@ export default function Form({ promos }) {
           needs,
           pain: pain.trim(),
           wish: wish.trim(),
-          change: change.trim(),
           reach: reach === true,
           name: reach ? name.trim() : '',
           phone: reach ? phone.trim() : '',
@@ -112,7 +110,6 @@ export default function Form({ promos }) {
       {step === 1 && (
         <div className="pl-step" key="s1">
           <h3 className="pl-q">أولاً، من أي Promo أنت؟</h3>
-          <p className="pl-hint">اختر سنتك الحالية.</p>
           <div className="pl-opts">
             {promos.map((p) => (
               <button key={p.id} type="button" className="pl-opt"
@@ -128,7 +125,6 @@ export default function Form({ promos }) {
       {step === 2 && (
         <div className="pl-step" key="s2">
           <h3 className="pl-q">ما أكثر شيء تحتاجه أثناء المراجعة؟</h3>
-          <p className="pl-hint">يمكنك اختيار أكثر من واحد.</p>
           <div className="pl-opts">
             {NEEDS.map((n) => (
               <button key={n} type="button" className="pl-opt"
@@ -146,7 +142,6 @@ export default function Form({ promos }) {
       {step === 3 && (
         <div className="pl-step" key="s3">
           <h3 className="pl-q">ما أكثر شيء يزعجك أثناء المراجعة؟</h3>
-          <p className="pl-hint">اكتب بحرّية — بالعربية أو بالفرنسية.</p>
           <textarea className="pl-ta" dir="auto" value={pain} onChange={(e) => setPain(e.target.value)}
             aria-label="ما أكثر شيء يزعجك أثناء المراجعة؟"
             placeholder="مثلاً: صعوبة العثور على QCM، كثرة الملفات، عدم تنظيم الدروس..." />
@@ -156,7 +151,6 @@ export default function Form({ promos }) {
       {step === 4 && (
         <div className="pl-step" key="s4">
           <h3 className="pl-q">ما الميزة التي تتمنى وجودها في MyPromo؟</h3>
-          <p className="pl-hint">الشيء الذي لو وُجد لغيّر مراجعتك.</p>
           <textarea className="pl-ta" dir="auto" value={wish} onChange={(e) => setWish(e.target.value)}
             aria-label="ما الميزة التي تتمنى وجودها في MyPromo؟"
             placeholder="اكتب ما يخطر ببالك..." />
@@ -165,16 +159,6 @@ export default function Form({ promos }) {
 
       {step === 5 && (
         <div className="pl-step" key="s5">
-          <h3 className="pl-q">لو استطعت تغيير شيء واحد في طريقة المراجعة، ماذا ستغيّر؟</h3>
-          <p className="pl-hint">شيء واحد فقط.</p>
-          <textarea className="pl-ta" dir="auto" value={change} onChange={(e) => setChange(e.target.value)}
-            aria-label="لو استطعت تغيير شيء واحد في طريقة المراجعة، ماذا ستغيّر؟"
-            placeholder="مثلاً: طريقة ترتيب الدروس قبل الامتحان..." />
-        </div>
-      )}
-
-      {step === 6 && (
-        <div className="pl-step" key="s6">
           <h3 className="pl-q">هل تريد أن نخبرك عند إطلاق MyPromo؟</h3>
           <p className="pl-hint">اختياري تمامًا — رأيك يصلنا في كل الحالات.</p>
           <div className="pl-opts">
