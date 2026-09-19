@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
+import { COUNTS, SECONDS, saysTime } from '@/lib/duel';
 
 export default function NewDuel({ subjects, to }) {
   const router = useRouter();
@@ -19,6 +20,8 @@ export default function NewDuel({ subjects, to }) {
   const [module, setModule] = useState('');
   const [about, setAbout] = useState(null);      // the subject's lectures
   const [lecture, setLecture] = useState('all');
+  const [count, setCount] = useState(10);
+  const [seconds, setSeconds] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -31,7 +34,7 @@ export default function NewDuel({ subjects, to }) {
   const here = lecture === 'all'
     ? about?.total
     : about?.lectures.find((l) => l.id === lecture)?.count;
-  const willBe = Math.min(about?.length || 10, here || 0);
+  const willBe = Math.min(count, here || 0);
 
   useEffect(() => {
     if (!module) { setAbout(null); return undefined; }
@@ -61,6 +64,8 @@ export default function NewDuel({ subjects, to }) {
           matricule: number,
           module,
           lecture: chosen ? { id: Number(chosen.id), title: chosen.title } : null,
+          count,
+          seconds,
         }),
       });
       const d = await res.json().catch(() => ({}));
@@ -144,6 +149,36 @@ export default function NewDuel({ subjects, to }) {
         </>
       )}
 
+      {/* Two dials, not ten. Both change the thing itself: how long it takes,
+          and whether it is a test of knowing or of knowing quickly. */}
+      <div className="eyebrow">كم سؤالًا؟</div>
+      <div className="imp-kinds">
+        {COUNTS.map((n) => (
+          <button
+            key={n}
+            className={`imp-kind${count === n ? ' on' : ''}`}
+            onClick={() => setCount(n)}
+            dir="ltr"
+          >
+            {n}
+          </button>
+        ))}
+      </div>
+
+      <div className="eyebrow">وقت كل سؤال</div>
+      <div className="imp-kinds">
+        {SECONDS.map((s) => (
+          <button
+            key={s}
+            className={`imp-kind${seconds === s ? ' on' : ''}`}
+            onClick={() => setSeconds(s)}
+            dir="auto"
+          >
+            {s ? `${s} ثانية` : 'بلا وقت'}
+          </button>
+        ))}
+      </div>
+
       {error && <div className="admin-err">{error}</div>}
 
       <button className="btn p" disabled={!ready || busy} onClick={send}>
@@ -151,8 +186,8 @@ export default function NewDuel({ subjects, to }) {
       </button>
 
       <p className="quiz-note">
-        تصله دعوة. حين يقبل، تجيبان على الأسئلة نفسها — كلٌّ في وقته — وتظهر
-        النتيجتان معًا.
+        تصله دعوة — {saysTime(seconds)}. حين يقبل، تجيبان على الأسئلة نفسها
+        — كلٌّ في وقته — وتظهر النتيجتان معًا.
       </p>
     </>
   );

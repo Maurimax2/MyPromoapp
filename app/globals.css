@@ -2888,3 +2888,18 @@ html:has(.pl) { scroll-behavior: smooth; }
   .duel-reveal .duel-of, .duel-reveal::after { animation: none; }
   .duel-reveal::after { display: none; }
 }
+
+/* The clock over a timed duel. It is a number, not a ring: a student
+   glancing at it needs "eleven", not an arc to interpret — and it turns
+   orange for the last five seconds, which is the only warning it gives. */
+.quiz-clock {
+  min-width: 32px; padding: 2px 9px; border-radius: 999px;
+  background: var(--purple-pale); color: var(--purple);
+  font-weight: 700; font-variant-numeric: tabular-nums; text-align: center;
+}
+.quiz-clock.out {
+  background: var(--orange-pale); color: var(--orange);
+  animation: clock-tick 1s steps(2, end) infinite;
+}
+@keyframes clock-tick { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .quiz-clock.out { animation: none; } }

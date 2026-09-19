@@ -15,7 +15,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 import { normalise, matriculeError } from '@/lib/matricule';
 import { moduleOf } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
-import { pick, stage, myMove, LENGTH } from '@/lib/duel';
+import { pick, stage, myMove, countOf, secondsOf, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
@@ -27,7 +27,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
   }
 
-  const { matricule, module, lecture } = await request.json().catch(() => ({}));
+  const { matricule, module, lecture, count, seconds } = await request.json().catch(() => ({}));
 
   const number = normalise(matricule);
   const wrong = matriculeError(number);
@@ -64,7 +64,7 @@ export async function POST(request) {
   const within = lecture?.id
     ? all.filter((q) => Number(q.lecture) === Number(lecture.id))
     : all;
-  const chosen = pick(within.length ? within : all, LENGTH);
+  const chosen = pick(within.length ? within : all, countOf(count));
 
   if (chosen.length < 2) {
     return NextResponse.json({
@@ -85,6 +85,7 @@ export async function POST(request) {
     challenger: me.id,
     opponent: them.id,
     state: 'invited',
+    seconds: secondsOf(seconds),
   }).select('id').single();
 
   if (error) {

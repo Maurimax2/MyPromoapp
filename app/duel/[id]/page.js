@@ -4,9 +4,10 @@ import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { outcome, stage } from '@/lib/duel';
+import { outcome, stage, saysTime } from '@/lib/duel';
 import Play from './Play';
 import Answer from './Answer';
+import Watch from './Watch';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,7 +26,7 @@ export default async function DuelPage({ params }) {
   // the policy decides, not this file.
   const { data: duel } = await sb
     .from('duels')
-    .select(`id, title, state, questions, challenger, opponent,
+    .select(`id, title, state, seconds, questions, challenger, opponent,
              challenger_score, opponent_score, challenger_at, opponent_at,
              a:profiles!duels_challenger_fkey(full_name, email),
              b:profiles!duels_opponent_fkey(full_name, email)`)
@@ -84,9 +85,15 @@ export default async function DuelPage({ params }) {
       </header>
 
       <div className="scroll">
+        {/* While the other half can still change under you, the screen asks
+            again every few seconds — otherwise the challenger sits on
+            «بانتظار ردّه» long after it has been accepted. */}
+        {(at === 'sent' || at === 'waiting') && <Watch />}
+
         {/* Somebody has challenged you. Nothing is answered until you say yes. */}
         {at === 'invited' && (
-          <Answer id={duel.id} who={WHO(them)} title={duel.title} of={duel.questions.length} />
+          <Answer id={duel.id} who={WHO(them)} title={duel.title}
+            of={duel.questions.length} time={saysTime(duel.seconds || 0)} />
         )}
 
         {at === 'sent' && (
@@ -106,7 +113,7 @@ export default async function DuelPage({ params }) {
         )}
 
         {at === 'play' && questions.length > 0 && (
-          <Play id={duel.id} questions={questions} title={duel.title} />
+          <Play id={duel.id} questions={questions} title={duel.title} seconds={duel.seconds || 0} />
         )}
 
         {at === 'play' && !questions.length && (

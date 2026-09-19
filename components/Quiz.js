@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 import { record } from '@/lib/review';
 
@@ -32,6 +32,10 @@ export default function Quiz({
   // Given this, the run ends by handing the answers over instead of drawing
   // a result of its own.
   onAnswers,
+  // Seconds a question is allowed, when the run is timed. A duel may be; the
+  // subject's own quiz never is — you are revising there, and a clock over
+  // somebody reading a question for the first time teaches them to panic.
+  seconds = 0,
 }) {
   const [i, setI] = useState(0);
   const [ticked, setTicked] = useState([]);
@@ -39,6 +43,7 @@ export default function Quiz({
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const [given, setGiven] = useState([]);
+  const [left, setLeft] = useState(seconds);
 
   const q = questions[i];
   const last = i === questions.length - 1;
@@ -73,7 +78,34 @@ export default function Quiz({
     setI((n) => n + 1);
     setTicked([]);
     setShown(false);
+    setLeft(seconds);
   };
+
+  // The clock, when there is one. It runs per question and takes whatever is
+  // ticked when it reaches zero — a question you ran out of time on is a
+  // question you did not answer, which is the same as getting it wrong.
+  //
+  // Held in a ref so the countdown is not torn down and restarted every time
+  // a box is ticked, and moved on from an effect rather than from inside the
+  // state update: React may run an updater twice, and a question that submits
+  // itself twice is a duel answered twice.
+  const move = useRef(next);
+  const ranOut = useRef(-1);
+  useEffect(() => { move.current = next; });
+
+  useEffect(() => {
+    if (!seconds || done || left <= 0) return undefined;
+    const tick = setTimeout(() => setLeft((s) => s - 1), 1000);
+    return () => clearTimeout(tick);
+  }, [left, seconds, done]);
+
+  useEffect(() => {
+    if (!seconds || done || left > 0) return;
+    // Once per question, however many times this effect is run.
+    if (ranOut.current === i) return;
+    ranOut.current = i;
+    move.current();
+  }, [left, seconds, done, i]);
 
   // A written answer is marked by the person who wrote it. Two buttons, not
   // five: a scale a student has to interpret is a scale they answer
@@ -116,6 +148,11 @@ export default function Quiz({
       </div>
       <div className="quiz-step">
         <span>سؤال {i + 1} من {questions.length}</span>
+        {/* The clock sits where the eye already is, between the count and the
+            kind — not over the question, which is the thing being read. */}
+        {seconds > 0 && (
+          <span className={`quiz-clock${left <= 5 ? ' out' : ''}`} dir="ltr">{left}</span>
+        )}
         <span className="quiz-kind">
           {written ? 'اكتب الجواب' : single ? 'جواب واحد' : 'عدة أجوبة'}
         </span>

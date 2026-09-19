@@ -488,3 +488,8 @@ update duels set state = 'done'
   where opponent_at is not null and state is distinct from 'done';
 
 create index if not exists duels_state_idx on duels (state, created_at desc);
+
+-- How long each question is on screen, in seconds; 0 is no limit. Chosen by
+-- whoever sends the challenge and shown on the invitation, so nobody accepts
+-- a timed duel without knowing it is timed.
+alter table duels add column if not exists seconds int not null default 0;

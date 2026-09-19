@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Quiz from '@/components/Quiz';
 
-export default function Play({ id, questions, title }) {
+export default function Play({ id, questions, title, seconds = 0 }) {
   const router = useRouter();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -39,5 +39,8 @@ export default function Play({ id, questions, title }) {
 
   if (busy) return <div className="pdf-msg"><div className="spinner" /></div>;
 
-  return <Quiz questions={questions} moduleName={title} source="تحدٍّ" onAnswers={send} />;
+  return (
+    <Quiz questions={questions} moduleName={title} source="تحدٍّ"
+      seconds={seconds} onAnswers={send} />
+  );
 }

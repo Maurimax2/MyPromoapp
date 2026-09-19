@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 
-export default function Answer({ id, who, title, of }) {
+export default function Answer({ id, who, title, of, time }) {
   const router = useRouter();
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
@@ -40,7 +40,7 @@ export default function Answer({ id, who, title, of }) {
         <div className="duel-invite-ic"><Icon name="swords" size={26} /></div>
         <div className="duel-invite-t">{who} يتحدّاك</div>
         <div className="duel-invite-b" dir="auto">{title}</div>
-        <div className="duel-invite-n">{of} أسئلة · نفس الأسئلة لكليكما</div>
+        <div className="duel-invite-n">{of} أسئلة · {time} · نفس الأسئلة لكليكما</div>
 
         {error && <div className="admin-err" style={{ marginTop: 14 }}>{error}</div>}
 
