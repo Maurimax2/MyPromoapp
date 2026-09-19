@@ -11,3 +11,4 @@ public/pdfjs/
 
 # copied out of node_modules by scripts/copy-tesseract.mjs
 public/tesseract/
+duel-*.png
