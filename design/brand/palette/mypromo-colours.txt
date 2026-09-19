@@ -1,0 +1,41 @@
+MyPromo — the palette
+Every one of these is taken from app/globals.css, where the app itself reads them.
+
+BRAND
+#6B21B5   Purple            the brand. Headers, primary buttons, the chosen thing.
+#8B5CF6   Purple light      hover, focus rings, the lighter half of the logo.
+#EDE9FE   Purple pale       chips, tags, the tint behind an icon.
+
+ATTENTION  — used sparingly. Orange means "this needs you", never decoration.
+#F97316   Orange            the one action on a screen. The + button.
+#FDBA74   Orange light      the lighter half of the logo's right figure.
+#FFF1E3   Orange pale       a warning's ground.
+
+GROUND
+#F1F5F9   Background        the field everything sits on.
+#FFFFFF   Surface           every card.
+
+INK
+#1A1424   Ink               body text, headings.
+#453D57   Ink 2             secondary text.
+#6B6480   Ink 3             captions, hints, disabled.
+
+LINES
+#E8E4F0   Line              borders.
+#F1EEF7   Line soft         a divider inside a card.
+
+PROMO BADGES — each year has its own colour, on every post.
+#8B5CF6   PCEM1
+#6B21B5   PCEM2
+#F97316   DCEM1
+#C2410C   DCEM2
+#7C3AED   DCEM3
+#9A3412   DCEM4
+
+FOR CANVA'S BRAND KIT, in this order:
+#6B21B5 #8B5CF6 #EDE9FE #F97316 #FDBA74 #FFF1E3 #1A1424 #453D57 #6B6480 #F1F5F9 #FFFFFF #E8E4F0
+
+TYPEFACE
+IBM Plex Sans Arabic — weights 300, 400, 500, 600, 700.
+Free, SIL Open Font License, from Google Fonts: fonts.google.com/specimen/IBM+Plex+Sans+Arabic
+It carries Arabic and Latin in one family, which is why the app uses it for both.

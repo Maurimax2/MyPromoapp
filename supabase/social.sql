@@ -465,3 +465,26 @@ alter table duels enable row level security;
 drop policy if exists duels_mine on duels;
 create policy duels_mine on duels for select
   using (challenger = auth.uid() or opponent = auth.uid());
+
+-- ---------------------------------------------------------------------------
+-- The invitation comes before the questions
+-- ---------------------------------------------------------------------------
+--
+-- The first version had you answer ten questions and then choose who to send
+-- them to, which is the wrong way round: you sit an exam before knowing
+-- whether anybody is going to sit it with you. A duel is now an invitation
+-- first — a name, a subject, and a question you can say no to.
+--
+--   invited  → sent, not yet answered by the person challenged
+--   playing  → accepted; both may answer, each in their own time
+--   done     → both have answered, and both may see the two scores
+--   refused  → politely declined, and that is the end of it
+alter table duels add column if not exists state text not null default 'playing';
+alter table duels add column if not exists accepted_at timestamptz;
+
+-- Rows made under the old flow: the challenger had already answered, so they
+-- were mid-game — and the ones with both halves in are over.
+update duels set state = 'done'
+  where opponent_at is not null and state is distinct from 'done';
+
+create index if not exists duels_state_idx on duels (state, created_at desc);

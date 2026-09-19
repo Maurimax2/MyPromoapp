@@ -1,15 +1,16 @@
 'use client';
 
-// Setting up a duel, and taking it.
+// Setting a duel up: who, and on what.
 //
-// Who, what, then ten questions. In that order on purpose: asked the other
-// way round you would answer ten questions and then find out nobody holds
-// that number.
+// Nothing is answered here any more. You choose the person and the subject
+// and send an invitation; the questions are drawn on the server and nobody
+// sees one until the other person has accepted. Answering ten questions
+// before knowing whether anybody will sit them with you is not a challenge,
+// it is homework.
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
-import Quiz from '@/components/Quiz';
 import { normalise, looksRight } from '@/lib/matricule';
 
 export default function NewDuel({ subjects, to }) {
@@ -18,7 +19,6 @@ export default function NewDuel({ subjects, to }) {
   const [module, setModule] = useState('');
   const [about, setAbout] = useState(null);      // the subject's lectures
   const [lecture, setLecture] = useState('all');
-  const [run, setRun] = useState(null);          // the drawn questions
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,7 +27,7 @@ export default function NewDuel({ subjects, to }) {
 
   // How many it will actually be. A subject with four usable questions draws
   // four, and a button promising ten over it is a button that lies about the
-  // one number the student is agreeing to.
+  // one number both of you are agreeing to.
   const here = lecture === 'all'
     ? about?.total
     : about?.lectures.find((l) => l.id === lecture)?.count;
@@ -49,46 +49,28 @@ export default function NewDuel({ subjects, to }) {
     return () => { alive = false; };
   }, [module]);
 
-  const start = async () => {
-    setBusy(true); setError('');
-    const res = await fetch(
-      `/api/duel/setup?module=${encodeURIComponent(module)}&lecture=${encodeURIComponent(lecture)}`);
-    const d = await res.json().catch(() => ({}));
-    setBusy(false);
-    if (!res.ok) { setError(d.error || 'تعذّر'); return; }
-    setRun(d.questions);
-  };
-
-  const send = async (answers) => {
+  const send = async () => {
+    if (busy) return;
     setBusy(true); setError('');
     const chosen = about.lectures.find((l) => l.id === lecture);
-    const res = await fetch('/api/duel', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        matricule: number,
-        module,
-        lecture: chosen ? { id: Number(chosen.id), title: chosen.title } : null,
-        questions: run.map((q) => q.dbId),
-        answers,
-      }),
-    });
-    const d = await res.json().catch(() => ({}));
-    setBusy(false);
-    if (!res.ok) { setError(d.error || 'تعذّر الإرسال'); setRun(null); return; }
-    router.push(`/duel/${d.id}`);
+    try {
+      const res = await fetch('/api/duel', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          matricule: number,
+          module,
+          lecture: chosen ? { id: Number(chosen.id), title: chosen.title } : null,
+        }),
+      });
+      const d = await res.json().catch(() => ({}));
+      setBusy(false);
+      if (!res.ok) { setError(d.error || 'تعذّر الإرسال'); return; }
+      router.push(`/duel/${d.id}`);
+    } catch {
+      setBusy(false); setError('لا اتصال');
+    }
   };
-
-  if (run) {
-    return (
-      <Quiz
-        questions={run}
-        moduleName={about?.name}
-        source="تحدٍّ"
-        onAnswers={send}
-      />
-    );
-  }
 
   return (
     <>
@@ -164,12 +146,13 @@ export default function NewDuel({ subjects, to }) {
 
       {error && <div className="admin-err">{error}</div>}
 
-      <button className="btn p" disabled={!ready || busy} onClick={start}>
-        {busy ? '…' : `ابدأ — ${willBe} ${willBe === 2 ? 'سؤالان' : 'أسئلة'}`}
+      <button className="btn p" disabled={!ready || busy} onClick={send}>
+        {busy ? '…' : `أرسل الدعوة — ${willBe} ${willBe === 2 ? 'سؤالان' : 'أسئلة'}`}
       </button>
 
       <p className="quiz-note">
-        تجيب أنت أوّلًا، ثمّ يصله التحدّي بالأسئلة نفسها.
+        تصله دعوة. حين يقبل، تجيبان على الأسئلة نفسها — كلٌّ في وقته — وتظهر
+        النتيجتان معًا.
       </p>
     </>
   );

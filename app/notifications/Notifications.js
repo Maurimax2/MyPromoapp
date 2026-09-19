@@ -19,12 +19,14 @@ const SAYS = {
   accepted: (n) => `${WHO(n.actor)} قبِل جوابك`,
   approved: () => 'فُتح لك التطبيق — أهلًا بك',
   duel:      (n) => `${WHO(n.actor)} تحدّاك`,
-  duel_done: (n) => `${WHO(n.actor)} أجاب على تحدّيك`,
+  duel_ok:   (n) => `${WHO(n.actor)} قبِل تحدّيك`,
+  duel_no:   (n) => `${WHO(n.actor)} اعتذر عن تحدّيك`,
+  duel_done: (n) => `${WHO(n.actor)} أنهى التحدّي — ظهرت النتيجة`,
 };
 
 const ICON = {
   like: 'heart', comment: 'msg', answer: 'msg', accepted: 'check', approved: 'person',
-  duel: 'swords', duel_done: 'swords',
+  duel: 'swords', duel_done: 'swords', duel_ok: 'swords', duel_no: 'swords',
 };
 
 function when(iso) {
@@ -65,7 +67,7 @@ export default function Notifications({ items }) {
           const line = (SAYS[n.kind] || (() => 'حدث شيء'))(n);
           const inner = (
             <div className="card-row">
-              <div className={`tile ${n.kind === 'accepted' || n.kind === 'duel' ? 'tint-orange' : 'tint-purple'}`}>
+              <div className={`tile ${n.kind === 'accepted' || n.kind === 'duel' || n.kind === 'duel_ok' ? 'tint-orange' : 'tint-purple'}`}>
                 <Icon name={ICON[n.kind] || 'bell'} size={19} />
               </div>
               <div className="grow">
@@ -76,7 +78,7 @@ export default function Notifications({ items }) {
             </div>
           );
           const href = n.kind === 'approved' ? '/feed'
-            : n.kind === 'duel' || n.kind === 'duel_done' ? '/duel'
+            : n.kind.startsWith('duel') ? '/duel'
             : n.kind === 'answer' || n.kind === 'accepted' ? `/qa/${n.post}` : '/feed';
           return (
             <Link key={n.id} href={href} className={`card${n.seen ? '' : ' notif-new'}`}>

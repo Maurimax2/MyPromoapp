@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { outcome } from '@/lib/duel';
+import { outcome, stage } from '@/lib/duel';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,9 +11,9 @@ const WHO = (p) => p?.full_name || p?.email?.split('@')[0] || 'زميل';
 
 // تحدّي زميلك.
 //
-// Three piles, in the order they matter: the ones waiting for you, the ones
-// waiting for them, and the ones that are over. A screen that sorted them
-// only by date would bury the one thing on it you can act on.
+// Four piles, in the order they matter: what is waiting for your answer, what
+// is waiting for theirs, and what is over. A screen sorted only by date would
+// bury the one thing on it you can act on.
 export default async function Duels() {
   const me = await currentProfile();
   if (!me) redirect('/login');
@@ -22,29 +22,33 @@ export default async function Duels() {
   const sb = await supabaseServer();
   const { data, error } = await sb
     .from('duels')
-    .select(`id, title, questions, challenger, opponent,
+    .select(`id, title, state, questions, challenger, opponent,
              challenger_score, opponent_score, challenger_at, opponent_at, created_at,
              a:profiles!duels_challenger_fkey(full_name, email),
              b:profiles!duels_opponent_fkey(full_name, email)`)
     .order('created_at', { ascending: false })
     .limit(40);
 
-  const duels = error ? [] : (data || []);
-  const mineToPlay = duels.filter((d) => d.opponent === me.id && !d.opponent_at);
-  const waiting = duels.filter((d) => d.challenger === me.id && !d.opponent_at);
-  const over = duels.filter((d) => d.opponent_at);
+  const duels = (error ? [] : (data || [])).map((d) => ({ ...d, at: stage(d, me.id) }));
+  const invited = duels.filter((d) => d.at === 'invited');
+  const toPlay = duels.filter((d) => d.at === 'play');
+  const theirs = duels.filter((d) => d.at === 'sent' || d.at === 'waiting');
+  const over = duels.filter((d) => d.at === 'done' || d.at === 'refused');
 
   const Row = ({ d, action }) => {
     const iAmChallenger = d.challenger === me.id;
     const them = iAmChallenger ? d.b : d.a;
     const mine = iAmChallenger ? d.challenger_score : d.opponent_score;
-    const theirs = iAmChallenger ? d.opponent_score : d.challenger_score;
-    const how = outcome(mine, theirs);
+    const hers = iAmChallenger ? d.opponent_score : d.challenger_score;
+    // Only a finished duel shows two numbers. Half a result is a leak: it
+    // tells the one who answered first what the other has to beat.
+    const how = d.at === 'done' ? outcome(mine, hers) : null;
 
     return (
       <Link href={`/duel/${d.id}`} className="card duel-row">
         <div className="card-row">
-          <div className={`tile ${how === 'won' ? 'tint-orange' : 'tint-purple'}`}>
+          <div className={`tile ${d.at === 'invited' ? 'tint-orange'
+            : how === 'won' ? 'tint-orange' : 'tint-purple'}`}>
             <Icon name="swords" size={19} />
           </div>
           <div className="grow">
@@ -56,7 +60,7 @@ export default async function Duels() {
           </div>
           {how && (
             <div className={`duel-score ${how}`} dir="ltr">
-              {mine}–{theirs}
+              {mine}–{hers}
             </div>
           )}
           {!how && <span className="chev"><Icon name="chev" size={18} /></span>}
@@ -73,7 +77,9 @@ export default async function Duels() {
           <div className="grow">
             <div className="head-t">تحدّي زميلك</div>
             <div className="head-s">
-              {mineToPlay.length ? `${mineToPlay.length} بانتظارك` : 'نفس الأسئلة، ونتيجتان'}
+              {invited.length + toPlay.length
+                ? `${invited.length + toPlay.length} بانتظارك`
+                : 'نفس الأسئلة، ونتيجتان'}
             </div>
           </div>
         </div>
@@ -84,7 +90,7 @@ export default async function Duels() {
           <div className="quizcard-ic"><Icon name="plus" size={19} /></div>
           <div className="grow">
             <div className="nm" style={{ fontSize: 14 }}>تحدٍّ جديد</div>
-            <div className="mt">اختر المادة، أجب، ثمّ أرسِله</div>
+            <div className="mt">اختر المادة والزميل، وأرسِل الدعوة</div>
           </div>
           <span className="chev"><Icon name="chev" size={18} /></span>
         </Link>
@@ -99,24 +105,35 @@ export default async function Duels() {
           </div>
         )}
 
-        {mineToPlay.length > 0 && (
+        {invited.length > 0 && (
           <>
-            <div className="eyebrow">دورك</div>
-            {mineToPlay.map((d) => <Row key={d.id} d={d} action="تحدّاك" />)}
+            <div className="eyebrow">دعوة بانتظار ردّك</div>
+            {invited.map((d) => <Row key={d.id} d={d} action="تحدّاك" />)}
           </>
         )}
 
-        {waiting.length > 0 && (
+        {toPlay.length > 0 && (
           <>
-            <div className="eyebrow">بانتظار ردّه</div>
-            {waiting.map((d) => <Row key={d.id} d={d} action="لم يجب بعد" />)}
+            <div className="eyebrow">دورك</div>
+            {toPlay.map((d) => <Row key={d.id} d={d} action="أجب الآن" />)}
+          </>
+        )}
+
+        {theirs.length > 0 && (
+          <>
+            <div className="eyebrow">بانتظاره</div>
+            {theirs.map((d) => (
+              <Row key={d.id} d={d} action={d.at === 'sent' ? 'لم يقبل بعد' : 'لم يجب بعد'} />
+            ))}
           </>
         )}
 
         {over.length > 0 && (
           <>
             <div className="eyebrow">انتهت</div>
-            {over.map((d) => <Row key={d.id} d={d} />)}
+            {over.map((d) => (
+              <Row key={d.id} d={d} action={d.at === 'refused' ? 'اعتذر' : null} />
+            ))}
           </>
         )}
 
@@ -125,8 +142,8 @@ export default async function Duels() {
             <div className="tile tint-purple"><Icon name="swords" size={24} /></div>
             <div className="empty-t">لا تحدّيات بعد</div>
             <div className="empty-b">
-              أجب على عشرة أسئلة من محاضرة، وأرسلها إلى زميل برقمه الجامعي.
-              يجيب على الأسئلة نفسها، وتريان النتيجتين.
+              اختر مادة وزميلًا، وأرسل له دعوة. حين يقبل، تجيبان على الأسئلة
+              نفسها — وتظهر النتيجتان معًا.
             </div>
           </div>
         )}

@@ -1,8 +1,13 @@
-// Making a duel.
+// Sending somebody a challenge.
 //
-// The challenger takes it first and it is sent when they finish. You cannot
-// send somebody a challenge you have not sat yourself, which is both fairer
-// and the only version that does not fill the app with duels nobody started.
+// An invitation, not a finished exam. The first version had the challenger
+// answer ten questions and only then choose who to send them to, which is the
+// wrong way round twice over: you sit the thing before knowing whether
+// anybody will sit it with you, and the person challenged is handed a score
+// to beat before they have agreed to play at all.
+//
+// So this writes a row with the questions drawn and nothing else, and tells
+// the other person. Nobody answers anything until they accept.
 
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
@@ -10,7 +15,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 import { normalise, matriculeError } from '@/lib/matricule';
 import { moduleOf } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
-import { score, LENGTH } from '@/lib/duel';
+import { pick, stage, myMove, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
 
 export const runtime = 'nodejs';
@@ -22,8 +27,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
   }
 
-  const { matricule, module, lecture, answers, questions: asked } =
-    await request.json().catch(() => ({}));
+  const { matricule, module, lecture } = await request.json().catch(() => ({}));
 
   const number = normalise(matricule);
   const wrong = matriculeError(number);
@@ -53,28 +57,24 @@ export async function POST(request) {
     return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
   }
 
-  // The questions the challenger actually answered, in the order they were
-  // shown. Sent back rather than drawn again here: drawing twice would score
-  // their answers against somebody else's questions.
+  // The draw happens here, once, and is kept on the row. Drawing again for
+  // the second player would give two people different questions and call the
+  // difference a result.
   const all = await allOf(module);
-  const byId = new Map(all.filter((q) => q.dbId != null).map((q) => [String(q.dbId), q]));
-  const chosen = (Array.isArray(asked) ? asked : [])
-    .map((id) => byId.get(String(id))).filter(Boolean);
+  const within = lecture?.id
+    ? all.filter((q) => Number(q.lecture) === Number(lecture.id))
+    : all;
+  const chosen = pick(within.length ? within : all, LENGTH);
 
   if (chosen.length < 2) {
-    // Either nothing was sent back, or this subject is still being served
-    // from the bundled file and its questions have no row to point at.
     return NextResponse.json({
-      error: byId.size
+      error: all.some((q) => q.dbId != null)
         ? 'لا أسئلة كافية في هذه المادة'
         : 'أسئلة هذه المادة لم تُنقل إلى قاعدة البيانات بعد',
     }, { status: 400 });
   }
 
-  const mine = score(chosen, answers);
-  const title = lecture?.title
-    ? `${m.name} · ${lecture.title}`
-    : m.name;
+  const title = lecture?.title ? `${m.name} · ${lecture.title}` : m.name;
 
   const { data: made, error } = await db.from('duels').insert({
     promo: me.promo,
@@ -84,8 +84,7 @@ export async function POST(request) {
     questions: chosen.map((q) => Number(q.dbId)),
     challenger: me.id,
     opponent: them.id,
-    challenger_score: mine,
-    challenger_at: new Date().toISOString(),
+    state: 'invited',
   }).select('id').single();
 
   if (error) {
@@ -97,23 +96,30 @@ export async function POST(request) {
     }, { status: behind ? 503 : 500 });
   }
 
+  // They are not looking at the screen. That is the whole point of a duel you
+  // can send at midnight.
   await notify({
     person: them.id, actor: me.id, kind: 'duel',
-    body: `${title} — ${mine}/${chosen.length}`,
+    body: `${title} — ${chosen.length} أسئلة`,
   });
 
-  return NextResponse.json({ id: made.id, score: mine, of: chosen.length });
+  return NextResponse.json({ id: made.id, of: chosen.length });
 }
 
-/** How many are waiting for you — for the badge on الرئيسية. */
+/** How many are your move — for the badge on الرئيسية. */
 export async function GET() {
   const me = await currentProfile();
   if (!me) return NextResponse.json({ waiting: 0 });
 
-  const { count, error } = await supabaseAdmin().from('duels')
-    .select('id', { count: 'exact', head: true })
-    .eq('opponent', me.id).is('opponent_at', null);
+  // Counted from the same rule the screens draw from, rather than a second
+  // query that means to say the same thing.
+  const { data, error } = await supabaseAdmin().from('duels')
+    .select('challenger, opponent, state, challenger_at, opponent_at')
+    .or(`challenger.eq.${me.id},opponent.eq.${me.id}`)
+    .order('created_at', { ascending: false })
+    .limit(100);
 
   // A counter is not worth an error message.
-  return NextResponse.json({ waiting: error ? 0 : (count || 0), length: LENGTH });
+  const waiting = error ? 0 : (data || []).filter((d) => myMove(stage(d, me.id))).length;
+  return NextResponse.json({ waiting, length: LENGTH });
 }

@@ -2820,3 +2820,71 @@ html:has(.pl) { scroll-behavior: smooth; }
   font-size: 13px; color: var(--ink-2);
 }
 .fb-who a { color: var(--purple); font-weight: 600; }
+
+/* ---------- تحدّي زميلك: the invitation, and the moment it is over -------- */
+
+/* Somebody has challenged you. This is the screen that used to be missing —
+   before it, a challenge arrived as ten questions and a score to beat. */
+.duel-invite {
+  padding: 30px 22px 22px; display: flex; flex-direction: column;
+  align-items: center; gap: 9px; text-align: center;
+}
+.duel-invite-ic {
+  width: 62px; height: 62px; border-radius: 20px; margin-bottom: 6px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--orange-pale); color: var(--orange);
+  animation: duel-knock 2.6s ease-in-out infinite;
+}
+.duel-invite-t { font-size: 20px; font-weight: 700; }
+.duel-invite-b { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
+.duel-invite-n { font-size: 12.5px; color: var(--ink-3); }
+.duel-invite-row { display: flex; gap: 10px; width: 100%; margin-top: 18px; }
+.duel-invite-row .btn { flex: 1; }
+/* A knock at the door, not a bounce: it tilts and settles. */
+@keyframes duel-knock {
+  0%, 62%, 100% { transform: rotate(0deg); }
+  68% { transform: rotate(-9deg) scale(1.04); }
+  74% { transform: rotate(7deg) scale(1.04); }
+  80% { transform: rotate(-4deg); }
+  86% { transform: rotate(0deg); }
+}
+
+/* Both halves are in, and this is the first time either of you sees the two
+   numbers. They land one after the other — yours, then theirs — and the card
+   catches the light once as they do. Only here: the result screen is opened
+   once and it is the whole point of the thing. */
+.duel-reveal { position: relative; overflow: hidden; }
+.duel-reveal .duel-verdict { animation: duel-say .5s .95s cubic-bezier(.2, 1.3, .4, 1) both; }
+.duel-reveal .duel-pair .me   { animation: duel-land .42s .15s cubic-bezier(.2, 1.4, .4, 1) both; }
+.duel-reveal .duel-pair .duel-dash { animation: duel-say .3s .4s ease both; }
+.duel-reveal .duel-pair .them { animation: duel-land .42s .55s cubic-bezier(.2, 1.4, .4, 1) both; }
+.duel-reveal .duel-of { animation: duel-say .4s 1.15s ease both; }
+.duel-reveal::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 35%,
+              rgba(255, 255, 255, .55) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: duel-sweep .8s .95s ease-out both;
+}
+.duel-reveal.won  { box-shadow: 0 0 0 1.5px var(--orange), var(--shadow); }
+.duel-reveal.won .duel-verdict { animation-name: duel-cheer; }
+
+@keyframes duel-land {
+  from { opacity: 0; transform: translateY(-26px) scale(.6); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes duel-say  { from { opacity: 0; transform: translateY(6px); } }
+@keyframes duel-cheer {
+  0%   { opacity: 0; transform: scale(.7); }
+  60%  { opacity: 1; transform: scale(1.14); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes duel-sweep { to { transform: translateX(120%); } }
+
+/* Somebody who has asked for less motion gets the same result, at rest. */
+@media (prefers-reduced-motion: reduce) {
+  .duel-invite-ic, .duel-reveal .duel-verdict, .duel-reveal .duel-pair .me,
+  .duel-reveal .duel-pair .them, .duel-reveal .duel-pair .duel-dash,
+  .duel-reveal .duel-of, .duel-reveal::after { animation: none; }
+  .duel-reveal::after { display: none; }
+}
