@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import PdfViewer from '@/components/PdfViewer';
 import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
+import { opened, mark } from '@/lib/resume';
 
 const REMEMBER = 'mypromo.reader';
 
@@ -29,10 +30,15 @@ const FURTHEST = 3;
 const STEP = 1.25;
 const hold = (z) => Math.min(FURTHEST, Math.max(NEAREST, z));
 
-export default function Reader({ fid, src, title, bytes }) {
+export default function Reader({ fid, src, title, subject = null, bytes }) {
   const [mode, setMode] = useState(null);   // null until the device is read
   const [full, setFull] = useState(false);  // الصفحات وحدها
   const [zoom, setZoom] = useState(1);
+
+  // Opening a lecture is what «تابع من حيث توقّفت» is made of, and this is
+  // the moment it happens. Recorded in the browser, not on the server — the
+  // reasoning is in lib/resume.js.
+  useEffect(() => { opened({ fid, title, subject }); }, [fid, title, subject]);
 
   useEffect(() => {
     let saved = null;
@@ -134,7 +140,12 @@ export default function Reader({ fid, src, title, bytes }) {
             src={src} title={title} zoom={zoom}
             /* Two fingers only where there is a way back out of what they
                do. Outside ملء الشاشة the width is the column's to decide. */
-            onZoom={full ? (z) => setZoom(hold(z)) : undefined} />}
+            onZoom={full ? (z) => setZoom(hold(z)) : undefined}
+            /* What الرئيسية's card is made of: the cover, and how far in you
+               got. Both are written straight through to the browser — see
+               lib/resume.js — because neither is worth a render here. */
+            onThumb={(thumb) => mark({ fid, thumb })}
+            onProgress={(page, pages) => mark({ fid, page, pages })} />}
 
       {/* The only things drawn over the pages, and among them the only way
           back to the rest of the screen — so they stay put rather than fading

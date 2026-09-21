@@ -85,7 +85,7 @@ export default async function PersonPage({ params }) {
         ) : (
           <>
             <div className="me">
-              <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--purple)' }}>
+              <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--olive)' }}>
                 {name.slice(0, 2)}
               </div>
               <div className="me-name">{name}</div>

@@ -67,7 +67,7 @@ export default function Waiting({
       <Logo size={54} id="wait" />
 
       <div className="wait-card">
-        <div className={`tile ${refused ? 'tint-orange' : 'tint-purple'}`}>
+        <div className={`tile ${refused ? 'tint-clay' : 'tint-olive'}`}>
           <Icon name={refused ? 'x' : asks ? 'award' : 'clock'} size={24} />
         </div>
         <div className="wait-t">

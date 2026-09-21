@@ -17,7 +17,7 @@ export default function Lectures() {
       <div className="scroll">
         {TODAY.length === 0 && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="clock" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="clock" size={24} /></div>
             <div className="empty-t">لا جدول بعد</div>
             <div className="empty-b">سيظهر هنا حين يُضاف جدول المحاضرات.</div>
           </div>
@@ -27,7 +27,7 @@ export default function Lectures() {
             <div className="card-row">
               <div style={{ width: 52, flexShrink: 0, textAlign: 'center' }}>
                 <div style={{
-                  fontSize: 15, fontWeight: 700, color: 'var(--purple)',
+                  fontSize: 15, fontWeight: 700, color: 'var(--olive)',
                   fontVariantNumeric: 'tabular-nums',
                 }}>{l.time}</div>
               </div>

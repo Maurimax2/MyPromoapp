@@ -156,7 +156,7 @@ export default function NoteList({ groups, subjects, me }) {
                 <>
                   <div className="note-top">
                     {n.author ? (
-                      <div className="av" style={{ width: 38, height: 38, fontSize: 12.5, background: 'var(--purple)' }}>
+                      <div className="av" style={{ width: 38, height: 38, fontSize: 12.5, background: 'var(--olive)' }}>
                         {initials(n.author)}
                       </div>
                     ) : (
@@ -195,7 +195,7 @@ export default function NoteList({ groups, subjects, me }) {
 
         {!shown.length && !adding && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="book" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="book" size={24} /></div>
             <div className="empty-t">{q ? 'لا نتائج' : 'لا ملخصات بعد'}</div>
             <div className="empty-b">
               {q ? `لا ملخص يطابق «${q}».` : 'كن أول من يشارك ملخصًا مع دفعتك.'}

@@ -200,7 +200,7 @@ export default function LectureScreen({ promos, modules }) {
       {state && state.ready === false && (
         <section className="admin-card admin-seed">
           <div className="admin-card-t">قاعدة البيانات لا تعرف المحاضرات بعد</div>
-          <p className="admin-card-b" style={{ color: 'var(--orange)' }}>
+          <p className="admin-card-b" style={{ color: 'var(--clay)' }}>
             الصق <b dir="ltr">supabase/schema.sql</b> في Supabase → SQL Editor،
             ثمّ عُد. لا شيء هنا يمكن حفظه قبل ذلك.
           </p>
@@ -242,7 +242,7 @@ export default function LectureScreen({ promos, modules }) {
           {state.shared?.length > 0 && (
             <section className="admin-card admin-seed">
               <div className="admin-card-t">أرقام مكرّرة في الأرشيف</div>
-              <p className="admin-card-b" style={{ color: 'var(--orange)' }}>
+              <p className="admin-card-b" style={{ color: 'var(--clay)' }}>
                 لا يمكن إسناد سؤال إلى هذه الأرقام حتى تُصحَّح:
               </p>
               {state.shared.map((x) => (

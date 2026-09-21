@@ -42,7 +42,7 @@ export default function Answers({ rows }) {
   if (!rows.length) {
     return (
       <div className="empty">
-        <div className="tile tint-purple"><Icon name="msgs" size={24} /></div>
+        <div className="tile tint-olive"><Icon name="msgs" size={24} /></div>
         <div className="empty-t">لا آراء بعد</div>
         <div className="empty-b">شارك رابط /feedback مع الطلبة.</div>
       </div>

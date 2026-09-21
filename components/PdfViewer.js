@@ -38,12 +38,16 @@ const BUDGET_ZOOM = 2200;
 // Pages retained either side of the viewport, against the size of one.
 const keepFor = (px) => (px > 1800 ? 1 : px > 800 ? 2 : 4);
 
-export default function PdfViewer({ src, title, zoom = 1, onZoom }) {
+export default function PdfViewer({ src, title, zoom = 1, onZoom,
+                                    onThumb, onProgress }) {
   const holder = useRef(null);        // .pdf-pages
   const [status, setStatus] = useState('loading');
   const [pages, setPages] = useState(0);
   const [percent, setPercent] = useState(0);
 
+  // The furthest page that has come into view. A ref, not state: it changes
+  // on every scroll and nothing on this screen is drawn from it.
+  const reached = useRef(0);
   const zoomRef = useRef(zoom);
   const rescale = useRef(null);       // filled in once the document is open
 
@@ -250,6 +254,24 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom }) {
 
         await drawPage(slots[0]);
 
+        // The cover, for «تابع من حيث توقّفت». Drawn again small rather than
+        // shrinking the page canvas: that one is up to 1600px across and
+        // turning it straight into a data URL is a third of a megabyte into
+        // localStorage, which is a quota error on the third lecture.
+        if (!dead && onThumb) {
+          const big = slots[0].querySelector('canvas');
+          if (big) {
+            try {
+              const w = 132;
+              const h = Math.round(w * (big.height / big.width));
+              const small = document.createElement('canvas');
+              small.width = w; small.height = h;
+              small.getContext('2d').drawImage(big, 0, 0, w, h);
+              onThumb(small.toDataURL('image/jpeg', 0.7));
+            } catch { /* a picture is not worth an exception */ }
+          }
+        }
+
         // Draw what is near, free what is far. Freeing is the half that keeps
         // the tab alive on a long document.
         observer = new IntersectionObserver((entries) => {
@@ -258,6 +280,13 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom }) {
             const { keep } = measure();
             if (e.isIntersecting) {
               drawPage(slot);
+              // The furthest page seen is where you got to. The observer is
+              // already firing for it, so this costs nothing.
+              const n = Number(slot.dataset.page);
+              if (onProgress && n > reached.current) {
+                reached.current = n;
+                onProgress(n, doc.numPages);
+              }
             } else {
               const n = Number(slot.dataset.page);
               const near = [...drawn].some((d) => Math.abs(d - n) <= keep && d !== n);

@@ -101,7 +101,7 @@ export default function Ask({ questions, subjects, open, only, me }) {
 
         {!questions.length && !asking && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="msg" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
             <div className="empty-t">{only ? 'لا أسئلة بلا جواب' : 'لا أسئلة بعد'}</div>
             <div className="empty-b">اسأل أول سؤال — دفعتك ترى الأسئلة كلها.</div>
           </div>

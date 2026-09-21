@@ -92,7 +92,7 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
             to tick a box: whatever the panel creates shows up here. */}
         {inPromo.length === 0 && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="archive" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="archive" size={24} /></div>
             <div className="empty-t">{chosen?.name} — لم تُفهرس بعد</div>
             <div className="empty-b">
               لا مواد في هذه الدفعة بعد. تُضاف من لوحة التحكم.
@@ -130,7 +130,7 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
 
         {inPromo.length > 0 && modules.length === 0 && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="search" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="search" size={24} /></div>
             <div className="empty-t">لا نتائج</div>
             <div className="empty-b">لا توجد مادة تطابق «{q}» في {sem}.</div>
           </div>

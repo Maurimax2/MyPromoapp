@@ -47,8 +47,8 @@ export default async function Duels() {
     return (
       <Link href={`/duel/${d.id}`} className="card duel-row">
         <div className="card-row">
-          <div className={`tile ${d.at === 'invited' ? 'tint-orange'
-            : how === 'won' ? 'tint-orange' : 'tint-purple'}`}>
+          <div className={`tile ${d.at === 'invited' ? 'tint-clay'
+            : how === 'won' ? 'tint-clay' : 'tint-olive'}`}>
             <Icon name="swords" size={19} />
           </div>
           <div className="grow">
@@ -139,7 +139,7 @@ export default async function Duels() {
 
         {!error && !duels.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="swords" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="swords" size={24} /></div>
             <div className="empty-t">لا تحدّيات بعد</div>
             <div className="empty-b">
               اختر مادة وزميلًا، وأرسل له دعوة. حين يقبل، تجيبان على الأسئلة

@@ -57,7 +57,7 @@ export default function Talk({ chat, person, first, me }) {
       <header className="head">
         <div className="head-row">
           <Link href="/chat" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
-          <div className="av" style={{ width: 38, height: 38, fontSize: 13, background: 'var(--purple)' }}>
+          <div className="av" style={{ width: 38, height: 38, fontSize: 13, background: 'var(--olive)' }}>
             {initials(person)}
           </div>
           <div className="grow"><div className="head-t" style={{ fontSize: 17 }}>{name(person)}</div></div>
@@ -72,7 +72,7 @@ export default function Talk({ chat, person, first, me }) {
         ))}
         {!messages.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="send" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="send" size={24} /></div>
             <div className="empty-t">لا رسائل بعد</div>
             <div className="empty-b">ابدأ الكلام.</div>
           </div>

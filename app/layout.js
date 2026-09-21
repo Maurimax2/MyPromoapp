@@ -1,5 +1,5 @@
 import './globals.css';
-import { IBM_Plex_Sans_Arabic } from 'next/font/google';
+import { Readex_Pro } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
 
 // The typeface, served from our own domain.
@@ -9,11 +9,12 @@ import BottomNav from '@/components/BottomNav';
 // data in Nouakchott it is the whole reason a screen takes seconds to appear.
 // Next fetches the files at build time, serves them from here, and inlines
 // the CSS, so there is no third-party request in the way of the first paint.
-const plex = IBM_Plex_Sans_Arabic({
+const readex = Readex_Pro({
   subsets: ['arabic', 'latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  // Readex Pro ships 200–700; the app uses four of them.
+  weight: ['300', '400', '500', '600'],
   display: 'swap',
-  variable: '--font-plex',
+  variable: '--font-app',
 });
 
 export const metadata = {
@@ -27,7 +28,7 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#6B21B5',
+  themeColor: '#2A5B3E',
   // The app draws its own bar along the bottom; on a notched phone it has to
   // reach the edge of the glass rather than stopping above it.
   viewportFit: 'cover',
@@ -35,7 +36,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl" className={plex.variable}>
+    <html lang="ar" dir="rtl" className={readex.variable}>
       <body>
         <div className="app">
           {children}

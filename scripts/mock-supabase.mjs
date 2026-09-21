@@ -263,10 +263,10 @@ const db = {
       closed: false, created_at: '2026-09-16T09:30:00Z' },
   ],
   room_members: [
-    { id: 951, room: 901, member: 'u-1', created_at: '2026-09-15T18:00:00Z' },
-    { id: 952, room: 901, member: 'u-3', created_at: '2026-09-15T18:20:00Z' },
-    { id: 953, room: 901, member: 'u-owner', created_at: '2026-09-15T18:30:00Z' },
-    { id: 954, room: 902, member: 'u-3', created_at: '2026-09-16T09:30:00Z' },
+    { id: 951, room: 901, person: 'u-1', created_at: '2026-09-15T18:00:00Z' },
+    { id: 952, room: 901, person: 'u-3', created_at: '2026-09-15T18:20:00Z' },
+    { id: 953, room: 901, person: 'u-owner', created_at: '2026-09-15T18:30:00Z' },
+    { id: 954, room: 902, person: 'u-3', created_at: '2026-09-16T09:30:00Z' },
   ],
   room_messages: [
     { id: 961, room: 901, author: 'u-1', body: 'نبدأ بالثقبة البيضية — من يجاوب؟',
@@ -585,6 +585,10 @@ createServer(async (req, res) => {
         a: db.profiles.find((p) => p.id === r.challenger) || null,
         b: db.profiles.find((p) => p.id === r.opponent) || null,
       }));
+    }
+    if (table === 'room_members' && select.includes('profiles!room_members_person_fkey')) {
+      rows = rows.map((r) => ({
+        ...r, profile: db.profiles.find((x) => x.id === r.person) || null }));
     }
     if (table === 'room_members' && select.includes('person:profiles')) {
       rows = rows.map((r) => ({ ...r, person: db.profiles.find((p) => p.id === r.person) || null }));

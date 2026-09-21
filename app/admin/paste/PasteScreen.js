@@ -203,7 +203,7 @@ export default function PasteScreen({ promos, modules, papers, prompt }) {
               {seen.banks > 1 && ` · ${seen.banks} أقسام`}
             </p>
             {seen.guessed > 0 && (
-              <p className="admin-card-b" style={{ color: 'var(--orange)' }}>
+              <p className="admin-card-b" style={{ color: 'var(--clay)' }}>
                 {seen.guessed} إجابة كتبها الذكاء الاصطناعي، لا ورقة التصحيح —
                 اقرأها قبل أن تضيفها. ستظهر للطالب موسومة بذلك.
               </p>

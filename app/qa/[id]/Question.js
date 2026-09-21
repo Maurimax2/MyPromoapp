@@ -60,7 +60,7 @@ export default function Question({ post, subject, answers: first, me }) {
       <div className="scroll">
         <div className="qa-full">
           <div className="post-head" style={{ padding: 0 }}>
-            <div className="av" style={{ width: 36, height: 36, fontSize: 12, background: '#F97316' }}>
+            <div className="av" style={{ width: 36, height: 36, fontSize: 12, background: '#A8502A' }}>
               {initials(post.author)}
             </div>
             <div className="grow">
@@ -77,7 +77,7 @@ export default function Question({ post, subject, answers: first, me }) {
         {answers.map((a) => (
           <div key={a.id} className={`ans${a.accepted ? ' ok' : ''}`}>
             <div className="ans-top">
-              <div className="av" style={{ width: 30, height: 30, fontSize: 11, background: 'var(--purple)' }}>
+              <div className="av" style={{ width: 30, height: 30, fontSize: 11, background: 'var(--olive)' }}>
                 {initials(a.author)}
               </div>
               <b className="grow">{name(a.author)}</b>

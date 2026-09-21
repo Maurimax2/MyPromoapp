@@ -29,7 +29,7 @@ export default function Find() {
   return (
     <form className="card" onSubmit={go}>
       <div className="card-row">
-        <div className="tile tint-purpleLight"><Icon name="search" size={20} /></div>
+        <div className="tile tint-oliveLight"><Icon name="search" size={20} /></div>
         <div className="grow">
           <div className="nm">ابحث عن زميل</div>
           <input

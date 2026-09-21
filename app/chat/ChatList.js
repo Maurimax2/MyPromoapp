@@ -49,7 +49,7 @@ export default function ChatList({ chats, mates }) {
         {chats.map((c) => (
           <Link key={c.id} href={`/chat/${c.id}`} className="card">
             <div className="card-row">
-              <div className="av" style={{ width: 44, height: 44, fontSize: 14, background: 'var(--purple)' }}>
+              <div className="av" style={{ width: 44, height: 44, fontSize: 14, background: 'var(--olive)' }}>
                 {initials(c.person)}
               </div>
               <div className="grow">
@@ -80,7 +80,7 @@ export default function ChatList({ chats, mates }) {
 
         {!chats.length && !others.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="send" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="send" size={24} /></div>
             <div className="empty-t">لا أحد بعد</div>
             <div className="empty-b">حين ينضم زملاؤك ستجدهم هنا.</div>
           </div>

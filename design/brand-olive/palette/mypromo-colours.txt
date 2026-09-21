@@ -1,0 +1,53 @@
+MyPromo — زيتون
+The palette, as chosen 20/09/2026. Everything below is a flat hex, so it can
+be typed straight into Canva's Brand Kit or into app/globals.css.
+
+THE BRAND
+#2A5B3E   Olive        the brand AND the action. Buttons, the chosen tab,
+                       the live dot, the second figure of the mark.
+#3F7A57   Olive light  pressed and hover states.
+#E3EDE5   Olive pale   chips, the tint behind an icon, a soft highlight.
+
+ATTENTION  — used sparingly, and never as decoration.
+#A8502A   Clay         the one thing that needs you: a warning, a duel
+                       waiting, an unanswered question.
+#F2E3DA   Clay pale    the ground under a warning.
+
+GROUND
+#F3F1E9   Background   the ivory field everything sits on.
+#FFFDF8   Surface      every card — warm white, not pure white.
+
+INK
+#17201A   Ink          headings and body.
+#6B6F69   Ink 2        secondary text.
+#979992   Ink 3        captions, hints, disabled.
+
+LINES
+#DDDCD4   Line         borders and dividers.
+#EAE8E0   Line soft    a divider inside a card.
+
+THE YEARS — each promo's badge, muted to live in this world.
+#3F7A57   PCEM1
+#2A5B3E   PCEM2
+#A8502A   DCEM1
+#7D4A2A   DCEM2
+#4B5B3A   DCEM3
+#6B4A3A   DCEM4
+
+FOR CANVA'S BRAND KIT, in this order:
+#2A5B3E #3F7A57 #E3EDE5 #A8502A #F2E3DA #17201A #6B6F69 #979992 #F3F1E9 #FFFDF8 #DDDCD4
+
+TYPEFACE
+Tajawal — weights 400, 500, 700, 800. Free, SIL Open Font Licence.
+fonts.google.com/specimen/Tajawal
+Carries Arabic and Latin in one family.
+See mypromo-arabic-faces.png before settling: four Arabic faces set in this
+palette at the app's own sizes, because Tajawal may not be the final answer.
+
+THE RULES
+1. Olive is both the brand and the action — so there is only ever ONE olive
+   button on a screen. Everything else is ink on ivory.
+2. Clay means "this needs you". Never decoration.
+3. Light only. Warm white cards on ivory, one radius, one hairline.
+4. The mark is never redrawn, recoloured or stretched. Clear space of one
+   head's width on every side.

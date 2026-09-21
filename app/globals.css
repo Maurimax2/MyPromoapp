@@ -19,21 +19,21 @@
      stops here, because past this a page is not more readable, only larger —
      and every pixel of it is a bitmap the browser has to hold. */
   --doc-w: 1100px;
-  --purple: #6B21B5;
-  --purple-light: #8B5CF6;
-  --purple-pale: #EDE9FE;
-  --orange: #F97316;
-  --orange-light: #FDBA74;
-  --orange-pale: #FFF1E3;
-  --bg: #F1F5F9;
-  --surface: #FFFFFF;
-  --ink: #1A1424;
-  --ink-2: #453D57;
-  --ink-3: #6B6480;
-  --line: #E8E4F0;
-  --line-soft: #F1EEF7;
-  --shadow: 0 1px 2px rgba(26, 20, 36, .04), 0 4px 16px rgba(26, 20, 36, .06);
-  --shadow-nav: 0 -1px 20px rgba(26, 20, 36, .07);
+  --olive: #2A5B3E;
+  --olive-light: #3F7A57;
+  --olive-pale: #E3EDE5;
+  --clay: #A8502A;
+  --clay-light: #C97A50;
+  --clay-pale: #F2E3DA;
+  --bg: #F3F1E9;
+  --surface: #FFFDF8;
+  --ink: #17201A;
+  --ink-2: #6B6F69;
+  --ink-3: #979992;
+  --line: #DDDCD4;
+  --line-soft: #EAE8E0;
+  --shadow: 0 1px 2px rgba(23, 32, 26, .04), 0 4px 14px rgba(23, 32, 26, .06);
+  --shadow-nav: 0 -1px 18px rgba(23, 32, 26, .07);
   --r-card: 17px;
   --r-tile: 14px;
   --nav-h: 76px;
@@ -49,14 +49,14 @@ html { overscroll-behavior-y: none; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-plex), 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  font-family: var(--font-app), 'Readex Pro', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
 }
 
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-:focus-visible { outline: 2px solid var(--purple-light); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--olive-light); outline-offset: 2px; }
 
 /* Pressing things.
 
@@ -78,11 +78,11 @@ a, button, [role='button'], label, input, select, textarea, summary {
    you pressed a minute ago still lit. Every hover in this file is behind this,
    and every one of them has an :active beside it for the thumb. */
 @media (hover: hover) and (pointer: fine) {
-  .icobtn:hover { background: var(--purple-pale); color: var(--purple); }
+  .icobtn:hover { background: var(--olive-pale); color: var(--olive); }
   .composer-acts button:hover { background: var(--bg); }
-  .post-acts button:hover { background: var(--bg); color: var(--purple); }
-  .quiz-opt:not(:disabled):hover { border-color: var(--purple-light); }
-  .composer-send:hover { background: var(--purple) !important; }
+  .post-acts button:hover { background: var(--bg); color: var(--olive); }
+  .quiz-opt:not(:disabled):hover { border-color: var(--olive-light); }
+  .composer-send:hover { background: var(--olive) !important; }
   .post-menu button:hover { background: var(--bg); }
 }
 
@@ -129,7 +129,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   border: 0; background: none; outline: 0; width: 100%;
   font: inherit; color: var(--ink);
 }
-.srch:focus-within { background: var(--surface); border-color: var(--purple-light); }
+.srch:focus-within { background: var(--surface); border-color: var(--olive-light); }
 
 .seg { display: flex; gap: 4px; background: var(--bg); border-radius: 12px; padding: 4px; }
 /* Also an <a>: the semester switch on a subject is two links, because each
@@ -140,8 +140,8 @@ a, button, [role='button'], label, input, select, textarea, summary {
   display: flex; align-items: center; justify-content: center;
 }
 .seg button[data-on='true'], .seg a[data-on='true'] {
-  background: var(--surface); color: var(--purple);
-  box-shadow: 0 1px 3px rgba(26, 20, 36, .09);
+  background: var(--surface); color: var(--olive);
+  box-shadow: 0 1px 3px rgba(23, 32, 26, .09);
 }
 
 .chips { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
@@ -152,7 +152,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   font-size: 16px; font-weight: 600; color: var(--ink-3);
   padding-bottom: 8px; border-bottom: 2.5px solid transparent;
 }
-.tabs button[data-on='true'] { color: var(--purple); border-bottom-color: var(--orange); }
+.tabs button[data-on='true'] { color: var(--olive); border-bottom-color: var(--clay); }
 
 /* ---------- body ---------- */
 .scroll {
@@ -181,9 +181,9 @@ a, button, [role='button'], label, input, select, textarea, summary {
   display: flex; align-items: center; justify-content: center;
 }
 .tile.sm { width: 38px; height: 38px; border-radius: 11px; }
-.tint-purple      { background: var(--purple-pale); color: var(--purple); }
-.tint-purpleLight { background: var(--purple-pale); color: var(--purple-light); }
-.tint-orange      { background: var(--orange-pale); color: var(--orange); }
+.tint-olive      { background: var(--olive-pale); color: var(--olive); }
+.tint-oliveLight { background: var(--olive-pale); color: var(--olive-light); }
+.tint-clay      { background: var(--clay-pale); color: var(--clay); }
 .tint-grey        { background: var(--bg); color: var(--ink-3); }
 
 .grow { flex: 1; min-width: 0; }
@@ -196,15 +196,15 @@ a, button, [role='button'], label, input, select, textarea, summary {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .chev { color: var(--ink-3); flex-shrink: 0; }
-.cnt { font-size: 13px; font-weight: 700; color: var(--purple); font-variant-numeric: tabular-nums; }
+.cnt { font-size: 13px; font-weight: 700; color: var(--olive); font-variant-numeric: tabular-nums; }
 
 .pill {
   display: inline-flex; align-items: center; white-space: nowrap;
   font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
 }
 .pill.grey { background: var(--bg); color: var(--ink-3); }
-.pill.warn { background: var(--orange-pale); color: #C2410C; }
+.pill.warn { background: var(--clay-pale); color: #8A4022; }
 .pill.solid { color: #fff; }
 
 /* ---------- lecture row ---------- */
@@ -216,11 +216,11 @@ a, button, [role='button'], label, input, select, textarea, summary {
 .lec:active { transform: scale(.985); }
 .num {
   width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   display: flex; align-items: center; justify-content: center;
   font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
-.num.clash { background: var(--orange-pale); color: #C2410C; }
+.num.clash { background: var(--clay-pale); color: #8A4022; }
 .num.none { background: var(--bg); color: var(--ink-3); font-size: 15px; }
 .lec-nm { font-size: 15px; font-weight: 500; line-height: 1.35; }
 .lec-mt {
@@ -240,12 +240,12 @@ a, button, [role='button'], label, input, select, textarea, summary {
 
 /* ---------- notice ---------- */
 .notice {
-  background: var(--orange-pale); border-radius: var(--r-card); padding: 13px 14px;
+  background: var(--clay-pale); border-radius: var(--r-card); padding: 13px 14px;
   display: flex; gap: 11px; align-items: flex-start;
 }
-.notice svg { color: var(--orange); flex-shrink: 0; margin-top: 1px; }
-.notice-t { font-size: 14px; font-weight: 600; color: #7C2D12; line-height: 1.4; }
-.notice-b { font-size: 13px; color: #9A3412; line-height: 1.55; margin-top: 3px; }
+.notice svg { color: var(--clay); flex-shrink: 0; margin-top: 1px; }
+.notice-t { font-size: 14px; font-weight: 600; color: #6E3418; line-height: 1.4; }
+.notice-b { font-size: 13px; color: #7D3A1E; line-height: 1.55; margin-top: 3px; }
 
 /* ---------- empty ---------- */
 .empty {
@@ -261,7 +261,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   height: 52px; border-radius: 14px; display: flex; align-items: center;
   justify-content: center; font-size: 16px; font-weight: 700; width: 100%;
 }
-.btn.p { background: var(--purple); color: #fff; }
+.btn.p { background: var(--olive); color: #fff; }
 .btn.g { background: var(--bg); color: var(--ink); }
 
 /* ---------- bottom nav ---------- */
@@ -290,7 +290,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   justify-content: center; gap: 4px; min-height: 56px;
   font-size: 12px; font-weight: 600; color: var(--ink-3);
 }
-.nav a[data-on='true'] { color: var(--purple); }
+.nav a[data-on='true'] { color: var(--olive); }
 
 /* A count on a tab, not a dot: "there are messages" and "there are seven"
    are different things to walk into. It hangs off the icon, so it does not
@@ -299,16 +299,16 @@ a, button, [role='button'], label, input, select, textarea, summary {
 .nav-tally {
   position: absolute; top: -5px; inset-inline-end: -9px;
   min-width: 17px; height: 17px; padding: 0 5px; border-radius: 9px;
-  background: var(--orange); color: #fff;
+  background: var(--clay); color: #fff;
   font-size: 10px; font-weight: 700; line-height: 1;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 0 0 2px var(--surface);
 }
 .nav .fab {
   width: 52px; height: 52px; flex: none; border-radius: 17px;
-  background: var(--orange); color: #fff;
+  background: var(--olive); color: #fff;
   display: flex; align-items: center; justify-content: center;
-  margin-top: -14px; box-shadow: 0 6px 16px rgba(249, 115, 22, .4);
+  margin-top: -14px; box-shadow: 0 6px 16px rgba(42, 91, 62, .28);
 }
 
 /* ============================================================
@@ -348,20 +348,20 @@ a, button, [role='button'], label, input, select, textarea, summary {
    quieter version of the same fault. */
 .nav .fab:active {
   transform: scale(.9);
-  box-shadow: 0 3px 10px rgba(249, 115, 22, .45);
+  box-shadow: 0 3px 10px rgba(42, 91, 62, .30);
 }
 
-.icobtn:active { transform: scale(.92); background: var(--purple-pale); color: var(--purple); }
+.icobtn:active { transform: scale(.92); background: var(--olive-pale); color: var(--olive); }
 .hero-ic:active { transform: scale(.92); }
 
 /* Chips and switches — the year, S1/S2, the panel's kinds. */
 button.pill:active { transform: scale(.94); }
 .seg button:active, .seg a:active { transform: scale(.95); }
 .imp-kind:active { transform: scale(.95); }
-.yr-item:active { background: var(--purple-pale); }
+.yr-item:active { background: var(--olive-pale); }
 
 /* An answer being chosen. */
-.quiz-opt:not(:disabled):active { transform: scale(.99); border-color: var(--purple-light); }
+.quiz-opt:not(:disabled):active { transform: scale(.99); border-color: var(--olive-light); }
 
 /* Liking, commenting, attaching — small round things that need to sink
    further than a card to be felt at all. */
@@ -419,8 +419,8 @@ button.pill:active { transform: scale(.94); }
   min-height: 44px; border-radius: 11px;
   font-size: 13.5px; font-weight: 600; color: var(--ink-2);
 }
-.composer-acts .ic-img { color: var(--purple-light); }
-.composer-acts .ic-pdf { color: var(--orange); }
+.composer-acts .ic-img { color: var(--olive-light); }
+.composer-acts .ic-pdf { color: var(--clay); }
 
 .post {
   background: var(--surface);
@@ -445,9 +445,9 @@ button.pill:active { transform: scale(.94); }
 .post-photo {
   height: 200px;
   background:
-    linear-gradient(135deg, var(--purple-pale) 0%, var(--orange-pale) 100%);
+    linear-gradient(135deg, var(--olive-pale) 0%, var(--clay-pale) 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; color: var(--purple);
+  gap: 8px; color: var(--olive);
 }
 .post-photo span { font-size: 13px; font-weight: 600; color: var(--ink-2); }
 
@@ -463,7 +463,10 @@ button.pill:active { transform: scale(.94); }
   font-size: 14.5px; font-weight: 600; line-height: 1.35;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.post-file-mt { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+.post-file-mt {
+  font-size: 13px; color: var(--ink-3); margin-top: 3px;
+  direction: ltr; text-align: start;
+}
 
 .post-tagrow { padding: 13px 14px 0; }
 
@@ -474,7 +477,7 @@ button.pill:active { transform: scale(.94); }
 }
 .post-counts .heart {
   width: 20px; height: 20px; border-radius: 50%;
-  background: var(--orange); color: #fff;
+  background: var(--clay); color: #fff;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
@@ -489,7 +492,7 @@ button.pill:active { transform: scale(.94); }
   min-height: 48px;
   font-size: 13.5px; font-weight: 600; color: var(--ink-2);
 }
-.post-acts button[data-on='true'] { color: var(--orange); }
+.post-acts button[data-on='true'] { color: var(--clay); }
 
 /* ============================================================
    الملخصات — student notes, grouped by subject.
@@ -503,7 +506,7 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-2); padding: 0 2px 2px;
 }
 .note-subject-n {
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   border-radius: 20px; padding: 2px 8px; font-size: 12.5px;
   font-variant-numeric: tabular-nums;
 }
@@ -527,7 +530,7 @@ button.pill:active { transform: scale(.94); }
 
 .pdf {
   flex: 1;
-  background: #2A2733;
+  background: #1F2A22;
   min-height: calc(100dvh - 96px - var(--nav-h));
   padding: 14px 12px calc(var(--nav-h) + 24px);
 }
@@ -547,21 +550,21 @@ button.pill:active { transform: scale(.94); }
   overflow: hidden;
 }
 .pdf-page canvas { border-radius: 10px; }
-.pdf-pct { font-variant-numeric: tabular-nums; color: var(--orange); font-weight: 700; }
+.pdf-pct { font-variant-numeric: tabular-nums; color: var(--clay); font-weight: 700; }
 .pdf-msg {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 12px; padding: 70px 24px; color: #CFC8DC; text-align: center;
+  gap: 12px; padding: 70px 24px; color: #D3D9CF; text-align: center;
   font-size: 14.5px; line-height: 1.7;
 }
 .pdf-msg .btn { max-width: 220px; }
 .pdf-count {
-  text-align: center; color: #8F87A3; font-size: 13px;
+  text-align: center; color: #9AA396; font-size: 13px;
   padding: 16px 0 4px; font-variant-numeric: tabular-nums;
 }
 .spinner {
   width: 28px; height: 28px; border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, .18);
-  border-top-color: var(--orange);
+  border-top-color: var(--clay);
   animation: spin .8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -586,7 +589,7 @@ button.pill:active { transform: scale(.94); }
 
 .quizcard {
   display: flex; align-items: center; gap: 13px; padding: 13px 14px;
-  background: var(--orange); color: #fff; margin-bottom: 4px;
+  background: var(--clay); color: #fff; margin-bottom: 4px;
 }
 .quizcard .nm, .quizcard .mt { color: #fff; }
 .quizcard .mt { opacity: .8; }
@@ -604,7 +607,7 @@ button.pill:active { transform: scale(.94); }
 .quizcard.model .nm { color: var(--ink); }
 .quizcard.model .mt { color: var(--ink-3); opacity: 1; }
 .quizcard.model .chev { color: var(--ink-3); }
-.quizcard.model .quizcard-ic { background: var(--purple-pale); color: var(--purple); }
+.quizcard.model .quizcard-ic { background: var(--olive-pale); color: var(--olive); }
 
 /* ============================================================
    Quizzes. Right and wrong are semantic colours, deliberately
@@ -619,7 +622,7 @@ button.pill:active { transform: scale(.94); }
 }
 
 .quiz-bar { height: 5px; border-radius: 4px; background: var(--line); overflow: hidden; }
-.quiz-bar-fill { height: 100%; background: var(--orange); transition: width .25s ease; }
+.quiz-bar-fill { height: 100%; background: var(--clay); transition: width .25s ease; }
 .quiz-step { font-size: 13px; color: var(--ink-3); font-weight: 600; }
 
 .quiz-q {
@@ -638,7 +641,7 @@ button.pill:active { transform: scale(.94); }
 .quiz-opt.dim { opacity: .5; }
 
 .quiz-why {
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   border-radius: 14px; padding: 13px 15px;
   font-size: 14px; line-height: 1.75;
 }
@@ -668,7 +671,7 @@ button.pill:active { transform: scale(.94); }
 .inv-state {
   font-size: 12.5px; color: var(--ink-3); text-align: center;
 }
-.inv-state.on { color: var(--orange); }
+.inv-state.on { color: var(--clay); }
 
 .inv-tree {
   background: var(--surface);
@@ -697,10 +700,10 @@ button.pill:active { transform: scale(.94); }
 .inv-size { font-size: 12.5px; color: var(--ink-3); flex-shrink: 0; }
 .inv-wait { color: var(--ink-3); }
 .inv-err, .inv-fatal {
-  color: var(--orange); font-size: 13px;
+  color: var(--clay); font-size: 13px;
 }
 .inv-fatal {
-  background: var(--orange-pale); margin: 12px; padding: 14px;
+  background: var(--clay-pale); margin: 12px; padding: 14px;
   border-radius: var(--r-card); overflow-wrap: anywhere;
 }
 
@@ -713,7 +716,7 @@ button.pill:active { transform: scale(.94); }
 .alts > summary {
   list-style: none; cursor: pointer;
   padding: 9px 16px 9px 52px;
-  font-size: 13px; color: var(--purple); font-weight: 600;
+  font-size: 13px; color: var(--olive); font-weight: 600;
 }
 .alts > summary::-webkit-details-marker { display: none; }
 .alts > summary::before { content: '▾ '; }
@@ -726,21 +729,21 @@ button.pill:active { transform: scale(.94); }
   min-height: 44px;
 }
 .alt-nm { display: block; font-size: 13.5px; color: var(--ink-2); }
-.corr { color: var(--orange); }
-.corr .alt-nm { color: var(--orange); font-weight: 600; }
+.corr { color: var(--clay); }
+.corr .alt-nm { color: var(--clay); font-weight: 600; }
 
 /* A note that came out of the Drive has no author to show. */
 .note-ic {
   width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   display: flex; align-items: center; justify-content: center;
 }
 
 /* ---------- the quiz, with multiple answers ---------- */
 .quiz-step { display: flex; align-items: center; justify-content: space-between; }
 .quiz-kind {
-  font-size: 12px; font-weight: 600; color: var(--purple);
-  background: var(--purple-pale); border-radius: 999px; padding: 3px 9px;
+  font-size: 12px; font-weight: 600; color: var(--olive);
+  background: var(--olive-pale); border-radius: 999px; padding: 3px 9px;
 }
 .quiz-letter {
   width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0;
@@ -748,8 +751,8 @@ button.pill:active { transform: scale(.94); }
   font-size: 13px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
-.quiz-opt.on { border-color: var(--purple); background: var(--purple-pale); }
-.quiz-opt.on .quiz-letter { background: var(--purple); color: #fff; }
+.quiz-opt.on { border-color: var(--olive); background: var(--olive-pale); }
+.quiz-opt.on .quiz-letter { background: var(--olive); color: #fff; }
 .quiz-opt.right .quiz-letter { background: var(--right); color: #fff; }
 .quiz-opt.wrong .quiz-letter { background: var(--wrong); color: #fff; }
 .quiz-why.ok { color: var(--right); }
@@ -763,7 +766,7 @@ button.pill:active { transform: scale(.94); }
 }
 .quiz-model {
   padding: 15px 16px; font-size: 15px; line-height: 1.9; color: var(--ink);
-  border-inline-start: 3px solid var(--purple);
+  border-inline-start: 3px solid var(--olive);
 }
 .quiz-mark { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 
@@ -787,7 +790,7 @@ button.pill:active { transform: scale(.94); }
   border: 2px solid var(--line); background: var(--surface);
   display: flex; align-items: center; justify-content: center; color: #fff;
 }
-.pick-box.on { background: var(--purple); border-color: var(--purple); }
+.pick-box.on { background: var(--olive); border-color: var(--olive); }
 .pick .num { background: var(--bg); color: var(--ink-3); }
 /* ---------- تحدّي زميلك ---------- */
 
@@ -799,7 +802,7 @@ button.pill:active { transform: scale(.94); }
   font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums;
   color: var(--ink-2); flex-shrink: 0;
 }
-.duel-score.won  { color: var(--orange); }
+.duel-score.won  { color: var(--clay); }
 .duel-score.lost { color: var(--ink-3); }
 
 /* And the whole of it, on the duel's own screen. */
@@ -808,14 +811,14 @@ button.pill:active { transform: scale(.94); }
   align-items: center; gap: 8px; text-align: center;
 }
 .duel-verdict { font-size: 19px; font-weight: 700; }
-.duel-result.won .duel-verdict  { color: var(--orange); }
+.duel-result.won .duel-verdict  { color: var(--clay); }
 .duel-result.lost .duel-verdict { color: var(--ink-2); }
 .duel-pair {
   display: flex; align-items: center; gap: 14px;
   font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums;
   line-height: 1.1; color: var(--ink-3);
 }
-.duel-pair .win { color: var(--purple); }
+.duel-pair .win { color: var(--olive); }
 .duel-dash { color: var(--line); font-size: 30px; }
 .duel-of { font-size: 13px; color: var(--ink-3); }
 
@@ -838,20 +841,20 @@ button.pill:active { transform: scale(.94); }
   overflow: hidden; margin-top: 10px;
 }
 .admin-fill span {
-  display: block; height: 100%; background: var(--purple);
+  display: block; height: 100%; background: var(--olive);
   transition: width .3s ease;
 }
 
 /* The lecture's own number, the one the archive prints beside it. Coloured
    apart from the count at the other end of the row, which is a different
    number about a different thing. */
-.pick .pick-n { background: var(--purple-pale); color: var(--purple); font-weight: 700; }
-.quizcard.review { background: var(--orange-pale); }
-.quizcard.review .quizcard-ic { background: var(--orange); color: #fff; }
+.pick .pick-n { background: var(--olive-pale); color: var(--olive); font-weight: 700; }
+.quizcard.review { background: var(--clay-pale); }
+.quizcard.review .quizcard-ic { background: var(--clay); color: #fff; }
 
 /* An answer MyPromo worked out, where the paper had no correction. */
 .quiz-by {
-  font-size: 12.5px; color: var(--orange); background: var(--orange-pale);
+  font-size: 12.5px; color: var(--clay); background: var(--clay-pale);
   border-radius: 11px; padding: 9px 12px; line-height: 1.6;
 }
 
@@ -865,7 +868,7 @@ button.pill:active { transform: scale(.94); }
   font-size: 31px; font-weight: 700; margin-top: 18px; letter-spacing: -.02em;
   color: var(--ink);
 }
-.login-name-b { color: var(--purple); }
+.login-name-b { color: var(--olive); }
 .login-form, .login-sent {
   width: 100%; display: flex; flex-direction: column; gap: 11px; margin-top: 40px;
 }
@@ -889,7 +892,7 @@ button.pill:active { transform: scale(.94); }
   box-shadow: inset 0 0 0 100px var(--bg);
   caret-color: var(--ink);
 }
-.login-input:focus { outline: none; border-color: var(--purple); background: var(--surface); }
+.login-input:focus { outline: none; border-color: var(--olive); background: var(--surface); }
 .login-err { font-size: 13px; color: var(--wrong); text-align: center; }
 .login-sent { align-items: center; text-align: center; }
 .login-sent-t { font-size: 19px; font-weight: 700; }
@@ -908,10 +911,10 @@ button.pill:active { transform: scale(.94); }
   border-bottom: 1px solid var(--line-soft);
 }
 .admin-brand { font-size: 17px; font-weight: 700; letter-spacing: -.02em; flex: 1; }
-.admin-brand-b { color: var(--purple); }
+.admin-brand-b { color: var(--olive); }
 .admin-badge {
   font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   border-radius: 999px; padding: 3px 8px; margin-inline-start: 8px;
 }
 .admin-out { font-size: 13.5px; color: var(--ink-3); }
@@ -941,7 +944,7 @@ button.pill:active { transform: scale(.94); }
 .admin-tile span { font-size: 13px; }
 .admin-import-ic {
   width: 42px; height: 42px; border-radius: 13px; flex-shrink: 0;
-  background: var(--orange); color: #fff;
+  background: var(--clay); color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
 .admin-import { transition: transform .12s ease; }
@@ -953,7 +956,7 @@ button.pill:active { transform: scale(.94); }
   background: var(--bg); padding: 0 14px; font: inherit; font-size: 15px;
   font-weight: 500; color: var(--ink); width: 100%;
 }
-.admin-input:focus { outline: none; border-color: var(--purple); background: var(--surface); }
+.admin-input:focus { outline: none; border-color: var(--olive); background: var(--surface); }
 .admin-err {
   font-size: 13px; color: var(--wrong); line-height: 1.7;
   overflow-wrap: anywhere; word-break: break-word;
@@ -976,7 +979,7 @@ button.pill:active { transform: scale(.94); }
   font-weight: 600; color: var(--ink); padding: 2px 0;
   border-bottom: 1.5px solid transparent;
 }
-.imp-title:focus { outline: none; border-bottom-color: var(--purple); }
+.imp-title:focus { outline: none; border-bottom-color: var(--olive); }
 .imp-meta { font-size: 11.5px; color: var(--ink-3); margin: 3px 0 8px; overflow-wrap: anywhere; }
 .imp-kinds { display: flex; flex-wrap: wrap; gap: 5px; }
 .imp-kind {
@@ -984,7 +987,7 @@ button.pill:active { transform: scale(.94); }
   background: var(--bg); color: var(--ink-3);
   transition: background .12s ease, color .12s ease;
 }
-.imp-kind.on { background: var(--purple); color: #fff; }
+.imp-kind.on { background: var(--olive); color: #fff; }
 
 /* ---------- reviewing questions ---------- */
 /* The card is the whole screen. Everything else is a thin frame around it:
@@ -1004,7 +1007,7 @@ button.pill:active { transform: scale(.94); }
   background: var(--bg); color: var(--ink-3);
   border-radius: 999px; padding: 2px 7px;
 }
-.rev-tab.on { background: var(--purple); color: #fff; }
+.rev-tab.on { background: var(--olive); color: #fff; }
 .rev-tab.on span { background: rgba(255, 255, 255, .22); color: #fff; }
 
 .rev-meta {
@@ -1012,7 +1015,7 @@ button.pill:active { transform: scale(.94); }
   font-size: 12.5px; font-weight: 600; color: var(--ink-3); padding: 0 3px;
 }
 .rev-meta > span:first-child { overflow-wrap: anywhere; }
-.rev-n { flex-shrink: 0; color: var(--purple); font-variant-numeric: tabular-nums; }
+.rev-n { flex-shrink: 0; color: var(--olive); font-variant-numeric: tabular-nums; }
 
 /* Leaving is 180ms — long enough to read as movement, short enough that a
    fast reviewer never waits for it. It matches the timeout in ReviewScreen. */
@@ -1036,9 +1039,9 @@ button.pill:active { transform: scale(.94); }
   text-align: left;
   transition: border-color .12s ease, background .12s ease;
 }
-.rev-opt.on { border-color: var(--purple); background: var(--purple-pale); }
-.rev-opt.on .rev-letter { background: var(--purple); color: #fff; }
-.rev-opt > svg { flex-shrink: 0; color: var(--purple); margin-top: 2px; }
+.rev-opt.on { border-color: var(--olive); background: var(--olive-pale); }
+.rev-opt.on .rev-letter { background: var(--olive); color: #fff; }
+.rev-opt > svg { flex-shrink: 0; color: var(--olive); margin-top: 2px; }
 .rev-letter {
   flex-shrink: 0; width: 25px; height: 25px; border-radius: 8px;
   background: var(--line); color: var(--ink-2);
@@ -1052,7 +1055,7 @@ button.pill:active { transform: scale(.94); }
   padding: 11px 13px; font: inherit; font-size: 14px; font-weight: 500;
   line-height: 1.7; color: var(--ink); text-align: left;
 }
-.rev-why:focus { outline: none; border-color: var(--purple); background: var(--surface); }
+.rev-why:focus { outline: none; border-color: var(--olive); background: var(--surface); }
 
 .rev-actions { display: flex; flex-direction: column; gap: 9px; }
 .rev-minor { display: flex; gap: 9px; }
@@ -1137,7 +1140,7 @@ button.pill:active { transform: scale(.94); }
 .ctd-sort > span { font-size: 12.5px; font-weight: 600; color: var(--ink-3); }
 .ctd-n {
   flex-shrink: 0; min-width: 27px; height: 27px; border-radius: 9px;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   font-size: 12.5px; font-weight: 700; line-height: 27px; text-align: center;
 }
 .ctd-t { font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.5; }
@@ -1163,7 +1166,7 @@ button.pill:active { transform: scale(.94); }
 
 /* Asking before something irreversible. Orange is for attention, and losing a
    year's worth of files is the most attention anything here needs. */
-.danger-card { border: 1.5px solid var(--orange); }
+.danger-card { border: 1.5px solid var(--clay); }
 
 /* Pulling questions out of a paper: the button, then what came back. */
 .ctd-qcm {
@@ -1171,7 +1174,7 @@ button.pill:active { transform: scale(.94); }
   padding-top: 10px; border-top: 1px solid var(--line);
 }
 .ctd-qcm-b { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--ink-3); }
-.ctd-qcm-b.bad { color: var(--orange); }
+.ctd-qcm-b.bad { color: var(--clay); }
 .btn.g.sm.danger { color: var(--wrong); }
 
 /* the years, and a year's subjects */
@@ -1194,7 +1197,7 @@ button.pill:active { transform: scale(.94); }
 .login-sent .btn { text-decoration: none; }
 .fill-bar { height: 6px; border-radius: 4px; background: var(--line); overflow: hidden; }
 .fill-bar-in {
-  height: 100%; background: var(--purple);
+  height: 100%; background: var(--olive);
   transition: width .3s ease; min-width: 3px;
 }
 .login-alts {
@@ -1203,7 +1206,7 @@ button.pill:active { transform: scale(.94); }
 }
 .login-alt {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 14px; font-weight: 600; color: var(--purple); min-height: 44px;
+  font-size: 14px; font-weight: 600; color: var(--olive); min-height: 44px;
 }
 .login-lbl {
   font-size: 12.5px; font-weight: 700; letter-spacing: .05em;
@@ -1219,8 +1222,8 @@ button.pill:active { transform: scale(.94); }
 .admin-top .icobtn svg { transform: scaleX(1); }
 
 /* importing: year, then subject, then the link */
-.imp-kind.add { gap: 5px; display: inline-flex; align-items: center; color: var(--purple); background: var(--purple-pale); }
-.imp-kind.on { background: var(--purple); color: #fff; }
+.imp-kind.add { gap: 5px; display: inline-flex; align-items: center; color: var(--olive); background: var(--olive-pale); }
+.imp-kind.on { background: var(--olive); color: #fff; }
 .imp-sem { display: flex; align-items: flex-start; gap: 9px; }
 .imp-sem-n {
   flex-shrink: 0; min-width: 26px; padding: 4px 0; text-align: center;
@@ -1242,7 +1245,7 @@ button.pill:active { transform: scale(.94); }
 .sk::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(107, 33, 181, .06), transparent);
+  background: linear-gradient(90deg, transparent, rgba(42, 91, 62, .06), transparent);
   transform: translateX(-100%);
   animation: sweep 1.3s ease-in-out infinite;
 }
@@ -1308,7 +1311,7 @@ button.pill:active { transform: scale(.94); }
    the head reads as something the cards sit under rather than a band above
    them. */
 .hero {
-  background: linear-gradient(150deg, #6B21B5 0%, #7C3AED 62%, #8B5CF6 100%);
+  background: linear-gradient(150deg, #22492F 0%, #2A5B3E 58%, #3F7A57 100%);
   color: #fff;
   padding: 16px 18px 42px;
   flex-shrink: 0;
@@ -1330,10 +1333,10 @@ button.pill:active { transform: scale(.94); }
 .tally {
   position: absolute; top: 1px; inset-inline-end: 0;
   min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
-  background: var(--orange); color: #fff;
+  background: var(--clay); color: #fff;
   font-size: 10.5px; font-weight: 700; line-height: 1;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 0 2px #7326BE;
+  box-shadow: 0 0 0 2px #22492F;
 }
 
 /* `.av` carries no size — every other use passes one inline, and this one
@@ -1385,10 +1388,10 @@ button.pill:active { transform: scale(.94); }
 .today-ic {
   width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
 }
 /* Orange is spent here and only here on this screen: something is owed. */
-.today-ic.due { background: var(--orange-pale); color: #C2410C; }
+.today-ic.due { background: var(--clay-pale); color: #8A4022; }
 .today b { display: block; font-size: 15px; font-weight: 600; }
 .today s { display: block; text-decoration: none; font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
 .today-go { color: var(--ink-3); flex-shrink: 0; }
@@ -1423,7 +1426,7 @@ button.pill:active { transform: scale(.94); }
 .composer-field:focus { outline: none; }
 .composer-send {
   flex: 0 0 auto !important; min-width: 84px;
-  background: var(--purple); color: #fff !important; border-radius: 11px;
+  background: var(--olive); color: #fff !important; border-radius: 11px;
 }
 .composer-send:disabled { opacity: .35; }
 
@@ -1444,7 +1447,7 @@ button.pill:active { transform: scale(.94); }
   background: var(--bg);
 }
 .post-media > * + * { margin-top: 8px; }
-.post-acts button[data-on='true'] { color: var(--orange); }
+.post-acts button[data-on='true'] { color: var(--clay); }
 
 /* ---------- replies ---------- */
 .replies {
@@ -1459,10 +1462,10 @@ button.pill:active { transform: scale(.94); }
   flex: 1; height: 42px; border-radius: 21px; border: 1px solid var(--line);
   background: var(--bg); padding: 0 14px; font: inherit; font-size: 14px; color: var(--ink);
 }
-.reply-new input:focus { outline: none; border-color: var(--purple-light); background: var(--surface); }
+.reply-new input:focus { outline: none; border-color: var(--olive-light); background: var(--surface); }
 .reply-new button {
   width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-  background: var(--purple); color: #fff;
+  background: var(--olive); color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
 .reply-new button:disabled { opacity: .35; }
@@ -1485,7 +1488,7 @@ button.pill:active { transform: scale(.94); }
 .room-people { display: flex; gap: -6px; flex-wrap: wrap; }
 .room-av {
   width: 30px; height: 30px; border-radius: 50%; margin-inline-end: -6px;
-  background: var(--purple); color: #fff; border: 2px solid var(--surface);
+  background: var(--olive); color: #fff; border: 2px solid var(--surface);
   font-size: 11px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1498,9 +1501,9 @@ button.pill:active { transform: scale(.94); }
   padding: 9px 13px; box-shadow: var(--shadow);
   font-size: 14.5px; line-height: 1.6;
 }
-.say b { display: block; font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 2px; }
+.say b { display: block; font-size: 12px; font-weight: 700; color: var(--olive); margin-bottom: 2px; }
 .say.mine {
-  align-self: flex-end; background: var(--purple); color: #fff;
+  align-self: flex-end; background: var(--olive); color: #fff;
   border-radius: 15px 15px 5px 15px;
 }
 .say-new {
@@ -1514,10 +1517,10 @@ button.pill:active { transform: scale(.94); }
   flex: 1; height: 44px; border-radius: 22px; border: 1px solid var(--line);
   background: var(--bg); padding: 0 15px; font: inherit; font-size: 15px; color: var(--ink);
 }
-.say-new input:focus { outline: none; border-color: var(--purple-light); background: var(--surface); }
+.say-new input:focus { outline: none; border-color: var(--olive-light); background: var(--surface); }
 .say-new button {
   width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-  background: var(--purple); color: #fff;
+  background: var(--olive); color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
 .say-new button:disabled { opacity: .35; }
@@ -1528,8 +1531,8 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-2); padding: 9px 0; border-radius: 9px;
 }
 .seg-a[data-on='true'] {
-  background: var(--surface); color: var(--purple);
-  box-shadow: 0 1px 3px rgba(26, 20, 36, .09);
+  background: var(--surface); color: var(--olive);
+  box-shadow: 0 1px 3px rgba(23, 32, 26, .09);
 }
 
 .qa {
@@ -1540,7 +1543,7 @@ button.pill:active { transform: scale(.94); }
 .qa-top { display: flex; align-items: flex-start; gap: 11px; }
 .qa-dot {
   width: 28px; height: 28px; border-radius: 9px; flex-shrink: 0;
-  background: var(--orange-pale); color: #C2410C;
+  background: var(--clay-pale); color: #8A4022;
   font-size: 14px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1572,11 +1575,11 @@ button.pill:active { transform: scale(.94); }
 }
 .ans-body { font-size: 14.5px; line-height: 1.75; color: var(--ink-2); }
 .ans-pick {
-  align-self: flex-start; font-size: 12.5px; font-weight: 700; color: var(--purple);
+  align-self: flex-start; font-size: 12.5px; font-weight: 700; color: var(--olive);
   min-height: 36px;
 }
 .scroll:has(+ .say-new) { padding-bottom: 86px; }
-.note-saves[data-on='true'] { color: var(--orange); }
+.note-saves[data-on='true'] { color: var(--clay); }
 .note-saves { min-height: 36px; min-width: 36px; justify-content: center; }
 
 /* ---------- الملف الشخصي ---------- */
@@ -1594,7 +1597,7 @@ button.pill:active { transform: scale(.94); }
 }
 .me-stat { flex: 1; text-align: center; }
 .me-stat b {
-  display: block; font-size: 20px; font-weight: 700; color: var(--purple);
+  display: block; font-size: 20px; font-weight: 700; color: var(--olive);
   font-variant-numeric: tabular-nums;
 }
 .me-stat span { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; display: block; }
@@ -1644,7 +1647,7 @@ button.pill:active { transform: scale(.94); }
   padding: 26px; text-align: center;
 }
 .rev-due-n {
-  font-size: 46px; font-weight: 700; color: var(--orange);
+  font-size: 46px; font-weight: 700; color: var(--clay);
   font-variant-numeric: tabular-nums; line-height: 1;
 }
 .rev-due-l { font-size: 14px; color: var(--ink-3); margin-top: 7px; }
@@ -1655,7 +1658,7 @@ button.pill:active { transform: scale(.94); }
   padding: 26px 18px; text-align: center;
 }
 .pts-n {
-  font-size: 52px; font-weight: 700; color: var(--purple);
+  font-size: 52px; font-weight: 700; color: var(--olive);
   font-variant-numeric: tabular-nums; line-height: 1;
 }
 .pts-l { font-size: 14px; color: var(--ink-3); margin-top: 7px; }
@@ -1673,14 +1676,14 @@ button.pill:active { transform: scale(.94); }
 .pts-ic {
   width: 30px; height: 30px; flex-shrink: 0; border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--bg); color: var(--purple);
+  background: var(--bg); color: var(--olive);
 }
 .pts-x {
   font-size: 12px; color: var(--ink-3); font-weight: 600;
   font-variant-numeric: tabular-nums; direction: ltr;
 }
 .pts-p {
-  font-size: 15px; font-weight: 700; color: var(--purple);
+  font-size: 15px; font-weight: 700; color: var(--olive);
   font-variant-numeric: tabular-nums; min-width: 34px; text-align: left;
 }
 .pts-note { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; padding: 0 3px; }
@@ -1705,8 +1708,8 @@ button.pill:active { transform: scale(.94); }
 }
 /* Earned is the only place colour appears here — a wall of orange badges
    would say nothing about which ones were actually won. */
-.badge.on .badge-ic { background: var(--purple); color: #fff; }
-.badge.on { box-shadow: var(--shadow), inset 0 0 0 1.5px var(--purple); }
+.badge.on .badge-ic { background: var(--olive); color: #fff; }
+.badge.on { box-shadow: var(--shadow), inset 0 0 0 1.5px var(--olive); }
 
 .pts-board { padding: 4px 13px; }
 .pts-b {
@@ -1715,19 +1718,19 @@ button.pill:active { transform: scale(.94); }
 }
 .pts-b + .pts-b { border-top: 1px solid var(--line-soft); }
 .pts-b b {
-  font-size: 15px; font-weight: 700; color: var(--purple);
+  font-size: 15px; font-weight: 700; color: var(--olive);
   font-variant-numeric: tabular-nums;
 }
-.pts-b.you { color: var(--purple); }
+.pts-b.you { color: var(--olive); }
 .pts-place {
   width: 26px; height: 26px; flex-shrink: 0; border-radius: 999px;
   display: flex; align-items: center; justify-content: center;
   background: var(--bg); color: var(--ink-3);
   font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums;
 }
-.pts-place.p1 { background: var(--orange); color: #fff; }
-.pts-place.p2 { background: var(--purple); color: #fff; }
-.pts-place.p3 { background: #A78BFA; color: #fff; }
+.pts-place.p1 { background: var(--clay); color: #fff; }
+.pts-place.p2 { background: var(--olive); color: #fff; }
+.pts-place.p3 { background: #C97A50; color: #fff; }
 
 /* ---------- بانتظار الموافقة ---------- */
 .wait { align-items: center; justify-content: center; gap: 18px; text-align: center; }
@@ -1752,14 +1755,14 @@ button.pill:active { transform: scale(.94); }
 /* An unread notification is marked, not coloured in: the whole list glowing
    orange says nothing about which one is new. The mark sits on the right,
    where a line of Arabic starts. */
-.notif-new { box-shadow: var(--shadow), inset -3px 0 0 var(--orange); }
+.notif-new { box-shadow: var(--shadow), inset -3px 0 0 var(--clay); }
 
 /* The bell says how many without printing a number nobody needs. */
 .bell { position: relative; }
 .bell-dot {
   position: absolute; top: 7px; right: 7px;
   width: 9px; height: 9px; border-radius: 999px;
-  background: var(--orange); box-shadow: 0 0 0 2px var(--surface);
+  background: var(--clay); box-shadow: 0 0 0 2px var(--surface);
 }
 
 /* The attachment shows itself: a photograph, or the first page of the scan. */
@@ -1783,7 +1786,7 @@ button.pill:active { transform: scale(.94); }
 .pdf-switch {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   flex: 1; min-height: 44px;
-  font-size: 12.5px; font-weight: 600; color: var(--purple);
+  font-size: 12.5px; font-weight: 600; color: var(--olive);
   background: none;
 }
 .pdf-full {
@@ -1791,7 +1794,7 @@ button.pill:active { transform: scale(.94); }
   display: flex; align-items: center; justify-content: center;
   color: var(--ink-3); border-inline-start: 1px solid var(--line-soft);
 }
-.pdf-full:active { color: var(--purple); background: var(--bg); }
+.pdf-full:active { color: var(--olive); background: var(--bg); }
 
 /* ملء الشاشة — الصفحات وحدها.
    `.only-pages` is put on the root element by the reader. It has to reach
@@ -1849,7 +1852,7 @@ button.pill:active { transform: scale(.94); }
   display: flex; align-items: center; gap: 10px;
 }
 .pdf-out, .pdf-zoom {
-  background: rgba(26, 20, 36, .72); color: #fff;
+  background: rgba(23, 32, 26, .72); color: #fff;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, .38);
 }
@@ -1865,7 +1868,7 @@ button.pill:active { transform: scale(.94); }
 .pdf-mode {
   height: 48px; border-radius: 24px; padding: 0 16px; color: #fff;
   font-size: 12.5px; font-weight: 700;
-  background: rgba(26, 20, 36, .72);
+  background: rgba(23, 32, 26, .72);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, .38);
 }
@@ -1874,7 +1877,7 @@ button.pill:active { transform: scale(.94); }
   width: 46px; height: 48px; color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
-.pdf-zoom button:active { color: var(--orange-light); }
+.pdf-zoom button:active { color: var(--clay-light); }
 /* A limit that is reached says so rather than going quiet under the thumb. */
 .pdf-zoom button:disabled { color: rgba(255, 255, 255, .34); }
 .pdf-zoom-n {
@@ -1900,10 +1903,10 @@ button.pill:active { transform: scale(.94); }
   margin-top: 6px; padding: 9px 11px; border-radius: 10px;
   background: var(--bg); color: var(--ink-2);
   font-size: 13px; line-height: 1.8;
-  border-inline-start: 3px solid var(--purple-light);
+  border-inline-start: 3px solid var(--olive-light);
 }
 .paste-ai {
-  margin-top: 5px; font-size: 12px; font-weight: 700; color: var(--orange);
+  margin-top: 5px; font-size: 12px; font-weight: 700; color: var(--clay);
 }
 .paste-box { min-height: 150px; resize: vertical; line-height: 1.7; font-size: 14px; }
 
@@ -1916,7 +1919,7 @@ button.pill:active { transform: scale(.94); }
 .paste-file + .paste-file { margin-top: 8px; }
 .paste-file .grow { flex: 1; min-width: 0; }
 .paste-ext {
-  font-size: 11px; font-weight: 700; color: var(--purple);
+  font-size: 11px; font-weight: 700; color: var(--olive);
   background: var(--surface); border-radius: 6px; padding: 3px 7px;
 }
 
@@ -1926,10 +1929,10 @@ button.pill:active { transform: scale(.94); }
 .paste-opts { margin: 7px 0 0; padding-inline-start: 20px; display: grid; gap: 4px; }
 .paste-opts li { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
 /* The answer is the whole reason to look at this screen before saving. */
-.paste-opts li.right { color: var(--purple); font-weight: 600; }
+.paste-opts li.right { color: var(--olive); font-weight: 600; }
 .paste-none {
-  margin-top: 6px; font-size: 12px; font-weight: 600; color: #C2410C;
-  background: var(--orange-pale); border-radius: 6px; padding: 2px 7px;
+  margin-top: 6px; font-size: 12px; font-weight: 600; color: #8A4022;
+  background: var(--clay-pale); border-radius: 6px; padding: 2px 7px;
   display: inline-block;
 }
 
@@ -1940,18 +1943,18 @@ button.pill:active { transform: scale(.94); }
   width: 100%; display: flex; align-items: center; justify-content: center; gap: 7px;
 }
 .ctm-pick { width: 100%; text-align: start; }
-.ctm-pick.on { box-shadow: 0 0 0 2px var(--purple), var(--shadow); }
+.ctm-pick.on { box-shadow: 0 0 0 2px var(--olive), var(--shadow); }
 .ctm-box {
   flex-shrink: 0; width: 22px; height: 22px; border-radius: 7px;
   border: 2px solid var(--line); background: #fff; color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
-.ctm-pick.on .ctm-box { background: var(--purple); border-color: var(--purple); }
+.ctm-pick.on .ctm-box { background: var(--olive); border-color: var(--olive); }
 /* Which one survives the merge, said on the row itself: the chips above name
    it too, but the row is where you are looking when you pick. */
 .ctm-keep {
   flex-shrink: 0; font-size: 11px; font-weight: 700;
-  color: var(--purple); background: var(--purple-pale);
+  color: var(--olive); background: var(--olive-pale);
   border-radius: 6px; padding: 3px 7px;
 }
 
@@ -1966,22 +1969,25 @@ button.pill:active { transform: scale(.94); }
 .yr { position: relative; flex-shrink: 0; }
 .yr-btn {
   display: flex; align-items: center; gap: 3px;
-  min-height: 34px; padding: 0 9px; border: 0; border-radius: 999px;
-  background: rgba(255,255,255,.16); color: #fff;
-  font: inherit; font-size: 12.5px; font-weight: 700;
+  min-height: 34px; padding: 0 9px; border-radius: 999px;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line);
+  font: inherit; font-size: 12.5px; font-weight: 600;
   cursor: pointer;
 }
 .yr-btn:disabled { opacity: .6; }
 /* Reading a year that is not yours is a state worth seeing without
    reading the word — it is why the feed below looks like somebody
    else's. */
-.yr-btn.away { background: var(--orange); }
+/* Clay, because reading somebody else's year is the state that needs you
+   to notice it. */
+.yr-btn.away { background: var(--clay-pale); color: var(--clay); border-color: var(--clay-pale); }
 
 .yr-menu {
   position: absolute; top: calc(100% + 7px); inset-inline-end: 0; z-index: 40;
   min-width: 172px; padding: 5px;
   background: var(--surface); border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(17,12,34,.22);
+  box-shadow: 0 12px 30px rgba(23, 32, 26, .18);
 }
 .yr-item {
   display: flex; align-items: center; gap: 9px;
@@ -1990,7 +1996,7 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink); font: inherit; font-size: 14px; font-weight: 600;
   text-align: start; cursor: pointer;
 }
-.yr-item.on { background: var(--purple-pale); color: var(--purple); }
+.yr-item.on { background: var(--olive-pale); color: var(--olive); }
 .yr-dot { flex-shrink: 0; width: 9px; height: 9px; border-radius: 50%; }
 .yr-mine {
   flex-shrink: 0; font-size: 10.5px; font-weight: 700;
@@ -2070,7 +2076,7 @@ button.pill:active { transform: scale(.94); }
   animation: pop .16s ease-out both;
   transform-origin: top var(--pop-side, left);
   border: 1px solid var(--line);
-  box-shadow: 0 12px 30px rgba(26, 20, 36, .18);
+  box-shadow: 0 12px 30px rgba(23, 32, 26, .18);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2095,7 +2101,7 @@ button.pill:active { transform: scale(.94); }
 .sheet-back {
   position: fixed; inset: 0; z-index: 60;
   display: flex; align-items: flex-end; justify-content: center;
-  background: rgba(26, 20, 36, .32);
+  background: rgba(23, 32, 26, .32);
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   animation: fade .18s ease-out both;
 }
@@ -2106,7 +2112,7 @@ button.pill:active { transform: scale(.94); }
   background: var(--surface);
   border-radius: 22px 22px 0 0;
   border-top: 1px solid var(--line);
-  box-shadow: 0 -8px 40px rgba(26, 20, 36, .22);
+  box-shadow: 0 -8px 40px rgba(23, 32, 26, .22);
   padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
   animation: sheetup .24s cubic-bezier(.32, .72, 0, 1) both;
   /* A drag that stopped short springs back rather than snapping. The inline
@@ -2174,7 +2180,7 @@ button.pill:active { transform: scale(.94); }
   align-items: center; justify-content: center;
   color: var(--ink-3); font-size: 15px;
 }
-.m3d-bad { color: var(--orange); }
+.m3d-bad { color: var(--clay); }
 
 .m3d-acts {
   position: absolute; top: 12px; inset-inline-end: 12px; z-index: 4;
@@ -2183,7 +2189,7 @@ button.pill:active { transform: scale(.94); }
 /* `hidden` is a user-agent rule and this class beats it. */
 .m3d-acts[hidden] { display: none; }
 .m3d-acts .icobtn { background: var(--surface); box-shadow: var(--shadow); }
-.m3d-acts .icobtn.on { background: var(--purple); color: #fff; }
+.m3d-acts .icobtn.on { background: var(--olive); color: #fff; }
 .m3d-acts .icobtn:disabled { opacity: .4; cursor: default; }
 
 /* The name sits over the model rather than under it, because the thing you
@@ -2240,14 +2246,14 @@ button.pill:active { transform: scale(.94); }
   background: none; border: 0; color: var(--line); cursor: pointer;
 }
 .m3d-line.away .m3d-row { opacity: .45; }
-.m3d-line.away .m3d-off { color: var(--purple); }
+.m3d-line.away .m3d-off { color: var(--olive); }
 .m3d-row + .m3d-row { border-top: 1px solid var(--line-soft); }
-.m3d-row.on { background: var(--purple-pale); color: var(--purple); font-weight: 600; }
+.m3d-row.on { background: var(--olive-pale); color: var(--olive); font-weight: 600; }
 .m3d-swatch {
   width: 12px; height: 12px; border-radius: 4px; flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(26, 20, 36, .12);
+  box-shadow: inset 0 0 0 1px rgba(23, 32, 26, .12);
 }
-.m3d-dot { border-radius: 50%; background: var(--purple); }
+.m3d-dot { border-radius: 50%; background: var(--olive); }
 .m3d-head {
   padding: 10px 12px 6px; font-size: 12px; font-weight: 600;
   color: var(--ink-3); letter-spacing: .2px;
@@ -2273,15 +2279,15 @@ button.pill:active { transform: scale(.94); }
 .m3d-pin::before {
   content: ''; width: 11px; height: 11px; border-radius: 50%;
   background: var(--ink-2); border: 2px solid #fff;
-  box-shadow: 0 1px 3px rgba(26, 20, 36, .35);
+  box-shadow: 0 1px 3px rgba(23, 32, 26, .35);
   transition: none;
 }
 .m3d-pin.on { z-index: 2; }
 .m3d-pin.on::before {
-  width: 17px; height: 17px; background: var(--purple);
-  box-shadow: 0 0 0 4px rgba(107, 33, 181, .22), 0 1px 3px rgba(26, 20, 36, .35);
+  width: 17px; height: 17px; background: var(--olive);
+  box-shadow: 0 0 0 4px rgba(42, 91, 62, .22), 0 1px 3px rgba(23, 32, 26, .35);
 }
-.m3d-spot { color: var(--purple); }
+.m3d-spot { color: var(--olive); }
 
 /* `hidden` is a user-agent rule, and a class beats it: a dot given
    display:flex stayed on the skull however hidden it claimed to be. Thirteen
@@ -2308,7 +2314,7 @@ button.pill:active { transform: scale(.94); }
   text-align: start; cursor: pointer; z-index: 2;
 }
 .m3d-tag[data-at='left'] { justify-content: flex-end; text-align: end; }
-.m3d-tag.on { color: var(--purple); font-weight: 600; background: var(--purple-pale); }
+.m3d-tag.on { color: var(--olive); font-weight: 600; background: var(--olive-pale); }
 
 /* What the structure is. Over the model rather than on a screen of its own:
    you read it with the bone still in front of you, and close it to keep
@@ -2333,7 +2339,7 @@ button.pill:active { transform: scale(.94); }
 .m3d-part { margin-top: 15px; }
 .m3d-part h3 {
   margin: 0 0 5px; font-size: 12px; font-weight: 600;
-  color: var(--purple); letter-spacing: .2px;
+  color: var(--olive); letter-spacing: .2px;
 }
 .m3d-part ul { margin: 0; padding-inline-start: 17px; }
 .m3d-part li {
@@ -2500,7 +2506,7 @@ button.pill:active { transform: scale(.94); }
    name beside it runs. */
 .anat-hit-k {
   flex-shrink: 0; font-size: 11.5px; font-weight: 600;
-  color: var(--purple); background: var(--purple-pale);
+  color: var(--olive); background: var(--olive-pale);
   border-radius: 999px; padding: 3px 9px;
 }
 
@@ -2546,11 +2552,11 @@ button.pill:active { transform: scale(.94); }
   transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
 }
 .pl-btn.p {
-  background: var(--orange); color: #fff;
-  box-shadow: 0 6px 18px rgba(249, 115, 22, .28);
+  background: var(--clay); color: #fff;
+  box-shadow: 0 6px 18px rgba(168, 80, 42, .22);
 }
 .pl-btn.p:active { transform: translateY(1px) scale(.99); }
-.pl-btn.g { background: var(--purple); color: #fff; box-shadow: 0 6px 18px rgba(107, 33, 181, .22); }
+.pl-btn.g { background: var(--olive); color: #fff; box-shadow: 0 6px 18px rgba(42, 91, 62, .22); }
 .pl-btn.g:active { transform: translateY(1px) scale(.99); }
 .pl-btn.q { background: var(--bg); color: var(--ink-2); }
 .pl-btn.q:active { transform: translateY(1px); }
@@ -2562,7 +2568,7 @@ button.pill:active { transform: scale(.94); }
 .pl-sec.grey { background: var(--bg); }
 .pl-kicker {
   display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: .3px;
-  color: var(--purple); background: var(--purple-pale);
+  color: var(--olive); background: var(--olive-pale);
   border-radius: 999px; padding: 6px 13px; margin-bottom: 14px;
 }
 .pl-h2 { font-size: 27px; line-height: 1.35; letter-spacing: -.3px; margin-bottom: 10px; }
@@ -2573,7 +2579,7 @@ button.pill:active { transform: scale(.94); }
 .pl-hero h1 {
   font-size: 34px; line-height: 1.3; letter-spacing: -.6px; margin: 16px 0 0;
 }
-.pl-hero h1 em { font-style: normal; color: var(--purple); }
+.pl-hero h1 em { font-style: normal; color: var(--olive); }
 .pl-hero p { font-size: 17px; line-height: 1.8; color: var(--ink-2); margin: 14px auto 0; max-width: 40ch; }
 .pl-cta { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 26px; }
 .pl-cta small { font-size: 13.5px; color: var(--ink-3); }
@@ -2581,7 +2587,7 @@ button.pill:active { transform: scale(.94); }
 .pl-glow {
   position: absolute; inset-inline-start: 50%; top: -220px;
   width: 620px; height: 620px; transform: translateX(50%);
-  background: radial-gradient(closest-side, rgba(139, 92, 246, .18), rgba(139, 92, 246, 0));
+  background: radial-gradient(closest-side, rgba(63, 122, 87, .18), rgba(63, 122, 87, 0));
   pointer-events: none;
 }
 
@@ -2589,8 +2595,8 @@ button.pill:active { transform: scale(.94); }
 .pl-phone {
   position: relative; flex-shrink: 0;
   width: 232px; padding: 7px; border-radius: 36px;
-  background: linear-gradient(160deg, #2B2338, #14101C);
-  box-shadow: 0 18px 44px rgba(26, 20, 36, .22), 0 2px 6px rgba(26, 20, 36, .14);
+  background: linear-gradient(160deg, #26332A, #121A14);
+  box-shadow: 0 18px 44px rgba(23, 32, 26, .22), 0 2px 6px rgba(23, 32, 26, .14);
 }
 .pl-phone img { display: block; width: 100%; height: auto; border-radius: 29px; background: var(--bg); }
 /* The speaker slot, drawn rather than photographed. */
@@ -2640,12 +2646,12 @@ button.pill:active { transform: scale(.94); }
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 .pl-tile:hover {
-  transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--purple-pale);
+  transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--olive-pale);
 }
 .pl-tile-ic {
   width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
 }
 .pl-tile b { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
 /* The line under it runs the width of the card, under the icon as well: two
@@ -2659,7 +2665,7 @@ button.pill:active { transform: scale(.94); }
 
 /* ---- built by students */
 .pl-purple {
-  background: linear-gradient(165deg, #7B2CC9, var(--purple) 55%, #5A1A99);
+  background: linear-gradient(165deg, #3F7A57, var(--olive) 55%, #22492F);
   color: #fff; padding: 66px 0;
 }
 .pl-purple h2 { font-size: 27px; line-height: 1.4; letter-spacing: -.3px; }
@@ -2680,7 +2686,7 @@ button.pill:active { transform: scale(.94); }
 .pl-count { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .pl-bar { height: 6px; border-radius: 3px; background: var(--bg); overflow: hidden; margin: 12px 0 22px; }
 .pl-bar i {
-  display: block; height: 100%; border-radius: 3px; background: var(--purple);
+  display: block; height: 100%; border-radius: 3px; background: var(--olive);
   transition: width .45s cubic-bezier(.4, 0, .2, 1);
 }
 .pl-q { font-size: 19px; line-height: 1.5; margin-bottom: 4px; }
@@ -2696,7 +2702,7 @@ button.pill:active { transform: scale(.94); }
 }
 .pl-opt:active { transform: scale(.985); }
 .pl-opt[aria-pressed='true'], .pl-opt[data-on='true'] {
-  border-color: var(--purple); background: var(--purple-pale); font-weight: 600;
+  border-color: var(--olive); background: var(--olive-pale); font-weight: 600;
 }
 .pl-box {
   width: 44px; height: 44px; flex-shrink: 0; /* the tick keeps its own target */
@@ -2707,13 +2713,13 @@ button.pill:active { transform: scale(.94); }
   border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center;
   color: #fff;
 }
-.pl-opt[aria-pressed='true'] .pl-tick { background: var(--purple); border-color: var(--purple); }
+.pl-opt[aria-pressed='true'] .pl-tick { background: var(--olive); border-color: var(--olive); }
 .pl-ta {
   width: 100%; min-height: 128px; resize: vertical;
   padding: 14px; border-radius: 13px; border: 1.5px solid var(--line);
   background: var(--surface); font: inherit; font-size: 15px; line-height: 1.7; color: var(--ink);
 }
-.pl-ta:focus, .pl-inp:focus { outline: none; border-color: var(--purple-light); }
+.pl-ta:focus, .pl-inp:focus { outline: none; border-color: var(--olive-light); }
 .pl-inp {
   width: 100%; min-height: 50px; padding: 0 14px; border-radius: 13px;
   border: 1.5px solid var(--line); background: var(--surface);
@@ -2725,7 +2731,7 @@ button.pill:active { transform: scale(.94); }
 .pl-nav .pl-btn { flex: 1; }
 .pl-err {
   margin-top: 12px; padding: 11px 14px; border-radius: 12px;
-  background: var(--orange-pale); color: #9A3412; font-size: 14px;
+  background: var(--clay-pale); color: #7D3A1E; font-size: 14px;
 }
 /* Each step arrives from the side it came from. */
 .pl-step { animation: pl-in .32s cubic-bezier(.2, .7, .3, 1) both; }
@@ -2801,10 +2807,10 @@ html:has(.pl) { scroll-behavior: smooth; }
    because the two are one fact. */
 .fb-need {
   display: inline-flex; align-items: center; gap: 6px;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   border-radius: 999px; padding: 5px 10px; font-size: 13px; font-weight: 600;
 }
-.fb-need b { background: rgba(107, 33, 181, .14); border-radius: 999px; padding: 0 6px; font-size: 12px; }
+.fb-need b { background: rgba(42, 91, 62, .14); border-radius: 999px; padding: 0 6px; font-size: 12px; }
 .fb-need.sm { font-size: 11.5px; padding: 3px 8px; font-weight: 500; }
 .fb-row { display: block; }
 .fb-top { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -2819,7 +2825,7 @@ html:has(.pl) { scroll-behavior: smooth; }
   margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line-soft);
   font-size: 13px; color: var(--ink-2);
 }
-.fb-who a { color: var(--purple); font-weight: 600; }
+.fb-who a { color: var(--olive); font-weight: 600; }
 
 /* ---------- تحدّي زميلك: the invitation, and the moment it is over -------- */
 
@@ -2832,7 +2838,7 @@ html:has(.pl) { scroll-behavior: smooth; }
 .duel-invite-ic {
   width: 62px; height: 62px; border-radius: 20px; margin-bottom: 6px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--orange-pale); color: var(--orange);
+  background: var(--clay-pale); color: var(--clay);
   animation: duel-knock 2.6s ease-in-out infinite;
 }
 .duel-invite-t { font-size: 20px; font-weight: 700; }
@@ -2866,7 +2872,7 @@ html:has(.pl) { scroll-behavior: smooth; }
   transform: translateX(-120%);
   animation: duel-sweep .8s .95s ease-out both;
 }
-.duel-reveal.won  { box-shadow: 0 0 0 1.5px var(--orange), var(--shadow); }
+.duel-reveal.won  { box-shadow: 0 0 0 1.5px var(--clay), var(--shadow); }
 .duel-reveal.won .duel-verdict { animation-name: duel-cheer; }
 
 @keyframes duel-land {
@@ -2894,12 +2900,228 @@ html:has(.pl) { scroll-behavior: smooth; }
    orange for the last five seconds, which is the only warning it gives. */
 .quiz-clock {
   min-width: 32px; padding: 2px 9px; border-radius: 999px;
-  background: var(--purple-pale); color: var(--purple);
+  background: var(--olive-pale); color: var(--olive);
   font-weight: 700; font-variant-numeric: tabular-nums; text-align: center;
 }
 .quiz-clock.out {
-  background: var(--orange-pale); color: var(--orange);
+  background: var(--clay-pale); color: var(--clay);
   animation: clock-tick 1s steps(2, end) infinite;
 }
 @keyframes clock-tick { 50% { opacity: .45; } }
 @media (prefers-reduced-motion: reduce) { .quiz-clock.out { animation: none; } }
+
+/* ============================================================
+   الرئيسية — the balanced screen.
+
+   Two halves on one page: what the app knows about your studying,
+   then what your promo is saying. It replaced a violet head with
+   five icons on it, which named the app to somebody who had just
+   opened the app and pushed the live row below the fold.
+
+   One dark block (the continue card), one olive accent at a time,
+   hairlines instead of shadows. Everything here is prefixed or
+   named for this screen: `.say` and `.sub` already mean other
+   things in this file, and a collision like that cost an evening
+   once already.
+   ============================================================ */
+
+/* The bar. Not a surface — the mark is small and the ivory runs
+   from the status bar to the tabs without a seam. */
+.bar {
+  display: flex; align-items: center; gap: 9px;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 8px;
+  background: var(--bg);
+}
+.bar-who {
+  font-size: 13.5px; font-weight: 600; letter-spacing: -.2px; color: var(--ink);
+}
+.bar-ic {
+  position: relative; width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-2);
+}
+.bar-ic:active { background: var(--olive-pale); }
+/* The count used to be ringed in the head's violet. The head is gone,
+   so it is ringed in whatever it now sits on. */
+/* The count sits on the bell's corner, not across its face: the icon is
+   20px centred in a 44px target, so anything much inside 6px covers it. */
+.bar-ic .tally {
+  top: 4px; inset-inline-end: 4px;
+  min-width: 16px; height: 16px; border-radius: 8px; font-size: 9.5px;
+  box-shadow: 0 0 0 2px var(--bg);
+}
+.bar-me { width: 34px; height: 34px; font-size: 11.5px; }
+
+/* A face. Initials, because a promo is small enough that everyone
+   knows everyone, and a grey silhouette is not a person. */
+.face {
+  border-radius: 50%; flex-shrink: 0; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; font-size: 10.5px; font-weight: 600;
+  letter-spacing: -.2px; text-decoration: none;
+}
+.stack { display: flex; flex-shrink: 0; }
+.stack .face { margin-inline-start: -9px; box-shadow: 0 0 0 2px var(--surface); }
+.stack .face:first-child { margin-inline-start: 0; }
+
+/* مَن يدرس الآن — the row, and the way into the open rooms. */
+.here {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 10px 12px; text-align: inherit;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-card); transition: transform .14s ease;
+  min-height: 52px;
+}
+.here:active { transform: scale(.99); }
+.here-say { flex: 1; min-width: 0; font-size: 12.5px; color: var(--ink-2); }
+.here-say b { color: var(--ink); font-weight: 600; }
+.here > svg { color: var(--ink-3); flex-shrink: 0; }
+/* Live, and the only animated thing on the screen. */
+.here-dot {
+  width: 7px; height: 7px; border-radius: 4px; background: var(--olive);
+  flex-shrink: 0; animation: breathe 2.4s ease-in-out infinite;
+}
+@keyframes breathe { 0%, 100% { opacity: 1 } 50% { opacity: .3 } }
+
+/* A section heading, with the way to all of it on the far side. */
+.eb {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 10px 2px 0;
+}
+.eb b { font-size: 15px; font-weight: 600; letter-spacing: -.2px; }
+.eb a {
+  margin-inline-start: auto; font-size: 11.5px; color: var(--ink-3);
+  text-decoration: none;
+}
+
+/* تابع من حيث توقّفت — the one dark block. */
+.cont {
+  display: flex; align-items: center; gap: 12px; padding: 13px;
+  background: var(--ink); color: var(--bg);
+  border-radius: var(--r-card); text-decoration: none;
+  transition: transform .12s ease; min-height: 64px;
+}
+.cont:active { transform: scale(.99); }
+.cont-ic {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .1); color: var(--bg);
+}
+.cont b {
+  display: block; font-size: 13.5px; font-weight: 600; line-height: 1.35;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cont s {
+  display: block; text-decoration: none; font-size: 11.5px; opacity: .68;
+  margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cont > svg { color: var(--bg); opacity: .5; flex-shrink: 0; }
+
+/* The subjects. A name, a colour and a count — no artwork. Twenty-two
+   banners with the retired mark baked into each is not something the
+   app can restyle, and a rail of photographs shouts down the cards on
+   either side of it. */
+.rail {
+  display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
+  margin: 0 -18px; padding: 2px 18px 4px; overscroll-behavior-x: contain;
+}
+.rail::-webkit-scrollbar { display: none; }
+.stile {
+  flex: 0 0 124px; padding: 12px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-card); text-decoration: none; color: inherit;
+  transition: transform .12s ease;
+}
+.stile:active { transform: scale(.985); }
+/* The subject's colour, as a rule rather than a field: a tile that is
+   entirely one colour competes with the continue card above it. */
+.stile-cue {
+  display: block; width: 26px; height: 3px; border-radius: 2px;
+  margin-bottom: 9px; background: currentColor;
+}
+.stile b {
+  display: block; font-size: 11.5px; font-weight: 600; letter-spacing: .2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.stile s {
+  display: block; text-decoration: none; font-size: 10.5px;
+  color: var(--ink-3); margin-top: 3px;
+}
+
+/* Where the study half ends and the promo begins. */
+.split { height: 1px; background: var(--line); margin: 14px 2px 4px; }
+
+/* The composer, at rest. One line until there is something to say. */
+.hsay {
+  display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 12px 13px; text-align: inherit; min-height: 46px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  font-size: 12.5px; color: var(--ink-3);
+}
+.hsay:active { transform: scale(.99); }
+.hsay svg { color: var(--ink-3); flex-shrink: 0; }
+.composer-me { width: 38px; height: 38px; font-size: 12px; }
+
+/* The sheet the row opens. */
+.rooms-head { padding: 0 2px 10px; }
+.rooms-head b { display: block; font-size: 15px; font-weight: 600; }
+.rooms-head s {
+  display: block; text-decoration: none; font-size: 11.5px;
+  color: var(--ink-3); margin-top: 3px;
+}
+.room-row {
+  display: flex; align-items: center; gap: 11px;
+  padding: 12px 2px; border-top: 1px solid var(--line);
+  text-decoration: none; color: inherit;
+}
+.room-row .stack .face { box-shadow: 0 0 0 2px var(--surface); }
+.room-row b {
+  display: block; font-size: 12.5px; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.room-row s {
+  display: block; text-decoration: none; font-size: 10.5px;
+  color: var(--ink-3); margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* The one olive block on the screen, and there is one per room row
+   only because a row is a row — they never appear beside the continue
+   card, which is ink. */
+.room-go {
+  flex-shrink: 0; min-height: 34px; padding: 0 15px; border-radius: 10px;
+  background: var(--olive); color: #fff;
+  font-size: 11.5px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.room-new {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; margin-top: 14px; min-height: 46px; border-radius: 12px;
+  background: var(--bg); border: 1px dashed var(--line);
+  color: var(--ink-2); font-size: 12.5px; font-weight: 600;
+  text-decoration: none;
+}
+
+/* This screen sets its own rhythm: the bar is flush, and the sections
+   space themselves rather than sharing one gap. */
+.scroll.flow { padding-top: 6px; gap: 10px; }
+
+/* The cover of what you were reading — page one of the lecture, drawn small
+   by the reader and kept in the browser. A lecture is a document and looks
+   like one; an icon in its place looks like a category. */
+.cont-th {
+  width: 46px; height: 46px; border-radius: 11px; flex-shrink: 0;
+  overflow: hidden; background: var(--surface);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.cont-th img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* How far in. Nothing is drawn below 3% — see the card. */
+.cont-bar {
+  display: block; height: 3px; border-radius: 2px; margin-top: 8px;
+  background: rgba(255, 255, 255, .2);
+}
+.cont-bar i {
+  display: block; height: 100%; border-radius: 2px; background: var(--bg);
+  min-width: 3px;
+}

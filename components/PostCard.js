@@ -17,7 +17,7 @@ function Media({ a }) {
   return (
     <div className="post-media">
       <Link className="post-file" href={`/file/${a.fid}`}>
-        <div className="tile tint-orange"><Icon name="file" size={19} /></div>
+        <div className="tile tint-clay"><Icon name="file" size={19} /></div>
         <div className="grow">
           <div className="post-file-nm">{a.name}</div>
           <div className="post-file-mt">{a.ext} · {a.mb} MB</div>

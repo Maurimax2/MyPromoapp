@@ -58,7 +58,7 @@ export default async function Saved() {
         {items.map((it) => {
           const inner = (
             <div className="card-row">
-              <div className="tile tint-orange">
+              <div className="tile tint-clay">
                 <Icon name={it.kind === 'question' ? 'msg' : 'file'} size={20} />
               </div>
               <div className="grow">
@@ -78,7 +78,7 @@ export default async function Saved() {
 
         {!items.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="bookmark" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="bookmark" size={24} /></div>
             <div className="empty-t">لا شيء محفوظ</div>
             <div className="empty-b">اضغط الإشارة على أي ملخص أو منشور لتجده هنا.</div>
           </div>

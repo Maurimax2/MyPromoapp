@@ -42,7 +42,7 @@ export default async function Profile() {
 
       <div className="scroll">
         <div className="me">
-          <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--purple)' }}>
+          <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--olive)' }}>
             {name.slice(0, 2)}
           </div>
           <div className="me-name">{name}</div>
@@ -88,7 +88,7 @@ export default async function Profile() {
 
         <Link href="/saved" className="card">
           <div className="card-row">
-            <div className="tile tint-orange"><Icon name="bookmark" size={20} /></div>
+            <div className="tile tint-clay"><Icon name="bookmark" size={20} /></div>
             <div className="grow">
               <div className="nm">المحفوظات</div>
               <div className="mt">{saves.count || 0} عنصرًا</div>
@@ -99,7 +99,7 @@ export default async function Profile() {
 
         <Link href="/rooms" className="card">
           <div className="card-row">
-            <div className="tile tint-purpleLight"><Icon name="person" size={20} /></div>
+            <div className="tile tint-oliveLight"><Icon name="person" size={20} /></div>
             <div className="grow">
               <div className="nm">غرف الدراسة</div>
               <div className="mt">{rooms.count || 0} غرفة أنت فيها</div>

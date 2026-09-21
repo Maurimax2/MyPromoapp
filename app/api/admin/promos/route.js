@@ -13,8 +13,8 @@ export const runtime = 'nodejs';
 
 // Each year needs a colour of its own — it is shown on every post, so two
 // years must never share one. Picked in order, cycling if it ever runs out.
-const BADGES = ['#8B5CF6', '#6B21B5', '#F97316', '#C2410C', '#7C3AED', '#9A3412',
-                '#0E7490', '#4D7C0F', '#BE123C', '#1D4ED8'];
+const BADGES = ['#3F7A57', '#2A5B3E', '#A8502A', '#7D4A2A', '#4B5B3A', '#6B4A3A',
+                '#14555F', '#5A3A85', '#8A6A14', '#3A5A7D'];
 
 const slug = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 30);

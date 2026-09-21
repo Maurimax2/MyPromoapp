@@ -100,7 +100,7 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
 
       <section className="chapter">
         <div className="chapter-head">
-          <span className="chapter-ic tint-purple"><Icon name="quiz" size={16} /></span>
+          <span className="chapter-ic tint-olive"><Icon name="quiz" size={16} /></span>
           <div className="grow">
             <div className="chapter-t">
               {by === BY_LECTURE && canSplit ? 'اختر المحاضرات' : 'اختر الأوراق'}

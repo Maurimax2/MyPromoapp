@@ -100,7 +100,7 @@ export default function Room({ room, people, first, me }) {
         ))}
         {!messages.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="msg" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
             <div className="empty-t">لا رسائل بعد</div>
             <div className="empty-b">ابدأ الكلام — من في الغرفة سيرى.</div>
           </div>

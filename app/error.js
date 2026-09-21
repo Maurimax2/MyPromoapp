@@ -14,7 +14,7 @@ export default function Error({ reset }) {
   return (
     <div className="scroll">
       <div className="empty">
-        <div className="tile tint-orange"><Icon name="alert" size={24} /></div>
+        <div className="tile tint-clay"><Icon name="alert" size={24} /></div>
         <div className="empty-t">تعذّر فتح هذه الصفحة</div>
         <div className="empty-b">حدث خطأ عندنا، لا عندك. جرّب مرة أخرى.</div>
         <button className="btn p" style={{ maxWidth: 240 }} onClick={() => reset()}>

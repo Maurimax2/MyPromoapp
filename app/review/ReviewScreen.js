@@ -76,7 +76,7 @@ export default function ReviewScreen({ all }) {
           </>
         ) : (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="check" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="check" size={24} /></div>
             <div className="empty-t">
               {state.tracked ? 'لا شيء حان وقته' : 'لا شيء للمراجعة بعد'}
             </div>

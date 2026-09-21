@@ -67,7 +67,7 @@ export default function Notifications({ items }) {
           const line = (SAYS[n.kind] || (() => 'حدث شيء'))(n);
           const inner = (
             <div className="card-row">
-              <div className={`tile ${n.kind === 'accepted' || n.kind === 'duel' || n.kind === 'duel_ok' ? 'tint-orange' : 'tint-purple'}`}>
+              <div className={`tile ${n.kind === 'accepted' || n.kind === 'duel' || n.kind === 'duel_ok' ? 'tint-clay' : 'tint-olive'}`}>
                 <Icon name={ICON[n.kind] || 'bell'} size={19} />
               </div>
               <div className="grow">
@@ -89,7 +89,7 @@ export default function Notifications({ items }) {
 
         {!items.length && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="bell" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="bell" size={24} /></div>
             <div className="empty-t">لا إشعارات بعد</div>
             <div className="empty-b">
               حين يعجب أحدهم بمنشورك أو يجيب على سؤالك، ستجده هنا.

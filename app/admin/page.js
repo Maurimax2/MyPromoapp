@@ -108,7 +108,7 @@ export default async function AdminHome() {
           trip and a function that lives long enough to finish. This route
           around it costs nothing and has no limits. */}
       <Link href="/admin/paste" className="admin-card admin-import">
-        <div className="admin-import-ic" style={{ background: 'var(--purple)' }}>
+        <div className="admin-import-ic" style={{ background: 'var(--olive)' }}>
           <Icon name="quiz" size={22} />
         </div>
         <div className="grow">
@@ -124,7 +124,7 @@ export default async function AdminHome() {
           from rather than what it is about. Until somebody says which lecture
           each one revises, اختبر نفسك can only offer a student a year. */}
       <Link href="/admin/lectures" className="admin-card admin-import">
-        <div className="admin-import-ic" style={{ background: 'var(--purple-light)' }}>
+        <div className="admin-import-ic" style={{ background: 'var(--olive-light)' }}>
           <Icon name="book" size={22} />
         </div>
         <div className="grow">

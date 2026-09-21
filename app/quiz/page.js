@@ -49,7 +49,7 @@ export default async function QuizIndex() {
             <div className="head-t">الاختبارات</div>
             <div className="head-s">اختبر نفسك قبل الامتحان</div>
           </div>
-          <div className="tile sm tint-orange"><Icon name="quiz" size={18} /></div>
+          <div className="tile sm tint-clay"><Icon name="quiz" size={18} /></div>
         </div>
       </header>
       <div className="scroll">
@@ -77,7 +77,7 @@ export default async function QuizIndex() {
 
         {modules.length === 0 && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="quiz" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="quiz" size={24} /></div>
             <div className="empty-t">لا أسئلة بعد</div>
             <div className="empty-b">
               تُستخرج الأسئلة من امتحانات المادة في لوحة التحكم، وتظهر هنا حين

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 48 48" fill="none">
+  <title>MyPromo</title>
+  <circle cx="12.5" cy="10.5" r="5.2" fill="#17201A"/>
+  <circle cx="35.5" cy="10.5" r="5.2" fill="#2A5B3E"/>
+  <path d="M12.5 40V24l11.5 12" stroke="#17201A" stroke-width="8.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35.5 40V24L24 36" stroke="#2A5B3E" stroke-width="8.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -12,3 +12,7 @@ public/pdfjs/
 # copied out of node_modules by scripts/copy-tesseract.mjs
 public/tesseract/
 duel-*.png
+
+# 4.7 MB of design exploration shots — the concepts we looked at and
+# dropped on the way to زيتون. Kept on disk, not in history.
+palettes/

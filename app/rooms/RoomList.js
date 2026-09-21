@@ -108,7 +108,7 @@ export default function RoomList({ rooms, subjects, me }) {
 
         {!rooms.length && !making && (
           <div className="empty">
-            <div className="tile tint-purple"><Icon name="person" size={24} /></div>
+            <div className="tile tint-olive"><Icon name="person" size={24} /></div>
             <div className="empty-t">لا غرف مفتوحة</div>
             <div className="empty-b">افتح واحدة وادعُ دفعتك للمراجعة معك.</div>
           </div>

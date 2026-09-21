@@ -110,7 +110,7 @@ export default function Points({ total, rank, rows, badges, board, meId }) {
         </div>
       ) : (
         <div className="empty">
-          <div className="tile tint-purple"><Icon name="check" size={24} /></div>
+          <div className="tile tint-olive"><Icon name="check" size={24} /></div>
           <div className="empty-t">لا ترتيب بعد</div>
           <div className="empty-b">أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.</div>
         </div>

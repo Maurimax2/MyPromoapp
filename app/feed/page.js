@@ -1,13 +1,16 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { bannerFor } from '@/lib/data';
-import { subjectsOf, subjectRail, promosOf } from '@/lib/catalogue';
+import { subjectsOf, subjectRail, promosOf, moduleCounts } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
 export const dynamic = 'force-dynamic';
+
+// Two letters and a name. A promo is small enough that everyone knows every
+// face, so initials read as people rather than as placeholders.
+const nameOf = (p) => ({ id: p.id, name: p.full_name || p.email?.split('@')[0] || 'زميل' });
 
 // الرئيسية — what your promo is saying, and everything the app can do.
 export default async function Feed() {
@@ -65,6 +68,43 @@ export default async function Feed() {
     .eq('person', profile.id).eq('seen', false);
 
 
+  // مَن يدرس الآن — the row of faces at the top of the screen, and the sheet
+  // it opens. Both come from the same read: the promo's open rooms and who
+  // is sitting in them. It is the one thing on this screen that is true only
+  // at this second, so it is never cached and never guessed at — an empty
+  // result draws no row at all rather than a zero.
+  const { data: openRooms } = await sb.from('rooms')
+    .select('id, title, topic, module, capacity, created_at')
+    .eq('promo', promo).eq('closed', false)
+    .order('created_at', { ascending: false }).limit(12);
+
+  const roomIds = (openRooms || []).map((r) => r.id);
+  const { data: sitting } = roomIds.length
+    ? await sb.from('room_members')
+        .select('room, person, profile:profiles!room_members_person_fkey(id, full_name, email)')
+        .in('room', roomIds)
+    : { data: [] };
+
+  // A student in two rooms is one student studying, not two.
+  const who = new Map();
+  const inRoom = new Map();
+  for (const m of sitting || []) {
+    const person = m.profile;
+    if (person && !who.has(person.id)) who.set(person.id, person);
+    inRoom.set(m.room, [...(inRoom.get(m.room) || []), person].filter(Boolean));
+  }
+
+  const named2 = Object.fromEntries((await subjectsOf(promo)).map((m) => [m.id, m.name]));
+  const rooms = (openRooms || []).map((r) => ({
+    id: r.id,
+    title: r.title,
+    topic: r.topic || named2[r.module] || null,
+    capacity: r.capacity || null,
+    people: (inRoom.get(r.id) || []).map((x) => nameOf(x)),
+  }));
+
+  const studying = [...who.values()].map((x) => nameOf(x));
+
   const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
@@ -77,10 +117,25 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
-  // Every subject the promo has — one banner each, not one per semester, and
-  // including one a colleague added this morning with no files in it yet.
-  const subjects = (await subjectRail(reading))
-    .map((m) => ({ id: m.id, name: m.name, tint: m.tint, banner: bannerFor(m.name) }));
+  // Every subject the promo has, one tile each rather than one per
+  // semester, including one a colleague added this morning with no files
+  // in it yet.
+  //
+  // The banner is gone. Twenty-two pieces of Canva artwork with the
+  // retired mark baked into every one is not something the app can
+  // restyle, and a rail of photographs shouts down the two cards either
+  // side of it. A subject now carries its name, its colour, and how much
+  // is in it.
+  const { counts } = await moduleCounts();
+  const subjects = (await subjectRail(reading)).map((m) => ({
+    id: m.id,
+    name: m.name,
+    tint: m.tint,
+    // Every semester of the subject together: ANATOMIE and ANATOMIE S2
+    // are one tile, so they are one number.
+    lectures: (m.parts || [{ id: m.id }])
+      .reduce((n, part) => n + (counts.get(part.id)?.lectures || 0), 0),
+  }));
 
   return (
     <Home
@@ -96,6 +151,8 @@ export default async function Feed() {
       mySubjects={subjectRows.map((m) => ({ id: m.id, name: m.name }))}
       posts={posts}
       subjects={subjects}
+      studying={studying}
+      rooms={rooms}
     />
   );
 }
