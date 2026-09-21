@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MyPromo</title>
+<!--
+  What a student sees when the app cannot reach the site at all — no signal,
+  aeroplane mode, or the deployment down. Capacitor shows it from `errorPath`.
+
+  It is one file with no requests of its own, because the one thing we know
+  about the moment it appears is that the network is not working. The mark is
+  inline SVG for the same reason.
+-->
+<style>
+  :root {
+    --bg: #F3F1E9; --surface: #FFFDF8; --ink: #17201A;
+    --ink-2: #6B6F69; --ink-3: #979992; --olive: #2A5B3E; --line: #DDDCD4;
+  }
+  * { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    min-height: 100dvh; background: var(--bg); color: var(--ink);
+    font-family: 'Readex Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 22px; padding: 32px 26px;
+    text-align: center;
+  }
+  h1 { font-size: 20px; font-weight: 600; letter-spacing: -.3px; }
+  p { font-size: 14.5px; line-height: 1.8; color: var(--ink-2); max-width: 30ch; }
+  button {
+    min-height: 48px; padding: 0 30px; border: 0; border-radius: 14px;
+    background: var(--olive); color: #fff;
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  button:active { transform: scale(.97); }
+  small { font-size: 12px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+    <circle cx="12.5" cy="10.5" r="5.2" fill="#17201A"/>
+    <circle cx="35.5" cy="10.5" r="5.2" fill="#2A5B3E"/>
+    <path d="M12.5 40V24l11.5 12" stroke="#17201A" stroke-width="8.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M35.5 40V24L24 36" stroke="#2A5B3E" stroke-width="8.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <h1>لا يوجد اتصال</h1>
+  <p>تحقّق من الشبكة وأعد المحاولة. ما حمّلته سابقًا يبقى في هاتفك.</p>
+  <button onclick="location.reload()">أعد المحاولة</button>
+  <small>MyPromo · FMPOS</small>
+</body>
+</html>

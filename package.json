@@ -19,9 +19,16 @@
     "mock": "node scripts/mock-supabase.mjs",
     "check:lectures": "node scripts/check-lectures.mjs",
     "check:paste-json": "node scripts/check-paste-json.mjs",
-    "build:search": "node scripts/build-search.mjs"
+    "build:search": "node scripts/build-search.mjs",
+    "native:sync": "node scripts/native-url.mjs && npx cap sync",
+    "native:android": "npx cap open android",
+    "native:ios": "npx cap open ios"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/ios": "^8.5.2",
     "@supabase/ssr": "^0.12.6",
     "@supabase/supabase-js": "^2.115.0",
     "@tesseract.js-data/fra": "^1.0.0",

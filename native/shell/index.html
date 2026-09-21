@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MyPromo</title>
+<!--
+  The shell's own index. With `server.url` set in capacitor.config.js the app
+  loads the deployment and never reaches this file, but the Capacitor CLI
+  requires `webDir` to contain an index.html — and if the config is ever built
+  without a URL, this is what would ship. So it says which build it is rather
+  than being blank, which is the difference between a bug you can see and one
+  you cannot.
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100dvh; background: #F3F1E9; color: #17201A;
+    font-family: 'Readex Pro', system-ui, sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 18px; padding: 32px; text-align: center;
+  }
+  p { font-size: 14px; color: #6B6F69; line-height: 1.8; max-width: 32ch; }
+</style>
+</head>
+<body>
+  <svg width="56" height="56" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+    <circle cx="12.5" cy="10.5" r="5.2" fill="#17201A"/>
+    <circle cx="35.5" cy="10.5" r="5.2" fill="#2A5B3E"/>
+    <path d="M12.5 40V24l11.5 12" stroke="#17201A" stroke-width="8.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M35.5 40V24L24 36" stroke="#2A5B3E" stroke-width="8.4"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <p>هذه النسخة بُنيت بدون عنوان الموقع. أعد البناء مع MYPROMO_URL.</p>
+</body>
+</html>

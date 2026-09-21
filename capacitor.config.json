@@ -1,0 +1,23 @@
+{
+  "appId": "mr.mypromo.app",
+  "appName": "MyPromo",
+  "webDir": "native/shell",
+  "server": {
+    "cleartext": false,
+    "errorPath": "offline.html",
+    "allowNavigation": [
+      "*.supabase.co",
+      "drive.google.com",
+      "docs.google.com",
+      "accounts.google.com"
+    ]
+  },
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "ios": {
+    "backgroundColor": "#F3F1E9",
+    "contentInset": "always"
+  }
+}
