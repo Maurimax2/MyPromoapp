@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { badgeOf } from '@/lib/data';
 
 
 // S1 and S2 are shown exactly as written — that is what students call them.
@@ -58,7 +59,7 @@ export default function ArchiveList({ promos, modules: all, counts, mine,
           {promos.map((p) => (
             <button key={p.id} onClick={() => choose(p.id)}
               className={`pill${promo === p.id ? ' solid' : ' grey'}`}
-              style={promo === p.id ? { background: p.badge } : undefined}>
+              style={promo === p.id ? { background: badgeOf(p) } : undefined}>
               {p.name}
             </button>
           ))}

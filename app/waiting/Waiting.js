@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
+import { badgeOf } from '@/lib/data';
 
 /**
  * The screen a new account sees, and the only one it can reach.
@@ -105,7 +106,7 @@ export default function Waiting({
               <button
                 type="button" key={y.id}
                 className={`imp-kind${year === y.id ? ' on' : ''}`}
-                style={year === y.id && y.badge ? { background: y.badge } : undefined}
+                style={year === y.id && y.badge ? { background: badgeOf(y) } : undefined}
                 onClick={() => setYear(y.id)}
               >
                 {y.name || y.id.toUpperCase()}

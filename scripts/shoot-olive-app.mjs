@@ -51,7 +51,9 @@ await Promise.all([
   p.locator('form button.btn.p').click(),
 ]);
 
-const PAGES = [['/feed', 'home'], ['/duel', 'duel'], ['/me', 'me']];
+const PAGES = process.env.SHOTS
+  ? process.env.SHOTS.split(',').map((x) => { const [a, b] = x.split(':'); return [a, b]; })
+  : [['/feed', 'home'], ['/duel', 'duel'], ['/profile', 'me']];
 for (const [path, name] of PAGES) {
   await p.goto(`${B}${path}`, { waitUntil: 'domcontentloaded', timeout: 90000 });
   await p.waitForTimeout(2600);

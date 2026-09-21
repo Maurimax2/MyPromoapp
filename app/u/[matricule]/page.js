@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { promoById } from '@/lib/data';
+import { promoById, badgeOf } from '@/lib/data';
 import { normalise } from '@/lib/matricule';
 
 export const dynamic = 'force-dynamic';
@@ -91,7 +91,7 @@ export default async function PersonPage({ params }) {
               <div className="me-name">{name}</div>
               <div className="me-row">
                 {promo && (
-                  <span className="pill solid" style={{ background: promo.badge, fontSize: 11 }}>
+                  <span className="pill solid" style={{ background: badgeOf(promo), fontSize: 11 }}>
                     {promo.name}
                   </span>
                 )}

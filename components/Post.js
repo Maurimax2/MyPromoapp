@@ -154,7 +154,7 @@ export default function Post({ post, me }) {
             <img key={i} className="post-photo-real" src={m.url} alt="" loading="lazy" />
           ) : (
             <a key={i} className="post-file" href={m.url} target="_blank" rel="noreferrer">
-              <div className="tile tint-clay"><Icon name="file" size={20} /></div>
+              <div className="tile tint-olive"><Icon name="file" size={20} /></div>
               <div className="grow">
                 <div className="post-file-nm" dir="ltr">{m.name || 'ملف'}</div>
                 <div className="post-file-mt" dir="ltr">{mb(m.bytes)}</div>

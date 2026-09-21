@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
-import { promoById } from '@/lib/data';
+import { promoById, badgeOf } from '@/lib/data';
 
 function Media({ a }) {
   if (!a) return null;
@@ -17,7 +17,7 @@ function Media({ a }) {
   return (
     <div className="post-media">
       <Link className="post-file" href={`/file/${a.fid}`}>
-        <div className="tile tint-clay"><Icon name="file" size={19} /></div>
+        <div className="tile tint-olive"><Icon name="file" size={19} /></div>
         <div className="grow">
           <div className="post-file-nm">{a.name}</div>
           <div className="post-file-mt">{a.ext} · {a.mb} MB</div>
@@ -43,7 +43,7 @@ export default function PostCard({ post }) {
         <div className="grow">
           <div className="post-name">
             <b>{post.author}</b>
-            <span className="pill solid" style={{ background: promo.badge, fontSize: 10.5, padding: '3px 8px' }}>
+            <span className="pill solid" style={{ background: badgeOf(promo), fontSize: 10.5, padding: '3px 8px' }}>
               {promo.name}
             </span>
           </div>

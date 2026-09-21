@@ -49,7 +49,7 @@ export default async function QuizIndex() {
             <div className="head-t">الاختبارات</div>
             <div className="head-s">اختبر نفسك قبل الامتحان</div>
           </div>
-          <div className="tile sm tint-clay"><Icon name="quiz" size={18} /></div>
+          <div className="tile sm tint-olive"><Icon name="quiz" size={18} /></div>
         </div>
       </header>
       <div className="scroll">

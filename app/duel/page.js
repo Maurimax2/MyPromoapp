@@ -47,8 +47,11 @@ export default async function Duels() {
     return (
       <Link href={`/duel/${d.id}`} className="card duel-row">
         <div className="card-row">
-          <div className={`tile ${d.at === 'invited' ? 'tint-clay'
-            : how === 'won' ? 'tint-clay' : 'tint-olive'}`}>
+          {/* Clay for the two that are waiting on you — an invitation to
+              answer, and a duel it is your turn in. Everything else here is
+              news you can read later. */}
+          <div className={`tile ${d.at === 'invited' || d.at === 'play' ? 'tint-clay'
+            : 'tint-olive'}`}>
             <Icon name="swords" size={19} />
           </div>
           <div className="grow">

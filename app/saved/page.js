@@ -58,7 +58,7 @@ export default async function Saved() {
         {items.map((it) => {
           const inner = (
             <div className="card-row">
-              <div className="tile tint-clay">
+              <div className="tile tint-olive">
                 <Icon name={it.kind === 'question' ? 'msg' : 'file'} size={20} />
               </div>
               <div className="grow">

@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PROMOS } from '@/lib/data';
+import { PROMOS, badgeOf } from '@/lib/data';
 
 export default function PickPromo() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function PickPromo() {
           <button
             key={p.id}
             className={`imp-kind${busy === p.id ? ' on' : ''}`}
-            style={busy === p.id ? { background: p.badge } : undefined}
+            style={busy === p.id ? { background: badgeOf(p) } : undefined}
             onClick={() => pick(p.id)}
             disabled={!!busy}
           >

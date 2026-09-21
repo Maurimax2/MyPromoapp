@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
+import { badgeOf } from '@/lib/data';
 
 // ساعدنا نبني MyPromo — six questions, one at a time.
 //
@@ -114,7 +115,7 @@ export default function Form({ promos }) {
             {promos.map((p) => (
               <button key={p.id} type="button" className="pl-opt"
                 data-on={promo === p.id} onClick={() => setPromo(p.id)}>
-                <span className="pl-dotc" style={{ background: p.badge }} />
+                <span className="pl-dotc" style={{ background: badgeOf(p) }} />
                 <span dir="ltr">{p.name}</span>
               </button>
             ))}

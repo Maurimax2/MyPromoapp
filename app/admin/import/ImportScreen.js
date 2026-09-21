@@ -11,6 +11,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { badgeOf } from '@/lib/data';
 
 const KINDS = [
   { id: 'lecture', where: 'archive', label: 'محاضرة' },
@@ -209,7 +210,7 @@ export default function ImportScreen({ promos, modules, preset }) {
           <button
             key={p.id}
             className={`imp-kind${promo === p.id ? ' on' : ''}`}
-            style={promo === p.id ? { background: p.badge } : undefined}
+            style={promo === p.id ? { background: badgeOf(p) } : undefined}
             onClick={() => { setPromo(p.id); setModule(null); setNewModule(null); }}
           >
             {p.name}

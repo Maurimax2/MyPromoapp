@@ -32,7 +32,7 @@
   --ink-3: #979992;
   --line: #DDDCD4;
   --line-soft: #EAE8E0;
-  --shadow: 0 1px 2px rgba(23, 32, 26, .04), 0 4px 14px rgba(23, 32, 26, .06);
+  --shadow: 0 0 0 1px rgba(23, 32, 26, .10);
   --shadow-nav: 0 -1px 18px rgba(23, 32, 26, .07);
   --r-card: 17px;
   --r-tile: 14px;
@@ -100,12 +100,12 @@ a, button, [role='button'], label, input, select, textarea, summary {
 
 /* ---------- header ---------- */
 .head {
-  background: var(--surface);
+  background: var(--bg);
   padding: 18px 18px 14px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
   z-index: 5;
@@ -121,8 +121,8 @@ a, button, [role='button'], label, input, select, textarea, summary {
 
 /* ---------- controls ---------- */
 .srch {
-  display: flex; align-items: center; gap: 9px; background: var(--bg);
-  border: 1px solid transparent; border-radius: 13px; padding: 0 14px; height: 46px;
+  display: flex; align-items: center; gap: 9px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 13px; padding: 0 14px; height: 46px;
   font-size: 15px; color: var(--ink-3);
 }
 .srch input {
@@ -131,7 +131,10 @@ a, button, [role='button'], label, input, select, textarea, summary {
 }
 .srch:focus-within { background: var(--surface); border-color: var(--olive-light); }
 
-.seg { display: flex; gap: 4px; background: var(--bg); border-radius: 12px; padding: 4px; }
+.seg {
+  display: flex; gap: 4px; padding: 4px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--line);
+}
 /* Also an <a>: the semester switch on a subject is two links, because each
    semester is its own page and one of them should be shareable. */
 .seg button, .seg a {
@@ -140,8 +143,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   display: flex; align-items: center; justify-content: center;
 }
 .seg button[data-on='true'], .seg a[data-on='true'] {
-  background: var(--surface); color: var(--olive);
-  box-shadow: 0 1px 3px rgba(23, 32, 26, .09);
+  background: var(--olive-pale); color: var(--olive);
 }
 
 .chips { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
@@ -203,7 +205,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
   background: var(--olive-pale); color: var(--olive);
 }
-.pill.grey { background: var(--bg); color: var(--ink-3); }
+.pill.grey { background: var(--surface); color: var(--ink-2); box-shadow: 0 0 0 1px var(--line); }
 .pill.warn { background: var(--clay-pale); color: #8A4022; }
 .pill.solid { color: #fff; }
 
@@ -420,7 +422,7 @@ button.pill:active { transform: scale(.94); }
   font-size: 13.5px; font-weight: 600; color: var(--ink-2);
 }
 .composer-acts .ic-img { color: var(--olive-light); }
-.composer-acts .ic-pdf { color: var(--clay); }
+.composer-acts .ic-pdf { color: var(--olive); }
 
 .post {
   background: var(--surface);
@@ -589,7 +591,7 @@ button.pill:active { transform: scale(.94); }
 
 .quizcard {
   display: flex; align-items: center; gap: 13px; padding: 13px 14px;
-  background: var(--clay); color: #fff; margin-bottom: 4px;
+  background: var(--olive); color: #fff; margin-bottom: 4px;
 }
 .quizcard .nm, .quizcard .mt { color: #fff; }
 .quizcard .mt { opacity: .8; }
@@ -849,6 +851,8 @@ button.pill:active { transform: scale(.94); }
    apart from the count at the other end of the row, which is a different
    number about a different thing. */
 .pick .pick-n { background: var(--olive-pale); color: var(--olive); font-weight: 700; }
+/* المراجعة keeps the clay: questions come due whether you came for them
+   or not, and that is the one thing on these screens that needs you. */
 .quizcard.review { background: var(--clay-pale); }
 .quizcard.review .quizcard-ic { background: var(--clay); color: #fff; }
 
@@ -944,7 +948,9 @@ button.pill:active { transform: scale(.94); }
 .admin-tile span { font-size: 13px; }
 .admin-import-ic {
   width: 42px; height: 42px; border-radius: 13px; flex-shrink: 0;
-  background: var(--clay); color: #fff;
+  /* «شارك ملخصك» and «استورد» are the primary action of the screens they
+     sit on, and the primary action is olive. */
+  background: var(--olive); color: #fff;
   display: flex; align-items: center; justify-content: center;
 }
 .admin-import { transition: transform .12s ease; }
@@ -1531,8 +1537,7 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-2); padding: 9px 0; border-radius: 9px;
 }
 .seg-a[data-on='true'] {
-  background: var(--surface); color: var(--olive);
-  box-shadow: 0 1px 3px rgba(23, 32, 26, .09);
+  background: var(--olive-pale); color: var(--olive);
 }
 
 .qa {

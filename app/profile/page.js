@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { promoById } from '@/lib/data';
+import { promoById, badgeOf } from '@/lib/data';
 import Sign from './Sign';
 import Find from './Find';
 
@@ -48,7 +48,7 @@ export default async function Profile() {
           <div className="me-name">{name}</div>
           <div className="me-row">
             {promo && (
-              <span className="pill solid" style={{ background: promo.badge, fontSize: 11 }}>
+              <span className="pill solid" style={{ background: badgeOf(promo), fontSize: 11 }}>
                 {promo.name}
               </span>
             )}
@@ -88,7 +88,7 @@ export default async function Profile() {
 
         <Link href="/saved" className="card">
           <div className="card-row">
-            <div className="tile tint-clay"><Icon name="bookmark" size={20} /></div>
+            <div className="tile tint-olive"><Icon name="bookmark" size={20} /></div>
             <div className="grow">
               <div className="nm">المحفوظات</div>
               <div className="mt">{saves.count || 0} عنصرًا</div>

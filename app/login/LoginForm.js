@@ -16,7 +16,7 @@ import Logo from '@/components/Logo';
 import Icon from '@/components/Icon';
 import { supabase } from '@/lib/supabase/browser';
 import { authMessage } from '@/lib/auth-error';
-import { PROMOS } from '@/lib/data';
+import { PROMOS, badgeOf } from '@/lib/data';
 
 export default function LoginForm() {
   const [how, setHow] = useState('link');       // link | password | join
@@ -171,7 +171,7 @@ export default function LoginForm() {
                 <button
                   type="button" key={p.id}
                   className={`imp-kind${promo === p.id ? ' on' : ''}`}
-                  style={promo === p.id ? { background: p.badge } : undefined}
+                  style={promo === p.id ? { background: badgeOf(p) } : undefined}
                   onClick={() => setPromo(p.id)}
                 >
                   {p.name}

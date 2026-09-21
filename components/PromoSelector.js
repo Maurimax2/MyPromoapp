@@ -13,6 +13,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from './Icon';
+import { badgeOf } from '@/lib/data';
 
 export default function PromoSelector({ promos, current, mine }) {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function PromoSelector({ promos, current, mine }) {
               className={`yr-item${p.id === current ? ' on' : ''}`}
               onClick={() => choose(p.id)}
             >
-              <span className="yr-dot" style={{ background: p.badge }} />
+              <span className="yr-dot" style={{ background: badgeOf(p) }} />
               <span className="grow" dir="ltr">{p.name}</span>
               {/* Which one is actually yours, so leaving it is a deliberate
                   act and coming back is one tap and no thinking. */}

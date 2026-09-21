@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { badgeOf } from '@/lib/data';
 
 export default function PromoScreen({ promos, subjects, files, canDelete }) {
   const router = useRouter();
@@ -64,7 +65,7 @@ export default function PromoScreen({ promos, subjects, files, canDelete }) {
           <div key={p.id}>
           <div className="ctm-row">
             <Link href={`/admin/content?promo=${p.id}`} className="ctm grow">
-              <span className="ctm-badge" style={{ background: p.badge }}>{p.name}</span>
+              <span className="ctm-badge" style={{ background: badgeOf(p) }}>{p.name}</span>
               <div className="grow">
                 <div className="ctm-t">{p.label}</div>
                 <div className="ctm-b">

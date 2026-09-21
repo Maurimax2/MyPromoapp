@@ -67,7 +67,7 @@ export default function Notifications({ items }) {
           const line = (SAYS[n.kind] || (() => 'حدث شيء'))(n);
           const inner = (
             <div className="card-row">
-              <div className={`tile ${n.kind === 'accepted' || n.kind === 'duel' || n.kind === 'duel_ok' ? 'tint-clay' : 'tint-olive'}`}>
+              <div className={`tile ${n.kind === 'duel' ? 'tint-clay' : 'tint-olive'}`}>
                 <Icon name={ICON[n.kind] || 'bell'} size={19} />
               </div>
               <div className="grow">
