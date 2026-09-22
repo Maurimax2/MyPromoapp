@@ -10,7 +10,6 @@ export default function Lectures() {
             <div className="head-t">المحاضرات</div>
             <div className="head-s">جدول اليوم</div>
           </div>
-          <button className="icobtn" aria-label="الجدول"><Icon name="clock" size={19} /></button>
         </div>
       </header>
 

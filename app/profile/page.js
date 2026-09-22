@@ -20,13 +20,15 @@ export default async function Profile() {
   const sb = await supabaseServer();
 
   // Real numbers, or none at all — an invented "12 saved" is worse than a 0.
-  const [posts, saves, answers, rooms] = await Promise.all([
+  const [posts, saves, answers, rooms, chats] = await Promise.all([
     sb.from('posts').select('*', { count: 'exact', head: true })
       .eq('author', me.id).eq('removed', false),
     sb.from('saves').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('comments').select('*', { count: 'exact', head: true })
       .eq('author', me.id).eq('accepted', true),
     sb.from('room_members').select('*', { count: 'exact', head: true }).eq('person', me.id),
+    sb.from('chats').select('*', { count: 'exact', head: true })
+      .or(`a.eq.${me.id},b.eq.${me.id}`),
   ]);
 
   const promo = promoById(me.promo) || null;
@@ -92,6 +94,23 @@ export default async function Profile() {
             <div className="grow">
               <div className="nm">المحفوظات</div>
               <div className="mt">{saves.count || 0} عنصرًا</div>
+            </div>
+            <span className="chev"><Icon name="chev" size={18} /></span>
+          </div>
+        </Link>
+
+        {/* المحادثات gave up its place in the bottom bar, and that left it
+            with no way in at all — a screen you could only reach by typing
+            the URL. A conversation starts from a person, so it belongs
+            beside the rest of you. */}
+        <Link href="/chat" className="card">
+          <div className="card-row">
+            <div className="tile tint-olive"><Icon name="msg" size={20} /></div>
+            <div className="grow">
+              <div className="nm">المحادثات</div>
+              <div className="mt">
+                {chats.count ? `${chats.count} محادثة` : 'لا محادثات بعد'}
+              </div>
             </div>
             <span className="chev"><Icon name="chev" size={18} /></span>
           </div>
