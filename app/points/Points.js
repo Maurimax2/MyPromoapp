@@ -1,22 +1,38 @@
 'use client';
 
-// النقاط, on screen.
+// الترتيب, on screen.
 //
-// Two views of one number: what you earned, and where that puts you. The
-// board is second on purpose — a student who has just arrived should see how
-// to earn something before they see thirty people ahead of them.
+// Two views of one number: where you stand, and where the number came from.
+//
+// The board used to be second, so that somebody who had just arrived saw how
+// to earn a point before they saw thirty people ahead of them. It is first
+// now because it is a tab in the bottom bar called الترتيب, and a tab has to
+// open on the thing it is named after. The reason the board was hidden is
+// answered a different way instead: your own row is pinned to the top of it,
+// so you never scroll to find yourself, and how far the next place is gets
+// said in words.
 
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import { RULES } from '@/lib/points';
 
 const TABS = [
-  { id: 'me',    label: 'نقاطك' },
   { id: 'board', label: 'الترتيب' },
+  { id: 'me',    label: 'نقاطك' },
 ];
 
-export default function Points({ total, rank, rows, badges, board, meId }) {
-  const [tab, setTab] = useState('me');
+// A promo is small enough that everyone knows every face, so a colour read
+// off the id is a person rather than a placeholder — the same six as the feed.
+const FACES = ['#2A5B3E', '#A8502A', '#14555F', '#8A6A14', '#4B5B3A', '#6B4A3A'];
+const faceOf = (id = '') => {
+  let n = 0;
+  for (let i = 0; i < id.length; i += 1) n = (n * 31 + id.charCodeAt(i)) % 997;
+  return FACES[n % FACES.length];
+};
+const initials = (name = '') => name.trim().slice(0, 2);
+
+export default function Points({ total, rank, rows, badges, board, meId, mine = null }) {
+  const [tab, setTab] = useState('board');
 
   return (
     <div className="scroll">
@@ -99,15 +115,54 @@ export default function Points({ total, rank, rows, badges, board, meId }) {
           </p>
         </>
       ) : board.length ? (
-        <div className="card pts-board">
-          {board.map((p, i) => (
-            <div key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`}>
-              <span className={`pts-place p${i + 1 <= 3 ? i + 1 : ''}`}>{i + 1}</span>
-              <span className="grow">{p.name}</span>
-              <b>{p.points}</b>
+        <>
+          {/* The three at the top, as people rather than as rows one to
+              three. The tallest stands in the middle, so the order here is
+              second, first, third. */}
+          {board.length >= 3 && (
+            <div className="podium">
+              {[board[1], board[0], board[2]].map((p, i) => (
+                <div key={p.id} className={`pod pod${[2, 1, 3][i]}`}>
+                  <span className="pod-f" style={{ background: faceOf(p.id) }}>
+                    {initials(p.name)}
+                  </span>
+                  <span className="pod-n">{p.name}</span>
+                  <b className="pod-p">{p.points}</b>
+                  <span className="pod-bar" />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+
+          {/* You, pinned. The whole reason the board could be shown first. */}
+          {mine && (
+            <div className="you-row">
+              <span className="you-at">{mine.at}</span>
+              <span className="you-f" style={{ background: faceOf(meId) }}>
+                {initials(mine.name)}
+              </span>
+              <span className="grow">
+                <b>أنت</b>
+                <s>{mine.gap}</s>
+              </span>
+              <b className="you-p">{mine.points}</b>
+            </div>
+          )}
+
+          <div className="eyebrow">دفعتك</div>
+          <div className="card pts-board">
+            {board.map((p, i) => (
+              <div key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`}>
+                <span className={`pts-place p${i + 1 <= 3 ? i + 1 : ''}`}>{i + 1}</span>
+                <span className="pts-face" style={{ background: faceOf(p.id) }}>
+                  {initials(p.name)}
+                </span>
+                <span className="grow">{p.name}</span>
+                <b>{p.points}</b>
+              </div>
+            ))}
+          </div>
+        </>
       ) : (
         <div className="empty">
           <div className="tile tint-olive"><Icon name="check" size={24} /></div>

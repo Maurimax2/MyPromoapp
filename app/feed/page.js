@@ -3,6 +3,7 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { subjectsOf, subjectRail, promosOf, moduleCounts } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
+import { stage } from '@/lib/duel';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 
@@ -105,6 +106,26 @@ export default async function Feed() {
 
   const studying = [...who.values()].map((x) => nameOf(x));
 
+  // The one duel that is waiting on your answer, for the line under the row
+  // of faces. Only one is drawn however many there are: الدراسة holds the
+  // list, and a feed that opens with three orange rows is a feed nobody
+  // reads. The oldest is the one that has been waiting longest.
+  const { data: duelRows } = await sb.from('duels')
+    .select(`id, title, state, challenger, opponent, challenger_at, opponent_at,
+             a:profiles!duels_challenger_fkey(full_name, email),
+             b:profiles!duels_opponent_fkey(full_name, email)`)
+    .or(`challenger.eq.${profile.id},opponent.eq.${profile.id}`)
+    .order('created_at', { ascending: true })
+    .limit(40);
+
+  const duel = (duelRows || [])
+    .map((d) => ({ ...d, at: stage(d, profile.id) }))
+    .filter((d) => d.at === 'invited' || d.at === 'play')
+    .map((d) => {
+      const them = d.challenger === profile.id ? d.b : d.a;
+      return { id: d.id, at: d.at, title: d.title, who: nameOf(them || {}).name };
+    })[0] || null;
+
   const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
@@ -153,6 +174,7 @@ export default async function Feed() {
       subjects={subjects}
       studying={studying}
       rooms={rooms}
+      duel={duel}
     />
   );
 }

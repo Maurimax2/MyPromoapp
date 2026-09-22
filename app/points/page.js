@@ -78,13 +78,29 @@ export default async function PointsPage() {
   const mine = tally[me.id] || zero();
   const rank = board.findIndex((p) => p.id === me.id) + 1;
 
+  // Your own row, said in full, so the board can be shown first without
+  // making you hunt for yourself in it. The gap is in words rather than a
+  // number on its own: "34 points off sixth" is a thing to go and do.
+  const shown = board.filter((p) => p.points > 0).slice(0, 30);
+  const score = scoreOf(mine);
+  const above = board.filter((p) => p.points > score).pop() || null;
+  const standing = {
+    at: score ? rank : '—',
+    name: me.full_name || me.email.split('@')[0],
+    points: score,
+    gap: !score
+      ? 'انشر ملخّصًا أو أجب زميلًا لتدخل القائمة'
+      : above
+        ? `تحتاج ${above.points - score + 1} نقطة للمركز الذي فوقك`
+        : 'أنت في الصدارة',
+  };
+
   return (
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/feed" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">النقاط</div>
+            <div className="head-t">الترتيب</div>
             <div className="head-s">
               {scoreOf(mine)
                 ? `المركز ${rank} من ${board.length}`
@@ -99,8 +115,9 @@ export default async function PointsPage() {
         rank={rank}
         rows={breakdown(mine)}
         badges={badgesOf(mine)}
-        board={board.filter((p) => p.points > 0).slice(0, 30)}
+        board={shown}
         meId={me.id}
+        mine={standing}
       />
     </>
   );

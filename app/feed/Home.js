@@ -79,6 +79,22 @@ function Here({ studying, rooms }) {
   const [open, setOpen] = useState(false);
   const n = studying.length;
 
+  // Nobody in a room is not an empty state to apologise for — it is the
+  // moment to offer the camera. Same row, same place, different offer, so
+  // the screen does not reflow depending on who happens to be online.
+  if (!n) {
+    return (
+      <Link href="/rooms" className="here">
+        <span className="here-cam"><Icon name="video" size={20} /></span>
+        <span className="here-say">
+          <b>لا أحد يدرس الآن</b>
+          <s>افتح غرفة وسيرونها</s>
+        </span>
+        <Icon name="chev" size={16} />
+      </Link>
+    );
+  }
+
   return (
     <>
       <button className="here" onClick={() => setOpen(true)}>
@@ -92,11 +108,9 @@ function Here({ studying, rooms }) {
           </span>
         )}
         <span className="here-say">
-          {n > 0
-            ? <><b>{souls(n)}</b> من دفعتك {n === 1 ? 'يدرس' : 'يدرسون'} الآن</>
-            : <>لا أحد في غرفة الآن — <b>افتح واحدة</b></>}
+          <b>{souls(n)}</b> من دفعتك {n === 1 ? 'يدرس' : 'يدرسون'} الآن
         </span>
-        {n > 0 && <span className="here-dot" />}
+        <span className="here-dot" />
         <Icon name="chev" size={16} />
       </button>
 
@@ -197,9 +211,31 @@ function Continue({ review, resume }) {
   );
 }
 
+/**
+ * دورك في تحدٍّ.
+ *
+ * One line, and only while a duel is actually waiting on your answer. It is
+ * the only clay on the screen when it appears, which is the whole of what
+ * clay means — and when nothing is waiting it is not a quiet grey row, it is
+ * nothing at all. التحدّي itself lives in الدراسة.
+ */
+function DuelWaits({ duel }) {
+  if (!duel) return null;
+  return (
+    <Link href={`/duel/${duel.id}`} className="duelline">
+      <span className="duelline-ic"><Icon name="swords" size={19} /></span>
+      <span className="grow">
+        <b>{duel.at === 'invited' ? 'تحدٍّ ينتظر ردّك' : 'دورك في تحدٍّ'}</b>
+        <s dir="auto">{duel.who} · <bdi>{duel.title}</bdi></s>
+      </span>
+      <span className="duelline-go">{duel.at === 'invited' ? 'اقبل' : 'أجب'}</span>
+    </Link>
+  );
+}
+
 export default function Home({ me, posts, subjects, mySubjects = [],
                                promos = [], reading, unseen = 0,
-                               studying = [], rooms = [],
+                               studying = [], rooms = [], duel = null,
                                readError = null, refused = 0 }) {
   const router = useRouter();
   // Both of these live in this browser, so the card can only be filled in
@@ -316,12 +352,14 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
       <div className="scroll flow">
         <Here studying={studying} rooms={rooms} />
+        <DuelWaits duel={duel} />
+
+        <Continue review={review} resume={resume} />
 
         <div className="eb">
-          <b>ادرس</b>
-          <Link href="/archive">كل المواد</Link>
+          <b>موادك</b>
+          <Link href="/study">كل المواد</Link>
         </div>
-        <Continue review={review} resume={resume} />
 
         {subjects.length > 0 && (
           <div className="rail">
@@ -339,7 +377,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
         <div className="eb">
           <b>من دفعتك</b>
-          <Link href="/notes">الملخصات</Link>
+          <Link href="/qa">الكل</Link>
         </div>
 
         {/* A profile made by a magic link has no year, and a post belongs to
