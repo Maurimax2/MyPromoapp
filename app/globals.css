@@ -4325,6 +4325,19 @@ button.pts-b:active { background: var(--olive-pale); }
 .rm-send { width: 46px; height: 46px; border-radius: 14px; background: var(--olive); color: #FFFDF8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .rm-send:disabled { background: #B9C4BB; }
 .rm-leave { height: 46px; padding: 0 16px; border-radius: 14px; background: var(--clay); color: #fff; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+.rm-live.shut { background: var(--line-soft); color: var(--ink-3); }
+
+/* A visitor who has not joined sees this instead of a composer that would
+   only fail on the server — the same bar's width, so the screen does not
+   jump the moment they join. */
+.rm-foot-join { justify-content: space-between; }
+.rm-join-hint { font-size: 12.5px; color: var(--ink-3); flex: 1; min-width: 0; }
+.rm-join {
+  height: 46px; padding: 0 18px; border-radius: 14px; background: var(--olive); color: #FFFDF8;
+  font-size: 13.5px; font-weight: 600; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  text-decoration: none; border: 0;
+}
+.rm-join:disabled { background: #B9C4BB; }
 @media (prefers-reduced-motion: reduce) { .rm-live i, .rm-seat.talk .rm-f, .rm-bars i, .rm-msg { animation: none !important; } }
 .rm-free { align-self: center; font-size: 11px; color: var(--ink-3); margin-top: -4px; }
 

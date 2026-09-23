@@ -114,6 +114,25 @@ export default function Room({ room, subject, people, first, me }) {
     router.push('/rooms');
   };
 
+  // A room is readable by anyone in the promo — you can look before you
+  // join — but the composer used to sit there fully lit for a visitor too,
+  // and only the server knew they were not a member: it refused the message
+  // with a 403 the screen barely showed. Refreshing here is what puts the
+  // real me.inside back from the server, the same way accepting a duel does.
+  const join = async () => {
+    if (busy) return;
+    setBusy(true); setError('');
+    const res = await fetch('/api/rooms', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: room.id, join: true }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setBusy(false);
+    if (!res.ok) { setError(data.error || 'تعذّر الانضمام'); return; }
+    router.refresh();
+  };
+
   // Who has just said something: their seat lights up, the nearest thing to
   // hearing them that a text room has.
   const spoke = new Map();
@@ -133,7 +152,9 @@ export default function Room({ room, subject, people, first, me }) {
           <b>{room.title}</b>
           <s dir="auto">{room.topic || 'مراجعة'}</s>
         </span>
-        <span className="rm-live"><i />مباشر · {people.length}</span>
+        {room.closed
+          ? <span className="rm-live shut">أُغلقت</span>
+          : <span className="rm-live"><i />مباشر · {people.length}</span>}
       </div>
 
       <div className="rm-flow">
@@ -223,19 +244,33 @@ export default function Room({ room, subject, people, first, me }) {
         </div>
       </div>
 
-      {/* ================= type, and leave ================= */}
-      <div className="rm-foot">
-        <input
-          value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && say()}
-          placeholder="اكتب للغرفة…" aria-label="رسالة" />
-        <button className="rm-send" disabled={!draft.trim() || busy} onClick={say} aria-label="أرسل">
-          <Icon name="send" size={19} />
-        </button>
-        <button className="rm-leave" onClick={() => leave(me.host)}>
-          {me.host ? 'أغلق' : 'غادر'}
-        </button>
-      </div>
+      {/* ================= type, and leave — or join first ================= */}
+      {room.closed ? (
+        <div className="rm-foot rm-foot-join">
+          <span className="rm-join-hint">أُغلقت هذه الغرفة — لا يمكن الكتابة فيها بعد الآن.</span>
+          <Link href="/rooms" className="rm-join">غرف أخرى</Link>
+        </div>
+      ) : me.inside ? (
+        <div className="rm-foot">
+          <input
+            value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && say()}
+            placeholder="اكتب للغرفة…" aria-label="رسالة" />
+          <button className="rm-send" disabled={!draft.trim() || busy} onClick={say} aria-label="أرسل">
+            <Icon name="send" size={19} />
+          </button>
+          <button className="rm-leave" onClick={() => leave(me.host)}>
+            {me.host ? 'أغلق' : 'غادر'}
+          </button>
+        </div>
+      ) : (
+        <div className="rm-foot rm-foot-join">
+          <span className="rm-join-hint">انضم لتشارك في الحديث</span>
+          <button className="rm-join" disabled={busy} onClick={join}>
+            {busy ? '…' : 'انضم إلى الغرفة'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
