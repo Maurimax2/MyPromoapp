@@ -1,70 +1,53 @@
-// One icon set, one stroke weight. Lucide paths, inlined so the app carries
-// no icon dependency and every glyph is themeable through currentColor.
-const PATHS = {
-  home: <><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></>,
-  book: <><path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></>,
-  archive: <><rect width="20" height="5" x="2" y="3" rx="1" /><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /><path d="M10 12h4" /></>,
-  user: <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>,
-  search: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></>,
-  chev: <path d="m15 18-6-6 6-6" />,
-  chevR: <path d="m9 18 6-6-6-6" />,
-  plus: <><path d="M5 12h14" /><path d="M12 5v14" /></>,
-  minus: <path d="M5 12h14" />,
-  bell: <><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /><path d="M21 8.5c0-3.6-2.7-6.5-6-6.5S9 4.9 9 8.5c0 7-3 9-3 9h18s-3-2-3-9" /></>,
-  heart: <><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" /></>,
-  msg: <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />,
-  dots: <><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></>,
-  clock: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>,
-  person: <><circle cx="12" cy="5" r="1" /><path d="m9 20 3-6 3 6" /><path d="m6 8 6 2 6-2" /><path d="M12 10v4" /></>,
-  flask: <><path d="M10 2v7.31" /><path d="M14 9.3V1.99" /><path d="M8.5 2h7" /><path d="M14 9.3a6.5 6.5 0 1 1-4 0" /><path d="M5.52 16h12.96" /></>,
-  micro: <><path d="M6 18h8" /><path d="M3 22h18" /><path d="M14 22a7 7 0 1 0 0-14h-1" /><path d="M9 14h2" /><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z" /><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3" /></>,
-  shield: <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />,
-  atom: <><circle cx="12" cy="12" r="1" /><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z" /><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z" /></>,
-  baby: <><path d="M9 12h.01" /><path d="M15 12h.01" /><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5" /><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5S14.5 8 13 8" /></>,
-  alert: <><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></>,
-  file: <><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /></>,
-  bookmark: <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />,
-  trash: <><path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M10 11v6" /><path d="M14 11v6" /></>,
-  settings: <><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></>,
-  logout: <><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" x2="9" y1="12" y2="12" /></>,
-  book2: <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />,
-  image: <><rect width="18" height="18" x="3" y="3" rx="2" /><circle cx="9" cy="9" r="2" /><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21" /></>,
-  send: <><path d="M14.5 9.5 3 21" /><path d="M21.9 3.6a1 1 0 0 0-1.3-1.3L3.4 8.7a1 1 0 0 0 .1 1.9l7.5 1.9a1 1 0 0 1 .7.7l1.9 7.5a1 1 0 0 0 1.9.1z" /></>,
-  heartFill: <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" fill="currentColor" />,
-  check: <polyline points="20 6 9 17 4 12" />,
-  x: <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></>,
-  quiz: <><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3" /><path d="M12 17h.01" /><circle cx="12" cy="12" r="10" /></>,
-  zoomIn: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></>,
-  zoomOut: <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M8 11h6" /></>,
-  // ملء الشاشة, and the way back out of it.
-  expand: <><path d="M8 3H5a2 2 0 0 0-2 2v3" /><path d="M21 8V5a2 2 0 0 0-2-2h-3" /><path d="M3 16v3a2 2 0 0 0 2 2h3" /><path d="M16 21h3a2 2 0 0 0 2-2v-3" /></>,
-  shrink: <><path d="M8 3v3a2 2 0 0 1-2 2H3" /><path d="M21 8h-3a2 2 0 0 1-2-2V3" /><path d="M3 16h3a2 2 0 0 1 2 2v3" /><path d="M16 21v-3a2 2 0 0 1 2-2h3" /></>,
-  // نماذج ثلاثية الأبعاد: the model itself, the way back to the first view,
-  // and the list of what is in it.
-  box: <><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" /><path d="m3.3 7 8.7 5 8.7-5" /><path d="M12 22V12" /></>,
-  rotate: <><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></>,
-  list: <><path d="M3 5h.01" /><path d="M3 12h.01" /><path d="M3 19h.01" /><path d="M8 5h13" /><path d="M8 12h13" /><path d="M8 19h13" /></>,
-  palette: <><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" /><circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" /></>,
-  focus: <><circle cx="12" cy="12" r="3" /><path d="M3 7V5a2 2 0 0 1 2-2h2" /><path d="M17 3h2a2 2 0 0 1 2 2v2" /><path d="M21 17v2a2 2 0 0 1-2 2h-2" /><path d="M7 21H5a2 2 0 0 1-2-2v-2" /></>,
-  pin: <><path d="M20 10c0 4.4-5.6 9.9-7.4 11.5a1 1 0 0 1-1.2 0C9.6 19.9 4 14.4 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></>,
-  eye: <><path d="M2.06 12.3a1 1 0 0 1 0-.6 10.6 10.6 0 0 1 19.9 0 1 1 0 0 1 0 .6 10.6 10.6 0 0 1-19.9 0" /><circle cx="12" cy="12" r="3" /></>,
-  eyeOff: <><path d="M10.7 5.1A10.9 10.9 0 0 1 12 5c5 0 8.8 3.2 10 6.7a1 1 0 0 1 0 .6 12.8 12.8 0 0 1-1.7 2.9" /><path d="M6.6 6.6A13.5 13.5 0 0 0 2 11.7a1 1 0 0 0 0 .6C3.2 15.8 7 19 12 19c2 0 3.7-.5 5.2-1.3" /><path d="m9.9 9.9a3 3 0 0 0 4.2 4.2" /><path d="m2 2 20 20" /></>,
-  download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" x2="12" y1="15" y2="3" /></>,
+// One icon set: Phosphor, in its duotone weight.
+//
+// This used to be a hand-kept file of Lucide paths, one stroke weight, drawn
+// thin — correct, and anonymous: every app built this year has the same line
+// icons. Duotone is two tones of one colour, a quiet fill under a firm line,
+// and in olive it is the thing that makes a screen read as MyPromo rather than
+// as a template.
+//
+// The names are the app's own and did not change, so no screen had to: a
+// call site still asks for `chev` or `swords`, and this file decides what that
+// looks like. Imported from the `ssr` build, which carries no React context,
+// so the same component draws in server components and client ones alike.
 
-  // الرئيسية's five tools. `msg` is a single bubble and belongs to المحادثات
-  // now that it sits in the header, so سؤال وجواب gets a pair of its own.
-  msgs: <><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z" /><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1" /></>,
-  video: <><path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.5L16 10.5" /><rect x="2" y="6" width="14" height="12" rx="2" /></>,
-  award: <><circle cx="12" cy="8" r="6" /><path d="M15.5 12.9 17 21l-5-3-5 3 1.5-8.1" /></>,
-  swords: <><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" /><line x1="13" x2="19" y1="19" y2="13" /><line x1="16" x2="20" y1="16" y2="20" /><line x1="19" x2="21" y1="21" y2="19" /><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" /><line x1="5" x2="9" y1="14" y2="18" /><line x1="7" x2="4" y1="17" y2="20" /><line x1="3" x2="5" y1="19" y2="21" /></>,
-  calendar: <><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="M8 14h.01" /><path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /></>,
+import {
+  Archive, ArrowsClockwise, Atom, Baby, Bell, BookmarkSimple, BookOpenText, CalendarDots,
+  CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, ClockCountdown, CornersIn, CornersOut,
+  Crosshair, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, Heart,
+  House, Image, ListBullets, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
+  Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShieldCheck, SignOut, Sword,
+  Trash, Trophy, User, VideoCamera, Warning, X,
+} from '@phosphor-icons/react/dist/ssr';
+
+const ICONS = {
+  home: House, book: BookOpenText, archive: Archive, user: User, search: MagnifyingGlass,
+  // `chev` points the way you go in a right-to-left screen, `chevR` the way back.
+  chev: CaretLeft, chevR: CaretRight,
+  plus: Plus, minus: Minus, bell: Bell, heart: Heart, msg: ChatCircle, msgs: ChatsCircle,
+  dots: DotsThree, clock: ClockCountdown, person: Person, flask: Flask, micro: Microscope,
+  shield: ShieldCheck, atom: Atom, baby: Baby, alert: Warning, file: FileText,
+  bookmark: BookmarkSimple, trash: Trash, settings: Gear, logout: SignOut, book2: Notebook,
+  image: Image, send: PaperPlaneTilt, check: Check, x: X, quiz: Exam,
+  zoomIn: MagnifyingGlassPlus, zoomOut: MagnifyingGlassMinus, expand: CornersOut, shrink: CornersIn,
+  box: Cube, rotate: ArrowsClockwise, list: ListBullets, palette: Palette, focus: Crosshair,
+  pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, video: VideoCamera,
+  award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire,
 };
 
-export default function Icon({ name, size = 20, stroke = 2, ...rest }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...rest}>
-      {PATHS[name]}
-    </svg>
-  );
+// A few read as a state rather than a picture, and a state wants the solid
+// weight: a liked heart is filled.
+const SOLID = { heartFill: Heart };
+
+// …and a few are marks rather than pictures. A duotone caret fills its own
+// triangle and reads as a heavy arrowhead; these want a clean line.
+const LINE = new Set(['chev', 'chevR', 'x', 'check', 'plus', 'minus']);
+
+export default function Icon({ name, size = 20, weight, stroke, ...rest }) {
+  void stroke;   // the old line icons took a stroke width; duotone has none
+  const Solid = SOLID[name];
+  const Glyph = Solid || ICONS[name];
+  if (!Glyph) return null;
+  const w = Solid ? 'fill' : (weight || (LINE.has(name) ? 'bold' : 'duotone'));
+  return <Glyph size={size} weight={w} aria-hidden="true" {...rest} />;
 }

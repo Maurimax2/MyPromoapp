@@ -304,6 +304,8 @@ function matches(row, key, spec) {
   if (op === 'eq') return String(cell) === val;
   if (op === 'neq') return String(cell) !== val;
   if (op === 'is') return val === 'null' ? cell == null : String(cell) === val;
+  // not.is.null, not.eq.x — the rest of the spec is itself a spec, negated.
+  if (op === 'not') return !matches(row, key, val);
   if (op === 'in') {
     const list = val.replace(/^\(|\)$/g, '').split(',').map((s) => s.replace(/^"|"$/g, ''));
     return list.includes(String(cell));

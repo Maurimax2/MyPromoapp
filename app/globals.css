@@ -3275,3 +3275,192 @@ html:has(.pl) { scroll-behavior: smooth; }
   color: #fff; font-size: 10.5px; font-weight: 600;
   display: flex; align-items: center; justify-content: center;
 }
+
+/* ============================================================
+   الرئيسية, v2 — the screen the prototype was built around.
+
+   Who is studying, the duels, where you left off, the subjects
+   with their models breaking out of the card, then the promo.
+   Everything rises in on load, the models float, the live dots
+   breathe, and a duel waiting on you glows. All of it stops
+   under prefers-reduced-motion.
+   ============================================================ */
+
+@keyframes h-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes h-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+@keyframes h-breathe { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
+@keyframes h-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(224, 138, 94, 0); } 50% { box-shadow: 0 0 0 6px rgba(224, 138, 94, .18); } }
+.r1 { animation: h-rise .55s cubic-bezier(.2,.8,.3,1) both; }
+.r2 { animation: h-rise .55s .08s cubic-bezier(.2,.8,.3,1) both; }
+.r3 { animation: h-rise .55s .16s cubic-bezier(.2,.8,.3,1) both; }
+.r4 { animation: h-rise .55s .24s cubic-bezier(.2,.8,.3,1) both; }
+.r5 { animation: h-rise .55s .32s cubic-bezier(.2,.8,.3,1) both; }
+.r6 { animation: h-rise .55s .40s cubic-bezier(.2,.8,.3,1) both; }
+.float { animation: h-float 5.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .r1, .r2, .r3, .r4, .r5, .r6, .float, .duel-turn, .duel-live, .here-dot { animation: none !important; }
+}
+
+/* ---------- who you are ---------- */
+.h-top {
+  display: flex; align-items: center; gap: 11px;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px 10px;
+  background: var(--bg);
+}
+.h-me {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  color: #fff; font-size: 14px; font-weight: 600; text-decoration: none;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px #C9DCCD;
+}
+.h-hi { flex: 1; min-width: 0; }
+.h-hi > b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
+.h-sub { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 11.5px; color: var(--ink-2); flex-wrap: wrap; }
+.h-streak { display: inline-flex; align-items: center; gap: 3px; color: var(--clay); }
+.h-streak b { font-weight: 600; }
+.h-sub .yr-btn { min-height: 26px; padding: 0 8px; font-size: 11px; }
+.h-bell {
+  position: relative; width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.h-bell .tally { top: 5px; inset-inline-end: 6px; min-width: 16px; height: 16px; font-size: 9.5px; box-shadow: 0 0 0 2px var(--surface); }
+
+.scroll.h-flow { padding: 4px 16px calc(var(--nav-h) + 26px); gap: 14px; }
+/* The two strips run to the edge of the screen, so a card half-off the side
+   says there is more to swipe to. */
+.h-strip, .h-subjects { margin: 0 -16px; }
+.here { border-radius: 18px; }
+.here-dot { animation: h-breathe 2.2s ease-in-out infinite; }
+
+/* ---------- a section's heading ---------- */
+.h-sec { display: flex; align-items: center; gap: 8px; margin: 4px 0 0; }
+.h-sec > b { font-size: 16px; font-weight: 600; letter-spacing: -.2px; }
+.h-sec-ic { width: 28px; height: 28px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.h-sec-ic.clay { background: var(--clay-pale); color: var(--clay); }
+.h-sec-n { font-size: 11px; font-weight: 600; color: #fff; background: var(--clay); padding: 2px 8px; border-radius: 999px; }
+.h-sec-all { margin-inline-start: auto; font-size: 11.5px; color: var(--ink-3); text-decoration: none; }
+
+/* ---------- التحدّيات ---------- */
+.h-duels { display: flex; flex-direction: column; gap: 10px; }
+.h-strip {
+  display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none;
+  padding: 2px 16px 6px; overscroll-behavior-x: contain;
+}
+.h-strip::-webkit-scrollbar { display: none; }
+
+.duel-turn {
+  flex: 0 0 236px; box-sizing: border-box; padding: 14px; border-radius: 20px;
+  background: var(--ink); color: var(--bg); text-decoration: none;
+  display: flex; flex-direction: column; gap: 12px;
+  animation: h-glow 2.4s ease-in-out infinite;
+}
+.duel-turn-top { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.duel-turn-top b { font-weight: 600; color: #E08A5E; }
+.duel-live { width: 7px; height: 7px; border-radius: 4px; background: #E08A5E; animation: h-breathe 2.2s ease-in-out infinite; }
+.duel-turn-t { margin-inline-start: auto; display: inline-flex; align-items: center; gap: 4px; opacity: .6; }
+.duel-vs { display: flex; align-items: center; justify-content: space-between; }
+.duel-p { display: flex; flex-direction: column; align-items: center; gap: 5px; width: 64px; }
+.duel-p s { text-decoration: none; font-size: 10.5px; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 64px; }
+.duel-f {
+  width: 46px; height: 46px; border-radius: 50%; color: #fff; font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px #3F7A57;
+}
+.duel-f.them { box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px #C97A50; }
+.duel-f.sm { width: 40px; height: 40px; font-size: 13px; box-shadow: none; }
+.duel-f.xs { width: 30px; height: 30px; font-size: 11px; box-shadow: none; }
+.duel-mid { text-align: center; }
+.duel-mid b { display: block; font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #E08A5E; }
+.duel-mid s { display: block; text-decoration: none; font-size: 10px; opacity: .55; margin-top: 3px; }
+.duel-turn-bot { display: flex; align-items: center; gap: 8px; }
+.duel-turn-bot bdi { font-size: 11.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.duel-go { flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--ink); background: #E08A5E; padding: 8px 16px; border-radius: 999px; }
+
+.duel-wait {
+  flex: 0 0 150px; box-sizing: border-box; padding: 14px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.duel-wait-top { display: flex; align-items: center; justify-content: space-between; color: var(--ink-3); margin-bottom: 4px; }
+.duel-wait > b { font-size: 12.5px; font-weight: 600; }
+.duel-wait-t { font-size: 10.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.duel-wait s { text-decoration: none; font-size: 10.5px; color: var(--ink-2); margin-top: auto; }
+
+.duel-rivals {
+  flex: 0 0 186px; box-sizing: border-box; padding: 14px; border-radius: 20px;
+  background: var(--olive-pale); border: 1px solid #C8DCCD;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.duel-rivals > b { font-size: 12.5px; font-weight: 600; color: var(--olive); }
+.duel-rival { display: flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 500; }
+.duel-rival .grow { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.duel-rival-go {
+  width: 34px; height: 34px; border-radius: 11px; background: var(--olive); color: #fff;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.duel-rivals-any { margin-top: auto; font-size: 10.5px; font-weight: 500; color: var(--olive); text-decoration: none; }
+
+/* ---------- تابع من حيث توقّفت ---------- */
+.h-cont {
+  display: flex; align-items: center; gap: 12px; padding: 13px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  text-decoration: none; color: inherit; transition: transform .12s ease;
+}
+.h-cont:active { transform: scale(.99); }
+.h-cont-art {
+  position: relative; width: 52px; height: 52px; border-radius: 15px; flex-shrink: 0;
+  color: #fff; display: flex; align-items: center; justify-content: center;
+}
+.h-cont-art img {
+  position: absolute; width: 62px; height: 66px; object-fit: contain; top: -14px; left: -5px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.25));
+}
+.h-cont-art img.thumb { position: static; width: 100%; height: 100%; object-fit: cover; border-radius: 15px; filter: none; }
+.h-cont s { display: block; text-decoration: none; font-size: 10.5px; color: var(--ink-3); }
+.h-cont b { display: block; font-size: 14px; font-weight: 600; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.h-cont-bar { display: block; height: 4px; border-radius: 2px; background: var(--line-soft); margin-top: 8px; overflow: hidden; }
+.h-cont-bar i { display: block; height: 100%; border-radius: 2px; background: var(--olive); }
+.h-cont-n { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--olive); }
+.h-cont > svg { color: var(--ink-3); flex-shrink: 0; }
+
+/* ---------- موادك: each subject, its model breaking out of the top ---------- */
+.h-subjects {
+  display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none;
+  padding: 38px 16px 8px; overscroll-behavior-x: contain;
+}
+.h-subjects::-webkit-scrollbar { display: none; }
+.h-subj {
+  position: relative; flex: 0 0 150px; height: 118px; box-sizing: border-box;
+  padding: 12px 13px; border-radius: 20px; color: #FFFDF8; text-decoration: none;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: transform .12s ease;
+}
+.h-subj::before {
+  content: ''; position: absolute; inset: 0; border-radius: 20px; pointer-events: none;
+  background: radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%);
+}
+.h-subj:active { transform: scale(.97); }
+.h-subj img {
+  position: absolute; left: 6px; top: -36px; width: 96px; height: 96px; object-fit: contain;
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,.28)); pointer-events: none;
+}
+.h-subj b { position: relative; font-size: 12px; font-weight: 700; letter-spacing: .4px; line-height: 1.3; }
+.h-subj s { position: relative; text-decoration: none; font-size: 10.5px; opacity: .8; margin-top: 3px; }
+
+/* ---------- the composer at rest ---------- */
+.h-say {
+  display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+  font-size: 12.5px; color: var(--ink-3); text-align: inherit; min-height: 48px;
+}
+.h-say .face { width: 34px; height: 34px; font-size: 11px; }
+.h-say-pdf {
+  width: 36px; height: 36px; border-radius: 12px; background: var(--olive-pale); color: var(--olive);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ---------- the tabs: the chosen one sits in a pill ---------- */
+.nav a .nav-ic { padding: 4px 16px; border-radius: 999px; transition: background .2s ease; }
+.nav a[data-on='true'] .nav-ic { background: var(--olive-pale); }
+.nav .nav-tally { top: -2px; inset-inline-end: 6px; }

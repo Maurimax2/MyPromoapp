@@ -111,20 +111,45 @@ export default async function Feed() {
   // list, and a feed that opens with three orange rows is a feed nobody
   // reads. The oldest is the one that has been waiting longest.
   const { data: duelRows } = await sb.from('duels')
-    .select(`id, title, state, challenger, opponent, challenger_at, opponent_at,
-             a:profiles!duels_challenger_fkey(full_name, email),
-             b:profiles!duels_opponent_fkey(full_name, email)`)
+    .select(`id, title, state, questions, seconds, challenger, opponent, challenger_at, opponent_at, created_at,
+             a:profiles!duels_challenger_fkey(id, full_name, email),
+             b:profiles!duels_opponent_fkey(id, full_name, email)`)
     .or(`challenger.eq.${profile.id},opponent.eq.${profile.id}`)
-    .order('created_at', { ascending: true })
+    .order('created_at', { ascending: false })
     .limit(40);
 
-  const duel = (duelRows || [])
+  // Every duel still in play, the ones that need you first. A finished duel
+  // is on /duel; الرئيسية is for what can still happen.
+  const ORDER = { invited: 0, play: 1, sent: 2, waiting: 3 };
+  const duels = (duelRows || [])
     .map((d) => ({ ...d, at: stage(d, profile.id) }))
-    .filter((d) => d.at === 'invited' || d.at === 'play')
+    .filter((d) => d.at in ORDER)
+    .sort((x, y) => ORDER[x.at] - ORDER[y.at])
+    .slice(0, 6)
     .map((d) => {
       const them = d.challenger === profile.id ? d.b : d.a;
-      return { id: d.id, at: d.at, title: d.title, who: nameOf(them || {}).name };
-    })[0] || null;
+      return {
+        id: d.id, at: d.at, title: d.title,
+        them: nameOf(them || {}),
+        count: Array.isArray(d.questions) ? d.questions.length : null,
+        seconds: d.seconds || 0,
+      };
+    });
+
+  // Somebody to challenge, so the section is never an empty shelf. Classmates
+  // with a matricule — the challenge form is addressed by it — and not the
+  // ones you are already in a duel with.
+  const busyWith = new Set(duels.map((d) => d.them.id));
+  const { data: mates } = await sb.from('profiles')
+    .select('id, full_name, email, matricule')
+    .eq('promo', promo).eq('status', 'approved')
+    .not('matricule', 'is', null)
+    .neq('id', profile.id)
+    .limit(12);
+  const rivals = (mates || [])
+    .filter((m) => !busyWith.has(m.id))
+    .slice(0, 3)
+    .map((m) => ({ ...nameOf(m), matricule: m.matricule }));
 
   const subjectRows = await subjectsOf(promo);
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
@@ -174,7 +199,8 @@ export default async function Feed() {
       subjects={subjects}
       studying={studying}
       rooms={rooms}
-      duel={duel}
+      duels={duels}
+      rivals={rivals}
     />
   );
 }

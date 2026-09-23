@@ -1,0 +1,341 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "/three/three.module.js", "three/addons/": "/addons/" } }</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { colourOf, tissueOf } from '/lib/tissue.js';
+import { bundleOf } from '/lib/bundles.js';
+
+const q = new URLSearchParams(location.search);
+const SIZE = Number(q.get('size') || 1000);
+const yaw = Number(q.get('yaw') || 0) * Math.PI / 180;
+const pitch = Number(q.get('pitch') || 0) * Math.PI / 180;
+const roll = Number(q.get('roll') || 0) * Math.PI / 180;
+const zoom = Number(q.get('zoom') || 1);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(SIZE, SIZE);
+renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const group = new THREE.Group();
+scene.add(group);
+
+scene.add(new THREE.HemisphereLight(0xfff6e8, 0x3a3228, 1.1));
+const key = new THREE.DirectionalLight(0xfff1dc, 2.4); key.position.set(2.5, 3.5, 3); scene.add(key);
+const fill = new THREE.DirectionalLight(0xe8f0ff, 0.7); fill.position.set(-3, 1, 2); scene.add(fill);
+const rim = new THREE.DirectionalLight(0xffffff, 1.6); rim.position.set(-1, 2, -4); scene.add(rim);
+
+const glossy = (c, r = 0.32, extra = {}) => new THREE.MeshPhysicalMaterial({ color: c, roughness: r, clearcoat: 0.6, clearcoatRoughness: 0.25, ...extra });
+const add = (geo, mat, p = [0, 0, 0], r = [0, 0, 0], s = 1) => {
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(...p); m.rotation.set(...r);
+  if (Array.isArray(s)) m.scale.set(...s); else m.scale.setScalar(s);
+  group.add(m); return m;
+};
+
+// ---------------------------------------------------------------- anatomy
+// Several bundles share one world frame, so composing them is just loading
+// them together. `only` keeps some families, `names` some parts, `ghost`
+// draws one bundle see-through, `xray` draws everything as a radiograph.
+async function bundles(ids) {
+  const only = q.get('only') ? q.get('only').split(',') : null;
+  const names = q.get('names') ? q.get('names').split(',') : null;
+  const skip = q.get('skip') ? q.get('skip').split(',') : [];
+  const ghost = q.get('ghost') ? q.get('ghost').split(',') : [];
+  const xray = q.get('xray') === '1';
+  for (const id of ids) {
+    const [meta, bin] = await Promise.all([
+      fetch(`/anatomy/${id}.json`).then((r) => r.json()),
+      fetch(`/anatomy/${id}.bin`).then((r) => r.arrayBuffer()),
+    ]);
+    const book = bundleOf(id);
+    for (const p of meta.parts) {
+      if (only && !only.includes(p.family)) continue;
+      if (names && !names.includes(p.name)) continue;
+      if (skip.includes(p.name)) continue;
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(bin, p.positions, p.vertexCount * 3), 3));
+      g.setAttribute('normal', new THREE.BufferAttribute(new Int16Array(bin, p.normals, p.vertexCount * 3), 3, true));
+      g.setIndex(new THREE.BufferAttribute(new Uint32Array(bin, p.indices, p.indexCount), 1));
+      const kind = tissueOf(book, p.name, p.family);
+      let m;
+      if (xray) {
+        m = new THREE.MeshStandardMaterial({ color: 0xcfe6ff, emissive: 0x2d5f8c, emissiveIntensity: 0.9, roughness: 0.35,
+          transparent: true, opacity: 0.72, side: THREE.DoubleSide, depthWrite: false });
+      } else {
+        m = new THREE.MeshStandardMaterial({ color: colourOf(book, p.name, p.family), roughness: kind === 'bone' ? 0.78 : 0.5,
+          metalness: 0.02, side: THREE.DoubleSide });
+        if (ghost.includes(id)) { m.transparent = true; m.opacity = 0.32; m.depthWrite = false; }
+      }
+      const mesh = new THREE.Mesh(g, m);
+      if (ghost.includes(id)) mesh.renderOrder = 2;
+      group.add(mesh);
+    }
+  }
+}
+
+// ---------------------------------------------------------------- built here
+function molecule() {
+  const atoms = []; const bonds = [];
+  const C = 0x2b2b2e, O = 0xc8453b, H = 0xf1ece2;
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    atoms.push({ p: new THREE.Vector3(Math.cos(a) * 1.45, Math.sin(a * 2) * 0.28, Math.sin(a) * 1.45), c: i === 5 ? O : C, r: i === 5 ? 0.42 : 0.4 });
+  }
+  for (let i = 0; i < 6; i++) bonds.push([i, (i + 1) % 6]);
+  for (let i = 0; i < 5; i++) {
+    const base = atoms[i].p, out = base.clone().setY(0).normalize(), up = i % 2 ? 1 : -1;
+    const o = base.clone().add(out.clone().multiplyScalar(1.1)).add(new THREE.Vector3(0, up * 0.9, 0));
+    atoms.push({ p: o, c: O, r: 0.4 }); bonds.push([i, atoms.length - 1]);
+    const h = o.clone().add(out.clone().multiplyScalar(0.75)).add(new THREE.Vector3(0, up * 0.35, 0));
+    atoms.push({ p: h, c: H, r: 0.26 }); bonds.push([atoms.length - 2, atoms.length - 1]);
+  }
+  const sg = new THREE.SphereGeometry(1, 48, 32);
+  for (const a of atoms) add(sg, glossy(a.c), a.p.toArray(), [0, 0, 0], a.r);
+  const bm = glossy(0xd8d2c4, 0.45);
+  for (const [i, j] of bonds) {
+    const a = atoms[i].p, b = atoms[j].p;
+    const cy = add(new THREE.CylinderGeometry(0.11, 0.11, a.distanceTo(b), 20), bm, a.clone().lerp(b, 0.5).toArray());
+    cy.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+  }
+}
+
+function morula() {
+  const n = 22; const g = new THREE.SphereGeometry(1, 48, 32);
+  const skin = new THREE.MeshPhysicalMaterial({ color: 0xe9a58e, roughness: 0.45, clearcoat: 0.4, sheen: 1, sheenColor: 0xffd9c9 });
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(1 - y * y), t = i * 2.399963;
+    add(g, skin, [Math.cos(t) * r * 1.05, y * 1.05, Math.sin(t) * r * 1.05], [0, 0, 0], 0.62);
+  }
+  add(new THREE.SphereGeometry(2.05, 64, 48), new THREE.MeshPhysicalMaterial({ color: 0xf6efe4, roughness: 0.15, transmission: 0.85, thickness: 0.4, transparent: true, opacity: 0.38 }));
+}
+
+function tissue() {
+  const g = new THREE.SphereGeometry(1, 64, 48);
+  const cyto = new THREE.MeshPhysicalMaterial({ color: 0xeeb2c2, roughness: 0.3, clearcoat: 0.7, transmission: 0.55, thickness: 0.8, transparent: true, opacity: 0.82 });
+  const nuc = glossy(0x5b3a8c, 0.35);
+  for (const [x, y, z, s] of [[0,0,0,1.15],[2.1,0.2,0.3,0.95],[-2.0,-0.1,0.4,1],[0.9,0.1,1.9,0.9],[-1.0,0.15,-1.9,0.95],[1.2,-0.05,-1.8,0.85],[-1.4,0,1.8,0.85]]) {
+    add(g, cyto, [x, y, z], [0, 0, 0], [s, s * 0.8, s]);
+    add(new THREE.SphereGeometry(1, 40, 28), nuc, [x, y + 0.05 * s, z], [0, 0, 0], 0.4 * s);
+  }
+}
+
+function chromosomes() {
+  // Two metaphase chromosomes: sister chromatids crossed at the centromere,
+  // with the darker bands a karyotype shows.
+  const light = glossy(0x9fb4ec, 0.35), dark = glossy(0x5d6fb8, 0.35);
+  const chromatid = (x, tilt, len, parent) => {
+    const g = new THREE.Group();
+    const cap = new THREE.Mesh(new THREE.CapsuleGeometry(0.34, len, 16, 32), light); g.add(cap);
+    for (const y of [-len * 0.32, -len * 0.08, len * 0.18, len * 0.38]) {
+      const band = new THREE.Mesh(new THREE.CylinderGeometry(0.352, 0.352, 0.16, 32), dark); band.position.y = y; g.add(band);
+    }
+    g.position.x = x; g.rotation.z = tilt; parent.add(g);
+  };
+  const one = (px, py, rz, len) => {
+    const c = new THREE.Group();
+    chromatid(-0.24, 0.32, len, c); chromatid(0.24, -0.32, len, c);
+    const cen = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 16), dark); c.add(cen);
+    c.position.set(px, py, 0); c.rotation.z = rz; group.add(c);
+  };
+  one(-1.0, 0.2, 0.25, 2.6);
+  one(1.2, -0.3, -0.2, 2.0);
+}
+
+function blood() {
+  // Evans–Fung: thickness at radius r of a resting red cell, in units of its
+  // radius. Thin in the middle, thick at the rim — the dimple is the point.
+  const T = (r) => Math.sqrt(Math.max(0, 1 - r * r)) * (0.207 + 2.003 * r * r - 1.123 * r * r * r * r);
+  const N = 70, prof = [];
+  for (let i = 0; i <= N; i++) { const r = Math.sin((i / N) * Math.PI / 2); prof.push(new THREE.Vector2(r, -0.5 * T(r))); }
+  for (let i = N - 1; i >= 0; i--) { const r = Math.sin((i / N) * Math.PI / 2); prof.push(new THREE.Vector2(r, 0.5 * T(r))); }
+  prof[0].x = 0; prof[prof.length - 1].x = 0;
+  const g = new THREE.LatheGeometry(prof, 96); g.computeVertexNormals();
+  const red = glossy(0xc8392f, 0.3, { sheen: 0.7, sheenColor: 0xff9d8f });
+  for (const [x, y, z, rx, rz, s] of [[0,0,0,1.15,0.25,1.15],[1.95,0.75,-0.6,0.45,-0.6,0.95],[-1.9,0.45,0.5,1.9,0.9,0.9],[0.65,-1.45,0.8,0.8,1.2,0.85],[-0.95,1.55,-0.9,0.25,-0.4,0.8]])
+    add(g, red, [x, y, z], [rx, 0, rz], s);
+}
+
+function antibodies() {
+  // The Y: two heavy chains to the fork, a light chain along each arm, and the
+  // antigen-binding tips picked out.
+  const heavy = glossy(0x2f8f86, 0.3), light = glossy(0xf1ece2, 0.35), tip = glossy(0xe0a24a, 0.3);
+  const arm = (parent, angle) => {
+    const a = new THREE.Group(); a.rotation.z = angle; parent.add(a);
+    const h = new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 1.1, 12, 24), heavy); h.position.y = 0.75; a.add(h);
+    const l = new THREE.Mesh(new THREE.CapsuleGeometry(0.15, 0.8, 12, 24), light); l.position.set(0.3, 0.85, 0); a.add(l);
+    const t = new THREE.Mesh(new THREE.SphereGeometry(0.22, 24, 16), tip); t.position.set(0.12, 1.5, 0); a.add(t);
+  };
+  const Y = (px, py, rz, rx, s) => {
+    const y = new THREE.Group();
+    const stem = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 1.1, 12, 24), heavy); stem.position.y = -0.7; y.add(stem);
+    arm(y, 0.62); arm(y, -0.62);
+    y.position.set(px, py, 0); y.rotation.set(rx, 0, rz); y.scale.setScalar(s); group.add(y);
+  };
+  Y(0, 0.2, 0.1, 0.2, 1.1);
+  Y(-1.9, -0.6, 0.7, -0.3, 0.75);
+  Y(1.8, -0.4, -0.6, 0.4, 0.8);
+}
+
+function bacteria() {
+  const rod = glossy(0x86c06f, 0.3, { sheen: 0.5, sheenColor: 0xdfffc9 });
+  const coccus = glossy(0xe8b04a, 0.3);
+  const flag = new THREE.MeshStandardMaterial({ color: 0xd9f0c8, roughness: 0.6 });
+  const bacillus = (p, r, len) => {
+    const b = new THREE.Group(); b.position.set(...p); b.rotation.set(...r); group.add(b);
+    b.add(new THREE.Mesh(new THREE.CapsuleGeometry(0.34, len, 16, 32), rod));
+    const pts = []; for (let i = 0; i <= 30; i++) pts.push(new THREE.Vector3(Math.sin(i * 0.6) * 0.18, -len / 2 - 0.3 - i * 0.06, Math.cos(i * 0.6) * 0.18));
+    b.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.035, 8), flag));
+  };
+  bacillus([-0.6, 0.4, 0], [0, 0, 0.9], 1.5);
+  bacillus([1.1, -0.2, 0.4], [0.3, 0, -0.5], 1.3);
+  bacillus([-0.2, -1.2, -0.3], [0, 0.4, 1.7], 1.1);
+  for (const [x, y, z] of [[1.4, 1.2, -0.2], [1.85, 1.35, 0.1], [1.6, 1.7, -0.4], [2.05, 0.95, -0.3]]) add(new THREE.SphereGeometry(0.3, 32, 24), coccus, [x, y, z]);
+}
+
+function virus(at = [0, 0, 0], s = 1) {
+  const coat = glossy(0xd9674e, 0.35), spike = glossy(0xf1ece2, 0.35), head = glossy(0xe8b04a, 0.3);
+  const v = new THREE.Group(); v.position.set(...at); v.scale.setScalar(s); group.add(v);
+  v.add(new THREE.Mesh(new THREE.IcosahedronGeometry(1.25, 3), coat));
+  const n = 42;
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(1 - y * y), t = i * 2.399963;
+    const dir = new THREE.Vector3(Math.cos(t) * r, y, Math.sin(t) * r);
+    const stalk = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 0.42, 10), spike);
+    stalk.position.copy(dir.clone().multiplyScalar(1.42)); stalk.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir); v.add(stalk);
+    const knob = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), head);
+    knob.position.copy(dir.clone().multiplyScalar(1.66)); v.add(knob);
+  }
+}
+
+function pills() {
+  const olive = glossy(0x3f7a57, 0.25), ivory = glossy(0xf6f1e4, 0.3), clay = glossy(0xd07a4e, 0.25);
+  const capsule = (p, r, a, b) => {
+    const c = new THREE.Group(); c.position.set(...p); c.rotation.set(...r); group.add(c);
+    const top = new THREE.Mesh(new THREE.CapsuleGeometry(0.38, 0.7, 16, 32), a); top.position.y = 0.36; c.add(top);
+    const bot = new THREE.Mesh(new THREE.CapsuleGeometry(0.37, 0.7, 16, 32), b); bot.position.y = -0.36; c.add(bot);
+  };
+  capsule([-0.5, 0.3, 0], [0.2, 0, 0.9], olive, ivory);
+  capsule([1.0, 0.5, -0.4], [-0.3, 0.3, -0.5], clay, ivory);
+  capsule([0.2, -1.0, 0.5], [0.6, 0.2, 1.6], olive, clay);
+  const tab = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.26, 48), ivory); tab.position.set(-1.4, -0.8, 0.3); tab.rotation.set(1.1, 0, 0.3); group.add(tab);
+  const score = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.03, 0.06), glossy(0xd8d2c4)); score.position.set(0, 0.14, 0); tab.add(score);
+}
+
+function worm() {
+  // Ascaris: long, cream, tapering at both ends, faintly ringed.
+  const body = glossy(0xeccfb6, 0.4, { sheen: 0.6, sheenColor: 0xfff0e2 });
+  const make = (pts, radius, shift) => {
+    const curve = new THREE.CatmullRomCurve3(pts);
+    const g = new THREE.TubeGeometry(curve, 240, radius, 24, false);
+    const pos = g.attributes.position; const seg = 240, ring = 25;
+    for (let i = 0; i <= seg; i++) {
+      const t = i / seg, c = curve.getPointAt(t);
+      const k = Math.pow(Math.sin(Math.PI * Math.min(Math.max(t, 0.02), 0.98)), 0.55) * (1 + 0.04 * Math.sin(t * 160));
+      for (let j = 0; j < ring; j++) {
+        const idx = i * ring + j; const v = new THREE.Vector3().fromBufferAttribute(pos, idx);
+        v.sub(c).multiplyScalar(k).add(c); pos.setXYZ(idx, v.x, v.y, v.z);
+      }
+    }
+    g.computeVertexNormals(); const m = new THREE.Mesh(g, body); m.position.set(...shift); group.add(m);
+  };
+  make([[-2.2, 0.2, 0], [-1.2, 1.1, 0.4], [0, 0.3, 0], [1.1, -0.8, -0.3], [2.1, -0.1, 0.2], [2.6, 0.9, 0]].map((p) => new THREE.Vector3(...p)), 0.2, [0, 0.3, 0]);
+  make([[-1.8, -0.9, 0.5], [-0.6, -1.5, 0.2], [0.6, -1.1, 0.6], [1.6, -1.7, 0.3]].map((p) => new THREE.Vector3(...p)), 0.15, [0, 0, 0]);
+}
+
+function infection() {
+  virus([-0.9, 0.5, 0], 0.72);
+  const rod = glossy(0x86c06f, 0.3);
+  const b = new THREE.Mesh(new THREE.CapsuleGeometry(0.32, 1.3, 16, 32), rod); b.position.set(1.2, -0.3, 0.3); b.rotation.set(0.3, 0, -0.7); group.add(b);
+  const b2 = new THREE.Mesh(new THREE.CapsuleGeometry(0.28, 1.0, 16, 32), rod); b2.position.set(0.4, -1.4, -0.2); b2.rotation.set(0, 0, 1.4); group.add(b2);
+}
+
+function hospital() {
+  // A hospital, low-poly: the main block, a wing, rows of windows, and a
+  // green cross — never a red one, which is a protected emblem.
+  const wall = glossy(0xf4efe3, 0.55), glass = glossy(0x3e6e8e, 0.15), roof = glossy(0xd8d2c4, 0.6), cross = glossy(0x3f9a5f, 0.3);
+  add(new THREE.BoxGeometry(2.4, 2.2, 1.6), wall, [0, 0.1, 0]);
+  add(new THREE.BoxGeometry(1.8, 1.3, 1.4), wall, [-1.9, -0.35, 0.1]);
+  add(new THREE.BoxGeometry(2.5, 0.12, 1.7), roof, [0, 1.26, 0]);
+  add(new THREE.BoxGeometry(1.9, 0.1, 1.5), roof, [-1.9, 0.35, 0.1]);
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) add(new THREE.BoxGeometry(0.34, 0.36, 0.04), glass, [-0.84 + c * 0.56, 0.75 - r * 0.62, 0.81]);
+  for (let c = 0; c < 3; c++) add(new THREE.BoxGeometry(0.34, 0.36, 0.04), glass, [-2.5 + c * 0.6, -0.2, 0.81]);
+  add(new THREE.BoxGeometry(0.62, 0.8, 0.06), glass, [0, -0.6, 0.81]);
+  const sign = new THREE.Group(); sign.position.set(0, 1.85, 0); group.add(sign);
+  sign.add(new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.3, 0.3), cross));
+  sign.add(new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.9, 0.3), cross));
+}
+
+function chart() {
+  const bar = glossy(0x3f7a57, 0.3), top = glossy(0xe0a24a, 0.3), base = glossy(0xf1ece2, 0.5);
+  add(new THREE.BoxGeometry(4.2, 0.12, 1.4), base, [0, -1.36, 0]);
+  const H = [0.7, 1.6, 2.6, 1.9, 1.0];
+  H.forEach((h, i) => add(new THREE.BoxGeometry(0.6, h, 0.6), i === 2 ? top : bar, [-1.6 + i * 0.8, -1.3 + h / 2, 0]));
+  const pts = []; for (let i = 0; i <= 60; i++) { const x = -2 + i * (4 / 60); pts.push(new THREE.Vector3(x, -1.25 + 2.9 * Math.exp(-(x * x) / 1.1), 0.45)); }
+  add(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 120, 0.06, 12), glossy(0xf1ece2, 0.3));
+}
+
+async function lang() {
+  const font = await new FontLoader().loadAsync('/fonts/helvetiker_bold.typeface.json');
+  const bubble = new THREE.Shape();
+  const w = 3.2, h = 2.0, r = 0.5;
+  bubble.moveTo(-w / 2 + r, -h / 2); bubble.lineTo(-w / 2 + 0.9, -h / 2); bubble.lineTo(-w / 2 + 0.5, -h / 2 - 0.6); bubble.lineTo(-w / 2 + 1.4, -h / 2);
+  bubble.lineTo(w / 2 - r, -h / 2); bubble.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r); bubble.lineTo(w / 2, h / 2 - r);
+  bubble.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2); bubble.lineTo(-w / 2 + r, h / 2); bubble.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r);
+  bubble.lineTo(-w / 2, -h / 2 + r); bubble.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
+  add(new THREE.ExtrudeGeometry(bubble, { depth: 0.4, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 6 }), glossy(0xf4efe3, 0.4), [0, 0, -0.2]);
+  const t = new TextGeometry('EN', { font, size: 1.0, depth: 0.3, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.04, bevelSegments: 4 });
+  t.computeBoundingBox(); const bb = t.boundingBox;
+  add(t, glossy(0x2a5b3e, 0.3), [-(bb.max.x - bb.min.x) / 2, -(bb.max.y - bb.min.y) / 2 + 0.05, 0.25]);
+}
+
+function membrane() {
+  // A patch of lipid bilayer: heads on the two faces, tails meeting in the
+  // middle, one channel through it and ions on their way across.
+  const head = glossy(0xe8927c, 0.3), tail = new THREE.MeshStandardMaterial({ color: 0xf1e6cf, roughness: 0.6 });
+  const chan = glossy(0x2f8f86, 0.28), ion = glossy(0xe8c14a, 0.2, { emissive: 0x6b4a0a, emissiveIntensity: 0.3 });
+  const hg = new THREE.SphereGeometry(0.2, 20, 14), tg = new THREE.CylinderGeometry(0.035, 0.035, 0.62, 6);
+  for (let i = -5; i <= 5; i++) for (let j = -3; j <= 3; j++) {
+    const x = i * 0.44 + (j % 2 ? 0.22 : 0), z = j * 0.42;
+    if (Math.hypot(x, z) < 0.75) continue;
+    for (const side of [1, -1]) {
+      add(hg, head, [x, side * 0.95, z]);
+      for (const dx of [-0.07, 0.07]) add(tg, tail, [x + dx, side * 0.58, z]);
+    }
+  }
+  const ring = []; for (let k = 0; k <= 24; k++) { const t = k / 24; ring.push(new THREE.Vector2(0.28 + 0.38 * Math.sin(Math.PI * t) * 0.35 + 0.22, -1.25 + 2.5 * t)); }
+  add(new THREE.LatheGeometry(ring, 48), chan);
+  for (const [x, y, z, s] of [[0, 1.75, 0.1, 0.16], [0.35, 2.3, -0.2, 0.14], [0, 0.4, 0, 0.15], [-0.1, -1.6, 0.1, 0.16], [0.4, -2.1, 0.3, 0.13]]) add(new THREE.SphereGeometry(1, 24, 16), ion, [x, y, z], [0, 0, 0], s);
+}
+
+const BUILD = { membrane, molecule, morula, tissue, chromosomes, blood, antibodies, bacteria, virus, pills, worm, infection, hospital, chart, lang };
+const proc = q.get('proc');
+if (proc) await BUILD[proc]();
+else await bundles(q.get('bundle').split(','));
+
+const box = new THREE.Box3().setFromObject(group);
+const mid = box.getCenter(new THREE.Vector3());
+group.children.forEach((m) => m.position.sub(mid));
+group.rotation.set(pitch, yaw, roll);
+const sphere = new THREE.Box3().setFromObject(group).getBoundingSphere(new THREE.Sphere());
+const cam = new THREE.PerspectiveCamera(28, 1, 0.001, 1000);
+cam.position.set(0, sphere.radius * 0.15, sphere.radius / Math.sin(14 * Math.PI / 180) / zoom);
+cam.lookAt(0, 0, 0);
+renderer.render(scene, cam);
+document.title = 'done';
+</script>
+</body>
+</html>
