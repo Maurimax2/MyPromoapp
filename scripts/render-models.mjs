@@ -41,6 +41,10 @@ const SHOTS = {
   thorax: ['bundle=thorax&only=Sternum,C%C3%B4tes%20vraies,C%C3%B4tes%20fausses,C%C3%B4tes%20flottantes,Cartilages%20costaux&yaw=-25&pitch=8&zoom=1.05', 360],
   main: ['bundle=main&yaw=0&pitch=-10&zoom=1.05', 360],
   pied: ['bundle=pied&yaw=60&pitch=20&zoom=1.05', 360],
+  // The regions of the 3D tab that no subject banner needed.
+  'membre-inf': ['bundle=membre-inf&yaw=-25&pitch=0&zoom=1.05', 360],
+  bassin: ['bundle=membre-inf&only=Os%20coxal&yaw=-90&pitch=6&zoom=1.1', 360],
+  cou: ['bundle=cou&yaw=-35&pitch=4&zoom=1.1', 360],
   digestif: ['bundle=abdomen&only=Foie,Tube%20digestif%20haut,Voies%20biliaires&skip=%C5%92sophage&yaw=0&pitch=4&zoom=1.05', 360],
   colon: ['bundle=abdomen&only=C%C3%B4lon,Intestin%20gr%C3%AAle&yaw=0&pitch=4&zoom=1.05', 360],
   pancreas: ['bundle=abdomen&names=Pancr%C3%A9as,Rate&yaw=0&pitch=10&zoom=1.05', 360],

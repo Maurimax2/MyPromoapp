@@ -4,40 +4,39 @@
 // one subject — and it is reached by tapping a banner, which makes the wait
 // the most noticeable one there is: you press a picture and nothing happens.
 //
-// The chapter shape is drawn rather than a stack of identical rows, because
-// that is what arrives: a numbered heading, then its lectures under it.
+// So the banner is drawn at once, in olive, the shape the subject arrives in:
+// the banner, the four tabs, then chapters. Which colour and which model are
+// the server's to say, so neither is guessed here.
 
 export default function Loading() {
   return (
-    <>
-      <header className="head">
-        <div className="head-row">
-          <div className="sk sk-flat" style={{ width: 44, height: 44, borderRadius: 13 }} />
-          <div className="grow">
-            <div className="sk sk-line big" style={{ width: '55%' }} />
-            <div className="sk sk-line" style={{ width: '35%', marginTop: 7 }} />
-          </div>
+    <div className="sj">
+      <div className="sj-hero" style={{ '--sj-bg': '#2A5B3E' }}>
+        <div className="sj-hero-top">
+          <span className="sj-back" />
         </div>
-      </header>
-
-      <div className="scroll">
-        {/* اختبر نفسك sits at the top of every subject. */}
-        <div className="sk" style={{ height: 64 }} />
-
-        {[0, 1].map((c) => (
-          <section key={c} className="chapter">
-            <div className="chapter-head">
-              <span className="sk sk-flat" style={{ width: 27, height: 27, borderRadius: 9 }} />
-              <div className="grow">
-                <div className="sk sk-line" style={{ width: '58%' }} />
-                <div className="sk sk-line" style={{ width: '26%', height: 11, marginTop: 6 }} />
-              </div>
-            </div>
-            <div className="sk" style={{ height: 58, marginTop: 8 }} />
-            <div className="sk" style={{ height: 58, marginTop: 8 }} />
-          </section>
-        ))}
+        <div className="sj-hero-t" style={{ gap: 8, marginTop: 20 }}>
+          <span className="sk-dark" style={{ width: '40%', height: 10 }} />
+          <span className="sk-dark" style={{ width: '85%', height: 26 }} />
+          <span className="sk-dark" style={{ width: '60%', height: 10 }} />
+        </div>
+        <div className="sj-hero-p">
+          <span className="sk-dark" style={{ width: 58, height: 58, borderRadius: '50%' }} />
+          <span className="sk-dark" style={{ width: '55%', height: 10 }} />
+        </div>
       </div>
-    </>
+
+      <div className="sj-tabs">
+        <span className="sk" style={{ flex: 1, height: 44, margin: 4, borderRadius: 12 }} />
+      </div>
+
+      <div className="sj-body">
+        <div className="sj-pane">
+          {[0, 1, 2].map((c) => (
+            <div key={c} className="sk" style={{ height: 78, borderRadius: 20 }} />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

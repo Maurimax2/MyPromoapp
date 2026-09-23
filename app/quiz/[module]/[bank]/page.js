@@ -40,6 +40,7 @@ export default async function BankPage({ params }) {
           moduleId={id}
           moduleName={m.name}
           source={bank ? bank.title : null}
+          bestKey={`${id}:${slug}`}
         />
       </div>
     </>

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 import { record } from '@/lib/review';
+import { scored } from '@/lib/best';
 
 // A UNEM question can have one right answer or four. You tick what you think
 // is true and then confirm — there is no way to score a multiple-answer
@@ -36,6 +37,9 @@ export default function Quiz({
   // subject's own quiz never is — you are revising there, and a clock over
   // somebody reading a question for the first time teaches them to panic.
   seconds = 0,
+  // Where a finished run's score is kept (lib/best.js), when it is a paper
+  // of a subject. A duel and the review have none.
+  bestKey = null,
 }) {
   const [i, setI] = useState(0);
   const [ticked, setTicked] = useState([]);
@@ -118,6 +122,12 @@ export default function Quiz({
     // wrote it, which is why a duel never contains one.
     next([]);
   };
+
+  // Once per finished run: `done` turning true is the result screen appearing.
+  useEffect(() => {
+    if (done && bestKey) scored(bestKey, Math.round((score / questions.length) * 100));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done]);
 
   const restart = () => {
     setI(0); setTicked([]); setShown(false); setScore(0); setDone(false); setGiven([]);
