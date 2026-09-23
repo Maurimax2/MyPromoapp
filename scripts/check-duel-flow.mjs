@@ -11,7 +11,7 @@
 
 import { chromium } from 'playwright-core';
 
-const B = 'http://127.0.0.1:3000';
+const B = process.env.BASE || 'http://127.0.0.1:3000';
 const EDGE = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 
 const step = (s) => console.log(`  ${s}`);
@@ -115,17 +115,17 @@ if (!told.includes('تحدّاك')) fail('B was not notified of the challenge');
 await b.goto(url, { waitUntil: 'domcontentloaded' });
 const invite = await b.locator('.duel-invite-n').textContent().catch(() => '');
 step(`B's invitation reads: ${invite.trim()}`);
-await tap(b, b.getByRole('button', { name: 'أقبل التحدّي' }), '.quiz-q', 5);
-if (!(await b.locator('.quiz-q').count())) {
+await tap(b, b.getByRole('button', { name: 'أقبل التحدّي' }), '.qz-q', 5);
+if (!(await b.locator('.qz-q').count())) {
   const said = await b.locator('.admin-err').textContent().catch(() => null);
   fail(said ? `accepting refused: ${said.trim()}` : 'the questions did not appear after accepting');
 }
-if (await b.locator('.quiz-clock').count()) fail('an untimed duel is showing a clock');
+if (await b.locator('.qz-clock').count()) fail('an untimed duel is showing a clock');
 step('B is playing, untimed — no clock, as asked');
 
 // --- A's screen should move on by itself ------------------------------------
 step("waiting for A's screen to notice, without touching it…");
-await a.waitForSelector('.quiz-q', { timeout: 20000 })
+await a.waitForSelector('.qz-q', { timeout: 20000 })
   .then(() => step('A moved to the questions on its own'))
   .catch(() => fail('A never noticed that B accepted — Watch is not refreshing'));
 
@@ -138,8 +138,8 @@ await a.waitForSelector('.quiz-q', { timeout: 20000 })
 async function play(page, who) {
   await page.waitForTimeout(1500);           // let any refresh settle first
   for (let n = 0; n < 20; n++) {
-    if (!(await page.locator('.quiz-q').count())) break;
-    const opt = page.locator('.quiz-opt').first();
+    if (!(await page.locator('.qz-q').count())) break;
+    const opt = page.locator('.qz-opt').first();
     if (await opt.count()) await opt.click({ timeout: 8000 }).catch(() => {});
     const confirm = page.getByRole('button', { name: 'تأكيد' });
     if (await confirm.count()) await confirm.click({ timeout: 8000 }).catch(() => {});
@@ -193,14 +193,14 @@ await a.waitForURL(/\/duel\/\d+/, { timeout: 45000 });
 const timed = a.url();
 
 await b.goto(timed, { waitUntil: 'domcontentloaded' });
-await tap(b, b.getByRole('button', { name: 'أقبل التحدّي' }), '.quiz-clock', 5);
+await tap(b, b.getByRole('button', { name: 'أقبل التحدّي' }), '.qz-clock', 5);
 
-const first = Number(await b.locator('.quiz-clock').textContent());
-const onQ = async () => (await b.locator('.quiz-step span').first().textContent()).trim();
+const first = Number(await b.locator('.qz-clock').textContent());
+const onQ = async () => (await b.locator('.qz-count span').first().textContent()).trim();
 const q1 = await onQ();
 step(`clock starts at ${first} — ${q1}`);
 await b.waitForTimeout(3200);
-const later = Number(await b.locator('.quiz-clock').textContent());
+const later = Number(await b.locator('.qz-clock').textContent());
 step(`three seconds on: ${later}`);
 if (!(later < first)) fail('the clock is not counting down');
 

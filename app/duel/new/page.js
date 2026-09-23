@@ -20,7 +20,9 @@ export default async function NewDuelPage({ searchParams }) {
     .filter((m) => !quizzed || quizzed.has(m.id))
     .map((m) => ({ id: m.id, name: m.name }));
 
-  const to = (await searchParams)?.to || '';
+  const params = (await searchParams) || {};
+  const to = params.to || '';
+  const subject = params.subject || '';
 
   return (
     <>
@@ -35,7 +37,7 @@ export default async function NewDuelPage({ searchParams }) {
       </header>
 
       <div className="scroll">
-        <NewDuel subjects={subjects} to={to} />
+        <NewDuel subjects={subjects} to={to} subject={subject} />
       </div>
     </>
   );

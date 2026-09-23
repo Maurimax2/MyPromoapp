@@ -8,6 +8,8 @@ import { bankOf, allOf } from '@/lib/quiz-bank';
 // ones exist changes every time somebody extracts a paper.
 export const dynamic = 'force-dynamic';
 
+const countOf = (n) => (n === 1 ? 'سؤال واحد' : n === 2 ? 'سؤالان' : n <= 10 ? `${n} أسئلة` : `${n} سؤالًا`);
+
 export default async function BankPage({ params }) {
   const { module: id, bank: slug } = await params;
   // The catalogue, not the bundled copy: a subject catalogued in the panel
@@ -30,7 +32,7 @@ export default async function BankPage({ params }) {
             <div className="head-t" style={{ fontSize: 17 }}>
               {bank ? bank.title : 'كل الأسئلة'}
             </div>
-            <div className="head-s">{m.name} · {questions.length} سؤال</div>
+            <div className="head-s">{m.name} · {countOf(questions.length)}</div>
           </div>
         </div>
       </header>

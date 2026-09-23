@@ -14,10 +14,12 @@ import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
 import { COUNTS, SECONDS, saysTime } from '@/lib/duel';
 
-export default function NewDuel({ subjects, to }) {
+export default function NewDuel({ subjects, to, subject }) {
   const router = useRouter();
   const [matricule, setMatricule] = useState(to || '');
-  const [module, setModule] = useState('');
+  // Arriving from a finished quiz, the subject is already chosen: «تحدَّ زميلًا
+  // بهذه الأسئلة» should not make you find it again.
+  const [module, setModule] = useState(subjects.some((s) => s.id === subject) ? subject : '');
   const [about, setAbout] = useState(null);      // the subject's lectures
   const [lecture, setLecture] = useState('all');
   const [count, setCount] = useState(10);

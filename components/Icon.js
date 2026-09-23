@@ -12,12 +12,12 @@
 // so the same component draws in server components and client ones alike.
 
 import {
-  Archive, ArrowsClockwise, Atom, Baby, Bell, BookmarkSimple, BookOpenText, CalendarDots,
-  CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, ClockCountdown, CornersIn, CornersOut,
+  Archive, ArrowCounterClockwise, ArrowsClockwise, Atom, Baby, Bell, BookmarkSimple, BookOpenText, CalendarDots,
+  CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, CheckCircle, ClockCountdown, CornersIn, CornersOut,
   Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, Heart,
-  House, Image, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
-  Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShieldCheck, SignOut, Sword,
-  Trash, Trophy, User, VideoCamera, Warning, X,
+  House, Image, Lightbulb, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
+  Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShieldCheck, SignOut, Sparkle, Sword,
+  Trash, Trophy, User, VideoCamera, Warning, X, XCircle,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -33,11 +33,14 @@ const ICONS = {
   box: Cube, rotate: ArrowsClockwise, list: ListBullets, palette: Palette, focus: Crosshair,
   pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, video: VideoCamera,
   award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire, crown: Crown, lock: LockSimple,
+  sparkle: Sparkle, bulb: Lightbulb, again: ArrowCounterClockwise,
+  // An answer marked: the circled forms, filled, so right and wrong read at a glance.
+  right: CheckCircle, wrong: XCircle,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid
 // weight: a liked heart is filled.
-const SOLID = { heartFill: Heart };
+const SOLID = { heartFill: Heart, right: CheckCircle, wrong: XCircle };
 
 // …and a few are marks rather than pictures. A duotone caret fills its own
 // triangle and reads as a heavy arrowhead; these want a clean line.
