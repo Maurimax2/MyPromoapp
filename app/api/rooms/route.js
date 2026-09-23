@@ -50,7 +50,7 @@ export async function PATCH(request) {
   const profile = await currentProfile();
   if (!allowed(profile)) return NextResponse.json({ error: 'غير مسموح' }, { status: 403 });
 
-  const { id, join, close } = await request.json();
+  const { id, join, close, here } = await request.json();
   if (!id) return NextResponse.json({ error: 'no room' }, { status: 400 });
 
   const db = supabaseAdmin();
@@ -66,6 +66,16 @@ export async function PATCH(request) {
       return NextResponse.json({ error: 'المضيف وحده يغلق الغرفة' }, { status: 403 });
     }
     const { error } = await db.from('rooms').update({ closed: !!close }).eq('id', id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: true });
+  }
+
+  // Still here: the room screen says so every half minute while it is open
+  // (lib/rooms.js). Only a member can be here; a visitor is only looking.
+  if (here) {
+    const { error } = await db.from('room_members')
+      .update({ seen_at: new Date().toISOString() })
+      .eq('room', id).eq('person', profile.id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ ok: true });
   }

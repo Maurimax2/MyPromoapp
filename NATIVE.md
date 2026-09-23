@@ -82,6 +82,35 @@ An M1 is fine. Everything below is on the Mac.
    ```
 3. In Xcode: pick your team under **Signing & Capabilities**, plug in an
    iPhone, press Run.
+4. Study rooms use the camera and microphone. iOS refuses both — and the App
+   Store rejects the build — unless `ios/App/App/Info.plist` says why. Add:
+   ```xml
+   <key>NSCameraUsageDescription</key>
+   <string>لتظهر لزملائك في غرفة الدراسة حين تشغّل الكاميرا.</string>
+   <key>NSMicrophoneUsageDescription</key>
+   <string>ليسمعك زملاؤك في غرفة الدراسة حين تشغّل الميكروفون.</string>
+   ```
+   Android already has its permissions in the manifest; it asks only when a
+   student turns their microphone or camera on.
+
+## Study rooms: voice and video
+
+The call is LiveKit's. Until the three variables below are set in Vercel,
+a room works as text and says so; nothing breaks.
+
+1. Make a free account at livekit.io → **Cloud** → create a project.
+2. In the project's **Settings → Keys**, create an API key.
+3. In Vercel → the project → **Settings → Environment Variables**, add, for
+   Production (and Preview if you use it):
+   - `LIVEKIT_URL` — the `wss://….livekit.cloud` address on the project page
+   - `LIVEKIT_API_KEY`
+   - `LIVEKIT_API_SECRET`
+4. Redeploy. Never paste the secret into chat or into the repo — it only
+   lives in Vercel (and in `.env.local` on your own machine, which git
+   ignores).
+
+For testing on a computer without an account, `livekit-server --dev` runs a
+local server with the key `devkey` and secret `secret` on `ws://127.0.0.1:7880`.
 
 A **free** Apple ID signs an app onto your own phone — it expires after 7
 days, which is enough to show people. Submitting to the App Store needs the

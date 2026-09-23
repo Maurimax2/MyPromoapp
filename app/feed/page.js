@@ -6,6 +6,7 @@ import { browsingPromo } from '@/lib/promo';
 import { stage } from '@/lib/duel';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
+import { isHere } from '@/lib/rooms';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,21 +83,25 @@ export default async function Feed() {
   const roomIds = (openRooms || []).map((r) => r.id);
   const { data: sitting } = roomIds.length
     ? await sb.from('room_members')
-        .select('room, person, profile:profiles!room_members_person_fkey(id, full_name, email)')
+        .select('room, person, seen_at, profile:profiles!room_members_person_fkey(id, full_name, email)')
         .in('room', roomIds)
     : { data: [] };
 
   // A student in two rooms is one student studying, not two.
   const who = new Map();
   const inRoom = new Map();
-  for (const m of sitting || []) {
+  // Only who is on a room screen now (lib/rooms.js), not who ever joined one.
+  const now = Date.now();
+  for (const m of (sitting || []).filter((x) => isHere(x, now))) {
     const person = m.profile;
     if (person && !who.has(person.id)) who.set(person.id, person);
     inRoom.set(m.room, [...(inRoom.get(m.room) || []), person].filter(Boolean));
   }
 
   const named2 = Object.fromEntries((await subjectsOf(promo)).map((m) => [m.id, m.name]));
-  const rooms = (openRooms || []).map((r) => ({
+  // A room nobody is sitting in is not «open» in any sense a student cares
+  // about, so the sheet does not offer it.
+  const rooms = (openRooms || []).filter((r) => inRoom.get(r.id)?.length).map((r) => ({
     id: r.id,
     title: r.title,
     topic: r.topic || named2[r.module] || null,

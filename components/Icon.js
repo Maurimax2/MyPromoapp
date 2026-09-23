@@ -16,8 +16,8 @@ import {
   CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, CheckCircle, ClockCountdown, CornersIn, CornersOut,
   Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, Heart,
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
-  Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShareNetwork, ShieldCheck, SignOut, Sparkle, Sword,
-  Trash, Trophy, User, VideoCamera, Warning, X, XCircle,
+  Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
+  Trash, Trophy, User, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -34,6 +34,7 @@ const ICONS = {
   pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, video: VideoCamera,
   award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire, crown: Crown, lock: LockSimple,
   sparkle: Sparkle, bulb: Lightbulb, again: ArrowCounterClockwise, bolt: Lightning, share: ShareNetwork,
+  mic: Microphone, micOff: MicrophoneSlash, camOff: VideoCameraSlash, speaker: SpeakerHigh,
   // An answer marked: the circled forms, filled, so right and wrong read at a glance.
   right: CheckCircle, wrong: XCircle,
 };

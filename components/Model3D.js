@@ -84,6 +84,10 @@ export default function Model3D({
   // Arriving from a search: a structure (or a named part of a bone) to hold,
   // or a landmark to read. Applied once, after the geometry is up.
   pick = null, point = null,
+  // In a study room: the host's taps are reported (onPicked, with the
+  // structure's name) and everyone else's model follows them (follow). A
+  // name rather than an id, because it is what travels between phones.
+  follow = undefined, onPicked = null,
 }) {
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
@@ -202,6 +206,31 @@ export default function Model3D({
       return;
     }
   }, [loading, parts, points, pick, point]);
+
+  // What the host holds, told to the room.
+  const told = useRef(null);
+  useEffect(() => {
+    if (!onPicked) return;
+    const name = parts.find((p) => p.id === picked)?.name || null;
+    if (name === told.current) return;
+    told.current = name;
+    onPicked(name);
+  }, [picked, parts, onPicked]);
+
+  // …and what the room shows, following the host. Only when it changes: the
+  // viewer is free to turn the model in between.
+  const followed = useRef(undefined);
+  useEffect(() => {
+    if (follow === undefined || loading || !parts.length) return;
+    if (followed.current === follow) return;
+    followed.current = follow;
+    if (!follow) { setPicked(null); setSub(null); setMode('context'); return; }
+    const one = parts.find((p) => same(p.name, follow));
+    if (!one) return;
+    setPicked(one.id);
+    setMode('focus');
+    api.current?.focusOn(one.id);
+  }, [follow, loading, parts]);
 
   useEffect(() => {
     const el = host.current;

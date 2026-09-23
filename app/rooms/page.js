@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { subjectsOf } from '@/lib/catalogue';
+import { isHere } from '@/lib/rooms';
 import RoomList from './RoomList';
 
 export const dynamic = 'force-dynamic';
@@ -26,17 +27,21 @@ export default async function Rooms() {
 
   // How many are in each room: one query for all of them, tallied here.
   const { data: members } = list.length
-    ? await sb.from('room_members').select('room').in('room', list.map((r) => r.id))
+    ? await sb.from('room_members').select('room, seen_at').in('room', list.map((r) => r.id))
     : { data: [] };
 
   const count = {};
-  for (const m of members || []) count[m.room] = (count[m.room] || 0) + 1;
+  // Who is sitting there now, not who ever joined (lib/rooms.js).
+  const now = Date.now();
+  for (const m of members || []) if (isHere(m, now)) count[m.room] = (count[m.room] || 0) + 1;
 
   const subjects = (await subjectsOf(promo)).map((m) => ({ id: m.id, name: m.name }));
 
   return (
     <RoomList
-      rooms={list.map((r) => ({ ...r, members: count[r.id] || 0, joined: joined.has(r.id) }))}
+      // A room with nobody in it is not offered: opening a new one is what
+      // somebody who wants company actually needs.
+      rooms={list.filter((r) => count[r.id]).map((r) => ({ ...r, members: count[r.id], joined: joined.has(r.id) }))}
       subjects={subjects}
       me={{ id: profile.id }}
     />
