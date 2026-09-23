@@ -4,11 +4,11 @@ import Icon from './Icon';
 
 // Goes back the way the student came. Falls back to a sensible screen when
 // the viewer was opened directly from a link.
-export default function BackButton({ fallback = '/archive' }) {
+export default function BackButton({ fallback = '/archive', className = 'icobtn' }) {
   const router = useRouter();
   return (
     <button
-      className="icobtn"
+      className={className}
       aria-label="رجوع"
       onClick={() => {
         if (window.history.length > 1) router.back();

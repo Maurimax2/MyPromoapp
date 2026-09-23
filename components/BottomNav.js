@@ -58,6 +58,9 @@ export default function BottomNav() {
   if (/^\/(rooms|chat|qa|file|model)\/[^/]+$/.test(path)) return null;
   // A region of the body is a model with layers, at the same full height.
   if (path.startsWith('/anatomie/')) return null;
+  // A duel is an arena, dark to the edges; a light bar across its foot is a
+  // way out in the middle of a contest. It has its own ✕.
+  if (/^\/duel\/\d+$/.test(path)) return null;
   // The pre-launch page is read by somebody with no account.
   if (path === '/feedback') return null;
 
