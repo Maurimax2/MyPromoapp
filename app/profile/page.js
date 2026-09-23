@@ -2,9 +2,13 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { promoById, badgeOf } from '@/lib/data';
+import { promoById } from '@/lib/data';
+import { zero, scoreOf, badgesOf } from '@/lib/points';
+import { standings } from '@/lib/standings';
 import Sign from './Sign';
 import Find from './Find';
+import MeLive from './MeLive';
+import Badges from './Badges';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,119 +17,135 @@ const ROLE = {
   marketing: 'تسويق', student: 'طالب',
 };
 
+// A level is fifty points. Derived, never stored, so it can never disagree
+// with الترتيب — it is the same number, read another way.
+const STEP = 50;
+
+// A promo is small enough that everyone knows every face; the same colour the
+// feed and the board give you.
+const FACES = ['#2A5B3E', '#A8502A', '#14555F', '#8A6A14', '#4B5B3A', '#6B4A3A'];
+const faceOf = (id = '') => {
+  let n = 0;
+  for (let i = 0; i < id.length; i += 1) n = (n * 31 + id.charCodeAt(i)) % 997;
+  return FACES[n % FACES.length];
+};
+
+// أنا — you: your level, your standing, your days, your badges, your things.
 export default async function Profile() {
   const me = await currentProfile();
   if (!me) redirect('/login');
 
   const sb = await supabaseServer();
+  const promoId = me.promo || 'pcem2';
 
   // Real numbers, or none at all — an invented "12 saved" is worse than a 0.
-  const [posts, saves, answers, rooms, chats] = await Promise.all([
-    sb.from('posts').select('*', { count: 'exact', head: true })
-      .eq('author', me.id).eq('removed', false),
+  const [saves, rooms, chats, duels, { board, tally }] = await Promise.all([
     sb.from('saves').select('*', { count: 'exact', head: true }).eq('person', me.id),
-    sb.from('comments').select('*', { count: 'exact', head: true })
-      .eq('author', me.id).eq('accepted', true),
     sb.from('room_members').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('chats').select('*', { count: 'exact', head: true })
       .or(`a.eq.${me.id},b.eq.${me.id}`),
+    sb.from('duels')
+      .select('challenger, opponent, challenger_score, opponent_score, challenger_at, opponent_at')
+      .or(`challenger.eq.${me.id},opponent.eq.${me.id}`)
+      .limit(200),
+    standings(promoId, me),
   ]);
+
+  const mine = tally[me.id] || zero();
+  const score = scoreOf(mine);
+  const rank = score ? board.findIndex((p) => p.id === me.id) + 1 : null;
+  const level = Math.floor(score / STEP) + 1;
+  const toNext = STEP - (score % STEP);
+
+  // A duel is won once both have answered and yours is the higher score.
+  const wins = (duels.data || []).filter((d) => {
+    if (!d.challenger_at || !d.opponent_at) return false;
+    const mineS = d.challenger === me.id ? d.challenger_score : d.opponent_score;
+    const theirs = d.challenger === me.id ? d.opponent_score : d.challenger_score;
+    return (mineS ?? 0) > (theirs ?? 0);
+  }).length;
 
   const promo = promoById(me.promo) || null;
   const name = me.full_name || me.email.split('@')[0];
 
   return (
     <>
-      <header className="head">
-        <div className="head-row">
-          <div className="head-t">الملف الشخصي</div>
+      <header className="st-top r1">
+        <div className="st-title">
+          <span className="grow"><b>أنا</b></span>
         </div>
       </header>
 
-      <div className="scroll">
-        <div className="me">
-          <div className="av" style={{ width: 68, height: 68, fontSize: 22, background: 'var(--olive)' }}>
-            {name.slice(0, 2)}
-          </div>
-          <div className="me-name">{name}</div>
-          <div className="me-row">
-            {promo && (
-              <span className="pill solid" style={{ background: badgeOf(promo), fontSize: 11 }}>
-                {promo.name}
-              </span>
-            )}
-            <span className="me-sub">{ROLE[me.role] || me.role} · UNEM</span>
-          </div>
-          <div className="me-mail" dir="ltr">{me.email}</div>
-          {/* The number classmates find you by — yours to read off and give. */}
-          {me.matricule && (
-            <div className="me-mail" dir="ltr" style={{ fontWeight: 700 }}>{me.matricule}</div>
-          )}
-
-          {me.status !== 'approved' && (
-            <div className="notice" style={{ width: '100%' }}>
-              <Icon name="alert" size={19} />
-              <div>
-                <div className="notice-t">حسابك بانتظار الموافقة</div>
-                <div className="notice-b">سيفتح لك التطبيق كاملًا فور موافقة أحد المشرفين.</div>
-              </div>
-            </div>
-          )}
-
-          <div className="me-stats">
-            {[[posts.count || 0, 'منشور'], [saves.count || 0, 'محفوظ'],
-              [answers.count || 0, 'جواب مقبول'], [rooms.count || 0, 'غرفة']].map(([n, l]) => (
-              <div key={l} className="me-stat">
-                <b>{n}</b><span>{l}</span>
-              </div>
-            ))}
-          </div>
+      <div className="scroll st-flow">
+        {/* ================= you ================= */}
+        <div className="me-hero r2">
+          <span className="me-ring">
+            <svg width="112" height="112" viewBox="0 0 112 112" aria-hidden="true">
+              <circle cx="56" cy="56" r="48" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="6" />
+              <circle className="me-ring-go" cx="56" cy="56" r="48" fill="none" stroke="#D9E8B8" strokeWidth="6"
+                strokeLinecap="round" strokeDasharray="301.6"
+                strokeDashoffset={String(301.6 * (1 - ((score % STEP) / STEP)))} />
+            </svg>
+            <span className="me-ring-f" style={{ background: faceOf(me.id) }}>{name.slice(0, 2)}</span>
+            <span className="me-ring-lv">المستوى {level}</span>
+          </span>
+          <b className="me-hero-n">{name}</b>
+          <span className="me-hero-s" dir="ltr">
+            {[promo?.name, me.matricule].filter(Boolean).join(' · ') || (ROLE[me.role] || me.role)}
+          </span>
+          <span className="me-hero-t">
+            {score ? `${toNext} نقطة للمستوى ${level + 1}` : 'انشر ملخّصًا أو أجب زميلًا لتبدأ'}
+          </span>
         </div>
 
-        {/* No card to the panel, for anyone. It is a separate page with its
-            own sign-in, reached by going to /admin — not something the app
-            shows a way into, even to the six people who run it. */}
+        {me.status !== 'approved' && (
+          <div className="notice" style={{ width: '100%' }}>
+            <Icon name="alert" size={19} />
+            <div>
+              <div className="notice-t">حسابك بانتظار الموافقة</div>
+              <div className="notice-b">سيفتح لك التطبيق كاملًا فور موافقة أحد المشرفين.</div>
+            </div>
+          </div>
+        )}
 
+        {/* ================= the numbers, and your days ================= */}
+        <MeLive points={score} rank={rank} wins={wins} />
+
+        {/* ================= badges ================= */}
+        <Badges badges={badgesOf(mine)} />
+
+        {/* ================= a classmate, by number ================= */}
         <Find />
 
-        <Link href="/saved" className="card">
-          <div className="card-row">
-            <div className="tile tint-olive"><Icon name="bookmark" size={20} /></div>
-            <div className="grow">
-              <div className="nm">المحفوظات</div>
-              <div className="mt">{saves.count || 0} عنصرًا</div>
-            </div>
-            <span className="chev"><Icon name="chev" size={18} /></span>
-          </div>
-        </Link>
-
-        {/* المحادثات gave up its place in the bottom bar, and that left it
-            with no way in at all — a screen you could only reach by typing
-            the URL. A conversation starts from a person, so it belongs
-            beside the rest of you. */}
-        <Link href="/chat" className="card">
-          <div className="card-row">
-            <div className="tile tint-olive"><Icon name="msg" size={20} /></div>
-            <div className="grow">
-              <div className="nm">المحادثات</div>
-              <div className="mt">
-                {chats.count ? `${chats.count} محادثة` : 'لا محادثات بعد'}
-              </div>
-            </div>
-            <span className="chev"><Icon name="chev" size={18} /></span>
-          </div>
-        </Link>
-
-        <Link href="/rooms" className="card">
-          <div className="card-row">
-            <div className="tile tint-oliveLight"><Icon name="person" size={20} /></div>
-            <div className="grow">
-              <div className="nm">غرف الدراسة</div>
-              <div className="mt">{rooms.count || 0} غرفة أنت فيها</div>
-            </div>
-            <span className="chev"><Icon name="chev" size={18} /></span>
-          </div>
-        </Link>
+        {/* ================= your things ================= */}
+        <div className="me-list">
+          <Link href="/saved">
+            <span className="me-list-ic"><Icon name="bookmark" size={19} /></span>
+            <span className="grow">المحفوظات</span>
+            <s>{saves.count || 0}</s>
+            <Icon name="chev" size={15} />
+          </Link>
+          {/* المحادثات gave up its place in the bottom bar, and a
+              conversation starts from a person, so it lives beside you. */}
+          <Link href="/chat">
+            <span className="me-list-ic"><Icon name="msgs" size={19} /></span>
+            <span className="grow">المحادثات</span>
+            <s>{chats.count ? `${chats.count}` : 'لا شيء بعد'}</s>
+            <Icon name="chev" size={15} />
+          </Link>
+          <Link href="/rooms">
+            <span className="me-list-ic"><Icon name="video" size={19} /></span>
+            <span className="grow">غرف الدراسة</span>
+            <s>{rooms.count ? `${rooms.count}` : '—'}</s>
+            <Icon name="chev" size={15} />
+          </Link>
+          <Link href="/points">
+            <span className="me-list-ic"><Icon name="award" size={19} /></span>
+            <span className="grow">نقاطك بالتفصيل</span>
+            <s>{score}</s>
+            <Icon name="chev" size={15} />
+          </Link>
+        </div>
 
         <Sign />
       </div>

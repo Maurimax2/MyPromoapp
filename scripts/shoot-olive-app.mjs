@@ -14,10 +14,11 @@
 import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 
-const B = 'http://127.0.0.1:3000';
+const B = process.env.BASE || 'http://127.0.0.1:3000';
 const SP = 'C:/Users/hcn/AppData/Local/Temp/claude/c--Users-hcn-Documents-projects/2ab31450-896b-4619-8218-f22d6ae7181c/scratchpad';
 const OUT = `${SP}/olive-app`;
 const PLANT = process.argv.includes('--resume');
+const DAYS = process.argv.includes('--days');
 
 const browser = await chromium.launch({ executablePath: 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' });
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
@@ -36,6 +37,21 @@ if (PLANT) {
   }, thumb);
 }
 
+// With --days, five weeks of made-up study days for أنا's squares: the
+// record lives in the browser (lib/streak.js), so a fresh one has none.
+if (DAYS) {
+  await ctx.addInitScript(() => {
+    const days = {};
+    const pad = (n) => String(n).padStart(2, '0');
+    for (let i = 0; i < 34; i += 1) {
+      if (i > 6 && (i * 7) % 5 === 0) continue;
+      const d = new Date(Date.now() - i * 86400000);
+      days[`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`] = 1 + ((i * 13) % 11);
+    }
+    try { localStorage.setItem('mypromo.days', JSON.stringify(days)); } catch {}
+  });
+}
+
 const p = await ctx.newPage();
 await p.goto(`${B}/login`, { waitUntil: 'domcontentloaded', timeout: 120000 });
 const door = p.getByRole('button', { name: 'ادخل بكلمة السر' });
@@ -52,11 +68,23 @@ await Promise.all([
 ]);
 
 const PAGES = process.env.SHOTS
-  ? process.env.SHOTS.split(',').map((x) => { const [a, b] = x.split(':'); return [a, b]; })
+  ? process.env.SHOTS.split(',').map((x) => { const [a, b, c] = x.split(':'); return [a, b, Number(c) || 0]; })
   : [['/feed', 'home'], ['/duel', 'duel'], ['/profile', 'me']];
-for (const [path, name] of PAGES) {
+// A third field scrolls the screen's own scroller first: `/profile:me-2:700`.
+for (const [path, name, y] of PAGES) {
   await p.goto(`${B}${path}`, { waitUntil: 'domcontentloaded', timeout: 90000 });
   await p.waitForTimeout(2600);
+  if (y) {
+    await p.evaluate((dy) => {
+      // Whichever box actually scrolls — the page, or a screen's own column.
+      const all = [document.scrollingElement, ...document.querySelectorAll('*')];
+      const el = all.filter((e) => e && e.scrollHeight - e.clientHeight > 40
+        && (e === document.scrollingElement || /auto|scroll/.test(getComputedStyle(e).overflowY)))
+        .sort((x, z) => (z.scrollHeight - z.clientHeight) - (x.scrollHeight - x.clientHeight))[0];
+      if (el) el.scrollTop = dy;
+    }, y);
+    await p.waitForTimeout(900);
+  }
   await p.screenshot({ path: `${OUT}/${name}.png` });
   console.log(`  ${name}`);
 }

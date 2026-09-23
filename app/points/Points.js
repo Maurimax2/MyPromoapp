@@ -13,7 +13,9 @@
 // said in words.
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Icon from '@/components/Icon';
+import Sheet from '@/components/Sheet';
 import { RULES } from '@/lib/points';
 
 const TABS = [
@@ -33,6 +35,9 @@ const initials = (name = '') => name.trim().slice(0, 2);
 
 export default function Points({ total, rank, rows, badges, board, meId, mine = null }) {
   const [tab, setTab] = useState('board');
+  // A classmate tapped on the board: their card, and a way to challenge them.
+  const [who, setWho] = useState(null);
+  const open = (p, place) => () => { if (p.id !== meId) setWho({ ...p, place }); };
 
   return (
     <div className="scroll">
@@ -121,16 +126,20 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
               second, first, third. */}
           {board.length >= 3 && (
             <div className="podium">
-              {[board[1], board[0], board[2]].map((p, i) => (
-                <div key={p.id} className={`pod pod${[2, 1, 3][i]}`}>
-                  <span className="pod-f" style={{ background: faceOf(p.id) }}>
-                    {initials(p.name)}
-                  </span>
-                  <span className="pod-n">{p.name}</span>
-                  <b className="pod-p">{p.points}</b>
-                  <span className="pod-bar" />
-                </div>
-              ))}
+              {[board[1], board[0], board[2]].map((p, i) => {
+                const place = [2, 1, 3][i];
+                return (
+                  <button key={p.id} className={`pod pod${place}`} onClick={open(p, place)}>
+                    {place === 1 && <span className="pod-crown"><Icon name="crown" size={30} weight="fill" /></span>}
+                    <span className="pod-f" style={{ background: faceOf(p.id) }}>
+                      {initials(p.name)}
+                    </span>
+                    <span className="pod-n">{p.name}</span>
+                    <b className="pod-p">{p.points}</b>
+                    <span className="pod-bar"><b>{place}</b></span>
+                  </button>
+                );
+              })}
             </div>
           )}
 
@@ -144,22 +153,31 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
               <span className="grow">
                 <b>أنت</b>
                 <s>{mine.gap}</s>
+                {mine.pct > 0 && mine.pct < 100 && (
+                  <span className="you-bar"><i style={{ width: `${mine.pct}%` }} /></span>
+                )}
               </span>
               <b className="you-p">{mine.points}</b>
             </div>
           )}
 
+          <div className="pts-rules">
+            {RULES.map((r) => (
+              <span key={r.id}><b>+{r.each}</b>{r.label}</span>
+            ))}
+          </div>
+
           <div className="eyebrow">دفعتك</div>
           <div className="card pts-board">
             {board.map((p, i) => (
-              <div key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`}>
+              <button key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`} onClick={open(p, i + 1)}>
                 <span className={`pts-place p${i + 1 <= 3 ? i + 1 : ''}`}>{i + 1}</span>
                 <span className="pts-face" style={{ background: faceOf(p.id) }}>
                   {initials(p.name)}
                 </span>
                 <span className="grow">{p.name}</span>
                 <b>{p.points}</b>
-              </div>
+              </button>
             ))}
           </div>
         </>
@@ -169,6 +187,23 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
           <div className="empty-t">لا ترتيب بعد</div>
           <div className="empty-b">أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.</div>
         </div>
+      )}
+      {who && (
+        <Sheet onClose={() => setWho(null)}>
+          <div className="pts-who">
+            <span className="pts-who-f" style={{ background: faceOf(who.id) }}>{initials(who.name)}</span>
+            <b>{who.name}</b>
+            <s>المركز {who.place} · {who.points} نقطة</s>
+            <div className="pts-who-acts">
+              {who.matricule
+                ? <Link href={`/duel/new?to=${encodeURIComponent(who.matricule)}`} className="pts-who-go">
+                    <Icon name="swords" size={18} weight="fill" /> تحدَّه
+                  </Link>
+                : <span className="pts-who-none">لا رقم تسجيل له بعد</span>}
+              <button className="pts-who-close" onClick={() => setWho(null)}>إغلاق</button>
+            </div>
+          </div>
+        </Sheet>
       )}
     </div>
   );

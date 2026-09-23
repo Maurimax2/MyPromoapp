@@ -14,8 +14,8 @@
 import {
   Archive, ArrowsClockwise, Atom, Baby, Bell, BookmarkSimple, BookOpenText, CalendarDots,
   CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, ClockCountdown, CornersIn, CornersOut,
-  Crosshair, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, Heart,
-  House, Image, ListBullets, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
+  Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, Heart,
+  House, Image, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
   Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShieldCheck, SignOut, Sword,
   Trash, Trophy, User, VideoCamera, Warning, X,
 } from '@phosphor-icons/react/dist/ssr';
@@ -32,7 +32,7 @@ const ICONS = {
   zoomIn: MagnifyingGlassPlus, zoomOut: MagnifyingGlassMinus, expand: CornersOut, shrink: CornersIn,
   box: Cube, rotate: ArrowsClockwise, list: ListBullets, palette: Palette, focus: Crosshair,
   pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, video: VideoCamera,
-  award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire,
+  award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire, crown: Crown, lock: LockSimple,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid

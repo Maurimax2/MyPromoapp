@@ -12,6 +12,7 @@
 // the gesture is the one worth having.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 // Far enough that a tap or a scroll-flick never dismisses by accident, close
 // enough that a deliberate push always does.
@@ -21,6 +22,12 @@ export default function Sheet({ onClose, children }) {
   const [drag, setDrag] = useState(0);      // how far it has been pushed down
   const [going, setGoing] = useState(false); // let it fall before unmounting
   const from = useRef(null);
+  // Drawn into <body>, not where it was asked for. A screen's entrance
+  // animation leaves a transform on its section, and a transformed ancestor
+  // makes `position: fixed` mean «fixed to me»: the badges' sheet came up in
+  // the middle of أنا instead of from the bottom edge.
+  const [host, setHost] = useState(null);
+  useEffect(() => setHost(document.body), []);
 
   const close = useCallback(() => {
     if (going) return;
@@ -66,7 +73,8 @@ export default function Sheet({ onClose, children }) {
     else setDrag(0);   // not far enough — it springs back
   };
 
-  return (
+  if (!host) return null;
+  return createPortal(
     <div className={`sheet-back${going ? ' going' : ''}`} onClick={close}>
       <div
         className={`sheet${going ? ' going' : ''}`}
@@ -88,6 +96,7 @@ export default function Sheet({ onClose, children }) {
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    host,
   );
 }
