@@ -33,16 +33,16 @@ export default async function RegionPage({ params, searchParams }) {
     region.bundles.map((b) => bundleOf(b)?.credit || CREDIT))].join(' · ');
 
   return (
-    <>
-      <header className="head" style={{ paddingBottom: 12 }}>
-        <div className="head-row">
-          <BackButton fallback={`/anatomie/${promo}/${semestre}`} />
-          <div className="grow">
-            {/* The region names material, so it is French like every other
-                piece of study content. The chrome around it is Arabic. */}
-            <div className="head-t" style={{ fontSize: 17 }} dir="auto">{region.title}</div>
-            <div className="head-s" dir="auto">{region.subtitle}</div>
-          </div>
+    // On a dark stage, the way the prototype has it: bone reads best against
+    // the dark, and the controls around it step back into glass.
+    <div className="m3d-page">
+      <header className="m3d-top">
+        <BackButton fallback={`/anatomie/${promo}/${semestre}`} className="m3d-back" />
+        <div className="grow">
+          {/* The region names material, so it is French like every other
+              piece of study content. The chrome around it is Arabic. */}
+          <b dir="auto">{region.title}</b>
+          <s dir="auto">{region.subtitle}</s>
         </div>
       </header>
 
@@ -57,6 +57,6 @@ export default async function RegionPage({ params, searchParams }) {
         point={typeof q.point === 'string' ? q.point : null}
         credit={credit}
       />
-    </>
+    </div>
   );
 }
