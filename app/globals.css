@@ -4219,3 +4219,111 @@ button.pts-b:active { background: var(--olive-pale); }
 
 /* The profile card was once called .me, and so is your number in a score. */
 .duel-pair .me { background: none; box-shadow: none; padding: 0; border-radius: 0; display: inline; }
+
+/* ============================================================
+   A study room, v2 — one clock for everyone, seats that light
+   up when someone speaks, the subject, and the talk.
+   ============================================================ */
+@keyframes rm-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.7); } }
+@keyframes rm-talk { 0%, 100% { box-shadow: 0 0 0 2px #9FD0B0, 0 0 0 6px rgba(159,208,176,.25); } 50% { box-shadow: 0 0 0 2px #9FD0B0, 0 0 0 11px rgba(159,208,176,0); } }
+@keyframes rm-bar { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+@keyframes rm-msg { from { opacity: 0; transform: translateY(8px) scale(.97); } to { opacity: 1; transform: none; } }
+
+.rm { display: flex; flex-direction: column; min-height: 100dvh; }
+.rm-top {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 14px 16px 10px; background: var(--bg);
+}
+.rm-back { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); color: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rm-top .grow { min-width: 0; display: flex; flex-direction: column; }
+.rm-top .grow b { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rm-top .grow s { text-decoration: none; font-size: 11px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rm-live {
+  display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; flex-shrink: 0;
+  background: var(--clay-pale); color: var(--clay); font-size: 11px; font-weight: 600;
+}
+.rm-live i { width: 7px; height: 7px; border-radius: 4px; background: var(--clay); animation: rm-pulse 1.8s ease-in-out infinite; }
+
+.rm-flow { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 4px 16px 96px; }
+
+.rm-clock {
+  display: flex; align-items: center; gap: 18px; padding: 16px; border-radius: 24px; color: #F3F1E9;
+  background: radial-gradient(120% 120% at 20% 10%, #2E3D33 0%, var(--ink) 65%);
+}
+.rm-ring { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
+.rm-ring svg { transform: rotate(-90deg); }
+.rm-ring svg circle:last-child { transition: stroke-dashoffset 1s linear, stroke .4s ease; }
+.rm-ring > span { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.rm-ring b { font-size: 24px; font-weight: 700; letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+.rm-ring s { text-decoration: none; font-size: 10px; opacity: .6; }
+.rm-clock .grow { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.rm-clock .grow > b { font-size: 15px; font-weight: 600; }
+.rm-clock .grow > s { text-decoration: none; font-size: 11px; opacity: .6; }
+.rm-rounds { display: flex; gap: 5px; margin-top: 4px; }
+.rm-rounds i { flex: 1; height: 5px; border-radius: 3px; background: rgba(255,255,255,.14); }
+.rm-rounds i.done { background: #9FD0B0; }
+.rm-rounds i.now { background: #E08A5E; }
+
+.rm-seats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rm-seat {
+  position: relative; height: 106px; border-radius: 20px; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--face) 88%, #fff), color-mix(in srgb, var(--face) 70%, #000));
+  background-color: var(--face);
+}
+.rm-seat::before { content: ''; position: absolute; inset: 0; background: radial-gradient(90% 90% at 50% 30%, rgba(255,255,255,.14), rgba(0,0,0,.18)); }
+.rm-f {
+  position: relative; width: 54px; height: 54px; border-radius: 50%; background: rgba(0,0,0,.18); color: #fff;
+  font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px rgba(255,255,255,.3);
+}
+.rm-seat.talk .rm-f { animation: rm-talk 1.2s ease-in-out infinite; }
+.rm-n { position: relative; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #FFFDF8; max-width: 90%; }
+.rm-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+.rm-bars i { width: 3px; height: 12px; border-radius: 2px; background: #9FD0B0; transform-origin: bottom; animation: rm-bar .6s ease-in-out infinite; }
+.rm-bars i:nth-child(2) { animation-delay: .15s; }
+.rm-bars i:nth-child(3) { animation-delay: .3s; }
+.rm-host { position: absolute; top: 9px; left: 9px; width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,.28); color: #D9B44A; display: flex; align-items: center; justify-content: center; }
+.rm-seat.free { background: var(--surface); border: 1.5px dashed var(--line); color: var(--ink-3); }
+.rm-seat.free::before { display: none; }
+.rm-seat.free s { text-decoration: none; font-size: 11px; }
+
+.rm-subj {
+  display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 20px;
+  background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: inherit;
+}
+.rm-subj-art { position: relative; width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0; }
+.rm-subj-art img { position: absolute; width: 58px; height: 60px; top: -12px; left: -6px; object-fit: contain; filter: drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
+.rm-subj .grow { min-width: 0; display: flex; flex-direction: column; }
+.rm-subj s { text-decoration: none; font-size: 10.5px; color: var(--ink-3); }
+.rm-subj b { font-size: 13px; font-weight: 600; text-align: right; }
+.rm-subj em { font-style: normal; font-size: 10.5px; color: var(--olive); font-weight: 500; }
+.rm-subj > svg { color: var(--ink-3); }
+
+.rm-chat { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.rm-msg { display: flex; gap: 8px; align-items: flex-end; animation: rm-msg .3s ease-out both; }
+.rm-msg.mine { flex-direction: row-reverse; }
+.rm-av { width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rm-bub {
+  max-width: 78%; padding: 9px 12px; border-radius: 16px 16px 16px 6px; background: var(--surface); border: 1px solid var(--line-soft);
+  font-size: 12.5px; line-height: 1.6; display: flex; flex-direction: column; gap: 1px;
+}
+.rm-bub b { font-size: 10.5px; font-weight: 600; color: var(--olive); }
+.rm-msg.mine .rm-bub { background: var(--olive); color: #FFFDF8; border-color: var(--olive); border-radius: 16px 16px 6px 16px; }
+.rm-quiet { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 20px; color: var(--ink-3); text-align: center; }
+.rm-quiet b { font-size: 14px; color: var(--ink); font-weight: 600; }
+.rm-quiet s { text-decoration: none; font-size: 12px; }
+
+.rm-foot {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--app-w); z-index: 10;
+  display: flex; align-items: center; gap: 8px; padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  background: var(--bg); border-top: 1px solid var(--line-soft);
+}
+.rm-foot input {
+  flex: 1; min-width: 0; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line);
+  background: var(--surface); font: inherit; font-size: 13.5px; color: var(--ink); outline: 0;
+}
+.rm-foot input:focus { border-color: var(--olive-light); }
+.rm-send { width: 46px; height: 46px; border-radius: 14px; background: var(--olive); color: #FFFDF8; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rm-send:disabled { background: #B9C4BB; }
+.rm-leave { height: 46px; padding: 0 16px; border-radius: 14px; background: var(--clay); color: #fff; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) { .rm-live i, .rm-seat.talk .rm-f, .rm-bars i, .rm-msg { animation: none !important; } }
+.rm-free { align-self: center; font-size: 11px; color: var(--ink-3); margin-top: -4px; }
