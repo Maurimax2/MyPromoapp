@@ -5,6 +5,8 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promoById } from '@/lib/data';
 import { zero, scoreOf, badgesOf } from '@/lib/points';
 import { standings } from '@/lib/standings';
+import { daysOf } from '@/lib/days';
+import { dayOf } from '@/lib/habit';
 import Sign from './Sign';
 import Find from './Find';
 import MeLive from './MeLive';
@@ -39,7 +41,8 @@ export default async function Profile() {
   const promoId = me.promo || 'pcem2';
 
   // Real numbers, or none at all — an invented "12 saved" is worse than a 0.
-  const [saves, rooms, chats, duels, { board, tally }] = await Promise.all([
+  const since = dayOf(Date.now() - 40 * 86400000);
+  const [saves, rooms, chats, duels, { board, tally }, mydays] = await Promise.all([
     sb.from('saves').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('room_members').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('chats').select('*', { count: 'exact', head: true })
@@ -49,6 +52,8 @@ export default async function Profile() {
       .or(`challenger.eq.${me.id},opponent.eq.${me.id}`)
       .limit(200),
     standings(promoId, me),
+    // The days behind the five-week grid, from the server (habits.sql).
+    daysOf([me.id], since),
   ]);
 
   const mine = tally[me.id] || zero();
@@ -109,7 +114,8 @@ export default async function Profile() {
         )}
 
         {/* ================= the numbers, and your days ================= */}
-        <MeLive points={score} rank={rank} wins={wins} />
+        <MeLive points={score} rank={rank} wins={wins}
+          days={Object.fromEntries(mydays.get(me.id) || [])} />
 
         {/* ================= badges ================= */}
         <Badges badges={badgesOf(mine)} />

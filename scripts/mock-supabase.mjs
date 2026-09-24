@@ -40,7 +40,20 @@ const whoIs = (req) => {
   return known ? { id: known.id, email: known.email, user_metadata: {} } : USER;
 };
 
+// Days relative to today, so a streak in the seed is a streak today.
+const back = (n) => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
+const run = (person, promo, from, to, skip = []) => Array.from({ length: to - from + 1 }, (_, i) => from + i)
+  .filter((n) => !skip.includes(n)).map((n) => ({ person, promo, day: back(n), n: 1 + ((n * 7) % 5) }));
+
 const db = {
+  // habits.sql. The owner has twelve days with one missed day in the middle,
+  // forgiven by the freeze the first seven earned.
+  study_days: [
+    ...run('u-owner', 'pcem2', 0, 12, [2]),
+    ...run('u-3', 'pcem2', 0, 2),
+    ...run('u-4', 'pcem2', 1, 20),
+  ],
+  daily_answers: [],
   profiles: [
     { id: 'u-owner', email: 'owner@unem.mr', username: 'mohamed', full_name: 'محمد', promo: 'pcem2',
       matricule: 'D04458', role: 'owner', status: 'approved', created_at: '2026-09-01' },

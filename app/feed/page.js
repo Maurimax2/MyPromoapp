@@ -7,6 +7,9 @@ import { stage } from '@/lib/duel';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 import { isHere } from '@/lib/rooms';
+import { dailyQuestion, shown, dailyTally, myDaily } from '@/lib/daily';
+import { streaksOf, studiedToday } from '@/lib/days';
+import { dayOf, weekStart } from '@/lib/habit';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,6 +62,11 @@ export default async function Feed() {
     subjectRows,
     { counts },
     guessedRail,
+    daily,
+    answered,
+    tally,
+    today,
+    habit,
   ] = await Promise.all([
     promosOf(),
     // The posts, their authors and their attachments…
@@ -107,6 +115,13 @@ export default async function Feed() {
     subjectsOf(promo),
     moduleCounts(),
     subjectRail(guess),
+    // The daily habit (habits.sql): today's question for the year, whether I
+    // answered it, how the year did, who studied today, and my own days.
+    dailyQuestion(promo),
+    myDaily(profile.id),
+    dailyTally(promo),
+    studiedToday(promo),
+    streaksOf([profile.id]),
   ]);
 
   const reading = await browsingPromo(profile, years.promos);
@@ -188,6 +203,23 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
+  // The question, without its answer unless it has been answered already.
+  const q = answered?.off ? null : shown(daily);
+  if (q && answered?.answered) { q.answer = daily.answer; q.why = daily.why; }
+
+  // Saturday and Sunday: how the week that ended went.
+  const myHabit = habit.get(profile.id);
+  const dow = new Date().getUTCDay();
+  let recap = null;
+  if ((dow === 6 || dow === 0) && myHabit) {
+    const thisWeek = weekStart();
+    const lastWeek = dayOf(Date.parse(`${thisWeek}T00:00:00Z`) - 7 * 86400000);
+    const days = [...myHabit.days.keys()].filter((d) => d >= lastWeek && d < thisWeek).length;
+    const { count } = await admin.from('daily_answers').select('person', { count: 'exact', head: true })
+      .eq('person', profile.id).eq('correct', true).gte('day', lastWeek).lt('day', thisWeek);
+    if (days || count) recap = { days, right: count || 0 };
+  }
+
   const subjects = rail.map((m) => ({
     id: m.id,
     name: m.name,
@@ -216,6 +248,10 @@ export default async function Feed() {
       rooms={rooms}
       duels={duels}
       rivals={rivals}
+      daily={q ? { q, mine: answered, tally } : null}
+      today={today}
+      habitDays={myHabit ? Object.fromEntries(myHabit.days) : null}
+      recap={recap}
     />
   );
 }

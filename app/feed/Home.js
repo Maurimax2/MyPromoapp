@@ -22,7 +22,9 @@ import PickPromo from './PickPromo';
 import { imageThumb, pdfThumb } from '@/lib/thumb';
 import { dueCount, trackedCount } from '@/lib/review';
 import { lastOpened } from '@/lib/resume';
-import { streak as streakOf } from '@/lib/streak';
+import { daysKnown } from '@/lib/streak';
+import { streakOf, dayOf } from '@/lib/habit';
+import { DailyCard, Recap } from './Daily';
 import { artOf } from '@/lib/subjectArt';
 
 // A face needs a colour, and it has to be the same colour tomorrow or a promo
@@ -252,7 +254,8 @@ function Continue({ review, resume }) {
 export default function Home({ me, posts, subjects, mySubjects = [],
                                promos = [], reading, unseen = 0,
                                studying = [], rooms = [], duels = [], rivals = [],
-                               readError = null, refused = 0 }) {
+                               readError = null, refused = 0,
+                               daily = null, today = 0, habitDays = null, recap = null }) {
   const router = useRouter();
   // These three live in this browser, so they can only be read once we are in
   // one. Until then each draws its own resting state rather than a number that
@@ -272,8 +275,10 @@ export default function Home({ me, posts, subjects, mySubjects = [],
   useEffect(() => {
     setReview({ due: dueCount(), tracked: trackedCount() });
     setResume(lastOpened());
-    setStreak(streakOf());
-  }, []);
+    // This phone's days and the server's (habits.sql), counted with the
+    // freezes the server counts, so the number here and on أنا agree.
+    setStreak(streakOf(Object.keys(daysKnown(habitDays)), dayOf()).current);
+  }, [habitDays]);
 
   // `/feed?write=1` opens the composer, for the few places that link here to
   // post something.
@@ -368,6 +373,10 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
       <div className="scroll flow h-flow">
         <Here studying={studying} rooms={rooms} />
+
+        <Recap recap={recap} />
+
+        {daily && <DailyCard q={daily.q} mine={daily.mine} tally={daily.tally} today={today} />}
 
         <Duels duels={duels} rivals={rivals} me={me} />
 

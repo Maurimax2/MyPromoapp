@@ -15,12 +15,15 @@ export const dynamic = 'force-dynamic';
 // to refuse that. Nothing computed here leaves this file except a name, a
 // number and a rank — no email, no post, nothing a student could not already
 // see on the feed.
-export default async function PointsPage() {
+export default async function PointsPage({ searchParams }) {
   const me = await currentProfile();
   if (!me) redirect('/login');
 
   const promo = me.promo || 'pcem2';
-  const { board, tally } = await standings(promo, me);
+  // This week, since Saturday, or all time. The week gives somebody who
+  // joined last month a board they can actually climb.
+  const week = (await searchParams)?.w === '1';
+  const { board, tally } = await standings(promo, me, { week });
 
   const mine = tally[me.id] || zero();
   const rank = board.findIndex((p) => p.id === me.id) + 1;
@@ -51,8 +54,8 @@ export default async function PointsPage() {
             <div className="head-t">الترتيب</div>
             <div className="head-s">
               {scoreOf(mine)
-                ? `المركز ${rank} من ${board.length}`
-                : 'لم تجمع نقاطًا بعد'}
+                ? `المركز ${rank} من ${board.length}${week ? ' هذا الأسبوع' : ''}`
+                : week ? 'لا نقاط لك هذا الأسبوع بعد' : 'لم تجمع نقاطًا بعد'}
             </div>
           </div>
         </div>
@@ -66,6 +69,7 @@ export default async function PointsPage() {
         board={shown}
         meId={me.id}
         mine={standing}
+        week={week}
       />
     </>
   );

@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const S = (f) => join(HERE, 'supabase', f);
-const MIGRATIONS = ['schema.sql', 'social.sql', 'feedback.sql', 'accounts.sql'];
+const MIGRATIONS = ['schema.sql', 'social.sql', 'feedback.sql', 'accounts.sql', 'habits.sql'];
 
 const db = new PGlite();
 await db.waitReady;
@@ -50,3 +50,4 @@ const rls = readFileSync(S('test/rls.sql'), 'utf8')
   .replace(/:bank_id/g, "(select id from question_banks where title = 'Examen 2024')");
 await apply(S('test/rls.sql'), rls);
 await apply(S('test/accounts.sql'));
+await apply(S('test/habits.sql'));

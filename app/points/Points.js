@@ -33,7 +33,7 @@ const faceOf = (id = '') => {
 };
 const initials = (name = '') => name.trim().slice(0, 2);
 
-export default function Points({ total, rank, rows, badges, board, meId, mine = null }) {
+export default function Points({ total, rank, rows, badges, board, meId, mine = null, week = false }) {
   const [tab, setTab] = useState('board');
   // A classmate tapped on the board: their card, and a way to challenge them.
   const [who, setWho] = useState(null);
@@ -124,6 +124,12 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
           {/* The three at the top, as people rather than as rows one to
               three. The tallest stands in the middle, so the order here is
               second, first, third. */}
+          {/* This week, or all time — a board somebody new can climb. */}
+          <div className="pts-when" role="group" aria-label="المدة">
+            <Link href="/points?w=1" data-on={!!week} replace>هذا الأسبوع</Link>
+            <Link href="/points" data-on={!week} replace>كل الوقت</Link>
+          </div>
+
           {board.length >= 3 && (
             <div className="podium">
               {[board[1], board[0], board[2]].map((p, i) => {
@@ -176,17 +182,28 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
                   {initials(p.name)}
                 </span>
                 <span className="grow">{p.name}</span>
+                {p.streak > 0 && (
+                  <span className="pts-streak" title="أيام متتالية">
+                    <Icon name="flame" size={13} weight="fill" />{p.streak}
+                  </span>
+                )}
                 <b>{p.points}</b>
               </button>
             ))}
           </div>
         </>
       ) : (
-        <div className="empty">
-          <div className="tile tint-olive"><Icon name="check" size={24} /></div>
-          <div className="empty-t">لا ترتيب بعد</div>
-          <div className="empty-b">أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.</div>
-        </div>
+        <>
+          <div className="pts-when" role="group" aria-label="المدة">
+            <Link href="/points?w=1" data-on={!!week} replace>هذا الأسبوع</Link>
+            <Link href="/points" data-on={!week} replace>كل الوقت</Link>
+          </div>
+          <div className="empty">
+            <div className="tile tint-olive"><Icon name="check" size={24} /></div>
+            <div className="empty-t">{week ? 'لا نقاط هذا الأسبوع بعد' : 'لا ترتيب بعد'}</div>
+            <div className="empty-b">{week ? 'الأسبوع بدأ السبت — أول من يجيب سؤال اليوم يتصدّر.' : 'أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.'}</div>
+          </div>
+        </>
       )}
       {who && (
         <Sheet onClose={() => setWho(null)}>

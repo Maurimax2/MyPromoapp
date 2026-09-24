@@ -37,6 +37,16 @@ Until it runs, sign-up still works (without usernames), and PCEP1/PCED1 are
 not offered. After it runs, members who joined before are asked to choose a
 username once, the next time they open the app.
 
+## 4. `supabase/habits.sql` — new, paste it once
+
+Days studied and the question of the day — what the streaks, the streak
+freezes, the 7/30/100-day badges, «N من دفعتك درسوا اليوم» and the weekly
+leaderboard are counted from. Nothing counted is stored; only the days and
+the answers are.
+
+Supabase → SQL Editor → paste → Run. Safe to run twice. Until it runs, the
+question of the day does not show and streaks stay on each phone.
+
 ## Google sign-in
 
 The button is on the website already; it answers «غير مفعّل بعد» until:
