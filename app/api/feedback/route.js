@@ -16,9 +16,10 @@ import { PROMOS } from '@/lib/data';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// What a student may have been offered on the page. Anything else was not on
-// the screen, so it was not typed by somebody using it.
-const NEEDS = new Set(['QCM', 'Flashcards', 'Résumés', 'IA', "Groupes d'étude", 'Autre']);
+// What a student may have been offered on the page — today's list and the
+// first page's. Anything else was not on the screen, so it was not typed by
+// somebody using it.
+const NEEDS = new Set(['QCM', 'Anatomie 3D', "Groupes d'étude", 'Duels', 'Résumés', 'Flashcards', 'IA', 'Autre']);
 
 // Long enough to say something real, short enough that nobody fills the table
 // with a pasted book.

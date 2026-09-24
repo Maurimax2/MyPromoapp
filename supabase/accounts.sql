@@ -104,6 +104,29 @@ select 'pced1', 'PCED1', 'طب الأسنان — السنة الأولى', '#8A
 where not exists (select 1 from promos where id = 'pced1')
   and exists (select 1 from promos where id = 'pcem1');
 
+-- The later pharmacy and dental years. Each has its own subjects, which are
+-- added in the panel when they are known — nothing is shared with medicine.
+-- Pharmacy: PCEP1, PCEP2, DCEP1, DCEP2. Dental: PCED1, PCED2, DCED1.
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'pcep2', 'PCEP2', 'صيدلة — السنة الثانية', '#1C6B6F', 12, false, 'pharmacy', 2
+where not exists (select 1 from promos where id = 'pcep2');
+
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'dcep1', 'DCEP1', 'صيدلة — السنة الثالثة', '#0F4A55', 13, false, 'pharmacy', 3
+where not exists (select 1 from promos where id = 'dcep1');
+
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'dcep2', 'DCEP2', 'صيدلة — السنة الرابعة', '#2A7A72', 14, false, 'pharmacy', 4
+where not exists (select 1 from promos where id = 'dcep2');
+
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'pced2', 'PCED2', 'طب الأسنان — السنة الثانية', '#9A7A22', 22, false, 'dental', 2
+where not exists (select 1 from promos where id = 'pced2');
+
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'dced1', 'DCED1', 'طب الأسنان — السنة الثالثة', '#6E5410', 23, false, 'dental', 3
+where not exists (select 1 from promos where id = 'dced1');
+
 -- ---------------------------------------------------------------------------
 -- 4. Titles students read: the faculty is FMPOS
 -- ---------------------------------------------------------------------------

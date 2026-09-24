@@ -1,11 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Icon from '@/components/Icon';
-import Logo from '@/components/Logo';
-import { badgeOf } from '@/lib/data';
 
-// ساعدنا نبني MyPromo — six questions, one at a time.
+// ساعدنا في بناء MyPromo — five questions, one at a time.
 //
 // One long form is a wall, and a wall on a phone opened from WhatsApp is a
 // page nobody finishes. So it is read the way the app itself is: one question,
@@ -17,16 +16,22 @@ import { badgeOf } from '@/lib/data';
 
 const ENDPOINT = '/api/feedback';
 
-// What a student needs while revising. These are the app's own words for the
-// things it holds — the same names the screens use — so an answer here points
-// at something real.
+// What is stored is the app's own name for the thing (the admin panel counts
+// these); what is shown is how a student says it.
 const NEEDS = [
-  'QCM', 'Flashcards', 'Résumés', 'IA', "Groupes d'étude", 'Autre',
+  { v: 'QCM', say: 'QCM', icon: 'check' },
+  { v: 'Anatomie 3D', say: 'Anatomie 3D', icon: 'heart' },
+  { v: "Groupes d'étude", say: 'غرف الدراسة', icon: 'video' },
+  { v: 'Duels', say: 'التحدّيات', icon: 'swords' },
+  { v: 'Résumés', say: 'الملخّصات' },
+  { v: 'Flashcards', say: 'Flashcards' },
+  { v: 'IA', say: 'مساعد ذكي (IA)' },
+  { v: 'Autre', say: 'شيء آخر' },
 ];
 
 const STEPS = 5;
 
-export default function Form({ promos }) {
+export default function Form({ tracks }) {
   const [step, setStep] = useState(1);
   const [promo, setPromo] = useState('');
   const [needs, setNeeds] = useState([]);
@@ -38,26 +43,34 @@ export default function Form({ promos }) {
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState('');
+  const [shared, setShared] = useState('');
+  const [source, setSource] = useState('');
   const head = useRef(null);
+
+  // Which WhatsApp group the link was posted in, when the link says:
+  // /feedback?from=pcem2-groupe1. Never a person, never an address.
+  useEffect(() => {
+    try {
+      const q = new URLSearchParams(window.location.search);
+      setSource((q.get('from') || q.get('utm_source') || '').slice(0, 120));
+    } catch { /* fine */ }
+  }, []);
 
   const toggle = (n) =>
     setNeeds((all) => (all.includes(n) ? all.filter((x) => x !== n) : [...all, n]));
 
   // The one thing that has to be answered. Everything else is a question a
-  // student may simply not have an answer to, and refusing to let them past
-  // is how a form gets abandoned at step three.
+  // student may simply not have an answer to.
   const blocked = step === 1 && !promo;
 
   const go = (to) => {
     setError('');
     setStep(to);
-    // The card, not the top of the page: the question they are now on should
-    // be the thing in front of them.
     head.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   };
 
   const send = async () => {
-    if (sending) return;                       // no second submission
+    if (sending) return;
     setSending(true);
     setError('');
     try {
@@ -65,17 +78,16 @@ export default function Form({ promos }) {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          promo,
-          needs,
-          pain: pain.trim(),
-          wish: wish.trim(),
+          promo, needs, pain: pain.trim(), wish: wish.trim(),
           reach: reach === true,
           name: reach ? name.trim() : '',
           phone: reach ? phone.trim() : '',
+          source,
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setDone(true);
+      head.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
     } catch {
       setError('تعذّر الإرسال. تحقّق من اتصالك ثم أعد المحاولة.');
     } finally {
@@ -83,57 +95,78 @@ export default function Form({ promos }) {
     }
   };
 
+  // Passing it on is the most useful thing anybody can do after answering.
+  const link = typeof window !== 'undefined' ? `${window.location.origin}/feedback` : '/feedback';
+  const message = `شاركنا رأيك في MyPromo — تطبيق لطلبة FMPOS (دقيقة واحدة): ${link}`;
+  const share = async () => {
+    try {
+      if (navigator.share) { await navigator.share({ title: 'MyPromo', text: message }); return; }
+      await navigator.clipboard.writeText(message);
+      setShared('نُسخ الرابط — الصقه في مجموعة دفعتك');
+    } catch { /* closed the sheet: nothing to say */ }
+  };
+
   if (done) {
     return (
-      <div className="pl-card" id="form">
-        <div className="pl-done">
-          <span className="pl-pop"><Logo size={62} /></span>
-          <h2>وصلنا رأيك ❤️</h2>
-          <p>شكرًا لأنك تساعدنا نبني MyPromo.</p>
-          <p style={{ marginTop: 10 }}>هذا التطبيق لكم… ولذلك نريد أن نسمع منكم.</p>
+      <div className="lp-card lp-done" ref={head}>
+        <span className="lp-pop"><Image src="/feedback/heart.webp" alt="" width={72} height={72} /></span>
+        <h2>وصلنا رأيك</h2>
+        <p>شكرًا لأنك تبني MyPromo معنا.</p>
+        <p className="lp-muted">ساعدنا أكثر: أرسل الرابط لدفعتك.</p>
+        <div className="lp-share">
+          <button type="button" className="lp-btn primary" onClick={share}>
+            <Icon name="share" size={18} /> شارك الرابط
+          </button>
+          <a className="lp-btn ghost" href={`https://wa.me/?text=${encodeURIComponent(message)}`} target="_blank" rel="noopener noreferrer">
+            أرسله على واتساب
+          </a>
         </div>
+        {shared && <p className="lp-hint" role="status">{shared}</p>}
       </div>
     );
   }
 
   return (
-    <div className="pl-card" id="form" ref={head}>
-      <div className="pl-steps">
-        <b>ساعدنا نبني MyPromo</b>
-        <span className="pl-grow" />
-        <span className="pl-count" dir="ltr">{step} / {STEPS}</span>
+    <div className="lp-card" ref={head}>
+      <div className="lp-steps">
+        <b>ساعدنا في بناء MyPromo</b>
+        <span className="lp-count" dir="ltr">{step} / {STEPS}</span>
       </div>
-      <div className="pl-bar" role="progressbar" aria-valuemin={1} aria-valuemax={STEPS}
+      <div className="lp-bar" role="progressbar" aria-valuemin={1} aria-valuemax={STEPS}
         aria-valuenow={step} aria-label="تقدّمك في الاستبيان">
         <i style={{ width: `${(step / STEPS) * 100}%` }} />
       </div>
 
       {step === 1 && (
-        <div className="pl-step" key="s1">
-          <h3 className="pl-q">أولاً، من أي Promo أنت؟</h3>
-          <div className="pl-opts">
-            {promos.map((p) => (
-              <button key={p.id} type="button" className="pl-opt"
-                data-on={promo === p.id} onClick={() => setPromo(p.id)}>
-                <span className="pl-dotc" style={{ background: badgeOf(p) }} />
-                <span dir="ltr">{p.name}</span>
-              </button>
-            ))}
-          </div>
+        <div className="lp-step" key="s1">
+          <h3 className="lp-q">أولًا، في أي سنة أنت؟</h3>
+          {tracks.map((t) => (
+            <div key={t.id} className="lp-group">
+              <span className="lp-group-t">{t.name}</span>
+              <div className="lp-opts years">
+                {t.years.map((p) => (
+                  <button key={p.id} type="button" className="lp-opt year" aria-pressed={promo === p.id}
+                    onClick={() => setPromo(p.id)}>
+                    <span dir="ltr">{p.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
       {step === 2 && (
-        <div className="pl-step" key="s2">
-          <h3 className="pl-q">ما أكثر شيء تحتاجه أثناء المراجعة؟</h3>
-          <div className="pl-opts">
+        <div className="lp-step" key="s2">
+          <h3 className="lp-q">أيّ ميزة تحتاجها أكثر؟</h3>
+          <p className="lp-hint">اختر ما شئت.</p>
+          <div className="lp-opts">
             {NEEDS.map((n) => (
-              <button key={n} type="button" className="pl-opt"
-                aria-pressed={needs.includes(n)} onClick={() => toggle(n)}>
-                <span className="pl-tick">
-                  {needs.includes(n) && <Icon name="check" size={13} />}
-                </span>
-                <span dir="auto">{n}</span>
+              <button key={n.v} type="button" className="lp-opt" aria-pressed={needs.includes(n.v)} onClick={() => toggle(n.v)}>
+                {n.icon
+                  ? <Image src={`/feedback/${n.icon}.webp`} alt="" width={26} height={26} />
+                  : <span className="lp-tick">{needs.includes(n.v) && <Icon name="check" size={13} />}</span>}
+                <span dir="auto">{n.say}</span>
               </button>
             ))}
           </div>
@@ -141,70 +174,60 @@ export default function Form({ promos }) {
       )}
 
       {step === 3 && (
-        <div className="pl-step" key="s3">
-          <h3 className="pl-q">ما أكثر شيء يزعجك أثناء المراجعة؟</h3>
-          <textarea className="pl-ta" dir="auto" value={pain} onChange={(e) => setPain(e.target.value)}
-            aria-label="ما أكثر شيء يزعجك أثناء المراجعة؟"
-            placeholder="مثلاً: صعوبة العثور على QCM، كثرة الملفات، عدم تنظيم الدروس..." />
+        <div className="lp-step" key="s3">
+          <label className="lp-q" htmlFor="lp-pain">ما أكثر شيء يزعجك أثناء المراجعة؟</label>
+          <textarea id="lp-pain" className="lp-ta" dir="auto" value={pain} onChange={(e) => setPain(e.target.value)}
+            placeholder="مثلًا: الملفات مبعثرة في المجموعات، لا أجد QCM لمحاضرة معيّنة…" />
         </div>
       )}
 
       {step === 4 && (
-        <div className="pl-step" key="s4">
-          <h3 className="pl-q">ما الميزة التي تتمنى وجودها في MyPromo؟</h3>
-          <textarea className="pl-ta" dir="auto" value={wish} onChange={(e) => setWish(e.target.value)}
-            aria-label="ما الميزة التي تتمنى وجودها في MyPromo؟"
-            placeholder="اكتب ما يخطر ببالك..." />
+        <div className="lp-step" key="s4">
+          <label className="lp-q" htmlFor="lp-wish">لو أضفنا ميزة واحدة من أجلك، ماذا تكون؟</label>
+          <textarea id="lp-wish" className="lp-ta" dir="auto" value={wish} onChange={(e) => setWish(e.target.value)}
+            placeholder="اكتب ما يخطر ببالك…" />
         </div>
       )}
 
       {step === 5 && (
-        <div className="pl-step" key="s5">
-          <h3 className="pl-q">هل تريد أن نخبرك عند إطلاق MyPromo؟</h3>
-          <div className="pl-opts">
-            <button type="button" className="pl-opt" data-on={reach === true}
-              onClick={() => setReach(true)}>نعم، أخبروني</button>
-            <button type="button" className="pl-opt" data-on={reach === false}
-              onClick={() => setReach(false)}>لا، شكرًا</button>
+        <div className="lp-step" key="s5">
+          <h3 className="lp-q">نخبرك يوم الإطلاق؟</h3>
+          <div className="lp-opts two">
+            <button type="button" className="lp-opt" aria-pressed={reach === true} onClick={() => setReach(true)}>نعم، أخبروني</button>
+            <button type="button" className="lp-opt" aria-pressed={reach === false} onClick={() => setReach(false)}>لا، شكرًا</button>
           </div>
           {reach === true && (
-            <div className="pl-step">
-              <div className="pl-field">
-                <label htmlFor="pl-name">الاسم <span style={{ color: 'var(--ink-3)' }}>(اختياري)</span></label>
-                <input id="pl-name" className="pl-inp" dir="auto" value={name}
+            <div className="lp-fields">
+              <div className="lp-field">
+                <label htmlFor="lp-name">الاسم <span>(اختياري)</span></label>
+                <input id="lp-name" className="lp-inp" dir="auto" value={name}
                   onChange={(e) => setName(e.target.value)} autoComplete="name" />
               </div>
-              <div className="pl-field">
-                <label htmlFor="pl-wa">WhatsApp <span style={{ color: 'var(--ink-3)' }}>(اختياري)</span></label>
-                <input id="pl-wa" className="pl-inp" dir="ltr" inputMode="tel" value={phone}
-                  onChange={(e) => setPhone(e.target.value)} autoComplete="tel" placeholder="+222 ..." />
+              <div className="lp-field">
+                <label htmlFor="lp-wa">رقم الواتساب <span>(اختياري)</span></label>
+                <input id="lp-wa" className="lp-inp" dir="ltr" inputMode="tel" value={phone}
+                  onChange={(e) => setPhone(e.target.value)} autoComplete="tel" placeholder="+222 …" />
               </div>
             </div>
           )}
         </div>
       )}
 
-      {error && <p className="pl-err" role="alert">{error}</p>}
+      {error && <p className="lp-err" role="alert">{error}</p>}
 
-      <div className="pl-nav">
-        {step > 1 && (
-          <button type="button" className="pl-btn q" onClick={() => go(step - 1)}>رجوع</button>
-        )}
+      <div className="lp-nav">
+        {step > 1 && <button type="button" className="lp-btn ghost" onClick={() => go(step - 1)}>رجوع</button>}
         {step < STEPS ? (
-          <button type="button" className="pl-btn g" disabled={blocked} onClick={() => go(step + 1)}>
-            التالي
+          <button type="button" className="lp-btn primary" disabled={blocked} onClick={() => go(step + 1)}>
+            {(step === 3 && !pain.trim()) || (step === 4 && !wish.trim()) ? 'تخطَّ' : 'التالي'}
           </button>
         ) : (
-          <button type="button" className="pl-btn p" disabled={sending} onClick={send}>
-            {sending ? 'جاري الإرسال...' : 'أرسل رأيك'}
+          <button type="button" className="lp-btn gold" disabled={sending} onClick={send}>
+            {sending ? 'جاري الإرسال…' : 'أرسل رأيك'}
           </button>
         )}
       </div>
-      {step === 1 && !promo && (
-        <p className="pl-hint" style={{ margin: '10px 0 0', textAlign: 'center' }}>
-          اختر سنتك للمتابعة
-        </p>
-      )}
+      {blocked && <p className="lp-hint center">اختر سنتك للمتابعة</p>}
     </div>
   );
 }

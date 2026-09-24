@@ -39,6 +39,10 @@ select must('dental reads medicine''s first year, both semesters',
   (select count(*) from promos where id = 'pced1' and reads_from = 'pcem1' and reads_semesters = array['S1', 'S2']), 1);
 select must('pharmacy reads it for the first semester only',
   (select count(*) from promos where id = 'pcep1' and reads_from = 'pcem1' and reads_semesters = array['S1']), 1);
+select must('the later pharmacy and dental years exist, on their own programme',
+  (select count(*) from promos where id in ('pcep2', 'dcep1', 'dcep2', 'pced2', 'dced1') and reads_from is null), 5);
+select must('pharmacy has four years, dental three',
+  (select count(*) from promos where track = 'pharmacy') * 10 + (select count(*) from promos where track = 'dental'), 43);
 select must('every medicine year knows its track',
   (select count(*) from promos
     where id in ('pcem1', 'pcem2', 'dcem1', 'dcem2', 'dcem3', 'dcem4') and track = 'medicine'), 6);

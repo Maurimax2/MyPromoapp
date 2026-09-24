@@ -6,10 +6,9 @@ import { useEffect, useRef, useState } from 'react';
 //
 // One observer per block, disconnected the moment it has fired — a page that
 // keeps watching twenty elements while somebody scrolls is a page that drops
-// frames on the phone this is written for. A browser that does not have
-// IntersectionObserver, or a reader who has asked for less motion, gets the
-// content sitting still, which is the point of starting from the CSS class
-// rather than from an inline style.
+// frames on the phone this is written for. Nothing above the fold uses it:
+// the first thing a student sees is painted by the server, not waiting on
+// JavaScript. A reader who asked for less motion gets everything still.
 export default function Reveal({ children, delay = 0, as: Tag = 'div', className = '' }) {
   const host = useRef(null);
   const [on, setOn] = useState(false);
@@ -23,7 +22,7 @@ export default function Reveal({ children, delay = 0, as: Tag = 'div', className
         setOn(true);
         eye.disconnect();
       }
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
     eye.observe(el);
     return () => eye.disconnect();
   }, []);
@@ -31,7 +30,7 @@ export default function Reveal({ children, delay = 0, as: Tag = 'div', className
   return (
     <Tag
       ref={host}
-      className={`pl-rev${on ? ' on' : ''}${className ? ` ${className}` : ''}`}
+      className={`lp-rev${on ? ' on' : ''}${className ? ` ${className}` : ''}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
