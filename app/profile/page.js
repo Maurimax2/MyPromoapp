@@ -91,7 +91,7 @@ export default async function Profile() {
           </span>
           <b className="me-hero-n">{name}</b>
           <span className="me-hero-s" dir="ltr">
-            {[promo?.name, me.matricule].filter(Boolean).join(' · ') || (ROLE[me.role] || me.role)}
+            {[me.username && `@${me.username}`, promo?.name, me.matricule].filter(Boolean).join(' · ') || (ROLE[me.role] || me.role)}
           </span>
           <span className="me-hero-t">
             {score ? `${toNext} نقطة للمستوى ${level + 1}` : 'انشر ملخّصًا أو أجب زميلًا لتبدأ'}

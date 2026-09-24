@@ -37,6 +37,10 @@ export default async function Feed() {
   if (!profile.promo && !['owner', 'admin', 'editor'].includes(profile.role)) {
     redirect('/waiting');
   }
+  // Everybody has a username now — it is how classmates find and challenge
+  // each other. Members from before it existed choose one, once, on /waiting.
+  // (`undefined`, not `null`, while accounts.sql has not been pasted.)
+  if (profile.username === null) redirect('/waiting');
   const promo = profile.promo || 'pcem2';
   const sb = await supabaseServer();
   const admin = supabaseAdmin();
@@ -93,13 +97,13 @@ export default async function Feed() {
       .or(`challenger.eq.${profile.id},opponent.eq.${profile.id}`)
       .order('created_at', { ascending: false })
       .limit(40),
-    // Somebody to challenge, so the duels section is never an empty shelf.
+    // Somebody to challenge, so the duels section is never an empty shelf —
+    // anybody with a number or a username to address a challenge to.
     sb.from('profiles')
-      .select('id, full_name, email, matricule')
+      .select('*')
       .eq('promo', promo).eq('status', 'approved')
-      .not('matricule', 'is', null)
       .neq('id', profile.id)
-      .limit(12),
+      .limit(24),
     subjectsOf(promo),
     moduleCounts(),
     subjectRail(guess),
@@ -171,9 +175,9 @@ export default async function Feed() {
   // Classmates you are not already in a duel with.
   const busyWith = new Set(duels.map((d) => d.them.id));
   const rivals = (mates || [])
-    .filter((m) => !busyWith.has(m.id))
+    .filter((m) => !busyWith.has(m.id) && (m.matricule || m.username))
     .slice(0, 3)
-    .map((m) => ({ ...nameOf(m), matricule: m.matricule }));
+    .map((m) => ({ ...nameOf(m), handle: m.matricule || m.username }));
 
   const posts = (rows || []).map((p) => ({
     ...p,

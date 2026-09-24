@@ -4,6 +4,7 @@ import { artOf, regionArt } from '@/lib/subjectArt';
 import { REGIONS, regionsFor } from '@/lib/anatomy/curriculum';
 import { CREDIT, bundleOf } from '@/lib/anatomy/bundles';
 import { isHere } from '@/lib/rooms';
+import { sourcesOf, studies } from '@/lib/catalogue';
 import Room from './Room';
 
 export const dynamic = 'force-dynamic';
@@ -58,9 +59,11 @@ export default async function RoomPage({ params }) {
     }
   }
   // A room about no particular subject — or one whose subject has no body in
-  // it — can still be shown any region its year studies.
+  // it — can still be shown any region its year studies, including the
+  // first year a pharmacy or dental year shares with medicine.
   if (!regions.length) {
-    regions = REGIONS.filter((r) => r.promo.toLowerCase() === String(room.promo || '').toLowerCase());
+    const sources = await sourcesOf(String(room.promo || '').toLowerCase());
+    regions = REGIONS.filter((r) => studies(sources, { promo: r.promo.toLowerCase(), semester: String(r.semester).toUpperCase() }));
   }
 
   const now = Date.now();

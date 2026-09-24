@@ -25,6 +25,34 @@ student read exactly one profile, their own, so every author's name on every
 screen would have come back empty with nothing to say why. This adds the
 policy that lets people in the same promo see each other.
 
+## 3. `supabase/accounts.sql` — new, paste it once
+
+Usernames, first-years' WhatsApp numbers, and the pharmacy (PCEP1) and dental
+(PCED1) first years, which share medicine's first-year programme — dental all
+year, pharmacy for S1. It also takes the old union's name out of paper titles.
+
+Supabase → SQL Editor → paste the whole file → Run. Safe to run twice.
+
+Until it runs, sign-up still works (without usernames), and PCEP1/PCED1 are
+not offered. After it runs, members who joined before are asked to choose a
+username once, the next time they open the app.
+
+## Google sign-in
+
+The button is on the website already; it answers «غير مفعّل بعد» until:
+
+1. Google Cloud Console → **APIs & Services → Credentials → Create OAuth
+   client ID** (type: Web application). Authorised redirect URI: the one
+   Supabase shows in the next step.
+2. Supabase → **Authentication → Providers → Google** → turn it on, paste the
+   client ID and secret, and copy its callback URL into step 1.
+3. Supabase → **Authentication → URL Configuration** → add
+   `https://mypromo-nu.vercel.app/auth/callback` to the redirect URLs.
+
+Inside the Android and iOS app the button is hidden for now: Google refuses to
+sign in inside an app's own web view, so the app needs its own Google sign-in,
+which comes with the store builds.
+
 ## Storage
 
 Nothing to do. Two buckets are made by the app itself the first time each is

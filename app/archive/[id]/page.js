@@ -3,7 +3,7 @@ import { sectionsFor, subjectName } from '@/lib/data';
 import { moduleOf, semestersOf } from '@/lib/catalogue';
 import { regionsFor } from '@/lib/anatomy/curriculum';
 import { banksOf } from '@/lib/quiz-bank';
-import { supabaseServer } from '@/lib/supabase/server';
+import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
 import { artOf, regionArt, chapterArt } from '@/lib/subjectArt';
 import Subject from './Subject';
@@ -31,7 +31,8 @@ export default async function Module({ params }) {
   const sb = await supabaseServer();
   const [semesters, banks, { data: rows }] = await Promise.all([
     // A subject taught in both semesters is two modules; the hero switches.
-    semestersOf(m),
+    // Only the semesters the viewer's year studies (lib/catalogue.js).
+    currentProfile().then((me) => semestersOf(m, me?.promo || null)),
     banksOf(id),
     // What classmates uploaded for this subject. The Drive's own résumés
     // join them below, as الملخصات does.

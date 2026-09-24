@@ -16,7 +16,7 @@ import { join } from 'node:path';
 
 // ---- what the database has ------------------------------------------------
 
-const sql = ['supabase/schema.sql', 'supabase/social.sql', 'supabase/feedback.sql']
+const sql = ['supabase/schema.sql', 'supabase/social.sql', 'supabase/feedback.sql', 'supabase/accounts.sql']
   .map((f) => readFileSync(f, 'utf8')).join('\n');
 
 const tables = new Map();

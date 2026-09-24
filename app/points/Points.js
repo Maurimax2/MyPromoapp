@@ -195,8 +195,8 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
             <b>{who.name}</b>
             <s>المركز {who.place} · {who.points} نقطة</s>
             <div className="pts-who-acts">
-              {who.matricule
-                ? <Link href={`/duel/new?to=${encodeURIComponent(who.matricule)}`} className="pts-who-go">
+              {who.handle
+                ? <Link href={`/duel/new?to=${encodeURIComponent(who.handle)}`} className="pts-who-go">
                     <Icon name="swords" size={18} weight="fill" /> تحدَّه
                   </Link>
                 : <span className="pts-who-none">لا رقم تسجيل له بعد</span>}

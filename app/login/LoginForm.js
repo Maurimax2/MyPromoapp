@@ -1,42 +1,50 @@
 'use client';
 
-// The front door — three ways through it.
+// The front door — four ways through it.
 //
-// A link to your own inbox is the right door for a student who forgets
-// passwords. It is the wrong door when Supabase's built-in mailer sends two
-// messages an hour, which is where this project spent an evening. So there is
-// also a password, and a way to make an account that needs no email at all.
+// Google is the quickest: every Android phone already has an account, so it
+// is one tap and no password to forget. A link to your own inbox is the
+// right door for a student who forgets passwords, but Supabase's built-in
+// mailer sends two messages an hour — so there is also a password, and a way
+// to make an account that needs no email at all.
 //
 // Making an account does not let you in. A new profile is `pending` and every
 // policy is written against is_approved(), so a student sees nothing until
 // somebody on the team approves them. That is the gate — not the inbox.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from '@/components/Logo';
 import Icon from '@/components/Icon';
 import { supabase } from '@/lib/supabase/browser';
 import { authMessage } from '@/lib/auth-error';
 import { PROMOS, badgeOf } from '@/lib/data';
+import { isFirstYear, normaliseUsername } from '@/lib/identity';
 
-export default function LoginForm() {
+export default function LoginForm({ years = PROMOS }) {
   const [how, setHow] = useState('link');       // link | password | join
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [matricule, setMatricule] = useState('');
+  const [phone, setPhone] = useState('');
   const [promo, setPromo] = useState('');
   const [state, setState] = useState('idle');   // idle | busy | sent | error
   const [error, setError] = useState('');
+  // Google refuses to sign in inside an app's own web view, so the button
+  // shows on the website only until the app has its own Google sign-in.
+  const [web, setWeb] = useState(false);
+  useEffect(() => { setWeb(!window.Capacitor?.isNativePlatform?.()); }, []);
+
+  const chosen = years.find((y) => y.id === promo);
+  const first = chosen ? isFirstYear(chosen) : null;
 
   // The link signs you in. It does not sign you up.
   //
   // Supabase creates the account for an unknown address unless it is told
   // not to, so typing any address here used to make a student — with no name
-  // and, worse, no year. Every policy compares against the year, so that
-  // account read an empty feed and was refused at the composer, and nothing
-  // on screen connected either to the door they came through. Signing up
-  // takes an email, a password and a year; this is the other way in for
-  // somebody who already did that.
+  // and, worse, no year. Signing up takes an email, a password and a year;
+  // this is the other way in for somebody who already did that.
   const sendLink = async () => {
     const { error } = await supabase().auth.signInWithOtp({
       email: email.trim(),
@@ -60,12 +68,30 @@ export default function LoginForm() {
     window.location.href = '/auth/home';
   };
 
+  // Google hands back to /auth/callback, the same door the emailed link uses.
+  // A new Google account arrives with a name and nothing else, and /waiting
+  // asks for the year, the username and the number or WhatsApp.
+  const google = async () => {
+    setState('busy'); setError('');
+    const { error } = await supabase().auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (error) {
+      setError(/not enabled|unsupported provider/i.test(error.message)
+        ? 'الدخول بحساب Google غير مفعّل بعد — استعمل البريد'
+        : authMessage(error));
+      setState('error');
+    }
+  };
+
   const join = async () => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        email: email.trim(), password, full_name: name.trim(), promo, matricule,
+        email: email.trim(), password, full_name: name.trim(), promo,
+        username, matricule: first ? matricule || null : matricule, phone: first ? phone : null,
       }),
     });
     const data = await res.json().catch(() => ({}));
@@ -81,7 +107,9 @@ export default function LoginForm() {
   const ready =
     how === 'link' ? email.trim()
     : how === 'password' ? email.trim() && password
-    : email.trim() && password.length >= 8 && name.trim() && promo && matricule.trim();
+    : email.trim() && password.length >= 8 && name.trim() && promo
+      && normaliseUsername(username).length >= 3
+      && (first ? phone.replace(/[^0-9]/g, '').length >= 8 : matricule.trim());
 
   const submit = async (e) => {
     e.preventDefault();
@@ -131,6 +159,15 @@ export default function LoginForm() {
       <Logo size={74} id="login" />
       <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
 
+      {web && (
+        <>
+          <button type="button" className="login-google" onClick={google} disabled={state === 'busy'}>
+            <Icon name="google" size={20} weight="bold" /> المتابعة بحساب Google
+          </button>
+          <div className="login-or"><span>أو</span></div>
+        </>
+      )}
+
       <form className="login-form" onSubmit={submit}>
         {how === 'join' && (
           <input
@@ -138,9 +175,55 @@ export default function LoginForm() {
             value={name} onChange={(e) => setName(e.target.value)} aria-label="الاسم" />
         )}
 
+        {/* How classmates find and challenge you. Lower-case as it is typed,
+            so the field shows exactly what will be stored. */}
+        {how === 'join' && (
+          <input
+            className="login-input" dir="ltr" placeholder="اسم المستخدم — مثال: sidi.ahmed"
+            value={username}
+            onChange={(e) => setUsername(normaliseUsername(e.target.value))}
+            autoCapitalize="none" autoCorrect="off" spellCheck={false}
+            aria-label="اسم المستخدم" />
+        )}
+
+        {how === 'join' && (
+          <>
+            <div className="login-lbl">سنتك</div>
+            <div className="login-promos">
+              {years.map((p) => (
+                <button
+                  type="button" key={p.id}
+                  className={`imp-kind${promo === p.id ? ' on' : ''}`}
+                  style={promo === p.id ? { background: badgeOf(p) } : undefined}
+                  onClick={() => setPromo(p.id)}
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* The first year has no university number yet. Instead: a WhatsApp
+            number, which staff check against the faculty's groups — and
+            which no classmate ever sees. */}
+        {how === 'join' && first === true && (
+          <>
+            {/* The words above, the number alone in the field: Arabic and
+                digits in one placeholder print the digit groups backwards. */}
+            <div className="login-lbl">رقم واتساب</div>
+            <input
+              className="login-input" dir="ltr" type="tel" inputMode="tel"
+              placeholder="36 12 34 56"
+              value={phone} onChange={(e) => setPhone(e.target.value)}
+              aria-label="رقم واتساب" />
+            <p className="login-note">يتحقّق منه المشرفون فقط، ولا يراه زملاؤك.</p>
+          </>
+        )}
+
         {/* Upper-cased as it is typed, so the field shows what will be stored
             and D12345 is never two different students. */}
-        {how === 'join' && (
+        {how === 'join' && first === false && (
           <input
             className="login-input" dir="ltr" placeholder="الرقم الجامعي — D12345"
             value={matricule}
@@ -161,24 +244,6 @@ export default function LoginForm() {
             placeholder={how === 'join' ? 'كلمة سر — 8 أحرف على الأقل' : 'كلمة السر'}
             value={password} onChange={(e) => setPassword(e.target.value)}
             aria-label="كلمة السر" />
-        )}
-
-        {how === 'join' && (
-          <>
-            <div className="login-lbl">سنتك</div>
-            <div className="login-promos">
-              {PROMOS.map((p) => (
-                <button
-                  type="button" key={p.id}
-                  className={`imp-kind${promo === p.id ? ' on' : ''}`}
-                  style={promo === p.id ? { background: badgeOf(p) } : undefined}
-                  onClick={() => setPromo(p.id)}
-                >
-                  {p.name}
-                </button>
-              ))}
-            </div>
-          </>
         )}
 
         <button className="btn p" disabled={!ready || state === 'busy'}>

@@ -4,26 +4,28 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
+import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
 
 /**
- * Finding a classmate by the number the faculty gave them.
+ * Finding a classmate by their username or the number the faculty gave them.
  *
- * No endpoint behind it: the number goes into the address and the page it
+ * No endpoint behind it: what was typed goes into the address and the page it
  * lands on answers. That keeps one screen deciding who may be seen, and it
  * leaves nothing here that could be asked a thousand times to find out which
- * numbers exist.
+ * usernames exist.
  */
 export default function Find() {
   const router = useRouter();
   const [value, setValue] = useState('');
 
   const number = normalise(value);
-  const ready = looksRight(number);
+  const handle = normaliseUsername(value);
+  const target = looksRight(number) ? number : usernameLooksRight(handle) ? handle : null;
 
   const go = (e) => {
     e.preventDefault();
-    if (!ready) return;
-    router.push(`/u/${number}`);
+    if (!target) return;
+    router.push(`/u/${encodeURIComponent(target)}`);
   };
 
   return (
@@ -34,13 +36,14 @@ export default function Find() {
           <div className="nm">ابحث عن زميل</div>
           <input
             className="login-input" dir="ltr" style={{ marginTop: 6, width: '100%' }}
-            placeholder="D12345" inputMode="text"
+            placeholder="sidi.ahmed أو D12345"
+            autoCapitalize="none" autoCorrect="off" spellCheck={false}
             value={value}
-            onChange={(e) => setValue(e.target.value.toUpperCase())}
-            aria-label="الرقم الجامعي" />
+            onChange={(e) => setValue(e.target.value)}
+            aria-label="اسم المستخدم أو الرقم الجامعي" />
         </div>
       </div>
-      <button className="btn p find-go" disabled={!ready}>اذهب</button>
+      <button className="btn p find-go" disabled={!target}>اذهب</button>
     </form>
   );
 }

@@ -22,7 +22,7 @@ const SEMESTERS = ['S1', 'S2'];
 
 const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-export default function Study({ promos, modules: all, counts, mine, waiting = 0,
+export default function Study({ promos, modules: all, counts, mine, waiting = 0, anatomy = {},
                                 readError = null, fromFile = false }) {
   const [promo, setPromo] = useState(
     promos.some((p) => p.id === mine) ? mine : promos[0]?.id);
@@ -46,7 +46,12 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
   };
 
   const chosen = promos.find((p) => p.id === promo) || promos[0];
-  const inPromo = all.filter((m) => m.promo === promo);
+  // A year's own subjects, and — for the pharmacy and dental first years —
+  // the medicine first year's they share (promos.reads_from).
+  const year = promos.find((p) => p.id === promo);
+  const inPromo = all.filter((m) => m.promo === promo
+    || (year?.reads_from === m.promo
+      && (!year.reads_semesters?.length || year.reads_semesters.includes(m.semester))));
   const modules = inPromo
     .filter((m) => m.semester === sem)
     .filter((m) => !q || strip(m.name).includes(strip(q)));
@@ -112,7 +117,8 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         </div>
 
         {/* ---------- the 3D reader, the thing no other app here has ---------- */}
-        <Link href="/anatomie" className="st-3d r3">
+        {anatomy[promo] && (
+        <Link href={anatomy[promo]} className="st-3d r3">
           <img className="st-3d-model" src="/art/crane-big.webp" alt="" />
           <span className="st-3d-text">
             <span className="st-3d-tag"><Icon name="box" size={12} /> ثلاثي الأبعاد</span>
@@ -121,6 +127,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
             <span className="st-3d-go">افتح النموذج <Icon name="chev" size={13} /></span>
           </span>
         </Link>
+        )}
 
         {/* ---------- every subject ---------- */}
         <div className="st-head r4">

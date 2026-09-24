@@ -12,8 +12,9 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { normalise, matriculeError } from '@/lib/matricule';
-import { moduleOf } from '@/lib/catalogue';
+import { normalise, looksRight } from '@/lib/matricule';
+import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
+import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { pick, stage, myMove, countOf, secondsOf, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
@@ -29,9 +30,14 @@ export async function POST(request) {
 
   const { matricule, module, lecture, count, seconds } = await request.json().catch(() => ({}));
 
+  // Who, by university number or username — first-years have no number yet.
+  // The field keeps its old name so an older app build still sends it.
   const number = normalise(matricule);
-  const wrong = matriculeError(number);
-  if (wrong) return NextResponse.json({ error: wrong }, { status: 400 });
+  const handle = normaliseUsername(matricule);
+  const byNumber = looksRight(number);
+  if (!byNumber && !usernameLooksRight(handle)) {
+    return NextResponse.json({ error: 'اكتب اسم المستخدم أو الرقم الجامعي' }, { status: 400 });
+  }
 
   const db = supabaseAdmin();
 
@@ -40,10 +46,10 @@ export async function POST(request) {
   // other's row anyway.
   const { data: them } = await db.from('profiles')
     .select('id, full_name, email, promo, status')
-    .eq('matricule', number).maybeSingle();
+    .eq(byNumber ? 'matricule' : 'username', byNumber ? number : handle).maybeSingle();
 
   if (!them || them.status !== 'approved') {
-    return NextResponse.json({ error: 'لا أحد بهذا الرقم' }, { status: 404 });
+    return NextResponse.json({ error: 'لا أحد بهذا الاسم أو الرقم' }, { status: 404 });
   }
   if (them.id === me.id) {
     return NextResponse.json({ error: 'تحدَّ زميلًا، لا نفسك' }, { status: 400 });
@@ -52,8 +58,10 @@ export async function POST(request) {
     return NextResponse.json({ error: 'زميلك في دفعة أخرى' }, { status: 400 });
   }
 
+  // A subject of your year — including the first year the pharmacy and
+  // dental years share with medicine (lib/catalogue.js).
   const m = await moduleOf(module);
-  if (!m || m.promo !== me.promo) {
+  if (!m || !studies(await sourcesOf(me.promo), m)) {
     return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
   }
 

@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
+import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
 import { COUNTS, SECONDS, saysTime } from '@/lib/duel';
 
 export default function NewDuel({ subjects, to, subject }) {
@@ -27,8 +28,11 @@ export default function NewDuel({ subjects, to, subject }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
+  // A university number or a username: first-years have no number yet.
   const number = normalise(matricule);
-  const ready = looksRight(number) && module && about;
+  const handle = normaliseUsername(matricule);
+  const target = looksRight(number) ? number : usernameLooksRight(handle) ? handle : null;
+  const ready = !!target && module && about;
 
   // How many it will actually be. A subject with four usable questions draws
   // four, and a button promising ten over it is a button that lies about the
@@ -63,7 +67,7 @@ export default function NewDuel({ subjects, to, subject }) {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          matricule: number,
+          matricule: target,
           module,
           lecture: chosen ? { id: Number(chosen.id), title: chosen.title } : null,
           count,
@@ -86,10 +90,11 @@ export default function NewDuel({ subjects, to, subject }) {
         <input
           className="login-input"
           dir="ltr"
-          placeholder="D12345"
+          placeholder="sidi.ahmed أو D12345"
+          autoCapitalize="none" autoCorrect="off" spellCheck={false}
           value={matricule}
-          onChange={(e) => setMatricule(e.target.value.toUpperCase())}
-          aria-label="الرقم الجامعي"
+          onChange={(e) => setMatricule(e.target.value)}
+          aria-label="اسم المستخدم أو الرقم الجامعي"
         />
       </section>
 

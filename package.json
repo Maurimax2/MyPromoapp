@@ -24,7 +24,8 @@
     "native:android": "npx cap open android",
     "native:ios": "npx cap open ios",
     "check:buttons": "node scripts/find-dead-buttons.mjs .",
-    "check:presses": "node scripts/check-buttons.mjs"
+    "check:presses": "node scripts/check-buttons.mjs",
+    "check:sql:lite": "node scripts/check-sql-lite.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.2",
@@ -48,6 +49,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "playwright-core": "^1.63.0"
   }
 }

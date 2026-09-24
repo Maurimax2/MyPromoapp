@@ -6,7 +6,7 @@
 
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
-import { moduleOf } from '@/lib/catalogue';
+import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { groupByLecture } from '@/lib/quiz-lectures';
 import { pick, usable, LENGTH } from '@/lib/duel';
@@ -23,7 +23,7 @@ export async function GET(request) {
   if (!module) return NextResponse.json({ error: 'أيّ مادة؟' }, { status: 400 });
 
   const m = await moduleOf(module);
-  if (!m || m.promo !== me.promo) {
+  if (!m || !studies(await sourcesOf(me.promo), m)) {
     return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
   }
 

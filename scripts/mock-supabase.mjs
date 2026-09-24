@@ -42,31 +42,46 @@ const whoIs = (req) => {
 
 const db = {
   profiles: [
-    { id: 'u-owner', email: 'owner@unem.mr', full_name: 'محمد', promo: 'pcem2',
+    { id: 'u-owner', email: 'owner@unem.mr', username: 'mohamed', full_name: 'محمد', promo: 'pcem2',
       matricule: 'D04458', role: 'owner', status: 'approved', created_at: '2026-09-01' },
-    { id: 'u-1', email: 'mohamedvall@gmail.com', full_name: 'Mohamed Vall', promo: null,
+    { id: 'u-1', email: 'mohamedvall@gmail.com', username: null, full_name: 'Mohamed Vall', promo: null,
       matricule: null, role: 'student', status: 'pending', created_at: '2026-09-04' },
-    { id: 'u-2', email: 'aichetou.b@gmail.com', full_name: null, promo: null,
+    { id: 'u-2', email: 'aichetou.b@gmail.com', username: null, full_name: null, promo: null,
       matricule: null, role: 'student', status: 'pending', created_at: '2026-09-04' },
-    { id: 'u-3', email: 'sidi@gmail.com', full_name: 'Sidi Ahmed', promo: 'pcem2',
+    { id: 'u-3', email: 'sidi@gmail.com', username: 'sidi.ahmed', full_name: 'Sidi Ahmed', promo: 'pcem2',
       matricule: 'D04102', role: 'editor', status: 'approved', created_at: '2026-09-02' },
     // The rest of the promo, so الترتيب has a podium to draw and a list under it.
-    { id: 'u-4', email: 'aichetou.ely@gmail.com', full_name: 'Aichetou Mint Ely', promo: 'pcem2',
+    { id: 'u-4', email: 'aichetou.ely@gmail.com', username: 'aichetou', full_name: 'Aichetou Mint Ely', promo: 'pcem2',
       matricule: 'D04211', role: 'student', status: 'approved', created_at: '2026-09-02' },
-    { id: 'u-5', email: 'lemine.m@gmail.com', full_name: 'Mohamed Lemine', promo: 'pcem2',
+    { id: 'u-5', email: 'lemine.m@gmail.com', username: 'lemine', full_name: 'Mohamed Lemine', promo: 'pcem2',
       matricule: 'D04377', role: 'student', status: 'approved', created_at: '2026-09-03' },
-    { id: 'u-6', email: 'fatimetou.s@gmail.com', full_name: 'Fatimetou Sidi', promo: 'pcem2',
+    { id: 'u-6', email: 'fatimetou.s@gmail.com', username: 'fatimetou', full_name: 'Fatimetou Sidi', promo: 'pcem2',
       matricule: 'D04520', role: 'student', status: 'approved', created_at: '2026-09-03' },
-    { id: 'u-7', email: 'ahmedou.salem@gmail.com', full_name: 'Ahmedou Salem', promo: 'pcem2',
+    { id: 'u-7', email: 'ahmedou.salem@gmail.com', username: 'ahmedou.salem', full_name: 'Ahmedou Salem', promo: 'pcem2',
       matricule: 'D04390', role: 'student', status: 'approved', created_at: '2026-09-05' },
+    // A member from before usernames: asked to choose one, once.
+    { id: 'u-8', email: 'old.member@gmail.com', username: null, full_name: 'Old Member', promo: 'pcem2',
+      matricule: 'D04999', role: 'student', status: 'approved', created_at: '2026-08-20' },
+    // A dental first-year, approved: studies PCEM1's programme all year.
+    { id: 'u-9', email: 'dent1@gmail.com', username: 'khadija.d', full_name: 'Khadija Dental', promo: 'pced1',
+      matricule: null, role: 'student', status: 'approved', created_at: '2026-09-10' },
+    // A pharmacy first-year, waiting: no number, a WhatsApp number instead.
+    { id: 'u-10', email: 'pharma1@gmail.com', username: 'moussa.p', full_name: 'Moussa Pharma', promo: 'pcep1',
+      matricule: null, role: 'student', status: 'pending', created_at: '2026-09-22' },
+  ],
+  // First-years' WhatsApp numbers — staff and the person only (accounts.sql).
+  profile_private: [
+    { id: 'u-10', phone: '+22236123456', updated_at: '2026-09-22T10:00:00Z' },
   ],
   promos: [
-    { id: 'pcem1', name: 'PCEM1', label: 'السنة الأولى', badge: '#8B5CF6', position: 1, indexed: false },
-    { id: 'pcem2', name: 'PCEM2', label: 'السنة الثانية', badge: '#6B21B5', position: 2, indexed: true },
-    { id: 'dcem1', name: 'DCEM1', label: 'السنة الثالثة', badge: '#F97316', position: 3, indexed: false },
-    { id: 'dcem2', name: 'DCEM2', label: 'السنة الرابعة', badge: '#C2410C', position: 4, indexed: false },
-    { id: 'dcem3', name: 'DCEM3', label: 'السنة الخامسة', badge: '#7C3AED', position: 5, indexed: false },
-    { id: 'dcem4', name: 'DCEM4', label: 'السنة السادسة', badge: '#9A3412', position: 6, indexed: false },
+    { id: 'pcem1', name: 'PCEM1', label: 'السنة الأولى', badge: '#8B5CF6', position: 1, indexed: false, track: 'medicine', year: 1, reads_from: null, reads_semesters: null },
+    { id: 'pcem2', name: 'PCEM2', label: 'السنة الثانية', badge: '#6B21B5', position: 2, indexed: true, track: 'medicine', year: 2, reads_from: null, reads_semesters: null },
+    { id: 'dcem1', name: 'DCEM1', label: 'السنة الثالثة', badge: '#F97316', position: 3, indexed: false, track: 'medicine', year: 3, reads_from: null, reads_semesters: null },
+    { id: 'dcem2', name: 'DCEM2', label: 'السنة الرابعة', badge: '#C2410C', position: 4, indexed: false, track: 'medicine', year: 4, reads_from: null, reads_semesters: null },
+    { id: 'dcem3', name: 'DCEM3', label: 'السنة الخامسة', badge: '#7C3AED', position: 5, indexed: false, track: 'medicine', year: 5, reads_from: null, reads_semesters: null },
+    { id: 'dcem4', name: 'DCEM4', label: 'السنة السادسة', badge: '#9A3412', position: 6, indexed: false, track: 'medicine', year: 6, reads_from: null, reads_semesters: null },
+    { id: 'pcep1', name: 'PCEP1', label: 'صيدلة — السنة الأولى', badge: '#14555F', position: 11, indexed: false, track: 'pharmacy', year: 1, reads_from: 'pcem1', reads_semesters: ['S1'] },
+    { id: 'pced1', name: 'PCED1', label: 'طب الأسنان — السنة الأولى', badge: '#8A6A14', position: 21, indexed: false, track: 'dental', year: 1, reads_from: 'pcem1', reads_semesters: ['S1', 'S2'] },
   ],
   modules: [
     { id: 'anatomie', promo: 'pcem2', semester: 'S1', name: 'ANATOMIE', icon: 'person', tint: 'purple', professors: [], position: 0 },

@@ -77,7 +77,7 @@ async function tap(page, target, proof, tries = 4) {
 
 // --- A sends the invitation ------------------------------------------------
 await a.goto(`${B}/duel/new`, { waitUntil: 'domcontentloaded' });
-const who = a.locator('input[aria-label="الرقم الجامعي"]');
+const who = a.locator('input[aria-label="اسم المستخدم أو الرقم الجامعي"]');
 await who.waitFor({ timeout: 60000 });
 // The subject first: the lecture list appearing is proof the page is alive.
 // Typing into a controlled input before then is typing into nothing — React
@@ -183,7 +183,7 @@ console.log(process.exitCode ? '\n  some checks failed' : '\n  ✓ the whole due
 step('');
 step('now a timed one…');
 await a.goto(`${B}/duel/new`, { waitUntil: 'domcontentloaded' });
-const who2 = a.locator('input[aria-label="الرقم الجامعي"]');
+const who2 = a.locator('input[aria-label="اسم المستخدم أو الرقم الجامعي"]');
 await who2.waitFor({ timeout: 60000 });
 await tap(a, a.getByRole('button', { name: 'ANATOMIE', exact: true }).first(), '.chapter');
 await who2.fill('D04102');

@@ -3,6 +3,7 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promosOf, allModules, moduleCounts } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
 import { stage } from '@/lib/duel';
+import { CURRICULUM } from '@/lib/anatomy/curriculum';
 import Study from './Study';
 
 export const dynamic = 'force-dynamic';
@@ -41,8 +42,22 @@ export default async function StudyPage() {
   // looks like it never saved anything. It says which it is.
   const trouble = years.error || subjects.error || tally.error || null;
 
+  // Where the 3D card leads for each year: the first semester that has
+  // models — the year's own, or the medicine first year a pharmacy or dental
+  // first year shares. A year with no body in its programme gets no card; it
+  // used to link to /anatomie, which is not a page.
+  const bodies = Object.fromEntries(CURRICULUM.map((c) => [c.promo.toLowerCase(), c.semesters[0]?.id]));
+  const anatomy = {};
+  for (const y of years.promos || []) {
+    const own = bodies[y.id];
+    const shared = y.reads_from && bodies[y.reads_from];
+    if (own) anatomy[y.id] = `/anatomie/${y.id}/${own}`;
+    else if (shared) anatomy[y.id] = `/anatomie/${y.reads_from}/${shared}`;
+  }
+
   return (
     <Study
+      anatomy={anatomy}
       promos={years.promos}
       modules={subjects.modules}
       counts={Object.fromEntries(tally.counts)}

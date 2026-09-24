@@ -3,7 +3,8 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promoById, badgeOf } from '@/lib/data';
-import { normalise } from '@/lib/matricule';
+import { normalise, looksRight } from '@/lib/matricule';
+import { normaliseUsername, handleOf } from '@/lib/identity';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,13 +29,18 @@ export default async function PersonPage({ params }) {
   const me = await currentProfile();
   if (!me) redirect('/login');
 
-  const number = normalise((await params).matricule);
+  // A university number or a username — /u/D12345 or /u/sidi.ahmed. First-
+  // years have no number yet, and a username is what friends remember.
+  const raw = decodeURIComponent((await params).matricule);
+  const number = normalise(raw);
+  const byNumber = looksRight(number);
+  const handle = normaliseUsername(raw);
   const sb = await supabaseServer();
 
   const { data: person } = await sb
     .from('profiles')
-    .select('id, full_name, email, promo, role, matricule, created_at')
-    .eq('matricule', number)
+    .select('*')
+    .eq(byNumber ? 'matricule' : 'username', byNumber ? number : handle)
     .maybeSingle();
 
   // Your own number lands on your own screen, which has the things only you
@@ -67,7 +73,7 @@ export default async function PersonPage({ params }) {
           <Link href="/profile" className="icobtn" aria-label="رجوع">
             <Icon name="chev" size={19} />
           </Link>
-          <div className="head-t">{name || 'لا أحد بهذا الرقم'}</div>
+          <div className="head-t">{name || 'لم نجد أحدًا'}</div>
         </div>
       </header>
 
@@ -76,9 +82,9 @@ export default async function PersonPage({ params }) {
           <div className="notice">
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">لا أحد بهذا الرقم في دفعتك</div>
+              <div className="notice-t">لا أحد بهذا الاسم أو الرقم في دفعتك</div>
               <div className="notice-b">
-                تحقّق من الرقم <span dir="ltr">{number}</span> — أو أنّ صاحبه في دفعة أخرى.
+                تحقّق من <span dir="ltr">{byNumber ? number : `@${handle}`}</span> — أو أنّ صاحبه في دفعة أخرى.
               </div>
             </div>
           </div>
@@ -98,7 +104,9 @@ export default async function PersonPage({ params }) {
                 <span className="me-sub">{ROLE[person.role] || person.role} · FMPOS</span>
               </div>
               {/* The number, not the address: a classmate's email is theirs. */}
-              <div className="me-mail" dir="ltr">{person.matricule}</div>
+              <div className="me-mail" dir="ltr">
+                {[person.username && `@${person.username}`, person.matricule].filter(Boolean).join(' · ')}
+              </div>
 
               <div className="me-stats">
                 {[[posts?.count || 0, 'منشور'],
@@ -112,7 +120,7 @@ export default async function PersonPage({ params }) {
             </div>
 
             {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
-            <Link href={`/duel/new?to=${person.matricule}`} className="btn p">
+            <Link href={`/duel/new?to=${encodeURIComponent(handleOf(person) || '')}`} className="btn p">
               <Icon name="swords" size={18} />
               تحدَّ {name.split(' ')[0]}
             </Link>

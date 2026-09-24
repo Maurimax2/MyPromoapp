@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { PROMOS } from '@/lib/data';
+import { whatsappLink } from '@/lib/identity';
 
 const TABS = [
   { id: 'pending',  label: 'بانتظار' },
@@ -24,7 +25,7 @@ const ROLES = [
   { id: 'admin',     label: 'مشرف' },
 ];
 
-export default function UsersScreen({ people, status, counts, canAct, meId }) {
+export default function UsersScreen({ people, status, counts, canAct, meId, years = PROMOS }) {
   const router = useRouter();
   const [rows, setRows] = useState(people);
   const [busy, setBusy] = useState(null);
@@ -88,16 +89,29 @@ export default function UsersScreen({ people, status, counts, canAct, meId }) {
                 <div className="grow">
                   <div className="usr-name">{p.full_name || p.email.split('@')[0]}</div>
                   <div className="usr-mail" dir="ltr">{p.email}</div>
+                  {(p.username || p.matricule) && (
+                    <div className="usr-mail" dir="ltr">
+                      {[p.username && `@${p.username}`, p.matricule].filter(Boolean).join(' · ')}
+                    </div>
+                  )}
                 </div>
                 {p.role !== 'student' && <span className="pill">{
                   ROLES.find((r) => r.id === p.role)?.label || p.role
                 }</span>}
               </div>
 
+              {/* A first-year has no faculty number: the WhatsApp number is
+                  what gets checked against the faculty's groups. */}
+              {p.phone && (
+                <a className="usr-wa" href={whatsappLink(p.phone)} target="_blank" rel="noreferrer">
+                  <Icon name="msg" size={16} /> <span dir="ltr">{p.phone}</span> — افتح في واتساب
+                </a>
+              )}
+
               {canAct && (
                 <>
                   <div className="usr-promos">
-                    {PROMOS.map((pr) => (
+                    {years.map((pr) => (
                       <button
                         key={pr.id}
                         className={`imp-kind${p.promo === pr.id ? ' on' : ''}`}

@@ -189,7 +189,7 @@ function Duels({ duels, rivals, me }) {
             <span key={r.id} className="duel-rival">
               <span className="duel-f xs" style={{ background: faceOf(r.id) }}>{initials(r.name)}</span>
               <span className="grow">{r.name}</span>
-              <Link href={`/duel/new?to=${encodeURIComponent(r.matricule)}`} className="duel-rival-go"
+              <Link href={`/duel/new?to=${encodeURIComponent(r.handle)}`} className="duel-rival-go"
                     aria-label={`تحدَّ ${r.name}`}>
                 <Icon name="swords" size={15} weight="fill" />
               </Link>

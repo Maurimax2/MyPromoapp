@@ -54,11 +54,13 @@ apply "$HERE/supabase/test/stub.sql"
 apply "$HERE/supabase/schema.sql"
 apply "$HERE/supabase/social.sql"
 apply "$HERE/supabase/feedback.sql"
+apply "$HERE/supabase/accounts.sql"
 
 echo "— and again, because it is pasted twice as often as not"
 apply "$HERE/supabase/schema.sql"
 apply "$HERE/supabase/social.sql"
 apply "$HERE/supabase/feedback.sql"
+apply "$HERE/supabase/accounts.sql"
 
 # The short form handed out when the whole file is too much to select on a
 # phone. It says the same things, so on a database that already has schema.sql
@@ -71,4 +73,11 @@ if psql -q -v ON_ERROR_STOP=1 -d mypromo -f "$HERE/supabase/test/rls.sql" >/dev/
   sed -n 's/.*NOTICE:  ok  /  ok  /p' "$DATA/rls"
 else
   echo "  FAILED"; grep -iE "ERROR|FATAL" "$DATA/rls" | head -5; exit 1
+fi
+
+# accounts.sql: usernames, first-years' WhatsApp numbers, the new years.
+if psql -q -v ON_ERROR_STOP=1 -d mypromo -f "$HERE/supabase/test/accounts.sql" >/dev/null 2>"$DATA/acc"; then
+  sed -n 's/.*NOTICE:  ok  /  ok  /p' "$DATA/acc"
+else
+  echo "  FAILED"; grep -iE "ERROR|FATAL" "$DATA/acc" | head -5; exit 1
 fi
