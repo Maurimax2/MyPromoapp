@@ -89,11 +89,11 @@ export default function Waiting({
         </div>
 
         {/* Upper-cased as it is typed, so the field shows what will be stored
-            and D04458 is never two different students. */}
+            and D12345 is never two different students. */}
         {needsNumber && (
           <input
             className="login-input" dir="ltr" autoFocus
-            placeholder="الرقم الجامعي — D04458"
+            placeholder="الرقم الجامعي — D12345"
             value={number}
             onChange={(e) => setNumber(e.target.value.toUpperCase())}
             aria-label="الرقم الجامعي" />

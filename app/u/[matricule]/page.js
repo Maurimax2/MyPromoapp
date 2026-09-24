@@ -16,7 +16,7 @@ const ROLE = {
  * A classmate, found by the number the faculty gave them.
  *
  * The number is what a student actually has written down about somebody
- * else, so it is what the address bar takes: /u/D04458.
+ * else, so it is what the address bar takes: /u/D12345.
  *
  * What comes back is decided by the policies, not here. An approved student
  * reads the profiles of their own promo, so a number from another year finds
@@ -95,7 +95,7 @@ export default async function PersonPage({ params }) {
                     {promo.name}
                   </span>
                 )}
-                <span className="me-sub">{ROLE[person.role] || person.role} · UNEM</span>
+                <span className="me-sub">{ROLE[person.role] || person.role} · FMPOS</span>
               </div>
               {/* The number, not the address: a classmate's email is theirs. */}
               <div className="me-mail" dir="ltr">{person.matricule}</div>

@@ -139,10 +139,10 @@ export default function LoginForm() {
         )}
 
         {/* Upper-cased as it is typed, so the field shows what will be stored
-            and D04458 is never two different students. */}
+            and D12345 is never two different students. */}
         {how === 'join' && (
           <input
-            className="login-input" dir="ltr" placeholder="الرقم الجامعي — D04458"
+            className="login-input" dir="ltr" placeholder="الرقم الجامعي — D12345"
             value={matricule}
             onChange={(e) => setMatricule(e.target.value.toUpperCase())}
             aria-label="الرقم الجامعي" />

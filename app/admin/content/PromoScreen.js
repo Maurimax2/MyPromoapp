@@ -2,7 +2,7 @@
 
 // The years.
 //
-// Six to begin with, because six is what UNEM has — a fact about today, not a
+// Six to begin with, because six is what FMPOS had in the catalogue — a fact about today, not a
 // rule. A year can be added, and a year can be taken away: deleting one takes
 // its subjects, their files and every question with them, so the row asks
 // once, counts what would go, and asks again.

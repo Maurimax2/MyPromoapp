@@ -29,7 +29,7 @@ export default function InventoryPage() {
   const [fatal, setFatal] = useState(null);
 
   const walk = useCallback(async () => {
-    const queue = [{ id: ROOT, name: 'UNEM-PCEM2', depth: 0 }];
+    const queue = [{ id: ROOT, name: 'المجلد المشترك', depth: 0 }];
     const seen = new Set();
     let active = 0;
 
@@ -138,7 +138,7 @@ export default function InventoryPage() {
           <Link href="/feed" className="icobtn" aria-label="رجوع">←</Link>
           <div className="head-t">
             محتويات الدرايف
-            <div className="head-s">UNEM-PCEM2 — قراءة فقط</div>
+            <div className="head-s">مجلد Drive المشترك — قراءة فقط</div>
           </div>
         </div>
 

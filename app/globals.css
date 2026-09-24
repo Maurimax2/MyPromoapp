@@ -4463,3 +4463,9 @@ button.pts-b:active { background: var(--olive-pale); }
 .rm-region img { position: absolute; left: 50%; top: 8px; height: 72px; width: 100px; margin-left: -50px; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0,0,0,.5)); }
 .rm-region b { position: relative; font-size: 12px; font-weight: 600; }
 .rm-region s { position: relative; text-decoration: none; font-size: 9.5px; opacity: .6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Placeholders for the new screens' dark and olive cards, so a duel card or a
+   subject waits in its own colour rather than as a white box. */
+.sk.dark { background: #1E2A22; box-shadow: none; }
+.sk.olive { background: #3F6B50; box-shadow: none; opacity: .55; }
+.sk.dark::after, .sk.olive::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); }

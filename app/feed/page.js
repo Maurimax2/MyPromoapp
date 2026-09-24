@@ -15,6 +15,12 @@ export const dynamic = 'force-dynamic';
 const nameOf = (p) => ({ id: p.id, name: p.full_name || p.email?.split('@')[0] || 'زميل' });
 
 // الرئيسية — what your promo is saying, and everything the app can do.
+//
+// Everything it needs is asked for at once. It used to be asked for one
+// thing after another — thirteen waits in a row, the subjects read twice —
+// and on mobile data the screen took as long as all of them added together.
+// Now it takes as long as the slowest one, plus one more for who is sitting
+// in the rooms, which needs the rooms first.
 export default async function Feed() {
   const profile = await currentProfile();
   if (!profile) redirect('/login');
@@ -32,21 +38,77 @@ export default async function Feed() {
     redirect('/waiting');
   }
   const promo = profile.promo || 'pcem2';
-  const years = await promosOf();
-  const reading = await browsingPromo(profile, years.promos);
   const sb = await supabaseServer();
+  const admin = supabaseAdmin();
+  // The year being read is a cookie, checked against the list of years once
+  // that arrives. The rail starts on the cookie's word meanwhile.
+  const guess = await browsingPromo(profile, null);
 
-  // The posts, their authors, their attachments, and which ones I have
-  // already liked — four things, one round trip each, all at once.
-  const [{ data: rows, error: readError }, { data: mine }] = await Promise.all([
+  const [
+    years,
+    { data: rows, error: readError },
+    { data: mine },
+    { count: unseen },
+    { openRooms, sitting },
+    { data: duelRows },
+    { data: mates },
+    subjectRows,
+    { counts },
+    guessedRail,
+  ] = await Promise.all([
+    promosOf(),
+    // The posts, their authors and their attachments…
     sb.from('posts')
       .select(`id, body, kind, module, created_at, likes, comments,
                author:profiles!posts_author_fkey(id, full_name, email, promo),
                post_media(kind, path, name, bytes, position)`)
       .eq('promo', promo).eq('removed', false)
       .order('created_at', { ascending: false }).limit(30),
+    // …which ones I have already liked…
     sb.from('likes').select('post').eq('person', profile.id),
+    // …and the bell. Read with the service key: a student's own
+    // notifications are their own rows, and this is one head request.
+    admin.from('notifications').select('id', { count: 'exact', head: true })
+      .eq('person', profile.id).eq('seen', false),
+    // مَن يدرس الآن — the promo's open rooms and who is sitting in them. The
+    // one thing on this screen that is true only at this second, so it is
+    // never cached and never guessed at.
+    (async () => {
+      const { data: open } = await sb.from('rooms')
+        .select('id, title, topic, module, capacity, created_at')
+        .eq('promo', promo).eq('closed', false)
+        .order('created_at', { ascending: false }).limit(12);
+      const ids = (open || []).map((r) => r.id);
+      const { data: seated } = ids.length
+        ? await sb.from('room_members')
+            .select('room, person, seen_at, profile:profiles!room_members_person_fkey(id, full_name, email)')
+            .in('room', ids)
+        : { data: [] };
+      return { openRooms: open || [], sitting: seated || [] };
+    })(),
+    sb.from('duels')
+      .select(`id, title, state, questions, seconds, challenger, opponent, challenger_at, opponent_at, created_at,
+               a:profiles!duels_challenger_fkey(id, full_name, email),
+               b:profiles!duels_opponent_fkey(id, full_name, email)`)
+      .or(`challenger.eq.${profile.id},opponent.eq.${profile.id}`)
+      .order('created_at', { ascending: false })
+      .limit(40),
+    // Somebody to challenge, so the duels section is never an empty shelf.
+    sb.from('profiles')
+      .select('id, full_name, email, matricule')
+      .eq('promo', promo).eq('status', 'approved')
+      .not('matricule', 'is', null)
+      .neq('id', profile.id)
+      .limit(12),
+    subjectsOf(promo),
+    moduleCounts(),
+    subjectRail(guess),
   ]);
+
+  const reading = await browsingPromo(profile, years.promos);
+  // Every subject of the year being read, one tile each rather than one per
+  // semester — read again only if the cookie named a year that does not exist.
+  const rail = reading === guess ? guessedRail : await subjectRail(reading);
 
   const liked = new Set((mine || []).map((l) => l.post));
 
@@ -57,71 +119,36 @@ export default async function Feed() {
   // again with the key that ignores policies and compare the two numbers.
   let refused = 0;
   if (!readError && !(rows || []).length) {
-    const { count } = await supabaseAdmin()
+    const { count } = await admin
       .from('posts').select('id', { count: 'exact', head: true })
       .eq('promo', promo).eq('removed', false);
     refused = count || 0;
   }
 
-  // Read with the service key: a student's own notifications are their own
-  // rows, but the count is wanted on every load and this is one head request.
-  const { count: unseen } = await supabaseAdmin()
-    .from('notifications').select('id', { count: 'exact', head: true })
-    .eq('person', profile.id).eq('seen', false);
+  const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
-
-  // مَن يدرس الآن — the row of faces at the top of the screen, and the sheet
-  // it opens. Both come from the same read: the promo's open rooms and who
-  // is sitting in them. It is the one thing on this screen that is true only
-  // at this second, so it is never cached and never guessed at — an empty
-  // result draws no row at all rather than a zero.
-  const { data: openRooms } = await sb.from('rooms')
-    .select('id, title, topic, module, capacity, created_at')
-    .eq('promo', promo).eq('closed', false)
-    .order('created_at', { ascending: false }).limit(12);
-
-  const roomIds = (openRooms || []).map((r) => r.id);
-  const { data: sitting } = roomIds.length
-    ? await sb.from('room_members')
-        .select('room, person, seen_at, profile:profiles!room_members_person_fkey(id, full_name, email)')
-        .in('room', roomIds)
-    : { data: [] };
-
-  // A student in two rooms is one student studying, not two.
+  // A student in two rooms is one student studying, not two — and only who
+  // is on a room screen now (lib/rooms.js), not who ever joined one.
   const who = new Map();
   const inRoom = new Map();
-  // Only who is on a room screen now (lib/rooms.js), not who ever joined one.
   const now = Date.now();
-  for (const m of (sitting || []).filter((x) => isHere(x, now))) {
+  for (const m of sitting.filter((x) => isHere(x, now))) {
     const person = m.profile;
     if (person && !who.has(person.id)) who.set(person.id, person);
     inRoom.set(m.room, [...(inRoom.get(m.room) || []), person].filter(Boolean));
   }
 
-  const named2 = Object.fromEntries((await subjectsOf(promo)).map((m) => [m.id, m.name]));
   // A room nobody is sitting in is not «open» in any sense a student cares
   // about, so the sheet does not offer it.
-  const rooms = (openRooms || []).filter((r) => inRoom.get(r.id)?.length).map((r) => ({
+  const rooms = openRooms.filter((r) => inRoom.get(r.id)?.length).map((r) => ({
     id: r.id,
     title: r.title,
-    topic: r.topic || named2[r.module] || null,
+    topic: r.topic || named[r.module] || null,
     capacity: r.capacity || null,
     people: (inRoom.get(r.id) || []).map((x) => nameOf(x)),
   }));
 
   const studying = [...who.values()].map((x) => nameOf(x));
-
-  // The one duel that is waiting on your answer, for the line under the row
-  // of faces. Only one is drawn however many there are: الدراسة holds the
-  // list, and a feed that opens with three orange rows is a feed nobody
-  // reads. The oldest is the one that has been waiting longest.
-  const { data: duelRows } = await sb.from('duels')
-    .select(`id, title, state, questions, seconds, challenger, opponent, challenger_at, opponent_at, created_at,
-             a:profiles!duels_challenger_fkey(id, full_name, email),
-             b:profiles!duels_opponent_fkey(id, full_name, email)`)
-    .or(`challenger.eq.${profile.id},opponent.eq.${profile.id}`)
-    .order('created_at', { ascending: false })
-    .limit(40);
 
   // Every duel still in play, the ones that need you first. A finished duel
   // is on /duel; الرئيسية is for what can still happen.
@@ -141,23 +168,12 @@ export default async function Feed() {
       };
     });
 
-  // Somebody to challenge, so the section is never an empty shelf. Classmates
-  // with a matricule — the challenge form is addressed by it — and not the
-  // ones you are already in a duel with.
+  // Classmates you are not already in a duel with.
   const busyWith = new Set(duels.map((d) => d.them.id));
-  const { data: mates } = await sb.from('profiles')
-    .select('id, full_name, email, matricule')
-    .eq('promo', promo).eq('status', 'approved')
-    .not('matricule', 'is', null)
-    .neq('id', profile.id)
-    .limit(12);
   const rivals = (mates || [])
     .filter((m) => !busyWith.has(m.id))
     .slice(0, 3)
     .map((m) => ({ ...nameOf(m), matricule: m.matricule }));
-
-  const subjectRows = await subjectsOf(promo);
-  const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
 
   const posts = (rows || []).map((p) => ({
     ...p,
@@ -168,17 +184,7 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
-  // Every subject the promo has, one tile each rather than one per
-  // semester, including one a colleague added this morning with no files
-  // in it yet.
-  //
-  // The banner is gone. Twenty-two pieces of Canva artwork with the
-  // retired mark baked into every one is not something the app can
-  // restyle, and a rail of photographs shouts down the two cards either
-  // side of it. A subject now carries its name, its colour, and how much
-  // is in it.
-  const { counts } = await moduleCounts();
-  const subjects = (await subjectRail(reading)).map((m) => ({
+  const subjects = rail.map((m) => ({
     id: m.id,
     name: m.name,
     tint: m.tint,

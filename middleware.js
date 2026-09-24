@@ -14,6 +14,29 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
+// An approval already checked, remembered for ten minutes so the profile is
+// not read again on every screen — one database wait fewer per tap. Signed
+// with a secret only the server has, so it cannot be written by hand; and
+// short-lived, so an approval taken away still takes effect within minutes.
+const PASS = 'mp-pass';
+const PASS_FOR = 10 * 60;   // seconds
+
+async function seal(text) {
+  const secret = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!secret) return null;
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`pass:${text}`));
+  return btoa(String.fromCharCode(...new Uint8Array(mac))).replace(/[+/=]/g, (c) => ({ '+': '-', '/': '_', '=': '' })[c]);
+}
+
+async function passed(value, id) {
+  const [who, until, mac] = String(value || '').split('.');
+  if (!who || who !== id || !(Number(until) > Date.now() / 1000)) return false;
+  const want = await seal(`${who}.${until}`);
+  return !!want && want === mac;
+}
+
 export async function middleware(request) {
   let response = NextResponse.next({ request });
 
@@ -34,7 +57,15 @@ export async function middleware(request) {
     },
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  // getClaims reads the signed token locally where the project signs with
+  // its own keys, and asks the auth server otherwise — the same check as
+  // getUser, without the round trip when it can do without one. Either way
+  // it refreshes an expiring session and writes the cookie back.
+  const { data: signed, error: unsigned } = await supabase.auth.getClaims();
+  let user = !unsigned && signed?.claims?.sub ? { id: signed.claims.sub } : null;
+  // A token getClaims cannot read is not proof of being signed out; ask the
+  // auth server before sending anybody to the door.
+  if (!user) user = (await supabase.auth.getUser()).data?.user || null;
 
   // Already where somebody without an account is allowed to be. The API is
   // open here because every route behind it checks for itself, and a redirect
@@ -70,6 +101,8 @@ export async function middleware(request) {
     return NextResponse.redirect(to);
   }
 
+  if (await passed(request.cookies.get(PASS)?.value, user.id)) return response;
+
   const { data: profile, error } = await supabase
     .from('profiles').select('status, role').eq('id', user.id).maybeSingle();
 
@@ -99,6 +132,13 @@ export async function middleware(request) {
     return NextResponse.redirect(to);
   }
 
+  const until = Math.floor(Date.now() / 1000) + PASS_FOR;
+  const mac = await seal(`${user.id}.${until}`);
+  if (mac) {
+    response.cookies.set(PASS, `${user.id}.${until}.${mac}`, {
+      httpOnly: true, sameSite: 'lax', secure: request.nextUrl.protocol === 'https:', path: '/', maxAge: PASS_FOR,
+    });
+  }
   return response;
 }
 

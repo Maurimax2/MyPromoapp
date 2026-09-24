@@ -34,7 +34,7 @@ export default function Find() {
           <div className="nm">ابحث عن زميل</div>
           <input
             className="login-input" dir="ltr" style={{ marginTop: 6, width: '100%' }}
-            placeholder="D04458" inputMode="text"
+            placeholder="D12345" inputMode="text"
             value={value}
             onChange={(e) => setValue(e.target.value.toUpperCase())}
             aria-label="الرقم الجامعي" />

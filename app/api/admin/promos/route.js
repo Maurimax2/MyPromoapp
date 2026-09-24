@@ -1,6 +1,6 @@
 // Adding a year.
 //
-// Six were hard-coded because six is what UNEM has. That was a fact about
+// Six were hard-coded because six is what FMPOS had in the catalogue. That was a fact about
 // today, not a rule — so a year is a row like anything else, and the panel can
 // make one.
 

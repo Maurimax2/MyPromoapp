@@ -5,7 +5,7 @@ import Icon from './Icon';
 import { record } from '@/lib/review';
 import { scored } from '@/lib/best';
 
-// A UNEM question can have one right answer or four. You tick what you think
+// An FMPOS question can have one right answer or four. You tick what you think
 // is true and then confirm — there is no way to score a multiple-answer
 // question the moment a single option is tapped.
 //

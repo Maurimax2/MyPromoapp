@@ -86,7 +86,7 @@ export default function NewDuel({ subjects, to, subject }) {
         <input
           className="login-input"
           dir="ltr"
-          placeholder="D04458"
+          placeholder="D12345"
           value={matricule}
           onChange={(e) => setMatricule(e.target.value.toUpperCase())}
           aria-label="الرقم الجامعي"
