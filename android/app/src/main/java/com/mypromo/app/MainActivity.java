@@ -1,4 +1,4 @@
-package mr.mypromo.app;
+package com.mypromo.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -22,11 +22,18 @@ const SAYS = {
   duel_ok:   (n) => `${WHO(n.actor)} قبِل تحدّيك`,
   duel_no:   (n) => `${WHO(n.actor)} اعتذر عن تحدّيك`,
   duel_done: (n) => `${WHO(n.actor)} أنهى التحدّي — ظهرت النتيجة`,
+  friend_req:  (n) => `${WHO(n.actor)} يريد أن يضيفك صديقًا`,
+  friend_ok:   (n) => `${WHO(n.actor)} قبِل طلب صداقتك`,
+  friend_post: (n) => `${WHO(n.actor)} نشر`,
+  friend_room: (n) => `${WHO(n.actor)} فتح غرفة دراسة`,
+  news:        (n) => n.news?.title || n.body || 'إعلان',
 };
 
 const ICON = {
   like: 'heart', comment: 'msg', answer: 'msg', accepted: 'check', approved: 'person',
   duel: 'swords', duel_done: 'swords', duel_ok: 'swords', duel_no: 'swords',
+  friend_req: 'addFriend', friend_ok: 'friend', friend_post: 'friends', friend_room: 'video',
+  news: 'news',
 };
 
 function when(iso) {
@@ -59,6 +66,9 @@ export default function Notifications({ items }) {
               {items.length ? `${items.length} إشعارًا` : 'لا جديد'}
             </div>
           </div>
+          <Link href="/notifications/settings" className="icobtn" aria-label="إعدادات الإشعارات">
+            <Icon name="settings" size={19} />
+          </Link>
         </div>
       </header>
 
@@ -67,17 +77,20 @@ export default function Notifications({ items }) {
           const line = (SAYS[n.kind] || (() => 'حدث شيء'))(n);
           const inner = (
             <div className="card-row">
-              <div className={`tile ${n.kind === 'duel' ? 'tint-clay' : 'tint-olive'}`}>
+              <div className={`tile ${n.kind === 'duel' || n.kind === 'news' ? 'tint-clay' : 'tint-olive'}`}>
                 <Icon name={ICON[n.kind] || 'bell'} size={19} />
               </div>
               <div className="grow">
                 <div className="nm">{line}</div>
-                {n.body && <div className="mt" dir="auto">{n.body}</div>}
+                {n.kind === 'news'
+                  ? n.news?.body && <div className="mt notif-news" dir="auto">{n.news.body}</div>
+                  : n.body && <div className="mt" dir="auto">{n.body}</div>}
                 <div className="mt" suppressHydrationWarning>{when(n.created_at)}</div>
               </div>
             </div>
           );
-          const href = n.kind === 'approved' ? '/feed'
+          const href = n.link && (n.link.startsWith('/') || n.link.startsWith('https://')) ? n.link
+            : n.kind === 'approved' ? '/feed'
             : n.kind.startsWith('duel') ? '/duel'
             : n.kind === 'answer' || n.kind === 'accepted' ? `/qa/${n.post}` : '/feed';
           return (
@@ -92,7 +105,7 @@ export default function Notifications({ items }) {
             <div className="tile tint-olive"><Icon name="bell" size={24} /></div>
             <div className="empty-t">لا إشعارات بعد</div>
             <div className="empty-b">
-              حين يعجب أحدهم بمنشورك أو يجيب على سؤالك، ستجده هنا.
+              حين يعجب أحدهم بمنشورك، أو يتحدّاك، أو ينشر أحد أصدقائك، ستجده هنا.
             </div>
           </div>
         )}

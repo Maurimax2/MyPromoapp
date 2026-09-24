@@ -11,9 +11,19 @@ export default async function NotificationsPage() {
   if (!me) redirect('/login');
 
   const db = supabaseAdmin();
-  const { data: rows } = await db.from('notifications')
-    .select('id, kind, post, comment, body, created_at, seen, actor')
+  const mine = (cols) => db.from('notifications').select(cols)
     .eq('person', me.id).order('created_at', { ascending: false }).limit(50);
+  // `link` and `announcement` come with push.sql; before it is pasted the
+  // bell reads what it always read.
+  let { data: rows, error } = await mine('id, kind, post, comment, body, created_at, seen, actor, link, announcement');
+  if (error) ({ data: rows } = await mine('id, kind, post, comment, body, created_at, seen, actor'));
+
+  // An announcement's row carries its title; the words are on the announcement.
+  const news = [...new Set((rows || []).map((r) => r.announcement).filter(Boolean))];
+  const { data: said } = news.length
+    ? await db.from('announcements').select('id, title, body').in('id', news)
+    : { data: [] };
+  const byNews = Object.fromEntries((said || []).map((a) => [a.id, a]));
 
   const ids = [...new Set((rows || []).map((r) => r.actor).filter(Boolean))];
   const { data: people } = ids.length
@@ -23,7 +33,11 @@ export default async function NotificationsPage() {
 
   return (
     <Notifications
-      items={(rows || []).map((r) => ({ ...r, actor: named[r.actor] || null }))}
+      items={(rows || []).map((r) => ({
+        ...r,
+        actor: named[r.actor] || null,
+        news: r.announcement ? byNews[r.announcement] || null : null,
+      }))}
     />
   );
 }

@@ -7,6 +7,9 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { friendsIn } from '@/lib/friends';
+import { notifyMany } from '@/lib/notify';
+import { later } from '@/lib/push';
 
 export const runtime = 'nodejs';
 
@@ -42,6 +45,13 @@ export async function POST(request) {
   // Whoever opens a room is in it. A room with nobody in it is a mistake
   // waiting to be explained.
   await db.from('room_members').insert({ room: room.id, person: profile.id });
+
+  // A room is only worth opening if somebody comes: friends are asked.
+  await later(async () => {
+    await notifyMany(await friendsIn(profile.id, profile.promo), {
+      actor: profile.id, kind: 'friend_room', body: name, link: `/rooms/${room.id}`,
+    });
+  });
 
   return NextResponse.json({ id: room.id });
 }

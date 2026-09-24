@@ -25,6 +25,7 @@ import { lastOpened } from '@/lib/resume';
 import { daysKnown } from '@/lib/streak';
 import { streakOf, dayOf } from '@/lib/habit';
 import { DailyCard, Recap } from './Daily';
+import PushAsk from './PushAsk';
 import { artOf } from '@/lib/subjectArt';
 
 // A face needs a colour, and it has to be the same colour tomorrow or a promo
@@ -377,6 +378,8 @@ export default function Home({ me, posts, subjects, mySubjects = [],
         <Recap recap={recap} />
 
         {daily && <DailyCard q={daily.q} mine={daily.mine} tally={daily.tally} today={today} />}
+
+        <PushAsk />
 
         <Duels duels={duels} rivals={rivals} me={me} />
 

@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff, supabaseServer } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { pushTo, later } from '@/lib/push';
 
 export const runtime = 'nodejs';
 
@@ -87,5 +88,15 @@ export async function PUT(request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   await db.from('chats').update({ last_at: new Date().toISOString() }).eq('id', chat);
+
+  // The other person's phone. No row in the bell — a conversation keeps its
+  // own unread count — only the knock, and a chat's messages stack as one.
+  const other = room.a === me.id ? room.b : room.a;
+  const short = text.length > 120 ? `${text.slice(0, 119)}…` : text;
+  await later(() => pushTo([other], {
+    kind: 'message', title: me.full_name || me.email?.split('@')[0] || 'زميل',
+    body: short, url: `/chat/${chat}`, tag: `chat-${chat}`,
+  }));
+
   return NextResponse.json(data);
 }

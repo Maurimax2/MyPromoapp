@@ -147,6 +147,9 @@ export const config = {
     // `webp` and `jpeg` were missing, which is why the pre-launch page's
     // screenshots came back as a redirect to the door: a picture asked for by
     // somebody signed out went through the gate like a screen would.
-    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|.*\\.(?:png|jpg|jpeg|webp|svg|ico)$).*)',
+    //
+    // `sw.js` is the push worker: the browser re-fetches it on its own
+    // schedule, and a redirect to the door in answer would break it.
+    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico)$).*)',
   ],
 };

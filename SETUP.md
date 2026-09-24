@@ -47,6 +47,38 @@ the answers are.
 Supabase → SQL Editor → paste → Run. Safe to run twice. Until it runs, the
 question of the day does not show and streaks stay on each phone.
 
+## 5. `supabase/push.sql` — new, paste it once
+
+Push notifications, friends and announcements: the phones and browsers that
+may be woken, what each student turned off, who is friends with whom, and
+the team's announcements. Safe to run twice.
+
+Until it runs, nobody can turn notifications on or add a friend, and the
+announcement screen says to paste this first. Everything else works as
+before.
+
+## Push notifications — four variables on Vercel
+
+Vercel → the project → Settings → Environment Variables. Add each, then
+redeploy.
+
+| Name | Value |
+|---|---|
+| `NEXT_PUBLIC_VAPID_KEY` | from `.env.local` on the laptop |
+| `VAPID_PRIVATE_KEY` | from `.env.local` — secret |
+| `CRON_SECRET` | from `.env.local` — secret |
+| `FIREBASE_SERVICE_ACCOUNT` | Firebase → ⚙ Project settings → Service accounts → **Generate new private key**. Open the downloaded file, copy **all** of it, paste it as the value. Secret. Then delete the file. |
+
+The first two send to browsers (Chrome on Android, and an iPhone once the
+site is added to the home screen). The last one sends to the Android and iOS
+app. `CRON_SECRET` guards the evening reminder, which `vercel.json` runs every
+day at 18:00 Nouakchott time; without it the reminder refuses to run.
+
+Nothing breaks while any of them is missing — the pushes that need it are
+simply not sent. The bell inside the app works either way.
+
+Announcements: **اللوحة ← إعلان للطلبة**. Admins and the owner only.
+
 ## Google sign-in
 
 The button is on the website already; it answers «غير مفعّل بعد» until:

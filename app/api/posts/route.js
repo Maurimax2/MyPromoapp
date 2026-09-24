@@ -7,6 +7,9 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { friendsIn } from '@/lib/friends';
+import { notifyMany } from '@/lib/notify';
+import { later } from '@/lib/push';
 
 export const runtime = 'nodejs';
 
@@ -63,6 +66,17 @@ export async function POST(request) {
       return NextResponse.json({ error: mediaError.message }, { status: 500 });
     }
   }
+
+  // Friends are told — after the answer has gone, so posting never waits on
+  // it. The rest of the promo sees it in the feed, as before.
+  const asked = KINDS.includes(kind) ? kind : 'post';
+  await later(async () => {
+    await notifyMany(await friendsIn(profile.id, profile.promo), {
+      actor: profile.id, kind: 'friend_post', post: post.id,
+      body: text || (files.length ? 'ملف مرفق' : null),
+      link: asked === 'question' ? `/qa/${post.id}` : '/feed',
+    });
+  });
 
   return NextResponse.json({ id: post.id });
 }

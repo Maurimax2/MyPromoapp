@@ -1,6 +1,7 @@
 import './globals.css';
 import { Readex_Pro } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
+import PushListener from '@/components/PushListener';
 
 // The typeface, served from our own domain.
 //
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
           {children}
           <BottomNav />
         </div>
+        <PushListener />
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { zero, scoreOf, badgesOf } from '@/lib/points';
 import { standings } from '@/lib/standings';
 import { daysOf } from '@/lib/days';
 import { dayOf } from '@/lib/habit';
+import { friendsOf } from '@/lib/friends';
 import Sign from './Sign';
 import Find from './Find';
 import MeLive from './MeLive';
@@ -42,7 +43,7 @@ export default async function Profile() {
 
   // Real numbers, or none at all — an invented "12 saved" is worse than a 0.
   const since = dayOf(Date.now() - 40 * 86400000);
-  const [saves, rooms, chats, duels, { board, tally }, mydays] = await Promise.all([
+  const [saves, rooms, chats, duels, { board, tally }, mydays, circle] = await Promise.all([
     sb.from('saves').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('room_members').select('*', { count: 'exact', head: true }).eq('person', me.id),
     sb.from('chats').select('*', { count: 'exact', head: true })
@@ -54,6 +55,7 @@ export default async function Profile() {
     standings(promoId, me),
     // The days behind the five-week grid, from the server (habits.sql).
     daysOf([me.id], since),
+    friendsOf(me.id),
   ]);
 
   const mine = tally[me.id] || zero();
@@ -125,6 +127,14 @@ export default async function Profile() {
 
         {/* ================= your things ================= */}
         <div className="me-list">
+          <Link href="/friends">
+            <span className="me-list-ic"><Icon name="friends" size={19} /></span>
+            <span className="grow">الأصدقاء</span>
+            {circle.asked.length > 0
+              ? <span className="tally">{circle.asked.length}</span>
+              : <s>{circle.friends.length || 'أضف صديقًا'}</s>}
+            <Icon name="chev" size={15} />
+          </Link>
           <Link href="/saved">
             <span className="me-list-ic"><Icon name="bookmark" size={19} /></span>
             <span className="grow">المحفوظات</span>
@@ -143,6 +153,12 @@ export default async function Profile() {
             <span className="me-list-ic"><Icon name="video" size={19} /></span>
             <span className="grow">غرف الدراسة</span>
             <s>{rooms.count ? `${rooms.count}` : '—'}</s>
+            <Icon name="chev" size={15} />
+          </Link>
+          <Link href="/notifications/settings">
+            <span className="me-list-ic"><Icon name="bell" size={19} /></span>
+            <span className="grow">الإشعارات</span>
+            <s>الإعدادات</s>
             <Icon name="chev" size={15} />
           </Link>
           <Link href="/points">

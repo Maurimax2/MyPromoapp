@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279404445559",
+    "project_id": "mypromo-f3b04",
+    "storage_bucket": "mypromo-f3b04.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279404445559:android:3ff0998ff60be284ba6b72",
+        "android_client_info": {
+          "package_name": "com.mypromo.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2CmzwmSoiKsw3mFo7gRNYNf2Q_TnboaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

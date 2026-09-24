@@ -17,7 +17,7 @@ import {
   Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, GoogleLogo, Heart,
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
   Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
-  Trash, Trophy, User, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
+  Megaphone, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -37,6 +37,7 @@ const ICONS = {
   google: GoogleLogo, mic: Microphone, micOff: MicrophoneSlash, camOff: VideoCameraSlash, speaker: SpeakerHigh,
   // An answer marked: the circled forms, filled, so right and wrong read at a glance.
   right: CheckCircle, wrong: XCircle,
+  friends: UsersThree, addFriend: UserPlus, friend: UserCheck, news: Megaphone,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid

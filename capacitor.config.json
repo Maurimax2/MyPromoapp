@@ -1,5 +1,5 @@
 {
-  "appId": "mr.mypromo.app",
+  "appId": "com.mypromo.app",
   "appName": "MyPromo",
   "webDir": "native/shell",
   "server": {

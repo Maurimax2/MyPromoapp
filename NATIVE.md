@@ -23,8 +23,8 @@ the bundle.
 
 **The App Store risk, plainly.** Apple's guideline 4.2 rejects apps that are
 a website in a window. Push notifications are the thing that makes this an
-app rather than a bookmark, and they are not built yet — see below. Google
-Play has no equivalent rule and will accept the shell as it stands.
+app rather than a bookmark — see «Push notifications» below. Google Play has
+no equivalent rule and will accept the shell as it stands.
 
 ## The URL
 
@@ -118,13 +118,34 @@ days, which is enough to show people. Submitting to the App Store needs the
 be approved. If the store is the goal, start that enrolment before Saturday
 rather than on it.
 
+## Push notifications
+
+Built. The app id is `com.mypromo.app` on both platforms, and that is the
+id the Firebase project (`mypromo-f3b04`) knows.
+
+- **Android.** `android/app/google-services.json` is in place and the Gradle
+  plugin applies itself when it finds it. `@capacitor/push-notifications` is
+  installed and synced. Nothing else: the first build that runs on a phone
+  asks for permission when the student taps «فعّل الإشعارات», registers, and
+  hands its token to `/api/me/push`.
+- **iOS.** Two things, both on the Mac and the Apple account:
+  1. Apple Developer → Keys → create a key with **Apple Push Notifications
+     service (APNs)**, download the `.p8`. In Firebase → Project settings →
+     Cloud Messaging → Apple app configuration, upload it with its Key ID and
+     your Team ID. Add an iOS app in Firebase with bundle id
+     `com.mypromo.app` and put its `GoogleService-Info.plist` in
+     `ios/App/App/`.
+  2. Capacitor's plugin hands back an **APNs** token on iOS, not an FCM one,
+     and the server sends through FCM. Add the `FirebaseMessaging` pod and
+     the few lines in `AppDelegate.swift` from the plugin's README («Using
+     Firebase Messaging on iOS») so the token is FCM's. Then enable **Push
+     Notifications** and **Background Modes → Remote notifications** under
+     Signing & Capabilities.
+- **The server** sends with `FIREBASE_SERVICE_ACCOUNT` (see SETUP.md). Until
+  it is set, nothing is sent and nothing breaks.
+
 ## What is still missing before either store
 
-- **Push notifications.** The one piece that makes this a real app to Apple,
-  and the thing students will actually notice. Needs `@capacitor/push-
-  notifications`, a Firebase project with `google-services.json` for Android,
-  and an APNs key from the Apple developer account for iOS. The app already
-  has a `notifications` table and writes to it — this is the delivery half.
 - **Store assets.** Icon at 1024×1024 (in `design/brand-olive/logo/`),
   feature graphic 1024×500, and phone screenshots. The shooter makes real
   ones: `node scripts/shoot-olive-app.mjs`.

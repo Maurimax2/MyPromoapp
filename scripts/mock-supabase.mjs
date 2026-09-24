@@ -54,6 +54,17 @@ const db = {
     ...run('u-4', 'pcem2', 1, 20),
   ],
   daily_answers: [],
+  // push.sql. The owner is friends with Sidi, has been asked by Aichetou,
+  // and has asked Fatimetou — one of each state, on the first screen.
+  friends: [
+    { a: 'u-3', b: 'u-owner', created_at: '2026-09-10T10:00:00Z', accepted_at: '2026-09-10T11:00:00Z' },
+    { a: 'u-4', b: 'u-owner', created_at: '2026-09-20T10:00:00Z', accepted_at: null },
+    { a: 'u-owner', b: 'u-6', created_at: '2026-09-21T10:00:00Z', accepted_at: null },
+  ],
+  push_devices: [],
+  push_prefs: [],
+  push_log: [],
+  announcements: [],
   profiles: [
     { id: 'u-owner', email: 'owner@unem.mr', username: 'mohamed', full_name: 'محمد', promo: 'pcem2',
       matricule: 'D04458', role: 'owner', status: 'approved', created_at: '2026-09-01' },
@@ -553,12 +564,33 @@ createServer(async (req, res) => {
 
   // `.or('a.eq.x,b.eq.y')` comes through as a single `or` parameter.
   const orClause = params.get('or');
+  // …and may nest: `.or('and(a.eq.x,b.eq.y),and(a.eq.y,b.eq.x)')` is how a
+  // friendship is found whichever way round it was asked.
+  const parts = (s) => {
+    const out = [];
+    let depth = 0, token = '';
+    for (const ch of s) {
+      if (ch === '(') depth += 1;
+      if (ch === ')') depth -= 1;
+      if (ch === ',' && depth === 0) { out.push(token); token = ''; continue; }
+      token += ch;
+    }
+    if (token) out.push(token);
+    return out;
+  };
+  const test = (row, part) => {
+    const group = part.match(/^(and|or)\((.*)\)$/);
+    if (group) {
+      const list = parts(group[2]);
+      return group[1] === 'and' ? list.every((p) => test(row, p)) : list.some((p) => test(row, p));
+    }
+    const [col, ...spec] = part.split('.');
+    return matches(row, col, spec.join('.'));
+  };
   const matchesOr = (row) => {
     if (!orClause) return true;
-    return orClause.replace(/^\(|\)$/g, '').split(',').some((part) => {
-      const [col, op, val] = part.split('.');
-      return matches(row, col, `${op}.${val}`);
-    });
+    const inner = orClause.startsWith('(') ? orClause.slice(1, -1) : orClause;
+    return parts(inner).some((p) => test(row, p));
   };
 
   const pick = () => db[table].filter((row) => matchesOr(row) &&
@@ -701,6 +733,10 @@ createServer(async (req, res) => {
     reviews:  () => ({ box: 0, wrong: 0, due_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     reports:  () => ({ state: 'open', created_at: new Date().toISOString() }),
     notifications: () => ({ seen: false, created_at: new Date().toISOString() }),
+    friends:  () => ({ created_at: new Date().toISOString(), accepted_at: null }),
+    push_devices: () => ({ created_at: new Date().toISOString(), seen_at: new Date().toISOString(), keys: null }),
+    push_prefs: () => ({ off: [], updated_at: new Date().toISOString() }),
+    announcements: () => ({ created_at: new Date().toISOString(), body: null, link: null, promo: null }),
   };
 
   // The unique indexes the schema actually carries. Read by both the insert
@@ -712,6 +748,9 @@ createServer(async (req, res) => {
     chapters: ['module', 'title'],
     question_banks: ['module', 'title'],
     profiles: ['matricule'],
+    push_devices: ['token'],
+    friends: ['a', 'b'],
+    push_log: ['person', 'kind', 'day'],
   };
 
   if (req.method === 'POST') {
@@ -759,7 +798,7 @@ createServer(async (req, res) => {
       const row = { ...(DEFAULTS[table]?.() || {}), ...r };
       // Tables whose primary key is the pair, not a serial of their own.
       if (row.id === undefined
-          && !['likes', 'saves', 'room_members', 'reviews'].includes(table)) row.id = id();
+          && !['likes', 'saves', 'room_members', 'reviews', 'friends', 'push_prefs', 'push_log'].includes(table)) row.id = id();
       db[table].push(row);
       return row;
     });

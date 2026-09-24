@@ -5,6 +5,8 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promoById, badgeOf } from '@/lib/data';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, handleOf } from '@/lib/identity';
+import { friendState } from '@/lib/friends';
+import FriendButton from '@/components/FriendButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,7 +57,7 @@ export default async function PersonPage({ params }) {
   // Counted only when somebody was found, and counted the same way الملف
   // counts them, so two screens never disagree about how many answers a
   // person has had accepted.
-  const [posts, answers, rooms] = person
+  const [posts, answers, rooms, friendship] = person
     ? await Promise.all([
       sb.from('posts').select('*', { count: 'exact', head: true })
         .eq('author', person.id).eq('removed', false),
@@ -63,8 +65,9 @@ export default async function PersonPage({ params }) {
         .eq('author', person.id).eq('accepted', true),
       sb.from('room_members').select('*', { count: 'exact', head: true })
         .eq('person', person.id),
+      friendState(me.id, person.id),
     ])
-    : [null, null, null];
+    : [null, null, null, 'none'];
 
   return (
     <>
@@ -118,6 +121,8 @@ export default async function PersonPage({ params }) {
                 ))}
               </div>
             </div>
+
+            <FriendButton to={handleOf(person) || person.id} state={friendship} />
 
             {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
             <Link href={`/duel/new?to=${encodeURIComponent(handleOf(person) || '')}`} className="btn p">

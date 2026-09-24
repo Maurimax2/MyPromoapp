@@ -19,6 +19,7 @@ const TITLES = {
   '/admin/content':   'المحتوى',
   '/admin/import':    'استيراد',
   '/admin/reports':   'البلاغات',
+  '/admin/news':      'إعلان',
 };
 
 /** One level up, worked out from the path and its parameters. */

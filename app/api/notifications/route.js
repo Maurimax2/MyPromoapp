@@ -11,13 +11,17 @@ export async function GET() {
   if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
 
   const db = supabaseAdmin();
-  const [{ data: rows }, { count }] = await Promise.all([
-    db.from('notifications')
-      .select('id, kind, post, comment, body, created_at, seen, actor')
-      .eq('person', me.id).order('created_at', { ascending: false }).limit(50),
+  const mine = (cols) => db.from('notifications').select(cols)
+    .eq('person', me.id).order('created_at', { ascending: false }).limit(50);
+  const [first, { count }] = await Promise.all([
+    mine('id, kind, post, comment, body, created_at, seen, actor, link'),
     db.from('notifications')
       .select('id', { count: 'exact', head: true }).eq('person', me.id).eq('seen', false),
   ]);
+  // Before push.sql there is no `link` column.
+  const rows = first.error
+    ? (await mine('id, kind, post, comment, body, created_at, seen, actor')).data
+    : first.data;
 
   // The actors are fetched separately rather than embedded: `notifications`
   // points at `profiles` twice, so an embed has to be told which foreign key
