@@ -132,7 +132,7 @@ export default async function Feedback() {
 
           <div className="lp-hero-grid">
             <div className="lp-hero-copy">
-              <span className="lp-chip"><i />قريبًا · لطلبة FMPOS</span>
+              <span className="lp-chip">قريبًا · لطلبة FMPOS</span>
               <h1>
                 <span className="lp-h1a">ساعدنا في بناء</span>
                 <span className="lp-h1b" dir="ltr">MyPromo</span>
