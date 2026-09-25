@@ -127,12 +127,10 @@ export default async function Feedback() {
         <div className="lp-in">
           <nav className="lp-top">
             <span className="lp-brand" dir="ltr"><Mark size={30} light /><b>MyPromo</b></span>
-            <span className="lp-slogan">منّا ولنا</span>
           </nav>
 
           <div className="lp-hero-grid">
             <div className="lp-hero-copy">
-              <span className="lp-chip">قريبًا · لطلبة FMPOS</span>
               <h1>
                 <span className="lp-h1a">ساعدنا في بناء</span>
                 <span className="lp-h1b" dir="ltr">MyPromo</span>
@@ -149,7 +147,7 @@ export default async function Feedback() {
 
             <div className="lp-stage" aria-label="صور حقيقية من التطبيق">
               <Phone src="/preview/study.webp" alt="شاشة الدراسة في MyPromo: المواد، QCM، الملخصات والنموذج ثلاثي الأبعاد" className="side" />
-              <Phone src="/preview/home.webp" alt="الشاشة الرئيسية في MyPromo: سؤال اليوم والتحديات" className="main" priority />
+              <Phone src="/preview/home-v2.webp" alt="الشاشة الرئيسية في MyPromo: سؤال اليوم والتحديات" className="main" priority />
               <Ico n="check" size={64} className="lp-float f1" />
               <Ico n="heart" size={70} className="lp-float f2" />
               <Ico n="swords" size={58} className="lp-float f3" />
@@ -171,14 +169,14 @@ export default async function Feedback() {
 
       {/* -------------------------------------------------------- features */}
       <Feature id="qcm" icon="check" kicker="QCM" title={<><span dir="ltr">+10,000</span> سؤال، من المحاضرات والامتحانات السابقة</>}
-        shots={[{ src: '/preview/qcm.webp', alt: 'سؤال QCM في ANATOMIE مع الجواب الصحيح' }]}>
+        shots={[{ src: '/preview/qcm-v2.webp', alt: 'سؤال QCM في ANATOMIE مع الجواب الصحيح' }]}>
         <p>مرتّبة حسب المادة والمحاضرة. تعرف الجواب فور إجابتك، وما تخطئ فيه يعود إليك في «المراجعة» حتى تتقنه.</p>
       </Feature>
 
       <Feature id="anatomie" icon="heart" kicker={<span dir="ltr">Anatomie 3D</span>} title="أدِر النموذج، والمس لتعرف الاسم" dark flip
         shots={[
-          { src: '/preview/heart.webp', alt: 'نموذج Cœur ثلاثي الأبعاد، وقد لُمس Ventricule droit' },
-          { src: '/preview/knee.webp', alt: 'نموذج Genou ثلاثي الأبعاد، وقد لُمست Patella' },
+          { src: '/preview/heart-v2.webp', alt: 'نموذج Cœur ثلاثي الأبعاد، وقد لُمس Ventricule droit' },
+          { src: '/preview/knee-v2.webp', alt: 'نموذج Genou ثلاثي الأبعاد، وقد لُمست Patella' },
         ]}
         extra={(
           <dl className="lp-stats">
@@ -186,12 +184,7 @@ export default async function Feedback() {
             <div><dt>319</dt><dd>معلمًا مُسمّى</dd></div>
             <div><dt>818</dt><dd>اسمًا بالفرنسية</dd></div>
           </dl>
-        )}>
-        <p>
-          نماذج ثلاثية الأبعاد تديرها وتكبّرها بإصبعك. المس أي بنية فيظهر اسمها بالفرنسية —
-          {' '}<span dir="ltr">Ventricule droit</span>، <span dir="ltr">Patella</span> — كما ستجدها في الامتحان.
-        </p>
-      </Feature>
+        )} />
 
       <Feature id="rooms" icon="video" kicker="غرف الدراسة" title="راجعوا معًا، بالصوت والصورة"
         shots={[{ src: '/preview/room.webp', alt: 'غرفة دراسة فيها أربعة طلبة، مع مؤقّت التركيز والدردشة' }]}>
@@ -238,7 +231,6 @@ export default async function Feedback() {
                 </div>
               ))}
             </div>
-            <p className="lp-note">محاضرات الصيدلة وطب الأسنان تُضاف تباعًا.</p>
           </Reveal>
         </div>
       </section>
@@ -266,7 +258,9 @@ export default async function Feedback() {
         <div className="lp-in">
           <span className="lp-brand dark" dir="ltr"><Mark size={24} /><b>MyPromo</b></span>
           <small>FMPOS · Nouakchott</small>
-          <small className="lp-credit" dir="ltr">3D icons: Microsoft Fluent Emoji (MIT)</small>
+          <small className="lp-credit" dir="ltr">
+            3D models: Z-Anatomy (CC BY-SA 4.0), after BodyParts3D © The Database Center for Life Science (CC BY 4.0) · 3D icons: Microsoft Fluent Emoji (MIT)
+          </small>
         </div>
       </footer>
     </div>

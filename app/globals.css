@@ -2551,17 +2551,8 @@ html:has(.lp) { scroll-behavior: smooth; }
 .lp-top { display: flex; align-items: center; justify-content: space-between; min-height: 54px; }
 .lp-brand { display: inline-flex; align-items: center; gap: 9px; }
 .lp-brand b { font-family: var(--lp-mark), 'Poppins', sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -.3px; }
-.lp-slogan {
-  font-family: var(--lp-head), sans-serif; font-weight: 800; font-size: 16px; color: var(--lp-mint);
-  padding: 3px 13px 5px; border: 1px solid rgba(205, 237, 213, .32); border-radius: 999px;
-}
 .lp-hero-grid { display: grid; gap: 18px; padding-top: 18px; }
-.lp-chip {
-  display: inline-flex; align-items: center; gap: 9px; font-size: 13.5px; font-weight: 500; color: #E9F6EC;
-  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14);
-  padding: 6px 13px; border-radius: 999px;
-}
-.lp-hero h1 { margin: 14px 0 0; }
+.lp-hero h1 { margin: 0; }
 .lp-h1a { display: block; font-family: var(--lp-head), sans-serif; font-weight: 900; font-size: clamp(44px, 11.5vw, 78px); line-height: 1.12; }
 .lp-h1b {
   display: block; text-align: right; font-family: var(--lp-mark), 'Poppins', sans-serif; font-weight: 800;
@@ -2649,7 +2640,6 @@ html:has(.lp) { scroll-behavior: smooth; }
 .lp-track b { font-family: var(--lp-head), sans-serif; font-weight: 800; font-size: 22px; }
 .lp-years { display: flex; flex-wrap: wrap; gap: 6px; }
 .lp-years i { font-style: normal; font-family: var(--lp-mark), 'Poppins', sans-serif; font-weight: 700; font-size: 13.5px; color: var(--lp-green); background: var(--lp-mint2); padding: 4px 10px; border-radius: 999px; }
-.lp-note { text-align: center; color: var(--lp-mute); font-size: 14px; margin: 14px 0 0; }
 
 .lp-us { color: #fff; text-align: center; padding-block: 64px; margin-top: 38px; background: linear-gradient(170deg, #134A2D, #0F3322); }
 .lp-us h2 { font-family: var(--lp-head), sans-serif; font-weight: 900; font-size: clamp(36px, 8.5vw, 54px); margin: 14px 0 0; }
