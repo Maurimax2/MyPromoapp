@@ -44,6 +44,9 @@ export async function POST(request) {
     .filter((it) => it.drive_id && String(it.title || '').trim())
     .map((it, i) => ({
       module,
+      // The sub-subject, for the modules that have one — null for a subject
+      // that does not, which is most of them.
+      chapter: Number.isInteger(it.chapter) ? it.chapter : null,
       where_shown: it.where || 'archive',
       section: it.section || 'lecture',
       title: String(it.title).trim(),

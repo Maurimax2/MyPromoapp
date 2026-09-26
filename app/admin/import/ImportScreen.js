@@ -46,6 +46,12 @@ export default function ImportScreen({ promos, modules, preset }) {
   const [rows, setRows] = useState([]);
   const [truncated, setTruncated] = useState(false);
 
+  // The sub-subject — «الفصل». Most subjects have none; the ones that do get
+  // this list once the files for the subject are on screen.
+  const [chapters, setChapters] = useState([]);
+  const [addingChapter, setAddingChapter] = useState(false);
+  const [chapterName, setChapterName] = useState('');
+
   const subjects = useMemo(
     () => modules.filter((m) => m.promo === promo), [modules, promo]);
   const chosen = useMemo(() => rows.filter((r) => r.keep), [rows]);
@@ -82,17 +88,40 @@ export default function ImportScreen({ promos, modules, preset }) {
     router.refresh();
   };
 
+  // ---- a sub-subject, for the modules that need one ---------------------
+  const addChapter = async (e) => {
+    e.preventDefault();
+    const name = chapterName.trim();
+    if (!name) return;
+    setSaving(true); setError('');
+    const res = await fetch('/api/admin/chapters', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ module, title: name }),
+    });
+    const data = await res.json().catch(() => ({}));
+    setSaving(false);
+    if (!res.ok) { setError(data.error || `تعذّرت الإضافة (${res.status})`); return; }
+    setChapters((list) => (list.some((c) => c.id === data.id) ? list : [...list, { id: data.id, title: data.title }]));
+    setChapterName(''); setAddingChapter(false);
+  };
+
   // ---- reading the folder ----------------------------------------------
   const read = async (e) => {
     e.preventDefault();
     setState('reading'); setError(''); setRows([]);
 
-    const res = await fetch('/api/admin/crawl', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ url }),
-    });
+    const [res, chapRes] = await Promise.all([
+      fetch('/api/admin/crawl', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ url }),
+      }),
+      fetch(`/api/admin/chapters?module=${module}`),
+    ]);
     const data = await res.json().catch(() => ({}));
+    const chapData = await chapRes.json().catch(() => ({}));
+    setChapters(chapData.chapters || []);
 
     if (!res.ok) { setError(data.error || `تعذّرت القراءة (${res.status})`); setState('idle'); return; }
     setRows((data.files || []).map((f) => ({ ...f, keep: true })));
@@ -257,7 +286,7 @@ export default function ImportScreen({ promos, modules, preset }) {
                     <button
                       key={m.id}
                       className={`imp-kind${module === m.id ? ' on' : ''}`}
-                      onClick={() => setModule(m.id)}
+                      onClick={() => { setModule(m.id); setChapters([]); }}
                     >
                       {m.name}
                     </button>
@@ -343,6 +372,30 @@ export default function ImportScreen({ promos, modules, preset }) {
             </div>
           )}
 
+          {/* Not every subject needs this — most files carry only the kind
+              picker below. This is for the ones taught as several distinct
+              series under one name. */}
+          <div className="imp-kinds">
+            <button type="button" className="imp-kind add" onClick={() => setAddingChapter((v) => !v)}>
+              <Icon name="plus" size={14} /> فصل
+            </button>
+          </div>
+
+          {addingChapter && (
+            <form className="admin-card admin-seed" onSubmit={addChapter}>
+              <div className="admin-card-t">فصل جديد في <span dir="ltr">{here?.name}</span></div>
+              <input
+                className="admin-input" autoFocus placeholder="اسم الفصل"
+                value={chapterName} onChange={(e) => setChapterName(e.target.value)}
+                aria-label="اسم الفصل" />
+              <div className="usr-acts">
+                <button className="btn p sm" disabled={saving || !chapterName.trim()}>أضف</button>
+                <button type="button" className="btn g sm"
+                  onClick={() => { setAddingChapter(false); setChapterName(''); }}>ألغِ</button>
+              </div>
+            </form>
+          )}
+
           <div className="admin-rows">
             {rows.map((r, i) => (
               <div key={r.drive_id} className={`imp${r.keep ? '' : ' off'}`}>
@@ -369,6 +422,19 @@ export default function ImportScreen({ promos, modules, preset }) {
                       </button>
                     ))}
                   </div>
+                  {chapters.length > 0 && (
+                    <div className="imp-kinds">
+                      {chapters.map((c) => (
+                        <button
+                          key={c.id}
+                          className={`imp-kind${r.chapter === c.id ? ' on' : ''}`}
+                          onClick={() => patch(i, { chapter: r.chapter === c.id ? null : c.id })}
+                        >
+                          {c.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
