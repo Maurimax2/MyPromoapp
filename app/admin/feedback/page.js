@@ -22,7 +22,10 @@ export default async function Feedback({ searchParams }) {
     .limit(500);
   if (promo) q = q.eq('promo', promo);
 
-  const { data: rows, error } = await q;
+  const [{ data: rows, error }, { data: visits }] = await Promise.all([
+    q,
+    sb.from('feedback_visits').select('visitor, source').order('created_at', { ascending: false }).limit(20000),
+  ]);
 
   // The table may not have been created yet — this migration is pasted by
   // hand like the others. Say which thing is missing rather than printing an
@@ -37,6 +40,15 @@ export default async function Feedback({ searchParams }) {
   const tally = new Map();
   for (const r of all) for (const n of r.needs || []) tally.set(n, (tally.get(n) || 0) + 1);
   const wanted = [...tally.entries()].sort((a, b) => b[1] - a[1]);
+
+  // Visits against answers: who opened the link, and how many of them answered.
+  const seen = visits || [];
+  const people = new Set(seen.map((v) => v.visitor || Math.random())).size;
+  const rate = people ? Math.round((all.length / people) * 100) : 0;
+  const bySource = new Map();
+  for (const v of seen) { const s = v.source || '—'; bySource.set(s, [(bySource.get(s)?.[0] || 0) + 1, 0]); }
+  for (const r of all) { const s = r.source || '—'; const x = bySource.get(s) || [0, 0]; bySource.set(s, [x[0], x[1] + 1]); }
+  const sources = [...bySource.entries()].sort((a, b) => b[1][0] - a[1][0]);
 
   return (
     <div className="admin-body">
@@ -56,6 +68,16 @@ export default async function Feedback({ searchParams }) {
         <>
           <div className="admin-grid">
             <div className="admin-tile" style={{ cursor: 'default' }}>
+              <Icon name="eye" size={19} />
+              <b>{seen.length}</b>
+              <span>زيارة للصفحة</span>
+            </div>
+            <div className="admin-tile" style={{ cursor: 'default' }}>
+              <Icon name="person" size={19} />
+              <b>{people}</b>
+              <span>زائر مختلف · أجاب {rate}٪</span>
+            </div>
+            <div className="admin-tile" style={{ cursor: 'default' }}>
               <Icon name="msgs" size={19} />
               <b>{all.length}</b>
               <span>رأي</span>
@@ -66,6 +88,17 @@ export default async function Feedback({ searchParams }) {
               <span>ترك وسيلة تواصل</span>
             </div>
           </div>
+
+          {sources.length > 0 && (
+            <div className="admin-card" style={{ display: 'block' }}>
+              <div className="admin-card-t">من أين جاؤوا (?from=)</div>
+              <div className="fb-tally">
+                {sources.map(([s, [v, a]]) => (
+                  <span key={s} className="fb-need" dir="ltr">{s}<b>{v} زيارة · {a} رأي</b></span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {wanted.length > 0 && (
             <div className="admin-card" style={{ display: 'block' }}>

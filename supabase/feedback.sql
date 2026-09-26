@@ -63,3 +63,23 @@ create policy feedback_clear on feedback for delete using (is_staff());
 -- browser. The only writer is the server route, which holds the service key
 -- and answers for what it writes.
 drop policy if exists feedback_write on feedback;
+
+-- ---------------------------------------------------------------------------
+-- Who opened the page — so answers can be read against visits.
+--
+-- One row per visit. `visitor` is a random id the browser keeps, so a student
+-- who opens the link three times is one person; `source` is the ?from= the
+-- link was posted with. Nothing that names anybody. Written by the server
+-- route only, read by staff.
+-- ---------------------------------------------------------------------------
+create table if not exists feedback_visits (
+  id         bigint generated always as identity primary key,
+  visitor    text not null default '',
+  source     text not null default '',
+  created_at timestamptz not null default now()
+);
+create index if not exists feedback_visits_new_idx on feedback_visits (created_at desc);
+
+alter table feedback_visits enable row level security;
+drop policy if exists feedback_visits_read on feedback_visits;
+create policy feedback_visits_read on feedback_visits for select using (is_staff());
