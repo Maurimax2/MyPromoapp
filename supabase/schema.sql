@@ -123,7 +123,11 @@ create table if not exists documents (
 create index if not exists documents_module_idx  on documents (module, where_shown);
 create index if not exists documents_chapter_idx on documents (chapter);
 create index if not exists documents_parent_idx  on documents (parent);
-create unique index if not exists documents_drive_idx on documents (drive_id) where drive_id is not null;
+-- One Drive file may be catalogued under more than one subject — PCED1 and
+-- PCEP1 share medicine's first year, and later years share papers with each
+-- other. So a file is unique per subject that holds it, not once in the
+-- whole table.
+create unique index if not exists documents_module_drive_idx on documents (module, drive_id) where drive_id is not null;
 
 -- ---------------------------------------------------------------------------
 -- Questions
@@ -275,9 +279,6 @@ do $$
 begin
   if not exists (select 1 from pg_constraint where conname = 'chapters_module_title_key') then
     alter table chapters add constraint chapters_module_title_key unique (module, title);
-  end if;
-  if not exists (select 1 from pg_constraint where conname = 'documents_drive_key') then
-    alter table documents add constraint documents_drive_key unique (drive_id);
   end if;
   if not exists (select 1 from pg_constraint where conname = 'banks_module_title_key') then
     alter table question_banks add constraint banks_module_title_key unique (module, title);

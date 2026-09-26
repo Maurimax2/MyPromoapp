@@ -84,3 +84,17 @@ union all
 select 'questions.lecture',
        exists (select 1 from information_schema.columns
                 where table_name = 'questions' and column_name = 'lecture');
+
+-- ---------------------------------------------------------------------------
+-- A Drive file may be catalogued under more than one subject
+-- ---------------------------------------------------------------------------
+-- drive_id was unique across the whole table, so the same lecture or past
+-- paper could only ever belong to one subject — importing it a second time
+-- under another subject was silently refused. PCED1 and PCEP1 share
+-- medicine's first year, and pharmacy's own years share papers with each
+-- other, so this has to be allowed: a file is now unique per subject that
+-- holds it, not once in the whole database.
+alter table documents drop constraint if exists documents_drive_key;
+drop index if exists documents_drive_idx;
+create unique index if not exists documents_module_drive_idx
+  on documents (module, drive_id) where drive_id is not null;

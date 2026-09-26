@@ -62,6 +62,7 @@ const db = {
     { a: 'u-owner', b: 'u-6', created_at: '2026-09-21T10:00:00Z', accepted_at: null },
   ],
   push_devices: [],
+  feedback_visits: [],
   push_prefs: [],
   push_log: [],
   announcements: [],
@@ -755,7 +756,7 @@ createServer(async (req, res) => {
   // an UPDATE than an INSERT — a student filling it in on /waiting — and a
   // mock that checks it in only one of the two says a stolen number is fine.
   const UNIQUE = {
-    documents: ['drive_id'],
+    documents: ['module', 'drive_id'],
     chapters: ['module', 'title'],
     question_banks: ['module', 'title'],
     profiles: ['matricule'],

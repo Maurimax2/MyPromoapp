@@ -56,37 +56,32 @@ export async function POST(request) {
 
   if (!rows.length) return NextResponse.json({ error: 'لا شيء لحفظه' }, { status: 400 });
 
-  // One Drive file is one row in the whole database — `documents_drive_key`.
-  // A folder that lists the same file twice, a shortcut beside its original,
-  // a crawl re-run over a folder that overlaps another: all of it arrives
-  // here, and a single repeat used to take the entire batch down with it.
-  // Six files with one repeated saved nothing at all, which is what a subject
-  // with no files under a name that has thirty looks like.
+  // A file is unique per subject, not once in the whole database
+  // (documents_module_drive_idx) — but within *this* batch, a folder that
+  // lists the same file twice, or a shortcut beside its original, still has
+  // to be reduced to one row before it reaches Postgres, or a single repeat
+  // takes the entire insert down with it.
   const once = new Map();
   for (const r of rows) if (!once.has(r.drive_id)) once.set(r.drive_id, r);
   const wanted = [...once.values()];
 
-  // Who already holds these files. Asked across every subject, not just this
-  // one, because the answer changes what we are allowed to do.
+  // Whether this subject already has each file. A Drive file is unique per
+  // subject that holds it (documents_module_drive_idx), not once in the
+  // whole database — PCED1 and PCEP1 share medicine's first year, and
+  // pharmacy's own years share papers with each other. So the same file is
+  // simply catalogued again here if another subject already has it; only a
+  // repeat inside *this* subject is an update rather than a new row.
   const held = new Map();
   for (let i = 0; i < wanted.length; i += 100) {
     const slice = wanted.slice(i, i + 100);
     const { data, error } = await db.from('documents')
-      .select('id, drive_id, module').in('drive_id', slice.map((r) => r.drive_id));
+      .select('id, drive_id').eq('module', module).in('drive_id', slice.map((r) => r.drive_id));
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     for (const d of data || []) held.set(d.drive_id, d);
   }
 
   const fresh = wanted.filter((r) => !held.has(r.drive_id));
-  const again = wanted.filter((r) => held.get(r.drive_id)?.module === module);
-
-  // A file another subject already holds is left alone. This used to update
-  // the row's `module`, which does not add the file here — it takes it out of
-  // there. Cataloguing a second year that shares a lecture emptied the first
-  // year of it, silently, and the import reported it as saved.
-  const taken = wanted
-    .map((r) => held.get(r.drive_id))
-    .filter((d) => d && d.module !== module);
+  const again = wanted.filter((r) => held.has(r.drive_id));
 
   if (fresh.length) {
     const { error } = await db.from('documents').insert(fresh);
@@ -103,20 +98,17 @@ export async function POST(request) {
   await note(db, {
     actor: profile.id, action: 'imported_documents',
     target_type: 'module', target_id: module,
-    detail: {
-      added: fresh.length, updated: again.length,
-      repeated: rows.length - wanted.length, elsewhere: taken.length,
-    },
+    detail: { added: fresh.length, updated: again.length, repeated: rows.length - wanted.length },
   });
 
   return NextResponse.json({
     saved: fresh.length + again.length,
     added: fresh.length,
     updated: again.length,
-    // What was asked for and not done, so the panel can say so rather than
-    // report a clean save over files it never touched.
     repeated: rows.length - wanted.length,
-    elsewhere: taken.map((d) => ({ drive_id: d.drive_id, module: d.module })),
+    // Kept for the panel: a file shared with another subject is now saved
+    // here too, not left "elsewhere" waiting to be claimed.
+    elsewhere: [],
   });
 }
 
