@@ -795,6 +795,15 @@ button.pill:active { transform: scale(.94); }
 }
 .pick-box.on { background: var(--olive); border-color: var(--olive); }
 .pick .num { background: var(--bg); color: var(--ink-3); }
+/* A chapter heading over its lectures: one tap takes the whole chapter. */
+.pick-ch {
+  display: flex; align-items: center; gap: 11px; width: 100%; text-align: start;
+  padding: 12px 16px; min-height: 52px; background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
+}
+.pick-ch-t { font-size: 14px; font-weight: 700; color: var(--olive); }
+.pick-ch .num { background: var(--olive-pale); color: var(--olive); }
+.pick-chapter .pick { padding-inline-start: 26px; }
 /* ---------- تحدّي زميلك ---------- */
 
 .duel-set { padding: 16px; display: flex; flex-direction: column; gap: 10px; }

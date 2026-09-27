@@ -91,16 +91,34 @@ export default async function ContentPage({ searchParams }) {
     // rather than a query per subject.
     const mcqs = {};
     list.forEach((m) => { mcqs[m.id] = 0; });
-    const { data: banks } = await sb.from('question_banks')
-      .select('id, module').in('module', list.map((m) => m.id));
+    const banks = [];
+    for (let from = 0; ; ) {
+      const { data: page } = await sb.from('question_banks')
+        .select('id, module').in('module', list.map((m) => m.id))
+        .order('id').range(from, from + 999);
+      if (!page || !page.length) break;
+      banks.push(...page);
+      from += page.length;
+    }
     const bankIds = (banks || []).map((b) => b.id);
     if (bankIds.length) {
       const bankModule = new Map(banks.map((b) => [b.id, b.module]));
-      const { data: qrows } = await sb.from('questions')
-        .select('bank').in('bank', bankIds).neq('status', 'rejected');
-      for (const q of qrows || []) {
-        const mod = bankModule.get(q.bank);
-        if (mod && mcqs[mod] !== undefined) mcqs[mod] += 1;
+      // Paged, and the banks named a slice at a time: the server answers at
+      // most a thousand rows, so a year holding nine thousand questions was
+      // counted as a thousand, spread over whichever subjects came first.
+      for (let i = 0; i < bankIds.length; i += 150) {
+        const slice = bankIds.slice(i, i + 150);
+        for (let from = 0; ; ) {
+          const { data: qrows } = await sb.from('questions')
+            .select('bank').in('bank', slice).neq('status', 'rejected')
+            .order('id').range(from, from + 999);
+          if (!qrows || !qrows.length) break;
+          for (const q of qrows) {
+            const mod = bankModule.get(q.bank);
+            if (mod && mcqs[mod] !== undefined) mcqs[mod] += 1;
+          }
+          from += qrows.length;
+        }
       }
     }
 

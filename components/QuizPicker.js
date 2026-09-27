@@ -29,12 +29,46 @@ const shuffle = (list) => {
 const BY_LECTURE = 'lecture';
 const BY_PAPER = 'paper';
 
+// The lectures, gathered under their chapters in the order they arrive —
+// which is already the order the module is taught. The groups with no
+// chapter (unplaced, or pointing at a lecture no longer listed) stand alone
+// at the end, as they already do.
+function chaptersOf(groups) {
+  const out = [];
+  for (const g of groups) {
+    const key = g.section ?? `solo:${g.fid}`;
+    const last = out[out.length - 1];
+    if (last && last.key === key) last.items.push(g);
+    else out.push({ key, title: g.section ?? null, items: [g] });
+  }
+  return out;
+}
+
+function Row({ g, on, toggle, withSection }) {
+  return (
+    <button className={`pick${on ? ' on' : ''}`} onClick={() => toggle(g.fid)}>
+      <span className={`pick-box${on ? ' on' : ''}`}>
+        {on && <Icon name="check" size={13} />}
+      </span>
+      {/* The number the module gives the lecture, never a dash: a
+          lecture without one is drawn without the badge. */}
+      {g.n != null && <span className="num pick-n">{g.n}</span>}
+      <span className="grow">
+        <span className="lec-nm" style={{ display: 'block' }} dir="auto">{g.title}</span>
+        {withSection && g.section && <span className="lec-mt" dir="auto">{g.section}</span>}
+      </span>
+      <span className="num">{g.questions.length}</span>
+    </button>
+  );
+}
+
 export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
   // The subject has been classified, or it has not. Where it has, the lecture
   // is what opens, because it is the question a student came to ask.
   const canSplit = Boolean(lectures && lectures.length);
   const [by, setBy] = useState(canSplit ? BY_LECTURE : BY_PAPER);
   const groups = by === BY_LECTURE && canSplit ? lectures : banks;
+  const byChapter = by === BY_LECTURE && canSplit;
 
   const [chosen, setChosen] = useState(() => groups.map((g) => g.fid));
   const [playing, setPlaying] = useState(null);
@@ -115,24 +149,30 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
           </button>
         </div>
 
-        {groups.map((g) => {
-          const on = chosen.includes(g.fid);
-          return (
-            <button key={g.fid} className={`pick${on ? ' on' : ''}`} onClick={() => toggle(g.fid)}>
-              <span className={`pick-box${on ? ' on' : ''}`}>
-                {on && <Icon name="check" size={13} />}
-              </span>
-              {/* The number the module gives the lecture, never a dash: a
-                  lecture without one is drawn without the badge. */}
-              {g.n != null && <span className="num pick-n">{g.n}</span>}
-              <span className="grow">
-                <span className="lec-nm" style={{ display: 'block' }} dir="auto">{g.title}</span>
-                {g.section && <span className="lec-mt" dir="auto">{g.section}</span>}
-              </span>
-              <span className="num">{g.questions.length}</span>
-            </button>
-          );
-        })}
+        {byChapter
+          // By lecture, the lectures stand under their chapter, the way the
+          // archive lists them: a student revising « Motricité » takes the
+          // whole chapter in one tap, not seven.
+          ? chaptersOf(groups).map((ch) => {
+            const ids = ch.items.map((g) => g.fid);
+            const all = ids.every((id) => chosen.includes(id));
+            const count = ch.items.reduce((n, g) => n + g.questions.length, 0);
+            return (
+              <div key={ch.key} className="pick-chapter">
+                {ch.title && (
+                  <button className="pick-ch" onClick={() => setChosen((c) => (all
+                    ? c.filter((x) => !ids.includes(x))
+                    : [...new Set([...c, ...ids])]))}>
+                    <span className={`pick-box${all ? ' on' : ''}`}>{all && <Icon name="check" size={13} />}</span>
+                    <span className="grow pick-ch-t" dir="auto">{ch.title}</span>
+                    <span className="num">{count}</span>
+                  </button>
+                )}
+                {ch.items.map((g) => <Row key={g.fid} g={g} on={chosen.includes(g.fid)} toggle={toggle} />)}
+              </div>
+            );
+          })
+          : groups.map((g) => <Row key={g.fid} g={g} on={chosen.includes(g.fid)} toggle={toggle} withSection />)}
       </section>
 
       <button

@@ -91,13 +91,37 @@ function numbering(lectures) {
  * the write at the end would be the first thing to say the column is
  * missing. Better to say so on arrival.
  */
+/**
+ * Every row of a subject's questions, however many there are.
+ *
+ * The server answers at most a thousand rows per request, and a subject that
+ * has had two thousand questions pasted into it in a day is past that: this
+ * screen offered the oldest thousand to classify and the rest never came up.
+ * Papers are named a slice at a time too, or the list of ids outgrows the
+ * address it is sent in.
+ */
+async function everyQuestion(db, bankIds, columns) {
+  const got = [];
+  for (let i = 0; i < bankIds.length; i += 150) {
+    const slice = bankIds.slice(i, i + 150);
+    for (let from = 0; ; ) {
+      const page = await db.from('questions').select(columns)
+        .in('bank', slice).order('id').range(from, from + 999);
+      if (page.error) return { data: null, error: page.error };
+      if (!page.data.length) break;
+      got.push(...page.data);
+      from += page.data.length;
+    }
+  }
+  return { data: got, error: null };
+}
+
 async function questionsOf(db, module) {
   const { data: banks } = await db.from('question_banks')
     .select('id, title').eq('module', module).order('position');
   if (!banks || !banks.length) return { banks: [], rows: [], ready: true };
 
-  const ask = (columns) => db.from('questions')
-    .select(columns).in('bank', banks.map((b) => b.id)).order('id');
+  const ask = (columns) => everyQuestion(db, banks.map((b) => b.id), columns);
 
   let ready = true;
   const { data: rows } = await readingQuestions(
@@ -195,8 +219,10 @@ export async function POST(request) {
     }
 
     const ids = (loose || []).map((r) => r.id);
-    if (ids.length) {
-      const { error } = await db.from('questions').update({ lecture: to }).in('id', ids);
+    // Three hundred ids at a time: that many is what fits in the address of
+    // one request, and a paper can hold more.
+    for (let i = 0; i < ids.length; i += 300) {
+      const { error } = await db.from('questions').update({ lecture: to }).in('id', ids.slice(i, i + 300));
       if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
@@ -219,8 +245,7 @@ export async function POST(request) {
   const { data: banks } = await db.from('question_banks')
     .select('id').eq('module', module);
   const mine = new Set((banks || []).map((b) => b.id));
-  const { data: rows } = await db.from('questions')
-    .select('id, bank').in('bank', [...mine]);
+  const { data: rows } = await everyQuestion(db, [...mine], 'id, bank');
   const here = new Set((rows || []).map((r) => r.id));
 
   let set = 0;
@@ -245,7 +270,10 @@ export async function POST(request) {
   // One update per lecture rather than one per question: a subject is a
   // couple of dozen lectures and several hundred questions.
   for (const [lecture, ids] of byLecture) {
-    const { error } = await db.from('questions').update({ lecture }).in('id', ids);
+    let error = null;
+    for (let i = 0; i < ids.length && !error; i += 300) {
+      ({ error } = await db.from('questions').update({ lecture }).in('id', ids.slice(i, i + 300)));
+    }
     if (error) {
       const behind = error.code === '42703';
       return NextResponse.json({
