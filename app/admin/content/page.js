@@ -84,8 +84,28 @@ export default async function ContentPage({ searchParams }) {
     const files = {};
     list.forEach((m, i) => { files[m.id] = tallies[i]?.count || 0; });
 
+    // One question's parent bank names its module, not a column on the
+    // question itself — so a subject's MCQ count is not a column filter but a
+    // join. Fetching every bank in this year and every question in those
+    // banks, once each, and tallying in JS is one round trip for the lot
+    // rather than a query per subject.
+    const mcqs = {};
+    list.forEach((m) => { mcqs[m.id] = 0; });
+    const { data: banks } = await sb.from('question_banks')
+      .select('id, module').in('module', list.map((m) => m.id));
+    const bankIds = (banks || []).map((b) => b.id);
+    if (bankIds.length) {
+      const bankModule = new Map(banks.map((b) => [b.id, b.module]));
+      const { data: qrows } = await sb.from('questions')
+        .select('bank').in('bank', bankIds).neq('status', 'rejected');
+      for (const q of qrows || []) {
+        const mod = bankModule.get(q.bank);
+        if (mod && mcqs[mod] !== undefined) mcqs[mod] += 1;
+      }
+    }
+
     return <ModuleScreen promo={promo || { id: params.promo, name: params.promo }}
-                         modules={list} files={files} canDelete={isAdmin(me)} />;
+                         modules={list} files={files} mcqs={mcqs} canDelete={isAdmin(me)} />;
   }
 
   // ---- the six years -----------------------------------------------------

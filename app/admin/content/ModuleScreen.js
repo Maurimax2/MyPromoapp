@@ -12,7 +12,7 @@ import Icon from '@/components/Icon';
 
 const SEMESTERS = ['S1', 'S2'];
 
-export default function ModuleScreen({ promo, modules, files, canDelete }) {
+export default function ModuleScreen({ promo, modules, files, mcqs, canDelete }) {
   const router = useRouter();
   const [adding, setAdding] = useState(false);
   const [name, setName] = useState('');
@@ -225,7 +225,7 @@ export default function ModuleScreen({ promo, modules, files, canDelete }) {
                         </span>
                         <div className="grow">
                           <div className="ctm-t" dir="ltr">{m.name}</div>
-                          <div className="ctm-b ltr">{files[m.id] || 0} ملف</div>
+                          <div className="ctm-b ltr">{files[m.id] || 0} ملف · {mcqs?.[m.id] || 0} سؤال</div>
                         </div>
                         {keep === m.id && <span className="ctm-keep">تبقى</span>}
                       </button>
@@ -233,7 +233,7 @@ export default function ModuleScreen({ promo, modules, files, canDelete }) {
                       <Link href={`/admin/content?promo=${promo.id}&module=${m.id}`} className="ctm grow">
                         <div className="grow">
                           <div className="ctm-t" dir="ltr">{m.name}</div>
-                          <div className="ctm-b ltr">{files[m.id] || 0} ملف</div>
+                          <div className="ctm-b ltr">{files[m.id] || 0} ملف · {mcqs?.[m.id] || 0} سؤال</div>
                         </div>
                         <Icon name="chev" size={18} />
                       </Link>
