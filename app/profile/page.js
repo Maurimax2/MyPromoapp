@@ -9,6 +9,7 @@ import { daysOf } from '@/lib/days';
 import { dayOf } from '@/lib/habit';
 import { friendsOf } from '@/lib/friends';
 import Sign from './Sign';
+import DeleteAccount from './DeleteAccount';
 import Find from './Find';
 import MeLive from './MeLive';
 import Badges from './Badges';
@@ -170,6 +171,7 @@ export default async function Profile() {
         </div>
 
         <Sign />
+        <DeleteAccount />
       </div>
     </>
   );

@@ -149,7 +149,7 @@ export default function LoginForm({ years = PROMOS }) {
             رجوع
           </button>
         </div>
-        <p className="login-terms">بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
+        <p className="login-terms">بالمتابعة، أنت توافق على <a href="/privacy">سياسة الخصوصية</a></p>
       </div>
     );
   }
@@ -277,7 +277,7 @@ export default function LoginForm({ years = PROMOS }) {
         </div>
       </form>
 
-      <p className="login-terms">بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية</p>
+      <p className="login-terms">بالمتابعة، أنت توافق على <a href="/privacy">سياسة الخصوصية</a></p>
     </div>
   );
 }

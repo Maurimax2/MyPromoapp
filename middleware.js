@@ -79,11 +79,15 @@ export async function middleware(request) {
   // no profile shows the panel's own sign-in, a student is told plainly that
   // they are not staff.
   //
+  // `/privacy` and `/delete-account` are read by the app stores' reviewers and
+  // by anybody deciding whether to sign up, so they cannot sit behind a sign-in.
+  //
   // `/feedback` is the pre-launch page: it is opened from a WhatsApp message
   // by students who have no account at all, which is the entire point of it.
   // Sending them to the door would be asking them to sign up before they are
   // allowed to say whether they want the thing.
   const open = path === '/waiting' || path === '/feedback'
+    || path === '/privacy' || path === '/delete-account'
     || path.startsWith('/login') || path.startsWith('/auth')
     || path.startsWith('/admin') || path.startsWith('/api/');
   if (open) return response;

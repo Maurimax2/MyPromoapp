@@ -916,6 +916,26 @@ button.pill:active { transform: scale(.94); }
   margin-top: 22px; max-width: 250px;
 }
 
+/* ---------- public pages: privacy, delete-account ---------- */
+.legal { min-height: 100dvh; padding: 18px 20px 48px; background: var(--bg); color: var(--ink); line-height: 1.9; font-size: 15px; }
+.legal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.legal-brand { font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
+.legal-brand b { color: var(--olive); }
+.legal-lang { min-height: 44px; display: inline-flex; align-items: center; padding: 0 14px; border-radius: 12px; background: var(--surface); color: var(--olive); font-weight: 600; font-size: 14px; text-decoration: none; }
+.legal h1 { font-size: 24px; line-height: 1.5; margin: 6px 0 2px; }
+.legal-date { font-size: 13px; color: var(--ink-3); margin: 0 0 18px; }
+.legal-sec { background: var(--surface); border-radius: 16px; padding: 4px 18px 10px; margin-top: 12px; }
+.legal h2 { font-size: 16.5px; margin: 14px 0 4px; color: var(--olive); }
+.legal p { margin: 6px 0; }
+.legal ul, .legal ol { margin: 6px 0; padding-inline-start: 22px; }
+.legal a { color: var(--olive); font-weight: 600; }
+.login-terms a { color: var(--olive); font-weight: 600; }
+.delete-ask { margin-top: 10px; padding: 16px; border-radius: 16px; background: var(--surface); box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+.delete-ask b { font-size: 15.5px; }
+.delete-ask p { font-size: 13.5px; color: var(--ink-2); line-height: 1.9; margin: 6px 0 10px; }
+.delete-ask-row { display: flex; gap: 8px; }
+.delete-ask-row .btn { flex: 1; }
+
 /* ---------- the admin panel ---------- */
 .admin { min-height: 100dvh; background: var(--bg); }
 .admin-top {

@@ -39,7 +39,8 @@ export default function BottomNav() {
   const [waiting, setWaiting] = useState(0);
 
   const quiet = path === '/' || path.startsWith('/login')
-    || path.startsWith('/admin') || path === '/waiting';
+    || path.startsWith('/admin') || path === '/waiting'
+    || path === '/privacy' || path === '/delete-account';
 
   useEffect(() => {
     if (quiet) { setWaiting(0); return undefined; }
