@@ -81,7 +81,12 @@ export default async function Module({ params }) {
     href: `/file/${it.fid}`, external: false, ext: it.ext || 'PDF', mb: it.mb,
   }));
 
-  const regions = regionsFor(m.promo, m.semester).map((r) => ({
+  // A model belongs to the lecture it explains (lib/anatomy/curriculum.js),
+  // so only Anatomie offers the body's regions. Every other subject of the
+  // same year and semester used to list them too — Biochimie showed the skull.
+  // ANATOMIE PATHOLOGIQUE is a different subject and does not match.
+  const isAnatomy = /(^|-)anatomie(-s\d)?$/i.test(id);
+  const regions = (isAnatomy ? regionsFor(m.promo, m.semester) : []).map((r) => ({
     href: `/anatomie/${r.promo.toLowerCase()}/${r.semesterId}/${r.id}`,
     title: r.title, subtitle: r.subtitle, img: regionArt(r),
   }));

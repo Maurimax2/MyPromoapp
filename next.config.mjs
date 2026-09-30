@@ -19,5 +19,17 @@ const nextConfig = {
   outputFileTracingIncludes: {
     '/api/admin/extract': ['./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs'],
   },
+
+  // The 3D geometry is a few megabytes per model and never changes between
+  // deploys. Left to the default, a phone asks the server whether it has
+  // changed on every visit — one slow round trip per file on mobile data —
+  // before it shows anything it already holds. A day of "no need to ask",
+  // then a week of showing the old copy while it refreshes in the background.
+  async headers() {
+    return [{
+      source: '/anatomy/:path*',
+      headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
+    }];
+  },
 };
 export default nextConfig;

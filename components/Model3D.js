@@ -20,9 +20,10 @@ import { CREDIT, boneOf, bundleOf, familyOf } from '@/lib/anatomy/bundles';
 import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
 import { tissueOf, colourOf } from '@/lib/anatomy/tissue';
-import { tissueMaterial, axisOf, studio } from '@/lib/anatomy/material';
+import { tissueMaterial, axisOf, studio, qualityTier, setDetail } from '@/lib/anatomy/material';
 
-const MAX_DPR = 2;
+// Sharp enough on a 3x screen without drawing nine pixels for every one shown.
+const MAX_DPR = { high: 1.75, lite: 1.5 };
 // Accent- and case-blind, for matching a name that arrived in a URL. The
 // search module has its own copy; importing it here would drag its whole
 // index into every screen that draws a model.
@@ -201,13 +202,15 @@ export default function Model3D({
     if (!el) return undefined;
 
     let dead = false;
+    const tier = qualityTier();
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR[tier]));
+    setDetail(true);
     renderer.setSize(el.clientWidth, el.clientHeight, false);
     el.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    const unstudio = studio(renderer, scene);
+    const unstudio = studio(renderer, scene, tier);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 20);
     const group = new THREE.Group();
     scene.add(group);
@@ -216,11 +219,14 @@ export default function Model3D({
     // hides exactly the sutures and foramina somebody opened this to look at.
     // The studio environment (lib/anatomy/material.js) now carries part of the
     // fill, so the direct lights are lower than they were on their own.
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2c9, 0.85));
-    const key = new THREE.DirectionalLight(0xffffff, 1.6);
+    // The light tier has no reflections to fill the shadows, so it keeps the
+    // original flat lighting the models had before there was an environment.
+    const lite = tier === 'lite';
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2c9, lite ? 2.1 : 0.85));
+    const key = new THREE.DirectionalLight(0xffffff, lite ? 1.25 : 1.6);
     key.position.set(0.6, 1, 0.8);
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.4);
+    const fill = new THREE.DirectionalLight(0xffffff, lite ? 0.55 : 0.4);
     fill.position.set(-0.7, -0.2, -0.6);
     scene.add(fill);
 
@@ -407,15 +413,44 @@ export default function Model3D({
       });
     };
 
+    // The frame-rate governor. While the model is being turned, the time
+    // between frames is what the phone can do: if it averages under about 30
+    // frames a second, quality steps down — first the resolution and the
+    // reflections, then the surface noise — rather than leaving the student
+    // to fight a slideshow. It only ever goes down, and it starts again on
+    // the next model.
     let live = true;
+    let last = 0, avg = 16, seen = 0, stage = 0;
+    const stepDown = () => {
+      stage += 1;
+      if (stage === 1) {
+        renderer.setPixelRatio(1);
+        renderer.setSize(el.clientWidth, el.clientHeight, false);
+        scene.environment = null;
+      } else {
+        setDetail(false);
+      }
+      avg = 16; seen = 0;
+    };
     const loop = () => {
       if (!live) return;
       requestAnimationFrame(loop);
-      if (controls.update()) { renderer.render(scene, camera); movePins(); }
-      // React draws the labels a tick after the geometry arrives, so the first
-      // placement has nothing to place. Without this they stay where they were
-      // born — the corner of the screen — until the first drag.
-      else if (dots.length !== marks.length) movePins();
+      const now = performance.now();
+      if (controls.update()) {
+        renderer.render(scene, camera); movePins();
+        if (last && now - last < 250) {
+          avg = avg * 0.9 + (now - last) * 0.1;
+          seen += 1;
+          if (seen > 24 && avg > 30 && stage < 2) stepDown();
+        }
+        last = now;
+      } else {
+        last = 0;
+        // React draws the labels a tick after the geometry arrives, so the first
+        // placement has nothing to place. Without this they stay where they were
+        // born — the corner of the screen — until the first drag.
+        if (dots.length !== marks.length) movePins();
+      }
     };
 
     // How far back the camera has to stand for the whole thing to be on
@@ -585,7 +620,7 @@ export default function Model3D({
           // the structure's own long axis, a porous grain on bone, a wet coat
           // on vessels and viscera.
           const axis = axisOf(g.attributes.position.array);
-          const coat = () => tissueMaterial(kind, skin, axis);
+          const coat = () => tissueMaterial(kind, skin, axis, tier);
           // One draw group per part, so a bone can be coloured by its parts
           // without the geometry being cut into separate objects.
           if (p.groups) {
