@@ -4730,3 +4730,22 @@ button.pts-b:active { background: var(--olive-pale); }
   min-height: 44px; padding: 0 10px; border: 0; background: none; font: inherit; font-size: 12.5px;
   color: var(--wrong); cursor: pointer;
 }
+
+/* A level, reached (app/profile/LevelUp.js). */
+.lv-medal {
+  width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 28%, #C4F2D6 0%, #43A26E 45%, #1B4A31 100%);
+  box-shadow: 0 0 0 8px rgba(196, 242, 214, .18), 0 0 0 16px rgba(244, 205, 107, .12), 0 20px 50px rgba(0, 0, 0, .45), 0 0 50px rgba(67, 162, 110, .5);
+}
+.lv-medal span { font: 800 72px/1 'Poppins', var(--font-app), sans-serif; color: #FFFDF8; text-shadow: 0 4px 16px rgba(0, 0, 0, .35); }
+
+/* Right on the question of the day: the points rise off the verdict. */
+.dq-after { position: relative; }
+.dq-win { position: absolute; top: -10px; left: 50%; pointer-events: none; }
+.dq-win b { position: absolute; font: 800 26px/1 'Poppins', sans-serif; color: var(--olive); animation: dq-rise 1.6s cubic-bezier(.2, .9, .3, 1) both; }
+.dq-win i { position: absolute; width: 7px; height: 11px; border-radius: 2px; background: #F4CD6B; animation: dq-spark .9s cubic-bezier(.1, .8, .3, 1) both; }
+.dq-win i:nth-child(3n) { background: var(--olive); }
+.dq-win i:nth-child(3n + 1) { background: #E08A5A; }
+@keyframes dq-rise { 0% { opacity: 0; transform: translateY(12px) scale(.5); } 25% { opacity: 1; transform: translateY(-6px) scale(1.25); } 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-46px) scale(1); } }
+@keyframes dq-spark { from { opacity: 1; transform: rotate(var(--a)) translateY(0) scale(.4); } to { opacity: 0; transform: rotate(var(--a)) translateY(calc(-1 * var(--d))) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .dq-win { display: none; } }

@@ -13,6 +13,7 @@ import DeleteAccount from './DeleteAccount';
 import Find from './Find';
 import MeLive from './MeLive';
 import Badges from './Badges';
+import LevelUp from './LevelUp';
 
 export const dynamic = 'force-dynamic';
 
@@ -86,6 +87,7 @@ export default async function Profile() {
 
       <div className="scroll st-flow">
         {/* ================= you ================= */}
+        <LevelUp level={level} toNext={toNext} />
         <div className="me-hero r2">
           <span className="me-ring">
             <svg width="112" height="112" viewBox="0 0 112 112" aria-hidden="true">

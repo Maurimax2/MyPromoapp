@@ -84,6 +84,13 @@ export function DailyCard({ q, mine, tally, today = 0 }) {
         </button>
       ) : (
         <div className="dq-after">
+          {result.correct && !result.already && (
+            // Earned just now: the two points rise off the verdict in a small burst.
+            <span className="dq-win" aria-hidden="true">
+              <b>+2</b>
+              {Array.from({ length: 14 }, (_, i) => <i key={i} style={{ '--a': `${i * 26 - 90}deg`, '--d': `${38 + (i * 13) % 34}px` }} />)}
+            </span>
+          )}
           <b className="dq-verdict">
             <Icon name={result.correct ? 'sparkle' : 'bulb'} size={17} weight="fill" />
             {result.correct
