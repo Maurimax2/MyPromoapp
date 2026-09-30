@@ -875,9 +875,27 @@ button.pill:active { transform: scale(.94); }
 /* ---------- the front door ---------- */
 .login {
   min-height: 100dvh; background: var(--surface);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0 30px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding: max(44px, env(safe-area-inset-top)) 26px 28px;
 }
+.login-top { display: flex; flex-direction: column; align-items: center; }
+.login-hello { margin: 6px 0 0; font-size: 15px; color: var(--ink-2); text-align: center; line-height: 1.7; }
+.login-tabs {
+  width: 100%; max-width: 420px; margin-top: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  padding: 4px; border-radius: 16px; background: var(--bg);
+}
+.login-tabs button { min-height: 46px; border-radius: 12px; font: inherit; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.login-tabs button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 6px rgba(23, 32, 26, .12); }
+.login .login-form { max-width: 420px; margin-top: 20px; }
+.login .login-input { text-align: start; font-weight: 500; }
+.login .login-lbl { margin: 6px 2px -5px; letter-spacing: 0; font-size: 13.5px; color: var(--ink-2); font-weight: 600; }
+.login-pw { position: relative; display: flex; }
+.login-pw .login-input { flex: 1; padding-right: 84px; }
+.login-eye { position: absolute; top: 0; bottom: 0; right: 6px; padding: 0 12px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--olive); }
+.login-forgot { align-self: flex-start; min-height: 40px; padding: 0 2px; font: inherit; font-size: 13.5px; font-weight: 600; color: var(--olive); }
+.login-back { align-self: center; }
+.login .btn.p { margin-top: 4px; }
+.login-or { margin: 14px 0 12px; }
 .login-name {
   font-size: 31px; font-weight: 700; margin-top: 18px; letter-spacing: -.02em;
   color: var(--ink);

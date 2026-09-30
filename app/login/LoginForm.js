@@ -21,7 +21,8 @@ import { PROMOS, badgeOf } from '@/lib/data';
 import { isFirstYear, normaliseUsername } from '@/lib/identity';
 
 export default function LoginForm({ years = PROMOS }) {
-  const [how, setHow] = useState('link');       // link | password | join
+  const [how, setHow] = useState('password');   // password | join | link (forgot)
+  const [showPw, setShowPw] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -145,7 +146,7 @@ export default function LoginForm({ years = PROMOS }) {
           <div className="login-sent-b">
             أرسلنا رابط الدخول إلى<br /><span dir="ltr">{email}</span>
           </div>
-          <button className="btn g" onClick={() => { setState('idle'); setHow('link'); }}>
+          <button className="btn g" onClick={() => { setState('idle'); setHow('password'); }}>
             رجوع
           </button>
         </div>
@@ -154,40 +155,42 @@ export default function LoginForm({ years = PROMOS }) {
     );
   }
 
+  const go = (to) => () => { setHow(to); setState('idle'); setError(''); };
+  const hello = how === 'join' ? 'أنشئ حسابك لتنضمّ إلى دفعتك'
+    : how === 'link' ? 'نسيت كلمة السر؟ سنرسل لك رابطًا للدخول'
+    : 'أهلًا بعودتك';
+
   return (
     <div className="login">
-      <Logo size={74} id="login" />
-      <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
+      <div className="login-top">
+        <Logo size={64} id="login" />
+        <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
+        <p className="login-hello">{hello}</p>
+      </div>
 
-      {web && (
-        <>
-          <button type="button" className="login-google" onClick={google} disabled={state === 'busy'}>
-            <Icon name="google" size={20} weight="bold" /> المتابعة بحساب Google
-          </button>
-          <div className="login-or"><span>أو</span></div>
-        </>
+      {how !== 'link' && (
+        <div className="login-tabs" role="tablist">
+          <button type="button" role="tab" aria-selected={how === 'password'}
+            className={how === 'password' ? 'on' : ''} onClick={go('password')}>تسجيل الدخول</button>
+          <button type="button" role="tab" aria-selected={how === 'join'}
+            className={how === 'join' ? 'on' : ''} onClick={go('join')}>حساب جديد</button>
+        </div>
       )}
 
       <form className="login-form" onSubmit={submit}>
         {how === 'join' && (
-          <input
-            className="login-input" autoFocus placeholder="اسمك الكامل"
-            value={name} onChange={(e) => setName(e.target.value)} aria-label="الاسم" />
-        )}
-
-        {/* How classmates find and challenge you. Lower-case as it is typed,
-            so the field shows exactly what will be stored. */}
-        {how === 'join' && (
-          <input
-            className="login-input" dir="ltr" placeholder="اسم المستخدم — مثال: sidi.ahmed"
-            value={username}
-            onChange={(e) => setUsername(normaliseUsername(e.target.value))}
-            autoCapitalize="none" autoCorrect="off" spellCheck={false}
-            aria-label="اسم المستخدم" />
-        )}
-
-        {how === 'join' && (
           <>
+            <label className="login-lbl" htmlFor="lg-name">الاسم الكامل</label>
+            <input id="lg-name" className="login-input" autoComplete="name"
+              value={name} onChange={(e) => setName(e.target.value)} />
+
+            {/* How classmates find and challenge you. Lower-case as it is typed,
+                so the field shows exactly what will be stored. */}
+            <label className="login-lbl" htmlFor="lg-user">اسم المستخدم</label>
+            <input id="lg-user" className="login-input" dir="ltr" placeholder="sidi.ahmed"
+              value={username} onChange={(e) => setUsername(normaliseUsername(e.target.value))}
+              autoCapitalize="none" autoCorrect="off" spellCheck={false} />
+
             <div className="login-lbl">سنتك</div>
             <div className="login-promos">
               {years.map((p) => (
@@ -201,81 +204,80 @@ export default function LoginForm({ years = PROMOS }) {
                 </button>
               ))}
             </div>
+
+            {/* The first year has no university number yet. Instead: a WhatsApp
+                number, which staff check against the faculty's groups — and
+                which no classmate ever sees. */}
+            {first === true && (
+              <>
+                <label className="login-lbl" htmlFor="lg-phone">رقم واتساب</label>
+                <input id="lg-phone" className="login-input" dir="ltr" type="tel" inputMode="tel"
+                  placeholder="36 12 34 56" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <p className="login-note">يتحقّق منه المشرفون فقط، ولا يراه زملاؤك.</p>
+              </>
+            )}
+
+            {/* Upper-cased as it is typed, so the field shows what will be stored
+                and D12345 is never two different students. */}
+            {first === false && (
+              <>
+                <label className="login-lbl" htmlFor="lg-mat">الرقم الجامعي</label>
+                <input id="lg-mat" className="login-input" dir="ltr" placeholder="D12345"
+                  value={matricule} onChange={(e) => setMatricule(e.target.value.toUpperCase())} />
+              </>
+            )}
           </>
         )}
 
-        {/* The first year has no university number yet. Instead: a WhatsApp
-            number, which staff check against the faculty's groups — and
-            which no classmate ever sees. */}
-        {how === 'join' && first === true && (
-          <>
-            {/* The words above, the number alone in the field: Arabic and
-                digits in one placeholder print the digit groups backwards. */}
-            <div className="login-lbl">رقم واتساب</div>
-            <input
-              className="login-input" dir="ltr" type="tel" inputMode="tel"
-              placeholder="36 12 34 56"
-              value={phone} onChange={(e) => setPhone(e.target.value)}
-              aria-label="رقم واتساب" />
-            <p className="login-note">يتحقّق منه المشرفون فقط، ولا يراه زملاؤك.</p>
-          </>
-        )}
-
-        {/* Upper-cased as it is typed, so the field shows what will be stored
-            and D12345 is never two different students. */}
-        {how === 'join' && first === false && (
-          <input
-            className="login-input" dir="ltr" placeholder="الرقم الجامعي — D12345"
-            value={matricule}
-            onChange={(e) => setMatricule(e.target.value.toUpperCase())}
-            aria-label="الرقم الجامعي" />
-        )}
-
-        <input
-          className="login-input" type="email" dir="ltr" inputMode="email"
+        <label className="login-lbl" htmlFor="lg-email">البريد الإلكتروني</label>
+        <input id="lg-email" className="login-input" type="email" dir="ltr" inputMode="email"
           autoComplete="email" placeholder="you@example.com"
-          value={email} onChange={(e) => setEmail(e.target.value)}
-          aria-label="البريد الإلكتروني" />
+          value={email} onChange={(e) => setEmail(e.target.value)} />
 
         {how !== 'link' && (
-          <input
-            className="login-input" type="password" dir="ltr"
-            autoComplete={how === 'join' ? 'new-password' : 'current-password'}
-            placeholder={how === 'join' ? 'كلمة سر — 8 أحرف على الأقل' : 'كلمة السر'}
-            value={password} onChange={(e) => setPassword(e.target.value)}
-            aria-label="كلمة السر" />
+          <>
+            <label className="login-lbl" htmlFor="lg-pw">كلمة السر</label>
+            <div className="login-pw">
+              <input id="lg-pw" className="login-input" type={showPw ? 'text' : 'password'} dir="ltr"
+                autoComplete={how === 'join' ? 'new-password' : 'current-password'}
+                placeholder={how === 'join' ? '8 أحرف على الأقل' : ''}
+                value={password} onChange={(e) => setPassword(e.target.value)} />
+              <button type="button" className="login-eye" onClick={() => setShowPw((v) => !v)}
+                aria-label={showPw ? 'أخفِ كلمة السر' : 'أظهر كلمة السر'}>
+                {showPw ? 'إخفاء' : 'إظهار'}
+              </button>
+            </div>
+          </>
+        )}
+
+        {how === 'password' && (
+          <button type="button" className="login-forgot" onClick={go('link')}>نسيت كلمة السر؟</button>
         )}
 
         <button className="btn p" disabled={!ready || state === 'busy'}>
           {state === 'busy' ? '…'
             : how === 'link' ? 'أرسل رابط الدخول'
-            : how === 'password' ? 'ادخل'
+            : how === 'password' ? 'تسجيل الدخول'
             : 'أنشئ الحساب'}
         </button>
 
         {state === 'error' && <div className="login-err">{error}</div>}
 
-        <div className="login-alts">
-          {how !== 'password' && (
-            <button type="button" className="login-alt"
-              onClick={() => { setHow('password'); setState('idle'); }}>
-              ادخل بكلمة السر
-            </button>
-          )}
-          {how !== 'join' && (
-            <button type="button" className="login-alt"
-              onClick={() => { setHow('join'); setState('idle'); }}>
-              <Icon name="plus" size={15} /> حساب جديد
-            </button>
-          )}
-          {how !== 'link' && (
-            <button type="button" className="login-alt"
-              onClick={() => { setHow('link'); setState('idle'); }}>
-              أرسل لي رابطًا
-            </button>
-          )}
-        </div>
+        {how === 'link' && (
+          <button type="button" className="login-alt login-back" onClick={go('password')}>
+            رجوع إلى تسجيل الدخول
+          </button>
+        )}
       </form>
+
+      {web && how !== 'link' && (
+        <>
+          <div className="login-or"><span>أو</span></div>
+          <button type="button" className="login-google" onClick={google} disabled={state === 'busy'}>
+            <Icon name="google" size={20} weight="bold" /> المتابعة بحساب Google
+          </button>
+        </>
+      )}
 
       <p className="login-terms">بالمتابعة، أنت توافق على <a href="/privacy">سياسة الخصوصية</a></p>
     </div>
