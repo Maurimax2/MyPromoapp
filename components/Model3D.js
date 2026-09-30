@@ -20,17 +20,9 @@ import { CREDIT, boneOf, bundleOf, familyOf } from '@/lib/anatomy/bundles';
 import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
 import { tissueOf, colourOf } from '@/lib/anatomy/tissue';
+import { tissueMaterial, axisOf, studio } from '@/lib/anatomy/material';
 
 const MAX_DPR = 2;
-/** Unpainted bone. Everything that is not the answer to the question. */
-// The grain of bone.
-//
-// A single flat ivory reads as plastic: bone is not one colour, it is a
-// mottled surface with a visible grain, and at the size a phone draws a skull
-// the difference between those two is the difference between a specimen and a
-// toy. Made once, in code, rather than shipped as an image — it is noise, and
-// noise costs nothing to generate and a download to fetch.
-let grain = null;
 // Accent- and case-blind, for matching a name that arrived in a URL. The
 // search module has its own copy; importing it here would drag its whole
 // index into every screen that draws a model.
@@ -40,34 +32,6 @@ const same = (a, b) => !!a && !!b && String(a)
   === String(b)
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u2019']/g, ' ')
     .toLowerCase().trim();
-
-function boneGrain() {
-  if (grain || typeof document === 'undefined') return grain;
-  const N = 256;
-  const can = document.createElement('canvas');
-  can.width = can.height = N;
-  const ctx = can.getContext('2d');
-  const img = ctx.createImageData(N, N);
-  for (let i = 0; i < N * N; i++) {
-    // Two scales of noise: a fine speck for the grain, a broad drift for the
-    // patches a real bone has. A normal map, so it catches the light rather
-    // than dirtying the colour.
-    const x = i % N, y = (i / N) | 0;
-    const fine = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-    const broad = Math.sin(x * 0.07) * Math.cos(y * 0.09);
-    const n = (fine - Math.floor(fine)) * 0.55 + (broad * 0.5 + 0.5) * 0.45;
-    const k = i * 4;
-    img.data[k] = 128 + (n - 0.5) * 34;
-    img.data[k + 1] = 128 + (n - 0.5) * 34;
-    img.data[k + 2] = 255;
-    img.data[k + 3] = 255;
-  }
-  ctx.putImageData(img, 0, 0);
-  grain = new THREE.CanvasTexture(can);
-  grain.wrapS = grain.wrapT = THREE.RepeatWrapping;
-  grain.repeat.set(3, 3);
-  return grain;
-}
 
 export default function Model3D({
   id, title, hidden = [], facing = null, credit = CREDIT,
@@ -243,17 +207,20 @@ export default function Model3D({
     el.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
+    const unstudio = studio(renderer, scene);
     const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 20);
     const group = new THREE.Group();
     scene.add(group);
 
     // Flat, even light. A dramatic key light looks better in a screenshot and
     // hides exactly the sutures and foramina somebody opened this to look at.
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2c9, 2.1));
-    const key = new THREE.DirectionalLight(0xffffff, 1.25);
+    // The studio environment (lib/anatomy/material.js) now carries part of the
+    // fill, so the direct lights are lower than they were on their own.
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2c9, 0.85));
+    const key = new THREE.DirectionalLight(0xffffff, 1.6);
     key.position.set(0.6, 1, 0.8);
     scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.55);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.4);
     fill.position.set(-0.7, -0.2, -0.6);
     scene.add(fill);
 
@@ -614,15 +581,11 @@ export default function Model3D({
           // cannot be one default for everything.
           const kind = tissueOf(book, p.name, p.family);
           const skin = colourOf(book, p.name, p.family);
-          const coat = () => new THREE.MeshStandardMaterial({
-            color: skin,
-            // Bone is dry and matt, muscle is wet and catches a highlight.
-            roughness: kind === 'bone' || kind === 'tendon' ? 0.86 : 0.62,
-            metalness: 0.02,
-            ...(kind === 'bone' ? { normalMap: boneGrain(),
-              normalScale: new THREE.Vector2(0.45, 0.45) } : {}),
-            side: THREE.DoubleSide,
-          });
+          // Surface after the tissue (lib/anatomy/material.js): fibres along
+          // the structure's own long axis, a porous grain on bone, a wet coat
+          // on vessels and viscera.
+          const axis = axisOf(g.attributes.position.array);
+          const coat = () => tissueMaterial(kind, skin, axis);
           // One draw group per part, so a bone can be coloured by its parts
           // without the geometry being cut into separate objects.
           if (p.groups) {
@@ -714,6 +677,7 @@ export default function Model3D({
         m.geometry.dispose();
         for (const c of [m.material].flat()) c.dispose();
       }
+      unstudio();
       renderer.dispose();
       renderer.domElement.remove();
       api.current = null;
@@ -873,7 +837,7 @@ export default function Model3D({
                   {note && <Icon name="chev" size={15} />}
                 </button>
               )
-              : <span className="m3d-hint">أدر النموذج، والمس عظمًا لمعرفة اسمه</span>}
+              : <span className="m3d-hint">أدر النموذج، والمس أي جزء لمعرفة اسمه</span>}
             {picked && !spot && (
               <button className="m3d-clear" aria-label="أخفِ هذا العظم"
                 onClick={() => { setGone((g) => [...g, picked]); setPicked(null); setMode('context'); }}>
