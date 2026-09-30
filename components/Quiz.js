@@ -273,11 +273,6 @@ export default function Quiz({
       {written ? (
         shown && (
           <div className="qz-after">
-            {q.by === 'claude' && (
-              <div className="quiz-by">
-                هذا الجواب من MyPromo، لا من ورقة التصحيح — الورقة الأصلية لا تحمل تصحيحًا.
-              </div>
-            )}
             <div className="qz-model" dir="auto">{q.model || '—'}</div>
             {q.why && (
               <div className="qz-why">
@@ -310,11 +305,6 @@ export default function Quiz({
 
           {shown && (
             <div className="qz-after">
-              {q.by === 'claude' && (
-                <div className="quiz-by">
-                  هذا الجواب من MyPromo، لا من ورقة التصحيح — الورقة الأصلية لا تحمل تصحيحًا.
-                </div>
-              )}
               <div className={`qz-verdict ${right ? 'ok' : 'no'}`}>
                 <Icon name={right ? 'sparkle' : 'wrong'} size={20} weight="fill" />
                 <b>
