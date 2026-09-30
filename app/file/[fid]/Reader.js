@@ -1,75 +1,25 @@
 'use client';
 
-// Which way to read this file, and how much of the screen it gets.
+// How a file is read, and how much of the screen it gets.
 //
-// Quick view first for anything big: Google draws the pages and sends
-// pictures, so a 40 MB scan starts immediately instead of arriving in full.
-// Our own renderer for the rest, and for anyone who asks — it has our fonts
-// and our page handling, it just has to fetch the whole document first.
-//
-// The choice is remembered per device: a student who prefers one should not
-// have to say so on every lecture.
+// One way only: Google draws the pages and sends pictures, so a 40 MB scan
+// starts at once instead of arriving whole. There used to be a second reader
+// of our own for the small files, and a switch between them; it had to fetch
+// the whole document before drawing anything, and students found it slow, so
+// it went.
 
 import { useEffect, useState } from 'react';
-import PdfViewer from '@/components/PdfViewer';
 import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
-import { opened, mark } from '@/lib/resume';
+import { opened } from '@/lib/resume';
 
-const REMEMBER = 'mypromo.reader';
-
-// Below this our renderer arrives fast enough that its better typography and
-// its page handling are worth the wait.
-const BIG = 8 * 1024 * 1024;
-
-// How far a page may be taken. Below 1 it is smaller than the screen, which
-// is how you see a whole page at once; above it, it is drawn again bigger
-// rather than stretched, which is how you read the small print on a scan.
-const NEAREST = 0.6;
-const FURTHEST = 3;
-const STEP = 1.25;
-const hold = (z) => Math.min(FURTHEST, Math.max(NEAREST, z));
-
-export default function Reader({ fid, src, title, subject = null, bytes }) {
-  const [mode, setMode] = useState(null);   // null until the device is read
+export default function Reader({ fid, src, title, subject = null }) {
   const [full, setFull] = useState(false);  // الصفحات وحدها
-  const [zoom, setZoom] = useState(1);
 
   // Opening a lecture is what «تابع من حيث توقّفت» is made of, and this is
   // the moment it happens. Recorded in the browser, not on the server — the
   // reasoning is in lib/resume.js.
   useEffect(() => { opened({ fid, title, subject }); }, [fid, title, subject]);
-
-  useEffect(() => {
-    let saved = null;
-    try { saved = localStorage.getItem(REMEMBER); } catch {}
-    setMode(saved === 'app' || saved === 'quick'
-      ? saved
-      : (bytes && bytes > BIG ? 'quick' : 'app'));
-  }, [bytes]);
-
-  const choose = (next, size = 1) => {
-    setMode(next);
-    setZoom(size);
-    try { localStorage.setItem(REMEMBER, next); } catch {}
-  };
-
-  // Bigger, or smaller.
-  //
-  // In العرض السريع there is nothing here to resize: the pages are drawn by
-  // Google inside a frame this page is not allowed to reach into, and every
-  // trick from outside it cancels out — a narrower frame makes Google fit the
-  // page smaller by exactly as much as the frame is then scaled up by, which
-  // is a control that visibly does nothing. Measured, not assumed.
-  //
-  // So asking for a bigger page is asking for the reader that can draw one,
-  // and the press does that. The pill beside these says which reader you are
-  // in and takes you back.
-  const step = (dir) => {
-    const out = dir > 0 ? STEP : 1 / STEP;
-    if (mode === 'quick') { choose('app', hold(out)); return; }
-    setZoom((z) => hold(z * out));
-  };
 
   // Two things happen at once, because neither is enough on its own.
   //
@@ -113,72 +63,25 @@ export default function Reader({ fid, src, title, subject = null, bytes }) {
 
   const leave = () => {
     setFull(false);
-    // Back to the size of the screen. A document left at 240% would come back
-    // to a header and a bar with the pages running off the side of both, and
-    // nothing on that screen says why.
-    setZoom(1);
     if (document.fullscreenElement) settle(document.exitFullscreen());
   };
-
-  if (!mode) return <div className="pdf-msg"><div className="spinner" /></div>;
 
   return (
     <>
       {/* At the top, where a thumb reaches it and nothing covers it. */}
       <div className="pdf-bar">
-        <button className="pdf-switch" onClick={() => choose(mode === 'quick' ? 'app' : 'quick')}>
-          {mode === 'quick' ? 'افتحه داخل التطبيق بدل ذلك' : 'العرض السريع — أسرع للملفات الكبيرة'}
-        </button>
-        <button className="pdf-full" onClick={enter} aria-label="ملء الشاشة" title="ملء الشاشة">
-          <Icon name="expand" size={19} />
+        <button className="pdf-full wide" onClick={enter} aria-label="ملء الشاشة">
+          <Icon name="expand" size={18} /> ملء الشاشة
         </button>
       </div>
 
-      {mode === 'quick'
-        ? <QuickView fid={fid} onFallback={() => choose('app')} zoom={zoom} />
-        : <PdfViewer
-            src={src} title={title} zoom={zoom}
-            /* Two fingers only where there is a way back out of what they
-               do. Outside ملء الشاشة the width is the column's to decide. */
-            onZoom={full ? (z) => setZoom(hold(z)) : undefined}
-            /* What الرئيسية's card is made of: the cover, and how far in you
-               got. Both are written straight through to the browser — see
-               lib/resume.js — because neither is worth a render here. */
-            onThumb={(thumb) => mark({ fid, thumb })}
-            onProgress={(page, pages) => mark({ fid, page, pages })} />}
+      <QuickView fid={fid} src={src} />
 
-      {/* The only things drawn over the pages, and among them the only way
-          back to the rest of the screen — so they stay put rather than fading
-          out after a few seconds onto a page that then looks like a dead
-          end. */}
+      {/* The only thing drawn over the pages, and the only way back to the
+          rest of the screen — so it stays put rather than fading out after a
+          few seconds onto a page that then looks like a dead end. */}
       {full && (
         <div className="pdf-tools">
-          <div className="pdf-zoom">
-            <button onClick={() => step(-1)}
-              disabled={mode === 'app' && zoom <= NEAREST + 0.001} aria-label="تصغير">
-              <Icon name="minus" size={18} />
-            </button>
-            {/* The number is the way back to the size of the screen. */}
-            <button className="pdf-zoom-n" onClick={() => setZoom(1)}
-              aria-label="ملء عرض الشاشة">
-              {Math.round(zoom * 100)}%
-            </button>
-            <button onClick={() => step(1)}
-              disabled={mode === 'app' && zoom >= FURTHEST - 0.001} aria-label="تكبير">
-              <Icon name="plus" size={18} />
-            </button>
-          </div>
-
-          {/* The way out of one reader and into the other.
-              It used to live only in the bar at the top, which ملء الشاشة
-              hides — so a student who had opened a lecture in العرض السريع
-              and gone fullscreen was left with Google's pages, Google's
-              speed, and no way to reach the renderer that draws them
-              properly without first leaving the screen they wanted. */}
-          <button className="pdf-mode" onClick={() => choose(mode === 'quick' ? 'app' : 'quick')}>
-            {mode === 'quick' ? 'داخل التطبيق' : 'العرض السريع'}
-          </button>
-
           <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
             <Icon name="shrink" size={20} />
           </button>
