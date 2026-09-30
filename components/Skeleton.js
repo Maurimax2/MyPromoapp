@@ -38,3 +38,48 @@ export function SkPost() {
     </div>
   );
 }
+
+/**
+ * A whole screen while it waits: its own header, named, over the shape of
+ * what is coming. Before these existed a tap on a screen without one left
+ * the last screen standing until the server answered — which on mobile data
+ * reads as a button that did nothing.
+ */
+export function SkScreen({ title, rows = 5, post = false, hero = false }) {
+  return (
+    <>
+      <header className="head">
+        <div className="head-row">
+          <div className="sk sk-flat" style={{ width: 40, height: 40, borderRadius: 14 }} />
+          <div className="grow">
+            {title
+              ? <div className="head-t">{title}</div>
+              : <div className="sk sk-line big" style={{ width: '50%' }} />}
+          </div>
+        </div>
+      </header>
+      <div className="scroll">
+        {hero && <div className="sk" style={{ height: 150, borderRadius: 22 }} />}
+        {Array.from({ length: rows }, (_, i) => (post ? <SkPost key={i} /> : <SkRow key={i} />))}
+      </div>
+    </>
+  );
+}
+
+/** A 3D model while its geometry arrives: the stage, and a pulse where it will stand. */
+export function SkModel() {
+  return (
+    <>
+      <header className="head" style={{ paddingBottom: 12 }}>
+        <div className="head-row">
+          <div className="sk sk-flat" style={{ width: 40, height: 40, borderRadius: 14 }} />
+          <div className="grow">
+            <div className="sk sk-line big" style={{ width: '55%' }} />
+            <div className="sk sk-line" style={{ width: '35%', marginTop: 7 }} />
+          </div>
+        </div>
+      </header>
+      <div className="sk-model"><div className="sk sk-model-core" /></div>
+    </>
+  );
+}

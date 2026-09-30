@@ -1303,6 +1303,9 @@ button.pill:active { transform: scale(.94); }
    Flat, because a line of text does not sit on its own card. */
 .sk-line { height: 14px; border-radius: 7px; box-shadow: none; background: var(--line-soft); }
 .sk-line.big { height: 21px; }
+.sk-model { flex: 1; min-height: 60dvh; display: grid; place-items: center; background: radial-gradient(circle at 50% 42%, #FBFAF6, var(--bg) 70%); }
+.sk-model-core { width: 46%; aspect-ratio: 3 / 4; border-radius: 48% 48% 44% 44%; animation: sk-breathe 1.6s ease-in-out infinite; }
+@keyframes sk-breathe { 0%, 100% { transform: scale(.94); opacity: .55; } 50% { transform: scale(1); opacity: .9; } }
 
 /* A banner in الرئيسية's rail. The real one is 82% wide so the next one
    peeks, and the skeleton has to peek too or the screen jumps sideways
