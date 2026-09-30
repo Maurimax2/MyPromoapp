@@ -16,6 +16,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import Sheet from '@/components/Sheet';
+import BadgeArt from '@/components/BadgeArt';
 import { RULES } from '@/lib/points';
 
 const TABS = [
@@ -81,7 +82,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
           <div className="badges">
             {badges.map((b) => (
               <div key={b.id} className={`badge${b.done ? ' on' : ''}`}>
-                <span className="badge-ic"><Icon name={b.icon} size={19} /></span>
+                <BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} done={b.done} size={48} />
                 <b>{b.label}</b>
                 <span className="badge-w">{b.want}</span>
                 {!b.done && (
