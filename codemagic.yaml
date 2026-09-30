@@ -1,0 +1,59 @@
+# MyPromo for iOS, built on a rented Mac (Codemagic) and sent to TestFlight.
+#
+# The app is a Capacitor shell around the live site (see NATIVE.md), so the
+# only thing that changes between builds is the native wrapper: the shell
+# opens MYPROMO_URL, which is stamped into the config just before the sync.
+#
+# One-time setup, in this order:
+#   1. Apple Developer Program, then App Store Connect → Users and Access →
+#      Integrations → App Store Connect API → make a key (role: App Manager).
+#   2. Codemagic → Teams → Integrations → App Store Connect → add that key and
+#      name it `mypromo` (the name below).
+#   3. Apple Developer → Identifiers → com.mypromo.app → tick Push
+#      Notifications.
+#   4. App Store Connect → Apps → New App, bundle id com.mypromo.app.
+#   5. Codemagic → Add application → this repo → choose `codemagic.yaml`.
+
+workflows:
+  ios:
+    name: MyPromo iOS → TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: mypromo
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.mypromo.app
+      vars:
+        MYPROMO_URL: https://mypromo-nu.vercel.app
+      node: 22
+      xcode: latest
+      cocoapods: default
+    triggering:
+      events: []          # started by hand from Codemagic, never by a push
+    scripts:
+      - name: Install dependencies
+        script: npm ci
+      - name: Point the shell at the live site and sync
+        script: |
+          node scripts/native-url.mjs
+          npx cap sync ios
+      - name: Apply the signing files
+        script: xcode-project use-profiles
+      - name: Number this build
+        script: |
+          # TestFlight refuses a build number it has already seen.
+          sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/" ios/App/App.xcodeproj/project.pbxproj
+      - name: Build the app
+        script: |
+          xcode-project build-ipa \
+            --project "ios/App/App.xcodeproj" \
+            --scheme "App"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
