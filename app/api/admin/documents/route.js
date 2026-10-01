@@ -11,8 +11,11 @@ import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { openness } from '@/lib/drive-open';
 
 export const runtime = 'nodejs';
+// A long folder is checked file by file against Google.
+export const maxDuration = 60;
 
 /**
  * Write to the log, and carry on if it cannot be written.
@@ -83,8 +86,24 @@ export async function POST(request) {
     for (const d of data || []) held.set(d.drive_id, d);
   }
 
-  const fresh = wanted.filter((r) => !held.has(r.drive_id));
+  const candidates = wanted.filter((r) => !held.has(r.drive_id));
   const again = wanted.filter((r) => held.has(r.drive_id));
+
+  // A file nobody but its owner can open must not be catalogued: the student
+  // who taps it meets a request-access screen. Only what is clearly closed is
+  // refused — a check that could not tell lets the file through. Files already
+  // in the catalogue are not re-checked here; this is about what comes in.
+  const verdict = await openness(candidates.map((r) => r.drive_id));
+  const refused = candidates.filter((r) => verdict.get(r.drive_id) === 'closed');
+  const fresh = candidates.filter((r) => verdict.get(r.drive_id) !== 'closed');
+
+  if (!fresh.length && !again.length && refused.length) {
+    return NextResponse.json({
+      error: `لم يُحفظ شيء: ${refused.length} ملفًا غير مشارك مع «أي شخص لديه الرابط»، فلن يفتحه الطلبة. `
+        + 'غيّر المشاركة في Drive إلى «أي شخص لديه الرابط — مشاهد» ثم أعد المحاولة.',
+      refused: refused.map((r) => ({ drive_id: r.drive_id, title: r.title })),
+    }, { status: 422 });
+  }
 
   if (fresh.length) {
     const { error } = await db.from('documents').insert(fresh);
@@ -101,7 +120,7 @@ export async function POST(request) {
   await note(db, {
     actor: profile.id, action: 'imported_documents',
     target_type: 'module', target_id: module,
-    detail: { added: fresh.length, updated: again.length, repeated: rows.length - wanted.length },
+    detail: { added: fresh.length, updated: again.length, repeated: rows.length - wanted.length, refused: refused.length },
   });
 
   return NextResponse.json({
@@ -109,6 +128,8 @@ export async function POST(request) {
     added: fresh.length,
     updated: again.length,
     repeated: rows.length - wanted.length,
+    // Not saved because Drive does not share them with everybody.
+    refused: refused.map((r) => ({ drive_id: r.drive_id, title: r.title })),
     // Kept for the panel: a file shared with another subject is now saved
     // here too, not left "elsewhere" waiting to be claimed.
     elsewhere: [],

@@ -192,6 +192,21 @@ export default function ImportScreen({ promos, modules, preset }) {
             </p>
           )}
 
+          {/* Not saved on purpose: nobody but the owner can open these, so a
+              student would meet a request-access screen. */}
+          {(result?.refused || []).length > 0 && (
+            <div className="admin-err" style={{ display: 'grid', gap: 6 }}>
+              <span>
+                لم يُحفظ {result.refused.length} ملفًا لأنه غير مشارك مع «أي شخص لديه الرابط».
+                غيّر المشاركة في Drive ثم أعد الاستيراد:
+              </span>
+              <span dir="ltr" style={{ fontSize: 12.5 }}>
+                {result.refused.slice(0, 5).map((f) => f.title).join(' · ')}
+                {result.refused.length > 5 ? ` … +${result.refused.length - 5}` : ''}
+              </span>
+            </div>
+          )}
+
           {result?.moved > 0 && (
             <p className="admin-card-b">
               ونُقل {result.moved} ملفًا من
