@@ -132,6 +132,21 @@ export default async function AdminHome() {
       {/* A question knows the paper it was printed on, which is where it came
           from rather than what it is about. Until somebody says which lecture
           each one revises, اختبر نفسك can only offer a student a year. */}
+      {/* Which lectures a student cannot open, because Drive stopped sharing
+          them with everybody. */}
+      <Link href="/admin/files" className="admin-card admin-import">
+        <div className="admin-import-ic" style={{ background: 'var(--clay)' }}>
+          <Icon name="alert" size={22} />
+        </div>
+        <div className="grow">
+          <div className="admin-card-t">ملفات لا يفتحها الطلبة</div>
+          <div className="admin-card-b">
+            افحص أيّ ملف في الأرشيف توقّفت مشاركته على Drive
+          </div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
+
       <Link href="/admin/lectures" className="admin-card admin-import">
         <div className="admin-import-ic" style={{ background: 'var(--olive-light)' }}>
           <Icon name="book" size={22} />

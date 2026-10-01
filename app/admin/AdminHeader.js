@@ -20,6 +20,7 @@ const TITLES = {
   '/admin/import':    'استيراد',
   '/admin/reports':   'البلاغات',
   '/admin/news':      'إعلان',
+  '/admin/files':     'ملفات مغلقة',
 };
 
 /** One level up, worked out from the path and its parameters. */
