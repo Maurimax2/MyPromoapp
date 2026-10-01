@@ -38,6 +38,7 @@ export default async function FileView({ params }) {
         src={src}
         title={file ? file.title : 'الملف'}
         subject={file?.module || null}
+        bytes={file?.mb ? Math.round(Number(file.mb) * 1048576) : null}
       />
     </>
   );

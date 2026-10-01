@@ -1851,7 +1851,6 @@ button.pill:active { transform: scale(.94); }
   color: var(--ink-3); border-inline-start: 1px solid var(--line-soft);
 }
 .pdf-full:active { color: var(--olive); background: var(--bg); }
-.pdf-full.wide { width: 100%; gap: 8px; border: 0; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--olive); }
 
 /* ملء الشاشة — الصفحات وحدها.
    `.only-pages` is put on the root element by the reader. It has to reach
