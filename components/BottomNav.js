@@ -77,7 +77,8 @@ export default function BottomNav() {
   return (
     <nav className="nav">
       {TABS.map((t) => (
-        <Link key={t.href} href={t.href} data-on={on(t.href)}>
+        <Link key={t.href} href={t.href} data-on={on(t.href)}
+          onClick={() => { try { navigator.vibrate?.(8); } catch { /* not a phone */ } }}>
           <span className="nav-ic">
             <Icon name={t.icon} size={22} />
             {t.waiting && waiting > 0 && (

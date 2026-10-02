@@ -58,6 +58,7 @@ export default function Post({ post, me }) {
 
   const like = async () => {
     const on = !liked;
+    if (on) { try { navigator.vibrate?.(10); } catch { /* not a phone */ } }
     setLiked(on); setLikes((n) => n + (on ? 1 : -1));
     const res = await fetch('/api/posts/like', {
       method: 'POST',
@@ -167,7 +168,12 @@ export default function Post({ post, me }) {
 
       <div className="post-acts">
         <button onClick={like} data-on={liked}>
-          <Icon name={liked ? 'heartFill' : 'heart'} size={18} />
+          {/* Keyed on the state, so each like starts the pop over; the little
+              hearts only fly when it is a like, never when it is taken back. */}
+          <span className={`heart${liked ? ' pop' : ''}`} key={liked ? 'on' : 'off'}>
+            <Icon name={liked ? 'heartFill' : 'heart'} size={18} />
+            {liked && <span className="heart-burst" aria-hidden="true"><i /><i /><i /><i /><i /><i /></span>}
+          </span>
           {likes || ''}
         </button>
         <button onClick={show}>
