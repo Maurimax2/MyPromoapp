@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
+import Flame from './Flame';
+import CountUp from './CountUp';
 import { record } from '@/lib/review';
 import { scored } from '@/lib/best';
 
@@ -166,6 +168,8 @@ export default function Quiz({
     const pct = Math.round((score / questions.length) * 100);
     const missed = questions.length - score;
     const ink = pct >= 75 ? 'var(--olive)' : pct >= 50 ? '#8A6A14' : 'var(--clay)';
+    // Three stars for a strong run, none for a run that got nothing.
+    const stars = pct >= 90 ? 3 : pct >= 60 ? 2 : pct > 0 ? 1 : 0;
     return (
       <div className="qz-done">
         {pct === 100 && (
@@ -186,9 +190,17 @@ export default function Quiz({
               strokeLinecap="round" strokeDasharray={SCORE} strokeDashoffset={SCORE * (1 - pct / 100)} />
           </svg>
           <span>
-            <b style={{ color: ink }} dir="ltr">{score}/{questions.length}</b>
+            <b style={{ color: ink }} dir="ltr"><CountUp to={score} ms={1100} />/{questions.length}</b>
             <s>صحيحة</s>
           </span>
+        </span>
+        <span className="qz-stars" role="img" aria-label={`${stars} من 3 نجوم`}>
+          {[0, 1, 2].map((n) => (
+            <svg key={n} className={n < stars ? 'on' : ''} style={{ animationDelay: `${1.15 + n * 0.24}s` }}
+              viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+              <path d="M12 2.6l2.8 5.9 6.5.8-4.8 4.5 1.2 6.4L12 17l-5.7 3.2 1.2-6.4L2.7 9.3l6.5-.8z" />
+            </svg>
+          ))}
         </span>
         <b className="qz-head">
           {pct === 100 ? 'كاملة!' : pct >= 75 ? 'أحسنت' : pct >= 50 ? 'لا بأس — راجع ما فاتك' : 'تحتاج مراجعة'}
@@ -233,7 +245,7 @@ export default function Quiz({
           <span className="qz-count">
             <span>السؤال <b>{i + 1}</b> من {questions.length}</span>
             {run >= 2 && (
-              <span className="qz-run" key={run}><Icon name="flame" size={14} weight="fill" /><span dir="ltr">×{run}</span></span>
+              <span className="qz-run" key={run}><Flame streak={run} size={15} /><span dir="ltr">×{run}</span></span>
             )}
           </span>
           {few ? (

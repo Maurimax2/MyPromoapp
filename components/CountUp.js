@@ -2,21 +2,21 @@
 
 // A number that arrives rather than appears.
 //
-// Counts from zero to the value over a short ease-out, once, when it first
-// shows. The final value is what is in the markup for anything that reads the
-// page without running scripts, and under reduced motion it is simply there.
+// Counts from zero to the value over a short ease-out whenever the value is
+// first shown or changes. The final value is the initial state, so a render
+// that never runs the effect (reduced motion, a failed script) still shows the
+// right number, and the effect cleans up after itself so being run twice — as
+// React does in development — only restarts the count and never strands it.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CountUp({ to, ms = 900, delay = 0 }) {
   const target = Number(to) || 0;
   const [n, setN] = useState(target);
-  const ran = useRef(false);
 
   useEffect(() => {
-    if (ran.current || target <= 0) return undefined;
-    ran.current = true;
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (target <= 0) { setN(target); return undefined; }
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) { setN(target); return undefined; }
     let raf = 0;
     let start = 0;
     setN(0);

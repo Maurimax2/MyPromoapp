@@ -4081,6 +4081,34 @@ button.pts-b:active { background: var(--olive-pale); }
   display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14.5px; font-weight: 600;
 }
 .qz-duel svg { color: #E08A5E; }
+/* The quiz, polished: options spring, the right one glows, a right verdict shines, and a finished run
+   rates itself in stars. */
+@keyframes qz-tap { 0% { transform: scale(.96); } 55% { transform: scale(1.025); } 100% { transform: none; } }
+@keyframes qz-glow { 0% { box-shadow: 0 0 0 0 rgba(31, 138, 76, .55); } 100% { box-shadow: 0 0 0 14px rgba(31, 138, 76, 0); } }
+@keyframes qz-shine { from { transform: translateX(-130%) skewX(-20deg); } to { transform: translateX(330%) skewX(-20deg); } }
+@keyframes qz-star { 0% { opacity: 0; transform: scale(.2) rotate(-70deg); } 60% { opacity: 1; transform: scale(1.3) rotate(8deg); } 100% { opacity: 1; transform: none; } }
+.qz-opt.on { animation: qz-tap .28s cubic-bezier(.2, .9, .3, 1.3); }
+.qz-opt.right { animation: qz-glow .9s ease-out; }
+.qz-verdict { position: relative; overflow: hidden; }
+.qz-verdict.ok::after {
+  content: ''; position: absolute; inset-block: 0; left: 0; width: 28%;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.65), rgba(255,255,255,0));
+  animation: qz-shine 1s .25s ease-out both; pointer-events: none;
+}
+.qz-stars { display: flex; gap: 8px; margin-top: -2px; }
+.qz-stars svg { fill: var(--line); opacity: 0; animation: qz-star .6s cubic-bezier(.2, 1.2, .35, 1) both; }
+.qz-stars svg.on { fill: #E2B33F; filter: drop-shadow(0 2px 6px rgba(226, 179, 63, .55)); }
+.qz-head, .qz-sub { animation: qz-rise .5s 1.0s cubic-bezier(.2, .8, .3, 1) both; }
+.qz-stats > span { animation: qz-rise .5s cubic-bezier(.2, .8, .3, 1) both; }
+.qz-stats > span:nth-child(1) { animation-delay: 1.35s; }
+.qz-stats > span:nth-child(2) { animation-delay: 1.5s; }
+.qz-stats > span:nth-child(3) { animation-delay: 1.65s; }
+.arena .qz-opt.right { animation-name: qz-glow-arena; }
+@keyframes qz-glow-arena { 0% { box-shadow: 0 0 0 0 rgba(111, 196, 149, .6); } 100% { box-shadow: 0 0 0 14px rgba(111, 196, 149, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .qz-opt.on, .qz-opt.right, .qz-verdict.ok::after, .qz-stars svg, .qz-head, .qz-sub, .qz-stats > span { animation: none !important; }
+  .qz-stars svg { opacity: 1; }
+}
 @media (prefers-reduced-motion: reduce) {
   .qz-q, .qz-opts.shake, .qz-mk, .qz-after, .qz-verdict svg, .qz-run, .qz-clock.out, .qz-done, .qz-score-go, .qz-confetti i { animation: none !important; }
   .qz-confetti { display: none; }
