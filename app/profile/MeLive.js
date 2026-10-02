@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import Flame from '@/components/Flame';
 import { lastWeeks, daysKnown } from '@/lib/streak';
 import { streakOf, dayOf, nextMilestone } from '@/lib/habit';
 
@@ -40,7 +41,7 @@ export default function MeLive({ points, rank, wins, days = null }) {
         <Link href="/points"><Icon name="award" size={18} /><b>{points}</b><s>نقطة</s></Link>
         <Link href="/points"><Icon name="list" size={18} /><b>{rank ? `#${rank}` : '—'}</b><s>الترتيب</s></Link>
         <Link href="/duel"><Icon name="swords" size={18} /><b>{wins}</b><s>تحدٍّ مربوح</s></Link>
-        <span className={run ? 'hot' : ''}><Icon name="flame" size={18} weight={run ? 'fill' : 'duotone'} />
+        <span className={run ? 'hot' : ''}>{run ? <Flame streak={run} size={20} /> : <Icon name="flame" size={18} weight="duotone" />}
           <b>{run}</b><s>{run === 1 ? 'يوم' : 'أيام متتالية'}</s></span>
       </div>
 
@@ -51,7 +52,7 @@ export default function MeLive({ points, rank, wins, days = null }) {
         </div>
         {(goal || freezes > 0) && run > 0 && (
           <div className="me-goal">
-            {goal && <span><Icon name="flame" size={14} weight="fill" /> {plural(goal.left)} لشارة {goal.target === 7 ? 'أسبوع كامل' : goal.target === 30 ? 'شهر كامل' : 'المئة'}</span>}
+            {goal && <span><Flame streak={run} size={14} /> {plural(goal.left)} لشارة {goal.target === 7 ? 'أسبوع كامل' : goal.target === 30 ? 'شهر كامل' : 'المئة'}</span>}
             {freezes > 0 && <span className="frz">❄ {freezes === 1 ? 'تجميد واحد يحمي سلسلتك' : 'تجميدان يحميان سلسلتك'}</span>}
           </div>
         )}

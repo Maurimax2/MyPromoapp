@@ -4749,6 +4749,63 @@ button.pts-b:active { background: var(--olive-pale); }
   color: var(--wrong); cursor: pointer;
 }
 
+/* The streak flame (components/Flame.js): it flickers, and burns hotter the longer the run. */
+.flame { position: relative; display: inline-flex; vertical-align: middle; color: #E07A46;
+  filter: drop-shadow(0 0 3px rgba(224, 122, 70, .65)); }
+.flame > svg { transform-origin: 50% 90%; animation: flame-flick 1.5s ease-in-out infinite; }
+.flame.f2 { color: #E8642C; filter: drop-shadow(0 0 5px rgba(232, 100, 44, .8)); }
+.flame.f3 { color: #F0A92E; filter: drop-shadow(0 0 7px rgba(240, 169, 46, .9)); }
+.flame.f3 > svg { animation-duration: 1.2s; }
+.flame.f4 { color: #FFC02E; filter: drop-shadow(0 0 9px rgba(255, 211, 107, 1)) drop-shadow(0 0 16px rgba(255, 140, 60, .6)); }
+.flame.f4 > svg { animation-duration: .9s; }
+.flame-ember { position: absolute; left: 50%; top: 8%; width: 3px; height: 3px; margin-left: -1.5px; border-radius: 50%;
+  background: #FFC27A; animation: flame-ember 1.8s ease-out infinite; }
+.flame.f3 .flame-ember, .flame.f4 .flame-ember { animation-duration: 1.3s; }
+@keyframes flame-flick {
+  0%, 100% { transform: scale(1, 1) rotate(-1.5deg); }
+  22% { transform: scale(.95, 1.09) rotate(2deg); }
+  48% { transform: scale(1.04, .96) rotate(-2.5deg); }
+  74% { transform: scale(.97, 1.07) rotate(1.5deg); }
+}
+@keyframes flame-ember { 0% { opacity: 0; transform: translate(0, 2px) scale(.6); } 20% { opacity: .95; } 100% { opacity: 0; transform: translate(4px, -14px) scale(.3); } }
+.me-nums > span.hot .flame { color: var(--clay); }
+.me-nums > span.hot .flame.f3 { color: #D18A12; }
+.me-nums > span.hot .flame.f4 { color: #C77A00; }
+
+/* The podium, finished: faces drop onto their pedestals, the winner glows and sparkles,
+   and the board's rows come in one after another. */
+@keyframes pod-face { 0% { opacity: 0; transform: translateY(26px) scale(.5); } 60% { opacity: 1; transform: translateY(-4px) scale(1.08); } 100% { opacity: 1; transform: none; } }
+@keyframes pod-text { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes pod-aura { 0%, 100% { box-shadow: 0 0 0 2px #D9B44A, 0 0 14px 2px rgba(217, 180, 74, .35); } 50% { box-shadow: 0 0 0 2px #E8C766, 0 0 26px 6px rgba(217, 180, 74, .6); } }
+@keyframes pod-spark { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+.pod .pod-f { animation: pod-face .7s cubic-bezier(.2, 1.2, .35, 1) both; }
+.pod1 .pod-f { animation: pod-face .7s .9s cubic-bezier(.2, 1.2, .35, 1) both, pod-aura 2.6s 1.7s ease-in-out infinite; }
+.pod2 .pod-f { animation-delay: 1.05s; }
+.pod3 .pod-f { animation-delay: 1.2s; }
+.pod .pod-n, .pod .pod-p { animation: pod-text .5s 1.3s ease both; }
+.pod1 { isolation: isolate; }
+.pod1::before, .pod1::after {
+  content: ''; position: absolute; z-index: 1; width: 9px; height: 9px; pointer-events: none;
+  background: #FFE9A6; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: pod-spark 2.2s 1.8s ease-in-out infinite;
+}
+.pod1::before { top: 18px; left: 8%; }
+.pod1::after { top: 52px; right: 6%; animation-delay: 2.7s; width: 7px; height: 7px; }
+.pts-board .pts-b { animation: pod-text .45s ease both; }
+.pts-board .pts-b:nth-child(1) { animation-delay: .1s; }
+.pts-board .pts-b:nth-child(2) { animation-delay: .16s; }
+.pts-board .pts-b:nth-child(3) { animation-delay: .22s; }
+.pts-board .pts-b:nth-child(4) { animation-delay: .28s; }
+.pts-board .pts-b:nth-child(5) { animation-delay: .34s; }
+.pts-board .pts-b:nth-child(n + 6) { animation-delay: .4s; }
+@keyframes you-glow { 0% { box-shadow: 0 0 0 0 rgba(42, 91, 62, .5); } 100% { box-shadow: 0 0 0 16px rgba(42, 91, 62, 0); } }
+.you-row { animation: you-glow 1.4s 1.4s ease-out 2; }
+@media (prefers-reduced-motion: reduce) {
+  .flame > svg, .flame-ember, .pod .pod-f, .pod .pod-n, .pod .pod-p, .pod1::before, .pod1::after,
+  .pts-board .pts-b, .you-row { animation: none !important; }
+  .flame-ember, .pod1::before, .pod1::after { display: none; }
+}
+
 /* A level, reached (app/profile/LevelUp.js). */
 .lv-medal {
   width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center;

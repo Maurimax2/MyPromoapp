@@ -23,6 +23,7 @@ import { imageThumb, pdfThumb } from '@/lib/thumb';
 import { dueCount, trackedCount } from '@/lib/review';
 import { lastOpened } from '@/lib/resume';
 import { daysKnown } from '@/lib/streak';
+import Flame from '@/components/Flame';
 import { streakOf, dayOf } from '@/lib/habit';
 import { DailyCard, Recap } from './Daily';
 import PushAsk from './PushAsk';
@@ -360,7 +361,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
           <b>أهلًا {first}</b>
           <span className="h-sub">
             {streak > 0 && (
-              <span className="h-streak"><Icon name="flame" size={13} weight="fill" /> <b>{days(streak)}</b> متتالية ·</span>
+              <span className="h-streak"><Flame streak={streak} size={14} /> <b>{days(streak)}</b> متتالية ·</span>
             )}
             <PromoSelector promos={promos} current={reading} mine={me.promo} />
           </span>

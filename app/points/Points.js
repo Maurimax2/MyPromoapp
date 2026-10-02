@@ -17,6 +17,8 @@ import Link from 'next/link';
 import Icon from '@/components/Icon';
 import Sheet from '@/components/Sheet';
 import BadgeArt from '@/components/BadgeArt';
+import Flame from '@/components/Flame';
+import CountUp from '@/components/CountUp';
 import { RULES } from '@/lib/points';
 
 const TABS = [
@@ -57,7 +59,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
       {tab === 'me' ? (
         <>
           <div className="pts-hero">
-            <div className="pts-n">{total}</div>
+            <div className="pts-n"><CountUp to={total} /></div>
             <div className="pts-l">نقطة</div>
             {total > 0 && <div className="pts-rank">المركز {rank} في دفعتك</div>}
           </div>
@@ -142,7 +144,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
                       {initials(p.name)}
                     </span>
                     <span className="pod-n">{p.name}</span>
-                    <b className="pod-p">{p.points}</b>
+                    <b className="pod-p"><CountUp to={p.points} delay={600 + place * 120} /></b>
                     <span className="pod-bar"><b>{place}</b></span>
                   </button>
                 );
@@ -185,7 +187,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
                 <span className="grow">{p.name}</span>
                 {p.streak > 0 && (
                   <span className="pts-streak" title="أيام متتالية">
-                    <Icon name="flame" size={13} weight="fill" />{p.streak}
+                    <Flame streak={p.streak} size={14} />{p.streak}
                   </span>
                 )}
                 <b>{p.points}</b>
