@@ -52,6 +52,11 @@ const SHOTS = {
   organes: ['bundle=coeur,poumons,abdomen&ghost=poumons&yaw=0&pitch=0&zoom=1.05', 360],
   molecule: ['proc=molecule&yaw=24&pitch=22&zoom=1.05', 360],
   morula: ['proc=morula&yaw=0&pitch=12&zoom=1.1', 360],
+  // Female anatomy is built, not carved: both sources are a male reference body.
+  gyneco: ['proc=gyneco&yaw=0&pitch=0&zoom=1.05', 360],
+  // Kidneys, ureters and bladder only — the urinary model also holds the male
+  // genital organs, which a urology banner has no business showing.
+  vessie: ['bundle=urinaire&only=Reins,Voies%20excr%C3%A9trices&yaw=-12&pitch=0&zoom=1.1', 360],
   cellules: ['proc=tissue&yaw=18&pitch=38&zoom=1.1', 360],
   membrane: ['proc=membrane&yaw=-25&pitch=18&zoom=1.05', 360],
   chromosomes: ['proc=chromosomes&yaw=0&pitch=0&zoom=1.05', 360],

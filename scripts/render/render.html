@@ -123,6 +123,66 @@ function morula() {
   add(new THREE.SphereGeometry(2.05, 64, 48), new THREE.MeshPhysicalMaterial({ color: 0xf6efe4, roughness: 0.15, transmission: 0.85, thickness: 0.4, transparent: true, opacity: 0.38 }));
 }
 
+function gyneco() {
+  // The female reproductive system, seen from the front: uterus with its
+  // cervix, the vagina below, a fallopian tube on each side ending in a fringe
+  // of fimbriae that reaches for the ovary, and the ovaries themselves with
+  // their follicles. The project holds no female anatomy (both sources are a
+  // male reference body), so this one is built, and drawn in a clean schematic
+  // way rather than pretending to a dissection.
+  const both = { side: THREE.DoubleSide };
+  const rose = glossy(0xc9707e, 0.38, { sheen: 1, sheenColor: 0xffc4cc, sheenRoughness: 0.5, ...both });
+  const deep = glossy(0xb25666, 0.4, { sheen: 0.8, sheenColor: 0xff9fae, ...both });
+  const tubeM = glossy(0xe9a2ac, 0.34, { sheen: 1, sheenColor: 0xffe0e4, ...both });
+  const ovM = glossy(0xe6cfae, 0.5, { sheen: 0.6, sheenColor: 0xfff3dc });
+  const folM = glossy(0xf8ecd5, 0.2, { transmission: 0.35, thickness: 0.3 });
+  const lutM = glossy(0xe2b43a, 0.4);
+  const ligM = glossy(0xd9a8a0, 0.5);
+
+  // Uterus, cervix and vagina in one profile (radius against height), then
+  // flattened front to back: the uterus is a pear that has been pressed.
+  const prof = [[0, 1.08], [0.32, 1.04], [0.56, 0.93], [0.78, 0.74], [0.9, 0.46], [0.86, 0.1], [0.68, -0.28],
+    [0.46, -0.62], [0.33, -0.86], [0.34, -1.04], [0.3, -1.2], [0.27, -1.34]].map(([r, y]) => new THREE.Vector2(r, y));
+  const body = add(new THREE.LatheGeometry(prof, 72), rose);
+  body.scale.set(1, 1, 0.62);
+  const canal = [[0.27, -1.34], [0.3, -1.6], [0.34, -2.0], [0.4, -2.4], [0.42, -2.62], [0, -2.66]].map(([r, y]) => new THREE.Vector2(r, y));
+  add(new THREE.LatheGeometry(canal, 64), deep).scale.set(1, 1, 0.7);
+  // The cervix is a slightly darker collar at the neck of the uterus.
+  add(new THREE.TorusGeometry(0.31, 0.07, 18, 48), deep, [0, -1.12, 0], [Math.PI / 2, 0, 0], [1, 0.62, 1]);
+
+  for (const side of [1, -1]) {
+    // The tube leaves the corner of the fundus, arches out and over, and
+    // drops towards the ovary.
+    const pts = [[0.74, 0.86, 0], [1.2, 1.12, 0.04], [1.78, 1.12, 0.1], [2.34, 0.88, 0.12], [2.7, 0.5, 0.1], [2.82, 0.12, 0.08]]
+      .map(([x, y, z]) => new THREE.Vector3(x * side, y, z));
+    const curve = new THREE.CatmullRomCurve3(pts);
+    add(new THREE.TubeGeometry(curve, 80, 0.125, 20, false), tubeM);
+    // The ampulla swells towards the end, then opens in a funnel of fimbriae.
+    const end = pts[pts.length - 1];
+    const tangent = curve.getTangent(1).normalize();
+    const funnel = add(new THREE.ConeGeometry(0.3, 0.4, 28, 1, true), tubeM, end.clone().add(tangent.clone().multiplyScalar(0.12)).toArray());
+    funnel.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), tangent.clone().negate());
+    for (let k = 0; k < 9; k++) {
+      const a = (k / 9) * Math.PI * 2;
+      const ortho = new THREE.Vector3(Math.cos(a), 0, Math.sin(a));
+      const fing = add(new THREE.ConeGeometry(0.06, 0.42, 10), tubeM,
+        end.clone().add(tangent.clone().multiplyScalar(0.2)).add(ortho.clone().multiplyScalar(0.2)).toArray());
+      const dir = tangent.clone().multiplyScalar(0.55).add(ortho.multiplyScalar(0.7)).normalize();
+      fing.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+    }
+
+    // The ovary hangs beside the funnel, held to the uterus by its ligament.
+    const oc = new THREE.Vector3(2.62 * side, -0.46, 0.02);
+    add(new THREE.SphereGeometry(1, 56, 40), ovM, oc.toArray(), [0, 0, side * -0.35], [0.66, 0.44, 0.4]);
+    for (const [fx, fy, fz, fs] of [[0.22, 0.12, 0.34, 0.15], [-0.26, -0.04, 0.36, 0.12], [0.05, -0.2, 0.38, 0.1], [-0.06, 0.26, 0.32, 0.09]]) {
+      add(new THREE.SphereGeometry(1, 20, 14), folM, [oc.x + fx * side, oc.y + fy, oc.z + fz], [0, 0, 0], fs);
+    }
+    add(new THREE.SphereGeometry(1, 24, 18), lutM, [oc.x - 0.36 * side, oc.y - 0.1, oc.z + 0.3], [0, 0, 0], 0.11);
+    const lig = new THREE.CatmullRomCurve3([new THREE.Vector3(0.82 * side, 0.3, 0.02), new THREE.Vector3(1.5 * side, -0.05, 0.04), new THREE.Vector3(2.16 * side, -0.38, 0.03)]);
+    add(new THREE.TubeGeometry(lig, 30, 0.06, 12, false), ligM);
+  }
+}
+
 function tissue() {
   const g = new THREE.SphereGeometry(1, 64, 48);
   const cyto = new THREE.MeshPhysicalMaterial({ color: 0xeeb2c2, roughness: 0.3, clearcoat: 0.7, transmission: 0.55, thickness: 0.8, transparent: true, opacity: 0.82 });
@@ -321,7 +381,7 @@ function membrane() {
   for (const [x, y, z, s] of [[0, 1.75, 0.1, 0.16], [0.35, 2.3, -0.2, 0.14], [0, 0.4, 0, 0.15], [-0.1, -1.6, 0.1, 0.16], [0.4, -2.1, 0.3, 0.13]]) add(new THREE.SphereGeometry(1, 24, 16), ion, [x, y, z], [0, 0, 0], s);
 }
 
-const BUILD = { membrane, molecule, morula, tissue, chromosomes, blood, antibodies, bacteria, virus, pills, worm, infection, hospital, chart, lang };
+const BUILD = { membrane, molecule, morula, gyneco, tissue, chromosomes, blood, antibodies, bacteria, virus, pills, worm, infection, hospital, chart, lang };
 const proc = q.get('proc');
 if (proc) await BUILD[proc]();
 else await bundles(q.get('bundle').split(','));
