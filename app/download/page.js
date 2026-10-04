@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Logo from '@/components/Logo';
 import Icon from '@/components/Icon';
 
@@ -60,7 +59,6 @@ export default function Download() {
         ))}
       </ol>
 
-      <Link href="/login" className="dl-web">أو افتح الموقع مباشرة ←</Link>
     </main>
   );
 }
