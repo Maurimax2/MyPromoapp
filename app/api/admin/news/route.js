@@ -12,6 +12,7 @@ import { currentProfile, isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { pushTo, pushReady, later } from '@/lib/push';
 import { fcmReady } from '@/lib/fcm';
+import { webReady } from '@/lib/webpush';
 
 export const runtime = 'nodejs';
 // A push to a whole faculty is a couple of thousand requests.
@@ -53,7 +54,7 @@ export async function POST(request) {
         })).sent || 0
       : 0;
     return NextResponse.json({
-      test: true, ready: pushReady(), fcm: fcmReady(), table: !noTable,
+      test: true, ready: pushReady(), fcm: fcmReady(), web: webReady(), table: !noTable,
       devices: (mine || []).map((d) => d.platform), sent,
     });
   }

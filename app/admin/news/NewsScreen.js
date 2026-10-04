@@ -54,7 +54,9 @@ export default function NewsScreen({ years, past, ready }) {
     const d = await res.json().catch(() => ({}));
     if (!res.ok) { setProbe(d.error || 'تعذّرت التجربة'); return; }
     if (!d.table) setProbe('جدول الأجهزة غير موجود — الصق supabase/push.sql في Supabase.');
-    else if (!d.ready) setProbe('الخادم لا يملك مفتاح الإرسال — تحقّق من FIREBASE_SERVICE_ACCOUNT في Vercel ثم أعد النشر.');
+    else if (!d.ready) setProbe('الخادم لا يملك أيّ مفتاح إرسال — لا FIREBASE_SERVICE_ACCOUNT ولا مفاتيح VAPID. أضفها في Vercel ثم أعد النشر.');
+    else if (d.devices.includes('android') && !d.fcm) setProbe('جهازك أندرويد لكن مفتاح Firebase غير موجود أو غير صالح في Vercel (FIREBASE_SERVICE_ACCOUNT).');
+    else if (d.devices.includes('web') && !d.web) setProbe('جهازك متصفح لكن مفاتيح VAPID غير موجودة في Vercel (VAPID_PRIVATE_KEY).');
     else if (!d.devices.length) setProbe('لا جهاز مسجَّل لحسابك. افتح التطبيق على الهاتف بهذا الحساب نفسه وفعّل الإشعارات.');
     else if (!d.sent) setProbe(`وُجد جهاز (${d.devices.join('، ')}) لكن الإرسال فشل — المفتاح غير صالح أو الجهاز لا يستقبل.`);
     else setProbe(`أُرسلت تجربة إلى ${d.sent} جهاز — انظر إلى هاتفك.`);
