@@ -20,6 +20,14 @@ export default async function WaitingPage() {
 
   const staff = ['owner', 'admin', 'editor'].includes(me.role);
 
+  // Accounts made while approval was still by hand are waiting on a person who
+  // is no longer in the loop. Let them in here, once; a refusal stays refused.
+  if (me.status === 'pending') {
+    const { error } = await supabaseAdmin().from('profiles')
+      .update({ status: 'approved' }).eq('id', me.id).eq('status', 'pending');
+    if (!error) me.status = 'approved';
+  }
+
   const [{ data: years }, { data: priv, error: privError }] = await Promise.all([
     // Asked of the database, so a year the panel added is choosable at once,
     // in the panel's order — and with the service key, because an account

@@ -175,19 +175,20 @@ terms in Arabic — French is a necessity, not a preference.
   pieces and believes the header; if the upstream ignores Range, every piece
   comes back as the whole file.
 
-## Two ways to read a file
+## One way to read a file
 
-- **العرض السريع** is Google's own preview in a frame on our screen: Google
-  draws the pages and sends pictures, so a 40 MB scan starts at once instead
-  of arriving whole. Default for anything over 8 MB.
-- **Our renderer** for the rest — better typography, our fonts, our page
-  handling — and it must fetch the whole document first.
-- Either way the student stays on our screen. The rule was never "no iframe",
-  it was never handing them to the Drive app.
-- The choice is remembered per device, and if Google refuses to be framed the
-  fallback is one tap.
+- **العرض السريع only.** Google's own preview, in a frame on our screen: Google
+  draws the pages and sends pictures, so a 40 MB scan starts at once.
+- **Our own renderer (`PdfViewer`) was removed** on the owner's word — it had
+  to fetch the whole document first and students found it slow. Do not bring
+  it back, and do not add a switch between readers.
+- The student stays on our screen. The rule was never "no iframe", it was
+  never handing them to the Drive app. If Google refuses to be framed, the
+  fallback is the download, through `/api/file`.
+- «تابع من حيث توقّفت» still records which lecture was opened, but no longer
+  the page reached or a cover picture: only our renderer could know those.
 - **The bottom bar is hidden on a file.** It used to cover the last inch of
-  every lecture, and the control for switching.
+  every lecture.
 
 ## The file viewer
 

@@ -101,7 +101,10 @@ export async function POST(request) {
     matricule: number || null,
     username: handle,
     role: 'student',
-    status: 'pending',
+    // Let in at once. Approval was a person reading a list, and a class handed
+    // the app on the same morning cannot wait for one. A refusal is still a
+    // thing staff can do afterwards, from اللوحة ← الأعضاء.
+    status: 'approved',
   };
   let { error: profileError } = await db.from('profiles').insert(row);
 

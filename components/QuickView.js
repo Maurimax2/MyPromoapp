@@ -2,20 +2,18 @@
 
 // Reading a lecture without pulling it onto the phone first.
 //
-// Our own renderer downloads the whole PDF and draws it — good typography,
-// our fonts, our memory rules, and on a 40 MB scan over LTE it is a long
-// wait before the first page. Google renders the pages on their side and
-// sends images as you scroll, which for the big scanned lectures is the
-// difference between two seconds and two minutes.
+// Google renders the pages on their side and sends images as you scroll, which
+// for the big scanned lectures is the difference between two seconds and two
+// minutes. It is the only reader: it is still inside MyPromo — an iframe on
+// our own screen, not the student handed to the Drive app.
 //
-// It is still inside MyPromo: an iframe on our own screen, not the student
-// handed to the Drive app. If Google refuses to frame it — Safari blocks
-// some third-party frames — the fallback is our renderer, one tap away.
+// If Google refuses to frame the file (Safari blocks some third-party frames)
+// the way out is the download, through our own route.
 
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 
-export default function QuickView({ fid, onFallback }) {
+export default function QuickView({ fid, src }) {
   const [failed, setFailed] = useState(false);
   const frame = useRef(null);
 
@@ -33,9 +31,9 @@ export default function QuickView({ fid, onFallback }) {
       <div className="pdf-msg">
         <Icon name="alert" size={26} />
         <span>تعذّر العرض السريع لهذا الملف.</span>
-        <button className="btn p" style={{ maxWidth: 240 }} onClick={onFallback}>
-          افتحه داخل التطبيق
-        </button>
+        <a className="btn p" style={{ maxWidth: 240 }} href={src} download>
+          حمّل الملف
+        </a>
       </div>
     );
   }

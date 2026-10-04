@@ -1,10 +1,8 @@
 // Where the emailed link lands.
 //
 // Exchanges the code for a session, then makes sure the person has a profile.
-// A profile is created `pending` — signing in is not the same as being let in,
-// and an admin decides the difference. The exception is the staff listed in
-// ADMIN_EMAILS, who are approved on sight so that somebody can let the first
-// student in.
+// A profile is created `approved`: a new account is let in at once, and staff
+// can still refuse one afterwards from اللوحة ← الأعضاء.
 //
 // Staff land in the panel, not the app. For now that is everyone who signs
 // in: only the four of us use the web app, and we use it to load the
@@ -43,7 +41,7 @@ export async function GET(request) {
       id: user.id,
       email: user.email,
       role: staff ? 'admin' : 'student',
-      status: staff ? 'approved' : 'pending',
+      status: 'approved',
     };
     await admin.from('profiles').insert(profile);
   } else {
