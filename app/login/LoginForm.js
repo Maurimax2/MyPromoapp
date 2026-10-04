@@ -35,7 +35,11 @@ export default function LoginForm({ years = PROMOS }) {
   // Google refuses to sign in inside an app's own web view, so the button
   // shows on the website only until the app has its own Google sign-in.
   const [web, setWeb] = useState(false);
-  useEffect(() => { setWeb(!window.Capacitor?.isNativePlatform?.()); }, []);
+  // Neither the phone app nor the laptop app can show Google's sign-in: Google
+  // refuses to run inside an embedded window.
+  useEffect(() => {
+    setWeb(!window.Capacitor?.isNativePlatform?.() && !/MyPromoDesktop/.test(navigator.userAgent));
+  }, []);
 
   const chosen = years.find((y) => y.id === promo);
   const first = chosen ? isFirstYear(chosen) : null;

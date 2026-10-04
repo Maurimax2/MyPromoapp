@@ -22,6 +22,7 @@ export const metadata = {
 // ask how big it is. Change both when a new APK replaces public/MyPromo.apk.
 const VERSION = '1.0.4';
 const SIZE = '4.8';
+const WIN_SIZE = '0.9';
 
 const STEPS = [
   ['اضغط «تحميل التطبيق»', 'يبدأ التحميل فورًا، والملف صغير.'],
@@ -58,6 +59,18 @@ export default function Download() {
           </li>
         ))}
       </ol>
+
+      <a className="dl-go win" href="/MyPromo.exe" download="MyPromo.exe">
+        <Icon name="download" size={22} />
+        <span>
+          <b>تحميل التطبيق للحاسوب (Windows)</b>
+          <s dir="ltr">EXE · {WIN_SIZE} MB · Windows 10 / 11</s>
+        </span>
+      </a>
+      <p className="dl-win-note">
+        شغّل الملف مباشرة، دون تثبيت. إن ظهرت «Windows protected your PC» فاضغط
+        <bdi dir="ltr"> More info </bdi> ثم <bdi dir="ltr"> Run anyway</bdi> — التطبيق غير موقَّع بعد.
+      </p>
 
     </main>
   );

@@ -13,7 +13,7 @@ import { screenOf } from '@/lib/activity';
 
 export const runtime = 'nodejs';
 
-const PLATFORMS = ['app', 'pwa', 'web'];
+const PLATFORMS = ['app', 'desktop', 'pwa', 'web'];
 const missing = (e) => /presence|app_opens|relation|does not exist|schema cache/i.test(e?.message || '');
 
 export async function POST(request) {

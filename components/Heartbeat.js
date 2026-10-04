@@ -19,6 +19,7 @@ const LAST = 'mypromo.ping';
 
 function platform() {
   if (window.Capacitor?.isNativePlatform?.()) return 'app';
+  if (/MyPromoDesktop/.test(navigator.userAgent)) return 'desktop';
   if (window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone) return 'pwa';
   return 'web';
 }

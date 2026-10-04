@@ -30,6 +30,14 @@ const nextConfig = {
       source: '/anatomy/:path*',
       headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
     }, {
+      // The laptop app: a window around the site, ~1 MB.
+      source: '/MyPromo.exe',
+      headers: [
+        { key: 'Content-Type', value: 'application/vnd.microsoft.portable-executable' },
+        { key: 'Content-Disposition', value: 'attachment; filename="MyPromo.exe"' },
+        { key: 'Cache-Control', value: 'public, max-age=300' },
+      ],
+    }, {
       // The Android app, handed out from /download. Told what it is so a
       // phone installs it rather than showing it as text, and kept for only a
       // few minutes so a new build replaces the old one quickly.

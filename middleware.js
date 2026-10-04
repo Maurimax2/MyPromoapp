@@ -156,6 +156,6 @@ export const config = {
     //
     // `sw.js` is the push worker: the browser re-fetches it on its own
     // schedule, and a redirect to the door in answer would break it.
-    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico|apk)$).*)',
+    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico|apk|exe)$).*)',
   ],
 };

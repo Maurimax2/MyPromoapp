@@ -18,7 +18,7 @@ create table if not exists presence (
   person      uuid primary key references profiles on delete cascade,
   promo       text,
   screen      text        not null default 'feed',
-  platform    text        not null default 'web',     -- app | pwa | web
+  platform    text        not null default 'web',     -- app | desktop | pwa | web
   first_seen  timestamptz not null default now(),
   seen_at     timestamptz not null default now(),
   opens       int         not null default 0
