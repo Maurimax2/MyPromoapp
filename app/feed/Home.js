@@ -25,7 +25,8 @@ import { lastOpened } from '@/lib/resume';
 import { daysKnown } from '@/lib/streak';
 import Flame from '@/components/Flame';
 import { streakOf, dayOf } from '@/lib/habit';
-import { DailyCard, Recap } from './Daily';
+import NextUp from './NextUp';
+import Welcome from '@/components/Welcome';
 import PushAsk from './PushAsk';
 import { artOf } from '@/lib/subjectArt';
 
@@ -257,7 +258,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
                                promos = [], reading, unseen = 0,
                                studying = [], rooms = [], duels = [], rivals = [],
                                readError = null, refused = 0,
-                               daily = null, today = 0, habitDays = null, recap = null }) {
+                               next = null, term = null, now = 0, habitDays = null }) {
   const router = useRouter();
   // These three live in this browser, so they can only be read once we are in
   // one. Until then each draws its own resting state rather than a number that
@@ -373,12 +374,12 @@ export default function Home({ me, posts, subjects, mySubjects = [],
         </Link>
       </header>
 
+      <Welcome name={me.name} ready={me.approved && !!me.promo} />
+
       <div className="scroll flow h-flow">
+        {next && next.length > 0 && <NextUp sessions={next} term={term} now={now} />}
+
         <Here studying={studying} rooms={rooms} />
-
-        <Recap recap={recap} />
-
-        {daily && <DailyCard q={daily.q} mine={daily.mine} tally={daily.tally} today={today} />}
 
         <PushAsk />
 

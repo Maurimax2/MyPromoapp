@@ -7,11 +7,25 @@ import { stage } from '@/lib/duel';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
 import { isHere } from '@/lib/rooms';
-import { dailyQuestion, shown, dailyTally, myDaily } from '@/lib/daily';
-import { streaksOf, studiedToday } from '@/lib/days';
-import { dayOf, weekStart } from '@/lib/habit';
+import { streaksOf } from '@/lib/days';
+import { sessionsOf, hasPlanning, LECTURE } from '@/lib/timetable';
+import { withLinks } from '@/lib/timetable-links';
 
 export const dynamic = 'force-dynamic';
+
+// From today on, up to the sixth lecture — and everything before it, because
+// the rows between (a week of «Vacances», a day left for revision) are what
+// say why nothing is on. Counting rows instead stops short inside a holiday.
+function soon(sessions, today) {
+  const out = [];
+  let lectures = 0;
+  for (const x of sessions) {
+    if (x.date < today) continue;
+    out.push(x);
+    if (LECTURE.has(x.kind) && ++lectures >= 6) break;
+  }
+  return out;
+}
 
 // Two letters and a name. A promo is small enough that everyone knows every
 // face, so initials read as people rather than as placeholders.
@@ -51,6 +65,19 @@ export default async function Feed() {
   // that arrives. The rail starts on the cookie's word meanwhile.
   const guess = await browsingPromo(profile, null);
 
+  // The planning's next few sessions: everything from today on, enough to
+  // say what is live, what is next, and why an empty day is empty.
+  const rendered = Date.now();
+  const planned = hasPlanning(promo) ? sessionsOf(promo) : [];
+  const term = planned.length ? { first: planned[0].date, last: planned.at(-1).date } : null;
+  const today = new Date(rendered).toISOString().slice(0, 10);
+  const subjectsP = subjectsOf(promo);
+  const upcomingP = planned.length
+    ? subjectsP.then((rows) => withLinks(
+        soon(planned, today),
+        rows.map((m) => ({ id: m.id, name: m.name })), sb))
+    : Promise.resolve([]);
+
   const [
     years,
     { data: rows, error: readError },
@@ -62,10 +89,7 @@ export default async function Feed() {
     subjectRows,
     { counts },
     guessedRail,
-    daily,
-    answered,
-    tally,
-    today,
+    upcoming,
     habit,
   ] = await Promise.all([
     promosOf(),
@@ -112,15 +136,13 @@ export default async function Feed() {
       .eq('promo', promo).eq('status', 'approved')
       .neq('id', profile.id)
       .limit(24),
-    subjectsOf(promo),
+    subjectsP,
     moduleCounts(),
     subjectRail(guess),
-    // The daily habit (habits.sql): today's question for the year, whether I
-    // answered it, how the year did, who studied today, and my own days.
-    dailyQuestion(promo),
-    myDaily(profile.id),
-    dailyTally(promo),
-    studiedToday(promo),
+    // What the faculty's planning has next for my year, with a way to revise
+    // each — read beside everything else, so it costs no wait of its own.
+    upcomingP,
+    // My own days (habits.sql), for the flame.
     streaksOf([profile.id]),
   ]);
 
@@ -203,22 +225,7 @@ export default async function Feed() {
       .map((m) => ({ ...m, url: urlFor(m.path) })),
   }));
 
-  // The question, without its answer unless it has been answered already.
-  const q = answered?.off ? null : shown(daily);
-  if (q && answered?.answered) { q.answer = daily.answer; q.why = daily.why; }
-
-  // Saturday and Sunday: how the week that ended went.
   const myHabit = habit.get(profile.id);
-  const dow = new Date().getUTCDay();
-  let recap = null;
-  if ((dow === 6 || dow === 0) && myHabit) {
-    const thisWeek = weekStart();
-    const lastWeek = dayOf(Date.parse(`${thisWeek}T00:00:00Z`) - 7 * 86400000);
-    const days = [...myHabit.days.keys()].filter((d) => d >= lastWeek && d < thisWeek).length;
-    const { count } = await admin.from('daily_answers').select('person', { count: 'exact', head: true })
-      .eq('person', profile.id).eq('correct', true).gte('day', lastWeek).lt('day', thisWeek);
-    if (days || count) recap = { days, right: count || 0 };
-  }
 
   const subjects = rail.map((m) => ({
     id: m.id,
@@ -248,10 +255,10 @@ export default async function Feed() {
       rooms={rooms}
       duels={duels}
       rivals={rivals}
-      daily={q ? { q, mine: answered, tally } : null}
-      today={today}
+      next={upcoming}
+      term={term}
+      now={rendered}
       habitDays={myHabit ? Object.fromEntries(myHabit.days) : null}
-      recap={recap}
     />
   );
 }

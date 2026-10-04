@@ -432,3 +432,28 @@ missing from both sources, and is not faked:
 - **Run it before sending it.** `npm run mock` stands up a Supabase in memory
   and the app can then be driven in a browser. Compiling is not testing:
   "the button does nothing" only ever shows up when you click it.
+
+## الجدول والمحاضرة القادمة
+
+- **The planning is the faculty's, and it is a plan, not a promise.** A PDF per
+  year, read by `scripts/build-timetable.mjs` into `lib/timetable-data.json`
+  (semester 1, 2026-2027). Rerun it with the next semester's PDFs; nothing else
+  changes. Row borders are found on the rendered page because the cells are
+  centred and run over several lines — reading the text in order puts a title on
+  the neighbouring row.
+- **Three promos read one file, one promo reads two**: PCEM1, PCED1 and PCEP1
+  share `PCEM1-PCED1-PCEP1`; PCEP1 also has its own `PCEP1` (`FILES` in
+  `lib/timetable.js`).
+- **The phone never imports the data.** `lib/timetable-core.js` is logic with no
+  data and is what client components import; `lib/timetable.js` holds the
+  semester and is server only. Importing it from a client file ships ~190 KB to
+  every student.
+- **A lecture is linked only when it can be told which file it is** (two words
+  in common and half of the session's own); otherwise the subject, otherwise
+  nothing. A wrong chapter the night before an exam is worse than no link.
+- **سؤال اليوم is gone from الرئيسية.** The owner's rule: only what students
+  have studied. The card, the weekend recap and the evening reminder's question
+  went with it; `lib/daily.js` and `/api/daily` remain only because old answers
+  still count toward points.
+- The welcome (`components/Welcome.js`) is shown once per phone and again from
+  أنا ← جولة في التطبيق.

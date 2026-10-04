@@ -4,7 +4,7 @@
 // not studied today. One of two things, never both:
 //
 //   a streak that ends tonight  «سلسلتك: 12 يومًا — لا تكسرها الليلة»
-//   no streak                   «سؤال اليوم بانتظارك» and its question
+//   no streak                   tomorrow's first lecture, so it can be read tonight
 //
 // Somebody who has not opened a lecture in two weeks is not nagged every
 // evening — once a week, on Saturday, when the week and its board are new.
@@ -17,7 +17,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 import { pushTo, pushReady } from '@/lib/push';
 import { streaksOf } from '@/lib/days';
 import { dayOf } from '@/lib/habit';
-import { dailyQuestion } from '@/lib/daily';
+import { sessionsOf, hasPlanning, agenda } from '@/lib/timetable';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -105,17 +105,24 @@ export async function GET(request) {
   for (const [run, who] of streakers) {
     const r = await pushTo(who, {
       kind: 'streak', title: `🔥 ${plural(run)} متتالية`,
-      body: 'سلسلتك تنتهي الليلة — افتح محاضرة أو أجب سؤال اليوم لتبقيها', url: '/feed', tag: 'remind',
+      body: 'سلسلتك تنتهي الليلة — افتح محاضرة أو أجب عن أسئلة المراجعة لتبقيها', url: '/feed', tag: 'remind',
     });
     sent += r.sent || 0;
   }
   for (const [promo, who] of askers) {
-    const q = await dailyQuestion(promo).catch(() => null);
-    const stem = q?.stem ? (q.stem.length > 110 ? `${q.stem.slice(0, 109)}…` : q.stem) : null;
-    const r = await pushTo(who, {
-      kind: 'daily', title: saturday ? 'أسبوع جديد، ترتيب جديد' : 'سؤال اليوم بانتظارك',
-      body: stem || 'سؤال واحد، دقيقة واحدة — وتبدأ سلسلتك', url: '/feed', tag: 'remind',
-    });
+    // What the faculty's planning has tomorrow. A reminder that says which
+    // lecture is better than one that says "study".
+    const next = hasPlanning(promo) ? agenda(sessionsOf(promo)).next : null;
+    const soon = next && next.daysTo <= 1 ? next : null;
+    const r = await pushTo(who, soon
+      ? {
+          kind: 'daily', title: 'محاضرتك القادمة', url: '/timetable', tag: 'remind',
+          body: `${soon.module}${soon.title ? ` — ${soon.title}` : ''} · ${soon.start}`.slice(0, 140),
+        }
+      : {
+          kind: 'daily', title: saturday ? 'أسبوع جديد، ترتيب جديد' : 'وقت المراجعة', url: '/feed', tag: 'remind',
+          body: 'سؤال أو اثنان مما درسته — دقيقة واحدة وتبدأ سلسلتك',
+        });
     sent += r.sent || 0;
   }
 

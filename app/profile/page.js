@@ -164,6 +164,12 @@ export default async function Profile() {
             <s>الإعدادات</s>
             <Icon name="chev" size={15} />
           </Link>
+          <Link href="/feed?tour=1">
+            <span className="me-list-ic"><Icon name="sparkle" size={19} /></span>
+            <span className="grow">جولة في التطبيق</span>
+            <s>من جديد</s>
+            <Icon name="chev" size={15} />
+          </Link>
           <Link href="/points">
             <span className="me-list-ic"><Icon name="award" size={19} /></span>
             <span className="grow">نقاطك بالتفصيل</span>
