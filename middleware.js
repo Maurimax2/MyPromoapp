@@ -102,8 +102,12 @@ export async function middleware(request) {
   // next month is the one that forgets.
   if (!user) {
     const to = request.nextUrl.clone();
+    // A link somebody sent — a private room — must survive the sign-in it
+    // sends them through, or the friend lands on الرئيسية and the invitation
+    // is lost. Only the rooms' door is remembered: anywhere else is just home.
+    const back = path.startsWith('/rooms/join/') ? `${path}${request.nextUrl.search}` : null;
     to.pathname = '/login';
-    to.search = '';
+    to.search = back ? `?next=${encodeURIComponent(back)}` : '';
     return NextResponse.redirect(to);
   }
 

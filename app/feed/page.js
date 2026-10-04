@@ -110,10 +110,14 @@ export default async function Feed() {
     // one thing on this screen that is true only at this second, so it is
     // never cached and never guessed at.
     (async () => {
-      const { data: open } = await sb.from('rooms')
-        .select('id, title, topic, module, capacity, created_at')
+      // `*` and a filter here, not a column in the query: a database that has
+      // not had rooms-private.sql has no `private`, and naming it would hide
+      // every room until it did. A private room is never offered.
+      const { data: every } = await sb.from('rooms')
+        .select('*')
         .eq('promo', promo).eq('closed', false)
-        .order('created_at', { ascending: false }).limit(12);
+        .order('created_at', { ascending: false }).limit(24);
+      const open = (every || []).filter((r) => !r.private).slice(0, 12);
       const ids = (open || []).map((r) => r.id);
       const { data: seated } = ids.length
         ? await sb.from('room_members')

@@ -18,5 +18,10 @@ export async function GET(request) {
     : profile.status !== 'approved' && !['owner', 'admin', 'editor'].includes(profile.role)
       ? '/waiting'
       : homeFor(profile);
+  // The link they came for, when it is one of ours and they are let in: a path
+  // inside the app, never another site and never the door itself.
+  const next = new URL(request.url).searchParams.get('next');
+  const safe = next && /^\/rooms\/join\/[A-Za-z0-9_-]+$/.test(next);
+  if (safe && where === homeFor(profile)) return NextResponse.redirect(new URL(next, originOf(request)));
   return NextResponse.redirect(new URL(where, originOf(request)));
 }

@@ -472,3 +472,29 @@ missing from both sources, and is not faked:
   screen nobody listed is «أخرى», not dropped.
 - Both tables have row-level security on and no policy: only the server's
   service key reads or writes them, and only an admin sees the numbers.
+
+## غرف خاصة
+
+- **A private room does not exist for anybody without its link.** Not listed on
+  غرف الدراسة, not counted in «يدرسون الآن», not announced to friends, and the
+  room page answers anyone who is not in it as if there were nothing there. The
+  link is `/rooms/join/<code>`; the code is 16 random characters, kept in
+  `rooms.code`, and only people already inside are ever sent it.
+- **Whoever has the link may enter, from any year.** A private room is the one
+  place a PCEP1 student and a PCEM2 student can sit together, so its pages read
+  with the server's key and authorise in code — a student's own key sees only
+  their promo.
+- `rooms_read` must not ask `room_members` (whose policy asks `rooms`):
+  Postgres refuses that as infinite recursion. **If `social.sql` is ever pasted
+  again it puts the old policies back — paste `rooms-private.sql` after it.**
+- A link survives sign-in: the middleware sends a signed-out visitor to
+  `/login?next=…` for `/rooms/join/*` only, and `/auth/home` honours exactly
+  that shape and nothing else.
+
+## The icon on an iPhone's home screen
+
+- `app/apple-icon.png` (180×180, opaque) and the manifest icons are cut from
+  the one official icon by `scripts/web-icons.mjs`. They had been a separate
+  drawing with the mark 12 px low in 512. iOS fills transparency with black, so
+  never ship one with an alpha channel. A phone that already added the site
+  keeps the old picture until the icon is removed and added again.

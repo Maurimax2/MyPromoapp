@@ -7,12 +7,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 
-export default function RoomList({ rooms, subjects, me }) {
+export default function RoomList({ rooms, secret = [], subjects, me }) {
   const router = useRouter();
   const [making, setMaking] = useState(false);
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [module, setModule] = useState('');
+  const [secretly, setSecretly] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
@@ -23,7 +24,7 @@ export default function RoomList({ rooms, subjects, me }) {
     const res = await fetch('/api/rooms', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ title, topic, module: module || null }),
+      body: JSON.stringify({ title, topic, module: module || null, private: secretly }),
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
@@ -66,12 +67,26 @@ export default function RoomList({ rooms, subjects, me }) {
               value={title} onChange={(e) => setTitle(e.target.value)} aria-label="اسم الغرفة" />
             <input className="admin-input" placeholder="ماذا ستراجعون؟ (اختياري)"
               value={topic} onChange={(e) => setTopic(e.target.value)} aria-label="الموضوع" />
+            {/* Public: listed for your year. Private: nobody sees it, and it is
+                entered with a link you send. */}
+            <div className="rl-kind" role="radiogroup" aria-label="نوع الغرفة">
+              <button type="button" role="radio" aria-checked={!secretly} data-on={!secretly} onClick={() => setSecretly(false)}>
+                <Icon name="friends" size={17} />
+                <b>عامة</b>
+                <s>تظهر لدفعتك ويدخلها من يشاء</s>
+              </button>
+              <button type="button" role="radio" aria-checked={secretly} data-on={secretly} onClick={() => setSecretly(true)}>
+                <Icon name="lock" size={17} />
+                <b>خاصة</b>
+                <s>لا تظهر لأحد — تدخلها برابط ترسله لأصدقائك</s>
+              </button>
+            </div>
             <select className="admin-input" value={module} onChange={(e) => setModule(e.target.value)}>
               <option value="">بلا مادة</option>
               {subjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
             <div className="usr-acts">
-              <button className="btn p sm" disabled={busy || !title.trim()}>افتح</button>
+              <button className="btn p sm" disabled={busy || !title.trim()}>{secretly ? 'افتح غرفة خاصة' : 'افتح'}</button>
               <button type="button" className="btn g sm" onClick={() => setMaking(false)}>ألغِ</button>
             </div>
           </form>
@@ -83,6 +98,25 @@ export default function RoomList({ rooms, subjects, me }) {
               <div className="admin-card-b">ادرسوا معًا في نفس الوقت</div>
             </div>
           </button>
+        )}
+
+        {secret.length > 0 && (
+          <>
+            <div className="admin-bar"><span>غرفك الخاصة</span><span>{secret.length}</span></div>
+            {secret.map((r) => (
+              <Link key={r.id} href={`/rooms/${r.id}`} className="room rl-secret">
+                <div className="room-top">
+                  <span className="rl-lock"><Icon name="lock" size={16} /></span>
+                  <div className="grow">
+                    <div className="room-t">{r.title}</div>
+                    {r.topic && <div className="room-b" dir="auto">{r.topic}</div>}
+                  </div>
+                  <Icon name="chev" size={16} />
+                </div>
+              </Link>
+            ))}
+            {rooms.length > 0 && <div className="admin-bar"><span>غرف دفعتك</span><span>{rooms.length}</span></div>}
+          </>
         )}
 
         {rooms.map((r) => (

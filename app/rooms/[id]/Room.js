@@ -292,6 +292,18 @@ export default function Room({ room, subject, people, here, first, regions, me }
     setNow(Date.now());
   };
 
+  // Hand the invitation to the phone's own share sheet when it has one — the
+  // quickest way into a WhatsApp chat — and to the clipboard when it does not.
+  const [copied, setCopied] = useState(false);
+  const invite = async () => {
+    const link = `${window.location.origin}/rooms/join/${room.code}`;
+    const text = `تعال ندرس معًا في «${room.title}» على MyPromo`;
+    try {
+      if (navigator.share) { await navigator.share({ title: 'MyPromo', text, url: link }); return; }
+    } catch { /* closed the sheet: nothing to do */ return; }
+    try { await navigator.clipboard.writeText(`${text}\n${link}`); setCopied(true); setTimeout(() => setCopied(false), 3500); } catch { /* the page can still be copied from the address bar */ }
+  };
+
   const leave = async (close = false) => {
     await fetch('/api/rooms', {
       method: 'PATCH',
@@ -367,10 +379,23 @@ export default function Room({ room, subject, people, here, first, regions, me }
           <b>{room.title}</b>
           <s dir="auto">{room.topic || 'مراجعة'}</s>
         </span>
+        {room.private && <span className="rm-lock" title="غرفة خاصة"><Icon name="lock" size={14} /></span>}
         {room.closed
           ? <span className="rm-live shut">أُغلقت</span>
           : <span className="rm-live"><i />مباشر · {sitting.length}</span>}
       </div>
+
+      {/* The way a friend comes in. Only people already in the room hold the
+          code, so only they can pass it on. */}
+      {room.private && room.code && !room.closed && (
+        <button className="rm-invite" onClick={invite}>
+          <Icon name="share" size={17} />
+          <span className="grow">
+            <b>{copied ? 'نُسخ الرابط — الصقه لصديقك' : 'ادعُ صديقًا برابط'}</b>
+            <s>غرفة خاصة: لا يدخلها إلا من وصله هذا الرابط</s>
+          </span>
+        </button>
+      )}
 
       <div className="rm-flow">
         {/* ================= the host's model ================= */}

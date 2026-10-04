@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { subjectsOf } from '@/lib/catalogue';
 import { isHere } from '@/lib/rooms';
 import RoomList from './RoomList';
@@ -15,14 +16,23 @@ export default async function Rooms() {
   const sb = await supabaseServer();
 
   const [{ data: rows }, { data: mine }] = await Promise.all([
+    // `*` and a filter: see the same note on الرئيسية.
     sb.from('rooms')
-      .select('id, title, topic, module, capacity, closed, created_at, host:profiles!rooms_host_fkey(id, full_name, email)')
+      .select('*, host:profiles!rooms_host_fkey(id, full_name, email)')
       .eq('promo', promo).eq('closed', false)
-      .order('created_at', { ascending: false }).limit(40),
+      .order('created_at', { ascending: false }).limit(60),
     sb.from('room_members').select('room').eq('person', profile.id),
   ]);
 
-  const list = rows || [];
+  const list = (rows || []).filter((r) => !r.private).slice(0, 40);
+
+  // The private rooms you are in, so leaving one and coming back is possible.
+  // Read with the server's key: a private room is not readable with yours.
+  const mineIds = (mine || []).map((m) => m.room);
+  const { data: hidden } = mineIds.length
+    ? await supabaseAdmin().from('rooms').select('id, title, topic, capacity, closed, private').in('id', mineIds).eq('closed', false)
+    : { data: [] };
+  const secret = (hidden || []).filter((r) => r.private);
   const joined = new Set((mine || []).map((m) => m.room));
 
   // How many are in each room: one query for all of them, tallied here.
@@ -42,6 +52,7 @@ export default async function Rooms() {
       // A room with nobody in it is not offered: opening a new one is what
       // somebody who wants company actually needs.
       rooms={list.filter((r) => count[r.id]).map((r) => ({ ...r, members: count[r.id], joined: joined.has(r.id) }))}
+      secret={secret}
       subjects={subjects}
       me={{ id: profile.id }}
     />

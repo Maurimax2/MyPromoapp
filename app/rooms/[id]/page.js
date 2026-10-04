@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
-import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { supabaseServer, currentProfile, isStaff } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { artOf, regionArt } from '@/lib/subjectArt';
 import { REGIONS, regionsFor } from '@/lib/anatomy/curriculum';
 import { CREDIT, bundleOf } from '@/lib/anatomy/bundles';
@@ -34,18 +35,30 @@ export default async function RoomPage({ params }) {
   if (!profile) redirect('/login');
 
   const sb = await supabaseServer();
+  // Read with the server's key and authorised here, because a private room's
+  // people can come from any year and a student's own key sees only their
+  // promo's rows (and a private room's names with them).
+  const db = supabaseAdmin();
   const [{ data: room }, { data: members }, { data: messages }] = await Promise.all([
-    sb.from('rooms')
-      .select('id, title, topic, module, promo, capacity, closed, created_at, host:profiles!rooms_host_fkey(id, full_name, email)')
+    db.from('rooms')
+      .select('*, host:profiles!rooms_host_fkey(id, full_name, email)')
       .eq('id', id).maybeSingle(),
-    sb.from('room_members')
+    db.from('room_members')
       .select('seen_at, person:profiles!room_members_person_fkey(id, full_name, email)').eq('room', id),
-    sb.from('room_messages')
+    db.from('room_messages')
       .select('id, body, created_at, author:profiles!room_messages_author_fkey(id, full_name, email)')
       .eq('room', id).order('created_at').limit(200),
   ]);
 
   if (!room) notFound();
+
+  const insideRoom = (members || []).some((m) => m.person?.id === profile.id);
+  // A private room does not exist for anybody without its link; a public one
+  // is looked at by its own promo, as it always was.
+  if (room.private ? !(insideRoom || room.host?.id === profile.id || isStaff(profile))
+                   : (room.promo !== profile.promo && !isStaff(profile))) notFound();
+  // Only people who are in it read what is said.
+  const said = insideRoom || isStaff(profile) ? messages : [];
 
   // The subject the room is about, by name and with its model, when it has one.
   let subject = null;
@@ -76,13 +89,13 @@ export default async function RoomPage({ params }) {
       // Held in state so new messages can be appended. Without a key,
       // walking from one room to another kept the first room's messages.
       key={id}
-      room={room}
+      room={{ ...room, code: room.private && insideRoom ? room.code : null }}
       subject={subject}
       people={people}
       // Who is on this screen right now. You are, if you are a member —
       // you are looking at it.
       here={inside ? [...new Set([...here, profile.id])] : here}
-      first={messages || []}
+      first={said || []}
       regions={regions.map(scene)}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             host: room.host?.id === profile.id, inside }}

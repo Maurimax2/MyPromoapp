@@ -36,10 +36,11 @@ export async function POST(request) {
 
   const db = supabaseAdmin();
   const { data: room } = await db.from('rooms')
-    .select('id, host, promo, closed').eq('id', id).maybeSingle();
+    .select('*').eq('id', id).maybeSingle();
   if (!room) return NextResponse.json({ error: 'لا غرفة' }, { status: 404 });
   if (room.closed) return NextResponse.json({ error: 'الغرفة مغلقة' }, { status: 409 });
-  if (room.promo !== profile.promo && !isStaff(profile)) {
+  // Membership is checked below; a private room's members can be from any year.
+  if (!room.private && room.promo !== profile.promo && !isStaff(profile)) {
     return NextResponse.json({ error: 'ليست غرفة دفعتك' }, { status: 403 });
   }
 

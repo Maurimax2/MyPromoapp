@@ -62,6 +62,13 @@ export default function LoginForm({ years = PROMOS }) {
     setState('sent');
   };
 
+  // Where the door sends you: the screen the server picks, remembering the
+  // link you came for when there was one (a private room's invitation).
+  const afterSignIn = () => {
+    const next = new URLSearchParams(window.location.search).get('next');
+    return next ? `/auth/home?next=${encodeURIComponent(next)}` : '/auth/home';
+  };
+
   const signIn = async () => {
     const { error } = await supabase().auth.signInWithPassword({
       email: email.trim(), password,
@@ -70,7 +77,7 @@ export default function LoginForm({ years = PROMOS }) {
     // One destination for everybody; the server picks the screen, because it
     // is the only side that can see whether you are staff, a student, or an
     // account still waiting to be approved.
-    window.location.href = '/auth/home';
+    window.location.href = afterSignIn();
   };
 
   // Google hands back to /auth/callback, the same door the emailed link uses.
@@ -106,7 +113,7 @@ export default function LoginForm({ years = PROMOS }) {
     // account can reach. Saying "you are waiting" here as well would be a
     // second version of that screen to keep in step with the first.
     await supabase().auth.signInWithPassword({ email: email.trim(), password });
-    window.location.href = '/auth/home';
+    window.location.href = afterSignIn();
   };
 
   const ready =

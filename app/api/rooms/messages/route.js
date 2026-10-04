@@ -1,7 +1,7 @@
 // What is said inside a room. Only people who joined can read or write it.
 
 import { NextResponse } from 'next/server';
-import { currentProfile, isStaff, supabaseServer } from '@/lib/supabase/server';
+import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const runtime = 'nodejs';
@@ -15,8 +15,12 @@ export async function GET(request) {
   const after = url.searchParams.get('after');
   if (!room) return NextResponse.json({ error: 'no room' }, { status: 400 });
 
-  const sb = await supabaseServer();
-  let q = sb.from('room_messages')
+  const db = supabaseAdmin();
+  const { data: member } = await db.from('room_members')
+    .select('person').eq('room', room).eq('person', profile.id).maybeSingle();
+  if (!member && !isStaff(profile)) return NextResponse.json({ messages: [] });
+
+  let q = db.from('room_messages')
     .select('id, body, created_at, author:profiles!room_messages_author_fkey(id, full_name, email)')
     .eq('room', room).order('created_at').limit(200);
   if (after) q = q.gt('id', after);
