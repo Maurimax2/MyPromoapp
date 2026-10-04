@@ -53,6 +53,16 @@ export default function NewsScreen({ years, past, ready }) {
     });
     const d = await res.json().catch(() => ({}));
     if (!res.ok) { setProbe(d.error || 'تعذّرت التجربة'); return; }
+    // The Android half, checked with no phone: is the key Google's to accept?
+    const FCM = {
+      ok: 'مفتاح Firebase سليم — إشعارات الأندرويد ستعمل متى سُجّل جهاز.',
+      none: 'لا يوجد مفتاح Firebase في Vercel (FIREBASE_SERVICE_ACCOUNT) — إشعارات الأندرويد لن تعمل.',
+      auth: 'Google رفض مفتاح Firebase — الصق مفتاحًا جديدًا كاملًا في FIREBASE_SERVICE_ACCOUNT وأعد النشر.',
+      api: 'المفتاح سليم لكن Firebase Cloud Messaging API غير مفعّل لمشروعك — فعّله من Google Cloud.',
+      project: 'المشروع الذي في المفتاح غير موجود — تأكّد أنه مفتاح mypromo-f3b04.',
+      unknown: 'تعذّر الحكم على مفتاح Firebase الآن — أعد المحاولة.',
+    };
+    const android = FCM[d.fcmCheck] || '';
     if (!d.table) setProbe('جدول الأجهزة غير موجود — الصق supabase/push.sql في Supabase.');
     else if (!d.ready) setProbe('الخادم لا يملك أيّ مفتاح إرسال — لا FIREBASE_SERVICE_ACCOUNT ولا مفاتيح VAPID. أضفها في Vercel ثم أعد النشر.');
     else if (d.devices.includes('android') && !d.fcm) setProbe('جهازك أندرويد لكن مفتاح Firebase غير موجود أو غير صالح في Vercel (FIREBASE_SERVICE_ACCOUNT).');
@@ -60,6 +70,7 @@ export default function NewsScreen({ years, past, ready }) {
     else if (!d.devices.length) setProbe('لا جهاز مسجَّل لحسابك. افتح التطبيق على الهاتف بهذا الحساب نفسه وفعّل الإشعارات.');
     else if (!d.sent) setProbe(`وُجد جهاز (${d.devices.join('، ')}) لكن الإرسال فشل — المفتاح غير صالح أو الجهاز لا يستقبل.`);
     else setProbe(`أُرسلت تجربة إلى ${d.sent} جهاز — انظر إلى هاتفك.`);
+    setProbe((p) => `${p}\n${android}`);
   };
 
   const remove = async (id) => {
@@ -115,7 +126,7 @@ export default function NewsScreen({ years, past, ready }) {
         <button className="btn g" onClick={trial}>
           <Icon name="bell" size={17} /> جرّب على جهازي فقط
         </button>
-        {probe && <div className="news-done" style={{ marginTop: 10 }}>{probe}</div>}
+        {probe && <div className="news-done" style={{ marginTop: 10, whiteSpace: 'pre-line' }}>{probe}</div>}
         <p className="admin-card-b" style={{ marginTop: 8 }}>
           الإعلان لا يصل إلى من أرسله. هذا الزر يرسل إلى أجهزة حسابك وحدك ليُعرف إن كان الإرسال يعمل.
         </p>
