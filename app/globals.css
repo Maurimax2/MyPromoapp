@@ -5107,3 +5107,39 @@ a.card:active, button.card:active { transform: scale(.985); }
 .dl-web { text-align: center; font-size: 13px; color: var(--ink-3); text-decoration: none; padding: 8px; }
 @media (min-width: 560px) { .dl { max-width: 430px; margin: 0 auto; } }
 @media (prefers-reduced-motion: reduce) { .dl-go, .dl-logo, .dl-art { animation: none !important; } }
+
+/* ---------- النشاط (app/admin/activity) ---------- */
+.act-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.act-tile {
+  position: relative; display: flex; flex-direction: column; gap: 2px; padding: 14px 15px 13px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+}
+.act-tile b { font-size: 30px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.act-tile b em { font-style: normal; font-size: 15px; font-weight: 500; color: var(--ink-3); }
+.act-tile span { font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+.act-tile small { font-size: 11px; color: var(--ink-3); }
+.act-tile.live { background: linear-gradient(180deg, #EAF6EE, var(--surface)); border-color: #BFD8C6; }
+.act-tile.live b { color: var(--olive); }
+.act-dot { position: absolute; top: 15px; inset-inline-end: 15px; width: 10px; height: 10px; border-radius: 50%; background: #2FB26A; animation: nu-pulse 1.6s ease-out infinite; }
+.act-now { display: flex; flex-direction: column; gap: 14px; }
+.act-row { display: flex; flex-direction: column; gap: 5px; }
+.act-row-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; }
+.act-row-top b { font-weight: 600; }
+.act-row-top span { font-weight: 700; color: var(--olive); font-variant-numeric: tabular-nums; }
+.act-bar { display: block; height: 7px; border-radius: 4px; background: var(--line-soft); overflow: hidden; }
+.act-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--olive), var(--olive-light)); transition: width .5s ease; }
+.act-row small { font-size: 11.5px; color: var(--ink-3); line-height: 1.7; }
+.act-years { display: flex; flex-direction: column; padding: 4px 0; }
+.act-yr { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); align-items: center; text-align: center; padding: 10px 14px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.act-yr + .act-yr { border-top: 1px solid var(--line-soft); }
+.act-yr b { text-align: start; font-weight: 600; }
+.act-yr.head { font-size: 11px; color: var(--ink-3); padding-bottom: 6px; }
+.act-yr .on { color: var(--olive); font-weight: 700; }
+.act-days { display: flex; align-items: flex-end; gap: 5px; height: 130px; }
+.act-day { flex: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; }
+.act-day i { width: 100%; max-width: 22px; border-radius: 6px 6px 3px 3px; background: var(--olive-light); min-height: 3px; }
+.act-day em { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--ink-2); }
+.act-day small { font-size: 9.5px; color: var(--ink-3); }
+.act-plat { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+.act-plat b { color: var(--ink); font-weight: 700; }
+.act-note { font-size: 11.5px; color: var(--ink-3); line-height: 1.8; padding: 4px 4px 20px; }

@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const S = (f) => join(HERE, 'supabase', f);
-const MIGRATIONS = ['schema.sql', 'social.sql', 'feedback.sql', 'accounts.sql', 'habits.sql', 'push.sql'];
+const MIGRATIONS = ['schema.sql', 'social.sql', 'feedback.sql', 'accounts.sql', 'habits.sql', 'push.sql', 'activity.sql'];
 
 const db = new PGlite();
 await db.waitReady;

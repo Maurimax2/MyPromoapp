@@ -62,6 +62,9 @@ const db = {
     { a: 'u-owner', b: 'u-6', created_at: '2026-09-21T10:00:00Z', accepted_at: null },
   ],
   push_devices: [],
+  // activity.sql
+  presence: [],
+  app_opens: [],
   feedback_visits: [],
   push_prefs: [],
   push_log: [],
@@ -748,6 +751,8 @@ createServer(async (req, res) => {
     friends:  () => ({ created_at: new Date().toISOString(), accepted_at: null }),
     push_devices: () => ({ created_at: new Date().toISOString(), seen_at: new Date().toISOString(), keys: null }),
     push_prefs: () => ({ off: [], updated_at: new Date().toISOString() }),
+    presence: () => ({ first_seen: new Date().toISOString(), seen_at: new Date().toISOString(), opens: 0 }),
+    app_opens: () => ({ at: new Date().toISOString() }),
     announcements: () => ({ created_at: new Date().toISOString(), body: null, link: null, promo: null }),
   };
 
@@ -761,6 +766,7 @@ createServer(async (req, res) => {
     question_banks: ['module', 'title'],
     profiles: ['matricule'],
     push_devices: ['token'],
+    presence: ['person'],
     friends: ['a', 'b'],
     push_log: ['person', 'kind', 'day'],
   };

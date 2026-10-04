@@ -2,6 +2,7 @@ import './globals.css';
 import { Readex_Pro } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
 import PushListener from '@/components/PushListener';
+import Heartbeat from '@/components/Heartbeat';
 
 // The typeface, served from our own domain.
 //
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
           <BottomNav />
         </div>
         <PushListener />
+        <Heartbeat />
       </body>
     </html>
   );

@@ -84,6 +84,15 @@ export default async function AdminHome() {
         </Link>
       )}
 
+      <Link href="/admin/activity" className="admin-card admin-import">
+        <div className="admin-import-ic" style={{ background: 'var(--olive)' }}><Icon name="friends" size={22} /></div>
+        <div className="grow">
+          <div className="admin-card-t">النشاط</div>
+          <div className="admin-card-b">من على التطبيق الآن، ماذا يفعلون، وكم دخلوا من كل سنة</div>
+        </div>
+        <Icon name="chev" size={18} />
+      </Link>
+
       <Link href="/admin/news" className="admin-card admin-import">
         <div className="admin-import-ic" style={{ background: 'var(--clay)' }}><Icon name="bell" size={22} /></div>
         <div className="grow">

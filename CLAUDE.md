@@ -458,3 +458,17 @@ missing from both sources, and is not faked:
   still count toward points.
 - The welcome (`components/Welcome.js`) is shown once per phone and again from
   أنا ← جولة في التطبيق.
+
+## النشاط
+
+- **Online is worked out when it is asked, never stored.** The phone sends one
+  ping a minute while the app is in front of somebody (`components/Heartbeat.js`
+  → `/api/me/ping`); a row seen in the last 150 s is «online». Nothing is
+  written for a closed app, so nothing can go stale.
+- **«Opened» is one row in `app_opens`** — a new session, or a visit after 30
+  minutes away. Tracking starts the day `supabase/activity.sql` is pasted, and
+  the panel says so rather than showing a low number as the whole history.
+- **Screens are named from the address in one file** (`lib/activity.js`). A
+  screen nobody listed is «أخرى», not dropped.
+- Both tables have row-level security on and no policy: only the server's
+  service key reads or writes them, and only an admin sees the numbers.
