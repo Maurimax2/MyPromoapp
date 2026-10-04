@@ -10,7 +10,8 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { pushTo, later } from '@/lib/push';
+import { pushTo, pushReady, later } from '@/lib/push';
+import { fcmReady } from '@/lib/fcm';
 
 export const runtime = 'nodejs';
 // A push to a whole faculty is a couple of thousand requests.
@@ -36,6 +37,27 @@ export async function POST(request) {
   if (!isAdmin(me)) return NextResponse.json({ error: 'للمشرفين فقط' }, { status: 403 });
 
   const b = await request.json().catch(() => ({}));
+
+  // «Try it on my phone». An announcement never goes to whoever sends it —
+  // nobody is notified about their own doing — so an admin cannot test with
+  // one. This sends to the admin's own devices only, waits for the answer, and
+  // says which link in the chain is missing: no credentials on the server, no
+  // device registered, or Firebase refusing.
+  if (b.test) {
+    const db = supabaseAdmin();
+    const { data: mine, error: noTable } = await db.from('push_devices').select('platform').eq('person', me.id);
+    const sent = pushReady()
+      ? (await pushTo([me.id], {
+          kind: 'news', title: 'MyPromo — تجربة', body: 'إن وصلك هذا فالإشعارات تعمل.',
+          url: '/notifications', tag: 'test',
+        })).sent || 0
+      : 0;
+    return NextResponse.json({
+      test: true, ready: pushReady(), fcm: fcmReady(), table: !noTable,
+      devices: (mine || []).map((d) => d.platform), sent,
+    });
+  }
+
   const title = String(b.title || '').trim().slice(0, 80);
   const body = String(b.body || '').trim().slice(0, 600) || null;
   const promo = b.promo ? String(b.promo) : null;

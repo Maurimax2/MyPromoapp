@@ -22,6 +22,7 @@ export default function NewsScreen({ years, past, ready }) {
   const [error, setError] = useState('');
   const [done, setDone] = useState('');
   const [sure, setSure] = useState(false);
+  const [probe, setProbe] = useState('');
 
   const to = promo ? (years.find((y) => y.id === promo)?.name || promo) : 'كل الطلبة';
 
@@ -41,6 +42,22 @@ export default function NewsScreen({ years, past, ready }) {
     setDone(`أُرسل إلى ${data.to} طالبًا`);
     setTitle(''); setBody(''); setLink('');
     router.refresh();
+  };
+
+  // Sends to this admin's own devices and says what is missing if nothing
+  // arrives.
+  const trial = async () => {
+    setProbe('…');
+    const res = await fetch('/api/admin/news', {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ test: true }),
+    });
+    const d = await res.json().catch(() => ({}));
+    if (!res.ok) { setProbe(d.error || 'تعذّرت التجربة'); return; }
+    if (!d.table) setProbe('جدول الأجهزة غير موجود — الصق supabase/push.sql في Supabase.');
+    else if (!d.ready) setProbe('الخادم لا يملك مفتاح الإرسال — تحقّق من FIREBASE_SERVICE_ACCOUNT في Vercel ثم أعد النشر.');
+    else if (!d.devices.length) setProbe('لا جهاز مسجَّل لحسابك. افتح التطبيق على الهاتف بهذا الحساب نفسه وفعّل الإشعارات.');
+    else if (!d.sent) setProbe(`وُجد جهاز (${d.devices.join('، ')}) لكن الإرسال فشل — المفتاح غير صالح أو الجهاز لا يستقبل.`);
+    else setProbe(`أُرسلت تجربة إلى ${d.sent} جهاز — انظر إلى هاتفك.`);
   };
 
   const remove = async (id) => {
@@ -90,6 +107,16 @@ export default function NewsScreen({ years, past, ready }) {
           <Icon name="bell" size={17} />
           {busy ? '…' : sure ? `اضغط مرة أخرى للإرسال إلى ${to}` : 'أرسل'}
         </button>
+      </section>
+
+      <section className="admin-card admin-seed">
+        <button className="btn g" onClick={trial}>
+          <Icon name="bell" size={17} /> جرّب على جهازي فقط
+        </button>
+        {probe && <div className="news-done" style={{ marginTop: 10 }}>{probe}</div>}
+        <p className="admin-card-b" style={{ marginTop: 8 }}>
+          الإعلان لا يصل إلى من أرسله. هذا الزر يرسل إلى أجهزة حسابك وحدك ليُعرف إن كان الإرسال يعمل.
+        </p>
       </section>
 
       {past.length > 0 && <div className="admin-bar"><span>أُرسلت</span><span>{past.length}</span></div>}
