@@ -79,6 +79,8 @@ export async function middleware(request) {
   // no profile shows the panel's own sign-in, a student is told plainly that
   // they are not staff.
   //
+  // `/download` is where the APK is handed out, to people with no account yet.
+  //
   // `/privacy` and `/delete-account` are read by the app stores' reviewers and
   // by anybody deciding whether to sign up, so they cannot sit behind a sign-in.
   //
@@ -87,7 +89,7 @@ export async function middleware(request) {
   // Sending them to the door would be asking them to sign up before they are
   // allowed to say whether they want the thing.
   const open = path === '/waiting' || path === '/feedback'
-    || path === '/privacy' || path === '/delete-account'
+    || path === '/privacy' || path === '/delete-account' || path === '/download'
     || path.startsWith('/login') || path.startsWith('/auth')
     || path.startsWith('/admin') || path.startsWith('/api/');
   if (open) return response;
@@ -154,6 +156,6 @@ export const config = {
     //
     // `sw.js` is the push worker: the browser re-fetches it on its own
     // schedule, and a redirect to the door in answer would break it.
-    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico)$).*)',
+    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico|apk)$).*)',
   ],
 };

@@ -29,6 +29,16 @@ const nextConfig = {
     return [{
       source: '/anatomy/:path*',
       headers: [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }],
+    }, {
+      // The Android app, handed out from /download. Told what it is so a
+      // phone installs it rather than showing it as text, and kept for only a
+      // few minutes so a new build replaces the old one quickly.
+      source: '/MyPromo.apk',
+      headers: [
+        { key: 'Content-Type', value: 'application/vnd.android.package-archive' },
+        { key: 'Content-Disposition', value: 'attachment; filename="MyPromo.apk"' },
+        { key: 'Cache-Control', value: 'public, max-age=300' },
+      ],
     }];
   },
 };

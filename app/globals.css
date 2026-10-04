@@ -5070,3 +5070,40 @@ a.card:active, button.card:active { transform: scale(.985); }
 @media (prefers-reduced-motion: reduce) { .wl, .wl-page, .wl-art, .wl-logo, .wl-faces i, .wl-mini, .tt-card { animation: none !important; } }
 
 .pa-why { font-size: 10.5px; color: var(--ink-3); word-break: break-word; }
+
+/* ---------- the download page (app/download) ---------- */
+.dl { min-height: 100dvh; padding: calc(env(safe-area-inset-top) + 16px) 18px 36px; display: flex; flex-direction: column; gap: 16px; background: var(--bg); }
+.dl-hero {
+  position: relative; text-align: center; padding: 34px 20px 46px; border-radius: 30px; color: #FFFDF8; overflow: hidden;
+  background: radial-gradient(120% 120% at 20% 0%, #3E7A56 0%, #2A5B3E 55%, #1D4630 100%);
+}
+.dl-logo { display: inline-block; animation: wl-pop .7s .1s cubic-bezier(.2,1.3,.4,1) both; }
+.dl-hero h1 { font: 800 34px/1.1 'Poppins', var(--font-app), sans-serif; margin-top: 12px; letter-spacing: .3px; }
+.dl-hero p { font-size: 14px; opacity: .85; margin-top: 8px; }
+.dl-art { position: absolute; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(0,0,0,.3)); opacity: .95; animation: wl-art .7s cubic-bezier(.2,1.2,.4,1) both; }
+.dl-art.a { width: 70px; height: 70px; bottom: -22px; right: 6px; animation-delay: .15s; }
+.dl-art.b { width: 62px; height: 62px; top: 14px; left: 14px; animation-delay: .25s; }
+.dl-art.c { width: 58px; height: 58px; bottom: -8px; left: 26px; animation-delay: .35s; }
+.dl-go {
+  display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 68px; padding: 0 20px;
+  border-radius: 22px; background: var(--olive); color: #FFFDF8; text-decoration: none;
+  box-shadow: 0 12px 26px rgba(42,91,62,.32); transition: transform .12s ease; animation: dl-breathe 2.8s ease-in-out infinite;
+}
+.dl-go:active { transform: scale(.97); animation: none; }
+.dl-go > span { text-align: start; }
+.dl-go b { display: block; font-size: 17px; font-weight: 600; }
+.dl-go s { display: block; text-decoration: none; font-size: 11.5px; opacity: .8; margin-top: 2px; }
+@keyframes dl-breathe { 50% { box-shadow: 0 14px 34px rgba(42,91,62,.5); transform: translateY(-1px); } }
+.dl-steps { list-style: none; display: flex; flex-direction: column; gap: 0; padding: 6px 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; }
+.dl-steps li { display: flex; gap: 13px; align-items: flex-start; padding: 13px 14px; }
+.dl-steps li + li { border-top: 1px solid var(--line-soft); }
+.dl-n { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; background: var(--olive-pale); color: var(--olive); font-size: 13px; font-weight: 700; }
+.dl-steps b { display: block; font-size: 14.5px; font-weight: 600; }
+.dl-steps s { display: block; text-decoration: none; font-size: 12.5px; line-height: 1.8; color: var(--ink-2); margin-top: 2px; }
+.dl-ios { display: flex; gap: 13px; align-items: flex-start; padding: 14px; border-radius: 20px; background: var(--clay-pale); }
+.dl-ios-ic { width: 40px; height: 40px; border-radius: 13px; flex-shrink: 0; display: grid; place-items: center; background: #FFFDF8; color: var(--clay); }
+.dl-ios b { display: block; font-size: 14.5px; font-weight: 600; color: var(--clay); }
+.dl-ios s { display: block; text-decoration: none; font-size: 12.5px; line-height: 1.8; color: var(--ink-2); margin-top: 2px; }
+.dl-web { text-align: center; font-size: 13px; color: var(--ink-3); text-decoration: none; padding: 8px; }
+@media (min-width: 560px) { .dl { max-width: 430px; margin: 0 auto; } }
+@media (prefers-reduced-motion: reduce) { .dl-go, .dl-logo, .dl-art { animation: none !important; } }
