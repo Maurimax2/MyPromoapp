@@ -31,7 +31,6 @@ const STEPS = [
   ['افتح MyPromo', 'أنشئ حسابك واختر سنتك — ويُفتح لك التطبيق مباشرة.'],
 ];
 
-// أندرويد: the file itself. آيفون: the site, as an app.
 export default function Download() {
   return (
     <main className="dl">
@@ -60,17 +59,6 @@ export default function Download() {
           </li>
         ))}
       </ol>
-
-      <section className="dl-ios">
-        <span className="dl-ios-ic"><Icon name="share" size={20} /></span>
-        <span>
-          <b>عندك iPhone؟</b>
-          <s>
-            افتح <bdi dir="ltr">{SITE.replace(/^https?:\/\//, '')}</bdi> في Safari، ثم زر المشاركة، ثم
-            «إضافة إلى الشاشة الرئيسية». يصبح أيقونة كباقي التطبيقات.
-          </s>
-        </span>
-      </section>
 
       <Link href="/login" className="dl-web">أو افتح الموقع مباشرة ←</Link>
     </main>
