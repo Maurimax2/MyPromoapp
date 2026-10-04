@@ -5068,3 +5068,5 @@ a.card:active, button.card:active { transform: scale(.985); }
 }
 .wl-next:active { transform: scale(.96); }
 @media (prefers-reduced-motion: reduce) { .wl, .wl-page, .wl-art, .wl-logo, .wl-faces i, .wl-mini, .tt-card { animation: none !important; } }
+
+.pa-why { font-size: 10.5px; color: var(--ink-3); word-break: break-word; }

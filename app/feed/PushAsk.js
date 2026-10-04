@@ -9,7 +9,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { pushStatus, enablePush } from '@/lib/pushClient';
+import { pushStatus, enablePush, pushError } from '@/lib/pushClient';
 
 const LATER = 'mypromo.push.later';
 const WEEK = 7 * 86400000;
@@ -48,7 +48,7 @@ export default function PushAsk() {
           {state === 'install'
             ? 'على iPhone: اضغط زرّ المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح MyPromo من هناك لتصلك الإشعارات.'
             : state === 'error'
-              ? 'تعذّر التفعيل — حاول مرة أخرى بعد قليل.'
+              ? <>تعذّر التفعيل — حاول مرة أخرى بعد قليل.{pushError() && <><br /><bdi dir="ltr" className="pa-why">{pushError()}</bdi></>}</>
               : 'رسائل أصدقائك، التحدّيات، تذكير سلسلتك، وإعلانات الكلية — على هاتفك.'}
         </s>
         <span className="pa-acts">
