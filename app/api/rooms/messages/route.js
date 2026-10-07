@@ -3,12 +3,14 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function GET(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const url = new URL(request.url);
   const room = url.searchParams.get('room');
@@ -31,18 +33,19 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { room, body } = await request.json();
   const text = String(body || '').trim().slice(0, 2000);
-  if (!room || !text) return NextResponse.json({ error: 'اكتب شيئًا' }, { status: 400 });
+  if (!room || !text) return NextResponse.json({ error: t('اكتب شيئًا') }, { status: 400 });
 
   const db = supabaseAdmin();
   const { data: member } = await db.from('room_members')
     .select('person').eq('room', room).eq('person', profile.id).maybeSingle();
   if (!member && !isStaff(profile)) {
-    return NextResponse.json({ error: 'انضم إلى الغرفة أولًا' }, { status: 403 });
+    return NextResponse.json({ error: t('انضم إلى الغرفة أولًا') }, { status: 403 });
   }
 
   const { data, error } = await db.from('room_messages')

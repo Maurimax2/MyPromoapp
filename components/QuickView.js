@@ -12,8 +12,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
+import { useT } from '@/components/Lang';
 
 export default function QuickView({ fid, src }) {
+  const t = useT();
   const [failed, setFailed] = useState(false);
   const frame = useRef(null);
 
@@ -30,10 +32,8 @@ export default function QuickView({ fid, src }) {
     return (
       <div className="pdf-msg">
         <Icon name="alert" size={26} />
-        <span>تعذّر العرض السريع لهذا الملف.</span>
-        <a className="btn p" style={{ maxWidth: 240 }} href={src} download>
-          حمّل الملف
-        </a>
+        <span>{t('تعذّر العرض السريع لهذا الملف.')}</span>
+        <a className="btn p" style={{ maxWidth: 240 }} href={src} download>{t('حمّل الملف')}</a>
       </div>
     );
   }
@@ -43,7 +43,7 @@ export default function QuickView({ fid, src }) {
       ref={frame}
       className="pdf-frame"
       src={`https://drive.google.com/file/d/${fid}/preview`}
-      title="عرض الملف"
+      title={t('عرض الملف')}
       allow="autoplay"
       onLoad={(e) => { e.currentTarget.dataset.loaded = '1'; }}
     />

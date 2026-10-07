@@ -3,12 +3,14 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { post, document, on } = await request.json();
   if (!post && !document) return NextResponse.json({ error: 'no target' }, { status: 400 });

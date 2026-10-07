@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, supabaseServer } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
@@ -15,8 +16,9 @@ export const runtime = 'nodejs';
 const DELAYS = [10, 24 * 60, 3 * 24 * 60, 7 * 24 * 60, 21 * 24 * 60];
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { question, correct } = await request.json();
   if (!question) return NextResponse.json({ error: 'no question' }, { status: 400 });
@@ -50,8 +52,9 @@ export async function POST(request) {
 
 /** What this student owes right now. */
 export async function GET() {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const sb = await supabaseServer();
   const now = new Date().toISOString();

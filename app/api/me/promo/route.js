@@ -14,21 +14,23 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   if (me.promo) {
     return NextResponse.json(
-      { error: 'سنتك محدَّدة — راجع أحد المشرفين لتغييرها' }, { status: 409 });
+      { error: t('سنتك محدَّدة — راجع أحد المشرفين لتغييرها') }, { status: 409 });
   }
 
   const { promo } = await request.json().catch(() => ({}));
   const want = String(promo || '').trim();
-  if (!want) return NextResponse.json({ error: 'اختر سنتك' }, { status: 400 });
+  if (!want) return NextResponse.json({ error: t('اختر سنتك') }, { status: 400 });
 
   const db = supabaseAdmin();
 
@@ -39,7 +41,7 @@ export async function POST(request) {
   if (lookupError) {
     return NextResponse.json({ error: lookupError.message }, { status: 500 });
   }
-  if (!known) return NextResponse.json({ error: 'لا سنة بهذا الاسم' }, { status: 404 });
+  if (!known) return NextResponse.json({ error: t('لا سنة بهذا الاسم') }, { status: 404 });
 
   // `is('promo', null)` and not just the id: two tabs, or a tap while an
   // admin is setting it from the panel, must not race into a second answer.
@@ -50,7 +52,7 @@ export async function POST(request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   if (!saved) {
     return NextResponse.json(
-      { error: 'سنتك محدَّدة — راجع أحد المشرفين لتغييرها' }, { status: 409 });
+      { error: t('سنتك محدَّدة — راجع أحد المشرفين لتغييرها') }, { status: 409 });
   }
 
   await db.from('audit_log').insert({

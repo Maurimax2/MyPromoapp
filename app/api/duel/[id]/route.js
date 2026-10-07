@@ -9,14 +9,16 @@ import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { score, stage } from '@/lib/duel';
 import { notify } from '@/lib/notify';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 const WHO = (p) => p?.full_name || p?.email?.split('@')[0] || 'زميلك';
 
 export async function POST(request, { params }) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { id } = await params;
   const { action, answers } = await request.json().catch(() => ({}));
@@ -29,20 +31,20 @@ export async function POST(request, { params }) {
              b:profiles!duels_opponent_fkey(full_name, email)`)
     .eq('id', id).maybeSingle();
 
-  if (!duel) return NextResponse.json({ error: 'لا تحدٍّ بهذا الرقم' }, { status: 404 });
+  if (!duel) return NextResponse.json({ error: t('لا تحدٍّ بهذا الرقم') }, { status: 404 });
 
   const mine = duel.challenger === me.id;
   if (!mine && duel.opponent !== me.id) {
-    return NextResponse.json({ error: 'هذا التحدّي ليس لك' }, { status: 403 });
+    return NextResponse.json({ error: t('هذا التحدّي ليس لك') }, { status: 403 });
   }
 
   // ---- accepting, or not -------------------------------------------------
   if (action === 'accept' || action === 'refuse') {
     if (mine) {
-      return NextResponse.json({ error: 'أنت من أرسله' }, { status: 403 });
+      return NextResponse.json({ error: t('أنت من أرسله') }, { status: 403 });
     }
     if (duel.state !== 'invited') {
-      return NextResponse.json({ error: 'رُدّ عليه من قبل' }, { status: 409 });
+      return NextResponse.json({ error: t('رُدّ عليه من قبل') }, { status: 409 });
     }
 
     const to = action === 'accept' ? 'playing' : 'refused';
@@ -64,13 +66,13 @@ export async function POST(request, { params }) {
 
   // ---- answering it ------------------------------------------------------
   if (duel.state === 'invited') {
-    return NextResponse.json({ error: 'لم يُقبل التحدّي بعد' }, { status: 409 });
+    return NextResponse.json({ error: t('لم يُقبل التحدّي بعد') }, { status: 409 });
   }
   if (duel.state === 'refused') {
-    return NextResponse.json({ error: 'انتهى هذا التحدّي' }, { status: 409 });
+    return NextResponse.json({ error: t('انتهى هذا التحدّي') }, { status: 409 });
   }
   if ((mine ? duel.challenger_at : duel.opponent_at)) {
-    return NextResponse.json({ error: 'أجبتَ عليه من قبل' }, { status: 409 });
+    return NextResponse.json({ error: t('أجبتَ عليه من قبل') }, { status: 409 });
   }
 
   // The questions as the duel stored them, in the order it stored them — `in`

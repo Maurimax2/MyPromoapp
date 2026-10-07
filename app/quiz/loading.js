@@ -1,15 +1,17 @@
 // الاختبارات while the database is asked which subjects have questions.
 
 import { SkRow } from '@/components/Skeleton';
+import { getT } from '@/lib/lang';
 
-export default function Loading() {
+export default async function Loading() {
+  const t = await getT();
   return (
     <>
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">الاختبارات</div>
-            <div className="head-s">اختبر نفسك قبل الامتحان</div>
+            <div className="head-t">{t('الاختبارات')}</div>
+            <div className="head-s">{t('اختبر نفسك قبل الامتحان')}</div>
           </div>
           <div className="sk sk-flat" style={{ width: 38, height: 38, borderRadius: 12 }} />
         </div>

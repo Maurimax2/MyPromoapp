@@ -16,6 +16,7 @@
 import { after } from 'next/server';
 import { relayHeaders } from '@/lib/file-headers';
 import { cachedUrl, keep } from '@/lib/archive-cache';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -34,10 +35,11 @@ const SOURCES = (fid) => (FAKE ? [`${FAKE}/${fid}`] : [
 ]);
 
 export async function GET(req, { params }) {
+  const t = await getT();
   const { fid } = await params;
 
   if (!/^[A-Za-z0-9_-]{10,80}$/.test(fid)) {
-    return new Response('معرّف ملف غير صالح', { status: 400 });
+    return new Response(t('معرّف ملف غير صالح'), { status: 400 });
   }
 
   // Our own copy, if we have one. A redirect rather than a relay: the phone
@@ -85,7 +87,7 @@ export async function GET(req, { params }) {
     return new Response(res.body, { status: res.status === 206 ? 206 : 200, headers });
   }
 
-  return new Response('تعذّر جلب الملف', { status: 502 });
+  return new Response(t('تعذّر جلب الملف'), { status: 502 });
 }
 
 export async function HEAD(req, ctx) {

@@ -10,6 +10,7 @@ import Play from './Play';
 import Answer from './Answer';
 import Watch from './Watch';
 import Share from './Share';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,12 +27,13 @@ const faceOf = (id = '') => {
 };
 
 // Two faces and a bolt between them: every stage of a duel opens on this.
-function Versus({ me, them, meNote = null, themNote = null, dim = false }) {
+async function Versus({ me, them, meNote = null, themNote = null, dim = false }) {
+  const t = await getT();
   return (
     <div className="ar-vs">
       <span className="ar-p">
         <span className="ar-f" style={{ background: me.face }}>{me.ini}</span>
-        <b>أنت</b>
+        <b>{t('أنت')}</b>
         {meNote}
       </span>
       <span className="ar-mid">
@@ -48,6 +50,7 @@ function Versus({ me, them, meNote = null, themNote = null, dim = false }) {
 }
 
 export default async function DuelPage({ params }) {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
 
@@ -102,7 +105,7 @@ export default async function DuelPage({ params }) {
     them: { face: faceOf(themId), ini: theirName.slice(0, 2), first: theirName.split(' ')[0], name: theirName },
   };
   const of = duel.questions.length;
-  const time = saysTime(duel.seconds || 0);
+  const time = saysTime(duel.seconds || 0, t);
   const art = artOf(duel.title);
   const how = at === 'done' ? outcome(mine, theirs) : null;
 
@@ -118,10 +121,10 @@ export default async function DuelPage({ params }) {
         <b dir="auto">{duel.title}</b>
       </span>
       <span className="ar-chips">
-        <span><Icon name="quiz" size={15} /> {of} أسئلة</span>
+        <span><Icon name="quiz" size={15} />{' '}{t('{of} أسئلة', { of })}</span>
         <span><Icon name="clock" size={15} /> {time}</span>
       </span>
-      <span className="ar-note">نفس الأسئلة لكليكما · لا يرى أحدكما نتيجة الآخر قبل النهاية</span>
+      <span className="ar-note">{t('نفس الأسئلة لكليكما · لا يرى أحدكما نتيجة الآخر قبل النهاية')}</span>
     </div>
   );
 
@@ -129,7 +132,7 @@ export default async function DuelPage({ params }) {
     <div className={`arena ar-${at}${how ? ` ar-${how}` : ''}`}>
       <div className="ar-top">
         <BackButton fallback="/duel" className="ar-x" />
-        <b className="grow">تحدٍّ</b>
+        <b className="grow">{t('تحدٍّ')}</b>
         <span className="ar-x-pad" />
       </div>
 
@@ -141,7 +144,7 @@ export default async function DuelPage({ params }) {
       {/* Somebody has challenged you. Nothing is answered until you say yes. */}
       {at === 'invited' && (
         <div className="ar-body">
-          <Versus {...P} themNote={<span className="ar-pill hot"><Icon name="swords" size={12} /> تحدّاك</span>} />
+          <Versus {...P} themNote={<span className="ar-pill hot"><Icon name="swords" size={12} />{' '}{t('تحدّاك')}</span>} />
           <Card />
           <span className="grow" />
           <Answer id={duel.id} />
@@ -150,22 +153,22 @@ export default async function DuelPage({ params }) {
 
       {at === 'sent' && (
         <div className="ar-body">
-          <Versus {...P} themNote={<span className="ar-pill wait"><Icon name="clock" size={12} /> لم يردّ بعد</span>} />
-          <div className="duel-verdict ar-say">أُرسلت الدعوة</div>
-          <span className="ar-sub">سنخبرك حين يقبل {P.them.first}.</span>
+          <Versus {...P} themNote={<span className="ar-pill wait"><Icon name="clock" size={12} />{' '}{t('لم يردّ بعد')}</span>} />
+          <div className="duel-verdict ar-say">{t('أُرسلت الدعوة')}</div>
+          <span className="ar-sub">{t('سنخبرك حين يقبل {first}.', { first: P.them.first })}</span>
           <Card />
           <span className="grow" />
-          <Link href="/duel/new" className="ar-ghost">تحدٍّ آخر</Link>
+          <Link href="/duel/new" className="ar-ghost">{t('تحدٍّ آخر')}</Link>
         </div>
       )}
 
       {at === 'refused' && (
         <div className="ar-body">
-          <Versus {...P} dim themNote={<span className="ar-pill">اعتذر</span>} />
-          <div className="duel-verdict ar-say">اعتذر عن التحدّي</div>
-          <span className="ar-sub">لا شيء تخسره — تحدَّ زميلًا آخر.</span>
+          <Versus {...P} dim themNote={<span className="ar-pill">{t('اعتذر')}</span>} />
+          <div className="duel-verdict ar-say">{t('اعتذر عن التحدّي')}</div>
+          <span className="ar-sub">{t('لا شيء تخسره — تحدَّ زميلًا آخر.')}</span>
           <span className="grow" />
-          <Link href="/duel/new" className="ar-go"><Icon name="swords" size={20} /> تحدٍّ آخر</Link>
+          <Link href="/duel/new" className="ar-go"><Icon name="swords" size={20} />{' '}{t('تحدٍّ آخر')}</Link>
         </div>
       )}
 
@@ -179,8 +182,8 @@ export default async function DuelPage({ params }) {
           <div className="notice">
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">تعذّر فتح أسئلة هذا التحدّي</div>
-              <div className="notice-b">ربما حُذفت من المادة. لا شيء تخسره.</div>
+              <div className="notice-t">{t('تعذّر فتح أسئلة هذا التحدّي')}</div>
+              <div className="notice-b">{t('ربما حُذفت من المادة. لا شيء تخسره.')}</div>
             </div>
           </div>
         </div>
@@ -189,18 +192,18 @@ export default async function DuelPage({ params }) {
       {at === 'waiting' && (
         <div className="ar-body">
           <Versus {...P}
-            meNote={<span className="ar-pill done"><Icon name="check" size={12} /> أنهيت</span>}
-            themNote={<span className="ar-pill wait"><Icon name="clock" size={12} /> يجيب…</span>} />
-          <div className="duel-verdict ar-say">بانتظار {P.them.first}</div>
-          {/* Right to left like the faces above it: yours sits on your side. */}
-          <div className="duel-pair ar-pair" dir="rtl">
+            meNote={<span className="ar-pill done"><Icon name="check" size={12} />{' '}{t('أنهيت')}</span>}
+            themNote={<span className="ar-pill wait"><Icon name="clock" size={12} />{' '}{t('يجيب…')}</span>} />
+          <div className="duel-verdict ar-say">{t('بانتظار {first}', { first: P.them.first })}</div>
+          {/* The way the faces above it read: yours sits on your side. */}
+          <div className="duel-pair ar-pair">
             <span className="me">{mine}</span>
             <span className="duel-dash">–</span>
             <span className="them ar-q">؟</span>
           </div>
-          <span className="ar-sub">أصبت {mine} من {of}. تظهر النتيجتان معًا حين ينتهي.</span>
+          <span className="ar-sub">{t('أصبت {mine} من {of}. تظهر النتيجتان معًا حين ينتهي.', { mine, of })}</span>
           <span className="grow" />
-          <Link href="/duel/new" className="ar-ghost">تحدٍّ آخر</Link>
+          <Link href="/duel/new" className="ar-ghost">{t('تحدٍّ آخر')}</Link>
         </div>
       )}
 
@@ -220,14 +223,14 @@ export default async function DuelPage({ params }) {
             </div>
           )}
           <span className={`ar-trophy ${how}`}><Icon name="award" size={96} weight="fill" /></span>
-          <div className="duel-verdict ar-say">{SAYS[how]}</div>
+          <div className="duel-verdict ar-say">{t(SAYS[how])}</div>
           <span className="ar-sub" dir="auto">{duel.title}</span>
           <div className="ar-final duel-reveal">
             <span className="ar-p">
               <span className={`ar-f${how === 'won' ? ' win' : ''}`} style={{ background: P.me.face }}>{P.me.ini}</span>
-              <s>أنت</s>
+              <s>{t('أنت')}</s>
             </span>
-            <div className="duel-pair" dir="rtl">
+            <div className="duel-pair">
               <span className={how === 'won' ? 'me win' : 'me'}>{mine}</span>
               <span className="duel-dash">–</span>
               <span className={how === 'lost' ? 'them win' : 'them'}>{theirs}</span>
@@ -237,14 +240,14 @@ export default async function DuelPage({ params }) {
               <s dir="auto">{P.them.first}</s>
             </span>
           </div>
-          <span className="ar-sub">من {of} أسئلة</span>
+          <span className="ar-sub">{t('من {of} أسئلة', { of })}</span>
           <span className="grow" />
           <Link href={again} className="ar-go">
-            <Icon name="swords" size={20} /> {how === 'lost' ? 'خذ ثأرك' : 'ردّ التحدّي'}
+            <Icon name="swords" size={20} /> {how === 'lost' ? t('خذ ثأرك') : t('ردّ التحدّي')}
           </Link>
           <div className="ar-two">
-            <Share text={`${SAYS[how].replace('!', '')} — ${mine}–${theirs} مع ${P.them.first} في ${duel.title} على MyPromo`} />
-            <Link href="/duel/new" className="ar-ghost">تحدٍّ آخر</Link>
+            <Share text={t('{verdict} — {mine}–{theirs} مع {first} في {title} على MyPromo', { verdict: t(SAYS[how]).replace(/\s*!$/, ''), mine, theirs, first: P.them.first, title: duel.title })} />
+            <Link href="/duel/new" className="ar-ghost">{t('تحدٍّ آخر')}</Link>
           </div>
         </div>
       )}

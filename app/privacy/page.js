@@ -1,4 +1,5 @@
 import Legal, { Section, Contact } from '@/components/Legal';
+import { getLang } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,7 +8,9 @@ export const metadata = { title: 'سياسة الخصوصية — MyPromo' };
 const UPDATED = { ar: 'آخر تحديث: 29 سبتمبر 2026', fr: 'Dernière mise à jour : 29 septembre 2026' };
 
 export default async function Privacy({ searchParams }) {
-  const fr = (await searchParams)?.lang === 'fr';
+  // ?lang= when the link asks for one; otherwise the language the app is in
+  const asked = (await searchParams)?.lang;
+  const fr = asked ? asked === 'fr' : (await getLang()) === 'fr';
 
   if (fr) {
     return (
@@ -62,7 +65,7 @@ export default async function Privacy({ searchParams }) {
 
         <Section title="Supprimer votre compte">
           <p>
-            Dans l&apos;application : Profil, puis « حذف حسابي ». Sans l&apos;application, suivez la page{' '}
+            Dans l&apos;application : Profil, puis « Supprimer mon compte » (« حذف حسابي » en arabe). Sans l&apos;application, suivez la page{' '}
             <a href="/delete-account?lang=fr">Suppression de compte</a>. Le compte, les publications,
             messages, points et paramètres sont supprimés définitivement. Les résumés et questions que
             vous avez partagés restent pour votre promo, sans votre nom.

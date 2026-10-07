@@ -5,6 +5,7 @@ import { currentProfile } from '@/lib/supabase/server';
 import { zero, scoreOf, breakdown, badgesOf } from '@/lib/points';
 import { standings } from '@/lib/standings';
 import Points from './Points';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +17,7 @@ export const dynamic = 'force-dynamic';
 // number and a rank — no email, no post, nothing a student could not already
 // see on the feed.
 export default async function PointsPage({ searchParams }) {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
 
@@ -39,10 +41,10 @@ export default async function PointsPage({ searchParams }) {
     name: me.full_name || me.email.split('@')[0],
     points: score,
     gap: !score
-      ? 'انشر ملخّصًا أو أجب زميلًا لتدخل القائمة'
+      ? t('انشر ملخّصًا أو أجب زميلًا لتدخل القائمة')
       : above
-        ? `تحتاج ${above.points - score + 1} نقطة للمركز الذي فوقك`
-        : 'أنت في الصدارة',
+        ? t('تحتاج {v0} نقطة للمركز الذي فوقك', { v0: above.points - score + 1 })
+        : t('أنت في الصدارة'),
     pct: !score ? 0 : above ? Math.max(4, Math.min(100, Math.round((score / above.points) * 100))) : 100,
   };
 
@@ -51,11 +53,11 @@ export default async function PointsPage({ searchParams }) {
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">الترتيب</div>
+            <div className="head-t">{t('الترتيب')}</div>
             <div className="head-s">
               {scoreOf(mine)
-                ? `المركز ${rank} من ${board.length}${week ? ' هذا الأسبوع' : ''}`
-                : week ? 'لا نقاط لك هذا الأسبوع بعد' : 'لم تجمع نقاطًا بعد'}
+                ? t('المركز {rank} من {length}{v2}', { rank, length: board.length, v2: week ? t(' هذا الأسبوع') : '' })
+                : week ? t('لا نقاط لك هذا الأسبوع بعد') : t('لم تجمع نقاطًا بعد')}
             </div>
           </div>
         </div>

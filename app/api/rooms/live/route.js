@@ -15,20 +15,22 @@ import { AccessToken } from 'livekit-server-sdk';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { liveName } from '@/lib/rooms';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const url = process.env.LIVEKIT_URL;
   const key = process.env.LIVEKIT_API_KEY;
   const secret = process.env.LIVEKIT_API_SECRET;
   if (!url || !key || !secret) {
     // Not a failure: the room works without a call, so it is answered as one.
-    return NextResponse.json({ error: 'الصوت والصورة غير مفعّلين بعد', off: true });
+    return NextResponse.json({ error: t('الصوت والصورة غير مفعّلين بعد'), off: true });
   }
 
   const { room: id } = await request.json().catch(() => ({}));
@@ -37,16 +39,16 @@ export async function POST(request) {
   const db = supabaseAdmin();
   const { data: room } = await db.from('rooms')
     .select('*').eq('id', id).maybeSingle();
-  if (!room) return NextResponse.json({ error: 'لا غرفة' }, { status: 404 });
-  if (room.closed) return NextResponse.json({ error: 'الغرفة مغلقة' }, { status: 409 });
+  if (!room) return NextResponse.json({ error: t('لا غرفة') }, { status: 404 });
+  if (room.closed) return NextResponse.json({ error: t('الغرفة مغلقة') }, { status: 409 });
   // Membership is checked below; a private room's members can be from any year.
   if (!room.private && room.promo !== profile.promo && !isStaff(profile)) {
-    return NextResponse.json({ error: 'ليست غرفة دفعتك' }, { status: 403 });
+    return NextResponse.json({ error: t('ليست غرفة دفعتك') }, { status: 403 });
   }
 
   const { data: member } = await db.from('room_members')
     .select('person').eq('room', id).eq('person', profile.id).maybeSingle();
-  if (!member) return NextResponse.json({ error: 'انضم إلى الغرفة أولًا' }, { status: 403 });
+  if (!member) return NextResponse.json({ error: t('انضم إلى الغرفة أولًا') }, { status: 403 });
 
   const token = new AccessToken(key, secret, {
     identity: profile.id,

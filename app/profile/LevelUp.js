@@ -8,11 +8,13 @@
 
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useT } from '@/components/Lang';
 
 const KEY = 'mypromo.level';
 const COLOURS = ['#F4CD6B', '#E3EDE5', '#E08A5A', '#43A26E', '#FFFDF8'];
 
 export default function LevelUp({ level, toNext }) {
+  const t = useT();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function LevelUp({ level, toNext }) {
   const close = () => setShow(false);
 
   return createPortal(
-    <div className="bc" role="dialog" aria-label={`المستوى ${level}`} onClick={close}>
+    <div className="bc" role="dialog" aria-label={t('المستوى {level}', { level })} onClick={close}>
       <div className="bc-rays" />
       <div className="bc-burst" aria-hidden="true">
         {Array.from({ length: 32 }, (_, i) => (
@@ -43,11 +45,11 @@ export default function LevelUp({ level, toNext }) {
         ))}
       </div>
       <div className="bc-card" onClick={(e) => e.stopPropagation()}>
-        <div className="bc-kicker">مستوى جديد</div>
+        <div className="bc-kicker">{t('مستوى جديد')}</div>
         <div className="bc-medal lv-medal"><span>{level}</span></div>
-        <b className="bc-name">المستوى {level}</b>
-        <s className="bc-want">{toNext} نقطة للمستوى {level + 1}</s>
-        <button className="bc-ok" onClick={close}>رائع</button>
+        <b className="bc-name">{t('المستوى {level}', { level })}</b>
+        <s className="bc-want">{t('{toNext} نقطة للمستوى {v2}', { toNext, v2: level + 1 })}</s>
+        <button className="bc-ok" onClick={close}>{t('رائع')}</button>
       </div>
     </div>,
     document.body,

@@ -4,11 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 const initials = (p) => (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 
 export default function ChatList({ chats, mates }) {
+  const t = useT();
   const router = useRouter();
   const [q, setQ] = useState('');
   const [busy, setBusy] = useState(false);
@@ -35,13 +37,13 @@ export default function ChatList({ chats, mates }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/feed" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
-          <div className="grow"><div className="head-t">المحادثات</div></div>
+          <Link href="/feed" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
+          <div className="grow"><div className="head-t">{t('المحادثات')}</div></div>
         </div>
         <label className="srch">
           <Icon name="search" size={18} />
           <input value={q} onChange={(e) => setQ(e.target.value)} type="search"
-            placeholder="ابحث عن زميل" aria-label="ابحث" />
+            placeholder={t('ابحث عن زميل')} aria-label={t('ابحث')} />
         </label>
       </header>
 
@@ -54,7 +56,7 @@ export default function ChatList({ chats, mates }) {
               </div>
               <div className="grow">
                 <div className="nm">{name(c.person)}</div>
-                <div className="mt">{c.last || 'لا رسائل بعد'}</div>
+                <div className="mt">{c.last || t('لا رسائل بعد')}</div>
               </div>
               <span className="chev"><Icon name="chev" size={18} /></span>
             </div>
@@ -63,7 +65,7 @@ export default function ChatList({ chats, mates }) {
 
         {others.length > 0 && (
           <>
-            <div className="eyebrow">من دفعتك</div>
+            <div className="eyebrow">{t('من دفعتك')}</div>
             {others.map((m) => (
               <button key={m.id} className="card" onClick={() => open(m.id)} disabled={busy}>
                 <div className="card-row">
@@ -71,7 +73,7 @@ export default function ChatList({ chats, mates }) {
                     {initials(m)}
                   </div>
                   <div className="grow"><div className="nm">{name(m)}</div></div>
-                  <span className="pill">راسِل</span>
+                  <span className="pill">{t('راسِل')}</span>
                 </div>
               </button>
             ))}
@@ -81,8 +83,8 @@ export default function ChatList({ chats, mates }) {
         {!chats.length && !others.length && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="send" size={24} /></div>
-            <div className="empty-t">لا أحد بعد</div>
-            <div className="empty-b">حين ينضم زملاؤك ستجدهم هنا.</div>
+            <div className="empty-t">{t('لا أحد بعد')}</div>
+            <div className="empty-b">{t('حين ينضم زملاؤك ستجدهم هنا.')}</div>
           </div>
         )}
       </div>

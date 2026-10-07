@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import BadgeArt from '@/components/BadgeArt';
 import { TIERS } from '@/lib/points';
+import { useT } from '@/components/Lang';
 
 const KEY = 'mypromo.badges.seen';
 const COLOURS = ['#F4CD6B', '#E3EDE5', '#E08A5A', '#43A26E', '#FFFDF8', '#C9D0D6'];
@@ -25,6 +26,7 @@ function writeSeen(ids) {
 }
 
 export default function BadgeCelebrate({ badges }) {
+  const t = useT();
   const [queue, setQueue] = useState([]);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function BadgeCelebrate({ badges }) {
   // Onto the body: the profile's cards animate in with a transform, and a
   // transformed ancestor turns position: fixed into a strip inside the card.
   return createPortal(
-    <div className="bc" role="dialog" aria-label={`شارة جديدة: ${b.label}`} onClick={next} key={b.id}>
+    <div className="bc" role="dialog" aria-label={t('شارة جديدة: {label}', { label: t(b.label) })} onClick={next} key={b.id}>
       <div className="bc-rays" />
       <div className="bc-burst" aria-hidden="true">
         {Array.from({ length: 28 }, (_, i) => {
@@ -67,12 +69,12 @@ export default function BadgeCelebrate({ badges }) {
         })}
       </div>
       <div className="bc-card" onClick={(e) => e.stopPropagation()}>
-        <div className="bc-kicker">شارة جديدة</div>
+        <div className="bc-kicker">{t('شارة جديدة')}</div>
         <div className="bc-medal"><BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} size={150} /></div>
-        <b className="bc-name">{b.label}</b>
-        <span className="bc-tier">شارة {TIERS[b.tier]}</span>
-        <s className="bc-want">{b.want}</s>
-        <button className="bc-ok" onClick={next}>{queue.length > 1 ? 'التالية' : 'رائع'}</button>
+        <b className="bc-name">{t(b.label)}</b>
+        <span className="bc-tier">{t('شارة {v1}', { v1: t(TIERS[b.tier]) })}</span>
+        <s className="bc-want">{t(b.want)}</s>
+        <button className="bc-ok" onClick={next}>{queue.length > 1 ? t('التالية') : t('رائع')}</button>
       </div>
     </div>,
     document.body,

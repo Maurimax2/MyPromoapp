@@ -7,13 +7,15 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { PROMO_COOKIE } from '@/lib/promo';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const { promo } = await request.json().catch(() => ({}));
   const want = String(promo || '').trim();
-  if (!want) return NextResponse.json({ error: 'أيّ سنة؟' }, { status: 400 });
+  if (!want) return NextResponse.json({ error: t('أيّ سنة؟') }, { status: 400 });
 
   // Asked of the database rather than checked against a list written here:
   // the panel can add a year, and a year it added must be choosable the same
@@ -21,7 +23,7 @@ export async function POST(request) {
   const { data: known, error } = await supabaseAdmin()
     .from('promos').select('id').eq('id', want).maybeSingle();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  if (!known) return NextResponse.json({ error: 'لا سنة بهذا الاسم' }, { status: 404 });
+  if (!known) return NextResponse.json({ error: t('لا سنة بهذا الاسم') }, { status: 404 });
 
   const res = NextResponse.json({ ok: true, promo: want });
   res.cookies.set(PROMO_COOKIE, want, {

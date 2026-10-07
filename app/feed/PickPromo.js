@@ -5,8 +5,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PROMOS, badgeOf } from '@/lib/data';
+import { useT } from '@/components/Lang';
 
 export default function PickPromo() {
+  const t = useT();
   const router = useRouter();
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
@@ -21,16 +23,14 @@ export default function PickPromo() {
     });
     const data = await res.json().catch(() => ({}));
     setBusy('');
-    if (!res.ok) { setError(data.error || `تعذّر الحفظ (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر الحفظ ({status})', { status: res.status })); return; }
     router.refresh();
   };
 
   return (
     <div className="composer">
-      <div className="admin-card-t">في أي سنة أنت؟</div>
-      <p className="admin-card-b">
-        كل منشور ينتمي إلى دفعة، فاختر سنتك مرة واحدة لتبدأ النشر.
-      </p>
+      <div className="admin-card-t">{t('في أي سنة أنت؟')}</div>
+      <p className="admin-card-b">{t('كل منشور ينتمي إلى دفعة، فاختر سنتك مرة واحدة لتبدأ النشر.')}</p>
       <div className="login-promos">
         {PROMOS.map((p) => (
           <button

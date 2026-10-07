@@ -11,11 +11,13 @@ import QuizPicker from '@/components/QuizPicker';
 import { unansweredCount } from '@/lib/questions';
 import { banksOf } from '@/lib/quiz-bank';
 import { groupByLecture } from '@/lib/quiz-lectures';
+import { getT } from '@/lib/lang';
 
 // Not prerendered: which banks exist changes whenever a paper is extracted.
 export const dynamic = 'force-dynamic';
 
 export default async function QuizModule({ params }) {
+  const t = await getT();
   const { module: id } = await params;
   // Read the subject from the catalogue, not from the copy bundled with the
   // app. `moduleById` only knew the subjects that shipped, so a subject
@@ -40,10 +42,8 @@ export default async function QuizModule({ params }) {
         <div className="head-row">
           <BackButton fallback="/quiz" />
           <div className="grow">
-            <div className="head-t" style={{ fontSize: 17 }}>اختبر نفسك</div>
-            <div className="head-s">
-              {m.name} · {total} سؤال · {sourceCount} ملف
-            </div>
+            <div className="head-t" style={{ fontSize: 17 }}>{t('اختبر نفسك')}</div>
+            <div className="head-s">{t('{name} · {total} سؤال · {sourceCount} ملف', { name: m.name, total, sourceCount })}</div>
           </div>
           <div className={`tile sm tint-${m.tint}`}><Icon name={m.icon} size={18} /></div>
         </div>
@@ -58,17 +58,23 @@ export default async function QuizModule({ params }) {
         {total === 0 && (
           <div className="empty">
             <div className={`tile tint-${m.tint}`}><Icon name="quiz" size={24} /></div>
-            <div className="empty-t">لا أسئلة مستخرجة بعد</div>
-            <div className="empty-b">
-              أوراق {m.name} كلها ممسوحة كصور — تحتاج قراءة ضوئية (OCR) قبل استخراج الأسئلة.
-            </div>
+            <div className="empty-t">{t('لا أسئلة مستخرجة بعد')}</div>
+            <div className="empty-b">{t(
+                'أوراق {name} كلها ممسوحة كصور — تحتاج قراءة ضوئية (OCR) قبل استخراج الأسئلة.',
+                {
+                  name: m.name
+                }
+              )}</div>
           </div>
         )}
 
         {waiting > 0 && (
-          <div className="quiz-note">
-            {waiting} سؤالًا في هذه المادة بلا تصحيح في الورقة الأصلية — لن تُعرض حتى يُضاف جوابها.
-          </div>
+          <div className="quiz-note">{t(
+              '{waiting} سؤالًا في هذه المادة بلا تصحيح في الورقة الأصلية — لن تُعرض حتى يُضاف جوابها.',
+              {
+                waiting
+              }
+            )}</div>
         )}
 
         {sources.map((s) => (
@@ -77,14 +83,14 @@ export default async function QuizModule({ params }) {
               <span className={`chapter-ic tint-${m.tint}`}><Icon name="file" size={16} /></span>
               <div className="grow">
                 <div className="chapter-t">{s.title}</div>
-                <div className="chapter-s">{s.items.length} ملف</div>
+                <div className="chapter-s">{t('{length} ملف', { length: s.items.length })}</div>
               </div>
             </div>
             {s.items.map((it) => (
               <div key={it.fid}>
                 <Link className="lec" href={`/file/${it.fid}`}>
                   <span className="grow">
-                    <span className="lec-nm" style={{ display: 'block' }}>{it.title}</span>
+                    <span className="lec-nm" style={{ display: 'block' }}>{t(it.title)}</span>
                     <span className="lec-mt">
                       <span className="ext">{it.ext || 'PDF'}</span>
                       <span className="dot" /><span dir="ltr">{it.mb} MB</span>

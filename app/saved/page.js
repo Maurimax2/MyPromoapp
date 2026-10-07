@@ -4,6 +4,7 @@ import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
 import { subjectsOf } from '@/lib/catalogue';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +12,7 @@ const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
 // What you kept for later.
 export default async function Saved() {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
 
@@ -33,9 +35,9 @@ export default async function Saved() {
     const file = (p.post_media || []).sort((a, b) => a.position - b.position)[0];
     return {
       id: p.id,
-      title: p.body || file?.name || 'منشور',
+      title: p.body || file?.name || t('منشور'),
       subject: named[p.module] || null,
-      who: p.author?.full_name || p.author?.email?.split('@')[0] || 'طالب',
+      who: p.author?.full_name || p.author?.email?.split('@')[0] || t('طالب'),
       url: file ? urlFor(file.path) : null,
       bytes: file?.bytes ?? null,
       kind: p.kind,
@@ -46,10 +48,10 @@ export default async function Saved() {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/profile" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/profile" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">المحفوظات</div>
-            <div className="head-s">{items.length ? `${items.length} عنصرًا` : 'لا شيء محفوظ'}</div>
+            <div className="head-t">{t('المحفوظات')}</div>
+            <div className="head-s">{items.length ? t('{length} عنصرًا', { length: items.length }) : t('لا شيء محفوظ')}</div>
           </div>
         </div>
       </header>
@@ -79,8 +81,8 @@ export default async function Saved() {
         {!items.length && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="bookmark" size={24} /></div>
-            <div className="empty-t">لا شيء محفوظ</div>
-            <div className="empty-b">اضغط الإشارة على أي ملخص أو منشور لتجده هنا.</div>
+            <div className="empty-t">{t('لا شيء محفوظ')}</div>
+            <div className="empty-b">{t('اضغط الإشارة على أي ملخص أو منشور لتجده هنا.')}</div>
           </div>
         )}
       </div>

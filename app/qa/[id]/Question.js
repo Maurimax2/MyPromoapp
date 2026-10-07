@@ -5,11 +5,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 const initials = (p) => (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 
 export default function Question({ post, subject, answers: first, me }) {
+  const t = useT();
   const [answers, setAnswers] = useState(first);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
@@ -26,7 +28,7 @@ export default function Question({ post, subject, answers: first, me }) {
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || `تعذّر الإرسال (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر الإرسال ({status})', { status: res.status })); return; }
     setAnswers((a) => [...a, { ...data, accepted: false }]);
     setDraft('');
   };
@@ -46,12 +48,12 @@ export default function Question({ post, subject, answers: first, me }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/qa" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/qa" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">سؤال</div>
+            <div className="head-t">{t('سؤال')}</div>
             <div className="head-s">
-              {subject ? <span dir="ltr">{subject}</span> : 'من دفعتك'}
-              {post.answered ? ' · مُجاب' : ''}
+              {subject ? <span dir="ltr">{subject}</span> : t('من دفعتك')}
+              {post.answered ? t(' · مُجاب') : ''}
             </div>
           </div>
         </div>
@@ -71,7 +73,7 @@ export default function Question({ post, subject, answers: first, me }) {
         </div>
 
         <div className="eyebrow" style={{ margin: '4px 2px 0' }}>
-          {answers.length ? `${answers.length} ردّ` : 'لا ردود بعد'}
+          {answers.length ? t('{length} ردّ', { length: answers.length }) : t('لا ردود بعد')}
         </div>
 
         {answers.map((a) => (
@@ -81,12 +83,12 @@ export default function Question({ post, subject, answers: first, me }) {
                 {initials(a.author)}
               </div>
               <b className="grow">{name(a.author)}</b>
-              {a.accepted && <span className="pill ans-tag"><Icon name="check" size={13} /> الجواب</span>}
+              {a.accepted && <span className="pill ans-tag"><Icon name="check" size={13} />{' '}{t('الجواب')}</span>}
             </div>
             <div className="ans-body" dir="auto">{a.body}</div>
             {me.asked && (
               <button className="ans-pick" onClick={() => accept(a.id)}>
-                {a.accepted ? 'ألغِ الاختيار' : 'هذا هو الجواب'}
+                {a.accepted ? t('ألغِ الاختيار') : t('هذا هو الجواب')}
               </button>
             )}
           </div>
@@ -99,8 +101,8 @@ export default function Question({ post, subject, answers: first, me }) {
         <input
           value={draft} onChange={(e) => setDraft(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && answer()}
-          placeholder="اكتب ردًّا…" aria-label="ردّك" />
-        <button disabled={!draft.trim() || busy} onClick={answer} aria-label="أرسل">
+          placeholder={t('اكتب ردًّا…')} aria-label={t('ردّك')} />
+        <button disabled={!draft.trim() || busy} onClick={answer} aria-label={t('أرسل')}>
           <Icon name="send" size={19} />
         </button>
       </div>

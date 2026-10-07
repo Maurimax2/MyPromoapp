@@ -6,10 +6,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 
 export default function Ask({ questions, subjects, open, only, me }) {
+  const t = useT();
   const router = useRouter();
   const [asking, setAsking] = useState(false);
   const [body, setBody] = useState('');
@@ -28,7 +30,7 @@ export default function Ask({ questions, subjects, open, only, me }) {
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || `تعذّر النشر (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر النشر ({status})', { status: res.status })); return; }
     setBody(''); setAsking(false);
     router.refresh();
   };
@@ -39,15 +41,15 @@ export default function Ask({ questions, subjects, open, only, me }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/feed" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/feed" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">سؤال وجواب</div>
-            <div className="head-s">{open ? `${open} بلا جواب` : 'كل الأسئلة مُجابة'}</div>
+            <div className="head-t">{t('سؤال وجواب')}</div>
+            <div className="head-s">{open ? t('{open} بلا جواب', { open }) : t('كل الأسئلة مُجابة')}</div>
           </div>
         </div>
         <div className="seg">
-          <Link href="/qa" data-on={!only} className="seg-a">الكل</Link>
-          <Link href="/qa?only=open" data-on={only} className="seg-a">بلا جواب</Link>
+          <Link href="/qa" data-on={!only} className="seg-a">{t('الكل')}</Link>
+          <Link href="/qa?only=open" data-on={only} className="seg-a">{t('بلا جواب')}</Link>
         </div>
       </header>
 
@@ -56,26 +58,26 @@ export default function Ask({ questions, subjects, open, only, me }) {
 
         {asking ? (
           <form className="admin-card admin-seed" onSubmit={ask}>
-            <div className="admin-card-t">سؤال جديد</div>
+            <div className="admin-card-t">{t('سؤال جديد')}</div>
             <textarea
               className="admin-input qa-write" autoFocus rows={4} dir="auto"
-              placeholder="اكتب سؤالك…"
-              value={body} onChange={(e) => setBody(e.target.value)} aria-label="سؤالك" />
+              placeholder={t('اكتب سؤالك…')}
+              value={body} onChange={(e) => setBody(e.target.value)} aria-label={t('سؤالك')} />
             <select className="admin-input" value={module} onChange={(e) => setModule(e.target.value)}>
-              <option value="">بلا مادة</option>
+              <option value="">{t('بلا مادة')}</option>
               {subjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
             <div className="usr-acts">
-              <button className="btn p sm" disabled={busy || !body.trim()}>اسأل</button>
-              <button type="button" className="btn g sm" onClick={() => setAsking(false)}>ألغِ</button>
+              <button className="btn p sm" disabled={busy || !body.trim()}>{t('اسأل')}</button>
+              <button type="button" className="btn g sm" onClick={() => setAsking(false)}>{t('ألغِ')}</button>
             </div>
           </form>
         ) : (
           <button className="admin-card admin-import" onClick={() => setAsking(true)}>
             <div className="admin-import-ic"><Icon name="msg" size={22} /></div>
             <div className="grow ct-start">
-              <div className="admin-card-t">اسأل دفعتك</div>
-              <div className="admin-card-b">من يعرف الجواب سيردّ</div>
+              <div className="admin-card-t">{t('اسأل دفعتك')}</div>
+              <div className="admin-card-b">{t('من يعرف الجواب سيردّ')}</div>
             </div>
           </button>
         )}
@@ -91,7 +93,7 @@ export default function Ask({ questions, subjects, open, only, me }) {
                 <div className="qa-m">
                   {name(q.author)}
                   {q.module ? ` · ${subject(q.module) || ''}` : ''}
-                  {q.comments ? ` · ${q.comments} ردّ` : ''}
+                  {q.comments ? t(' · {comments} ردّ', { comments: q.comments }) : ''}
                 </div>
               </div>
               <span className="chev"><Icon name="chev" size={17} /></span>
@@ -102,8 +104,8 @@ export default function Ask({ questions, subjects, open, only, me }) {
         {!questions.length && !asking && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
-            <div className="empty-t">{only ? 'لا أسئلة بلا جواب' : 'لا أسئلة بعد'}</div>
-            <div className="empty-b">اسأل أول سؤال — دفعتك ترى الأسئلة كلها.</div>
+            <div className="empty-t">{only ? t('لا أسئلة بلا جواب') : t('لا أسئلة بعد')}</div>
+            <div className="empty-b">{t('اسأل أول سؤال — دفعتك ترى الأسئلة كلها.')}</div>
           </div>
         )}
       </div>

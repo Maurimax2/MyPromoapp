@@ -6,12 +6,14 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 const who = (p) => p?.full_name || p?.email?.split('@')[0] || null;
 const initials = (p) => (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 
 export default function NoteList({ groups, subjects, me }) {
+  const t = useT();
   const router = useRouter();
   const [adding, setAdding] = useState(false);
   const [title, setTitle] = useState('');
@@ -36,7 +38,7 @@ export default function NoteList({ groups, subjects, me }) {
     form.append('file', chosen);
     const res = await fetch('/api/upload', { method: 'POST', body: form });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) { setFile(null); setError(data.error || `تعذّر الرفع (${res.status})`); return; }
+    if (!res.ok) { setFile(null); setError(data.error || t('تعذّر الرفع ({status})', { status: res.status })); return; }
     setFile(data);
     if (!title.trim()) setTitle(chosen.name.replace(/\.[a-z0-9]+$/i, ''));
   };
@@ -55,7 +57,7 @@ export default function NoteList({ groups, subjects, me }) {
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || `تعذّر النشر (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر النشر ({status})', { status: res.status })); return; }
     setTitle(''); setFile(null); setModule(''); setAdding(false);
     router.refresh();
   };
@@ -83,14 +85,14 @@ export default function NoteList({ groups, subjects, me }) {
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">الملخصات</div>
-            <div className="head-s">{total ? `${total} ملخصًا` : 'لا ملخصات بعد'}</div>
+            <div className="head-t">{t('الملخصات')}</div>
+            <div className="head-s">{total ? t('{total} ملخصًا', { total }) : t('لا ملخصات بعد')}</div>
           </div>
         </div>
         <label className="srch">
           <Icon name="search" size={18} />
           <input value={q} onChange={(e) => setQ(e.target.value)} type="search"
-            placeholder="ابحث بالمادة أو باسم الطالب" aria-label="ابحث في الملخصات" />
+            placeholder={t('ابحث بالمادة أو باسم الطالب')} aria-label={t('ابحث في الملخصات')} />
         </label>
       </header>
 
@@ -99,7 +101,7 @@ export default function NoteList({ groups, subjects, me }) {
 
         {adding ? (
           <form className="admin-card admin-seed" onSubmit={share}>
-            <div className="admin-card-t">شارك ملخصًا</div>
+            <div className="admin-card-t">{t('شارك ملخصًا')}</div>
             <input ref={picker} type="file" hidden accept="image/*,application/pdf"
               onChange={(e) => { take(e.target.files?.[0]); e.target.value = ''; }} />
 
@@ -109,38 +111,35 @@ export default function NoteList({ groups, subjects, me }) {
                 <span className="grow" dir="ltr">{file.name}</span>
                 <span className="draft-mb">{file.pending ? '…' : mb(file.bytes)}</span>
                 {!file.pending && (
-                  <button type="button" aria-label="احذف" onClick={() => setFile(null)}>
+                  <button type="button" aria-label={t('احذف')} onClick={() => setFile(null)}>
                     <Icon name="x" size={15} />
                   </button>
                 )}
               </div>
             ) : (
               <button type="button" className="btn g" onClick={() => picker.current?.click()}>
-                <Icon name="file" size={18} /> اختر ملفًا
-              </button>
+                <Icon name="file" size={18} />{' '}{t('اختر ملفًا')}</button>
             )}
 
-            <input className="admin-input" placeholder="عنوان الملخص" dir="ltr"
-              value={title} onChange={(e) => setTitle(e.target.value)} aria-label="العنوان" />
+            <input className="admin-input" placeholder={t('عنوان الملخص')} dir="ltr"
+              value={title} onChange={(e) => setTitle(e.target.value)} aria-label={t('العنوان')} />
             <select className="admin-input" value={module}
-              onChange={(e) => setModule(e.target.value)} aria-label="المادة">
-              <option value="">اختر المادة</option>
+              onChange={(e) => setModule(e.target.value)} aria-label={t('المادة')}>
+              <option value="">{t('اختر المادة')}</option>
               {subjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
 
             <div className="usr-acts">
-              <button className="btn p sm" disabled={busy || !file || file.pending || !module}>
-                شارك
-              </button>
-              <button type="button" className="btn g sm" onClick={() => setAdding(false)}>ألغِ</button>
+              <button className="btn p sm" disabled={busy || !file || file.pending || !module}>{t('شارك')}</button>
+              <button type="button" className="btn g sm" onClick={() => setAdding(false)}>{t('ألغِ')}</button>
             </div>
           </form>
         ) : (
           <button className="admin-card admin-import" onClick={() => setAdding(true)}>
             <div className="admin-import-ic"><Icon name="plus" size={22} /></div>
             <div className="grow ct-start">
-              <div className="admin-card-t">شارك ملخصك</div>
-              <div className="admin-card-b">ارفعه مرة، وتستفيد منه دفعتك كلها</div>
+              <div className="admin-card-t">{t('شارك ملخصك')}</div>
+              <div className="admin-card-b">{t('ارفعه مرة، وتستفيد منه دفعتك كلها')}</div>
             </div>
           </button>
         )}
@@ -164,7 +163,7 @@ export default function NoteList({ groups, subjects, me }) {
                     )}
                     <div className="grow">
                       <div className="note-title" dir="ltr">{n.title}</div>
-                      <div className="note-by">{who(n.author) || 'من مواد المقرّر'}</div>
+                      <div className="note-by">{who(n.author) || t('من مواد المقرّر')}</div>
                     </div>
                   </div>
                   <div className="note-foot">
@@ -175,7 +174,7 @@ export default function NoteList({ groups, subjects, me }) {
                       <button
                         className="note-saves" data-on={n.saved}
                         onClick={(e) => { e.preventDefault(); keep(n.post, !n.saved); }}
-                        aria-label={n.saved ? 'أزل الحفظ' : 'احفظ'}
+                        aria-label={n.saved ? t('أزل الحفظ') : t('احفظ')}
                       >
                         <Icon name="bookmark" size={16} />
                       </button>
@@ -196,9 +195,9 @@ export default function NoteList({ groups, subjects, me }) {
         {!shown.length && !adding && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="book" size={24} /></div>
-            <div className="empty-t">{q ? 'لا نتائج' : 'لا ملخصات بعد'}</div>
+            <div className="empty-t">{q ? t('لا نتائج') : t('لا ملخصات بعد')}</div>
             <div className="empty-b">
-              {q ? `لا ملخص يطابق «${q}».` : 'كن أول من يشارك ملخصًا مع دفعتك.'}
+              {q ? t('لا ملخص يطابق «{q}».', { q }) : t('كن أول من يشارك ملخصًا مع دفعتك.')}
             </div>
           </div>
         )}

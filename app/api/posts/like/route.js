@@ -6,13 +6,15 @@ import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { notify } from '@/lib/notify';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
   if (!profile || (profile.status !== 'approved' && !isStaff(profile))) {
-    return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
+    return NextResponse.json({ error: t('حسابك بانتظار الموافقة') }, { status: 403 });
   }
 
   const { post, on } = await request.json();

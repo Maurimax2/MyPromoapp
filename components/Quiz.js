@@ -6,6 +6,7 @@ import Flame from './Flame';
 import CountUp from './CountUp';
 import { record } from '@/lib/review';
 import { scored } from '@/lib/best';
+import { useT } from '@/components/Lang';
 
 // An FMPOS question can have one right answer or four. You tick what you think
 // is true and then confirm — there is no way to score a multiple-answer
@@ -52,6 +53,7 @@ export default function Quiz({
   // of a subject. A duel and the review have none.
   bestKey = null,
 }) {
+  const t = useT();
   const [i, setI] = useState(0);
   const [ticked, setTicked] = useState([]);
   const [shown, setShown] = useState(false);
@@ -191,10 +193,10 @@ export default function Quiz({
           </svg>
           <span>
             <b style={{ color: ink }} dir="ltr"><CountUp to={score} ms={1100} />/{questions.length}</b>
-            <s>صحيحة</s>
+            <s>{t('صحيحة')}</s>
           </span>
         </span>
-        <span className="qz-stars" role="img" aria-label={`${stars} من 3 نجوم`}>
+        <span className="qz-stars" role="img" aria-label={t('{stars} من 3 نجوم', { stars })}>
           {[0, 1, 2].map((n) => (
             <svg key={n} className={n < stars ? 'on' : ''} style={{ animationDelay: `${1.15 + n * 0.24}s` }}
               viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
@@ -203,18 +205,20 @@ export default function Quiz({
           ))}
         </span>
         <b className="qz-head">
-          {pct === 100 ? 'كاملة!' : pct >= 75 ? 'أحسنت' : pct >= 50 ? 'لا بأس — راجع ما فاتك' : 'تحتاج مراجعة'}
+          {pct === 100 ? t('كاملة!') : pct >= 75 ? t('أحسنت') : pct >= 50 ? t('لا بأس — راجع ما فاتك') : t('تحتاج مراجعة')}
         </b>
         <span className="qz-sub">
           {missed
-            ? `${missed === 1 ? 'سؤال واحد أخطأت فيه سيعود' : missed === 2 ? 'سؤالان أخطأت فيهما سيعودان' : `${missed} أسئلة أخطأت فيها ستعود`} إليك في المراجعة.`
-            : 'لا شيء للمراجعة — كل الأسئلة صحيحة.'}
+            ? t('{v0} إليك في المراجعة.', {
+            v0: missed === 1 ? t('سؤال واحد أخطأت فيه سيعود') : missed === 2 ? t('سؤالان أخطأت فيهما سيعودان') : t('{missed} أسئلة أخطأت فيها ستعود', { missed })
+          })
+            : t('لا شيء للمراجعة — كل الأسئلة صحيحة.')}
         </span>
 
         <div className="qz-stats">
-          <span><b dir="ltr">{clockOf(took)}</b><s>الوقت</s></span>
-          <span className={bestRun >= 3 ? 'hot' : ''}><b dir="ltr">×{bestRun}</b><s>أطول سلسلة</s></span>
-          <span><b>{missed}</b><s>للمراجعة</s></span>
+          <span><b dir="ltr">{clockOf(took)}</b><s>{t('الوقت')}</s></span>
+          <span className={bestRun >= 3 ? 'hot' : ''}><b dir="ltr">×{bestRun}</b><s>{t('أطول سلسلة')}</s></span>
+          <span><b>{missed}</b><s>{t('للمراجعة')}</s></span>
         </div>
 
         <span className="grow" />
@@ -223,14 +227,14 @@ export default function Quiz({
             file is offered no challenge rather than a form that cannot start. */}
         {moduleId && questions.some((x) => x.dbId) && (
           <Link href={`/duel/new?subject=${encodeURIComponent(moduleId)}`} className="qz-duel">
-            <Icon name="swords" size={19} /> تحدَّ زميلًا في <span dir="ltr">{moduleName}</span>
+            <Icon name="swords" size={19} />{' '}{t('تحدَّ زميلًا في')}{' '}<span dir="ltr">{moduleName}</span>
           </Link>
         )}
         <div className="qz-two">
-          <button className="qz-again" onClick={restart}><Icon name="again" size={16} /> أعد</button>
+          <button className="qz-again" onClick={restart}><Icon name="again" size={16} />{' '}{t('أعد')}</button>
           {onFinish
-            ? <button className="qz-back" onClick={onFinish}>العودة</button>
-            : <Link className="qz-back" href={moduleId ? `/archive/${moduleId}` : '/study'}>العودة للمادة</Link>}
+            ? <button className="qz-back" onClick={onFinish}>{t('العودة')}</button>
+            : <Link className="qz-back" href={moduleId ? `/archive/${moduleId}` : '/study'}>{t('العودة للمادة')}</Link>}
         </div>
       </div>
     );
@@ -243,7 +247,7 @@ export default function Quiz({
       <div className="qz-top">
         <span className="grow">
           <span className="qz-count">
-            <span>السؤال <b>{i + 1}</b> من {questions.length}</span>
+            <span>{t('السؤال')}{' '}<b>{i + 1}</b>{' '}{t('من {length}', { length: questions.length })}</span>
             {run >= 2 && (
               <span className="qz-run" key={run}><Flame streak={run} size={15} /><span dir="ltr">×{run}</span></span>
             )}
@@ -278,7 +282,7 @@ export default function Quiz({
         )}
         <b className="qz-stem" dir="auto">{q.q}</b>
         <span className="qz-kind">
-          {written ? 'أجب في ورقتك، ثمّ تحقّق' : single ? 'إجابة واحدة' : 'إجابة أو أكثر'}
+          {written ? t('أجب في ورقتك، ثمّ تحقّق') : single ? t('إجابة واحدة') : t('إجابة أو أكثر')}
         </span>
       </div>
 
@@ -288,7 +292,7 @@ export default function Quiz({
             <div className="qz-model" dir="auto">{q.model || '—'}</div>
             {q.why && (
               <div className="qz-why">
-                <span><Icon name="bulb" size={17} /> الشرح</span>
+                <span><Icon name="bulb" size={17} />{' '}{t('الشرح')}</span>
                 <p dir="auto">{q.why}</p>
               </div>
             )}
@@ -321,13 +325,13 @@ export default function Quiz({
                 <Icon name={right ? 'sparkle' : 'wrong'} size={20} weight="fill" />
                 <b>
                   {right
-                    ? (run >= 3 ? `صحيح — ${run} على التوالي` : 'صحيح')
-                    : `الجواب: ${answer.map(LETTER).join(' · ') || '—'}`}
+                    ? (run >= 3 ? t('صحيح — {run} على التوالي', { run }) : t('صحيح'))
+                    : t('الجواب: {v0}', { v0: answer.map(LETTER).join(' · ') || '—' })}
                 </b>
               </div>
               {q.why && (
                 <div className="qz-why">
-                  <span><Icon name="bulb" size={17} /> الشرح</span>
+                  <span><Icon name="bulb" size={17} />{' '}{t('الشرح')}</span>
                   <p dir="auto">{q.why}</p>
                 </div>
               )}
@@ -339,18 +343,18 @@ export default function Quiz({
       <div className="qz-act">
         {written ? (
           !shown ? (
-            <button className="qz-go" onClick={() => setShown(true)}>أظهر الجواب</button>
+            <button className="qz-go" onClick={() => setShown(true)}>{t('أظهر الجواب')}</button>
           ) : (
             <div className="qz-two">
-              <button className="qz-again" onClick={() => mark(false)}>لم أعرفها</button>
-              <button className="qz-go" onClick={() => mark(true)}>عرفتها</button>
+              <button className="qz-again" onClick={() => mark(false)}>{t('لم أعرفها')}</button>
+              <button className="qz-go" onClick={() => mark(true)}>{t('عرفتها')}</button>
             </div>
           )
         ) : !shown ? (
-          <button className="qz-go" onClick={confirm} disabled={ticked.length === 0}>تأكيد</button>
+          <button className="qz-go" onClick={confirm} disabled={ticked.length === 0}>{t('تأكيد')}</button>
         ) : (
           <button className="qz-go" onClick={() => next()}>
-            {last ? (onAnswers ? 'أرسِل' : 'إنهاء') : 'السؤال التالي'}
+            {last ? (onAnswers ? t('أرسِل') : t('إنهاء')) : t('السؤال التالي')}
             {!last && <Icon name="chev" size={16} />}
           </button>
         )}

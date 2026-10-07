@@ -21,28 +21,30 @@ import { normalise, matriculeError, writeFailure } from '@/lib/matricule';
 import {
   normaliseUsername, usernameError, normalisePhone, phoneError, isFirstYear,
 } from '@/lib/identity';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 const PROMOS = ['pcem1', 'pcem2', 'dcem1', 'dcem2', 'dcem3', 'dcem4'];
 
 export async function POST(request) {
+  const t = await getT();
   const { email, password, full_name, promo, matricule, username, phone } = await request.json();
 
   const address = String(email || '').trim().toLowerCase();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(address)) {
-    return NextResponse.json({ error: 'عنوان بريد غير صالح' }, { status: 400 });
+    return NextResponse.json({ error: t('عنوان بريد غير صالح') }, { status: 400 });
   }
   if (String(password || '').length < 8) {
-    return NextResponse.json({ error: 'كلمة السر: 8 أحرف على الأقل' }, { status: 400 });
+    return NextResponse.json({ error: t('كلمة السر: 8 أحرف على الأقل') }, { status: 400 });
   }
   if (!String(full_name || '').trim()) {
-    return NextResponse.json({ error: 'اكتب اسمك' }, { status: 400 });
+    return NextResponse.json({ error: t('اكتب اسمك') }, { status: 400 });
   }
 
   const handle = normaliseUsername(username);
   const badName = usernameError(handle);
-  if (badName) return NextResponse.json({ error: badName }, { status: 400 });
+  if (badName) return NextResponse.json({ error: t(badName) }, { status: 400 });
 
   const db = supabaseAdmin();
 
@@ -52,7 +54,7 @@ export async function POST(request) {
   if (yearsError) ({ data: years } = await db.from('promos').select('id'));
   const allowed = years?.length ? years.map((p) => p.id) : PROMOS;
   if (!allowed.includes(promo)) {
-    return NextResponse.json({ error: 'اختر سنتك' }, { status: 400 });
+    return NextResponse.json({ error: t('اختر سنتك') }, { status: 400 });
   }
   const first = isFirstYear(years?.find((p) => p.id === promo) || promo);
 
@@ -62,13 +64,13 @@ export async function POST(request) {
   const number = normalise(matricule);
   if (!first || number) {
     const wrong = matriculeError(number);
-    if (wrong) return NextResponse.json({ error: wrong }, { status: 400 });
+    if (wrong) return NextResponse.json({ error: t(wrong) }, { status: 400 });
   }
 
   const whatsapp = normalisePhone(phone);
   if (first) {
     const badPhone = phoneError(whatsapp);
-    if (badPhone) return NextResponse.json({ error: badPhone }, { status: 400 });
+    if (badPhone) return NextResponse.json({ error: t(badPhone) }, { status: 400 });
   }
 
   // Taken already? Asked before the account is made, so a clash costs the
@@ -76,7 +78,7 @@ export async function POST(request) {
   const { data: clash, error: clashError } = await db.from('profiles')
     .select('id').eq('username', handle).maybeSingle();
   if (!clashError && clash) {
-    return NextResponse.json({ error: 'اسم المستخدم محجوز — اختر غيره' }, { status: 409 });
+    return NextResponse.json({ error: t('اسم المستخدم محجوز — اختر غيره') }, { status: 409 });
   }
 
   const { data: made, error } = await db.auth.admin.createUser({
@@ -89,7 +91,7 @@ export async function POST(request) {
   if (error) {
     const taken = /already|registered|exists/i.test(error.message);
     return NextResponse.json(
-      { error: taken ? 'هذا البريد مسجَّل بالفعل — سجّل الدخول' : error.message },
+      { error: taken ? t('هذا البريد مسجَّل بالفعل — سجّل الدخول') : error.message },
       { status: taken ? 409 : 500 });
   }
 
@@ -122,14 +124,14 @@ export async function POST(request) {
   if (profileError) {
     await db.auth.admin.deleteUser(made.user.id);
     if (profileError.code === '23505' && /username/.test(`${profileError.message} ${profileError.details || ''}`)) {
-      return NextResponse.json({ error: 'اسم المستخدم محجوز — اختر غيره' }, { status: 409 });
+      return NextResponse.json({ error: t('اسم المستخدم محجوز — اختر غيره') }, { status: 409 });
     }
     // Classified by SQLSTATE, in one place shared with /api/me/matricule:
     // "somebody already holds that number" is a thing to tell the student,
     // and every other failure is a thing to tell us.
     const failed = writeFailure(profileError);
     if (failed.log) console.error('register:', failed.log);
-    return NextResponse.json({ error: failed.error }, { status: failed.status });
+    return NextResponse.json({ error: t(failed.error) }, { status: failed.status });
   }
 
   if (first && whatsapp) {

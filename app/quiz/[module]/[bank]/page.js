@@ -3,14 +3,16 @@ import BackButton from '@/components/BackButton';
 import Quiz from '@/components/Quiz';
 import { moduleOf } from '@/lib/catalogue';
 import { bankOf, allOf } from '@/lib/quiz-bank';
+import { getT } from '@/lib/lang';
+import { questionsWord } from '@/lib/i18n';
 
 // Not prerendered any more: the banks live in the database now, and which
 // ones exist changes every time somebody extracts a paper.
 export const dynamic = 'force-dynamic';
 
-const countOf = (n) => (n === 1 ? 'سؤال واحد' : n === 2 ? 'سؤالان' : n <= 10 ? `${n} أسئلة` : `${n} سؤالًا`);
 
 export default async function BankPage({ params }) {
+  const t = await getT();
   const { module: id, bank: slug } = await params;
   // The catalogue, not the bundled copy: a subject catalogued in the panel
   // answered 404 here even when its questions were sitting in the database.
@@ -30,9 +32,9 @@ export default async function BankPage({ params }) {
           <BackButton fallback={`/quiz/${id}`} />
           <div className="grow">
             <div className="head-t" style={{ fontSize: 17 }}>
-              {bank ? bank.title : 'كل الأسئلة'}
+              {bank ? bank.title : t('كل الأسئلة')}
             </div>
-            <div className="head-s">{m.name} · {countOf(questions.length)}</div>
+            <div className="head-s">{m.name} · {questionsWord(t, questions.length)}</div>
           </div>
         </div>
       </header>

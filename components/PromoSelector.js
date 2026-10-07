@@ -14,8 +14,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from './Icon';
 import { badgeOf } from '@/lib/data';
+import { useT } from '@/components/Lang';
 
 export default function PromoSelector({ promos, current, mine }) {
+  const t = useT();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -53,7 +55,7 @@ export default function PromoSelector({ promos, current, mine }) {
         className={`yr-btn${current !== mine ? ' away' : ''}`}
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-label={`السنة المعروضة — ${here?.name || current}`}
+        aria-label={t('السنة المعروضة — {v0}', { v0: here?.name || current })}
         disabled={busy}
       >
         <span dir="ltr">{here?.name || current.toUpperCase()}</span>
@@ -73,7 +75,7 @@ export default function PromoSelector({ promos, current, mine }) {
               <span className="grow" dir="ltr">{p.name}</span>
               {/* Which one is actually yours, so leaving it is a deliberate
                   act and coming back is one tap and no thinking. */}
-              {p.id === mine && <span className="yr-mine">دفعتك</span>}
+              {p.id === mine && <span className="yr-mine">{t('دفعتك')}</span>}
             </button>
           ))}
         </div>

@@ -12,6 +12,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { PROMOS } from '@/lib/data';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,11 +38,12 @@ async function years(db) {
 }
 
 export async function POST(request) {
+  const t = await getT();
   let body;
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'قراءة غير ممكنة' }, { status: 400 });
+    return NextResponse.json({ error: t('قراءة غير ممكنة') }, { status: 400 });
   }
 
   let db;
@@ -50,12 +52,12 @@ export async function POST(request) {
   } catch {
     // Not configured. Say so as a server fault, because it is one — the
     // student did nothing wrong and the page tells them to try again.
-    return NextResponse.json({ error: 'الخدمة غير متاحة الآن' }, { status: 503 });
+    return NextResponse.json({ error: t('الخدمة غير متاحة الآن') }, { status: 503 });
   }
 
   const promo = String(body?.promo || '').toLowerCase();
   if (!(await years(db)).has(promo)) {
-    return NextResponse.json({ error: 'اختر سنتك' }, { status: 400 });
+    return NextResponse.json({ error: t('اختر سنتك') }, { status: 400 });
   }
 
   const needs = Array.isArray(body?.needs)
@@ -95,7 +97,7 @@ export async function POST(request) {
     .insert({ promo, needs, pain, wish, reach, name, phone, source });
 
   if (error) {
-    return NextResponse.json({ error: 'تعذّر الحفظ' }, { status: 500 });
+    return NextResponse.json({ error: t('تعذّر الحفظ') }, { status: 500 });
   }
   return NextResponse.json({ ok: true, kept: true });
 }

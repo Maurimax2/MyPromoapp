@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 const LOOK = {
   none:    { icon: 'addFriend', say: 'أضف صديقًا', cls: 'p' },
@@ -14,6 +15,7 @@ const LOOK = {
 };
 
 export default function FriendButton({ to, state: initial }) {
+  const t = useT();
   const router = useRouter();
   const [state, setState] = useState(initial);
   const [busy, setBusy] = useState(false);
@@ -31,7 +33,7 @@ export default function FriendButton({ to, state: initial }) {
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false); setUnsure(false);
-    if (!res.ok) { setError(data.error || 'تعذّر ذلك'); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر ذلك')); return; }
     setState(data.state);
     router.refresh();
   };
@@ -41,7 +43,7 @@ export default function FriendButton({ to, state: initial }) {
     <>
       <button className={`btn ${look.cls}`} onClick={act} disabled={busy}>
         <Icon name={unsure ? 'x' : look.icon} size={17} />
-        {busy ? '…' : unsure ? 'إلغاء الصداقة؟ اضغط مرة أخرى' : look.say}
+        {busy ? '…' : unsure ? t('إلغاء الصداقة؟ اضغط مرة أخرى') : t(look.say)}
       </button>
       {error && <div className="admin-err">{error}</div>}
     </>

@@ -4,6 +4,7 @@ import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { outcome, stage } from '@/lib/duel';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,6 +16,7 @@ const WHO = (p) => p?.full_name || p?.email?.split('@')[0] || 'زميل';
 // is waiting for theirs, and what is over. A screen sorted only by date would
 // bury the one thing on it you can act on.
 export default async function Duels() {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
   if (me.status !== 'approved') redirect('/waiting');
@@ -78,11 +80,11 @@ export default async function Duels() {
         <div className="head-row">
           <BackButton fallback="/feed" />
           <div className="grow">
-            <div className="head-t">تحدّي زميلك</div>
+            <div className="head-t">{t('تحدّي زميلك')}</div>
             <div className="head-s">
               {invited.length + toPlay.length
-                ? `${invited.length + toPlay.length} بانتظارك`
-                : 'نفس الأسئلة، ونتيجتان'}
+                ? t('{v0} بانتظارك', { v0: invited.length + toPlay.length })
+                : t('نفس الأسئلة، ونتيجتان')}
             </div>
           </div>
         </div>
@@ -92,8 +94,8 @@ export default async function Duels() {
         <Link href="/duel/new" className="card quizcard">
           <div className="quizcard-ic"><Icon name="plus" size={19} /></div>
           <div className="grow">
-            <div className="nm" style={{ fontSize: 14 }}>تحدٍّ جديد</div>
-            <div className="mt">اختر المادة والزميل، وأرسِل الدعوة</div>
+            <div className="nm" style={{ fontSize: 14 }}>{t('تحدٍّ جديد')}</div>
+            <div className="mt">{t('اختر المادة والزميل، وأرسِل الدعوة')}</div>
           </div>
           <span className="chev"><Icon name="chev" size={18} /></span>
         </Link>
@@ -102,40 +104,40 @@ export default async function Duels() {
           <div className="notice">
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">التحدّيات غير متاحة بعد</div>
-              <div className="notice-b">راجع أحد المشرفين — قاعدة البيانات تحتاج تحديثًا.</div>
+              <div className="notice-t">{t('التحدّيات غير متاحة بعد')}</div>
+              <div className="notice-b">{t('راجع أحد المشرفين — قاعدة البيانات تحتاج تحديثًا.')}</div>
             </div>
           </div>
         )}
 
         {invited.length > 0 && (
           <>
-            <div className="eyebrow">دعوة بانتظار ردّك</div>
-            {invited.map((d) => <Row key={d.id} d={d} action="تحدّاك" />)}
+            <div className="eyebrow">{t('دعوة بانتظار ردّك')}</div>
+            {invited.map((d) => <Row key={d.id} d={d} action={t('تحدّاك')} />)}
           </>
         )}
 
         {toPlay.length > 0 && (
           <>
-            <div className="eyebrow">دورك</div>
-            {toPlay.map((d) => <Row key={d.id} d={d} action="أجب الآن" />)}
+            <div className="eyebrow">{t('دورك')}</div>
+            {toPlay.map((d) => <Row key={d.id} d={d} action={t('أجب الآن')} />)}
           </>
         )}
 
         {theirs.length > 0 && (
           <>
-            <div className="eyebrow">بانتظاره</div>
+            <div className="eyebrow">{t('بانتظاره')}</div>
             {theirs.map((d) => (
-              <Row key={d.id} d={d} action={d.at === 'sent' ? 'لم يقبل بعد' : 'لم يجب بعد'} />
+              <Row key={d.id} d={d} action={d.at === 'sent' ? t('لم يقبل بعد') : t('لم يجب بعد')} />
             ))}
           </>
         )}
 
         {over.length > 0 && (
           <>
-            <div className="eyebrow">انتهت</div>
+            <div className="eyebrow">{t('انتهت')}</div>
             {over.map((d) => (
-              <Row key={d.id} d={d} action={d.at === 'refused' ? 'اعتذر' : null} />
+              <Row key={d.id} d={d} action={d.at === 'refused' ? t('اعتذر') : null} />
             ))}
           </>
         )}
@@ -143,11 +145,10 @@ export default async function Duels() {
         {!error && !duels.length && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="swords" size={24} /></div>
-            <div className="empty-t">لا تحدّيات بعد</div>
-            <div className="empty-b">
-              اختر مادة وزميلًا، وأرسل له دعوة. حين يقبل، تجيبان على الأسئلة
-              نفسها — وتظهر النتيجتان معًا.
-            </div>
+            <div className="empty-t">{t('لا تحدّيات بعد')}</div>
+            <div className="empty-b">{t(
+              'اختر مادة وزميلًا، وأرسل له دعوة. حين يقبل، تجيبان على الأسئلة نفسها — وتظهر النتيجتان معًا.'
+            )}</div>
           </div>
         )}
       </div>

@@ -20,6 +20,7 @@ import BadgeArt from '@/components/BadgeArt';
 import Flame from '@/components/Flame';
 import CountUp from '@/components/CountUp';
 import { RULES } from '@/lib/points';
+import { useT } from '@/components/Lang';
 
 const TABS = [
   { id: 'board', label: 'الترتيب' },
@@ -37,6 +38,7 @@ const faceOf = (id = '') => {
 const initials = (name = '') => name.trim().slice(0, 2);
 
 export default function Points({ total, rank, rows, badges, board, meId, mine = null, week = false }) {
+  const t = useT();
   const [tab, setTab] = useState('board');
   // A classmate tapped on the board: their card, and a way to challenge them.
   const [who, setWho] = useState(null);
@@ -45,13 +47,13 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
   return (
     <div className="scroll">
       <div className="rev-tabs">
-        {TABS.map((t) => (
+        {TABS.map((it) => (
           <button
-            key={t.id}
-            className={`rev-tab${tab === t.id ? ' on' : ''}`}
-            onClick={() => setTab(t.id)}
+            key={it.id}
+            className={`rev-tab${tab === it.id ? ' on' : ''}`}
+            onClick={() => setTab(it.id)}
           >
-            {t.label}
+            {t(it.label)}
           </button>
         ))}
       </div>
@@ -60,18 +62,18 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
         <>
           <div className="pts-hero">
             <div className="pts-n"><CountUp to={total} /></div>
-            <div className="pts-l">نقطة</div>
-            {total > 0 && <div className="pts-rank">المركز {rank} في دفعتك</div>}
+            <div className="pts-l">{t('نقطة')}</div>
+            {total > 0 && <div className="pts-rank">{t('المركز {rank} في دفعتك', { rank })}</div>}
           </div>
 
           {rows.length > 0 && (
             <>
-              <div className="eyebrow">من أين جاءت</div>
+              <div className="eyebrow">{t('من أين جاءت')}</div>
               <div className="card">
                 {rows.map((r) => (
                   <div key={r.id} className="pts-row">
                     <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
-                    <span className="grow">{r.label}</span>
+                    <span className="grow">{t(r.label)}</span>
                     <span className="pts-x">{r.n} × {r.each}</span>
                     <b className="pts-p">{r.points}</b>
                   </div>
@@ -80,13 +82,13 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
             </>
           )}
 
-          <div className="eyebrow">الشارات</div>
+          <div className="eyebrow">{t('الشارات')}</div>
           <div className="badges">
             {badges.map((b) => (
               <div key={b.id} className={`badge${b.done ? ' on' : ''}`}>
                 <BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} done={b.done} size={48} />
-                <b>{b.label}</b>
-                <span className="badge-w">{b.want}</span>
+                <b>{t(b.label)}</b>
+                <span className="badge-w">{t(b.want)}</span>
                 {!b.done && (
                   <>
                     {/* Nothing drawn at zero: the bar has a minimum width, and
@@ -106,21 +108,19 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
             ))}
           </div>
 
-          <div className="eyebrow">كيف تُحسب</div>
+          <div className="eyebrow">{t('كيف تُحسب')}</div>
           <div className="card">
             {RULES.map((r) => (
               <div key={r.id} className="pts-row">
                 <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
-                <span className="grow">{r.label}</span>
+                <span className="grow">{t(r.label)}</span>
                 <b className="pts-p">+{r.each}</b>
               </div>
             ))}
           </div>
           {/* Said plainly, because a counter nobody understands is a counter
               nobody trusts. */}
-          <p className="pts-note">
-            القراءة لا تُحسب. النقاط لِما يستفيد منه زملاؤك.
-          </p>
+          <p className="pts-note">{t('القراءة لا تُحسب. النقاط لِما يستفيد منه زملاؤك.')}</p>
         </>
       ) : board.length ? (
         <>
@@ -128,9 +128,9 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
               three. The tallest stands in the middle, so the order here is
               second, first, third. */}
           {/* This week, or all time — a board somebody new can climb. */}
-          <div className="pts-when" role="group" aria-label="المدة">
-            <Link href="/points?w=1" data-on={!!week} replace>هذا الأسبوع</Link>
-            <Link href="/points" data-on={!week} replace>كل الوقت</Link>
+          <div className="pts-when" role="group" aria-label={t('المدة')}>
+            <Link href="/points?w=1" data-on={!!week} replace>{t('هذا الأسبوع')}</Link>
+            <Link href="/points" data-on={!week} replace>{t('كل الوقت')}</Link>
           </div>
 
           {board.length >= 3 && (
@@ -160,7 +160,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
                 {initials(mine.name)}
               </span>
               <span className="grow">
-                <b>أنت</b>
+                <b>{t('أنت')}</b>
                 <s>{mine.gap}</s>
                 {mine.pct > 0 && mine.pct < 100 && (
                   <span className="you-bar"><i style={{ width: `${mine.pct}%` }} /></span>
@@ -172,11 +172,11 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
 
           <div className="pts-rules">
             {RULES.map((r) => (
-              <span key={r.id}><b>+{r.each}</b>{r.label}</span>
+              <span key={r.id}><b>+{r.each}</b>{t(r.label)}</span>
             ))}
           </div>
 
-          <div className="eyebrow">دفعتك</div>
+          <div className="eyebrow">{t('دفعتك')}</div>
           <div className="card pts-board">
             {board.map((p, i) => (
               <button key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`} onClick={open(p, i + 1)}>
@@ -186,7 +186,7 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
                 </span>
                 <span className="grow">{p.name}</span>
                 {p.streak > 0 && (
-                  <span className="pts-streak" title="أيام متتالية">
+                  <span className="pts-streak" title={t('أيام متتالية')}>
                     <Flame streak={p.streak} size={14} />{p.streak}
                   </span>
                 )}
@@ -197,14 +197,14 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
         </>
       ) : (
         <>
-          <div className="pts-when" role="group" aria-label="المدة">
-            <Link href="/points?w=1" data-on={!!week} replace>هذا الأسبوع</Link>
-            <Link href="/points" data-on={!week} replace>كل الوقت</Link>
+          <div className="pts-when" role="group" aria-label={t('المدة')}>
+            <Link href="/points?w=1" data-on={!!week} replace>{t('هذا الأسبوع')}</Link>
+            <Link href="/points" data-on={!week} replace>{t('كل الوقت')}</Link>
           </div>
           <div className="empty">
             <div className="tile tint-olive"><Icon name="check" size={24} /></div>
-            <div className="empty-t">{week ? 'لا نقاط هذا الأسبوع بعد' : 'لا ترتيب بعد'}</div>
-            <div className="empty-b">{week ? 'الأسبوع بدأ السبت — أول من يجيب سؤال اليوم يتصدّر.' : 'أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.'}</div>
+            <div className="empty-t">{week ? t('لا نقاط هذا الأسبوع بعد') : t('لا ترتيب بعد')}</div>
+            <div className="empty-b">{week ? t('الأسبوع بدأ السبت — أول من يجيب سؤال اليوم يتصدّر.') : t('أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.')}</div>
           </div>
         </>
       )}
@@ -213,14 +213,13 @@ export default function Points({ total, rank, rows, badges, board, meId, mine = 
           <div className="pts-who">
             <span className="pts-who-f" style={{ background: faceOf(who.id) }}>{initials(who.name)}</span>
             <b>{who.name}</b>
-            <s>المركز {who.place} · {who.points} نقطة</s>
+            <s>{t('المركز {place} · {points} نقطة', { place: who.place, points: who.points })}</s>
             <div className="pts-who-acts">
               {who.handle
                 ? <Link href={`/duel/new?to=${encodeURIComponent(who.handle)}`} className="pts-who-go">
-                    <Icon name="swords" size={18} weight="fill" /> تحدَّه
-                  </Link>
-                : <span className="pts-who-none">لا رقم تسجيل له بعد</span>}
-              <button className="pts-who-close" onClick={() => setWho(null)}>إغلاق</button>
+                <Icon name="swords" size={18} weight="fill" />{' '}{t('تحدَّه')}</Link>
+                : <span className="pts-who-none">{t('لا رقم تسجيل له بعد')}</span>}
+              <button className="pts-who-close" onClick={() => setWho(null)}>{t('إغلاق')}</button>
             </div>
           </div>
         </Sheet>

@@ -16,20 +16,20 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
+import { useT } from '@/components/Lang';
 
 const KEY = 'mypromo.welcome';
 
 const SLIDES = [
   {
     art: null,
-    title: (name) => `أهلًا بك يا ${name}`,
-    body: 'هذه النسخة التجريبية الأولى من MyPromo، صُنعت لطلاب الطب والصيدلة وطب الأسنان في نواكشوط. '
-      + 'أنت من أوائل من يجرّبها — ورأيك هو ما سيصنع النسخة القادمة.',
+    title: 'أهلًا بك يا {name}',
+    body: 'هذه النسخة التجريبية الأولى من MyPromo، صُنعت لطلاب الطب والصيدلة وطب الأسنان في نواكشوط. أنت من أوائل من يجرّبها — ورأيك هو ما سيصنع النسخة القادمة.',
     points: [],
   },
   {
     art: ['crane', 'coeur', 'poumons'],
-    title: () => 'محاضراتك كلها هنا',
+    title: 'محاضراتك كلها هنا',
     points: [
       ['book', 'الأرشيف', 'مواد سنتك ومحاضراتها، تُفتح داخل التطبيق مباشرة.'],
       ['box', 'نماذج ثلاثية الأبعاد', 'في مواد التشريح: أدر العضو والمس أي جزء لتعرف اسمه.'],
@@ -38,7 +38,7 @@ const SLIDES = [
   {
     art: null,
     next: true,
-    title: () => 'محاضرتك القادمة أمامك',
+    title: 'محاضرتك القادمة أمامك',
     points: [
       ['calendar', 'جدول الكلية', 'يقرأ التطبيق جدول سنتك، فتجد في أعلى الرئيسية ما ينتظرك.'],
       ['book', 'راجعها قبل أن تبدأ', 'لمسة واحدة تفتح المحاضرة أو المادة، ولمسة أخرى تفتح الجدول كاملًا.'],
@@ -46,7 +46,7 @@ const SLIDES = [
   },
   {
     art: ['encephale', 'reins', 'globules'],
-    title: () => 'اختبر نفسك',
+    title: 'اختبر نفسك',
     points: [
       ['quiz', 'QCM في كل مادة', 'أجب، وانظر الجواب وشرحه فورًا.'],
       ['clock', 'ما تخطئ فيه يعود إليك', 'تعرض عليك المراجعة الأسئلة التي أخطأت فيها في وقتها المناسب.'],
@@ -56,7 +56,7 @@ const SLIDES = [
   {
     art: null,
     friends: true,
-    title: () => 'أنت وزملاؤك',
+    title: 'أنت وزملاؤك',
     points: [
       ['file', 'شارك واسأل', 'انشر ملخّصًا، أو اسأل دفعتك، أو أجب زميلًا.'],
       ['video', 'غرف الدراسة', 'ادرس مع زملائك في غرفة مباشرة.'],
@@ -67,11 +67,12 @@ const SLIDES = [
 
 /** What the third slide shows: the card students will see at the top of الرئيسية. */
 function MiniCard() {
+  const t = useT();
   return (
     <span className="wl-mini">
       <span className="wl-mini-art"><img src="/art/coeur.webp" alt="" /></span>
       <span className="grow">
-        <s>المحاضرة القادمة · بعد ساعة</s>
+        <s>{t('المحاضرة القادمة · بعد ساعة')}</s>
         <b dir="ltr">Sémiologie cardiologique</b>
         <em dir="ltr">15:00–16:30</em>
       </span>
@@ -80,6 +81,7 @@ function MiniCard() {
 }
 
 export default function Welcome({ name, ready = true }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [host, setHost] = useState(null);
@@ -115,22 +117,22 @@ export default function Welcome({ name, ready = true }) {
   if (!open || !host) return null;
   const last = step === SLIDES.length - 1;
   const s = SLIDES[step];
-  const first = (name || '').split(' ')[0] || 'زميلي';
+  const first = (name || '').split(' ')[0] || t('زميلي');
 
   const go = (n) => setStep(Math.max(0, Math.min(SLIDES.length - 1, n)));
 
   return createPortal(
-    <div className="wl" role="dialog" aria-modal="true" aria-label="جولة في التطبيق"
+    <div className="wl" role="dialog" aria-modal="true" aria-label={t('جولة في التطبيق')}
          onTouchStart={(e) => { from.current = e.touches[0].clientX; }}
          onTouchEnd={(e) => {
            if (from.current == null) return;
            const dx = e.changedTouches[0].clientX - from.current;
            from.current = null;
-           if (Math.abs(dx) > 50) go(step + (dx > 0 ? 1 : -1));
+           if (Math.abs(dx) > 50) go(step + ((dx > 0) === (t.lang !== 'fr') ? 1 : -1));
          }}>
       <div className="wl-top">
-        {step > 0 ? <button className="wl-back" onClick={() => go(step - 1)}>رجوع</button> : <span />}
-        {!last && <button className="wl-skip" onClick={done}>تخطَّ</button>}
+        {step > 0 ? <button className="wl-back" onClick={() => go(step - 1)}>{t('رجوع')}</button> : <span />}
+        {!last && <button className="wl-skip" onClick={done}>{t('تخطَّ')}</button>}
       </div>
 
       <div className="wl-page" key={step}>
@@ -140,7 +142,7 @@ export default function Welcome({ name, ready = true }) {
           {s.friends && (
             <span className="wl-faces">
               {['#A8502A', '#14555F', '#8A6A14', '#4B5B3A'].map((c, i) => (
-                <i key={c} style={{ background: c, animationDelay: `${i * 0.08}s` }}>{['ن', 'م', 'س', 'ع'][i]}</i>
+                <i key={c} style={{ background: c, animationDelay: `${i * 0.08}s` }}>{[t('ن'), t('م'), t('س'), t('ع')][i]}</i>
               ))}
             </span>
           )}
@@ -149,23 +151,22 @@ export default function Welcome({ name, ready = true }) {
           ))}
         </div>
 
-        <h2 className="wl-title">{s.title(first)}</h2>
-        {s.body && <p className="wl-body">{s.body}</p>}
+        <h2 className="wl-title">{t(s.title, { name: first })}</h2>
+        {s.body && <p className="wl-body">{t(s.body)}</p>}
 
         {s.points.length > 0 && (
           <ul className="wl-points">
             {s.points.map(([icon, head, text]) => (
               <li key={head}>
                 <span className="wl-ic"><Icon name={icon} size={19} /></span>
-                <span><b>{head}</b><s>{text}</s></span>
+                <span><b>{t(head)}</b><s>{t(text)}</s></span>
               </li>
             ))}
           </ul>
         )}
 
         {last && (
-          <Link href="/feedback" className="wl-note" onClick={done}>
-            عندك رأي أو وجدت خطأً؟ <b>شاركنا في دقيقة</b>
+          <Link href="/feedback" className="wl-note" onClick={done}>{t('عندك رأي أو وجدت خطأً؟')}{' '}<b>{t('شاركنا في دقيقة')}</b>
           </Link>
         )}
       </div>
@@ -175,7 +176,7 @@ export default function Welcome({ name, ready = true }) {
           {SLIDES.map((_, i) => <i key={i} data-on={i === step} />)}
         </span>
         <button className="wl-next" onClick={() => (last ? done() : go(step + 1))}>
-          {last ? 'ابدأ' : 'التالي'}
+          {last ? t('ابدأ') : t('التالي')}
         </button>
       </div>
     </div>,

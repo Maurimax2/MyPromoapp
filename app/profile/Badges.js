@@ -11,10 +11,12 @@ import Sheet from '@/components/Sheet';
 import BadgeArt from '@/components/BadgeArt';
 import BadgeCelebrate from '@/components/BadgeCelebrate';
 import { TIERS } from '@/lib/points';
+import { useT } from '@/components/Lang';
 
 const pct = (b) => Math.min(100, Math.round((b.have / b.need) * 100));
 
 export default function Badges({ badges }) {
+  const t = useT();
   const [open, setOpen] = useState(null);
   const got = badges.filter((b) => b.done).length;
   const b = badges.find((x) => x.id === open);
@@ -25,8 +27,8 @@ export default function Badges({ badges }) {
     <div className="me-badges r5">
       <BadgeCelebrate badges={badges} />
       <div className="me-days-top">
-        <b>الشارات</b>
-        <s>{got} من {badges.length}</s>
+        <b>{t('الشارات')}</b>
+        <s>{t('{got} من {length}', { got, length: badges.length })}</s>
       </div>
       <div className="me-badge-row">
         {shelf.map((x, i) => (
@@ -37,7 +39,7 @@ export default function Badges({ badges }) {
             onClick={() => setOpen(x.id)}
           >
             <BadgeArt kind={x.kind} tier={x.tier} icon={x.icon} done={x.done} size={58} />
-            <b>{x.label}</b>
+            <b>{t(x.label)}</b>
             <span className="me-badge-bar"><i style={{ width: `${pct(x)}%` }} /></span>
           </button>
         ))}
@@ -47,12 +49,12 @@ export default function Badges({ badges }) {
         <Sheet onClose={() => setOpen(null)}>
           <div className="me-badge-sheet">
             <span className="me-badge-big"><BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} done={b.done} size={124} /></span>
-            <b>{b.label}</b>
-            <span className={`me-badge-tier t${b.tier}`}>شارة {TIERS[b.tier]}</span>
-            <s>{b.want}</s>
+            <b>{t(b.label)}</b>
+            <span className={`me-badge-tier t${b.tier}`}>{t('شارة {v1}', { v1: t(TIERS[b.tier]) })}</span>
+            <s>{t(b.want)}</s>
             <span className="me-badge-bar wide"><i style={{ width: `${pct(b)}%` }} /></span>
-            <em>{b.done ? 'حصلت عليها' : `${b.have} من ${b.need}`}</em>
-            <button className="me-badge-ok" onClick={() => setOpen(null)}>حسنًا</button>
+            <em>{b.done ? t('حصلت عليها') : t('{have} من {need}', { have: b.have, need: b.need })}</em>
+            <button className="me-badge-ok" onClick={() => setOpen(null)}>{t('حسنًا')}</button>
           </div>
         </Sheet>
       )}

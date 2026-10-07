@@ -23,6 +23,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from './Icon';
+import { useT } from './Lang';
 
 const TABS = [
   { href: '/feed',    icon: 'home',   label: 'الرئيسية' },
@@ -32,6 +33,7 @@ const TABS = [
 ];
 
 export default function BottomNav() {
+  const t = useT();
   const path = usePathname();
   // Duels waiting on an answer. The count sits on الدراسة because that is
   // where التحدّي lives now, and it is the only number in the bar — a bar
@@ -76,16 +78,16 @@ export default function BottomNav() {
 
   return (
     <nav className="nav">
-      {TABS.map((t) => (
-        <Link key={t.href} href={t.href} data-on={on(t.href)}
+      {TABS.map((tab) => (
+        <Link key={tab.href} href={tab.href} data-on={on(tab.href)}
           onClick={() => { try { navigator.vibrate?.(8); } catch { /* not a phone */ } }}>
           <span className="nav-ic">
-            <Icon name={t.icon} size={22} />
-            {t.waiting && waiting > 0 && (
+            <Icon name={tab.icon} size={22} />
+            {tab.waiting && waiting > 0 && (
               <span className="nav-tally">{waiting > 9 ? '+9' : waiting}</span>
             )}
           </span>
-          <span>{t.label}</span>
+          <span>{t(tab.label)}</span>
         </Link>
       ))}
     </nav>

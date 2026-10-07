@@ -21,6 +21,7 @@ import { noteFor, SECTIONS } from '@/lib/anatomy/notes';
 import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
 import { tissueOf, colourOf } from '@/lib/anatomy/tissue';
 import { tissueMaterial, axisOf, studio, qualityTier, setDetail } from '@/lib/anatomy/material';
+import { useT } from '@/components/Lang';
 
 // Sharp enough on a 3x screen without drawing nine pixels for every one shown.
 const MAX_DPR = { high: 1.75, lite: 1.5 };
@@ -54,6 +55,7 @@ export default function Model3D({
   // name rather than an id, because it is what travels between phones.
   follow = undefined, onPicked = null,
 }) {
+  const t = useT();
   const host = useRef(null);
   const api = useRef(null);           // everything three.js owns
   const [parts, setParts] = useState([]);
@@ -693,7 +695,7 @@ export default function Model3D({
         reframe();
         loop();
       } catch {
-        if (!dead) { setLoading(false); setError('تعذّر تحميل النموذج'); }
+        if (!dead) { setLoading(false); setError(t('تعذّر تحميل النموذج')); }
       }
     })();
 
@@ -820,7 +822,7 @@ export default function Model3D({
               reading it, and the column sat over the panel's own close. */}
           <div className="m3d-acts" hidden={open}>
             <button className={`icobtn${plate ? ' on' : ''}`}
-              onClick={() => setPlate((v) => !v)} aria-label="تلوين كل العظام">
+              onClick={() => setPlate((v) => !v)} aria-label={t('تلوين كل العظام')}>
               <Icon name="palette" size={18} />
             </button>
             {/* Some of these are buried: the sphenoid and the vomer are behind
@@ -833,8 +835,8 @@ export default function Model3D({
             <button className={`icobtn${mode !== 'context' ? ' on' : ''}`} disabled={!picked}
               onClick={() => setMode(
                 mode === 'context' ? 'focus' : mode === 'focus' ? 'isolate' : 'context')}
-              aria-label={mode === 'context' ? 'المحيط القريب'
-                : mode === 'focus' ? 'إظهار المحدَّد وحده' : 'أظهِر المنطقة كاملة'}>
+              aria-label={mode === 'context' ? t('المحيط القريب')
+                : mode === 'focus' ? t('إظهار المحدَّد وحده') : t('أظهِر المنطقة كاملة')}>
               <Icon name="focus" size={18} />
             </button>
             {/* Off to begin with. Thirty labelled points on the first open is
@@ -842,17 +844,17 @@ export default function Model3D({
             {points.length > 0 && (
               <button className={`icobtn${pins ? ' on' : ''}`}
                 onClick={() => { setPins((v) => !v); setPin(null); }}
-                aria-label="أسماء المعالم">
+                aria-label={t('أسماء المعالم')}>
                 <Icon name="pin" size={18} />
               </button>
             )}
             <button className={`icobtn${listing ? ' on' : ''}`}
-              onClick={() => setListing((v) => !v)} aria-label="القائمة">
+              onClick={() => setListing((v) => !v)} aria-label={t('القائمة')}>
               <Icon name="list" size={18} />
             </button>
             <button className="icobtn"
               onClick={() => { setMode('context'); setGone([]); api.current?.home(); }}
-              aria-label="إعادة الضبط">
+              aria-label={t('إعادة الضبط')}>
               <Icon name="rotate" size={18} />
             </button>
           </div>
@@ -872,15 +874,15 @@ export default function Model3D({
                   {note && <Icon name="chev" size={15} />}
                 </button>
               )
-              : <span className="m3d-hint">أدر النموذج، والمس أي جزء لمعرفة اسمه</span>}
+              : <span className="m3d-hint">{t('أدر النموذج، والمس أي جزء لمعرفة اسمه')}</span>}
             {picked && !spot && (
-              <button className="m3d-clear" aria-label="أخفِ هذا العظم"
+              <button className="m3d-clear" aria-label={t('أخفِ هذا العظم')}
                 onClick={() => { setGone((g) => [...g, picked]); setPicked(null); setMode('context'); }}>
                 <Icon name="eyeOff" size={17} />
               </button>
             )}
             {name && (
-              <button className="m3d-clear" onClick={clear} aria-label="إلغاء التحديد">
+              <button className="m3d-clear" onClick={clear} aria-label={t('إلغاء التحديد')}>
                 <Icon name="x" size={16} />
               </button>
             )}
@@ -891,7 +893,7 @@ export default function Model3D({
               <div className="m3d-note-top">
                 <div className="m3d-note-t" dir="auto">{name}</div>
                 <button className="m3d-clear" onClick={() => setOpen(false)}
-                  aria-label="إغلاق">
+                  aria-label={t('إغلاق')}>
                   <Icon name="x" size={17} />
                 </button>
               </div>
@@ -935,7 +937,7 @@ export default function Model3D({
                       which ones are off without closing the list. */}
                   <button
                     className="m3d-off"
-                    aria-label={gone.includes(p.id) ? 'أظهر' : 'أخفِ'}
+                    aria-label={gone.includes(p.id) ? t('أظهر') : t('أخفِ')}
                     onClick={() => setGone((g) => (
                       g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id]))}
                   >
@@ -967,7 +969,7 @@ export default function Model3D({
 
               {points.length > 0 && (
                 <>
-                  <div className="m3d-head">المعالم</div>
+                  <div className="m3d-head">{t('المعالم')}</div>
                   {points.map((q) => (
                     <button
                       key={q.i}

@@ -13,6 +13,7 @@ import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername } from '@/lib/identity';
 import { rowBetween } from '@/lib/friends';
 import { notify } from '@/lib/notify';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
@@ -31,23 +32,25 @@ async function find(me, to) {
 }
 
 async function guard(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return { error: NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 }) };
+  if (!me) return { error: NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 }) };
   if (me.status !== 'approved') {
-    return { error: NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 }) };
+    return { error: NextResponse.json({ error: t('حسابك بانتظار الموافقة') }, { status: 403 }) };
   }
   const { to } = await request.json().catch(() => ({}));
   const them = await find(me, to);
   // Somebody in another year reads the same as nobody at all — the rule
   // /u/ keeps, so this route cannot be used to ask who exists elsewhere.
   if (!them || them.status !== 'approved' || them.promo !== me.promo) {
-    return { error: NextResponse.json({ error: 'لا أحد بهذا الاسم في دفعتك' }, { status: 404 }) };
+    return { error: NextResponse.json({ error: t('لا أحد بهذا الاسم في دفعتك') }, { status: 404 }) };
   }
-  if (them.id === me.id) return { error: NextResponse.json({ error: 'هذا أنت' }, { status: 400 }) };
+  if (them.id === me.id) return { error: NextResponse.json({ error: t('هذا أنت') }, { status: 400 }) };
   return { me, them };
 }
 
 export async function POST(request) {
+  const t = await getT();
   const { me, them, error } = await guard(request);
   if (error) return error;
 
@@ -72,7 +75,7 @@ export async function POST(request) {
     const again = await rowBetween(me.id, them.id);
     if (!again) {
       const off = /friends|relation|schema cache/i.test(e.message || '');
-      return NextResponse.json({ error: off ? 'الأصدقاء غير مفعّلين بعد' : e.message }, { status: off ? 503 : 500 });
+      return NextResponse.json({ error: off ? t('الأصدقاء غير مفعّلين بعد') : e.message }, { status: off ? 503 : 500 });
     }
     return NextResponse.json({ state: again.accepted_at ? 'friends' : again.a === me.id ? 'sent' : 'asked' });
   }

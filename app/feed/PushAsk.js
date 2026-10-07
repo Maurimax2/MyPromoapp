@@ -10,11 +10,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { pushStatus, enablePush, pushError } from '@/lib/pushClient';
+import { useT } from '@/components/Lang';
 
 const LATER = 'mypromo.push.later';
 const WEEK = 7 * 86400000;
 
 export default function PushAsk() {
+  const t = useT();
   const router = useRouter();
   const [state, setState] = useState(null);     // null until known
   const [busy, setBusy] = useState(false);
@@ -43,19 +45,21 @@ export default function PushAsk() {
     <section className="pa r3">
       <span className="pa-ic"><Icon name="bell" size={21} weight="fill" /></span>
       <span className="grow">
-        <b>لا تفوّتك دفعتك</b>
+        <b>{t('لا تفوّتك دفعتك')}</b>
         <s>
           {state === 'install'
-            ? 'على iPhone: اضغط زرّ المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح MyPromo من هناك لتصلك الإشعارات.'
+            ? t(
+            'على iPhone: اضغط زرّ المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح MyPromo من هناك لتصلك الإشعارات.'
+          )
             : state === 'error'
-              ? <>تعذّر التفعيل — حاول مرة أخرى بعد قليل.{pushError() && <><br /><bdi dir="ltr" className="pa-why">{pushError()}</bdi></>}</>
-              : 'رسائل أصدقائك، التحدّيات، تذكير سلسلتك، وإعلانات الكلية — على هاتفك.'}
+              ? <>{t('تعذّر التفعيل — حاول مرة أخرى بعد قليل.')}{pushError() && <><br /><bdi dir="ltr" className="pa-why">{pushError()}</bdi></>}</>
+              : t('رسائل أصدقائك، التحدّيات، تذكير سلسلتك، وإعلانات الكلية — على هاتفك.')}
         </s>
         <span className="pa-acts">
           {state !== 'install' && (
-            <button className="pa-go" onClick={turnOn} disabled={busy}>{busy ? '…' : 'فعّل الإشعارات'}</button>
+            <button className="pa-go" onClick={turnOn} disabled={busy}>{busy ? '…' : t('فعّل الإشعارات')}</button>
           )}
-          <button className="pa-later" onClick={notNow}>لاحقًا</button>
+          <button className="pa-later" onClick={notNow}>{t('لاحقًا')}</button>
         </span>
       </span>
     </section>

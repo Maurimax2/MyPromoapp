@@ -17,7 +17,7 @@ import {
   Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, GoogleLogo, Heart,
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
   Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
-  Megaphone, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
+  Megaphone, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -38,6 +38,7 @@ const ICONS = {
   // An answer marked: the circled forms, filled, so right and wrong read at a glance.
   right: CheckCircle, wrong: XCircle,
   friends: UsersThree, addFriend: UserPlus, friend: UserCheck, news: Megaphone,
+  lang: Translate,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid
@@ -48,11 +49,16 @@ const SOLID = { heartFill: Heart, right: CheckCircle, wrong: XCircle };
 // triangle and reads as a heavy arrowhead; these want a clean line.
 const LINE = new Set(['chev', 'chevR', 'x', 'check', 'plus', 'minus']);
 
-export default function Icon({ name, size = 20, weight, stroke, ...rest }) {
+// Arrows that point the way you go: in French the page reads left to right,
+// so they turn round with it (globals.css, .flip-ltr).
+const TURNS = new Set(['chev', 'chevR']);
+
+export default function Icon({ name, size = 20, weight, stroke, className, ...rest }) {
   void stroke;   // the old line icons took a stroke width; duotone has none
   const Solid = SOLID[name];
   const Glyph = Solid || ICONS[name];
   if (!Glyph) return null;
   const w = Solid ? 'fill' : (weight || (LINE.has(name) ? 'bold' : 'duotone'));
-  return <Glyph size={size} weight={w} aria-hidden="true" {...rest} />;
+  const cls = [className, TURNS.has(name) && 'flip-ltr'].filter(Boolean).join(' ') || undefined;
+  return <Glyph size={size} weight={w} aria-hidden="true" className={cls} {...rest} />;
 }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { pushStatus, enablePush, disablePush, isNative } from '@/lib/pushClient';
+import { useT } from '@/components/Lang';
 
 // The groups lib/push.js sends under, said the way a student would.
 const KINDS = [
@@ -26,6 +27,7 @@ const SAY = {
 };
 
 export default function PushSettings({ off: initial, ready }) {
+  const t = useT();
   const router = useRouter();
   const [status, setStatus] = useState(null);
   const [off, setOff] = useState(initial);
@@ -54,7 +56,7 @@ export default function PushSettings({ off: initial, ready }) {
     });
     if (!res.ok) {
       setOff(off);
-      setError((await res.json().catch(() => ({}))).error || 'تعذّر الحفظ');
+      setError((await res.json().catch(() => ({}))).error || t('تعذّر الحفظ'));
     }
   };
 
@@ -64,8 +66,8 @@ export default function PushSettings({ off: initial, ready }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/notifications" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
-          <div className="grow"><div className="head-t">إعدادات الإشعارات</div></div>
+          <Link href="/notifications" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
+          <div className="grow"><div className="head-t">{t('إعدادات الإشعارات')}</div></div>
         </div>
       </header>
 
@@ -73,36 +75,38 @@ export default function PushSettings({ off: initial, ready }) {
         <section className={`ps-dev${on ? ' on' : ''}`}>
           <span className="ps-dev-ic"><Icon name="bell" size={22} weight={on ? 'fill' : 'regular'} /></span>
           <span className="grow">
-            <b>{status ? SAY[status] : '…'}</b>
+            <b>{status ? t(SAY[status]) : '…'}</b>
             {status === 'denied' && (
               <s>{isNative()
-                ? 'افتح إعدادات الهاتف ← التطبيقات ← MyPromo ← الإشعارات، وفعّلها.'
-                : 'اضغط رمز القفل بجانب العنوان في أعلى المتصفّح ← الإشعارات ← السماح، ثم أعد تحميل الصفحة.'}</s>
+                ? t('افتح إعدادات الهاتف ← التطبيقات ← MyPromo ← الإشعارات، وفعّلها.')
+                : t(
+                'اضغط رمز القفل بجانب العنوان في أعلى المتصفّح ← الإشعارات ← السماح، ثم أعد تحميل الصفحة.'
+              )}</s>
             )}
           </span>
           {(status === 'default' || status === 'error') && (
-            <button className="ps-go" onClick={turnOn} disabled={busy}>{busy ? '…' : 'فعّل'}</button>
+            <button className="ps-go" onClick={turnOn} disabled={busy}>{busy ? '…' : t('فعّل')}</button>
           )}
-          {on && <button className="ps-stop" onClick={turnOff} disabled={busy}>{busy ? '…' : 'أوقف'}</button>}
+          {on && <button className="ps-stop" onClick={turnOff} disabled={busy}>{busy ? '…' : t('أوقف')}</button>}
         </section>
 
-        {!ready && <div className="admin-err">الإعدادات غير متاحة بعد.</div>}
+        {!ready && <div className="admin-err">{t('الإعدادات غير متاحة بعد.')}</div>}
         {error && <div className="admin-err">{error}</div>}
 
-        <div className="ps-list" role="group" aria-label="ما يصلك">
+        <div className="ps-list" role="group" aria-label={t('ما يصلك')}>
           {KINDS.map((k) => {
             const yes = !off.includes(k.id);
             return (
               <button key={k.id} className="ps-row" role="switch" aria-checked={yes}
                       onClick={() => flip(k.id)} disabled={!ready}>
                 <span className="ps-row-ic"><Icon name={k.icon} size={18} /></span>
-                <span className="grow"><b>{k.t}</b><s>{k.s}</s></span>
+                <span className="grow"><b>{t(k.t)}</b><s>{t(k.s)}</s></span>
                 <span className={`ps-sw${yes ? ' on' : ''}`} aria-hidden="true"><i /></span>
               </button>
             );
           })}
         </div>
-        <p className="ps-note">تُطبَّق على كل أجهزتك. الإشعارات داخل التطبيق (الجرس) تبقى كما هي.</p>
+        <p className="ps-note">{t('تُطبَّق على كل أجهزتك. الإشعارات داخل التطبيق (الجرس) تبقى كما هي.')}</p>
       </div>
     </>
   );

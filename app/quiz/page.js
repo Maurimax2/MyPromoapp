@@ -6,12 +6,14 @@ import { currentProfile } from '@/lib/supabase/server';
 import { subjectsOf, promosOf } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
 import { countOf, quizzedIds, bankCountOf } from '@/lib/quiz-bank';
+import { getT } from '@/lib/lang';
 
 // The counts come from the database, so this cannot be prerendered — and
 // should not be: it changes whenever a paper is extracted.
 export const dynamic = 'force-dynamic';
 
 export default async function QuizIndex() {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
   // The year being read, not the year you are in: this screen is the whole
@@ -38,7 +40,7 @@ export default async function QuizIndex() {
   const modules = await Promise.all(listed.map(async (m) => ({
     id: m.id, name: m.name, icon: m.icon || 'book', tint: m.tint || 'purple',
     questions: await countOf(m.id),
-    banks: m.bankCount ?? await bankCountOf(m.id),
+    banks: m.bankCount ?? (await bankCountOf(m.id)),
   })));
 
   return (
@@ -46,18 +48,17 @@ export default async function QuizIndex() {
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">الاختبارات</div>
-            <div className="head-s">اختبر نفسك قبل الامتحان</div>
+            <div className="head-t">{t('الاختبارات')}</div>
+            <div className="head-s">{t('اختبر نفسك قبل الامتحان')}</div>
           </div>
           <div className="tile sm tint-olive"><Icon name="quiz" size={18} /></div>
         </div>
       </header>
       <div className="scroll">
         {ids === null && (
-          <div className="admin-err" style={{ padding: '0 2px' }}>
-            تعذّرت قراءة بنوك الأسئلة — هذه القائمة من نسخة التطبيق، وقد تنقصها
-            موادّ أُضيفت من اللوحة.
-          </div>
+          <div className="admin-err" style={{ padding: '0 2px' }}>{t(
+            'تعذّرت قراءة بنوك الأسئلة — هذه القائمة من نسخة التطبيق، وقد تنقصها موادّ أُضيفت من اللوحة.'
+          )}</div>
         )}
 
         {modules.map((m) => (
@@ -66,9 +67,7 @@ export default async function QuizIndex() {
               <div className={`tile tint-${m.tint}`}><Icon name={m.icon} size={22} /></div>
               <div className="grow">
                 <div className="nm">{m.name}</div>
-                <div className="mt">
-                  {m.questions} سؤال · {m.banks} ملف أسئلة
-                </div>
+                <div className="mt">{t('{questions} سؤال · {banks} ملف أسئلة', { questions: m.questions, banks: m.banks })}</div>
               </div>
               <span className="chev"><Icon name="chev" size={18} /></span>
             </div>
@@ -78,11 +77,10 @@ export default async function QuizIndex() {
         {modules.length === 0 && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="quiz" size={24} /></div>
-            <div className="empty-t">لا أسئلة بعد</div>
-            <div className="empty-b">
-              تُستخرج الأسئلة من امتحانات المادة في لوحة التحكم، وتظهر هنا حين
-              تُنشر بإجاباتها.
-            </div>
+            <div className="empty-t">{t('لا أسئلة بعد')}</div>
+            <div className="empty-b">{t(
+              'تُستخرج الأسئلة من امتحانات المادة في لوحة التحكم، وتظهر هنا حين تُنشر بإجاباتها.'
+            )}</div>
           </div>
         )}
       </div>

@@ -6,6 +6,7 @@ import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
 import { badgeOf } from '@/lib/data';
 import { isFirstYear, normaliseUsername } from '@/lib/identity';
+import { useT, LangSwitch } from '@/components/Lang';
 
 /**
  * The screen a new account sees, and the only one it can reach.
@@ -25,6 +26,7 @@ export default function Waiting({
   name, email, promo, promoFirst, refused, years, needsUsername, numberMissing, phoneMissing,
   matricule, username, approved,
 }) {
+  const t = useT();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [year, setYear] = useState('');
@@ -56,7 +58,7 @@ export default function Waiting({
       body: JSON.stringify(body),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || `تعذّر الحفظ (${res.status})`);
+    if (!res.ok) throw new Error(data.error || t('تعذّر الحفظ ({status})', { status: res.status }));
   };
 
   // All in one tap, because they are one question to the student: who are
@@ -85,6 +87,7 @@ export default function Waiting({
 
   return (
     <div className="scroll wait">
+      <LangSwitch className="lang-switch login-lang" />
       <Logo size={54} id="wait" />
 
       <div className="wait-card">
@@ -92,21 +95,23 @@ export default function Waiting({
           <Icon name={refused ? 'x' : asks ? 'award' : 'clock'} size={24} />
         </div>
         <div className="wait-t">
-          {refused ? 'لم يُقبل حسابك' : `أهلًا ${name}`}
+          {refused ? t('لم يُقبل حسابك') : t('أهلًا {name}', { name })}
         </div>
         <p className="wait-b">
           {refused
-            ? 'راجع أحد المشرفين إن كنت ترى أن هذا خطأ.'
+            ? t('راجع أحد المشرفين إن كنت ترى أن هذا خطأ.')
             : asks
-            ? 'أكمل بياناتك لنعرف من أنت. لا يمكن تغييرها بعد ذلك إلا عبر مشرف.'
-            : 'حسابك قيد المراجعة. يفتح لك التطبيق بمجرد أن يوافق عليه أحد المشرفين — عادةً في نفس اليوم.'}
+            ? t('أكمل بياناتك لنعرف من أنت. لا يمكن تغييرها بعد ذلك إلا عبر مشرف.')
+            : t(
+            'حسابك قيد المراجعة. يفتح لك التطبيق بمجرد أن يوافق عليه أحد المشرفين — عادةً في نفس اليوم.'
+          )}
         </p>
 
         <div className="wait-rows">
-          <div><span>البريد</span><b dir="ltr">{email}</b></div>
-          {promo && <div><span>السنة</span><b dir="ltr">{promo}</b></div>}
-          {username && <div><span>اسم المستخدم</span><b dir="ltr">@{username}</b></div>}
-          {matricule && <div><span>الرقم الجامعي</span><b dir="ltr">{matricule}</b></div>}
+          <div><span>{t('البريد')}</span><b dir="ltr">{email}</b></div>
+          {promo && <div><span>{t('السنة')}</span><b dir="ltr">{promo}</b></div>}
+          {username && <div><span>{t('اسم المستخدم')}</span><b dir="ltr">@{username}</b></div>}
+          {matricule && <div><span>{t('الرقم الجامعي')}</span><b dir="ltr">{matricule}</b></div>}
         </div>
 
         {/* The same chips as sign-up, because it is the same question. */}
@@ -128,11 +133,11 @@ export default function Waiting({
         {needsUsername && (
           <input
             className="login-input" dir="ltr" autoFocus={!years}
-            placeholder="اسم المستخدم — مثال: sidi.ahmed"
+            placeholder={t('اسم المستخدم — مثال: sidi.ahmed')}
             value={handle}
             onChange={(e) => setHandle(normaliseUsername(e.target.value))}
             autoCapitalize="none" autoCorrect="off" spellCheck={false}
-            aria-label="اسم المستخدم" />
+            aria-label={t('اسم المستخدم')} />
         )}
 
         {/* Upper-cased as it is typed, so the field shows what will be stored
@@ -140,24 +145,24 @@ export default function Waiting({
         {asksNumber && (
           <input
             className="login-input" dir="ltr"
-            placeholder="الرقم الجامعي — D12345"
+            placeholder={t('الرقم الجامعي — D12345')}
             value={number}
             onChange={(e) => setNumber(e.target.value.toUpperCase())}
-            aria-label="الرقم الجامعي" />
+            aria-label={t('الرقم الجامعي')} />
         )}
 
         {asksPhone && (
           <>
-            <div className="login-lbl">رقم واتساب</div>
+            <div className="login-lbl">{t('رقم واتساب')}</div>
             <input
               className="login-input" dir="ltr" type="tel" inputMode="tel"
               placeholder="36 12 34 56"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              aria-label="رقم واتساب" />
-            <p className="wait-note">
-              لا رقم جامعي في السنة الأولى بعد — يتحقّق المشرفون من أن رقمك في مجموعات الكلية، ولا يراه أحد غيرهم.
-            </p>
+              aria-label={t('رقم واتساب')} />
+            <p className="wait-note">{t(
+              'لا رقم جامعي في السنة الأولى بعد — يتحقّق المشرفون من أن رقمك في مجموعات الكلية، ولا يراه أحد غيرهم.'
+            )}</p>
           </>
         )}
 
@@ -165,24 +170,24 @@ export default function Waiting({
 
         {asks ? (
           <button className="btn p" onClick={save} disabled={!ready || busy}>
-            {busy ? 'جارٍ الحفظ…' : 'حفظ'}
+            {busy ? t('جارٍ الحفظ…') : t('حفظ')}
           </button>
         ) : !refused ? (
           <button className="btn p" onClick={again} disabled={busy}>
-            {busy ? 'جارٍ التحقق…' : 'تحقّق الآن'}
+            {busy ? t('جارٍ التحقق…') : t('تحقّق الآن')}
           </button>
         ) : null}
 
         {/* Approved and only missing these: say so, or the screen reads as
             "still waiting" to somebody who is not. */}
         {asks && approved && (
-          <p className="wait-b">تمت الموافقة على حسابك — تبقّت هذه البيانات فقط.</p>
+          <p className="wait-b">{t('تمت الموافقة على حسابك — تبقّت هذه البيانات فقط.')}</p>
         )}
 
         {/* A POST, like everywhere else: a prefetched link must not be able
             to end a session. */}
         <form action="/auth/signout" method="post">
-          <button className="btn g">خروج</button>
+          <button className="btn g">{t('خروج')}</button>
         </form>
       </div>
     </div>

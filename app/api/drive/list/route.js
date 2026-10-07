@@ -3,19 +3,21 @@
 // before the serverless function times out.
 
 import { listFolder, isFolder, ROOT_FOLDER } from '@/lib/drive';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
+  const t = await getT();
   const key = process.env.GOOGLE_API_KEY;
   if (!key) {
-    return Response.json({ error: 'GOOGLE_API_KEY غير مضبوط' }, { status: 500 });
+    return Response.json({ error: t('GOOGLE_API_KEY غير مضبوط') }, { status: 500 });
   }
 
   const id = new URL(req.url).searchParams.get('id') || ROOT_FOLDER;
   if (!/^[A-Za-z0-9_-]{10,80}$/.test(id)) {
-    return Response.json({ error: 'معرّف مجلد غير صالح' }, { status: 400 });
+    return Response.json({ error: t('معرّف مجلد غير صالح') }, { status: 400 });
   }
 
   let items;

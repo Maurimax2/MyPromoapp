@@ -9,25 +9,17 @@
 import { useState } from 'react';
 import Sheet from './Sheet';
 import Icon from './Icon';
+import { useT } from '@/components/Lang';
+import { ago } from '@/lib/i18n';
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
-// "قبل ساعتين" without a date library.
-function when(iso) {
-  const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
-  if (s < 60) return 'الآن';
-  const m = Math.floor(s / 60);
-  if (m < 60) return `قبل ${m} دقيقة`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `قبل ${h} ساعة`;
-  const d = Math.floor(h / 24);
-  return d < 7 ? `قبل ${d} يوم` : new Date(iso).toLocaleDateString('fr');
-}
 
 const initials = (p) =>
   (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 
 export default function Post({ post, me }) {
+  const t = useT();
   const [liked, setLiked] = useState(post.liked);
   const [likes, setLikes] = useState(post.likes || 0);
   const [open, setOpen] = useState(false);
@@ -99,7 +91,7 @@ export default function Post({ post, me }) {
         </div>
         <div className="grow">
           <div className="post-name">
-            <b>{post.author?.full_name || post.author?.email?.split('@')[0] || 'طالب'}</b>
+            <b>{post.author?.full_name || post.author?.email?.split('@')[0] || t('طالب')}</b>
             {post.author?.promo && (
               <span className="pill" style={{ fontSize: 11, padding: '2px 7px' }}>
                 {post.author.promo.toUpperCase()}
@@ -111,7 +103,7 @@ export default function Post({ post, me }) {
               on every feed load. The difference is the point of the label,
               so the mismatch is allowed rather than designed away. */}
           <div className="post-meta" suppressHydrationWarning>
-            {when(post.created_at)}
+            {ago(t, post.created_at, { dateAfterWeek: true })}
             {/* The subject stays in French, like everything that names study
                 material. */}
             {post.subject && <> · <span dir="ltr">{post.subject}</span></>}
@@ -122,7 +114,7 @@ export default function Post({ post, me }) {
             app carrying what students write, and a promo needs it the first
             time somebody posts something they should not have. */}
         <div className="post-more">
-          <button onClick={() => setMenu((m) => !m)} aria-label="خيارات">
+          <button onClick={() => setMenu((m) => !m)} aria-label={t('خيارات')}>
             <Icon name="dots" size={18} />
           </button>
         </div>
@@ -138,11 +130,11 @@ export default function Post({ post, me }) {
         {menu && (
           <Sheet onClose={() => setMenu(false)}>
             {post.author?.id === me.id
-              ? <button className="sheet-act warn" onClick={remove}>احذف منشوري</button>
+              ? <button className="sheet-act warn" onClick={remove}>{t('احذف منشوري')}</button>
               : <button className="sheet-act" onClick={report} disabled={flagged}>
-                  {flagged ? 'أُبلغ عنه' : 'أبلغ عن المنشور'}
+                  {flagged ? t('أُبلغ عنه') : t('أبلغ عن المنشور')}
                 </button>}
-            <button className="sheet-act quiet" onClick={() => setMenu(false)}>إلغاء</button>
+            <button className="sheet-act quiet" onClick={() => setMenu(false)}>{t('إلغاء')}</button>
           </Sheet>
         )}
       </div>
@@ -157,7 +149,7 @@ export default function Post({ post, me }) {
             <a key={i} className="post-file" href={m.url} target="_blank" rel="noreferrer">
               <div className="tile tint-olive"><Icon name="file" size={20} /></div>
               <div className="grow">
-                <div className="post-file-nm" dir="ltr">{m.name || 'ملف'}</div>
+                <div className="post-file-nm" dir="ltr">{m.name || t('ملف')}</div>
                 <div className="post-file-mt" dir="ltr">{mb(m.bytes)}</div>
               </div>
               <Icon name="download" size={18} />
@@ -190,19 +182,19 @@ export default function Post({ post, me }) {
                 {initials(c.author)}
               </div>
               <div className="grow">
-                <b>{c.author?.full_name || c.author?.email?.split('@')[0] || 'طالب'}</b>
+                <b>{c.author?.full_name || c.author?.email?.split('@')[0] || t('طالب')}</b>
                 <div dir="auto">{c.body}</div>
               </div>
             </div>
           ))}
-          {replies?.length === 0 && <div className="replies-wait">لا ردود بعد.</div>}
+          {replies?.length === 0 && <div className="replies-wait">{t('لا ردود بعد.')}</div>}
 
           <div className="reply-new">
             <input
               value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && reply()}
-              placeholder="اكتب ردًّا…" aria-label="ردّك" />
-            <button disabled={!draft.trim() || busy} onClick={reply} aria-label="أرسل">
+              placeholder={t('اكتب ردًّا…')} aria-label={t('ردّك')} />
+            <button disabled={!draft.trim() || busy} onClick={reply} aria-label={t('أرسل')}>
               <Icon name="send" size={18} />
             </button>
           </div>

@@ -3,6 +3,7 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { notesOf } from '@/lib/catalogue';
 import { urlFor } from '@/lib/storage';
 import NoteList from './NoteList';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +14,7 @@ export const dynamic = 'force-dynamic';
 // phone. A student looking for a summary of Ostéologie does not care which
 // of the two it came from.
 export default async function Notes() {
+  const t = await getT();
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
@@ -34,7 +36,7 @@ export default async function Notes() {
   const uploaded = (rows || []).map((n) => {
     const file = (n.post_media || []).sort((a, b) => a.position - b.position)[0];
     return {
-      id: `p${n.id}`, post: n.id, title: n.body || file?.name || 'ملخص',
+      id: `p${n.id}`, post: n.id, title: n.body || file?.name || t('ملخص'),
       module: n.module, author: n.author, at: n.created_at,
       url: file ? urlFor(file.path) : null,
       ext: file?.name?.split('.').pop()?.toUpperCase() || null,

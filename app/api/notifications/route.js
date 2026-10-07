@@ -3,12 +3,14 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function GET() {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const db = supabaseAdmin();
   const mine = (cols) => db.from('notifications').select(cols)
@@ -41,8 +43,9 @@ export async function GET() {
 // Marking them read. Opening the screen clears the count — a badge you
 // cannot clear is a badge you learn to ignore.
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { id } = await request.json().catch(() => ({}));
   const db = supabaseAdmin();

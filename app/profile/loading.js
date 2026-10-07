@@ -1,10 +1,12 @@
+import { getT } from '@/lib/lang';
 // أنا while your numbers are counted.
 
-export default function Loading() {
+export default async function Loading() {
+  const t = await getT();
   return (
     <>
       <header className="st-top">
-        <div className="st-title"><span className="grow"><b>أنا</b></span></div>
+        <div className="st-title"><span className="grow"><b>{t('أنا')}</b></span></div>
       </header>
 
       <div className="scroll st-flow">

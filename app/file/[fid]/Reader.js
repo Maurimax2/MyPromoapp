@@ -12,8 +12,10 @@ import { useEffect, useState } from 'react';
 import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
 import { opened } from '@/lib/resume';
+import { useT } from '@/components/Lang';
 
 export default function Reader({ fid, src, title, subject = null }) {
+  const t = useT();
   const [full, setFull] = useState(false);  // الصفحات وحدها
 
   // Opening a lecture is what «تابع من حيث توقّفت» is made of, and this is
@@ -70,9 +72,8 @@ export default function Reader({ fid, src, title, subject = null }) {
     <>
       {/* At the top, where a thumb reaches it and nothing covers it. */}
       <div className="pdf-bar">
-        <button className="pdf-full wide" onClick={enter} aria-label="ملء الشاشة">
-          <Icon name="expand" size={18} /> ملء الشاشة
-        </button>
+        <button className="pdf-full wide" onClick={enter} aria-label={t('ملء الشاشة')}>
+          <Icon name="expand" size={18} />{' '}{t('ملء الشاشة')}</button>
       </div>
 
       <QuickView fid={fid} src={src} />
@@ -82,7 +83,7 @@ export default function Reader({ fid, src, title, subject = null }) {
           few seconds onto a page that then looks like a dead end. */}
       {full && (
         <div className="pdf-tools">
-          <button className="pdf-out" onClick={leave} aria-label="إنهاء ملء الشاشة">
+          <button className="pdf-out" onClick={leave} aria-label={t('إنهاء ملء الشاشة')}>
             <Icon name="shrink" size={20} />
           </button>
         </div>

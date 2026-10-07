@@ -30,6 +30,7 @@ import { Track, RoomEvent, ConnectionState } from 'livekit-client';
 import Icon from '@/components/Icon';
 import Sheet from '@/components/Sheet';
 import { PING } from '@/lib/rooms';
+import { useT } from '@/components/Lang';
 
 // three.js is only fetched when a model is actually shown.
 const Model3D = dynamic(() => import('@/components/Model3D'), {
@@ -76,6 +77,7 @@ function useClock(since) {
 // ================= the call: one live tile per person =================
 
 function Tile({ trackRef, hostId }) {
+  const t = useT();
   const p = trackRef.participant;
   const speaking = useIsSpeaking(p);
   const muted = useIsMuted({ participant: p, source: Track.Source.Microphone });
@@ -87,7 +89,7 @@ function Tile({ trackRef, hostId }) {
       <span className={`rm-mic${muted ? ' off' : ''}`}><Icon name={muted ? 'micOff' : 'mic'} size={13} weight="fill" /></span>
       {!cam && <span className="rm-f">{initials(p)}</span>}
       <span className="rm-n">
-        {p.isLocal ? 'أنت' : (p.name || 'طالب')}
+        {p.isLocal ? t('أنت') : (p.name || t('طالب'))}
         {speaking && <span className="rm-bars"><i /><i /><i /></span>}
       </span>
     </div>
@@ -144,6 +146,7 @@ function ShowSync({ hostId, isHost, show, held, onShow, onHeld, sendRef }) {
 }
 
 function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }) {
+  const t = useT();
   const { localParticipant, isMicrophoneEnabled, isCameraEnabled } = useLocalParticipant();
   const state = useConnectionState();
   const { canPlayAudio, startAudio } = useAudioPlayback();
@@ -159,8 +162,8 @@ function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }
       else await localParticipant.setCameraEnabled(!isCameraEnabled, { facingMode: 'user' });
     } catch {
       onError(what === 'mic'
-        ? 'لم يُسمح باستعمال الميكروفون — افتح إعدادات الهاتف واسمح به للتطبيق.'
-        : 'لم يُسمح باستعمال الكاميرا — افتح إعدادات الهاتف واسمح بها للتطبيق.');
+        ? t('لم يُسمح باستعمال الميكروفون — افتح إعدادات الهاتف واسمح به للتطبيق.')
+        : t('لم يُسمح باستعمال الكاميرا — افتح إعدادات الهاتف واسمح بها للتطبيق.'));
     }
     setBusy((x) => ({ ...x, [what]: false }));
   };
@@ -168,24 +171,24 @@ function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }
   return (
     <>
       {!canPlayAudio && (
-        <button className="rm-hear" onClick={startAudio}><Icon name="speaker" size={17} /> اضغط لتسمع الغرفة</button>
+        <button className="rm-hear" onClick={startAudio}><Icon name="speaker" size={17} />{' '}{t('اضغط لتسمع الغرفة')}</button>
       )}
       <div className="rm-ctrls">
         <button className={`rm-ctrl${isMicrophoneEnabled ? ' on' : ''}`} onClick={() => flip('mic')}
-          disabled={state !== ConnectionState.Connected} aria-label="الميكروفون" aria-pressed={isMicrophoneEnabled}>
+          disabled={state !== ConnectionState.Connected} aria-label={t('الميكروفون')} aria-pressed={isMicrophoneEnabled}>
           <Icon name={isMicrophoneEnabled ? 'mic' : 'micOff'} size={21} />
         </button>
         <button className={`rm-ctrl${isCameraEnabled ? ' on' : ''}`} onClick={() => flip('cam')}
-          disabled={state !== ConnectionState.Connected} aria-label="الكاميرا" aria-pressed={isCameraEnabled}>
+          disabled={state !== ConnectionState.Connected} aria-label={t('الكاميرا')} aria-pressed={isCameraEnabled}>
           <Icon name={isCameraEnabled ? 'video' : 'camOff'} size={21} />
         </button>
         {isHost && canShow && (
           showing
-            ? <button className="rm-ctrl wide on" onClick={onStop}><Icon name="box" size={19} /> أوقف العرض</button>
-            : <button className="rm-ctrl wide" onClick={onPickModel}><Icon name="box" size={19} /> اعرض نموذجًا</button>
+            ? <button className="rm-ctrl wide on" onClick={onStop}><Icon name="box" size={19} />{' '}{t('أوقف العرض')}</button>
+            : <button className="rm-ctrl wide" onClick={onPickModel}><Icon name="box" size={19} />{' '}{t('اعرض نموذجًا')}</button>
         )}
         {state !== ConnectionState.Connected && (
-          <span className="rm-conn">{state === ConnectionState.Reconnecting ? 'يعيد الاتصال…' : 'يتصل…'}</span>
+          <span className="rm-conn">{state === ConnectionState.Reconnecting ? t('يعيد الاتصال…') : t('يتصل…')}</span>
         )}
       </div>
     </>
@@ -195,6 +198,7 @@ function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }
 // ================= the room =================
 
 export default function Room({ room, subject, people, here, first, regions, me }) {
+  const t = useT();
   const router = useRouter();
   const [messages, setMessages] = useState(first);
   const [draft, setDraft] = useState('');
@@ -266,10 +270,10 @@ export default function Room({ room, subject, people, here, first, regions, me }
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ room: room.id }),
       }).catch(() => null);
-      const data = await res?.json().catch(() => ({})) || {};
+      const data = (await res?.json().catch(() => ({}))) || {};
       if (!alive) return;
       if (res?.ok && data.token) setLive({ url: data.url, token: data.token });
-      else setLive({ off: true, why: data.error || 'تعذّر الاتصال بالصوت والصورة' });
+      else setLive({ off: true, why: data.error || t('تعذّر الاتصال بالصوت والصورة') });
     })();
     return () => { alive = false; };
   }, [room.id, open]);
@@ -285,7 +289,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || `تعذّر الإرسال (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر الإرسال ({status})', { status: res.status })); return; }
     last.current = data.id;
     setMessages((m) => [...m, data]);
     setDraft('');
@@ -297,7 +301,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
   const [copied, setCopied] = useState(false);
   const invite = async () => {
     const link = `${window.location.origin}/rooms/join/${room.code}`;
-    const text = `تعال ندرس معًا في «${room.title}» على MyPromo`;
+    const text = t('تعال ندرس معًا في «{title}» على MyPromo', { title: room.title });
     try {
       if (navigator.share) { await navigator.share({ title: 'MyPromo', text, url: link }); return; }
     } catch { /* closed the sheet: nothing to do */ return; }
@@ -326,7 +330,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || 'تعذّر الانضمام'); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر الانضمام')); return; }
     router.refresh();
   };
 
@@ -362,27 +366,27 @@ export default function Room({ room, subject, people, here, first, regions, me }
           {hostId === p.id && <span className="rm-host"><Icon name="crown" size={13} weight="fill" /></span>}
           <span className="rm-f">{initials(p)}</span>
           <span className="rm-n">
-            {p.id === me.id ? 'أنت' : name(p)}
+            {p.id === me.id ? t('أنت') : name(p)}
             {talking(p.id) && <span className="rm-bars"><i /><i /><i /></span>}
           </span>
         </div>
       ))}
-      {!sitting.length && <div className="rm-seat free"><s>لا أحد هنا الآن</s></div>}
+      {!sitting.length && <div className="rm-seat free"><s>{t('لا أحد هنا الآن')}</s></div>}
     </div>
   );
 
   const body = (
     <div className="rm">
       <div className="rm-top r1">
-        <Link href="/rooms" className="rm-back" aria-label="رجوع"><Icon name="chevR" size={17} /></Link>
+        <Link href="/rooms" className="rm-back" aria-label={t('رجوع')}><Icon name="chevR" size={17} /></Link>
         <span className="grow">
           <b>{room.title}</b>
-          <s dir="auto">{room.topic || 'مراجعة'}</s>
+          <s dir="auto">{room.topic || t('مراجعة')}</s>
         </span>
-        {room.private && <span className="rm-lock" title="غرفة خاصة"><Icon name="lock" size={14} /></span>}
+        {room.private && <span className="rm-lock" title={t('غرفة خاصة')}><Icon name="lock" size={14} /></span>}
         {room.closed
-          ? <span className="rm-live shut">أُغلقت</span>
-          : <span className="rm-live"><i />مباشر · {sitting.length}</span>}
+          ? <span className="rm-live shut">{t('أُغلقت')}</span>
+          : <span className="rm-live"><i />{t('مباشر · {length}', { length: sitting.length })}</span>}
       </div>
 
       {/* The way a friend comes in. Only people already in the room hold the
@@ -391,8 +395,8 @@ export default function Room({ room, subject, people, here, first, regions, me }
         <button className="rm-invite" onClick={invite}>
           <Icon name="share" size={17} />
           <span className="grow">
-            <b>{copied ? 'نُسخ الرابط — الصقه لصديقك' : 'ادعُ صديقًا برابط'}</b>
-            <s>غرفة خاصة: لا يدخلها إلا من وصله هذا الرابط</s>
+            <b>{copied ? t('نُسخ الرابط — الصقه لصديقك') : t('ادعُ صديقًا برابط')}</b>
+            <s>{t('غرفة خاصة: لا يدخلها إلا من وصله هذا الرابط')}</s>
           </span>
         </button>
       )}
@@ -401,17 +405,16 @@ export default function Room({ room, subject, people, here, first, regions, me }
         {/* ================= the host's model ================= */}
         {shown && hidden && (
           <button className="rm-back-to" onClick={() => setHidden(false)}>
-            <Icon name="box" size={17} /> {me.host ? 'تعرض' : 'المضيف يعرض'} <b dir="ltr">{shown.title}</b> — ارجع إليه
-          </button>
+            <Icon name="box" size={17} /> {me.host ? t('تعرض') : t('المضيف يعرض')} <b dir="ltr">{shown.title}</b>{' '}{t('— ارجع إليه')}</button>
         )}
         {stageUp && (
           <div className="rm-stage r2">
             <div className="rm-stage-top">
               <span className="grow">
-                <s>{me.host ? 'تعرض الآن' : `يعرض ${name(room.host)}`}</s>
+                <s>{me.host ? t('تعرض الآن') : t('يعرض {name}', { name: name(room.host) })}</s>
                 <b dir="ltr">{shown.title}{held ? ` · ${held}` : ''}</b>
               </span>
-              {!me.host && <button className="rm-stage-x" onClick={() => setHidden(true)} aria-label="أخفِ العرض"><Icon name="x" size={16} /></button>}
+              {!me.host && <button className="rm-stage-x" onClick={() => setHidden(true)} aria-label={t('أخفِ العرض')}><Icon name="x" size={16} /></button>}
             </div>
             <div className="rm-stage-body">
               <Model3D key={shown.key} {...shown.view}
@@ -432,12 +435,12 @@ export default function Room({ room, subject, people, here, first, regions, me }
               </svg>
               <span>
                 <b dir="ltr">{clock ? mmss(clock.left) : '--:--'}</b>
-                <s>{clock?.working === false ? 'استراحة' : 'تركيز'}</s>
+                <s>{clock?.working === false ? t('استراحة') : t('تركيز')}</s>
               </span>
             </span>
             <span className="grow">
-              <b>{clock?.working === false ? 'استراحة — قوموا تمدّدوا' : 'وقت التركيز'}</b>
-              <s>الجولة {clock?.round ?? 1} من 4 · كلّكم على نفس الساعة</s>
+              <b>{clock?.working === false ? t('استراحة — قوموا تمدّدوا') : t('وقت التركيز')}</b>
+              <s>{t('الجولة {v1} من 4 · كلّكم على نفس الساعة', { v1: clock?.round ?? 1 })}</s>
               <span className="rm-rounds">
                 {[1, 2, 3, 4].map((n) => (
                   <i key={n} className={clock && n < clock.round ? 'done' : clock && n === clock.round ? 'now' : ''} />
@@ -449,16 +452,16 @@ export default function Room({ room, subject, people, here, first, regions, me }
 
         {/* ================= who is here ================= */}
         {connected ? <LiveSeats hostId={hostId} strip={stageUp} /> : quietSeats}
-        {live?.off && open && <span className="rm-free">{live.why} — الغرفة تعمل بالكتابة.</span>}
+        {live?.off && open && <span className="rm-free">{t('{why} — الغرفة تعمل بالكتابة.', { why: live.why })}</span>}
 
         {/* ================= what the room is about ================= */}
         {subject && !stageUp && (
           <Link href={`/archive/${subject.id}`} className="rm-subj r4">
             <span className="rm-subj-art" style={{ background: subject.bg }}><img src={subject.img} alt="" /></span>
             <span className="grow">
-              <s>يراجعون الآن</s>
+              <s>{t('يراجعون الآن')}</s>
               <b dir="ltr">{subject.name}</b>
-              <em>افتح المادة معهم</em>
+              <em>{t('افتح المادة معهم')}</em>
             </span>
             <Icon name="chev" size={15} />
           </Link>
@@ -481,8 +484,8 @@ export default function Room({ room, subject, people, here, first, regions, me }
           {!messages.length && (
             <div className="rm-quiet">
               <Icon name="msgs" size={26} />
-              <b>لا رسائل بعد</b>
-              <s>ابدأ الكلام — من في الغرفة سيرى.</s>
+              <b>{t('لا رسائل بعد')}</b>
+              <s>{t('ابدأ الكلام — من في الغرفة سيرى.')}</s>
             </div>
           )}
           {error && <div className="admin-err">{error}</div>}
@@ -493,8 +496,8 @@ export default function Room({ room, subject, people, here, first, regions, me }
       {/* ================= the controls, the composer — or join first ================= */}
       {room.closed ? (
         <div className="rm-foot rm-foot-join">
-          <span className="rm-join-hint">أُغلقت هذه الغرفة — لا يمكن الكتابة فيها بعد الآن.</span>
-          <Link href="/rooms" className="rm-join">غرف أخرى</Link>
+          <span className="rm-join-hint">{t('أُغلقت هذه الغرفة — لا يمكن الكتابة فيها بعد الآن.')}</span>
+          <Link href="/rooms" className="rm-join">{t('غرف أخرى')}</Link>
         </div>
       ) : me.inside ? (
         <div className="rm-foot col">
@@ -506,20 +509,20 @@ export default function Room({ room, subject, people, here, first, regions, me }
             <input
               value={draft} dir="auto" onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && say()}
-              placeholder="اكتب للغرفة…" aria-label="رسالة" />
-            <button className="rm-send" disabled={!draft.trim() || busy} onClick={say} aria-label="أرسل">
+              placeholder={t('اكتب للغرفة…')} aria-label={t('رسالة')} />
+            <button className="rm-send" disabled={!draft.trim() || busy} onClick={say} aria-label={t('أرسل')}>
               <Icon name="send" size={19} />
             </button>
             <button className="rm-leave" onClick={() => leave(me.host)}>
-              {me.host ? 'أغلق' : 'غادر'}
+              {me.host ? t('أغلق') : t('غادر')}
             </button>
           </div>
         </div>
       ) : (
         <div className="rm-foot rm-foot-join">
-          <span className="rm-join-hint">انضم لتشارك في الحديث</span>
+          <span className="rm-join-hint">{t('انضم لتشارك في الحديث')}</span>
           <button className="rm-join" disabled={busy} onClick={join}>
-            {busy ? '…' : 'انضم إلى الغرفة'}
+            {busy ? '…' : t('انضم إلى الغرفة')}
           </button>
         </div>
       )}
@@ -528,8 +531,8 @@ export default function Room({ room, subject, people, here, first, regions, me }
       {picking && (
         <Sheet onClose={() => setPicking(false)}>
           <div className="rm-pick">
-            <b>اعرض نموذجًا على الغرفة</b>
-            <s>يراه الجميع، وحين تلمس عظمًا يُحدَّد عندهم أيضًا.</s>
+            <b>{t('اعرض نموذجًا على الغرفة')}</b>
+            <s>{t('يراه الجميع، وحين تلمس عظمًا يُحدَّد عندهم أيضًا.')}</s>
             <div className="rm-regions">
               {regions.map((r) => (
                 <button key={r.key} className="rm-region" onClick={() => present(r.key)}>
@@ -552,7 +555,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
       options={{ adaptiveStream: true, dynacast: true }}
       // LiveKitRoom draws a <div>; this one should not change the layout.
       style={{ display: 'contents' }}
-      onError={() => setError('انقطع الاتصال بالصوت والصورة')}>
+      onError={() => setError(t('انقطع الاتصال بالصوت والصورة'))}>
       <RoomAudioRenderer />
       <ShowSync hostId={hostId} isHost={me.host} show={show} held={held}
         onShow={onShow} onHeld={setHeld} sendRef={sendRef} />

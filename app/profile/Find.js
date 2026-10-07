@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
+import { useT } from '@/components/Lang';
 
 /**
  * Finding a classmate by their username or the number the faculty gave them.
@@ -15,6 +16,7 @@ import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
  * usernames exist.
  */
 export default function Find() {
+  const t = useT();
   const router = useRouter();
   const [value, setValue] = useState('');
 
@@ -33,17 +35,17 @@ export default function Find() {
       <div className="card-row">
         <div className="tile tint-oliveLight"><Icon name="search" size={20} /></div>
         <div className="grow">
-          <div className="nm">ابحث عن زميل</div>
+          <div className="nm">{t('ابحث عن زميل')}</div>
           <input
             className="login-input" dir="ltr" style={{ marginTop: 6, width: '100%' }}
-            placeholder="sidi.ahmed أو D12345"
+            placeholder={t('sidi.ahmed أو D12345')}
             autoCapitalize="none" autoCorrect="off" spellCheck={false}
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            aria-label="اسم المستخدم أو الرقم الجامعي" />
+            aria-label={t('اسم المستخدم أو الرقم الجامعي')} />
         </div>
       </div>
-      <button className="btn p find-go" disabled={!target}>اذهب</button>
+      <button className="btn p find-go" disabled={!target}>{t('اذهب')}</button>
     </form>
   );
 }

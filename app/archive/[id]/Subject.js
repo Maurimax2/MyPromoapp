@@ -12,6 +12,8 @@ import Link from 'next/link';
 import Icon from '@/components/Icon';
 import { readsOf, isDone } from '@/lib/resume';
 import { bests } from '@/lib/best';
+import { useT } from '@/components/Lang';
+import { plural, lecturesWord, questionsWord } from '@/lib/i18n';
 
 const FACES = ['#2A5B3E', '#A8502A', '#14555F', '#8A6A14', '#4B5B3A', '#6B4A3A'];
 const faceOf = (id = '') => {
@@ -23,18 +25,16 @@ const faceOf = (id = '') => {
 const RING = 150.8;   // 2πr, r = 24
 const SMALL = 119.4;  // 2πr, r = 19
 
-const plural = (n, one, two, few, many) => (n === 1 ? one : n === 2 ? two : n <= 10 ? `${n} ${few}` : `${n} ${many}`);
-const lecturesWord = (n) => plural(n, 'محاضرة واحدة', 'محاضرتان', 'محاضرات', 'محاضرة');
-const questionsWord = (n) => plural(n, 'سؤال واحد', 'سؤالان', 'أسئلة', 'سؤالًا');
 // After «من» the dual takes its genitive: «1 من محاضرتين», never «محاضرتان».
-const ofLectures = (n) => plural(n, 'محاضرة واحدة', 'محاضرتين', 'محاضرات', 'محاضرة');
+const ofLectures = (t, n) => plural(t, n, ['محاضرة واحدة', 'محاضرتين', 'محاضرات', 'محاضرة'], ['cours', 'cours']);
 
 function Lecture({ l, i, r }) {
+  const t = useT();
   const done = isDone(r);
   const going = !!r && !done;
   const mark = done ? <Icon name="check" size={14} /> : going ? '◐' : (l.n ?? i + 1);
-  const sub = done ? 'قرأتها'
-    : going ? (r.pages ? `الصفحة ${r.page || 1} من ${r.pages}` : 'فتحتها')
+  const sub = done ? t('قرأتها')
+    : going ? (r.pages ? t('الصفحة {v0} من {pages}', { v0: r.page || 1, pages: r.pages }) : t('فتحتها'))
     : [l.prof, l.year, l.mb && `${l.mb} MB`].filter(Boolean).join(' · ');
   return (
     <>
@@ -48,7 +48,7 @@ function Lecture({ l, i, r }) {
       </Link>
       {l.versions?.length > 0 && (
         <details className="sj-alts">
-          <summary>{l.versions.length === 1 ? 'نسخة أخرى' : `${l.versions.length} نسخ أخرى`}</summary>
+          <summary>{l.versions.length === 1 ? t('نسخة أخرى') : t('{length} نسخ أخرى', { length: l.versions.length })}</summary>
           {l.versions.map((v) => (
             <Link key={v.fid} className="sj-lec alt" href={`/file/${v.fid}`}>
               <span className="grow">
@@ -68,6 +68,7 @@ export default function Subject({
   id, name, promo, semester, semesters, img, bg, professors,
   chapters, extra, banks, notes, regions, empty,
 }) {
+  const t = useT();
   const [tab, setTab] = useState('lectures');
   const [reads, setReads] = useState({});
   const [best, setBest] = useState({});
@@ -91,9 +92,9 @@ export default function Subject({
     .reduce((n, [, v]) => Math.max(n, v.best ?? 0), -1);
 
   const TABS = [
-    ['lectures', 'المحاضرات'],
+    ['lectures', t('المحاضرات')],
     ['qcm', 'QCM'],
-    ['notes', 'الملخصات'],
+    ['notes', t('الملخصات')],
     ...(regions.length ? [['3d', '3D']] : []),
   ];
 
@@ -105,10 +106,10 @@ export default function Subject({
         {/* ================= the banner ================= */}
         <div className="sj-hero r1" style={{ '--sj-bg': bg }}>
           <div className="sj-hero-top">
-            <Link href="/study" className="sj-back" aria-label="رجوع"><Icon name="chevR" size={18} /></Link>
+            <Link href="/study" className="sj-back" aria-label={t('رجوع')}><Icon name="chevR" size={18} /></Link>
             <span className="grow" />
             {semesters.length > 1 && (
-              <span className="sj-sem" role="group" aria-label="السداسي">
+              <span className="sj-sem" role="group" aria-label={t('السداسي')}>
                 {semesters.map((s) => (
                   <Link key={s.id} href={`/archive/${s.id}`} data-on={s.id === id} dir="ltr">{s.semester}</Link>
                 ))}
@@ -134,10 +135,10 @@ export default function Subject({
               <b>{pct}%</b>
             </span>
             <span className="sj-hero-n">
-              <span><b>{read}</b> من {ofLectures(all.length)}</span>
+              <span><b>{read}</b>{' '}{t('من {ofLectures}', { ofLectures: ofLectures(t, all.length) })}</span>
               <span className="dim">
-                {top >= 0 ? <>أفضل نتيجة <b dir="ltr">{top}%</b> في QCM</>
-                  : total ? `${questionsWord(total)} في QCM`
+                {top >= 0 ? <>{t('أفضل نتيجة')}{' '}<b dir="ltr">{top}%</b>{' '}{t('في QCM')}</>
+                  : total ? t('{questionsWord} في QCM', { questionsWord: questionsWord(t, total) })
                   : professors.length ? professors.join(' · ') : ' '}
               </span>
             </span>
@@ -168,7 +169,7 @@ export default function Subject({
                       </span>
                       <span className="grow">
                         <b dir="auto">{c.title}</b>
-                        <s>{lecturesWord(c.lectures.length)}{n ? ` · ${n} مقروءة` : ''}</s>
+                        <s>{lecturesWord(t, c.lectures.length)}{n ? t(' · {n} مقروءة', { n }) : ''}</s>
                         <span className="sj-bar"><i style={{ width: `${c.lectures.length ? (n / c.lectures.length) * 100 : 0}%` }} /></span>
                       </span>
                       <span className="sj-caret"><Icon name="chev" size={15} /></span>
@@ -191,7 +192,7 @@ export default function Subject({
                       <span className="sj-ch-ic"><Icon name={s.icon || 'file'} size={22} /></span>
                       <span className="grow">
                         <b>{s.title}</b>
-                        <s>{s.items.length} ملف</s>
+                        <s>{t('{length} ملف', { length: s.items.length })}</s>
                       </span>
                       <span className="sj-caret"><Icon name="chev" size={15} /></span>
                     </button>
@@ -217,8 +218,8 @@ export default function Subject({
               {!chapters.length && !extra.length && (
                 <div className="sj-empty">
                   <img src={img} alt="" />
-                  <b>{empty ? 'المجلد فارغ في Drive' : 'لم تُفهرس بعد'}</b>
-                  <s>لا توجد محاضرات في <span dir="ltr">{name}</span> حتى الآن.</s>
+                  <b>{empty ? t('المجلد فارغ في Drive') : t('لم تُفهرس بعد')}</b>
+                  <s>{t('لا توجد محاضرات في')}{' '}<span dir="ltr">{name}</span>{' '}{t('حتى الآن.')}</s>
                 </div>
               )}
             </div>
@@ -233,10 +234,10 @@ export default function Subject({
                     <span className="sj-exam-wm"><Icon name="quiz" size={110} /></span>
                     <span className="sj-exam-ic"><Icon name="clock" size={24} weight="fill" /></span>
                     <span className="grow">
-                      <b>اختبر نفسك</b>
-                      <s>{questionsWord(total)} · اختر المحاضرات أو الأوراق</s>
+                      <b>{t('اختبر نفسك')}</b>
+                      <s>{t('{questionsWord} · اختر المحاضرات أو الأوراق', { questionsWord: questionsWord(t, total) })}</s>
                     </span>
-                    <span className="sj-exam-go">ابدأ</span>
+                    <span className="sj-exam-go">{t('ابدأ')}</span>
                   </Link>
                   {banks.map((b) => {
                     const rec = best[`${id}:${b.fid}`];
@@ -253,7 +254,7 @@ export default function Subject({
                         </span>
                         <span className="grow">
                           <b dir="auto">{b.title}</b>
-                          <s>{questionsWord(b.count)}{rec ? ` · ${rec.runs === 1 ? 'مرة واحدة' : `${rec.runs} مرات`}` : ' · لم تبدأ'}</s>
+                          <s>{questionsWord(t, b.count)}{rec ? ` · ${rec.runs === 1 ? t('مرة واحدة') : t('{runs} مرات', { runs: rec.runs })}` : t(' · لم تبدأ')}</s>
                         </span>
                         <span className="sj-play"><Icon name="chev" size={16} /></span>
                       </Link>
@@ -263,8 +264,8 @@ export default function Subject({
               ) : (
                 <div className="sj-empty">
                   <img src={img} alt="" />
-                  <b>لا أسئلة مستخرجة بعد</b>
-                  <s>ستظهر هنا أوراق <span dir="ltr">{name}</span> حين تُستخرج أسئلتها.</s>
+                  <b>{t('لا أسئلة مستخرجة بعد')}</b>
+                  <s>{t('ستظهر هنا أوراق')}{' '}<span dir="ltr">{name}</span>{' '}{t('حين تُستخرج أسئلتها.')}</s>
                 </div>
               )}
             </div>
@@ -292,7 +293,7 @@ export default function Subject({
                       <span className="sj-note-m">
                         {n.mb && <span dir="ltr">{n.mb} MB</span>}
                         {n.likes != null && <span className="sj-likes"><Icon name="heartFill" size={12} />{n.likes}</span>}
-                        {!n.who && <span>من ملفات المادة</span>}
+                        {!n.who && <span>{t('من ملفات المادة')}</span>}
                       </span>
                     </span>
                   </>
@@ -301,10 +302,10 @@ export default function Subject({
                   ? <a key={n.id} className="sj-note" href={n.href} target="_blank" rel="noreferrer">{body}</a>
                   : <Link key={n.id} className="sj-note" href={n.href}>{body}</Link>;
               })}
-              <Link href="/notes" className="sj-add"><Icon name="plus" size={16} /> انشر ملخّصك</Link>
+              <Link href="/notes" className="sj-add"><Icon name="plus" size={16} />{' '}{t('انشر ملخّصك')}</Link>
               {!notes.length && (
                 <div className="sj-empty small">
-                  <s>لا ملخّصات لهذه المادة بعد — كن أول من يرفع واحدًا.</s>
+                  <s>{t('لا ملخّصات لهذه المادة بعد — كن أول من يرفع واحدًا.')}</s>
                 </div>
               )}
             </div>
@@ -328,7 +329,7 @@ export default function Subject({
       {/* The one action this screen is for. */}
       {total > 0 && tab !== 'qcm' && (
         <Link href={`/quiz/${id}`} className="sj-cta">
-          <Icon name="quiz" size={19} /> اختبر نفسك في <span dir="ltr">{name}</span>
+          <Icon name="quiz" size={19} />{' '}{t('اختبر نفسك في')}{' '}<span dir="ltr">{name}</span>
         </Link>
       )}
     </>

@@ -13,14 +13,16 @@
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
   if (me.promo) {
-    return NextResponse.json({ error: 'سنتك محدَّدة — راجع مشرفًا لتغييرها' }, { status: 409 });
+    return NextResponse.json({ error: t('سنتك محدَّدة — راجع مشرفًا لتغييرها') }, { status: 409 });
   }
 
   const { promo } = await request.json().catch(() => ({}));
@@ -29,7 +31,7 @@ export async function POST(request) {
   // Which years exist is a question for the database, not a constant.
   const { data: years } = await db.from('promos').select('id');
   if (!years?.some((p) => p.id === promo)) {
-    return NextResponse.json({ error: 'اختر سنتك' }, { status: 400 });
+    return NextResponse.json({ error: t('اختر سنتك') }, { status: 400 });
   }
 
   const { error } = await db.from('profiles').update({ promo }).eq('id', me.id);

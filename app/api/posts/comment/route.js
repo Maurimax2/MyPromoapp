@@ -4,18 +4,20 @@ import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { notify } from '@/lib/notify';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
   if (!profile || (profile.status !== 'approved' && !isStaff(profile))) {
-    return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
+    return NextResponse.json({ error: t('حسابك بانتظار الموافقة') }, { status: 403 });
   }
 
   const { post, body } = await request.json();
   const text = String(body || '').trim().slice(0, 2000);
-  if (!post || !text) return NextResponse.json({ error: 'اكتب ردًّا' }, { status: 400 });
+  if (!post || !text) return NextResponse.json({ error: t('اكتب ردًّا') }, { status: 400 });
 
   const db = supabaseAdmin();
   const { data, error } = await db.from('comments')
@@ -40,15 +42,16 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { id } = await request.json();
   const db = supabaseAdmin();
   const { data: c } = await db.from('comments').select('author').eq('id', id).maybeSingle();
-  if (!c) return NextResponse.json({ error: 'لا رد' }, { status: 404 });
+  if (!c) return NextResponse.json({ error: t('لا رد') }, { status: 404 });
   if (c.author !== profile.id && !isStaff(profile)) {
-    return NextResponse.json({ error: 'ليس ردّك' }, { status: 403 });
+    return NextResponse.json({ error: t('ليس ردّك') }, { status: 403 });
   }
 
   const { error } = await db.from('comments').delete().eq('id', id);

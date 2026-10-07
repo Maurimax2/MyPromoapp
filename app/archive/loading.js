@@ -5,14 +5,16 @@
 // real too — it is an empty grey field either way.
 
 import { SkRow } from '@/components/Skeleton';
+import { getT } from '@/lib/lang';
 
-export default function Loading() {
+export default async function Loading() {
+  const t = await getT();
   return (
     <>
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">الأرشيف</div>
+            <div className="head-t">{t('الأرشيف')}</div>
             <div className="sk sk-line" style={{ width: 96, marginTop: 7 }} />
           </div>
           <div className="sk sk-flat" style={{ width: 44, height: 44, borderRadius: 13 }} />

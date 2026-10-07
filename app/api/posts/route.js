@@ -10,6 +10,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
 import { friendsIn } from '@/lib/friends';
 import { notifyMany } from '@/lib/notify';
 import { later } from '@/lib/push';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
@@ -20,12 +21,13 @@ const MAX_MEDIA = 6;
 const canPost = (p) => !!p && (p.status === 'approved' || isStaff(p));
 
 export async function POST(request) {
+  const t = await getT();
   const profile = await currentProfile();
   if (!canPost(profile)) {
-    return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
+    return NextResponse.json({ error: t('حسابك بانتظار الموافقة') }, { status: 403 });
   }
   if (!profile.promo) {
-    return NextResponse.json({ error: 'لم تُحدَّد سنتك بعد' }, { status: 400 });
+    return NextResponse.json({ error: t('لم تُحدَّد سنتك بعد') }, { status: 400 });
   }
 
   const { body, kind, module, media } = await request.json();
@@ -34,7 +36,7 @@ export async function POST(request) {
 
   // A post with neither words nor a file is not a post.
   if (!text && !files.length) {
-    return NextResponse.json({ error: 'اكتب شيئًا أو أرفق ملفًا' }, { status: 400 });
+    return NextResponse.json({ error: t('اكتب شيئًا أو أرفق ملفًا') }, { status: 400 });
   }
 
   const db = supabaseAdmin();
@@ -82,19 +84,20 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { id } = await request.json();
   if (!id) return NextResponse.json({ error: 'no post' }, { status: 400 });
 
   const db = supabaseAdmin();
   const { data: post } = await db.from('posts').select('author').eq('id', id).maybeSingle();
-  if (!post) return NextResponse.json({ error: 'لا منشور' }, { status: 404 });
+  if (!post) return NextResponse.json({ error: t('لا منشور') }, { status: 404 });
 
   const mine = post.author === profile.id;
   if (!mine && !isStaff(profile)) {
-    return NextResponse.json({ error: 'ليس منشورك' }, { status: 403 });
+    return NextResponse.json({ error: t('ليس منشورك') }, { status: 403 });
   }
 
   // The author deletes; staff only hide, so a moderated post can be looked at

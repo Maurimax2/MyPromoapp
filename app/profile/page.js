@@ -14,6 +14,8 @@ import Find from './Find';
 import MeLive from './MeLive';
 import Badges from './Badges';
 import LevelUp from './LevelUp';
+import { getT } from '@/lib/lang';
+import { LangRow } from '@/components/Lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +39,7 @@ const faceOf = (id = '') => {
 
 // أنا — you: your level, your standing, your days, your badges, your things.
 export default async function Profile() {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
 
@@ -81,7 +84,7 @@ export default async function Profile() {
     <>
       <header className="st-top r1">
         <div className="st-title">
-          <span className="grow"><b>أنا</b></span>
+          <span className="grow"><b>{t('أنا')}</b></span>
         </div>
       </header>
 
@@ -97,14 +100,14 @@ export default async function Profile() {
                 strokeDashoffset={String(301.6 * (1 - ((score % STEP) / STEP)))} />
             </svg>
             <span className="me-ring-f" style={{ background: faceOf(me.id) }}>{name.slice(0, 2)}</span>
-            <span className="me-ring-lv">المستوى {level}</span>
+            <span className="me-ring-lv">{t('المستوى {level}', { level })}</span>
           </span>
           <b className="me-hero-n">{name}</b>
           <span className="me-hero-s" dir="ltr">
-            {[me.username && `@${me.username}`, promo?.name, me.matricule].filter(Boolean).join(' · ') || (ROLE[me.role] || me.role)}
+            {[me.username && `@${me.username}`, promo?.name, me.matricule].filter(Boolean).join(' · ') || t(ROLE[me.role] || me.role)}
           </span>
           <span className="me-hero-t">
-            {score ? `${toNext} نقطة للمستوى ${level + 1}` : 'انشر ملخّصًا أو أجب زميلًا لتبدأ'}
+            {score ? t('{toNext} نقطة للمستوى {v1}', { toNext, v1: level + 1 }) : t('انشر ملخّصًا أو أجب زميلًا لتبدأ')}
           </span>
         </div>
 
@@ -112,8 +115,8 @@ export default async function Profile() {
           <div className="notice" style={{ width: '100%' }}>
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">حسابك بانتظار الموافقة</div>
-              <div className="notice-b">سيفتح لك التطبيق كاملًا فور موافقة أحد المشرفين.</div>
+              <div className="notice-t">{t('حسابك بانتظار الموافقة')}</div>
+              <div className="notice-b">{t('سيفتح لك التطبيق كاملًا فور موافقة أحد المشرفين.')}</div>
             </div>
           </div>
         )}
@@ -132,15 +135,15 @@ export default async function Profile() {
         <div className="me-list">
           <Link href="/friends">
             <span className="me-list-ic"><Icon name="friends" size={19} /></span>
-            <span className="grow">الأصدقاء</span>
+            <span className="grow">{t('الأصدقاء')}</span>
             {circle.asked.length > 0
               ? <span className="tally">{circle.asked.length}</span>
-              : <s>{circle.friends.length || 'أضف صديقًا'}</s>}
+              : <s>{circle.friends.length || t('أضف صديقًا')}</s>}
             <Icon name="chev" size={15} />
           </Link>
           <Link href="/saved">
             <span className="me-list-ic"><Icon name="bookmark" size={19} /></span>
-            <span className="grow">المحفوظات</span>
+            <span className="grow">{t('المحفوظات')}</span>
             <s>{saves.count || 0}</s>
             <Icon name="chev" size={15} />
           </Link>
@@ -148,31 +151,32 @@ export default async function Profile() {
               conversation starts from a person, so it lives beside you. */}
           <Link href="/chat">
             <span className="me-list-ic"><Icon name="msgs" size={19} /></span>
-            <span className="grow">المحادثات</span>
-            <s>{chats.count ? `${chats.count}` : 'لا شيء بعد'}</s>
+            <span className="grow">{t('المحادثات')}</span>
+            <s>{chats.count ? `${chats.count}` : t('لا شيء بعد')}</s>
             <Icon name="chev" size={15} />
           </Link>
           <Link href="/rooms">
             <span className="me-list-ic"><Icon name="video" size={19} /></span>
-            <span className="grow">غرف الدراسة</span>
+            <span className="grow">{t('غرف الدراسة')}</span>
             <s>{rooms.count ? `${rooms.count}` : '—'}</s>
             <Icon name="chev" size={15} />
           </Link>
           <Link href="/notifications/settings">
             <span className="me-list-ic"><Icon name="bell" size={19} /></span>
-            <span className="grow">الإشعارات</span>
-            <s>الإعدادات</s>
+            <span className="grow">{t('الإشعارات')}</span>
+            <s>{t('الإعدادات')}</s>
             <Icon name="chev" size={15} />
           </Link>
+          <LangRow />
           <Link href="/feed?tour=1">
             <span className="me-list-ic"><Icon name="sparkle" size={19} /></span>
-            <span className="grow">جولة في التطبيق</span>
-            <s>من جديد</s>
+            <span className="grow">{t('جولة في التطبيق')}</span>
+            <s>{t('من جديد')}</s>
             <Icon name="chev" size={15} />
           </Link>
           <Link href="/points">
             <span className="me-list-ic"><Icon name="award" size={19} /></span>
-            <span className="grow">نقاطك بالتفصيل</span>
+            <span className="grow">{t('نقاطك بالتفصيل')}</span>
             <s>{score}</s>
             <Icon name="chev" size={15} />
           </Link>

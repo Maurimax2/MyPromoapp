@@ -6,24 +6,26 @@ import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { normalisePhone, phoneError } from '@/lib/identity';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { phone } = await request.json().catch(() => ({}));
   const number = normalisePhone(phone);
   const bad = phoneError(number);
-  if (bad) return NextResponse.json({ error: bad }, { status: 400 });
+  if (bad) return NextResponse.json({ error: t(bad) }, { status: 400 });
 
   const db = supabaseAdmin();
   // Look first, then write: no ON CONFLICT against this schema.
   const { data: had, error: lookup } = await db.from('profile_private').select('id').eq('id', me.id).maybeSingle();
   if (lookup?.code === '42P01') {
     console.error('me/phone: profile_private is missing — paste supabase/accounts.sql');
-    return NextResponse.json({ error: 'غير متاح الآن — راجع أحد المشرفين' }, { status: 503 });
+    return NextResponse.json({ error: t('غير متاح الآن — راجع أحد المشرفين') }, { status: 503 });
   }
   if (lookup) return NextResponse.json({ error: lookup.message }, { status: 500 });
 

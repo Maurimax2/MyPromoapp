@@ -4,10 +4,12 @@ import { currentProfile } from '@/lib/supabase/server';
 import { modulesOf } from '@/lib/catalogue';
 import { quizzedIds } from '@/lib/quiz-bank';
 import NewDuel from './NewDuel';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NewDuelPage({ searchParams }) {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
   if (me.status !== 'approved') redirect('/waiting');
@@ -30,8 +32,8 @@ export default async function NewDuelPage({ searchParams }) {
         <div className="head-row">
           <BackButton fallback="/duel" />
           <div className="grow">
-            <div className="head-t" style={{ fontSize: 17 }}>تحدٍّ جديد</div>
-            <div className="head-s">نفس الأسئلة، ونتيجتان</div>
+            <div className="head-t" style={{ fontSize: 17 }}>{t('تحدٍّ جديد')}</div>
+            <div className="head-s">{t('نفس الأسئلة، ونتيجتان')}</div>
           </div>
         </div>
       </header>

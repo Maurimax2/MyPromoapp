@@ -2,12 +2,14 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function GET(request) {
+  const t = await getT();
   const profile = await currentProfile();
-  if (!profile) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const post = new URL(request.url).searchParams.get('post');
   if (!post) return NextResponse.json({ error: 'no post' }, { status: 400 });

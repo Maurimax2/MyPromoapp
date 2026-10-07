@@ -18,14 +18,16 @@ import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { pick, stage, myMove, countOf, secondsOf, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
   if (me.status !== 'approved') {
-    return NextResponse.json({ error: 'حسابك بانتظار الموافقة' }, { status: 403 });
+    return NextResponse.json({ error: t('حسابك بانتظار الموافقة') }, { status: 403 });
   }
 
   const { matricule, module, lecture, count, seconds } = await request.json().catch(() => ({}));
@@ -36,7 +38,7 @@ export async function POST(request) {
   const handle = normaliseUsername(matricule);
   const byNumber = looksRight(number);
   if (!byNumber && !usernameLooksRight(handle)) {
-    return NextResponse.json({ error: 'اكتب اسم المستخدم أو الرقم الجامعي' }, { status: 400 });
+    return NextResponse.json({ error: t('اكتب اسم المستخدم أو الرقم الجامعي') }, { status: 400 });
   }
 
   const db = supabaseAdmin();
@@ -49,20 +51,20 @@ export async function POST(request) {
     .eq(byNumber ? 'matricule' : 'username', byNumber ? number : handle).maybeSingle();
 
   if (!them || them.status !== 'approved') {
-    return NextResponse.json({ error: 'لا أحد بهذا الاسم أو الرقم' }, { status: 404 });
+    return NextResponse.json({ error: t('لا أحد بهذا الاسم أو الرقم') }, { status: 404 });
   }
   if (them.id === me.id) {
-    return NextResponse.json({ error: 'تحدَّ زميلًا، لا نفسك' }, { status: 400 });
+    return NextResponse.json({ error: t('تحدَّ زميلًا، لا نفسك') }, { status: 400 });
   }
   if (them.promo !== me.promo) {
-    return NextResponse.json({ error: 'زميلك في دفعة أخرى' }, { status: 400 });
+    return NextResponse.json({ error: t('زميلك في دفعة أخرى') }, { status: 400 });
   }
 
   // A subject of your year — including the first year the pharmacy and
   // dental years share with medicine (lib/catalogue.js).
   const m = await moduleOf(module);
   if (!m || !studies(await sourcesOf(me.promo), m)) {
-    return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
+    return NextResponse.json({ error: t('لا مادة بهذا الاسم') }, { status: 404 });
   }
 
   // The draw happens here, once, and is kept on the row. Drawing again for
@@ -77,8 +79,8 @@ export async function POST(request) {
   if (chosen.length < 2) {
     return NextResponse.json({
       error: all.some((q) => q.dbId != null)
-        ? 'لا أسئلة كافية في هذه المادة'
-        : 'أسئلة هذه المادة لم تُنقل إلى قاعدة البيانات بعد',
+        ? t('لا أسئلة كافية في هذه المادة')
+        : t('أسئلة هذه المادة لم تُنقل إلى قاعدة البيانات بعد'),
     }, { status: 400 });
   }
 
@@ -100,7 +102,7 @@ export async function POST(request) {
     const behind = error.code === '42P01' || error.code === '42703';
     return NextResponse.json({
       error: behind
-        ? 'قاعدة البيانات لا تعرف التحدّيات بعد — الصق supabase/social.sql أولًا'
+        ? t('قاعدة البيانات لا تعرف التحدّيات بعد — الصق supabase/social.sql أولًا')
         : error.message,
     }, { status: behind ? 503 : 500 });
   }

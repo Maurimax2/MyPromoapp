@@ -7,6 +7,7 @@ import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, handleOf } from '@/lib/identity';
 import { friendState } from '@/lib/friends';
 import FriendButton from '@/components/FriendButton';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +29,7 @@ const ROLE = {
  * elsewhere.
  */
 export default async function PersonPage({ params }) {
+  const t = await getT();
   const me = await currentProfile();
   if (!me) redirect('/login');
 
@@ -50,7 +52,7 @@ export default async function PersonPage({ params }) {
   if (person && person.id === me.id) redirect('/profile');
 
   const name = person
-    ? (person.full_name || person.email?.split('@')[0] || 'طالب')
+    ? (person.full_name || person.email?.split('@')[0] || t('طالب'))
     : null;
   const promo = person ? promoById(person.promo) : null;
 
@@ -73,10 +75,10 @@ export default async function PersonPage({ params }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/profile" className="icobtn" aria-label="رجوع">
+          <Link href="/profile" className="icobtn" aria-label={t('رجوع')}>
             <Icon name="chev" size={19} />
           </Link>
-          <div className="head-t">{name || 'لم نجد أحدًا'}</div>
+          <div className="head-t">{name || t('لم نجد أحدًا')}</div>
         </div>
       </header>
 
@@ -85,10 +87,8 @@ export default async function PersonPage({ params }) {
           <div className="notice">
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">لا أحد بهذا الاسم أو الرقم في دفعتك</div>
-              <div className="notice-b">
-                تحقّق من <span dir="ltr">{byNumber ? number : `@${handle}`}</span> — أو أنّ صاحبه في دفعة أخرى.
-              </div>
+              <div className="notice-t">{t('لا أحد بهذا الاسم أو الرقم في دفعتك')}</div>
+              <div className="notice-b">{t('تحقّق من')}{' '}<span dir="ltr">{byNumber ? number : `@${handle}`}</span>{' '}{t('— أو أنّ صاحبه في دفعة أخرى.')}</div>
             </div>
           </div>
         ) : (
@@ -104,7 +104,7 @@ export default async function PersonPage({ params }) {
                     {promo.name}
                   </span>
                 )}
-                <span className="me-sub">{ROLE[person.role] || person.role} · FMPOS</span>
+                <span className="me-sub">{t(ROLE[person.role] || person.role)} · FMPOS</span>
               </div>
               {/* The number, not the address: a classmate's email is theirs. */}
               <div className="me-mail" dir="ltr">
@@ -112,9 +112,9 @@ export default async function PersonPage({ params }) {
               </div>
 
               <div className="me-stats">
-                {[[posts?.count || 0, 'منشور'],
-                  [answers?.count || 0, 'جواب مقبول'],
-                  [rooms?.count || 0, 'غرفة']].map(([n, l]) => (
+                {[[posts?.count || 0, t('منشور')],
+                  [answers?.count || 0, t('جواب مقبول')],
+                  [rooms?.count || 0, t('غرفة')]].map(([n, l]) => (
                   <div key={l} className="me-stat">
                     <b>{n}</b><span>{l}</span>
                   </div>
@@ -126,9 +126,7 @@ export default async function PersonPage({ params }) {
 
             {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
             <Link href={`/duel/new?to=${encodeURIComponent(handleOf(person) || '')}`} className="btn p">
-              <Icon name="swords" size={18} />
-              تحدَّ {name.split(' ')[0]}
-            </Link>
+              <Icon name="swords" size={18} />{t('تحدَّ {v1}', { v1: name.split(' ')[0] })}</Link>
           </>
         )}
       </div>

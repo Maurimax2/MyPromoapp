@@ -1,5 +1,7 @@
 import { SkScreen } from '@/components/Skeleton';
+import { getT } from '@/lib/lang';
 
-export default function Loading() {
-  return <SkScreen title="تحدٍّ جديد" rows={5} />;
+export default async function Loading() {
+  const t = await getT();
+  return <SkScreen title={t('تحدٍّ جديد')} rows={5} />;
 }

@@ -1,10 +1,12 @@
+import { getT } from '@/lib/lang';
 // الترتيب while the promo is counted: the tabs, the podium, you, the list.
 
-export default function Loading() {
+export default async function Loading() {
+  const t = await getT();
   return (
     <>
       <header className="head">
-        <div className="head-row"><div className="grow"><div className="head-t">الترتيب</div></div></div>
+        <div className="head-row"><div className="grow"><div className="head-t">{t('الترتيب')}</div></div></div>
       </header>
       <div className="scroll">
         <div className="sk" style={{ height: 50, borderRadius: 999 }} />

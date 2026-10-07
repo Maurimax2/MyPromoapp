@@ -1,14 +1,16 @@
 import Icon from '@/components/Icon';
 import { TODAY } from '@/lib/data';
+import { getT } from '@/lib/lang';
 
-export default function Lectures() {
+export default async function Lectures() {
+  const t = await getT();
   return (
     <>
       <header className="head">
         <div className="head-row">
           <div className="grow">
-            <div className="head-t">المحاضرات</div>
-            <div className="head-s">جدول اليوم</div>
+            <div className="head-t">{t('المحاضرات')}</div>
+            <div className="head-s">{t('جدول اليوم')}</div>
           </div>
         </div>
       </header>
@@ -17,8 +19,8 @@ export default function Lectures() {
         {TODAY.length === 0 && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="clock" size={24} /></div>
-            <div className="empty-t">لا جدول بعد</div>
-            <div className="empty-b">سيظهر هنا حين يُضاف جدول المحاضرات.</div>
+            <div className="empty-t">{t('لا جدول بعد')}</div>
+            <div className="empty-b">{t('سيظهر هنا حين يُضاف جدول المحاضرات.')}</div>
           </div>
         )}
         {TODAY.map((l) => (
@@ -40,9 +42,7 @@ export default function Lectures() {
           </div>
         ))}
 
-        <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--ink-3)', padding: '16px 0' }}>
-          لا محاضرات أخرى اليوم
-        </p>
+        <p style={{ textAlign: 'center', fontSize: 12.5, color: 'var(--ink-3)', padding: '16px 0' }}>{t('لا محاضرات أخرى اليوم')}</p>
       </div>
     </>
   );

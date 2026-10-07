@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
 import { findAnatomy, hrefOf } from '@/lib/anatomy/search';
+import { useT } from '@/components/Lang';
 
 // Looking a structure up by its name.
 //
@@ -20,7 +21,9 @@ import { findAnatomy, hrefOf } from '@/lib/anatomy/search';
 // thing it is — which is chrome — and the name itself is never translated.
 const KIND = { structure: 'بنية', part: 'جزء', landmark: 'معلم' };
 
-export default function AnatomySearch({ placeholder = 'ابحث عن بنية تشريحية' }) {
+export default function AnatomySearch({ placeholder }) {
+  const t = useT();
+  placeholder ??= t('ابحث عن بنية تشريحية');
   const [q, setQ] = useState('');
   const hits = useMemo(() => findAnatomy(q, 24), [q]);
   const asked = q.trim().length >= 2;
@@ -44,9 +47,7 @@ export default function AnatomySearch({ placeholder = 'ابحث عن بنية ت
       {asked && (
         <div className="anat-hits">
           {hits.length === 0 && (
-            <div className="m3d-row" style={{ color: 'var(--ink-3)' }} dir="auto">
-              لا نتيجة — {q.trim()}
-            </div>
+            <div className="m3d-row" style={{ color: 'var(--ink-3)' }} dir="auto">{t('لا نتيجة — {v1}', { v1: q.trim() })}</div>
           )}
           {hits.map((h) => (
             <Link key={`${h.region}/${h.kind}/${h.name}`} className="m3d-row" href={hrefOf(h)}>
@@ -59,7 +60,7 @@ export default function AnatomySearch({ placeholder = 'ابحث عن بنية ت
                   {h.on && h.on !== h.name ? `${h.on} · ` : ''}{h.where}
                 </span>
               </span>
-              <span className="anat-hit-k">{KIND[h.kind]}</span>
+              <span className="anat-hit-k">{t(KIND[h.kind])}</span>
             </Link>
           ))}
         </div>

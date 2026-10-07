@@ -9,18 +9,18 @@
 
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 export default function Error({ reset }) {
+  const t = useT();
   return (
     <div className="scroll">
       <div className="empty">
         <div className="tile tint-clay"><Icon name="alert" size={24} /></div>
-        <div className="empty-t">تعذّر فتح هذه الصفحة</div>
-        <div className="empty-b">حدث خطأ عندنا، لا عندك. جرّب مرة أخرى.</div>
-        <button className="btn p" style={{ maxWidth: 240 }} onClick={() => reset()}>
-          أعد المحاولة
-        </button>
-        <Link href="/feed" className="btn g" style={{ maxWidth: 240 }}>الرئيسية</Link>
+        <div className="empty-t">{t('تعذّر فتح هذه الصفحة')}</div>
+        <div className="empty-b">{t('حدث خطأ عندنا، لا عندك. جرّب مرة أخرى.')}</div>
+        <button className="btn p" style={{ maxWidth: 240 }} onClick={() => reset()}>{t('أعد المحاولة')}</button>
+        <Link href="/feed" className="btn g" style={{ maxWidth: 240 }}>{t('الرئيسية')}</Link>
       </div>
     </div>
   );

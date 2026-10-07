@@ -16,6 +16,7 @@ import Icon from '@/components/Icon';
 import { badgeOf } from '@/lib/data';
 import { artOf } from '@/lib/subjectArt';
 import { dueCount } from '@/lib/review';
+import { useT } from '@/components/Lang';
 
 // S1 and S2 are shown exactly as written — that is what students call them.
 const SEMESTERS = ['S1', 'S2'];
@@ -24,6 +25,7 @@ const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 export default function Study({ promos, modules: all, counts, mine, waiting = 0, anatomy = {},
                                 readError = null, fromFile = false }) {
+  const t = useT();
   const [promo, setPromo] = useState(
     promos.some((p) => p.id === mine) ? mine : promos[0]?.id);
   const [sem, setSem] = useState('S1');
@@ -61,10 +63,10 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
       <header className="st-top r1">
         <div className="st-title">
           <span className="grow">
-            <b>الدراسة</b>
-            <s>كل ما تحتاجه لامتحانك، في مكان واحد</s>
+            <b>{t('الدراسة')}</b>
+            <s>{t('كل ما تحتاجه لامتحانك، في مكان واحد')}</s>
           </span>
-          <Link href="/saved" className="h-bell" aria-label="المحفوظات">
+          <Link href="/saved" className="h-bell" aria-label={t('المحفوظات')}>
             <Icon name="bookmark" size={20} />
           </Link>
         </div>
@@ -72,7 +74,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         <label className="srch">
           <Icon name="search" size={19} />
           <input value={q} onChange={(e) => setQ(e.target.value)}
-            placeholder="ابحث في مواد دفعتك" type="search" aria-label="ابحث في المواد" />
+            placeholder={t('ابحث في مواد دفعتك')} type="search" aria-label={t('ابحث في المواد')} />
         </label>
 
         <div className="st-years">
@@ -91,20 +93,20 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
           <Link href="/quiz" className="st-tool olive">
             <span className="st-tool-mark"><Icon name="quiz" size={96} weight="light" /></span>
             <span className="st-tool-ic"><Icon name="quiz" size={21} /></span>
-            <span><b>اختبر نفسك</b><s>QCM لكل مادة</s></span>
+            <span><b>{t('اختبر نفسك')}</b><s>{t('QCM لكل مادة')}</s></span>
           </Link>
           <Link href="/duel" className="st-tool ink">
             <span className="st-tool-mark"><Icon name="swords" size={96} weight="light" /></span>
             <span className="st-tool-row">
               <span className="st-tool-ic"><Icon name="swords" size={21} /></span>
-              {waiting > 0 && <span className="st-tool-live"><i />{waiting} ينتظرك</span>}
+              {waiting > 0 && <span className="st-tool-live"><i />{t('{waiting} ينتظرك', { waiting })}</span>}
             </span>
-            <span><b>التحدّي</b><s>واجه زميلًا على نفس الأسئلة</s></span>
+            <span><b>{t('التحدّي')}</b><s>{t('واجه زميلًا على نفس الأسئلة')}</s></span>
           </Link>
           <Link href="/notes" className="st-tool plain">
             <span className="st-tool-mark"><Icon name="book2" size={96} weight="light" /></span>
             <span className="st-tool-ic"><Icon name="book2" size={21} /></span>
-            <span><b>الملخصات</b><s>ما كتبته دفعتك</s></span>
+            <span><b>{t('الملخصات')}</b><s>{t('ما كتبته دفعتك')}</s></span>
           </Link>
           <Link href="/review" className={`st-tool ${due > 0 ? 'clay' : 'plain'}`}>
             <span className="st-tool-mark"><Icon name="clock" size={96} weight="light" /></span>
@@ -112,7 +114,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
               <span className="st-tool-ic"><Icon name="clock" size={21} /></span>
               {due > 0 && <b className="st-tool-n">{due}</b>}
             </span>
-            <span><b>المراجعة</b><s>{due > 0 ? 'أسئلة أخطأت فيها، تعود اليوم' : 'ما أخطأت فيه يعود إليك'}</s></span>
+            <span><b>{t('المراجعة')}</b><s>{due > 0 ? t('أسئلة أخطأت فيها، تعود اليوم') : t('ما أخطأت فيه يعود إليك')}</s></span>
           </Link>
         </div>
 
@@ -121,17 +123,17 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         <Link href={anatomy[promo]} className="st-3d r3">
           <img className="st-3d-model" src="/art/crane-big.webp" alt="" />
           <span className="st-3d-text">
-            <span className="st-3d-tag"><Icon name="box" size={12} /> ثلاثي الأبعاد</span>
-            <b>التشريح بين يديك</b>
-            <s>33 منطقة · 319 معلمًا · 818 اسمًا</s>
-            <span className="st-3d-go">افتح النموذج <Icon name="chev" size={13} /></span>
+            <span className="st-3d-tag"><Icon name="box" size={12} />{' '}{t('ثلاثي الأبعاد')}</span>
+            <b>{t('التشريح بين يديك')}</b>
+            <s>{t('33 منطقة · 319 معلمًا · 818 اسمًا')}</s>
+            <span className="st-3d-go">{t('افتح النموذج')}{' '}<Icon name="chev" size={13} /></span>
           </span>
         </Link>
         )}
 
         {/* ---------- every subject ---------- */}
         <div className="st-head r4">
-          <b>المواد · <span dir="ltr">{chosen?.name}</span></b>
+          <b>{t('المواد ·')}{' '}<span dir="ltr">{chosen?.name}</span></b>
           <span className="st-seg">
             {SEMESTERS.map((s) => (
               <button key={s} data-on={sem === s} onClick={() => setSem(s)}>{s}</button>
@@ -143,23 +145,22 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
             got it" impossible to tell apart from "nobody has catalogued it".
             One of these is a bug and the other is a Tuesday. */}
         {readError && (
-          <div className="admin-err" style={{ padding: '0 2px' }}>
-            تعذّرت قراءة المواد — {readError}
-          </div>
+          <div className="admin-err" style={{ padding: '0 2px' }}>{t('تعذّرت قراءة المواد — {readError}', { readError })}</div>
         )}
 
         {!readError && fromFile && (
-          <div className="admin-err" style={{ padding: '0 2px' }}>
-            هذه المواد من نسخة التطبيق، لا من قاعدة البيانات — ما تضيفه في
-            اللوحة لن يظهر هنا حتى يُقرأ الجدول. أبلغ عن هذه الرسالة.
-          </div>
+          <div className="admin-err" style={{ padding: '0 2px' }}>{t(
+            'هذه المواد من نسخة التطبيق، لا من قاعدة البيانات — ما تضيفه في اللوحة لن يظهر هنا حتى يُقرأ الجدول. أبلغ عن هذه الرسالة.'
+          )}</div>
         )}
 
         {inPromo.length === 0 && (
           <div className="st-empty">
             <span><Icon name="book" size={28} /></span>
-            <b>{chosen?.name} — قريبًا</b>
-            <s>لم تُفهرس مواد هذه السنة بعد. تُضاف من لوحة التحكم، وتظهر هنا فور إضافتها.</s>
+            <b>{t('{name} — قريبًا', { name: chosen?.name })}</b>
+            <s>{t(
+              'لم تُفهرس مواد هذه السنة بعد. تُضاف من لوحة التحكم، وتظهر هنا فور إضافتها.'
+            )}</s>
           </div>
         )}
 
@@ -175,7 +176,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
                 <Link key={m.id} href={`/archive/${m.id}`} className="st-subj" style={{ background: a.bg }}>
                   <img className="float" src={a.img} alt="" style={{ animationDelay: `${-i * 0.8}s` }} />
                   <b dir="ltr">{m.name}</b>
-                  <s>{[n ? `${n} محاضرة` : null, total ? `${total} ملف` : null].filter(Boolean).join(' · ') || 'لا ملفات بعد'}</s>
+                  <s>{[n ? t('{n} محاضرة', { n }) : null, total ? t('{total} ملف', { total }) : null].filter(Boolean).join(' · ') || t('لا ملفات بعد')}</s>
                 </Link>
               );
             })}
@@ -185,8 +186,8 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         {inPromo.length > 0 && modules.length === 0 && (
           <div className="st-empty">
             <span><Icon name="search" size={28} /></span>
-            <b>لا نتائج</b>
-            <s>{q ? <>لا توجد مادة تطابق «{q}» في {sem}.</> : <>لا مواد في {sem} لهذه السنة.</>}</s>
+            <b>{t('لا نتائج')}</b>
+            <s>{q ? <>{t('لا توجد مادة تطابق «{q}» في {sem}.', { q, sem })}</> : <>{t('لا مواد في {sem} لهذه السنة.', { sem })}</>}</s>
           </div>
         )}
       </div>

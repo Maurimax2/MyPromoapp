@@ -3,6 +3,9 @@ import { Readex_Pro } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
 import PushListener from '@/components/PushListener';
 import Heartbeat from '@/components/Heartbeat';
+import { LangProvider } from '@/components/Lang';
+import { getLang, dictOf } from '@/lib/lang';
+import { dirOf } from '@/lib/i18n';
 
 // The typeface, served from our own domain.
 //
@@ -36,16 +39,22 @@ export const viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({ children }) {
+// Arabic or French, as this phone chose (lib/i18n.js): French turns the
+// whole page round to read left to right, and only then is the dictionary
+// sent down with it.
+export default async function RootLayout({ children }) {
+  const lang = await getLang();
   return (
-    <html lang="ar" dir="rtl" className={readex.variable}>
+    <html lang={lang} dir={dirOf(lang)} className={readex.variable}>
       <body>
-        <div className="app">
-          {children}
-          <BottomNav />
-        </div>
-        <PushListener />
-        <Heartbeat />
+        <LangProvider lang={lang} dict={dictOf(lang)}>
+          <div className="app">
+            {children}
+            <BottomNav />
+          </div>
+          <PushListener />
+          <Heartbeat />
+        </LangProvider>
       </body>
     </html>
   );

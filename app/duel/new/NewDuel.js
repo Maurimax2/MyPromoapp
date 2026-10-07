@@ -14,8 +14,10 @@ import Icon from '@/components/Icon';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
 import { COUNTS, SECONDS, saysTime } from '@/lib/duel';
+import { useT } from '@/components/Lang';
 
 export default function NewDuel({ subjects, to, subject }) {
+  const t = useT();
   const router = useRouter();
   const [matricule, setMatricule] = useState(to || '');
   // Arriving from a finished quiz, the subject is already chosen: «تحدَّ زميلًا
@@ -54,7 +56,7 @@ export default function NewDuel({ subjects, to, subject }) {
         if (d.error) { setError(d.error); return; }
         setAbout(d);
       })
-      .catch(() => { if (alive) { setBusy(false); setError('لا اتصال'); } });
+      .catch(() => { if (alive) { setBusy(false); setError(t('لا اتصال')); } });
     return () => { alive = false; };
   }, [module]);
 
@@ -76,29 +78,29 @@ export default function NewDuel({ subjects, to, subject }) {
       });
       const d = await res.json().catch(() => ({}));
       setBusy(false);
-      if (!res.ok) { setError(d.error || 'تعذّر الإرسال'); return; }
+      if (!res.ok) { setError(d.error || t('تعذّر الإرسال')); return; }
       router.push(`/duel/${d.id}`);
     } catch {
-      setBusy(false); setError('لا اتصال');
+      setBusy(false); setError(t('لا اتصال'));
     }
   };
 
   return (
     <>
       <section className="card duel-set">
-        <div className="nm">من تتحدّى؟</div>
+        <div className="nm">{t('من تتحدّى؟')}</div>
         <input
           className="login-input"
           dir="ltr"
-          placeholder="sidi.ahmed أو D12345"
+          placeholder={t('sidi.ahmed أو D12345')}
           autoCapitalize="none" autoCorrect="off" spellCheck={false}
           value={matricule}
           onChange={(e) => setMatricule(e.target.value)}
-          aria-label="اسم المستخدم أو الرقم الجامعي"
+          aria-label={t('اسم المستخدم أو الرقم الجامعي')}
         />
       </section>
 
-      <div className="eyebrow">المادة</div>
+      <div className="eyebrow">{t('المادة')}</div>
       <div className="imp-kinds">
         {subjects.map((s) => (
           <button
@@ -112,12 +114,12 @@ export default function NewDuel({ subjects, to, subject }) {
         ))}
       </div>
       {!subjects.length && (
-        <p className="quiz-note">لا مواد فيها أسئلة بعد.</p>
+        <p className="quiz-note">{t('لا مواد فيها أسئلة بعد.')}</p>
       )}
 
       {about && (
         <>
-          <div className="eyebrow">على أيّ محاضرة؟</div>
+          <div className="eyebrow">{t('على أيّ محاضرة؟')}</div>
           <section className="chapter">
             <button
               className={`pick${lecture === 'all' ? ' on' : ''}`}
@@ -126,7 +128,7 @@ export default function NewDuel({ subjects, to, subject }) {
               <span className={`pick-box${lecture === 'all' ? ' on' : ''}`}>
                 {lecture === 'all' && <Icon name="check" size={13} />}
               </span>
-              <span className="grow"><span className="lec-nm">المادة كلها</span></span>
+              <span className="grow"><span className="lec-nm">{t('المادة كلها')}</span></span>
               <span className="num">{about.total}</span>
             </button>
 
@@ -148,9 +150,7 @@ export default function NewDuel({ subjects, to, subject }) {
             ))}
 
             {!about.lectures.length && (
-              <p className="quiz-note" style={{ margin: 12 }}>
-                لم تُصنَّف أسئلة هذه المادة حسب المحاضرة بعد — التحدّي على المادة كلها.
-              </p>
+              <p className="quiz-note" style={{ margin: 12 }}>{t('لم تُصنَّف أسئلة هذه المادة حسب المحاضرة بعد — التحدّي على المادة كلها.')}</p>
             )}
           </section>
         </>
@@ -158,7 +158,7 @@ export default function NewDuel({ subjects, to, subject }) {
 
       {/* Two dials, not ten. Both change the thing itself: how long it takes,
           and whether it is a test of knowing or of knowing quickly. */}
-      <div className="eyebrow">كم سؤالًا؟</div>
+      <div className="eyebrow">{t('كم سؤالًا؟')}</div>
       <div className="imp-kinds">
         {COUNTS.map((n) => (
           <button
@@ -172,7 +172,7 @@ export default function NewDuel({ subjects, to, subject }) {
         ))}
       </div>
 
-      <div className="eyebrow">وقت كل سؤال</div>
+      <div className="eyebrow">{t('وقت كل سؤال')}</div>
       <div className="imp-kinds">
         {SECONDS.map((s) => (
           <button
@@ -181,7 +181,7 @@ export default function NewDuel({ subjects, to, subject }) {
             onClick={() => setSeconds(s)}
             dir="auto"
           >
-            {s ? `${s} ثانية` : 'بلا وقت'}
+            {s ? t('{s} ثانية', { s }) : t('بلا وقت')}
           </button>
         ))}
       </div>
@@ -189,13 +189,15 @@ export default function NewDuel({ subjects, to, subject }) {
       {error && <div className="admin-err">{error}</div>}
 
       <button className="btn p" disabled={!ready || busy} onClick={send}>
-        {busy ? '…' : `أرسل الدعوة — ${willBe} ${willBe === 2 ? 'سؤالان' : 'أسئلة'}`}
+        {busy ? '…' : t('أرسل الدعوة — {willBe} {v1}', { willBe, v1: willBe === 2 ? t('سؤالان') : t('أسئلة') })}
       </button>
 
-      <p className="quiz-note">
-        تصله دعوة — {saysTime(seconds)}. حين يقبل، تجيبان على الأسئلة نفسها
-        — كلٌّ في وقته — وتظهر النتيجتان معًا.
-      </p>
+      <p className="quiz-note">{t(
+          'تصله دعوة — {saysTime}. حين يقبل، تجيبان على الأسئلة نفسها — كلٌّ في وقته — وتظهر النتيجتان معًا.',
+          {
+            saysTime: saysTime(seconds, t)
+          }
+        )}</p>
     </>
   );
 }

@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import Icon from './Icon';
 import Quiz from './Quiz';
 import { dueIds, dueCount, trackedCount } from '@/lib/review';
+import { useT } from '@/components/Lang';
 
 const shuffle = (list) => {
   const a = [...list];
@@ -63,6 +64,7 @@ function Row({ g, on, toggle, withSection }) {
 }
 
 export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
+  const t = useT();
   // The subject has been classified, or it has not. Where it has, the lecture
   // is what opens, because it is the question a student came to ask.
   const canSplit = Boolean(lectures && lectures.length);
@@ -114,8 +116,8 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
         <button className="card quizcard review" onClick={startReview}>
           <div className="quizcard-ic"><Icon name="clock" size={19} /></div>
           <div className="grow">
-            <div className="nm" style={{ fontSize: 14 }}>المراجعة</div>
-            <div className="mt">{due} سؤال أخطأت فيه، حان وقت إعادته</div>
+            <div className="nm" style={{ fontSize: 14 }}>{t('المراجعة')}</div>
+            <div className="mt">{t('{due} سؤال أخطأت فيه، حان وقت إعادته', { due })}</div>
           </div>
           <span className="chev"><Icon name="chev" size={18} /></span>
         </button>
@@ -123,12 +125,8 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
 
       {canSplit && (
         <div className="seg">
-          <button data-on={by === BY_LECTURE} onClick={() => swap(BY_LECTURE)}>
-            حسب المحاضرة
-          </button>
-          <button data-on={by === BY_PAPER} onClick={() => swap(BY_PAPER)}>
-            حسب الورقة
-          </button>
+          <button data-on={by === BY_LECTURE} onClick={() => swap(BY_LECTURE)}>{t('حسب المحاضرة')}</button>
+          <button data-on={by === BY_PAPER} onClick={() => swap(BY_PAPER)}>{t('حسب الورقة')}</button>
         </div>
       )}
 
@@ -137,15 +135,15 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
           <span className="chapter-ic tint-olive"><Icon name="quiz" size={16} /></span>
           <div className="grow">
             <div className="chapter-t">
-              {by === BY_LECTURE && canSplit ? 'اختر المحاضرات' : 'اختر الأوراق'}
+              {by === BY_LECTURE && canSplit ? t('اختر المحاضرات') : t('اختر الأوراق')}
             </div>
-            <div className="chapter-s">{picked.length} من {all.length} سؤال</div>
+            <div className="chapter-s">{t('{length} من {length_} سؤال', { length: picked.length, length_: all.length })}</div>
           </div>
           <button
             className="pill grey"
             onClick={() => setChosen(chosen.length === groups.length ? [] : groups.map((g) => g.fid))}
           >
-            {chosen.length === groups.length ? 'إلغاء الكل' : 'اختر الكل'}
+            {chosen.length === groups.length ? t('إلغاء الكل') : t('اختر الكل')}
           </button>
         </div>
 
@@ -179,14 +177,10 @@ export default function QuizPicker({ banks, lectures, moduleId, moduleName }) {
         className="btn p"
         disabled={!picked.length}
         onClick={() => setPlaying(shuffle(picked))}
-      >
-        ابدأ — {picked.length} سؤال
-      </button>
+      >{t('ابدأ — {length} سؤال', { length: picked.length })}</button>
 
       {tracked > 0 && due === 0 && (
-        <div className="quiz-note">
-          {tracked} سؤال تحت المراجعة. سيعود كل واحد منها في وقته.
-        </div>
+        <div className="quiz-note">{t('{tracked} سؤال تحت المراجعة. سيعود كل واحد منها في وقته.', { tracked })}</div>
       )}
     </>
   );

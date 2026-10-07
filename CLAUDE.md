@@ -16,16 +16,49 @@ Rules established by the project owner. Follow them; do not re-derive them.
 
 ## Language
 
-The split is absolute: **the interface is Arabic, every piece of study content
-is French.** Students never study in Arabic and do not know the anatomical
-terms in Arabic — French is a necessity, not a preference.
+**Every piece of study content is French**, in both interfaces. Students never
+study in Arabic and do not know the anatomical terms in Arabic — French is a
+necessity, not a preference.
 
-- Interface chrome — menus, buttons, screen names, labels — is Arabic, RTL.
+- Interface chrome — menus, buttons, screen names, labels — is Arabic, RTL,
+  **by default. It can also be French, LTR**: the university is not only
+  Arabic-speaking, and some students read no Arabic at all. Chosen per phone
+  (cookie `mp-lang`), from a pill on the sign-in and waiting screens that
+  names the other language in that language, and from أنا ← اللغة.
 - **All study content is French.** Lecture titles, chapter names where they
   name material, MCQs, flashcards, answer explanations, notes. Always.
 - **`S1` and `S2` are never translated.** That is what students say.
 - Module and lecture names stay in French, exactly as they appear in Drive.
 - Never write a medical or anatomical term in Arabic. Nobody uses them.
+
+## Two interface languages
+
+- **The Arabic is the key.** A screen writes `t('الدراسة')`; in Arabic that is
+  the text, in French it is looked up in `lib/i18n-fr.js`. A string with no
+  French entry shows in Arabic rather than not at all. Values go in braces:
+  `t('أصبت {mine} من {of}.', { mine, of })` — **a sentence is one key**, never
+  pieces glued round a number, because French puts the words in another order.
+- `const t = useT()` in a client component, `const t = await getT()` in a
+  server component or a route. `t.lang` is the language. Counting goes
+  through `plural()` and its friends in `lib/i18n.js`: Arabic has its own
+  forms up to ten, French has one and many.
+- **Every new interface string goes through t() and gets its French line**
+  in the same change. Untranslated Arabic on a French screen is a bug.
+- What students write is never translated, and keeps `dir="auto"`.
+- **What is stored or sent to somebody else stays Arabic**: push messages
+  (`lib/notify.js`), a post's fallback body. The phone that does the writing
+  is not the phone that reads it. The in-app list of notifications is drawn
+  from each one's kind, so that one is translated.
+- The panel (`/admin`) is Arabic only and pins itself RTL.
+- **Layout is written in logical terms**: `inset-inline-end`,
+  `text-align: start`, `margin-inline`. The app was written RTL-only, and
+  `left:` there meant "the far side"; in French it lands on the text. A
+  picture that sits opposite the text is at the inline end.
+- `chev` points the way you go, `chevR` the way back; both turn round in
+  French. A back link with `chev` points forward in one of the two languages.
+- `/privacy` and `/delete-account` follow the app's language unless the link
+  says `?lang=`. `/download` is static and Arabic; `/feedback` has its own
+  switch.
 
 ## The Drive
 

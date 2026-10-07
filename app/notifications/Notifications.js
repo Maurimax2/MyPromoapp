@@ -9,24 +9,26 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
+import { ago } from '@/lib/i18n';
 
-const WHO = (p) => p?.full_name || p?.email?.split('@')[0] || 'زميل';
+const WHO = (p, t) => p?.full_name || p?.email?.split('@')[0] || t('زميل');
 
 const SAYS = {
-  like:     (n) => `${WHO(n.actor)} أعجب بمنشورك`,
-  comment:  (n) => `${WHO(n.actor)} علّق على منشورك`,
-  answer:   (n) => `${WHO(n.actor)} أجاب على سؤالك`,
-  accepted: (n) => `${WHO(n.actor)} قبِل جوابك`,
-  approved: () => 'فُتح لك التطبيق — أهلًا بك',
-  duel:      (n) => `${WHO(n.actor)} تحدّاك`,
-  duel_ok:   (n) => `${WHO(n.actor)} قبِل تحدّيك`,
-  duel_no:   (n) => `${WHO(n.actor)} اعتذر عن تحدّيك`,
-  duel_done: (n) => `${WHO(n.actor)} أنهى التحدّي — ظهرت النتيجة`,
-  friend_req:  (n) => `${WHO(n.actor)} يريد أن يضيفك صديقًا`,
-  friend_ok:   (n) => `${WHO(n.actor)} قبِل طلب صداقتك`,
-  friend_post: (n) => `${WHO(n.actor)} نشر`,
-  friend_room: (n) => `${WHO(n.actor)} فتح غرفة دراسة`,
-  news:        (n) => n.news?.title || n.body || 'إعلان',
+  like:     (n, t) => t('{who} أعجب بمنشورك', { who: WHO(n.actor, t) }),
+  comment:  (n, t) => t('{who} علّق على منشورك', { who: WHO(n.actor, t) }),
+  answer:   (n, t) => t('{who} أجاب على سؤالك', { who: WHO(n.actor, t) }),
+  accepted: (n, t) => t('{who} قبِل جوابك', { who: WHO(n.actor, t) }),
+  approved: (n, t) => t('فُتح لك التطبيق — أهلًا بك'),
+  duel:      (n, t) => t('{who} تحدّاك', { who: WHO(n.actor, t) }),
+  duel_ok:   (n, t) => t('{who} قبِل تحدّيك', { who: WHO(n.actor, t) }),
+  duel_no:   (n, t) => t('{who} اعتذر عن تحدّيك', { who: WHO(n.actor, t) }),
+  duel_done: (n, t) => t('{who} أنهى التحدّي — ظهرت النتيجة', { who: WHO(n.actor, t) }),
+  friend_req:  (n, t) => t('{who} يريد أن يضيفك صديقًا', { who: WHO(n.actor, t) }),
+  friend_ok:   (n, t) => t('{who} قبِل طلب صداقتك', { who: WHO(n.actor, t) }),
+  friend_post: (n, t) => t('{who} نشر', { who: WHO(n.actor, t) }),
+  friend_room: (n, t) => t('{who} فتح غرفة دراسة', { who: WHO(n.actor, t) }),
+  news:        (n, t) => n.news?.title || n.body || t('إعلان'),
 };
 
 const ICON = {
@@ -36,17 +38,9 @@ const ICON = {
   news: 'news',
 };
 
-function when(iso) {
-  const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
-  if (s < 60) return 'الآن';
-  const m = Math.floor(s / 60);
-  if (m < 60) return `قبل ${m} دقيقة`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `قبل ${h} ساعة`;
-  return `قبل ${Math.floor(h / 24)} يوم`;
-}
 
 export default function Notifications({ items }) {
+  const t = useT();
   // Opening the screen is the acknowledgement.
   useEffect(() => {
     if (items.some((n) => !n.seen)) {
@@ -59,14 +53,14 @@ export default function Notifications({ items }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/feed" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/feed" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">الإشعارات</div>
+            <div className="head-t">{t('الإشعارات')}</div>
             <div className="head-s">
-              {items.length ? `${items.length} إشعارًا` : 'لا جديد'}
+              {items.length ? t('{length} إشعارًا', { length: items.length }) : t('لا جديد')}
             </div>
           </div>
-          <Link href="/notifications/settings" className="icobtn" aria-label="إعدادات الإشعارات">
+          <Link href="/notifications/settings" className="icobtn" aria-label={t('إعدادات الإشعارات')}>
             <Icon name="settings" size={19} />
           </Link>
         </div>
@@ -74,7 +68,7 @@ export default function Notifications({ items }) {
 
       <div className="scroll">
         {items.map((n) => {
-          const line = (SAYS[n.kind] || (() => 'حدث شيء'))(n);
+          const line = (SAYS[n.kind] || (() => t('حدث شيء')))(n, t);
           const inner = (
             <div className="card-row">
               <div className={`tile ${n.kind === 'duel' || n.kind === 'news' ? 'tint-clay' : 'tint-olive'}`}>
@@ -85,7 +79,7 @@ export default function Notifications({ items }) {
                 {n.kind === 'news'
                   ? n.news?.body && <div className="mt notif-news" dir="auto">{n.news.body}</div>
                   : n.body && <div className="mt" dir="auto">{n.body}</div>}
-                <div className="mt" suppressHydrationWarning>{when(n.created_at)}</div>
+                <div className="mt" suppressHydrationWarning>{ago(t, n.created_at)}</div>
               </div>
             </div>
           );
@@ -103,10 +97,8 @@ export default function Notifications({ items }) {
         {!items.length && (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="bell" size={24} /></div>
-            <div className="empty-t">لا إشعارات بعد</div>
-            <div className="empty-b">
-              حين يعجب أحدهم بمنشورك، أو يتحدّاك، أو ينشر أحد أصدقائك، ستجده هنا.
-            </div>
+            <div className="empty-t">{t('لا إشعارات بعد')}</div>
+            <div className="empty-b">{t('حين يعجب أحدهم بمنشورك، أو يتحدّاك، أو ينشر أحد أصدقائك، ستجده هنا.')}</div>
           </div>
         )}
       </div>

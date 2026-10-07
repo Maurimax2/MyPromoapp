@@ -12,22 +12,24 @@ import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { normalise, matriculeError, writeFailure } from '@/lib/matricule';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   if (me.matricule) {
     return NextResponse.json(
-      { error: 'رقمك مسجَّل — راجع أحد المشرفين لتغييره' }, { status: 409 });
+      { error: t('رقمك مسجَّل — راجع أحد المشرفين لتغييره') }, { status: 409 });
   }
 
   const { matricule } = await request.json().catch(() => ({}));
   const number = normalise(matricule);
   const wrong = matriculeError(number);
-  if (wrong) return NextResponse.json({ error: wrong }, { status: 400 });
+  if (wrong) return NextResponse.json({ error: t(wrong) }, { status: 400 });
 
   // `is('matricule', null)` guards the same race the year does: two tabs, or
   // a tap while an admin is filling it in from the panel.
@@ -38,11 +40,11 @@ export async function POST(request) {
   if (error) {
     const failed = writeFailure(error);
     if (failed.log) console.error('matricule:', failed.log);
-    return NextResponse.json({ error: failed.error }, { status: failed.status });
+    return NextResponse.json({ error: t(failed.error) }, { status: failed.status });
   }
   if (!saved) {
     return NextResponse.json(
-      { error: 'رقمك مسجَّل — راجع أحد المشرفين لتغييره' }, { status: 409 });
+      { error: t('رقمك مسجَّل — راجع أحد المشرفين لتغييره') }, { status: 409 });
   }
 
   return NextResponse.json({ ok: true, matricule: saved.matricule });

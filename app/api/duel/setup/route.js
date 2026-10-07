@@ -10,21 +10,23 @@ import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { groupByLecture } from '@/lib/quiz-lectures';
 import { pick, usable, LENGTH } from '@/lib/duel';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 export async function GET(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const url = new URL(request.url);
   const module = url.searchParams.get('module');
   const lecture = url.searchParams.get('lecture');
-  if (!module) return NextResponse.json({ error: 'أيّ مادة؟' }, { status: 400 });
+  if (!module) return NextResponse.json({ error: t('أيّ مادة؟') }, { status: 400 });
 
   const m = await moduleOf(module);
   if (!m || !studies(await sourcesOf(me.promo), m)) {
-    return NextResponse.json({ error: 'لا مادة بهذا الاسم' }, { status: 404 });
+    return NextResponse.json({ error: t('لا مادة بهذا الاسم') }, { status: 404 });
   }
 
   // The same rule the draw uses, so every count on screen is a count the
@@ -51,7 +53,7 @@ export async function GET(request) {
     : (groups.find((g) => g.fid === `L${lecture}`)?.questions || []);
 
   if (from.length < 2) {
-    return NextResponse.json({ error: 'لا أسئلة كافية هنا' }, { status: 400 });
+    return NextResponse.json({ error: t('لا أسئلة كافية هنا') }, { status: 400 });
   }
 
   const drawn = pick(from);

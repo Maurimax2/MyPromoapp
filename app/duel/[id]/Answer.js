@@ -11,8 +11,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useT } from '@/components/Lang';
 
 export default function Answer({ id }) {
+  const t = useT();
   const router = useRouter();
   const [busy, setBusy] = useState('');
   const [error, setError] = useState('');
@@ -27,11 +29,11 @@ export default function Answer({ id }) {
         body: JSON.stringify({ action }),
       });
       const d = await res.json().catch(() => ({}));
-      if (!res.ok) { setError(d.error || 'تعذّر'); setBusy(''); return; }
+      if (!res.ok) { setError(d.error || t('تعذّر')); setBusy(''); return; }
       // Accepted: the same screen comes back with the questions on it.
       router.refresh();
     } catch {
-      setError('لا اتصال'); setBusy('');
+      setError(t('لا اتصال')); setBusy('');
     }
   };
 
@@ -39,10 +41,10 @@ export default function Answer({ id }) {
     <>
       {error && <div className="admin-err">{error}</div>}
       <button className="ar-go glow" disabled={!!busy} onClick={() => say('accept')}>
-        <Icon name="swords" size={21} /> {busy === 'accept' ? '…' : 'أقبل التحدّي'}
+        <Icon name="swords" size={21} /> {busy === 'accept' ? '…' : t('أقبل التحدّي')}
       </button>
       <button className="ar-ghost" disabled={!!busy} onClick={() => say('refuse')}>
-        {busy === 'refuse' ? '…' : 'ليس الآن'}
+        {busy === 'refuse' ? '…' : t('ليس الآن')}
       </button>
     </>
   );

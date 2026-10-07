@@ -1,4 +1,5 @@
 import Legal, { Section, Contact } from '@/components/Legal';
+import { getLang } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,7 +8,9 @@ export const metadata = { title: 'حذف الحساب — MyPromo' };
 const UPDATED = { ar: 'آخر تحديث: 29 سبتمبر 2026', fr: 'Dernière mise à jour : 29 septembre 2026' };
 
 export default async function DeleteAccountPage({ searchParams }) {
-  const fr = (await searchParams)?.lang === 'fr';
+  // ?lang= when the link asks for one; otherwise the language the app is in
+  const asked = (await searchParams)?.lang;
+  const fr = asked ? asked === 'fr' : (await getLang()) === 'fr';
 
   if (fr) {
     return (
@@ -16,7 +19,7 @@ export default async function DeleteAccountPage({ searchParams }) {
           <ol>
             <li>Ouvrez MyPromo et connectez-vous.</li>
             <li>Allez sur votre profil (votre photo, en haut de l&apos;accueil).</li>
-            <li>Tout en bas, touchez « حذف حسابي », puis confirmez.</li>
+            <li>Tout en bas, touchez « Supprimer mon compte » (« حذف حسابي » en arabe), puis confirmez.</li>
           </ol>
           <p>La suppression est immédiate et définitive.</p>
         </Section>

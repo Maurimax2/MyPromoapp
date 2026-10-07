@@ -10,6 +10,7 @@ import { isHere } from '@/lib/rooms';
 import { streaksOf } from '@/lib/days';
 import { sessionsOf, hasPlanning, LECTURE } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,6 +40,7 @@ const nameOf = (p) => ({ id: p.id, name: p.full_name || p.email?.split('@')[0] |
 // Now it takes as long as the slowest one, plus one more for who is sitting
 // in the rooms, which needs the rooms first.
 export default async function Feed() {
+  const t = await getT();
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
@@ -244,7 +246,7 @@ export default async function Feed() {
   return (
     <Home
       unseen={unseen || 0}
-      readError={readError ? (readError.message || 'تعذّرت قراءة المنشورات') : null}
+      readError={readError ? (readError.message || t('تعذّرت قراءة المنشورات')) : null}
       refused={refused}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             promo: profile.promo,

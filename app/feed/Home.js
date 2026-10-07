@@ -29,6 +29,8 @@ import NextUp from './NextUp';
 import Welcome from '@/components/Welcome';
 import PushAsk from './PushAsk';
 import { artOf } from '@/lib/subjectArt';
+import { useT } from '@/components/Lang';
+import { daysWord } from '@/lib/i18n';
 
 // A face needs a colour, and it has to be the same colour tomorrow or a promo
 // of forty people becomes a promo of forty strangers — so it is read off the
@@ -45,8 +47,7 @@ const initials = (name = '') => name.trim().slice(0, 2);
 // middle of the sentence reads like a score rather than like people.
 const SOULS = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة',
                'ثمانية', 'تسعة', 'عشرة'];
-const souls = (n) => (n <= 10 ? SOULS[n] : String(n));
-const days = (n) => (n === 1 ? 'يوم واحد' : n === 2 ? 'يومان' : n <= 10 ? `${n} أيام` : `${n} يومًا`);
+const souls = (t, n) => (t.lang === 'fr' || n > 10 ? String(n) : SOULS[n]);
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
@@ -59,6 +60,7 @@ const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
  * depending on who happens to be online.
  */
 function Here({ studying, rooms }) {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const n = studying.length;
 
@@ -67,8 +69,8 @@ function Here({ studying, rooms }) {
       <Link href="/rooms" className="here r2">
         <span className="here-cam"><Icon name="video" size={20} /></span>
         <span className="here-say">
-          <b>لا أحد يدرس الآن</b>
-          <s>افتح غرفة وسيرونها</s>
+          <b>{t('لا أحد يدرس الآن')}</b>
+          <s>{t('افتح غرفة وسيرونها')}</s>
         </span>
         <Icon name="chev" size={16} />
       </Link>
@@ -86,8 +88,7 @@ function Here({ studying, rooms }) {
           ))}
         </span>
         <span className="here-say">
-          <b>{souls(n)}</b> من دفعتك {n === 1 ? 'يدرس' : 'يدرسون'} الآن
-        </span>
+          <b>{souls(t, n)}</b>{' '}{n === 1 ? t('من دفعتك يدرس الآن') : t('من دفعتك يدرسون الآن')}</span>
         <span className="here-dot" />
         <Icon name="chev" size={16} />
       </button>
@@ -95,8 +96,8 @@ function Here({ studying, rooms }) {
       {open && (
         <Sheet onClose={() => setOpen(false)}>
           <div className="rooms-head">
-            <b>غرف مفتوحة الآن</b>
-            <s>{rooms.length ? 'ادخل واحدة، أو افتح غرفتك' : 'لا غرفة مفتوحة — كن أول من يفتح'}</s>
+            <b>{t('غرف مفتوحة الآن')}</b>
+            <s>{rooms.length ? t('ادخل واحدة، أو افتح غرفتك') : t('لا غرفة مفتوحة — كن أول من يفتح')}</s>
           </div>
           {rooms.map((r) => (
             <Link key={r.id} href={`/rooms/${r.id}`} className="room-row">
@@ -111,15 +112,15 @@ function Here({ studying, rooms }) {
               )}
               <span className="grow">
                 <b dir="auto">{r.title}</b>
-                <s dir="rtl">
-                  {r.people.length}{r.capacity ? ` من ${r.capacity}` : ''}
+                <s dir={t.lang === 'fr' ? 'ltr' : 'rtl'}>
+                  {r.people.length}{r.capacity ? t(' من {capacity}', { capacity: r.capacity }) : ''}
                   {r.topic && <>{' · '}<bdi>{r.topic}</bdi></>}
                 </s>
               </span>
-              <span className="room-go">انضم</span>
+              <span className="room-go">{t('انضم')}</span>
             </Link>
           ))}
-          <Link href="/rooms" className="room-new">+ افتح غرفة</Link>
+          <Link href="/rooms" className="room-new">{t('+ افتح غرفة')}</Link>
         </Sheet>
       )}
     </>
@@ -133,6 +134,7 @@ function Here({ studying, rooms }) {
  * is quieter; and at the end, always, classmates you can challenge in one tap.
  */
 function Duels({ duels, rivals, me }) {
+  const t = useT();
   const mine = duels.filter((d) => d.at === 'invited' || d.at === 'play');
   const theirs = duels.filter((d) => d.at === 'sent' || d.at === 'waiting');
 
@@ -140,9 +142,9 @@ function Duels({ duels, rivals, me }) {
     <section className="h-duels r3">
       <div className="h-sec">
         <span className="h-sec-ic clay"><Icon name="swords" size={17} /></span>
-        <b>التحدّيات</b>
-        {mine.length > 0 && <span className="h-sec-n">{mine.length} ينتظرك</span>}
-        <Link href="/duel" className="h-sec-all">الكل</Link>
+        <b>{t('التحدّيات')}</b>
+        {mine.length > 0 && <span className="h-sec-n">{t('{length} ينتظرك', { length: mine.length })}</span>}
+        <Link href="/duel" className="h-sec-all">{t('الكل')}</Link>
       </div>
 
       <div className="h-strip">
@@ -150,15 +152,15 @@ function Duels({ duels, rivals, me }) {
           <Link key={d.id} href={`/duel/${d.id}`} className="duel-turn">
             <span className="duel-turn-top">
               <span className="duel-live" />
-              <b>{d.at === 'invited' ? 'تحدٍّ ينتظر ردّك' : 'دورك'}</b>
+              <b>{d.at === 'invited' ? t('تحدٍّ ينتظر ردّك') : t('دورك')}</b>
               {d.seconds > 0 && (
-                <span className="duel-turn-t"><Icon name="clock" size={12} /> {d.seconds} ث</span>
+                <span className="duel-turn-t"><Icon name="clock" size={12} />{' '}{t('{seconds} ث', { seconds: d.seconds })}</span>
               )}
             </span>
             <span className="duel-vs">
               <span className="duel-p">
                 <span className="duel-f" style={{ background: faceOf(me.id) }}>{initials(me.name)}</span>
-                <s>أنت</s>
+                <s>{t('أنت')}</s>
               </span>
               <span className="duel-mid">
                 <b>VS</b>
@@ -171,7 +173,7 @@ function Duels({ duels, rivals, me }) {
             </span>
             <span className="duel-turn-bot">
               <bdi className="grow">{d.title}</bdi>
-              <span className="duel-go">{d.at === 'invited' ? 'اقبل' : 'أجب الآن'}</span>
+              <span className="duel-go">{d.at === 'invited' ? t('اقبل') : t('أجب الآن')}</span>
             </span>
           </Link>
         ))}
@@ -184,23 +186,23 @@ function Duels({ duels, rivals, me }) {
             </span>
             <b>{d.them.name}</b>
             <bdi className="duel-wait-t">{d.title}</bdi>
-            <s>{d.at === 'sent' ? 'أرسلت الدعوة…' : 'بانتظار إجابته…'}</s>
+            <s>{d.at === 'sent' ? t('أرسلت الدعوة…') : t('بانتظار إجابته…')}</s>
           </Link>
         ))}
 
         <div className="duel-rivals">
-          <b>تحدَّ زميلًا</b>
+          <b>{t('تحدَّ زميلًا')}</b>
           {rivals.map((r) => (
             <span key={r.id} className="duel-rival">
               <span className="duel-f xs" style={{ background: faceOf(r.id) }}>{initials(r.name)}</span>
               <span className="grow">{r.name}</span>
               <Link href={`/duel/new?to=${encodeURIComponent(r.handle)}`} className="duel-rival-go"
-                    aria-label={`تحدَّ ${r.name}`}>
+                    aria-label={t('تحدَّ {name}', { name: r.name })}>
                 <Icon name="swords" size={15} weight="fill" />
               </Link>
             </span>
           ))}
-          <Link href="/duel/new" className="duel-rivals-any">أو اختر أيّ زميل ←</Link>
+          <Link href="/duel/new" className="duel-rivals-any">{t('أو اختر أيّ زميل ←')}</Link>
         </div>
       </div>
     </section>
@@ -215,17 +217,18 @@ function Duels({ duels, rivals, me }) {
  * that are due, a calm all-clear, or the invitation to a first quiz.
  */
 function Continue({ review, resume }) {
+  const t = useT();
   const due = review?.due ?? 0;
   const started = (review?.tracked ?? 0) > 0;
 
   const said = resume
-    ? { at: `/file/${resume.fid}`, icon: 'book', kicker: 'تابع من حيث توقّفت', title: resume.title,
+    ? { at: `/file/${resume.fid}`, icon: 'book', kicker: t('تابع من حيث توقّفت'), title: resume.title,
         art: resume.subject ? artOf(resume.subject) : null }
-    : !review ? { at: '/review', icon: 'quiz', kicker: 'المراجعة', title: 'المراجعة' }
-    : due > 0 ? { at: '/review', icon: 'clock', kicker: 'ما أخطأت فيه يعود إليك',
-                  title: `${due} ${due === 1 ? 'سؤال يستحقّ' : 'أسئلة تستحقّ'} المراجعة` }
-    : started ? { at: '/review', icon: 'quiz', kicker: 'أحسنت — سنعيدها عليك في وقتها', title: 'لا شيء للمراجعة الآن' }
-    : { at: '/quiz', icon: 'quiz', kicker: 'ما تخطئ فيه يعود إليك وحده', title: 'ابدأ أوّل اختبار' };
+    : !review ? { at: '/review', icon: 'quiz', kicker: t('المراجعة'), title: t('المراجعة') }
+    : due > 0 ? { at: '/review', icon: 'clock', kicker: t('ما أخطأت فيه يعود إليك'),
+                  title: t('{due} {v1} المراجعة', { due, v1: due === 1 ? t('سؤال يستحقّ') : t('أسئلة تستحقّ') }) }
+    : started ? { at: '/review', icon: 'quiz', kicker: t('أحسنت — سنعيدها عليك في وقتها'), title: t('لا شيء للمراجعة الآن') }
+    : { at: '/quiz', icon: 'quiz', kicker: t('ما تخطئ فيه يعود إليك وحده'), title: t('ابدأ أوّل اختبار') };
 
   // How far in, when the reader got far enough to know. A bar at 2% reads as
   // a broken bar, so nothing is drawn until there is something to show.
@@ -259,6 +262,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
                                studying = [], rooms = [], duels = [], rivals = [],
                                readError = null, refused = 0,
                                next = null, term = null, now = 0, habitDays = null }) {
+  const t = useT();
   const router = useRouter();
   // These three live in this browser, so they can only be read once we are in
   // one. Until then each draws its own resting state rather than a number that
@@ -319,7 +323,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
       if (!res.ok) {
         setFiles((f) => f.filter((x) => x.id !== holding.id));
-        setError(data.error || `تعذّر الرفع (${res.status})`);
+        setError(data.error || t('تعذّر الرفع ({status})', { status: res.status }));
         continue;
       }
       setFiles((f) => f.map((x) => (
@@ -342,7 +346,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
     });
     const data = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(data.error || `تعذّر النشر (${res.status})`); return; }
+    if (!res.ok) { setError(data.error || t('تعذّر النشر ({status})', { status: res.status })); return; }
     setBody(''); setFiles([]); setModule(''); setWriting(false);
     router.refresh();
   };
@@ -355,20 +359,22 @@ export default function Home({ me, posts, subjects, mySubjects = [],
     <>
       {/* ================= who you are, today ================= */}
       <header className="h-top r1">
-        <Link href="/profile" className="h-me" style={{ background: faceOf(me.id) }} aria-label="أنا">
+        <Link href="/profile" className="h-me" style={{ background: faceOf(me.id) }} aria-label={t('أنا')}>
           {initials(me.name)}
         </Link>
         <span className="h-hi">
-          <b>أهلًا {first}</b>
+          <b>{t('أهلًا {first}', { first })}</b>
           <span className="h-sub">
             {streak > 0 && (
-              <span className="h-streak"><Flame streak={streak} size={14} /> <b>{days(streak)}</b> متتالية ·</span>
+              <span className="h-streak"><Flame streak={streak} size={14} /> <b>{daysWord(t, streak)}</b>{' '}{t('متتالية ·')}</span>
             )}
             <PromoSelector promos={promos} current={reading} mine={me.promo} />
           </span>
         </span>
         <Link href="/notifications" className="h-bell"
-              aria-label={`الإشعارات${unseen ? ` — ${unseen} جديدة` : ''}`}>
+              aria-label={t('الإشعارات{v0}', {
+                v0: unseen ? t(' — {unseen} جديدة', { unseen }) : ''
+              })}>
           <Icon name="bell" size={21} />
           {unseen > 0 && <span className="tally">{unseen > 9 ? '+9' : unseen}</span>}
         </Link>
@@ -391,8 +397,8 @@ export default function Home({ me, posts, subjects, mySubjects = [],
         {subjects.length > 0 && (
           <section className="r5">
             <div className="h-sec">
-              <b>موادك</b>
-              <Link href="/study" className="h-sec-all">كل المواد</Link>
+              <b>{t('موادك')}</b>
+              <Link href="/study" className="h-sec-all">{t('كل المواد')}</Link>
             </div>
             <div className="h-subjects">
               {subjects.map((m, i) => {
@@ -401,7 +407,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
                   <Link key={m.id} href={`/archive/${m.id}`} className="h-subj" style={{ background: a.bg }}>
                     <img className="float" src={a.img} alt="" style={{ animationDelay: `${-i * 0.9}s` }} />
                     <b dir="ltr">{m.name}</b>
-                    <s>{m.lectures ? `${m.lectures} محاضرة` : 'لا ملفات بعد'}</s>
+                    <s>{m.lectures ? t('{lectures} محاضرة', { lectures: m.lectures }) : t('لا ملفات بعد')}</s>
                   </Link>
                 );
               })}
@@ -413,8 +419,8 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
         {/* ================= the promo ================= */}
         <div className="h-sec r6">
-          <b>من دفعتك</b>
-          <Link href="/qa" className="h-sec-all">الكل</Link>
+          <b>{t('من دفعتك')}</b>
+          <Link href="/qa" className="h-sec-all">{t('الكل')}</Link>
         </div>
 
         {!me.promo ? <PickPromo /> : !writing ? (
@@ -423,7 +429,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
             setTimeout(() => field.current?.focus(), 0);
           }}>
             <span className="face" style={{ background: faceOf(me.id) }}>{initials(me.name)}</span>
-            <span className="grow">شارك ملخّصًا أو اسأل دفعتك…</span>
+            <span className="grow">{t('شارك ملخّصًا أو اسأل دفعتك…')}</span>
             <span className="h-say-pdf"><Icon name="file" size={18} /></span>
           </button>
         ) : (
@@ -437,10 +443,10 @@ export default function Home({ me, posts, subjects, mySubjects = [],
               className="composer-field"
               dir="auto"
               rows={3}
-              placeholder="شارك شيئًا مع دفعتك…"
+              placeholder={t('شارك شيئًا مع دفعتك…')}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              aria-label="منشور جديد"
+              aria-label={t('منشور جديد')}
             />
           </div>
 
@@ -454,7 +460,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
                   <span className="grow" dir="ltr">{f.name}</span>
                   <span className="draft-mb">{f.pending ? '…' : mb(f.bytes)}</span>
                   {!f.pending && (
-                    <button aria-label="احذف"
+                    <button aria-label={t('احذف')}
                       onClick={() => setFiles((l) => l.filter((x) => x.id !== f.id))}>
                       <Icon name="x" size={15} />
                     </button>
@@ -469,9 +475,9 @@ export default function Home({ me, posts, subjects, mySubjects = [],
               className="admin-input sm"
               value={module}
               onChange={(e) => setModule(e.target.value)}
-              aria-label="المادة"
+              aria-label={t('المادة')}
             >
-              <option value="">بلا مادة</option>
+              <option value="">{t('بلا مادة')}</option>
               {/* Your own year's subjects, never the rail's: the rail can be
                   showing another year, and the post is going into yours. */}
               {mySubjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
@@ -487,13 +493,11 @@ export default function Home({ me, posts, subjects, mySubjects = [],
               onChange={(e) => { take(e.target.files); e.target.value = ''; }}
             />
             <button onClick={() => picker.current?.click()}>
-              <span className="ic-img"><Icon name="image" size={18} /></span>صورة
-            </button>
+              <span className="ic-img"><Icon name="image" size={18} /></span>{t('صورة')}</button>
             <button onClick={() => picker.current?.click()}>
-              <span className="ic-pdf"><Icon name="file" size={18} /></span>ملف
-            </button>
+              <span className="ic-pdf"><Icon name="file" size={18} /></span>{t('ملف')}</button>
             <button className="composer-send" disabled={!ready} onClick={send}>
-              {busy ? '…' : 'انشر'}
+              {busy ? '…' : t('انشر')}
             </button>
           </div>
         </div>
@@ -503,16 +507,16 @@ export default function Home({ me, posts, subjects, mySubjects = [],
             and drew an empty screen, which reads exactly like "nobody has
             posted yet". */}
         {readError && (
-          <div className="admin-err" style={{ padding: '0 2px' }}>
-            تعذّرت قراءة المنشورات — {readError}
-          </div>
+          <div className="admin-err" style={{ padding: '0 2px' }}>{t('تعذّرت قراءة المنشورات — {readError}', { readError })}</div>
         )}
 
         {!readError && refused > 0 && (
-          <div className="admin-err" style={{ padding: '0 2px' }}>
-            في دفعتك {refused} منشورًا لا يسمح لك الخادم بقراءتها — تحقّق من
-            حالة حسابك وسنتك في اللوحة.
-          </div>
+          <div className="admin-err" style={{ padding: '0 2px' }}>{t(
+              'في دفعتك {refused} منشورًا لا يسمح لك الخادم بقراءتها — تحقّق من حالة حسابك وسنتك في اللوحة.',
+              {
+                refused
+              }
+            )}</div>
         )}
 
         {posts.length > 0
@@ -520,8 +524,8 @@ export default function Home({ me, posts, subjects, mySubjects = [],
           : (
             <div className="empty">
               <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
-              <div className="empty-t">لا منشورات بعد</div>
-              <div className="empty-b">كن أول من ينشر في دفعتك.</div>
+              <div className="empty-t">{t('لا منشورات بعد')}</div>
+              <div className="empty-b">{t('كن أول من ينشر في دفعتك.')}</div>
             </div>
           )}
       </div>

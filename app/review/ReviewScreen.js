@@ -17,8 +17,10 @@ import Link from 'next/link';
 import Icon from '@/components/Icon';
 import Quiz from '@/components/Quiz';
 import { dueIds, trackedCount, dueCount } from '@/lib/review';
+import { useT } from '@/components/Lang';
 
 export default function ReviewScreen({ all }) {
+  const t = useT();
   const [state, setState] = useState(null);   // null while the browser is read
   const [playing, setPlaying] = useState(false);
 
@@ -37,8 +39,8 @@ export default function ReviewScreen({ all }) {
     return (
       <Quiz
         questions={state.due}
-        moduleName="المراجعة"
-        source="ما أخطأت فيه"
+        moduleName={t('المراجعة')}
+        source={t('ما أخطأت فيه')}
         onFinish={() => setPlaying(false)}
       />
     );
@@ -48,13 +50,13 @@ export default function ReviewScreen({ all }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/feed" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/feed" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">المراجعة</div>
+            <div className="head-t">{t('المراجعة')}</div>
             <div className="head-s">
               {state === null ? '…'
-                : state.tracked ? `${state.tracked} سؤالًا تتابعها`
-                : 'لا شيء تتابعه بعد'}
+                : state.tracked ? t('{tracked} سؤالًا تتابعها', { tracked: state.tracked })
+                : t('لا شيء تتابعه بعد')}
             </div>
           </div>
         </div>
@@ -67,25 +69,23 @@ export default function ReviewScreen({ all }) {
           <>
             <div className="rev-due">
               <div className="rev-due-n">{state.due.length}</div>
-              <div className="rev-due-l">سؤالًا حان وقته</div>
+              <div className="rev-due-l">{t('سؤالًا حان وقته')}</div>
             </div>
-            <button className="btn p" onClick={() => setPlaying(true)}>ابدأ المراجعة</button>
-            <p className="rev-hint">
-              السؤال الذي تخطئ فيه يعود بعد عشر دقائق، ثم يوم، ثم ثلاثة، ثم أسبوع.
-            </p>
+            <button className="btn p" onClick={() => setPlaying(true)}>{t('ابدأ المراجعة')}</button>
+            <p className="rev-hint">{t('السؤال الذي تخطئ فيه يعود بعد عشر دقائق، ثم يوم، ثم ثلاثة، ثم أسبوع.')}</p>
           </>
         ) : (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="check" size={24} /></div>
             <div className="empty-t">
-              {state.tracked ? 'لا شيء حان وقته' : 'لا شيء للمراجعة بعد'}
+              {state.tracked ? t('لا شيء حان وقته') : t('لا شيء للمراجعة بعد')}
             </div>
             <div className="empty-b">
               {state.tracked
-                ? 'ما أخطأت فيه سيعود إليك في وقته. عُد لاحقًا.'
-                : 'أجب على أسئلة في «اختبر نفسك» — ما تخطئ فيه يظهر هنا.'}
+                ? t('ما أخطأت فيه سيعود إليك في وقته. عُد لاحقًا.')
+                : t('أجب على أسئلة في «اختبر نفسك» — ما تخطئ فيه يظهر هنا.')}
             </div>
-            <Link href="/quiz" className="btn g" style={{ maxWidth: 240 }}>اختبر نفسك</Link>
+            <Link href="/quiz" className="btn g" style={{ maxWidth: 240 }}>{t('اختبر نفسك')}</Link>
           </div>
         )}
       </div>

@@ -7,6 +7,7 @@ import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
 import { artOf, regionArt, chapterArt } from '@/lib/subjectArt';
 import Subject from './Subject';
+import { getT } from '@/lib/lang';
 
 // Not prerendered any more: what a subject holds is a question for the
 // database, and the answer depends on who is asking.
@@ -24,6 +25,7 @@ const doc = (d) => ({
 // One subject: its model, and everything it has — lectures, papers, what
 // classmates wrote, the regions of the body it covers — one tab each.
 export default async function Module({ params }) {
+  const t = await getT();
   const { id } = await params;
   const m = await moduleOf(id);
   if (!m) notFound();
@@ -65,7 +67,7 @@ export default async function Module({ params }) {
     const file = (n.post_media || []).sort((a, b) => a.position - b.position)[0];
     return {
       id: `p${n.id}`,
-      title: n.body || file?.name || 'ملخص',
+      title: n.body || file?.name || t('ملخص'),
       who: n.author?.full_name || n.author?.email?.split('@')[0] || null,
       whoId: n.author?.id || '',
       likes: n.likes || 0,

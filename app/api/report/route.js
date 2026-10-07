@@ -8,18 +8,20 @@
 import { NextResponse } from 'next/server';
 import { currentProfile, isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
 
 const KINDS = ['post', 'comment', 'note', 'profile', 'room'];
 
 export async function POST(request) {
+  const t = await getT();
   const me = await currentProfile();
-  if (!me) return NextResponse.json({ error: 'سجّل الدخول' }, { status: 401 });
+  if (!me) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
 
   const { type, id, reason } = await request.json();
   if (!KINDS.includes(type) || !id) {
-    return NextResponse.json({ error: 'ما الذي تُبلّغ عنه؟' }, { status: 400 });
+    return NextResponse.json({ error: t('ما الذي تُبلّغ عنه؟') }, { status: 400 });
   }
 
   const db = supabaseAdmin();
@@ -44,6 +46,7 @@ export async function POST(request) {
 
 /** Acting on one: hide what was reported, or decide there is nothing wrong. */
 export async function PATCH(request) {
+  const t = await getT();
   const me = await currentProfile();
   if (!isAdmin(me)) return NextResponse.json({ error: 'admins only' }, { status: 403 });
 
@@ -55,7 +58,7 @@ export async function PATCH(request) {
   const db = supabaseAdmin();
   const { data: report } = await db.from('reports')
     .select('target_type, target_id').eq('id', id).maybeSingle();
-  if (!report) return NextResponse.json({ error: 'لا بلاغ' }, { status: 404 });
+  if (!report) return NextResponse.json({ error: t('لا بلاغ') }, { status: 404 });
 
   if (action === 'remove') {
     // Hidden, never deleted: a moderator must be able to look at what they

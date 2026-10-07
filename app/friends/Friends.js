@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Find from '@/app/profile/Find';
+import { useT } from '@/components/Lang';
 
 const FACES = ['#2A5B3E', '#A8502A', '#14555F', '#8A6A14', '#4B5B3A', '#6B4A3A'];
 const faceOf = (id = '') => {
@@ -35,6 +36,7 @@ function Person({ p, children }) {
 }
 
 export default function Friends({ friends, asked, sent, off }) {
+  const t = useT();
   const router = useRouter();
   const [busy, setBusy] = useState(null);
 
@@ -53,27 +55,27 @@ export default function Friends({ friends, asked, sent, off }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/profile" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
+          <Link href="/profile" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
-            <div className="head-t">الأصدقاء</div>
-            <div className="head-s">{friends.length ? `${friends.length} ${friends.length === 1 ? 'صديق' : 'أصدقاء'}` : 'من دفعتك'}</div>
+            <div className="head-t">{t('الأصدقاء')}</div>
+            <div className="head-s">{friends.length ? `${friends.length} ${friends.length === 1 ? t('صديق') : t('أصدقاء')}` : t('من دفعتك')}</div>
           </div>
         </div>
       </header>
 
       <div className="scroll fr">
-        {off && <div className="admin-err">الأصدقاء غير مفعّلين بعد.</div>}
+        {off && <div className="admin-err">{t('الأصدقاء غير مفعّلين بعد.')}</div>}
 
         {asked.length > 0 && (
           <section className="fr-sec">
-            <div className="fr-h"><b>طلبات صداقة</b><span className="tally">{asked.length}</span></div>
+            <div className="fr-h"><b>{t('طلبات صداقة')}</b><span className="tally">{asked.length}</span></div>
             {asked.map((p) => (
               <Person key={p.id} p={p}>
                 <span className="fr-acts">
                   <button className="fr-yes" onClick={() => answer(p, true)} disabled={busy === p.id}>
-                    {busy === p.id ? '…' : 'قبول'}
+                    {busy === p.id ? '…' : t('قبول')}
                   </button>
-                  <button className="fr-no" onClick={() => answer(p, false)} disabled={busy === p.id} aria-label={`رفض ${p.name}`}>
+                  <button className="fr-no" onClick={() => answer(p, false)} disabled={busy === p.id} aria-label={t('رفض {name}', { name: p.name })}>
                     <Icon name="x" size={16} />
                   </button>
                 </span>
@@ -85,29 +87,29 @@ export default function Friends({ friends, asked, sent, off }) {
         <Find />
 
         <section className="fr-sec">
-          <div className="fr-h"><b>أصدقاؤك</b></div>
+          <div className="fr-h"><b>{t('أصدقاؤك')}</b></div>
           {friends.map((p) => (
             <Person key={p.id} p={p}>
               {p.streak > 0 && (
-                <span className={`fr-streak${p.today ? ' today' : ''}`} title={p.today ? 'درس اليوم' : 'لم يدرس اليوم بعد'}>
+                <span className={`fr-streak${p.today ? ' today' : ''}`} title={p.today ? t('درس اليوم') : t('لم يدرس اليوم بعد')}>
                   <Icon name="flame" size={14} weight="fill" /> {p.streak}
                 </span>
               )}
             </Person>
           ))}
           {!friends.length && (
-            <p className="fr-empty">
-              ابحث عن زميل باسم المستخدم أو الرقم الجامعي، ثم «أضف صديقًا». يصلك إشعار حين ينشر أحد أصدقائك أو يفتح غرفة دراسة.
-            </p>
+            <p className="fr-empty">{t(
+              'ابحث عن زميل باسم المستخدم أو الرقم الجامعي، ثم «أضف صديقًا». يصلك إشعار حين ينشر أحد أصدقائك أو يفتح غرفة دراسة.'
+            )}</p>
           )}
         </section>
 
         {sent.length > 0 && (
           <section className="fr-sec">
-            <div className="fr-h"><b>بانتظار ردّهم</b></div>
+            <div className="fr-h"><b>{t('بانتظار ردّهم')}</b></div>
             {sent.map((p) => (
               <Person key={p.id} p={p}>
-                <button className="fr-no" onClick={() => answer(p, false)} disabled={busy === p.id} aria-label={`إلغاء الطلب إلى ${p.name}`}>
+                <button className="fr-no" onClick={() => answer(p, false)} disabled={busy === p.id} aria-label={t('إلغاء الطلب إلى {name}', { name: p.name })}>
                   <Icon name="x" size={16} />
                 </button>
               </Person>

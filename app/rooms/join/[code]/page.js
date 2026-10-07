@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,7 @@ export const dynamic = 'force-dynamic';
 // code that matches nothing — a typo, a room its host closed — says so plainly
 // and says no more than that: it must not confirm that some other code exists.
 export default async function JoinRoom({ params }) {
+  const t = await getT();
   const { code } = await params;
   const profile = await currentProfile();
   if (!profile) redirect(`/login?next=${encodeURIComponent(`/rooms/join/${code}`)}`);
@@ -26,8 +28,8 @@ export default async function JoinRoom({ params }) {
     .select('id, title, capacity, closed, private').eq('code', code).maybeSingle();
 
   let why = null;
-  if (!room || !room.private) why = 'الرابط غير صحيح أو انتهت صلاحيته.';
-  else if (room.closed) why = 'أغلق مضيف الغرفة هذه الغرفة.';
+  if (!room || !room.private) why = t('الرابط غير صحيح أو انتهت صلاحيته.');
+  else if (room.closed) why = t('أغلق مضيف الغرفة هذه الغرفة.');
 
   if (!why) {
     const { data: already } = await db.from('room_members')
@@ -35,7 +37,7 @@ export default async function JoinRoom({ params }) {
     if (!already) {
       const { count } = await db.from('room_members')
         .select('*', { count: 'exact', head: true }).eq('room', room.id);
-      if ((count || 0) >= room.capacity) why = 'الغرفة ممتلئة.';
+      if ((count || 0) >= room.capacity) why = t('الغرفة ممتلئة.');
       else await db.from('room_members').insert({ room: room.id, person: profile.id });
     }
     if (!why) redirect(`/rooms/${room.id}`);
@@ -45,16 +47,16 @@ export default async function JoinRoom({ params }) {
     <>
       <header className="head">
         <div className="head-row">
-          <Link href="/rooms" className="icobtn" aria-label="رجوع"><Icon name="chev" size={19} /></Link>
-          <div className="grow"><div className="head-t">غرفة خاصة</div></div>
+          <Link href="/rooms" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
+          <div className="grow"><div className="head-t">{t('غرفة خاصة')}</div></div>
         </div>
       </header>
       <div className="scroll">
         <div className="empty">
           <div className="tile tint-olive"><Icon name="lock" size={24} /></div>
-          <div className="empty-t">تعذّر الدخول</div>
+          <div className="empty-t">{t('تعذّر الدخول')}</div>
           <div className="empty-b">{why}</div>
-          <Link href="/rooms" className="btn p" style={{ maxWidth: 240, marginTop: 8 }}>غرف الدراسة</Link>
+          <Link href="/rooms" className="btn p" style={{ maxWidth: 240, marginTop: 8 }}>{t('غرف الدراسة')}</Link>
         </div>
       </div>
     </>

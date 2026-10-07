@@ -23,14 +23,14 @@ export const dynamic = 'force-dynamic';
 // filed as a student. Being turned away now says who you are and why.
 export default async function AdminLayout({ children }) {
   const profile = await syncStaffRole(await currentProfile());
-  if (!profile) return <div className="admin"><AdminLogin /></div>;
+  if (!profile) return <div className="admin" dir="rtl"><AdminLogin /></div>;
 
   if (!isStaff(profile)) {
     const listed = staffEmails().includes((profile.email || '').toLowerCase());
     const configured = staffEmails().length > 0;
 
     return (
-      <div className="admin">
+      <div className="admin" dir="rtl">
         <header className="admin-top">
           <Link href="/admin" className="admin-mark">
             <span>My</span><span className="admin-brand-b">Promo</span>
@@ -62,7 +62,7 @@ export default async function AdminLayout({ children }) {
   }
 
   return (
-    <div className="admin">
+    <div className="admin" dir="rtl">
       <Suspense fallback={<div className="admin-top" />}>
         <AdminHeader role={profile.role} />
       </Suspense>

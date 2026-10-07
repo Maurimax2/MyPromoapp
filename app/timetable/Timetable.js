@@ -14,15 +14,20 @@ import BackButton from '@/components/BackButton';
 import { agenda, clockOf, LECTURE } from '@/lib/timetable-core';
 import { KIND, dayNumber, monthOf, longDay } from '@/lib/timetable-text';
 import { artOf } from '@/lib/subjectArt';
+import { useT } from '@/components/Lang';
 
 const ONE = 86400000;
 const iso = (t) => new Date(t).toISOString().slice(0, 10);
 const addDays = (day, n) => iso(Date.parse(`${day}T12:00:00Z`) + n * ONE);
 // A week starts on Monday here, like the faculty's planning does.
 const mondayOf = (day) => addDays(day, -((new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7));
-const SHORT = { 0: 'أحد', 1: 'إثنين', 2: 'ثلاثاء', 3: 'أربعاء', 4: 'خميس', 5: 'جمعة', 6: 'سبت' };
+const SHORT = {
+  ar: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت'],
+  fr: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+};
 
 export default function Timetable({ promo, semester, sessions, now: serverNow }) {
+  const t = useT();
   const [now, setNow] = useState(serverNow);
   useEffect(() => {
     setNow(Date.now());
@@ -81,7 +86,7 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
           <div className="head-row">
             <BackButton fallback="/feed" />
             <div className="grow">
-              <div className="head-t">جدول الحصص</div>
+              <div className="head-t">{t('جدول الحصص')}</div>
               <div className="head-s" dir="ltr">{promo}</div>
             </div>
           </div>
@@ -89,8 +94,8 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
         <div className="scroll">
           <div className="empty">
             <div className="tile tint-olive"><Icon name="calendar" size={24} /></div>
-            <div className="empty-t">لا جدول لسنتك بعد</div>
-            <div className="empty-b">سيظهر هنا حين تنشر الكلية جدول سنتك.</div>
+            <div className="empty-t">{t('لا جدول لسنتك بعد')}</div>
+            <div className="empty-b">{t('سيظهر هنا حين تنشر الكلية جدول سنتك.')}</div>
           </div>
         </div>
       </>
@@ -103,23 +108,23 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
         <div className="head-row">
           <BackButton fallback="/feed" />
           <div className="grow">
-            <div className="head-t">جدول الحصص</div>
+            <div className="head-t">{t('جدول الحصص')}</div>
             <div className="head-s"><bdi dir="ltr">{promo} · {semester}</bdi></div>
           </div>
           {day !== today && today >= first && today <= last && (
-            <button className="tt-today" onClick={() => setDay(today)}>اليوم</button>
+            <button className="tt-today" onClick={() => setDay(today)}>{t('اليوم')}</button>
           )}
         </div>
 
         <div className="tt-month">
-          <button aria-label="الأسبوع السابق" disabled={monday <= lo}
+          <button aria-label={t('الأسبوع السابق')} disabled={monday <= lo}
                   onClick={() => setDay(addDays(monday, -7) < first ? first : addDays(monday, -7))}>
-            <Icon name="chev" size={17} />
-          </button>
-          <b>{dayNumber(week[0])} {monthOf(week[0])} – {dayNumber(week.at(-1))} {monthOf(week.at(-1))}</b>
-          <button aria-label="الأسبوع التالي" disabled={monday >= hi}
-                  onClick={() => setDay(addDays(monday, 7) > last ? last : addDays(monday, 7))}>
             <Icon name="chevR" size={17} />
+          </button>
+          <b>{dayNumber(week[0])} {monthOf(week[0], t)} – {dayNumber(week.at(-1))} {monthOf(week.at(-1), t)}</b>
+          <button aria-label={t('الأسبوع التالي')} disabled={monday >= hi}
+                  onClick={() => setDay(addDays(monday, 7) > last ? last : addDays(monday, 7))}>
+            <Icon name="chev" size={17} />
           </button>
         </div>
 
@@ -132,7 +137,7 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
               <button key={d} data-on={d === day} data-today={d === today}
                       className={`tt-chip${some ? ' has' : ''}${off ? ' off' : ''}`}
                       onClick={() => setDay(d)}>
-                <s>{SHORT[new Date(`${d}T12:00:00Z`).getUTCDay()]}</s>
+                <s>{SHORT[t.lang][new Date(`${d}T12:00:00Z`).getUTCDay()]}</s>
                 <b>{dayNumber(d)}</b>
                 <i />
               </button>
@@ -143,14 +148,14 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
 
       <div className="scroll tt-flow">
         <div className="tt-day">
-          {longDay(day)}
-          {day === today && <span>اليوم</span>}
+          {longDay(day, t)}
+          {day === today && <span>{t('اليوم')}</span>}
         </div>
 
         {list.length === 0 && (
           <div className="empty" style={{ paddingTop: 28 }}>
             <div className="tile tint-olive"><Icon name="clock" size={24} /></div>
-            <div className="empty-t">لا حصص هذا اليوم</div>
+            <div className="empty-t">{t('لا حصص هذا اليوم')}</div>
           </div>
         )}
 
@@ -168,7 +173,7 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
             return (
               <div key={s.id} className="tt-free">
                 <span className="tt-time" dir="ltr"><b>{s.start}</b><s>{s.end}</s></span>
-                <span className="grow">حصة مراجعة <small>القاعة مفتوحة للمراجعة الشخصية</small></span>
+                <span className="grow">{t('حصة مراجعة')}{' '}<small>{t('القاعة مفتوحة للمراجعة الشخصية')}</small></span>
               </div>
             );
           }
@@ -183,14 +188,14 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
                 <b dir="auto">{s.title || s.module}</b>
                 <em dir="auto">
                   {s.title ? s.module : ''}
-                  {s.kind !== 'course' && <span className="nu-kind">{KIND[s.kind]}</span>}
-                  {isLive && <span className="nu-kind live">الآن</span>}
+                  {s.kind !== 'course' && <span className="nu-kind">{t(KIND[s.kind])}</span>}
+                  {isLive && <span className="nu-kind live">{t('الآن')}</span>}
                 </em>
                 {s.teacher && <small dir="auto">{s.teacher}</small>}
                 {href && (
                   <Link href={href} className="tt-rev">
                     <Icon name="book" size={14} />
-                    {s.fid ? 'راجع هذه المحاضرة' : 'افتح المادة'}
+                    {s.fid ? t('راجع هذه المحاضرة') : t('افتح المادة')}
                   </Link>
                 )}
               </span>
@@ -199,10 +204,9 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
         })}
 
         {lectures.length > 0 && (
-          <p className="tt-foot">
-            هذا ما نشرته الكلية. قد يتقدّم الأستاذ أو يتأخّر — اسأل زملاءك في الدفعة
-            عن آخر ما وصل إليه.
-          </p>
+          <p className="tt-foot">{t(
+            'هذا ما نشرته الكلية. قد يتقدّم الأستاذ أو يتأخّر — اسأل زملاءك في الدفعة عن آخر ما وصل إليه.'
+          )}</p>
         )}
       </div>
     </>

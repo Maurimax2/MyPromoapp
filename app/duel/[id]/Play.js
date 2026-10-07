@@ -15,12 +15,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Quiz from '@/components/Quiz';
+import { useT } from '@/components/Lang';
 
 const SPARKS = Array.from({ length: 10 }, (_, n) => ({
   a: `${n * 36 + 8}deg`, c: n % 2 ? '#E08A5E' : '#FFE7A8', d: `${0.5 + (n % 4) * 0.05}s`,
 }));
 
 export default function Play({ id, questions, title, seconds = 0, me, them }) {
+  const t = useT();
   const router = useRouter();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -43,7 +45,7 @@ export default function Play({ id, questions, title, seconds = 0, me, them }) {
     });
     const d = await res.json().catch(() => ({}));
     setBusy(false);
-    if (!res.ok) { setError(d.error || 'تعذّر الإرسال'); return; }
+    if (!res.ok) { setError(d.error || t('تعذّر الإرسال')); return; }
     router.refresh();
   };
 
@@ -51,7 +53,7 @@ export default function Play({ id, questions, title, seconds = 0, me, them }) {
     return (
       <div className="ar-body">
         <div className="admin-err">{error}</div>
-        <button className="ar-ghost" onClick={() => router.refresh()}>حدِّث</button>
+        <button className="ar-ghost" onClick={() => router.refresh()}>{t('حدِّث')}</button>
       </div>
     );
   }
@@ -60,12 +62,12 @@ export default function Play({ id, questions, title, seconds = 0, me, them }) {
 
   if (phase !== 'quiz') {
     return (
-      <button className="ar-show" onClick={() => setPhase('quiz')} aria-label="تخطَّ">
+      <button className="ar-show" onClick={() => setPhase('quiz')} aria-label={t('تخطَّ')}>
         {phase === 'vs' ? (
           <span className="ar-in">
             <span className="ar-side me">
               <span className="ar-f big" style={{ background: me.face }}>{me.ini}</span>
-              <b>أنت</b>
+              <b>{t('أنت')}</b>
             </span>
             <span className="ar-side them">
               <span className="ar-f big" style={{ background: them.face }}>{them.ini}</span>
@@ -86,7 +88,7 @@ export default function Play({ id, questions, title, seconds = 0, me, them }) {
           </span>
         ) : (
           <b key={phase} className={`ar-count${phase === '1' ? ' hot' : ''}${phase === 'go' ? ' go' : ''}`}>
-            {phase === 'go' ? 'انطلق!' : phase}
+            {phase === 'go' ? t('انطلق!') : phase}
           </b>
         )}
       </button>
@@ -97,14 +99,14 @@ export default function Play({ id, questions, title, seconds = 0, me, them }) {
     <div className="ar-body ar-play">
       <div className="ar-strip">
         <span className="ar-f sm" style={{ background: me.face }}>{me.ini}</span>
-        <b>أنت</b>
+        <b>{t('أنت')}</b>
         <span className="grow" />
         <Icon name="bolt" size={16} weight="fill" />
         <span className="grow" />
         <b dir="auto">{them.first}</b>
         <span className="ar-f sm" style={{ background: them.face }}>{them.ini}</span>
       </div>
-      <Quiz questions={questions} moduleName={title} source="تحدٍّ"
+      <Quiz questions={questions} moduleName={title} source={t('تحدٍّ')}
         seconds={seconds} onAnswers={send} />
     </div>
   );

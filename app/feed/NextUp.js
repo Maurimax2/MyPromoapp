@@ -19,10 +19,12 @@ import Icon from '@/components/Icon';
 import { agenda, clockOf } from '@/lib/timetable-core';
 import { inTime, whenIs, longDay, KIND } from '@/lib/timetable-text';
 import { artOf } from '@/lib/subjectArt';
+import { useT } from '@/components/Lang';
 
 const minutes = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 
 export default function NextUp({ sessions, term, now: serverNow }) {
+  const t = useT();
   const [now, setNow] = useState(serverNow);
   useEffect(() => {
     setNow(Date.now());
@@ -38,17 +40,17 @@ export default function NextUp({ sessions, term, now: serverNow }) {
   const cl = clockOf(now);
 
   let kicker;
-  if (a.live) kicker = 'الآن في القاعة';
-  else if (!a.started) kicker = `أول محاضرة في الفصل · ${longDay(a.next.date)}`;
-  else if (a.until != null) kicker = `المحاضرة القادمة · ${inTime(a.until)}`;
-  else kicker = `المحاضرة القادمة · ${whenIs(a.next.date, a.day)}`;
+  if (a.live) kicker = t('الآن في القاعة');
+  else if (!a.started) kicker = t('أول محاضرة في الفصل · {longDay}', { longDay: longDay(a.next.date, t) });
+  else if (a.until != null) kicker = t('المحاضرة القادمة · {inTime}', { inTime: inTime(a.until, t) });
+  else kicker = t('المحاضرة القادمة · {whenIs}', { whenIs: whenIs(a.next.date, a.day, t) });
 
   // «اليوم لا محاضرات» belongs above the next one when today is empty, and says
   // why when the faculty did: a holiday, or a day left for revision.
   const note = a.free && a.started && !a.live
     ? (a.why?.kind === 'break'
         ? (a.why.title || a.why.module)
-        : a.why?.kind === 'revision' ? 'يوم مراجعة — لا محاضرات اليوم' : 'لا محاضرات اليوم')
+        : a.why?.kind === 'revision' ? t('يوم مراجعة — لا محاضرات اليوم') : t('لا محاضرات اليوم'))
     : null;
 
   const done = a.live
@@ -56,8 +58,8 @@ export default function NextUp({ sessions, term, now: serverNow }) {
     : 0;
 
   const revise = s.fid
-    ? { at: `/file/${s.fid}`, label: a.live ? 'افتح المحاضرة' : 'راجع قبل المحاضرة' }
-    : s.sub ? { at: `/archive/${s.sub}`, label: 'افتح المادة' } : null;
+    ? { at: `/file/${s.fid}`, label: a.live ? t('افتح المحاضرة') : t('راجع قبل المحاضرة') }
+    : s.sub ? { at: `/archive/${s.sub}`, label: t('افتح المادة') } : null;
 
   return (
     <section className={`nu r2${a.live ? ' live' : ''}`}>
@@ -73,7 +75,7 @@ export default function NextUp({ sessions, term, now: serverNow }) {
           <em dir="auto">
             {s.title ? <>{s.module} · </> : null}
             <bdi dir="ltr">{s.start}–{s.end}</bdi>
-            {s.kind !== 'course' && <span className="nu-kind">{KIND[s.kind]}</span>}
+            {s.kind !== 'course' && <span className="nu-kind">{t(KIND[s.kind])}</span>}
           </em>
           {s.teacher && <small dir="auto">{s.teacher}</small>}
         </span>
@@ -88,8 +90,7 @@ export default function NextUp({ sessions, term, now: serverNow }) {
           </Link>
         )}
         <Link href="/timetable" className="nu-all">
-          <Icon name="calendar" size={16} /> الجدول كاملًا
-        </Link>
+          <Icon name="calendar" size={16} />{' '}{t('الجدول كاملًا')}</Link>
       </div>
     </section>
   );
