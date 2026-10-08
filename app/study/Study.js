@@ -143,6 +143,10 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
               <span className="st-body-ic"><Icon name="quiz" size={20} /></span>
               <span><b dir="ltr">Quiz 3D</b><s>{t('المس البنية أو سمّها')}</s></span>
             </Link>
+            <Link href="/anatomie/planches" className="st-body-card st-body-wide">
+              <span className="st-body-ic"><Icon name="image" size={20} /></span>
+              <span><b dir="ltr">Planches d’anatomie</b><s>{t('135 رسمًا تشريحيًا حسب الجهاز')}</s></span>
+            </Link>
             <Link href="/anatomie/feminin" className="st-body-card st-body-wide">
               <span className="st-body-ic"><Icon name="heart" size={20} /></span>
               <span><b dir="ltr">Le bassin féminin</b><s>{t('الرحم وملحقاته، المثانة، الحوض، الثدي والمشيمة')}</s></span>

@@ -590,3 +590,18 @@ missing from both sources, and is not faked:
 - **الرئيسية's «موادك» is always the student's own year.** It used to follow
   the year being browsed (the cookie الدراسة sets), so one peek at another year
   left that year's subjects on the home screen.
+
+## Planches d'anatomie (/anatomie/planches)
+
+- **135 drawings from Servier Medical Art (CC BY 4.0)**, picked one by one for
+  normal anatomy — no disease, no drug, no molecule — in twelve systems, each
+  with a French title written in `lib/anatomy/planches.js`. Servier's own
+  captions are French but a word or two; the titles say what is drawn.
+- The drawings carry no labels: they sit beside the 3D models the way an
+  atlas page sits beside the specimen. The 3D structure card links to the
+  plates of its system.
+- **No English-labelled figures** (OpenStax's are excellent and CC BY, but
+  labelled in English): study content is French.
+- `scripts/fetch-planches.mjs` writes `public/planches/<id>.webp` (1600 px) and
+  a thumbnail, caching the originals in `../servier`. The credit and a link to
+  the source are under every plate.

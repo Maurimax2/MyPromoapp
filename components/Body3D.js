@@ -25,7 +25,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import Icon from '@/components/Icon';
+import Link from 'next/link';
 import { useT } from '@/components/Lang';
+import { GROUPS_OF_LAYER } from '@/lib/anatomy/planches';
 import { studied } from '@/lib/streak';
 import { tissueMaterial, studio, qualityTier, setDetail } from '@/lib/anatomy/material';
 import {
@@ -780,6 +782,10 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
               <button data-on={follow} onClick={() => setFollow((f) => !f)}>{t('تتبّع مساره')}</button>
             )}
             <button data-on={reading} onClick={() => setReading((r) => !r)}>{t('الوصف')}</button>
+            {/* The drawings of the same system, as an atlas page beside the specimen. */}
+            {GROUPS_OF_LAYER[pLayer] && (
+              <Link href={`/anatomie/planches?g=${GROUPS_OF_LAYER[pLayer][0]}`}>{t('اللوحات')}</Link>
+            )}
           </div>
           {reading && (
             <div className="bd-about" dir="ltr" lang="fr">
