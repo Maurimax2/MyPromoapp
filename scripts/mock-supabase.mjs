@@ -62,6 +62,8 @@ const db = {
     { a: 'u-owner', b: 'u-6', created_at: '2026-09-21T10:00:00Z', accepted_at: null },
   ],
   push_devices: [],
+  // blocks.sql
+  blocks: [],
   // activity.sql
   presence: [],
   app_opens: [],
@@ -749,6 +751,7 @@ createServer(async (req, res) => {
     reports:  () => ({ state: 'open', created_at: new Date().toISOString() }),
     notifications: () => ({ seen: false, created_at: new Date().toISOString() }),
     friends:  () => ({ created_at: new Date().toISOString(), accepted_at: null }),
+    blocks:   () => ({ created_at: new Date().toISOString() }),
     push_devices: () => ({ created_at: new Date().toISOString(), seen_at: new Date().toISOString(), keys: null }),
     push_prefs: () => ({ off: [], updated_at: new Date().toISOString() }),
     presence: () => ({ first_seen: new Date().toISOString(), seen_at: new Date().toISOString(), opens: 0 }),
@@ -768,6 +771,7 @@ createServer(async (req, res) => {
     push_devices: ['token'],
     presence: ['person'],
     friends: ['a', 'b'],
+    blocks: ['blocker', 'blocked'],
     push_log: ['person', 'kind', 'day'],
   };
 

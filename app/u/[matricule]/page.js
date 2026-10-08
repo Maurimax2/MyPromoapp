@@ -7,6 +7,9 @@ import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, handleOf } from '@/lib/identity';
 import { friendState } from '@/lib/friends';
 import FriendButton from '@/components/FriendButton';
+import Flag from '@/components/Flag';
+import Unblock from '@/components/Unblock';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { getT } from '@/lib/lang';
 
 export const dynamic = 'force-dynamic';
@@ -59,7 +62,7 @@ export default async function PersonPage({ params }) {
   // Counted only when somebody was found, and counted the same way الملف
   // counts them, so two screens never disagree about how many answers a
   // person has had accepted.
-  const [posts, answers, rooms, friendship] = person
+  const [posts, answers, rooms, friendship, blocking] = person
     ? await Promise.all([
       sb.from('posts').select('*', { count: 'exact', head: true })
         .eq('author', person.id).eq('removed', false),
@@ -68,8 +71,13 @@ export default async function PersonPage({ params }) {
       sb.from('room_members').select('*', { count: 'exact', head: true })
         .eq('person', person.id),
       friendState(me.id, person.id),
+      // Only a block you made is shown here. One they made is not yours to
+      // know about — their profile reads as it always did.
+      supabaseAdmin().from('blocks').select('blocker')
+        .eq('blocker', me.id).eq('blocked', person.id).maybeSingle()
+        .then((r) => !!r.data, () => false),
     ])
-    : [null, null, null, 'none'];
+    : [null, null, null, 'none', false];
 
   return (
     <>
@@ -79,6 +87,10 @@ export default async function PersonPage({ params }) {
             <Icon name="chev" size={19} />
           </Link>
           <div className="head-t">{name || t('لم نجد أحدًا')}</div>
+          {person && (
+            <Flag type="profile" id={person.id} person={{ id: person.id, name }} blocked={blocking}
+              className="icobtn" />
+          )}
         </div>
       </header>
 
@@ -122,11 +134,24 @@ export default async function PersonPage({ params }) {
               </div>
             </div>
 
-            <FriendButton to={handleOf(person) || person.id} state={friendship} />
+            {blocking ? (
+              <div className="notice">
+                <Icon name="block" size={19} />
+                <div className="grow">
+                  <div className="notice-t">{t('حظرت هذا الحساب')}</div>
+                  <div className="notice-b">{t('لا يرى أحدكما ما ينشره الآخر، ولا يستطيع مراسلتك أو تحدّيك.')}</div>
+                </div>
+                <Unblock person={person.id} className="fr-unblock" />
+              </div>
+            ) : (
+              <>
+                <FriendButton to={handleOf(person) || person.id} state={friendship} />
 
-            {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
-            <Link href={`/duel/new?to=${encodeURIComponent(handleOf(person) || '')}`} className="btn p">
-              <Icon name="swords" size={18} />{t('تحدَّ {v1}', { v1: name.split(' ')[0] })}</Link>
+                {/* نفس الأسئلة، ونتيجتان. الرقم معروف هنا، فلا داعي لكتابته. */}
+                <Link href={`/duel/new?to=${encodeURIComponent(handleOf(person) || '')}`} className="btn p">
+                  <Icon name="swords" size={18} />{t('تحدَّ {v1}', { v1: name.split(' ')[0] })}</Link>
+              </>
+            )}
           </>
         )}
       </div>

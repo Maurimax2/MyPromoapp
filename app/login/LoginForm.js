@@ -160,7 +160,7 @@ export default function LoginForm({ years = PROMOS }) {
           </div>
           <button className="btn g" onClick={() => { setState('idle'); setHow('password'); }}>{t('رجوع')}</button>
         </div>
-        <p className="login-terms">{t('بالمتابعة، أنت توافق على')}{' '}<a href="/privacy">{t('سياسة الخصوصية')}</a></p>
+        <Agree t={t} />
       </div>
     );
   }
@@ -287,7 +287,21 @@ export default function LoginForm({ years = PROMOS }) {
         </>
       )}
 
-      <p className="login-terms">{t('بالمتابعة، أنت توافق على')}{' '}<a href="/privacy">{t('سياسة الخصوصية')}</a></p>
+      <Agree t={t} />
     </div>
+  );
+}
+
+// One sentence, one key — French puts the two links in its own order — with
+// the links put back where the braces are. The terms are what Apple means by
+// «users agree to terms with no tolerance for objectionable content».
+function Agree({ t }) {
+  const parts = t('بالمتابعة، أنت توافق على {terms} و{privacy}').split(/(\{terms\}|\{privacy\})/);
+  return (
+    <p className="login-terms">
+      {parts.map((part, i) => (part === '{terms}' ? <a key={i} href="/terms">{t('شروط الاستخدام')}</a>
+        : part === '{privacy}' ? <a key={i} href="/privacy">{t('سياسة الخصوصية')}</a>
+          : part))}
+    </p>
   );
 }

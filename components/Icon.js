@@ -14,9 +14,9 @@
 import {
   Archive, ArrowCounterClockwise, ArrowsClockwise, Atom, Baby, Bell, BookmarkSimple, BookOpenText, CalendarDots,
   CaretLeft, CaretRight, ChatCircle, ChatsCircle, Check, CheckCircle, ClockCountdown, CornersIn, CornersOut,
-  Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flask, Gear, GoogleLogo, Heart,
+  Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flag, Flask, Gear, GoogleLogo, Heart,
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
-  Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
+  Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, Prohibit, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
   Megaphone, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
 } from '@phosphor-icons/react/dist/ssr';
 
@@ -39,6 +39,7 @@ const ICONS = {
   right: CheckCircle, wrong: XCircle,
   friends: UsersThree, addFriend: UserPlus, friend: UserCheck, news: Megaphone,
   lang: Translate,
+  flag: Flag, block: Prohibit,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'سياسة الخصوصية — MyPromo' };
 
-const UPDATED = { ar: 'آخر تحديث: 29 سبتمبر 2026', fr: 'Dernière mise à jour : 29 septembre 2026' };
+const UPDATED = { ar: 'آخر تحديث: 8 أكتوبر 2026', fr: 'Dernière mise à jour : 8 octobre 2026' };
 
 export default async function Privacy({ searchParams }) {
   // ?lang= when the link asks for one; otherwise the language the app is in
@@ -27,6 +27,8 @@ export default async function Privacy({ searchParams }) {
             <li>Pour les étudiants de première année : votre numéro WhatsApp, uniquement pour que l&apos;équipe vérifie votre inscription.</li>
             <li>Ce que vous publiez : publications, commentaires, questions et réponses, messages, photos et fichiers PDF que vous envoyez.</li>
             <li>Votre activité d&apos;étude : réponses aux QCM, points, séries, cours consultés, défis.</li>
+            <li>Quand vous ouvrez l&apos;application et quel écran est affiché, pour que l&apos;équipe sache combien d&apos;étudiants l&apos;utilisent. Seule l&apos;équipe le voit.</li>
+            <li>Les personnes que vous bloquez et ce que vous signalez. Quand vous signalez une conversation privée, une copie des derniers messages de l&apos;autre personne est jointe au signalement pour l&apos;équipe.</li>
             <li>Un identifiant de notification de votre téléphone ou navigateur, si vous activez les notifications.</li>
           </ul>
         </Section>
@@ -42,14 +44,15 @@ export default async function Privacy({ searchParams }) {
           <p>
             Pour faire fonctionner l&apos;application : vous identifier, montrer vos publications à votre
             promo, calculer vos points, vous envoyer les notifications que vous avez choisies.
-            Un compte est approuvé par l&apos;équipe avant d&apos;accéder au contenu.
+            L&apos;équipe peut refuser ou suspendre un compte qui n&apos;appartient pas à un étudiant de la faculté.
           </p>
         </Section>
 
         <Section title="Où sont les données">
           <p>
             Elles sont stockées chez Supabase (base de données et fichiers). Le site est hébergé par
-            Vercel. Les notifications passent par Firebase Cloud Messaging (Google). Les appels des
+            Vercel. Les notifications passent par Firebase Cloud Messaging (Google) sur Android et par le
+            service de notifications d&apos;Apple sur iPhone. Les appels des
             salles d&apos;étude passent par LiveKit. Nous ne vendons aucune donnée et n&apos;affichons aucune
             publicité. Il n&apos;y a pas d&apos;outil de suivi publicitaire ni d&apos;analyse tierce dans l&apos;application.
           </p>
@@ -73,7 +76,7 @@ export default async function Privacy({ searchParams }) {
         </Section>
 
         <Section title="Contact">
-          <p>Pour toute question sur vos données, écrivez-nous.</p>
+          <p>Pour toute question sur vos données, écrivez-nous. Voir aussi les <a href="/terms?lang=fr">conditions d&apos;utilisation</a>.</p>
           <Contact fr />
         </Section>
       </Legal>
@@ -93,6 +96,8 @@ export default async function Privacy({ searchParams }) {
           <li>لطلبة السنة الأولى: رقم واتساب، ليتحقق الفريق من تسجيلك فقط.</li>
           <li>ما تنشره: المنشورات والتعليقات والأسئلة والأجوبة والرسائل، والصور وملفات PDF التي ترفعها.</li>
           <li>نشاطك الدراسي: إجاباتك على الأسئلة، النقاط، الأيام المتتالية، المحاضرات التي فتحتها، والتحديات.</li>
+          <li>متى تفتح التطبيق وأي شاشة أمامك، ليعرف الفريق عدد من يستعمله. لا يراه إلا الفريق.</li>
+          <li>من تحظرهم وما تبلّغ عنه. حين تبلّغ عن محادثة خاصة، تُرفق بالبلاغ نسخة من آخر رسائل الطرف الآخر ليراها الفريق.</li>
           <li>معرّف الإشعارات لهاتفك أو متصفحك إن فعّلت الإشعارات.</li>
         </ul>
       </Section>
@@ -107,14 +112,15 @@ export default async function Privacy({ searchParams }) {
       <Section title="لماذا">
         <p>
           لتشغيل التطبيق: التعرّف عليك، عرض منشوراتك لدفعتك، حساب نقاطك، وإرسال الإشعارات التي اخترتها.
-          يوافق الفريق على كل حساب قبل أن يرى المحتوى.
+          يستطيع الفريق رفض أو إيقاف أي حساب لا يخصّ طالبًا في الكلية.
         </p>
       </Section>
 
       <Section title="أين تُحفظ البيانات">
         <p>
           تُحفظ لدى Supabase (قاعدة البيانات والملفات). يُستضاف الموقع على Vercel، وتمر الإشعارات عبر
-          Firebase Cloud Messaging من Google، وتمر مكالمات غرف الدراسة عبر LiveKit. لا نبيع أي بيانات
+          Firebase Cloud Messaging من Google على أندرويد وعبر خدمة إشعارات Apple على الآيفون، وتمر مكالمات
+          غرف الدراسة عبر LiveKit. لا نبيع أي بيانات
           ولا نعرض إعلانات، ولا توجد في التطبيق أدوات تتبّع إعلاني أو تحليلات من طرف ثالث.
         </p>
       </Section>
@@ -135,7 +141,7 @@ export default async function Privacy({ searchParams }) {
       </Section>
 
       <Section title="التواصل">
-        <p>لأي سؤال عن بياناتك، راسلنا.</p>
+        <p>لأي سؤال عن بياناتك، راسلنا. وانظر أيضًا <a href="/terms">شروط الاستخدام</a>.</p>
         <Contact />
       </Section>
     </Legal>

@@ -57,6 +57,22 @@ Until it runs, nobody can turn notifications on or add a friend, and the
 announcement screen says to paste this first. Everything else works as
 before.
 
+## 6. `supabase/blocks.sql` — new, paste it once, before the App Store review
+
+Blocking. Once a student blocks somebody, neither sees the other's posts,
+comments, answers, chats, room messages, duels or notifications — and the
+person blocked is never told. It also gives reports a column for the copy of
+a chat that comes with reporting it, since nobody but the two people in a
+chat can read it.
+
+Safe to run twice, and safe to paste before or after any other file: it adds
+its rules beside the existing ones (restrictive policies) instead of
+rewriting them, so pasting `social.sql` again later leaves blocking in place.
+
+Until it runs, the «⋯» menus still report, but «احظر» answers «الحظر غير
+مفعّل بعد». Both stores look for blocking in an app where students write to
+each other (Apple 1.2), so paste this before the build goes to review.
+
 ## Push notifications — four variables on Vercel
 
 Vercel → the project → Settings → Environment Variables. Add each, then
@@ -70,14 +86,35 @@ redeploy.
 | `FIREBASE_SERVICE_ACCOUNT` | Firebase → ⚙ Project settings → Service accounts → **Generate new private key**. Open the downloaded file, copy **all** of it, paste it as the value. Secret. Then delete the file. |
 
 The first two send to browsers (Chrome on Android, and an iPhone once the
-site is added to the home screen). The last one sends to the Android and iOS
-app. `CRON_SECRET` guards the evening reminder, which `vercel.json` runs every
+site is added to the home screen). The last one sends to the Android app. `CRON_SECRET` guards the evening reminder, which `vercel.json` runs every
 day at 18:00 Nouakchott time; without it the reminder refuses to run.
 
 Nothing breaks while any of them is missing — the pushes that need it are
 simply not sent. The bell inside the app works either way.
 
 Announcements: **اللوحة ← إعلان للطلبة**. Admins and the owner only.
+
+### …and three more for the iPhone app
+
+The iPhone app is woken by Apple directly (`lib/apns.js`), not through
+Firebase, so it needs a key from the Apple Developer account — available the
+day the account is approved.
+
+1. developer.apple.com → Certificates, IDs & Profiles → **Keys** → (+). Name
+   it `MyPromo push`, tick **Apple Push Notifications service (APNs)**,
+   Continue → Register → **Download**. The `.p8` file downloads once only.
+2. Note the **Key ID** shown beside it, and the **Team ID** at the top right
+   of the account page.
+3. Vercel → Environment Variables:
+
+| Name | Value |
+|---|---|
+| `APNS_KEY` | open the `.p8` in Notepad, copy **all** of it (the BEGIN and END lines too), paste. Secret. |
+| `APNS_KEY_ID` | the 10-character Key ID |
+| `APNS_TEAM_ID` | the 10-character Team ID |
+
+Redeploy, then **اللوحة ← إعلان للطلبة ← جرّب على هاتفي**: the test now
+says whether Apple accepts the key, the same way it does for Firebase.
 
 ## Google sign-in
 

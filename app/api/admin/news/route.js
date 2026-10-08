@@ -12,6 +12,7 @@ import { currentProfile, isAdmin } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { pushTo, pushReady, later } from '@/lib/push';
 import { fcmReady, fcmCheck } from '@/lib/fcm';
+import { apnsReady, apnsCheck } from '@/lib/apns';
 import { webReady } from '@/lib/webpush';
 
 export const runtime = 'nodejs';
@@ -55,6 +56,7 @@ export async function POST(request) {
       : 0;
     return NextResponse.json({
       test: true, ready: pushReady(), fcm: fcmReady(), fcmCheck: await fcmCheck(), web: webReady(), table: !noTable,
+      apns: apnsReady(), apnsCheck: await apnsCheck(),
       devices: (mine || []).map((d) => d.platform), sent,
     });
   }

@@ -180,10 +180,23 @@ export default async function Profile() {
             <s>{score}</s>
             <Icon name="chev" size={15} />
           </Link>
+          <Link href="/blocked">
+            <span className="me-list-ic"><Icon name="block" size={19} /></span>
+            <span className="grow">{t('المحظورون')}</span>
+            <Icon name="chev" size={15} />
+          </Link>
         </div>
 
         <Sign />
         <DeleteAccount />
+
+        {/* The rules, the privacy policy and a way to reach us, from inside
+            the app — the stores look for all three. */}
+        <nav className="me-legal">
+          <Link href="/terms">{t('الشروط')}</Link>
+          <Link href="/privacy">{t('الخصوصية')}</Link>
+          <Link href="/support">{t('المساعدة والتواصل')}</Link>
+        </nav>
       </div>
     </>
   );

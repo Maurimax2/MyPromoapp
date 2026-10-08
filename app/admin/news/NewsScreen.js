@@ -63,14 +63,24 @@ export default function NewsScreen({ years, past, ready }) {
       unknown: 'تعذّر الحكم على مفتاح Firebase الآن — أعد المحاولة.',
     };
     const android = FCM[d.fcmCheck] || '';
+    // …and the iPhone half, the same way: does Apple accept the key?
+    const APNS = {
+      ok: 'مفتاح Apple سليم — إشعارات الآيفون ستعمل متى سُجّل جهاز.',
+      none: 'لا يوجد مفتاح Apple في Vercel (APNS_KEY و APNS_KEY_ID و APNS_TEAM_ID) — إشعارات الآيفون لن تعمل.',
+      auth: 'Apple رفض المفتاح — تأكّد من APNS_KEY_ID و APNS_TEAM_ID وأنّ APNS_KEY هو ملف ‎.p8 كاملًا.',
+      topic: 'Apple قبل المفتاح لكنه لا يعرف التطبيق com.mypromo.app — تأكّد أنه مفتاح الحساب نفسه.',
+      unknown: 'تعذّر الحكم على مفتاح Apple الآن — أعد المحاولة.',
+    };
+    const iphone = APNS[d.apnsCheck] || '';
     if (!d.table) setProbe('جدول الأجهزة غير موجود — الصق supabase/push.sql في Supabase.');
-    else if (!d.ready) setProbe('الخادم لا يملك أيّ مفتاح إرسال — لا FIREBASE_SERVICE_ACCOUNT ولا مفاتيح VAPID. أضفها في Vercel ثم أعد النشر.');
+    else if (!d.ready) setProbe('الخادم لا يملك أيّ مفتاح إرسال — لا FIREBASE_SERVICE_ACCOUNT ولا APNS_KEY ولا مفاتيح VAPID. أضفها في Vercel ثم أعد النشر.');
+    else if (d.devices.includes('ios') && !d.apns) setProbe('جهازك آيفون لكن مفتاح Apple غير موجود أو غير صالح في Vercel (APNS_KEY).');
     else if (d.devices.includes('android') && !d.fcm) setProbe('جهازك أندرويد لكن مفتاح Firebase غير موجود أو غير صالح في Vercel (FIREBASE_SERVICE_ACCOUNT).');
     else if (d.devices.includes('web') && !d.web) setProbe('جهازك متصفح لكن مفاتيح VAPID غير موجودة في Vercel (VAPID_PRIVATE_KEY).');
     else if (!d.devices.length) setProbe('لا جهاز مسجَّل لحسابك. افتح التطبيق على الهاتف بهذا الحساب نفسه وفعّل الإشعارات.');
     else if (!d.sent) setProbe(`وُجد جهاز (${d.devices.join('، ')}) لكن الإرسال فشل — المفتاح غير صالح أو الجهاز لا يستقبل.`);
     else setProbe(`أُرسلت تجربة إلى ${d.sent} جهاز — انظر إلى هاتفك.`);
-    setProbe((p) => `${p}\n${android}`);
+    setProbe((p) => `${p}\n${android}\n${iphone}`);
   };
 
   const remove = async (id) => {

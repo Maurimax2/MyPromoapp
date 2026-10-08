@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import Flag from '@/components/Flag';
 import { useT } from '@/components/Lang';
 
 const EVERY = 4000;
@@ -17,6 +18,7 @@ export default function Talk({ chat, person, first, me }) {
   const [messages, setMessages] = useState(first);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
   const foot = useRef(null);
   const last = useRef(first.at(-1)?.id ?? 0);
 
@@ -47,7 +49,12 @@ export default function Talk({ chat, person, first, me }) {
       body: JSON.stringify({ chat, body: text }),
     });
     setBusy(false);
-    if (!res.ok) return;
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data.error || t('تعذّر الإرسال'));
+      return;
+    }
+    setError('');
     const made = await res.json();
     last.current = made.id;
     setMessages((m) => [...m, made]);
@@ -63,6 +70,13 @@ export default function Talk({ chat, person, first, me }) {
             {initials(person)}
           </div>
           <div className="grow"><div className="head-t" style={{ fontSize: 17 }}>{name(person)}</div></div>
+          {/* What was said here can be reported — a copy of their messages
+              goes with it, since nobody else can read this chat — and the
+              person blocked, which closes the chat for both of you. */}
+          {person?.id && (
+            <Flag type="message" id={chat} person={{ id: person.id, name: name(person) }}
+              className="icobtn" onBlocked={() => window.location.assign('/chat')} />
+          )}
         </div>
       </header>
 
@@ -79,6 +93,7 @@ export default function Talk({ chat, person, first, me }) {
             <div className="empty-b">{t('ابدأ الكلام.')}</div>
           </div>
         )}
+        {error && <div className="admin-err" style={{ margin: '0 12px' }}>{error}</div>}
         <div ref={foot} />
       </div>
 

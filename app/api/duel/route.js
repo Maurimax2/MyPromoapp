@@ -19,6 +19,7 @@ import { allOf } from '@/lib/quiz-bank';
 import { pick, stage, myMove, countOf, secondsOf, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
 import { getT } from '@/lib/lang';
+import { blockedBetween } from '@/lib/blocks';
 
 export const runtime = 'nodejs';
 
@@ -58,6 +59,9 @@ export async function POST(request) {
   }
   if (them.promo !== me.promo) {
     return NextResponse.json({ error: t('زميلك في دفعة أخرى') }, { status: 400 });
+  }
+  if (await blockedBetween(me.id, them.id)) {
+    return NextResponse.json({ error: t('لا أحد بهذا الاسم أو الرقم') }, { status: 404 });
   }
 
   // A subject of your year — including the first year the pharmacy and

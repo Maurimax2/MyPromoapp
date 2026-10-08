@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import Flag from '@/components/Flag';
 import { useT } from '@/components/Lang';
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
@@ -170,6 +171,12 @@ export default function NoteList({ groups, subjects, me }) {
                     <span className="pill grey">
                       {n.ext || 'PDF'}{n.bytes ? ` · ${mb(n.bytes)}` : ''}
                     </span>
+                    {/* A résumé a classmate uploaded is theirs to answer for:
+                        it can be reported, and its author blocked. */}
+                    {n.post && n.author?.id && n.author.id !== me?.id && (
+                      <Flag type="note" id={n.post} person={{ id: n.author.id, name: who(n.author) || '' }}
+                        className="note-saves note-more" size={17} />
+                    )}
                     {n.post ? (
                       <button
                         className="note-saves" data-on={n.saved}

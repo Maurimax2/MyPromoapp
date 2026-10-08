@@ -12,7 +12,7 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 // Screens where nobody is signed in yet, or let in yet.
-const OUTSIDE = ['/login', '/waiting', '/feedback', '/auth', '/admin', '/privacy', '/delete-account', '/download'];
+const OUTSIDE = ['/login', '/waiting', '/feedback', '/auth', '/admin', '/privacy', '/delete-account', '/download', '/terms', '/support'];
 const EVERY = 60 * 1000;
 const NEW_VISIT = 30 * 60 * 1000;
 const LAST = 'mypromo.ping';

@@ -8,6 +8,7 @@ import { NextResponse } from 'next/server';
 import { currentProfile, isStaff, supabaseServer } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { pushTo, later } from '@/lib/push';
+import { blockedBetween } from '@/lib/blocks';
 import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
@@ -37,6 +38,10 @@ export async function POST(request) {
   }
   if (them.promo !== me.promo && !isStaff(me)) {
     return NextResponse.json({ error: t('من دفعتك فقط') }, { status: 403 });
+  }
+  // Blocked, by either of you: the same answer as nobody being there.
+  if (await blockedBetween(me.id, person)) {
+    return NextResponse.json({ error: t('لا يمكن مراسلة هذا الطالب') }, { status: 403 });
   }
 
   const [a, b] = pair(me.id, person);
@@ -84,6 +89,9 @@ export async function PUT(request) {
   const { data: room } = await db.from('chats').select('a, b').eq('id', chat).maybeSingle();
   if (!room || (room.a !== me.id && room.b !== me.id)) {
     return NextResponse.json({ error: t('ليست محادثتك') }, { status: 403 });
+  }
+  if (await blockedBetween(room.a, room.b)) {
+    return NextResponse.json({ error: t('لا يمكن مراسلة هذا الطالب') }, { status: 403 });
   }
 
   const { data, error } = await db.from('chat_messages')

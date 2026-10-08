@@ -10,7 +10,7 @@ const TABS = [
   { id: 'dismissed', label: 'رُفض البلاغ' },
 ];
 
-const WHAT = { post: 'منشور', comment: 'ردّ', note: 'ملخص', profile: 'حساب', room: 'غرفة' };
+const WHAT = { post: 'منشور', comment: 'ردّ', note: 'ملخص', profile: 'حساب', room: 'غرفة', message: 'محادثة خاصة' };
 const who = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 
 export default function ReportQueue({ reports, state, counts, canAct }) {
@@ -20,6 +20,7 @@ export default function ReportQueue({ reports, state, counts, canAct }) {
   const [error, setError] = useState('');
 
   const act = async (id, action) => {
+    if (action === 'suspend' && !window.confirm('يعود الحساب إلى شاشة الانتظار ولا يرى شيئًا حتى تعيد قبوله من الأعضاء. أوقفه؟')) return;
     setBusy(id); setError('');
     const res = await fetch('/api/report', {
       method: 'PATCH',
@@ -65,8 +66,14 @@ export default function ReportQueue({ reports, state, counts, canAct }) {
               {r.target ? (
                 <div className="rep-body">
                   <b>{who(r.target.author)}</b>
-                  <p>{r.target.body || '—'}</p>
+                  {r.target.title && <p>الغرفة: <span dir="auto">{r.target.title}</span></p>}
+                  {/* A chat or a room: the copy the report carries, line by
+                      line, each with its time. */}
+                  <p dir="auto" style={{ whiteSpace: 'pre-wrap' }}>
+                    {r.target.body || (r.target.person ? 'بلاغ عن الحساب نفسه، دون نص مرفق.' : '—')}
+                  </p>
                   {r.target.removed && <span className="pill grey">مخفي بالفعل</span>}
+                  {r.target.author?.status === 'refused' && <span className="pill grey">الحساب موقوف</span>}
                 </div>
               ) : (
                 <div className="rep-body"><p>المحتوى غير موجود — ربما حُذف.</p></div>
@@ -76,9 +83,16 @@ export default function ReportQueue({ reports, state, counts, canAct }) {
 
               {canAct && state === 'open' && (
                 <div className="usr-acts">
-                  <button className="btn g sm danger" onClick={() => act(r.id, 'remove')}>
-                    <Icon name="x" size={16} /> أخفِ المحتوى
-                  </button>
+                  {!r.target?.person && (
+                    <button className="btn g sm danger" onClick={() => act(r.id, 'remove')}>
+                      <Icon name="x" size={16} /> أخفِ المحتوى
+                    </button>
+                  )}
+                  {r.target?.author?.role !== 'owner' && r.target?.author?.role !== 'admin' && (
+                    <button className="btn g sm danger" onClick={() => act(r.id, 'suspend')}>
+                      أوقف الحساب
+                    </button>
+                  )}
                   <button className="btn g sm" onClick={() => act(r.id, 'dismiss')}>
                     لا مشكلة فيه
                   </button>

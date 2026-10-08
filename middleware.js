@@ -81,8 +81,9 @@ export async function middleware(request) {
   //
   // `/download` is where the APK is handed out, to people with no account yet.
   //
-  // `/privacy` and `/delete-account` are read by the app stores' reviewers and
-  // by anybody deciding whether to sign up, so they cannot sit behind a sign-in.
+  // `/privacy`, `/terms`, `/support` and `/delete-account` are read by the app
+  // stores' reviewers and by anybody deciding whether to sign up, so they
+  // cannot sit behind a sign-in.
   //
   // `/feedback` is the pre-launch page: it is opened from a WhatsApp message
   // by students who have no account at all, which is the entire point of it.
@@ -90,6 +91,7 @@ export async function middleware(request) {
   // allowed to say whether they want the thing.
   const open = path === '/waiting' || path === '/feedback'
     || path === '/privacy' || path === '/delete-account' || path === '/download'
+    || path === '/terms' || path === '/support'
     || path.startsWith('/login') || path.startsWith('/auth')
     || path.startsWith('/admin') || path.startsWith('/api/');
   if (open) return response;

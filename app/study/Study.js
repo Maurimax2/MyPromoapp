@@ -157,7 +157,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         {inPromo.length === 0 && (
           <div className="st-empty">
             <span><Icon name="book" size={28} /></span>
-            <b>{t('{name} — قريبًا', { name: chosen?.name })}</b>
+            <b>{t('{name} — لا مواد بعد', { name: chosen?.name })}</b>
             <s>{t(
               'لم تُفهرس مواد هذه السنة بعد. تُضاف من لوحة التحكم، وتظهر هنا فور إضافتها.'
             )}</s>

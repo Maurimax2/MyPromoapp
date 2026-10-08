@@ -13,6 +13,7 @@ import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername } from '@/lib/identity';
 import { rowBetween } from '@/lib/friends';
 import { notify } from '@/lib/notify';
+import { blockedBetween } from '@/lib/blocks';
 import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
@@ -53,6 +54,11 @@ export async function POST(request) {
   const t = await getT();
   const { me, them, error } = await guard(request);
   if (error) return error;
+  // A block, by either of you, reads like nobody being there — the person
+  // blocked must not be able to find out by asking.
+  if (await blockedBetween(me.id, them.id)) {
+    return NextResponse.json({ error: t('لا أحد بهذا الاسم في دفعتك') }, { status: 404 });
+  }
 
   const db = supabaseAdmin();
   const row = await rowBetween(me.id, them.id);

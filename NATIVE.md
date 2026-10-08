@@ -128,29 +128,34 @@ id the Firebase project (`mypromo-f3b04`) knows.
   installed and synced. Nothing else: the first build that runs on a phone
   asks for permission when the student taps «فعّل الإشعارات», registers, and
   hands its token to `/api/me/push`.
-- **iOS.** Two things, both on the Mac and the Apple account:
-  1. Apple Developer → Keys → create a key with **Apple Push Notifications
-     service (APNs)**, download the `.p8`. In Firebase → Project settings →
-     Cloud Messaging → Apple app configuration, upload it with its Key ID and
-     your Team ID. Add an iOS app in Firebase with bundle id
-     `com.mypromo.app` and put its `GoogleService-Info.plist` in
-     `ios/App/App/`.
-  2. Capacitor's plugin hands back an **APNs** token on iOS, not an FCM one,
-     and the server sends through FCM. Add the `FirebaseMessaging` pod and
-     the few lines in `AppDelegate.swift` from the plugin's README («Using
-     Firebase Messaging on iOS») so the token is FCM's. Then enable **Push
-     Notifications** and **Background Modes → Remote notifications** under
-     Signing & Capabilities.
-- **The server** sends with `FIREBASE_SERVICE_ACCOUNT` (see SETUP.md). Until
-  it is set, nothing is sent and nothing breaks.
+- **iOS.** Apple's own service, straight from the server (`lib/apns.js`) —
+  no Firebase on the phone, no `GoogleService-Info.plist`, no pod. The
+  plugin hands back Apple's token on iOS and the server sends to Apple with
+  it. What it needs:
+  1. `AppDelegate.swift` passes the token to the plugin (done — the two
+     `didRegisterForRemoteNotifications…` functions).
+  2. `App.entitlements` carries `aps-environment` (done) and the App ID
+     `com.mypromo.app` has **Push Notifications** ticked in the developer
+     account (Codemagic step 3 in `codemagic.yaml`).
+  3. The APNs key on Vercel — `APNS_KEY`, `APNS_KEY_ID`, `APNS_TEAM_ID`
+     (SETUP.md, «…and three more for the iPhone app»).
+- **The server** sends to Android with `FIREBASE_SERVICE_ACCOUNT` and to
+  iPhones with the APNs key (see SETUP.md). Until each is set, nothing is sent
+  to that platform and nothing breaks.
 
-## What is still missing before either store
+## Before either store
 
-- **Store assets.** Icon at 1024×1024 (in `design/brand-olive/logo/`),
-  feature graphic 1024×500, and phone screenshots. The shooter makes real
-  ones: `node scripts/shoot-olive-app.mjs`.
-- **A privacy policy at a public URL.** Both stores require one before
-  review. It has to say what is collected (email, name, matricule, what is
-  posted) and that it lives in Supabase.
-- **An account deletion route.** Google Play requires that a student can
-  delete their account from inside the app, and a web link to do it.
+Everything a reviewer looks for, and where it is:
+
+- **Privacy policy** `/privacy`, **terms of use** `/terms`, **support**
+  `/support`, **account deletion** `/delete-account` — public, Arabic and
+  French, linked from the sign-in screen and from أنا.
+- **Delete the account inside the app**: أنا ← حذف حسابي.
+- **Report and block** wherever students write: posts, replies, answers,
+  résumés, chats, profiles, rooms (`components/Flag.js`). Reports land in
+  اللوحة ← البلاغات, where a moderator hides the content or suspends the
+  account. Blocking needs `supabase/blocks.sql`.
+- **iPhone only.** `TARGETED_DEVICE_FAMILY = 1`: no iPad screenshots to
+  make, and no iPad layout for the reviewer to judge.
+- The listing texts, review notes, privacy answers and screenshots are in
+  `store/` (start with `store/README.md`).

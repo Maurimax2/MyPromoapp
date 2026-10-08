@@ -531,3 +531,20 @@ missing from both sources, and is not faked:
   drawing with the mark 12 px low in 512. iOS fills transparency with black, so
   never ship one with an alpha channel. A phone that already added the site
   keeps the old picture until the icon is removed and added again.
+
+## الإبلاغ والحظر
+
+- **Anything one student writes that another reads carries the «⋯» of
+  `components/Flag.js`**: report it, block its author. Posts, replies,
+  answers, résumés, chats, profiles and rooms have it; the next thing students
+  can write gets it in the same change. Both stores require the pair (Apple
+  1.2), and the reviewer looks.
+- **A block hides both ways and is never announced.** Reads are kept apart by
+  the restrictive policies in `supabase/blocks.sql`; anything the server
+  writes with its own key — a chat message, a friend request, a duel, a
+  notification — asks `lib/blocks.js` first. A blocked person who asks gets the
+  same answer as asking about nobody.
+- **A moderator never reads a private chat.** Reporting one copies the other
+  person's last messages into the report, and that copy is what is judged.
+- Acting on a report about a person suspends the account (`refused`), which
+  `/waiting` never lets back in by itself; it is undone from الأعضاء.

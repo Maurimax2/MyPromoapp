@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import Sheet from './Sheet';
 import Icon from './Icon';
+import Flag from './Flag';
 import { useT } from '@/components/Lang';
 import { ago } from '@/lib/i18n';
 
@@ -17,6 +18,9 @@ const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
 const initials = (p) =>
   (p?.full_name || p?.email || '؟').trim().slice(0, 2);
+const nameOf = (p) => p?.full_name || p?.email?.split('@')[0] || '';
+// Who to block from a post or a reply — nobody, when it is your own.
+const whom = (p, me) => (p?.id && p.id !== me ? { id: p.id, name: nameOf(p) } : null);
 
 export default function Post({ post, me }) {
   const t = useT();
@@ -26,17 +30,7 @@ export default function Post({ post, me }) {
   const [replies, setReplies] = useState(null);
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
-  const [flagged, setFlagged] = useState(false);
   const [menu, setMenu] = useState(false);
-
-  const report = async () => {
-    setMenu(false); setFlagged(true);
-    await fetch('/api/report', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ type: 'post', id: post.id }),
-    });
-  };
 
   const remove = async () => {
     setMenu(false);
@@ -114,9 +108,13 @@ export default function Post({ post, me }) {
             app carrying what students write, and a promo needs it the first
             time somebody posts something they should not have. */}
         <div className="post-more">
-          <button onClick={() => setMenu((m) => !m)} aria-label={t('خيارات')}>
-            <Icon name="dots" size={18} />
-          </button>
+          {post.author?.id === me.id ? (
+            <button onClick={() => setMenu((m) => !m)} aria-label={t('خيارات')}>
+              <Icon name="dots" size={18} />
+            </button>
+          ) : (
+            <Flag type="post" id={post.id} person={whom(post.author, me.id)} />
+          )}
         </div>
 
         {/* A sheet, not a popover under the dots.
@@ -129,11 +127,7 @@ export default function Post({ post, me }) {
             what gives the tap-to-dismiss somewhere to land. */}
         {menu && (
           <Sheet onClose={() => setMenu(false)}>
-            {post.author?.id === me.id
-              ? <button className="sheet-act warn" onClick={remove}>{t('احذف منشوري')}</button>
-              : <button className="sheet-act" onClick={report} disabled={flagged}>
-                  {flagged ? t('أُبلغ عنه') : t('أبلغ عن المنشور')}
-                </button>}
+            <button className="sheet-act warn" onClick={remove}>{t('احذف منشوري')}</button>
             <button className="sheet-act quiet" onClick={() => setMenu(false)}>{t('إلغاء')}</button>
           </Sheet>
         )}
@@ -185,6 +179,9 @@ export default function Post({ post, me }) {
                 <b>{c.author?.full_name || c.author?.email?.split('@')[0] || t('طالب')}</b>
                 <div dir="auto">{c.body}</div>
               </div>
+              {whom(c.author, me.id) && (
+                <Flag type="comment" id={c.id} person={whom(c.author, me.id)} className="reply-more" size={16} />
+              )}
             </div>
           ))}
           {replies?.length === 0 && <div className="replies-wait">{t('لا ردود بعد.')}</div>}

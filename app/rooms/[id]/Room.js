@@ -28,6 +28,7 @@ import {
 } from '@livekit/components-react';
 import { Track, RoomEvent, ConnectionState } from 'livekit-client';
 import Icon from '@/components/Icon';
+import Flag from '@/components/Flag';
 import Sheet from '@/components/Sheet';
 import { PING } from '@/lib/rooms';
 import { useT } from '@/components/Lang';
@@ -387,6 +388,13 @@ export default function Room({ room, subject, people, here, first, regions, me }
         {room.closed
           ? <span className="rm-live shut">{t('أُغلقت')}</span>
           : <span className="rm-live"><i />{t('مباشر · {length}', { length: sitting.length })}</span>}
+        {/* A room is reported with the last things said in it; its host can
+            be blocked from here like anybody else. */}
+        {!me.host && (
+          <Flag type="room" id={room.id} className="rm-back"
+            person={hostId && hostId !== me.id ? { id: hostId, name: name(room.host) } : null}
+            onBlocked={() => window.location.assign('/rooms')} />
+        )}
       </div>
 
       {/* The way a friend comes in. Only people already in the room hold the
