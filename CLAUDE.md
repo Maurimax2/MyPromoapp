@@ -274,18 +274,22 @@ necessity, not a preference.
   enough to mix one day; not mixed yet, so no model draws from both.
 - **A model belongs to the lecture it explains.** It opens from the subject
   and nowhere else. That is why نماذج 3D came off الرئيسية.
-- **A model is a named handful of structures, never the whole atlas.** The
-  complete body is 33 MB of geometry; the skull is 1.3 MB, which is less than
-  the lecture it goes with. A student opening the skull pays for the skull.
+- **A regional model is a named handful of structures, never the whole atlas.**
+  The skull is 1.3 MB, which is less than the lecture it goes with. A student
+  opening the skull pays for the skull. The whole body exists too, as its own
+  screen (Le corps entier, below), one file per system, each fetched only when
+  it is switched on.
 - **Every structure is named in French, by hand, in `lib/anatomy/bundles.js`.**
   The source names are English. Listing them one by one is also what keeps a
   bundle honest: a region cut by coordinates quietly includes whatever else
   sat in the same box — their `skull` holds the corneas and the lacrimal
   glands.
-- **Nothing in a model is ever made see-through.** Ghosting the rest of the
-  skull to point at one bone turns the whole thing into an X-ray, and an X-ray
-  of twenty-two overlapping bones is a picture of none of them. The bone you
-  touched takes its colour; the others stay bone.
+- **Nothing in a regional model is ever made see-through.** Ghosting the rest
+  of the skull to point at one bone turns the whole thing into an X-ray, and
+  an X-ray of twenty-two overlapping bones is a picture of none of them. The
+  bone you touched takes its colour; the others stay bone. (Le corps entier is
+  the exception, on the owner's word: there the student sets each system's
+  transparency, and nothing is ever ghosted automatically around a pick.)
 - **Muscles are coloured by the group they are taught in**, not one colour
   each. Twenty-six colours tell a student nothing, and « les muscles
   sous-hyoïdiens » is how the question is asked. A bundle names its groups in
@@ -412,9 +416,9 @@ Q&A, discussion, chat, study rooms, per-subject icons, badges students earn.
 The models now cover every region of the curriculum map. What is genuinely
 missing from both sources, and is not faked:
 
-- **Female anatomy.** BodyParts3D and Z-Anatomy are both a male reference
-  body. The uro-genital model says so on its face rather than presenting a
-  male pelvis as the pelvis.
+- **Female anatomy** is not in BodyParts3D or Z-Anatomy, both a male
+  reference body; the uro-genital model says so on its face. It now has its own
+  screen, Le bassin féminin, from the Human Reference Atlas (below).
 - **The ileum, the caecum and the rectum** are not separate meshes in
   Z-Anatomy: the gut it holds runs duodenum, jejunum, then the colon. The
   descriptions name what is absent instead of relabelling a neighbour.
@@ -548,3 +552,41 @@ missing from both sources, and is not faked:
   person's last messages into the report, and that copy is what is judged.
 - Acting on a report about a person suspends the account (`refused`), which
   `/waiting` never lets back in by itself; it is undone from الأعضاء.
+
+## Le corps entier (/anatomie/corps) and Le bassin féminin (/anatomie/feminin)
+
+- **The whole body, to dissect.** Eleven systems (peau, fascias, muscles,
+  artères, veines, nerfs, lymphe, viscères, encéphale et moelle, articulations,
+  squelette), about 2,800 structures with both sides, cut from Z-Anatomy by
+  `scripts/carve-body.mjs` into `public/anatomy/body/<system>.glb` — simplified
+  and meshopt-compressed by gltfpack, decoded by three's own MeshoptDecoder.
+  The skeleton (1.1 MB) opens the screen; every other system is fetched the
+  first time it is switched on. All eleven are about 8.5 MB.
+- **Each system has its own transparency.** A see-through system is blended as
+  one surface (a depth-only twin per mesh draws first), inside to outside, so
+  muscles at 20 % really are 20 % and the nerves under them read clearly. A tap
+  goes through a system under 50 % to what is behind it.
+- **Thin structures are helped.** A tap that misses tries a ring of rays
+  around the finger and takes the nearest nerve or vessel. «Suivre son trajet»
+  draws a nerve or vessel above everything, so its whole course reads at once.
+- **Names**: the regional bundles' names first (checked against a lecture),
+  then `lib/anatomy/body-names.js` (written by hand), then the titles of
+  Z-Anatomy's French definitions. The carve stops on any structure without a
+  French name. The side is said as «— côté droit», which agrees with no noun.
+- **Descriptions**: `notes.js` where a regional model wrote one, then
+  `lib/anatomy/body-notes.js` (the limb nerves, written here), then Z-Anatomy's
+  French definitions (Wikipédia, CC BY-SA, credited on screen).
+- **Quiz 3D** on both screens: «Où est-ce ?» (touch it — either side counts)
+  or «Son nom ?» (the structure glows, four names from the same system and
+  tissue). Ten questions per round; a finished round counts as a study day.
+- **Le bassin féminin** is a separate body and never drawn inside the male
+  one: uterus and adnexa, bladder, female pelvis, breast, full-term placenta,
+  from the Human Reference Atlas (HuBMAP, **CC BY 4.0**, after the Visible
+  Human Female), by `scripts/carve-feminin.mjs`.
+- To re-carve: the nine Z-Anatomy FBX files go in `../zanat/Resources/Models/FBX`
+  and its 1,000 `Resources/Descriptions/French definitions` in `../zanat/fr-defs`
+  (both from github.com/LluisV/Z-Anatomy, branch PC-Version); the HRA files are
+  fetched and cached in `../hra` by the script itself.
+- **الرئيسية's «موادك» is always the student's own year.** It used to follow
+  the year being browsed (the cookie الدراسة sets), so one peek at another year
+  left that year's subjects on the home screen.

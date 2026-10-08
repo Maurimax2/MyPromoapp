@@ -131,6 +131,25 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         </Link>
         )}
 
+        {/* The whole body to dissect, and the questions asked on it. The
+            regional models above are a lecture's; this is every system at once. */}
+        {anatomy[promo] && (
+          <div className="st-body r3">
+            <Link href="/anatomie/corps" className="st-body-card">
+              <span className="st-body-ic"><Icon name="person" size={20} /></span>
+              <span><b dir="ltr">Le corps entier</b><s>{t('كل الأجهزة، شرّحها طبقة بطبقة')}</s></span>
+            </Link>
+            <Link href="/anatomie/corps?quiz=1" className="st-body-card">
+              <span className="st-body-ic"><Icon name="quiz" size={20} /></span>
+              <span><b dir="ltr">Quiz 3D</b><s>{t('المس البنية أو سمّها')}</s></span>
+            </Link>
+            <Link href="/anatomie/feminin" className="st-body-card st-body-wide">
+              <span className="st-body-ic"><Icon name="heart" size={20} /></span>
+              <span><b dir="ltr">Le bassin féminin</b><s>{t('الرحم وملحقاته، المثانة، الحوض، الثدي والمشيمة')}</s></span>
+            </Link>
+          </div>
+        )}
+
         {/* ---------- every subject ---------- */}
         <div className="st-head r4">
           <b>{t('المواد ·')}{' '}<span dir="ltr">{chosen?.name}</span></b>

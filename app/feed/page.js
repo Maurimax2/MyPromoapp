@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { subjectsOf, subjectRail, promosOf, moduleCounts } from '@/lib/catalogue';
-import { browsingPromo } from '@/lib/promo';
 import { stage } from '@/lib/duel';
 import { urlFor } from '@/lib/storage';
 import Home from './Home';
@@ -44,9 +43,8 @@ export default async function Feed() {
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
-  // Two different things, and conflating them is what makes a student post
-  // into a year they are not in: `promo` is who they are and whose feed this
-  // is; `reading` is the year whose subjects they are looking at.
+  // `promo` is who the student is: whose feed this is, whose subjects «موادك»
+  // shows, and the year they post into. Other years are browsed from الدراسة.
   //
   // No year at all is a third thing, and falling back to 'pcem2' here was a
   // lie the policies do not tell: the query asked for PCEM2's posts while
@@ -63,9 +61,6 @@ export default async function Feed() {
   const promo = profile.promo || 'pcem2';
   const sb = await supabaseServer();
   const admin = supabaseAdmin();
-  // The year being read is a cookie, checked against the list of years once
-  // that arrives. The rail starts on the cookie's word meanwhile.
-  const guess = await browsingPromo(profile, null);
 
   // The planning's next few sessions: everything from today on, enough to
   // say what is live, what is next, and why an empty day is empty.
@@ -90,7 +85,7 @@ export default async function Feed() {
     { data: mates },
     subjectRows,
     { counts },
-    guessedRail,
+    rail,
     upcoming,
     habit,
   ] = await Promise.all([
@@ -144,7 +139,10 @@ export default async function Feed() {
       .limit(24),
     subjectsP,
     moduleCounts(),
-    subjectRail(guess),
+    // موادك is the student's own year, always. It used to follow the year
+    // being browsed (the cookie الدراسة sets), so a peek at PCEM1 left
+    // PCEM1's subjects on the home screen under «موادك» for good.
+    subjectRail(promo),
     // What the faculty's planning has next for my year, with a way to revise
     // each — read beside everything else, so it costs no wait of its own.
     upcomingP,
@@ -152,10 +150,6 @@ export default async function Feed() {
     streaksOf([profile.id]),
   ]);
 
-  const reading = await browsingPromo(profile, years.promos);
-  // Every subject of the year being read, one tile each rather than one per
-  // semester — read again only if the cookie named a year that does not exist.
-  const rail = reading === guess ? guessedRail : await subjectRail(reading);
 
   const liked = new Set((mine || []).map((l) => l.post));
 
@@ -253,7 +247,6 @@ export default async function Feed() {
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
       promos={years.promos}
-      reading={reading}
       mySubjects={subjectRows.map((m) => ({ id: m.id, name: m.name }))}
       posts={posts}
       subjects={subjects}

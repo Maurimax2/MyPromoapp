@@ -16,7 +16,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Post from '@/components/Post';
-import PromoSelector from '@/components/PromoSelector';
 import Sheet from '@/components/Sheet';
 import PickPromo from './PickPromo';
 import { imageThumb, pdfThumb } from '@/lib/thumb';
@@ -258,7 +257,7 @@ function Continue({ review, resume }) {
 }
 
 export default function Home({ me, posts, subjects, mySubjects = [],
-                               promos = [], reading, unseen = 0,
+                               promos = [], unseen = 0,
                                studying = [], rooms = [], duels = [], rivals = [],
                                readError = null, refused = 0,
                                next = null, term = null, now = 0, habitDays = null }) {
@@ -368,7 +367,13 @@ export default function Home({ me, posts, subjects, mySubjects = [],
             {streak > 0 && (
               <span className="h-streak"><Flame streak={streak} size={14} /> <b>{daysWord(t, streak)}</b>{' '}{t('متتالية ·')}</span>
             )}
-            <PromoSelector promos={promos} current={reading} mine={me.promo} />
+            {/* Your year, as a fact rather than a menu: the home screen is
+                yours. Other years' material is browsed from الدراسة. */}
+            {me.promo && (
+              <span className="yr-tag" dir="ltr">
+                {promos.find((p) => p.id === me.promo)?.name || me.promo.toUpperCase()}
+              </span>
+            )}
           </span>
         </span>
         <Link href="/notifications" className="h-bell"
@@ -478,8 +483,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
               aria-label={t('المادة')}
             >
               <option value="">{t('بلا مادة')}</option>
-              {/* Your own year's subjects, never the rail's: the rail can be
-                  showing another year, and the post is going into yours. */}
+              {/* Your own year's subjects: the post is going into your year. */}
               {mySubjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
             </select>
           )}
