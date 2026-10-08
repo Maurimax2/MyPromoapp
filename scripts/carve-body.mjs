@@ -51,6 +51,9 @@ const CM = 0.01;
 const RATIO = {
   peau: 0.6, fascias: 0.14, muscles: 0.14, arteres: 0.22, veines: 0.22, nerfs: 0.2,
   lymphe: 0.5, organes: 0.25, snc: 0.16, articulations: 0.3, squelette: 0.35,
+  // The attachment areas are thin patches lying on the bone; their outline is
+  // what matters, and a patch keeps its outline at a fifth of its triangles.
+  insertions: 0.15,
 };
 
 const FILES = [
@@ -260,6 +263,13 @@ mkdirSync(TMP, { recursive: true });
 const systems = new Map(LAYERS.map((l) => [l.id, []]));
 const missing = new Map();
 let skipped = 0;
+// Where each muscle holds on to a bone. Z-Anatomy draws these as patches on
+// the bone's surface, in the skeleton's own file, named after the muscle:
+// «Masseter.or» is the masseter's origin on the right, «.e1l» the first
+// piece of its insertion on the left. They are what «les insertions» means
+// in an exam question, so they are a system of their own.
+const attachments = [];
+const bones = [];
 
 for (const file of FILES) {
   const all = meshesOf(join(FBX, `${file}.fbx`));
@@ -274,18 +284,31 @@ for (const file of FILES) {
 
   for (const [name, mesh] of all) {
     if (mesh.indices.length / 3 <= 12) continue;                  // a label's anchor
-    if (/\.(j|i)\d*$/.test(name) || /\.(o|e)\d*[lr]$/.test(name)) continue;
+    if (/\.(j|i)\d*$/.test(name)) continue;
+    const att = name.match(/^(.*?)\.(o|e)(\d*)([lr])$/);
+    if (att) {
+      if (file === 'SkeletalSystem100' && (!only || only === 'insertions')) {
+        attachments.push({ b: base(att[1]), kind: att[2], part: att[3], side: att[4], mesh });
+      }
+      continue;
+    }
     const m = name.match(/^(.*?)\.([lr])$/);
     const b = base(m ? m[1] : name);
     const side = m ? m[2] : null;
     if (LEAVE_OUT.some((re) => re.test(b))) { skipped++; continue; }
     const system = systemOf(file, b);
-    if (only && system !== only) continue;
+    // The bones are always read: the other systems are placed against them.
+    if (only && system !== only && system !== 'squelette') continue;
     const fr = french(b);
     if (!fr) { missing.set(b, file); continue; }
 
     const metres = new Float32Array(mesh.positions.length);
     for (let i = 0; i < metres.length; i++) metres[i] = mesh.positions[i] * CM;
+    if (system === 'squelette') {
+      bones.push({ b, n: fr, positions: metres });
+      if (side && !sides.get(b).has(side === 'l' ? 'r' : 'l')) bones.push({ b, n: fr, positions: mirror(metres, mesh.indices).positions });
+      if (only && only !== 'squelette') continue;
+    }
     const list = [[side, { positions: metres, indices: mesh.indices }]];
     // A one-sided structure gets its other side, flipped.
     if (side && !sides.get(b).has(side === 'l' ? 'r' : 'l')) {
@@ -296,6 +319,27 @@ for (const file of FILES) {
     }
   }
   console.log(`${file.padEnd(26)} read`);
+}
+
+// The attachments, named after their muscle: «Masséter — origine».
+const ATTACH = { o: 'origine', e: 'terminaison' };
+if (systems.has('insertions') && (!only || only === 'insertions')) {
+  const have = new Set(attachments.map((a) => `${a.b}|${a.kind}|${a.part}|${a.side}`));
+  for (const a of attachments) {
+    if (LEAVE_OUT.some((re) => re.test(a.b))) { skipped++; continue; }
+    const fr = french(a.b);
+    if (!fr) { missing.set(a.b, 'attachments'); continue; }
+    const metres = new Float32Array(a.mesh.positions.length);
+    for (let i = 0; i < metres.length; i++) metres[i] = a.mesh.positions[i] * CM;
+    const list = [[a.side, { positions: metres, indices: a.mesh.indices }]];
+    const other = a.side === 'l' ? 'r' : 'l';
+    if (!have.has(`${a.b}|${a.kind}|${a.part}|${other}`)) list.push([other, mirror(metres, a.mesh.indices)]);
+    for (const [s, g] of list) {
+      systems.get('insertions').push({
+        b: a.b, n: `${fr} — ${ATTACH[a.kind]}`, s, k: a.kind === 'o' ? 'origin' : 'insertion', m: fr, ...g,
+      });
+    }
+  }
 }
 
 if (missing.size) {
@@ -340,11 +384,22 @@ if (skeleton) {
   for (const k of Object.keys(regions)) regions[k] = regions[k].map((v) => v.map((x) => Math.round(x * 1000) / 1000));
 }
 
+// For what holds on to no bone — the viscera, the brain, the vessels. The
+// trunk is asked first: an arm's box, hanging, covers half the trunk, and the
+// liver came out as part of the upper limb. The thorax stops at the dome of
+// the diaphragm, not at the lowest rib, or the liver and the stomach are
+// thoracic.
+const DOME = 1.21;
 const regionOf = (box) => {
   const c = [0, 1, 2].map((k) => (box[0][k] + box[1][k]) / 2);
   const inside = (r) => r && c.every((v, k) => v >= r[0][k] - 0.01 && v <= r[1][k] + 0.01);
-  for (const id of ['tete', 'cou', 'membre-sup', 'membre-inf', 'thorax', 'abdomen', 'bassin']) {
-    const r = regions[id];
+  const trunk = {
+    ...regions,
+    thorax: regions.thorax && [[regions.thorax[0][0], DOME, regions.thorax[0][2]], regions.thorax[1]],
+    abdomen: regions.abdomen && [regions.abdomen[0], [regions.abdomen[1][0], DOME, regions.abdomen[1][2]]],
+  };
+  for (const id of ['tete', 'cou', 'thorax', 'abdomen', 'bassin', 'membre-sup', 'membre-inf']) {
+    const r = trunk[id];
     if (!r) continue;
     // A limb box is one side; the other side's structure belongs there too.
     const mirrored = [[-r[1][0], r[0][1], r[0][2]], [-r[0][0], r[1][1], r[1][2]]];
@@ -352,6 +407,39 @@ const regionOf = (box) => {
   }
   return null;
 };
+
+// Which bone a structure lies against. A box per region put the hip's
+// ligaments in the upper limb — a hanging arm reaches below the hip joint —
+// so what holds on to a bone takes the region of the bone it holds on to.
+const boneRegion = (b) => {
+  for (const [region, re] of Object.entries(REGION_BONES)) if (re.test(b)) return region;
+  return null;
+};
+const boneIndex = bones.map((x) => {
+  const step = Math.max(1, Math.floor(x.positions.length / 3 / 800));
+  const pts = [];
+  for (let i = 0; i < x.positions.length; i += 3 * step) pts.push(x.positions[i], x.positions[i + 1], x.positions[i + 2]);
+  return { n: x.n, box: boxOf(x.positions), pts, region: boneRegion(x.b) };
+});
+const centroid = (p) => {
+  const c = [0, 0, 0];
+  for (let i = 0; i < p.length; i += 3) { c[0] += p[i]; c[1] += p[i + 1]; c[2] += p[i + 2]; }
+  return c.map((v) => v / (p.length / 3));
+};
+function nearestBone(positions, reach) {
+  const c = centroid(positions);
+  let best = null, bestD = reach * reach;
+  for (const bn of boneIndex) {
+    const [lo, hi] = bn.box;
+    if (c.some((v, k) => v < lo[k] - reach || v > hi[k] + reach)) continue;
+    for (let i = 0; i < bn.pts.length; i += 3) {
+      const d = (bn.pts[i] - c[0]) ** 2 + (bn.pts[i + 1] - c[1]) ** 2 + (bn.pts[i + 2] - c[2]) ** 2;
+      if (d < bestD) { bestD = d; best = bn; }
+    }
+  }
+  return best;
+}
+const ON_BONE = { insertions: 0.03, articulations: 0.04, muscles: 0.06, fascias: 0.06 };
 
 const index = existsSync(join(OUT, 'index.json')) ? JSON.parse(readFileSync(join(OUT, 'index.json'), 'utf8')) : { layers: {} };
 if (skeleton) index.regions = regions;
@@ -369,11 +457,24 @@ for (const [system, items] of systems) {
     // floats unless told otherwise, and gltfpack quantizes them itself.
     const normals = Float32Array.from(normalsOf(item.positions, item.indices), (v) => v / 32767);
     meshes.push({ id, positions: item.positions, normals, indices: item.indices });
-    const r = regionOf(boxOf(item.positions));
-    manifest.push({ id, n: item.n, s: item.s, k: item.k, b: item.b, ...(r ? { r } : {}) });
+    let r = null, on = null;
+    if (system === 'squelette') r = boneRegion(item.b);
+    else if (ON_BONE[system]) {
+      const bn = nearestBone(item.positions, ON_BONE[system]);
+      if (bn) { r = bn.region; on = bn.n; }
+    }
+    r = r || regionOf(boxOf(item.positions));
+    // Where it is, to the millimetre: a lesson keeps what lies in its part of
+    // the body, and can tell before a single file of geometry has arrived.
+    const c = centroid(item.positions).map((v) => Math.round(v * 1000) / 1000);
+    manifest.push({
+      id, n: item.n, s: item.s, k: item.k, b: item.b, ...(r ? { r } : {}), c,
+      // An attachment says whose it is and which bone it is on.
+      ...(item.m ? { m: item.m } : {}), ...(system === 'insertions' && on ? { o: on } : {}),
+    });
 
     if (!described[item.b]) {
-      const note = notes.get(item.n) || BODY_NOTES[item.n];
+      const note = notes.get(item.n) || BODY_NOTES[item.n] || (item.m && (notes.get(item.m) || BODY_NOTES[item.m]));
       const def = defs.get(plainKey(item.b));
       if (note || def) {
         described[item.b] = {

@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 import { sectionsFor, subjectName } from '@/lib/data';
 import { moduleOf, semestersOf } from '@/lib/catalogue';
-import { regionsFor } from '@/lib/anatomy/curriculum';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { atlasOf } from '@/lib/anatomy/lessons';
 import { banksOf } from '@/lib/quiz-bank';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
@@ -12,6 +14,16 @@ import { getT } from '@/lib/lang';
 // Not prerendered any more: what a subject holds is a question for the
 // database, and the answer depends on who is asking.
 export const dynamic = 'force-dynamic';
+
+// The pictures of the lessons, rendered from the lessons themselves
+// (scripts/lesson-thumbs.mjs). A lesson without one wears its region's art.
+let thumbs = null;
+const thumbOf = (l) => {
+  if (!thumbs) {
+    try { thumbs = new Set(readdirSync(join(process.cwd(), 'public/anatomy/thumbs'))); } catch { thumbs = new Set(); }
+  }
+  return thumbs.has(`${l.id}.webp`) ? `/anatomy/thumbs/${l.id}.webp` : regionArt({ id: l.region || l.id, title: l.title });
+};
 
 // The two models rendered large enough to stand as a hero; the rest are drawn
 // at their card size, which a 2× screen still shows sharp at this height.
@@ -24,9 +36,10 @@ const doc = (d) => ({
 
 // One subject: its model, and everything it has — lectures, papers, what
 // classmates wrote, the regions of the body it covers — one tab each.
-export default async function Module({ params }) {
+export default async function Module({ params, searchParams }) {
   const t = await getT();
   const { id } = await params;
+  const q = (await searchParams) || {};
   const m = await moduleOf(id);
   if (!m) notFound();
 
@@ -49,11 +62,28 @@ export default async function Module({ params }) {
   const art = artOf(m.name);
   const img = BIG.has(art.art) ? `/art/${art.art}-big.webp` : art.img;
 
+  // Anatomy is studied with the body in front of you: the subject's «Atlas»
+  // tab is every lecture's 3D scene and drawings, chapter by chapter, and a
+  // lecture that has one carries a «3D» chip to it. Only ANATOMIE: ANATOMIE
+  // PATHOLOGIQUE is a different subject and does not match, and Biochimie
+  // once listed the skull.
+  const isAnatomy = /(^|-)anatomie(-s\d)?$/i.test(id);
+  const atlas = isAnatomy
+    ? atlasOf(m.promo, m.semester, m.chapters.flatMap((ch) => ch.lectures.map((l) => ({ n: l.n, fid: l.fid, title: l.title }))))
+      .map((c) => ({ title: c.title, lessons: c.lessons.map((l) => ({ ...l, img: thumbOf(l) })) }))
+    : [];
+  const lessonsOf = new Map();
+  for (const l of atlas.flatMap((c) => c.lessons)) {
+    for (const fid of l.fids) lessonsOf.set(fid, [...(lessonsOf.get(fid) || []), { href: l.href, title: l.title }]);
+  }
+
   const chapters = m.chapters.map((ch) => ({
     title: ch.title,
     subtitle: ch.subtitle || null,
     img: chapterArt(ch.title, art.img),
-    lectures: ch.lectures.map((l) => ({ ...doc(l), versions: (l.versions || []).map(doc) })),
+    lectures: ch.lectures.map((l) => ({
+      ...doc(l), versions: (l.versions || []).map(doc), lessons: lessonsOf.get(l.fid) || [],
+    })),
   }));
 
   // Travaux dirigés, past papers and the rest of what is read rather than
@@ -83,15 +113,6 @@ export default async function Module({ params }) {
     href: `/file/${it.fid}`, external: false, ext: it.ext || 'PDF', mb: it.mb,
   }));
 
-  // A model belongs to the lecture it explains (lib/anatomy/curriculum.js),
-  // so only Anatomie offers the body's regions. Every other subject of the
-  // same year and semester used to list them too — Biochimie showed the skull.
-  // ANATOMIE PATHOLOGIQUE is a different subject and does not match.
-  const isAnatomy = /(^|-)anatomie(-s\d)?$/i.test(id);
-  const regions = (isAnatomy ? regionsFor(m.promo, m.semester) : []).map((r) => ({
-    href: `/anatomie/${r.promo.toLowerCase()}/${r.semesterId}/${r.id}`,
-    title: r.title, subtitle: r.subtitle, img: regionArt(r),
-  }));
 
   return (
     <Subject
@@ -107,7 +128,8 @@ export default async function Module({ params }) {
       extra={extra}
       banks={banks.map((b) => ({ fid: b.fid, title: b.title, section: b.section || null, count: b.questions.length }))}
       notes={[...uploaded, ...fromDrive]}
-      regions={regions}
+      atlas={isAnatomy ? atlas : null}
+      tab={typeof q.tab === 'string' ? q.tab : null}
       empty={!!m.empty}
     />
   );

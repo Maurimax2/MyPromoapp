@@ -22,6 +22,7 @@ import { loadScene, boundsOf, frameOf, keyOf } from '@/lib/anatomy/scene';
 import { tissueOf, colourOf } from '@/lib/anatomy/tissue';
 import { tissueMaterial, axisOf, studio, qualityTier, setDetail } from '@/lib/anatomy/material';
 import { useT } from '@/components/Lang';
+import { Viewer as PlateViewer } from '@/components/Planches';
 
 // Sharp enough on a 3x screen without drawing nine pixels for every one shown.
 const MAX_DPR = { high: 1.75, lite: 1.5 };
@@ -54,6 +55,8 @@ export default function Model3D({
   // structure's name) and everyone else's model follows them (follow). A
   // name rather than an id, because it is what travels between phones.
   follow = undefined, onPicked = null,
+  // A lesson's drawings, opened over the model (lib/anatomy/lessons.js).
+  plates = [],
 }) {
   const t = useT();
   const host = useRef(null);
@@ -76,6 +79,8 @@ export default function Model3D({
   const [sub, setSub] = useState(null);        // which part of the bone
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [sheet, setSheet] = useState(false);   // the lesson's drawings
+  const [plateAt, setPlateAt] = useState(null);
 
   // Selection is read by the scene and written by both the canvas and the
   // list, so it lives in a ref as well — the render loop must not close over
@@ -823,7 +828,7 @@ export default function Model3D({
           <div className="m3d-acts" hidden={open}>
             <button className={`icobtn${plate ? ' on' : ''}`}
               onClick={() => setPlate((v) => !v)} aria-label={t('تلوين كل العظام')}>
-              <Icon name="palette" size={18} />
+              <Icon name="palette" size={20} /><s>{t('الألوان')}</s>
             </button>
             {/* Some of these are buried: the sphenoid and the vomer are behind
                 everything else, and picking one out of the list would change
@@ -837,7 +842,7 @@ export default function Model3D({
                 mode === 'context' ? 'focus' : mode === 'focus' ? 'isolate' : 'context')}
               aria-label={mode === 'context' ? t('المحيط القريب')
                 : mode === 'focus' ? t('إظهار المحدَّد وحده') : t('أظهِر المنطقة كاملة')}>
-              <Icon name="focus" size={18} />
+              <Icon name="focus" size={20} /><s>{mode === 'isolate' ? t('وحده') : mode === 'focus' ? t('ما حوله') : t('التركيز')}</s>
             </button>
             {/* Off to begin with. Thirty labelled points on the first open is
                 somebody else's diagram, not a skull. */}
@@ -845,17 +850,23 @@ export default function Model3D({
               <button className={`icobtn${pins ? ' on' : ''}`}
                 onClick={() => { setPins((v) => !v); setPin(null); }}
                 aria-label={t('أسماء المعالم')}>
-                <Icon name="pin" size={18} />
+                <Icon name="pin" size={20} /><s>{t('المعالم')}</s>
               </button>
             )}
             <button className={`icobtn${listing ? ' on' : ''}`}
-              onClick={() => setListing((v) => !v)} aria-label={t('القائمة')}>
-              <Icon name="list" size={18} />
+              onClick={() => { setListing((v) => !v); setSheet(false); }} aria-label={t('القائمة')}>
+              <Icon name="list" size={20} /><s>{t('القائمة')}</s>
             </button>
+            {plates.length > 0 && (
+              <button className={`icobtn${sheet ? ' on' : ''}`}
+                onClick={() => { setSheet((v) => !v); setListing(false); }} aria-label={t('اللوحات')}>
+                <Icon name="images" size={20} /><s>{t('اللوحات')}</s>
+              </button>
+            )}
             <button className="icobtn"
               onClick={() => { setMode('context'); setGone([]); api.current?.home(); }}
               aria-label={t('إعادة الضبط')}>
-              <Icon name="rotate" size={18} />
+              <Icon name="again" size={20} /><s>{t('إعادة')}</s>
             </button>
           </div>
 
@@ -989,6 +1000,29 @@ export default function Model3D({
             </div>
           )}
         </>
+      )}
+
+      {sheet && (
+        <div className="m3d-list m3d-plates">
+          <div className="m3d-head">{t('اللوحات')}</div>
+          <div className="bd-plates">
+            {plates.map((pl, i) => (
+              <button key={pl.id} onClick={() => setPlateAt(i)}>
+                <span><img src={`/planches/${pl.id}-t.webp`} alt="" loading="lazy" /></span>
+                <b dir="ltr">{pl.t}</b>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      {plateAt != null && plates[plateAt] && (
+        <PlateViewer
+          key={plates[plateAt].id}
+          plate={plates[plateAt]}
+          index={plateAt + 1} total={plates.length}
+          onClose={() => setPlateAt(null)}
+          onStep={(d) => setPlateAt((i) => (i + d + plates.length) % plates.length)}
+        />
       )}
 
       <div className="m3d-credit" dir="auto">{credit}</div>

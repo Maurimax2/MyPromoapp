@@ -27,6 +27,7 @@ const SMALL = 119.4;  // 2πr, r = 19
 
 // After «من» the dual takes its genitive: «1 من محاضرتين», never «محاضرتان».
 const ofLectures = (t, n) => plural(t, n, ['محاضرة واحدة', 'محاضرتين', 'محاضرات', 'محاضرة'], ['cours', 'cours']);
+const platesWord = (t, n) => plural(t, n, ['لوحة واحدة', 'لوحتان', 'لوحات', 'لوحة'], ['planche', 'planches']);
 
 function Lecture({ l, i, r }) {
   const t = useT();
@@ -46,6 +47,17 @@ function Lecture({ l, i, r }) {
         </span>
         <Icon name="chev" size={14} />
       </Link>
+      {/* The lecture's body in 3D, its drawings and its questions: one tap
+          from the lecture they explain. */}
+      {l.lessons?.length > 0 && (
+        <div className="sj-3d">
+          {l.lessons.map((x) => (
+            <Link key={x.href} href={x.href} className="sj-3d-chip">
+              <Icon name="box" size={14} /><b>3D</b><span dir="ltr">{x.title}</span>
+            </Link>
+          ))}
+        </div>
+      )}
       {l.versions?.length > 0 && (
         <details className="sj-alts">
           <summary>{l.versions.length === 1 ? t('نسخة أخرى') : t('{length} نسخ أخرى', { length: l.versions.length })}</summary>
@@ -66,10 +78,10 @@ function Lecture({ l, i, r }) {
 
 export default function Subject({
   id, name, promo, semester, semesters, img, bg, professors,
-  chapters, extra, banks, notes, regions, empty,
+  chapters, extra, banks, notes, atlas = null, empty, tab: firstTab = null,
 }) {
   const t = useT();
-  const [tab, setTab] = useState('lectures');
+  const [tab, setTab] = useState(firstTab === 'atlas' && atlas ? 'atlas' : 'lectures');
   const [reads, setReads] = useState({});
   const [best, setBest] = useState({});
   const [open, setOpen] = useState(null);
@@ -95,7 +107,9 @@ export default function Subject({
     ['lectures', t('المحاضرات')],
     ['qcm', 'QCM'],
     ['notes', t('الملخصات')],
-    ...(regions.length ? [['3d', '3D']] : []),
+    // Every anatomy subject has one: at the least the whole body and the
+    // drawings; for a year whose lectures are mapped, each lecture's own.
+    ...(atlas ? [['atlas', t('الأطلس')]] : []),
   ];
 
   const topics = chapters.map((c) => c.title).slice(0, 3).join(' · ');
@@ -311,23 +325,56 @@ export default function Subject({
             </div>
           )}
 
-          {/* ---------- 3D ---------- */}
-          {tab === '3d' && (
-            <div className="sj-pane sj-grid">
-              {regions.map((g, i) => (
-                <Link key={g.href} href={g.href} className="sj-region">
-                  <img src={g.img} alt="" style={{ animationDelay: `${-i * 0.6}s` }} />
-                  <b dir="ltr">{g.title}</b>
-                  <s dir="ltr">{g.subtitle}</s>
-                </Link>
+          {/* ---------- الأطلس: the course's anatomy, lecture by lecture ---------- */}
+          {tab === 'atlas' && atlas && (
+            <div className="sj-pane">
+              {atlas.filter((c) => c.lessons.length).map((c) => (
+                <section key={c.title} className="sj-at">
+                  <h3 className="sj-at-h" dir="ltr">{c.title}</h3>
+                  <div className="sj-grid">
+                    {c.lessons.map((l) => (
+                      <Link key={l.id} href={l.href} className="sj-region sj-lesson">
+                        <img src={l.img} alt="" />
+                        {l.lectures.length > 0 && (
+                          <span className="sj-at-n">{t('المحاضرة {n}', { n: l.lectures.join(' · ') })}</span>
+                        )}
+                        <b dir="ltr">{l.title}</b>
+                        {/* Each part isolated: «3D · 5 لوحات» joined as one
+                            string came out reordered in Arabic. */}
+                        <s className="sj-at-meta">
+                          {['3D', l.planches.length ? platesWord(t, l.planches.length) : null, l.region ? null : t('اختبار')]
+                            .filter(Boolean).map((x) => <span key={x}>{x}</span>)}
+                        </s>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
               ))}
+
+              {/* For revising across lectures: every system in one body. */}
+              <Link href="/anatomie/corps" className="sj-whole">
+                <img src="/anatomy/thumbs/corps.webp" alt="" />
+                <span className="grow">
+                  <b dir="ltr">Le corps entier</b>
+                  <s>{t('كل الأجهزة في جسم واحد، شرّحه طبقة بطبقة')}</s>
+                </span>
+                <Icon name="chev" size={16} />
+              </Link>
+              <Link href="/anatomie/planches" className="sj-whole light">
+                <span className="sj-whole-ic"><Icon name="images" size={24} /></span>
+                <span className="grow">
+                  <b dir="ltr">Planches d’anatomie</b>
+                  <s>{t('كل اللوحات، حسب الجهاز')}</s>
+                </span>
+                <Icon name="chev" size={16} />
+              </Link>
             </div>
           )}
         </div>
       </div>
 
       {/* The one action this screen is for. */}
-      {total > 0 && tab !== 'qcm' && (
+      {total > 0 && tab !== 'qcm' && tab !== 'atlas' && (
         <Link href={`/quiz/${id}`} className="sj-cta">
           <Icon name="quiz" size={19} />{' '}{t('اختبر نفسك في')}{' '}<span dir="ltr">{name}</span>
         </Link>

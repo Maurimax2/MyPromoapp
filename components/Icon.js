@@ -18,6 +18,7 @@ import {
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
   Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, Prohibit, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
   Megaphone, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
+  Stack, Target, Images, Bone, Brain, Ear, Tooth, Hand, Heartbeat, Drop, Skull,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -40,6 +41,10 @@ const ICONS = {
   friends: UsersThree, addFriend: UserPlus, friend: UserCheck, news: Megaphone,
   lang: Translate,
   flag: Flag, block: Prohibit,
+  // The anatomy viewer's own: systems are a stack of layers, a quiz is a
+  // target to touch, the drawings are pictures.
+  layers: Stack, target: Target, images: Images,
+  bone: Bone, brain: Brain, ear: Ear, tooth: Tooth, hand: Hand, pulse: Heartbeat, drop: Drop, skull: Skull,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid

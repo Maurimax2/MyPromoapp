@@ -82,7 +82,8 @@ export default function Planches({ sizes = {}, group = null, open: first = null 
   );
 }
 
-function Viewer({ plate, index, total, onClose, onStep }) {
+// Also opened from a lesson in 3D, over the model, with that lesson's plates.
+export function Viewer({ plate, index, total, onClose, onStep }) {
   const t = useT();
   const box = useRef(null);
   const [view, setView] = useState({ s: 1, x: 0, y: 0 });

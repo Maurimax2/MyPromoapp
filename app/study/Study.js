@@ -23,7 +23,7 @@ const SEMESTERS = ['S1', 'S2'];
 
 const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-export default function Study({ promos, modules: all, counts, mine, waiting = 0, anatomy = {},
+export default function Study({ promos, modules: all, counts, mine, waiting = 0,
                                 readError = null, fromFile = false }) {
   const t = useT();
   const [promo, setPromo] = useState(
@@ -118,41 +118,10 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
           </Link>
         </div>
 
-        {/* ---------- the 3D reader, the thing no other app here has ---------- */}
-        {anatomy[promo] && (
-        <Link href={anatomy[promo]} className="st-3d r3">
-          <img className="st-3d-model" src="/art/crane-big.webp" alt="" />
-          <span className="st-3d-text">
-            <span className="st-3d-tag"><Icon name="box" size={12} />{' '}{t('ثلاثي الأبعاد')}</span>
-            <b>{t('التشريح بين يديك')}</b>
-            <s>{t('33 منطقة · 319 معلمًا · 818 اسمًا')}</s>
-            <span className="st-3d-go">{t('افتح النموذج')}{' '}<Icon name="chev" size={13} /></span>
-          </span>
-        </Link>
-        )}
-
-        {/* The whole body to dissect, and the questions asked on it. The
-            regional models above are a lecture's; this is every system at once. */}
-        {anatomy[promo] && (
-          <div className="st-body r3">
-            <Link href="/anatomie/corps" className="st-body-card">
-              <span className="st-body-ic"><Icon name="person" size={20} /></span>
-              <span><b dir="ltr">Le corps entier</b><s>{t('كل الأجهزة، شرّحها طبقة بطبقة')}</s></span>
-            </Link>
-            <Link href="/anatomie/corps?quiz=1" className="st-body-card">
-              <span className="st-body-ic"><Icon name="quiz" size={20} /></span>
-              <span><b dir="ltr">Quiz 3D</b><s>{t('المس البنية أو سمّها')}</s></span>
-            </Link>
-            <Link href="/anatomie/planches" className="st-body-card st-body-wide">
-              <span className="st-body-ic"><Icon name="image" size={20} /></span>
-              <span><b dir="ltr">Planches d’anatomie</b><s>{t('135 رسمًا تشريحيًا حسب الجهاز')}</s></span>
-            </Link>
-            <Link href="/anatomie/feminin" className="st-body-card st-body-wide">
-              <span className="st-body-ic"><Icon name="heart" size={20} /></span>
-              <span><b dir="ltr">Le bassin féminin</b><s>{t('الرحم وملحقاته، المثانة، الحوض، الثدي والمشيمة')}</s></span>
-            </Link>
-          </div>
-        )}
+        {/* Anatomy in 3D is not a door of its own here: it is inside ANATOMIE,
+            lecture by lecture (the subject's «Atlas» tab). Four loose cards
+            for it here left a student guessing which one answered which
+            lecture. */}
 
         {/* ---------- every subject ---------- */}
         <div className="st-head r4">

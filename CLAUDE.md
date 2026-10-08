@@ -273,7 +273,11 @@ necessity, not a preference.
 - The two sources are the same body about a centimetre apart in z. Close
   enough to mix one day; not mixed yet, so no model draws from both.
 - **A model belongs to the lecture it explains.** It opens from the subject
-  and nowhere else. That is why نماذج 3D came off الرئيسية.
+  and nowhere else: ANATOMIE's «الأطلس» tab, chapter by chapter, and a «3D»
+  chip under each lecture that has one. That is why نماذج 3D came off
+  الرئيسية, and why the four anatomy cards came off الدراسة — the owner found
+  them «hanging around», each leaving the student to guess which lecture it
+  answered.
 - **A regional model is a named handful of structures, never the whole atlas.**
   The skull is 1.3 MB, which is less than the lecture it goes with. A student
   opening the skull pays for the skull. The whole body exists too, as its own
@@ -287,9 +291,11 @@ necessity, not a preference.
 - **Nothing in a regional model is ever made see-through.** Ghosting the rest
   of the skull to point at one bone turns the whole thing into an X-ray, and
   an X-ray of twenty-two overlapping bones is a picture of none of them. The
-  bone you touched takes its colour; the others stay bone. (Le corps entier is
-  the exception, on the owner's word: there the student sets each system's
-  transparency, and nothing is ever ghosted automatically around a pick.)
+  bone you touched takes its colour; the others stay bone. (The body viewer —
+  Le corps entier and the lessons — is the exception, on the owner's word:
+  there the student sets each system's transparency, a lesson may open with a
+  system thinned, the way the skull is thinned to see the orbit, and nothing is
+  ever ghosted automatically around a pick.)
 - **Muscles are coloured by the group they are taught in**, not one colour
   each. Twenty-six colours tell a student nothing, and « les muscles
   sous-hyoïdiens » is how the question is asked. A bundle names its groups in
@@ -417,8 +423,8 @@ The models now cover every region of the curriculum map. What is genuinely
 missing from both sources, and is not faked:
 
 - **Female anatomy** is not in BodyParts3D or Z-Anatomy, both a male
-  reference body; the uro-genital model says so on its face. It now has its own
-  screen, Le bassin féminin, from the Human Reference Atlas (below).
+  reference body; the uro-genital model says so on its face. It is the lesson
+  L'utérus et ses annexes, from the Human Reference Atlas (below).
 - **The ileum, the caecum and the rectum** are not separate meshes in
   Z-Anatomy: the gut it holds runs duodenum, jejunum, then the colon. The
   descriptions name what is absent instead of relabelling a neighbour.
@@ -553,15 +559,58 @@ missing from both sources, and is not faked:
 - Acting on a report about a person suspends the account (`refused`), which
   `/waiting` never lets back in by itself; it is undone from الأعضاء.
 
-## Le corps entier (/anatomie/corps) and Le bassin féminin (/anatomie/feminin)
+## L'Atlas: anatomy lecture by lecture
 
-- **The whole body, to dissect.** Eleven systems (peau, fascias, muscles,
-  artères, veines, nerfs, lymphe, viscères, encéphale et moelle, articulations,
-  squelette), about 2,800 structures with both sides, cut from Z-Anatomy by
-  `scripts/carve-body.mjs` into `public/anatomy/body/<system>.glb` — simplified
-  and meshopt-compressed by gltfpack, decoded by three's own MeshoptDecoder.
-  The skeleton (1.1 MB) opens the screen; every other system is fetched the
-  first time it is switched on. All eleven are about 8.5 MB.
+- **Every lecture of ANATOMIE says what it is studied with**
+  (`lib/anatomy/lessons.js`): a 3D scene of its part of the body, the
+  drawings of the same thing, and the questions asked on it. The subject's
+  «الأطلس» tab lists them by chapter with the course's own lecture numbers; a
+  lecture with one carries a «3D» chip in المحاضرات. A lesson finds its
+  lectures by a pattern on their titles (the database's titles, folded), so
+  check a new pattern against every lecture of the year — «annexes» once sent
+  «L'œil et ses annexes» to the uterus.
+- **A lesson is the whole body cut down to the lecture** (`Body3D` with a
+  `lesson`): the systems it needs, each opened at its own opacity, the part of
+  the body it keeps (a box, by each structure's centroid, which the carve
+  writes into the manifests as `c`), optionally a tighter box per system and
+  which names of a system it keeps or opens without. Nothing it leaves out is
+  gone: the systems panel turns it on and «الجسم كاملًا» drops the box. The
+  skull and the base of the skull open the regional model instead, for their
+  landmarks and bone parts.
+- **Every viewer wears the same dock**: one row along the bottom, every
+  button with its name under it (الأجهزة · بحث · اللوحات · اختبار · إعادة; the
+  regional model: الألوان · التركيز · المعالم · القائمة · اللوحات · إعادة). A
+  column of bare glyphs down the side was a puzzle and sat over the model. The
+  canvas stops above the dock so the model is centred in what can be seen; the
+  credit is under the dock, never cut short.
+- **The lesson cards wear the lesson** — `public/anatomy/thumbs/<id>.webp`,
+  rendered from the lesson itself by `scripts/lesson-thumbs.mjs` (run against
+  a local build and the mock). Re-run it when a lesson's scene changes.
+- **Le corps entier** (`/anatomie/corps`) is reached from the bottom of every
+  Atlas tab, for revising across lectures. **It opens dressed** — skeleton and
+  muscles — because the bare skeleton read as «just a skeleton».
+
+## The body's files
+
+- **Twelve systems** (peau, fascias, muscles, artères, veines, nerfs, lymphe,
+  viscères, encéphale et moelle, articulations, insertions, squelette), about
+  3,500 structures with both sides, cut from Z-Anatomy by
+  `scripts/carve-body.mjs` into `public/anatomy/body/<system>.glb` —
+  simplified and meshopt-compressed by gltfpack, decoded by three's own
+  MeshoptDecoder. Each is fetched the first time it is switched on; the same
+  files serve every lesson, so a second lesson costs nothing.
+- **Insertions musculaires** are Z-Anatomy's own attachment areas — patches on
+  the bone in the skeleton file, «Masseter.or» the origin, «.e1l» a piece of
+  the termination — 728 of them, red for origin and blue for termination.
+  Asked from a muscle they show that muscle's; asked from a bone, every muscle
+  that holds on to it, with the muscles thinned. A muscle and its attachments
+  are named by different hands, so they are matched on the words that name
+  the muscle, not on the whole name.
+- **Regions are by the bone a structure holds on to**, for what holds on to
+  one (muscles, ligaments, insertions): a box per region put the hip's
+  ligaments in the upper limb, because a hanging arm reaches below the hip.
+  The rest go by box, trunk first, the thorax stopping at the dome of the
+  diaphragm — or the liver is thoracic.
 - **Each system has its own transparency.** A see-through system is blended as
   one surface (a depth-only twin per mesh draws first), inside to outside, so
   muscles at 20 % really are 20 % and the nerves under them read clearly. A tap
@@ -576,20 +625,39 @@ missing from both sources, and is not faked:
 - **Descriptions**: `notes.js` where a regional model wrote one, then
   `lib/anatomy/body-notes.js` (the limb nerves, written here), then Z-Anatomy's
   French definitions (Wikipédia, CC BY-SA, credited on screen).
-- **Quiz 3D** on both screens: «Où est-ce ?» (touch it — either side counts)
-  or «Son nom ?» (the structure glows, four names from the same system and
-  tissue). Ten questions per round; a finished round counts as a study day.
-- **Le bassin féminin** is a separate body and never drawn inside the male
-  one: uterus and adnexa, bladder, female pelvis, breast, full-term placenta,
-  from the Human Reference Atlas (HuBMAP, **CC BY 4.0**, after the Visible
-  Human Female), by `scripts/carve-feminin.mjs`.
+- **Quiz 3D** in every lesson, on the lesson's structures and systems:
+  «Où est-ce ?» (touch it — either side counts) or «Son nom ?» (the structure
+  glows, four names from the same system and tissue). Ten questions per
+  round; a finished round counts as a study day.
 - To re-carve: the nine Z-Anatomy FBX files go in `../zanat/Resources/Models/FBX`
   and its 1,000 `Resources/Descriptions/French definitions` in `../zanat/fr-defs`
   (both from github.com/LluisV/Z-Anatomy, branch PC-Version); the HRA files are
   fetched and cached in `../hra` by the script itself.
-- **الرئيسية's «موادك» is always the student's own year.** It used to follow
-  the year being browsed (the cookie الدراسة sets), so one peek at another year
-  left that year's subjects on the home screen.
+
+## The female pelvis (lesson L'utérus et ses annexes)
+
+- **A separate body, never drawn inside the male one**, and never alone in
+  front of a grey pelvis again — that is what «hanging around» was. The Human
+  Reference Atlas (HuBMAP, **CC BY 4.0**, after the Visible Human Female) gives
+  her organs where she has them: uterus and adnexa, bladder and ureters,
+  rectum, the pelvic vessels (the uterine arteries among them), her pelvis and
+  the skin of her hips. `scripts/carve-feminin.mjs`.
+- **Her pelvic walls and floor are Z-Anatomy's, fitted to her**: thirteen
+  landmarks on both pelvises, then an affine fit on the bone surfaces (about
+  4 mm apart on average once fitted). Their descriptions say so.
+- **What no atlas segments is drawn between its real attachments** — the
+  round, utero-ovarian, suspensory, utero-sacral and cardinal ligaments, the
+  broad ligament, the vagina and the urethra — measured on her organs and
+  bones, and every description says «tracé schématique».
+- The Stony Brook large intestine is another body: its sigmoid colon lies over
+  the uterus, so the lesson opens with it taken off. The breast and the
+  placenta are no longer carved: no lecture asks for them yet.
+
+## الرئيسية
+
+- **«موادك» is always the student's own year.** It used to follow the year
+  being browsed (the cookie الدراسة sets), so one peek at another year left
+  that year's subjects on the home screen.
 
 ## Planches d'anatomie (/anatomie/planches)
 
@@ -598,8 +666,9 @@ missing from both sources, and is not faked:
   with a French title written in `lib/anatomy/planches.js`. Servier's own
   captions are French but a word or two; the titles say what is drawn.
 - The drawings carry no labels: they sit beside the 3D models the way an
-  atlas page sits beside the specimen. The 3D structure card links to the
-  plates of its system.
+  atlas page sits beside the specimen. **Each lesson lists its own plates**
+  («اللوحات» in the dock) and opens them over the model; the whole collection is
+  at the bottom of the Atlas tab.
 - **No English-labelled figures** (OpenStax's are excellent and CC BY, but
   labelled in English): study content is French.
 - `scripts/fetch-planches.mjs` writes `public/planches/<id>.webp` (1600 px) and
