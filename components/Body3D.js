@@ -27,22 +27,17 @@
 // muscles thinned so the bone can be read.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import Icon from '@/components/Icon';
 import Link from 'next/link';
 import { useT } from '@/components/Lang';
 import { Viewer as PlateViewer } from '@/components/Planches';
 import { GROUPS_OF_LAYER, PLANCHES } from '@/lib/anatomy/planches';
 import { studied } from '@/lib/streak';
-import { tissueMaterial, studio, qualityTier, setDetail } from '@/lib/anatomy/material';
+import { createStage } from '@/lib/anatomy/stage';
 import {
-  SETS, BODY, TINT, LOOK_OF, THIN, BODY_SECTIONS, SIDE, fullName, fold,
+  SETS, BODY, TINT, THIN, BODY_SECTIONS, SIDE, fullName, fold,
 } from '@/lib/anatomy/body';
 
-const MAX_DPR = { high: 1.75, lite: 1.4 };
 const QUIZ_LENGTH = 10;
 const NOT_QUIZZED = new Set(['peau', 'fascias', 'insertions']);
 const shuffle = (list) => {
@@ -71,6 +66,9 @@ function compile(lesson) {
   const re = (s) => (s ? new RegExp(s, 'i') : null);
   return {
     box: sc.box || null, boxes: sc.boxes || {}, from: sc.from || null, layers: sc.layers || null,
+    // What the camera opens on, when it is not the whole of what is kept:
+    // the ear lesson keeps both ears and looks at one.
+    aim: sc.aim || sc.box || null,
     keep: Object.fromEntries(Object.entries(sc.keep || {}).map(([k, v]) => [k, re(v)])),
     drop: re(sc.drop), also: re(sc.also), quiz: lesson.quiz || null,
   };
@@ -100,6 +98,9 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   const api = useRef(null);
 
   const L = useMemo(() => compile(lesson), [lesson]);
+  // A system marked `only` belongs to the lessons that open it: the scanner's
+  // ear is not listed or searched in the whole body, which has its own.
+  const OFFERED = useMemo(() => LAYERS.filter((l) => !l.only || L?.layers?.[l.id] != null), [LAYERS, L]);
   const lessonRef = useRef(L);
   lessonRef.current = L;
   const plates = useMemo(() => (lesson?.planches || [])
@@ -133,296 +134,28 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   const [query, setQuery] = useState('');
   const [catalogue, setCatalogue] = useState(null);   // every system's names, for search
   const [quiz, setQuiz] = useState(null);
+  const [reps, setReps] = useState(null);             // every landmark, once asked for
+  const [repsOn, setRepsOn] = useState(false);        // the picked bone's landmarks shown
+  const [rep, setRep] = useState(null);               // …and the one being read
 
   const items = useRef(new Map());                    // id → { item, layer }
   const defs = useRef(new Map());                     // layer → descriptions
 
   // ------------------------------------------------------------------ scene
+  // Everything three.js owns lives in lib/anatomy/stage.js: batched systems,
+  // the camera, picking. This component keeps what the student chose.
   useEffect(() => {
     const el = host.current;
     if (!el) return undefined;
-    let dead = false;
-    const tier = qualityTier();
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_DPR[tier]));
-    renderer.setSize(el.clientWidth, el.clientHeight, false);
-    setDetail(tier !== 'lite');
-    el.appendChild(renderer.domElement);
-
-    const scene = new THREE.Scene();
-    const unstudio = studio(renderer, scene, tier);
-    const lite = tier === 'lite';
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b2c9, lite ? 2.1 : 0.9));
-    const key = new THREE.DirectionalLight(0xffffff, lite ? 1.25 : 1.6);
-    key.position.set(0.6, 1, 0.8);
-    scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, lite ? 0.55 : 0.45);
-    fill.position.set(-0.7, -0.2, -0.6);
-    scene.add(fill);
-
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.005, 30);
-    camera.position.set(0, 1, 4);
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
-    controls.rotateSpeed = 0.9;
-    controls.screenSpacePanning = true;
-    controls.minDistance = 0.04;
-    controls.maxDistance = 6;
-
-    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const meshes = [];
-    const groups = new Map();
-    const materials = new Map();          // `${layer}|${kind}` → material
-    const overrides = new Map();          // mesh → material it wears instead
-    // A see-through system is blended as ONE surface, not as every surface it
-    // has. Forty muscles overlapping at a fifth each add up to a solid wall —
-    // which is how «transparent muscles» first looked. So each mesh carries a
-    // twin that writes depth and no colour, drawn just before the system's
-    // colour: only the nearest surface of the system survives, and that one
-    // is blended once over what lies under it.
-    const depthOnly = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: true, transparent: true, side: THREE.DoubleSide });
-
-    const base = (layer, kind) => {
-      const k = `${layer}|${kind}`;
-      if (!materials.has(k)) {
-        const m = tissueMaterial(LOOK_OF[kind] || kind, TINT[kind] || TINT.bone, null, tier);
-        m.userData.layer = layer;
-        // An attachment is a patch lying on the bone: pulled towards the eye
-        // so the two surfaces do not flicker through each other.
-        if (layer === 'insertions') { m.polygonOffset = true; m.polygonOffsetFactor = -2; m.polygonOffsetUnits = -4; }
-        materials.set(k, m);
-      }
-      return materials.get(k);
-    };
-
-    // ---------------------------------------------------------- drawing
-    let pending = 0;
-    const draw = () => {
-      if (pending || dead) return;
-      pending = requestAnimationFrame(() => { pending = 0; renderer.render(scene, camera); });
-    };
-
-    let live = true, last = 0, avg = 16, seen = 0, stage = 0;
-    const loop = () => {
-      if (!live) return;
-      requestAnimationFrame(loop);
-      const now = performance.now();
-      if (controls.update()) {
-        renderer.render(scene, camera);
-        // The governor of the regional viewer: a phone that cannot keep 30
-        // frames a second while turning is stepped down, never up.
-        if (last && now - last < 250) {
-          avg = avg * 0.9 + (now - last) * 0.1;
-          if (++seen > 40 && avg > 34 && stage < 2) {
-            stage += 1;
-            if (stage === 1) {
-              renderer.setPixelRatio(1);
-              renderer.setSize(el.clientWidth, el.clientHeight, false);
-              scene.environment = null;
-            } else setDetail(false);
-            avg = 16; seen = 0;
-          }
-        }
-        last = now;
-      } else last = 0;
-    };
-    requestAnimationFrame(loop);
-
-    const fit = () => {
-      const w = el.clientWidth, h = el.clientHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / Math.max(1, h);
-      camera.updateProjectionMatrix();
-      draw();
-    };
-    const watch = new ResizeObserver(fit);
-    watch.observe(el);
-    fit();
-
-    // ---------------------------------------------------------- camera
-    // Keeps the direction the student is looking from, and moves the target
-    // and the distance so the box fills the screen.
-    const frame = (box, from = null) => {
-      const lo = new THREE.Vector3(...box[0]), hi = new THREE.Vector3(...box[1]);
-      const centre = lo.clone().add(hi).multiplyScalar(0.5);
-      const size = hi.clone().sub(lo);
-      const dir = from ? new THREE.Vector3(...from).normalize()
-        : camera.position.clone().sub(controls.target).normalize();
-      const fov = THREE.MathUtils.degToRad(camera.fov);
-      // The box seen from `dir`: its width across the screen is what the
-      // horizontal sides project to, not the x size alone.
-      const across = Math.abs(dir.z) * size.x + Math.abs(dir.x) * size.z;
-      const tall = Math.max(size.y, across / camera.aspect, 0.04);
-      const deep = Math.abs(dir.z) * size.z + Math.abs(dir.x) * size.x;
-      const dist = (tall / 2) / Math.tan(fov / 2) * 1.12 + deep / 2;
-      controls.target.copy(centre);
-      camera.position.copy(centre).addScaledVector(dir, dist);
-      camera.near = Math.max(0.002, dist / 200);
-      camera.updateProjectionMatrix();
-      controls.update();
-      draw();
-    };
-    const boxOfMesh = (mesh) => {
-      const b = new THREE.Box3().setFromObject(mesh);
-      return [b.min.toArray(), b.max.toArray()];
-    };
-
-    // ---------------------------------------------------------- loading
-    const load = async (layer) => {
-      const [gltf, man] = await Promise.all([
-        loader.loadAsync(`${ROOT}/${layer}.glb`),
-        fetch(`${ROOT}/${layer}.json`).then((r) => { if (!r.ok) throw new Error(layer); return r.json(); }),
-      ]);
-      if (dead) return [];
-      const by = new Map(man.items.map((i) => [i.id, i]));
-      const group = new THREE.Group();
-      gltf.scene.traverse((o) => {
-        if (!o.isMesh) return;
-        const item = by.get(o.parent?.name) || by.get(o.name);
-        if (!item) return;
-        o.userData = { id: item.id, layer, item, member: inLesson(lessonRef.current, item, layer) };
-        o.material = base(layer, item.k);
-        const twin = new THREE.Mesh(o.geometry, depthOnly);
-        twin.visible = false;
-        twin.renderOrder = 100 + 2 * DEPTH.indexOf(layer);
-        twin.raycast = () => {};
-        o.add(twin);
-        o.userData.twin = twin;
-        meshes.push(o);
-        items.current.set(item.id, { item, layer });
-      });
-      group.add(gltf.scene);
-      groups.set(layer, group);
-      scene.add(group);
-      return man.items;
-    };
-
-    // ---------------------------------------------------------- painting
-    // Everything that depends on what the student chose, in one place, run
-    // after every choice. Three thousand meshes is a short loop.
-    const paint = (s) => {
-      // While insertions are being read, the muscles are thinned: the
-      // attachment is on the bone, under them.
-      const seeOf = (layer) => {
-        const see = s.layers[layer]?.see ?? 1;
-        return s.ins && layer === 'muscles' ? Math.min(see, 0.2) : see;
-      };
-      for (const m of materials.values()) {
-        const see = seeOf(m.userData.layer);
-        const clear = see < 0.995;
-        if (m.transparent !== clear) { m.transparent = clear; m.needsUpdate = true; }
-        m.opacity = see;
-        m.depthWrite = !clear;
-      }
-      const off = new Set(s.hidden);
-      const pickedItem = s.picked ? items.current.get(s.picked)?.item : null;
-      for (const mesh of meshes) {
-        const { id, layer, item, member } = mesh.userData;
-        const Ls = s.layers[layer];
-        let show = !!Ls?.on && !off.has(id) && (s.whole || member);
-        if (layer === 'insertions' && s.ins) show = s.ins.has(id);
-        if (s.alone && pickedItem) show = item.n === pickedItem.n || (layer === 'insertions' && !!s.ins?.has(id));
-        mesh.visible = show;
-        const want = s.marks.get(id) || (id === s.picked ? (s.follow ? 'follow' : 'pick') : null);
-        const had = overrides.get(mesh);
-        const clear = seeOf(layer) < 0.995;
-        mesh.userData.twin.visible = clear && !want;
-        if (!want) {
-          if (had) { had.dispose(); overrides.delete(mesh); }
-          mesh.material = base(layer, item.k);
-          mesh.renderOrder = clear ? 101 + 2 * DEPTH.indexOf(layer) : 0;
-          continue;
-        }
-        if (had && had.userData.want === want) continue;
-        had?.dispose();
-        const m = base(layer, item.k).clone();
-        m.userData = { want };
-        // A pick glows in its own colour; the quiz says right in green and
-        // wrong in red; a followed structure is drawn over everything.
-        const glow = want === 'right' ? '#2E9E5B' : want === 'wrong' ? '#D23B2E' : want === 'ask' ? '#FFB020' : null;
-        if (glow) m.color = new THREE.Color(glow);
-        m.emissive = new THREE.Color(glow || TINT[item.k] || '#ffffff');
-        m.emissiveIntensity = glow ? 0.55 : 0.4;
-        m.opacity = 1; m.transparent = want === 'follow' || want === 'ask'; m.depthWrite = true;
-        mesh.renderOrder = 0;
-        if (want === 'follow' || want === 'ask') { m.depthTest = false; mesh.renderOrder = 999; }
-        overrides.set(mesh, m);
-        mesh.material = m;
-      }
-      draw();
-    };
-
-    // ---------------------------------------------------------- picking
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-    const pickable = () => meshes.filter((m) => m.visible);
-    const castAt = (x, y, box) => {
-      pointer.x = ((x - box.left) / box.width) * 2 - 1;
-      pointer.y = -((y - box.top) / box.height) * 2 + 1;
-      raycaster.setFromCamera(pointer, camera);
-      return raycaster.intersectObjects(pickable(), false);
-    };
-    // A faint system is looked through, not touched: a tap on a ghosted
-    // muscle reaches the nerve under it.
-    let solidEnough = () => true;
-    const firstSolid = (hits) => hits.find((h) => solidEnough(h.object.userData.layer));
-    const hitAt = (x, y) => {
-      const box = renderer.domElement.getBoundingClientRect();
-      const direct = firstSolid(castAt(x, y, box));
-      if (direct) return direct.object;
-      let best = null;
-      for (const r of [10, 20, 30]) {
-        for (let k = 0; k < 8; k++) {
-          const a = (k / 8) * Math.PI * 2;
-          const hit = firstSolid(castAt(x + Math.cos(a) * r, y + Math.sin(a) * r, box));
-          if (!hit) continue;
-          const thin = THIN.has(hit.object.userData.layer);
-          const score = r + (thin ? 0 : 40);
-          if (!best || score < best.score) best = { obj: hit.object, score };
-        }
-        if (best && best.score < 40) break;
-      }
-      return best?.obj || null;
-    };
-
-    let onTap = () => {};
-    let down = null;
-    const startTap = (e) => { down = { x: e.clientX, y: e.clientY, t: Date.now() }; };
-    const endTap = (e) => {
-      if (!down) return;
-      const slid = Math.hypot(e.clientX - down.x, e.clientY - down.y);
-      const held = Date.now() - down.t;
-      down = null;
-      if (slid > 8 || held > 600) return;
-      onTap(hitAt(e.clientX, e.clientY));
-    };
-    renderer.domElement.addEventListener('pointerdown', startTap);
-    renderer.domElement.addEventListener('pointerup', endTap);
-
-    api.current = {
-      load, paint, frame, boxOfMesh,
-      meshesOf: (id) => meshes.filter((m) => m.userData.id === id),
-      setTap: (fn) => { onTap = fn; },
-      setSolid: (fn) => { solidEnough = fn; },
-      dead: () => dead,
-    };
-
-    return () => {
-      dead = true; live = false;
-      watch.disconnect();
-      renderer.domElement.removeEventListener('pointerdown', startTap);
-      renderer.domElement.removeEventListener('pointerup', endTap);
-      controls.dispose();
-      for (const m of meshes) m.geometry.dispose();
-      for (const m of materials.values()) m.dispose();
-      for (const m of overrides.values()) m.dispose();
-      depthOnly.dispose();
-      unstudio();
-      renderer.dispose();
-      renderer.domElement.remove();
-      api.current = null;
-    };
+    const st = createStage(el, {
+      root: ROOT, depth: DEPTH,
+      member: (item, layer) => inLesson(lessonRef.current, item, layer),
+    });
+    api.current = st;
+    // `?debug3d` in the address hands the stage to the browser console (and
+    // to the screenshot scripts): what it drew, whether the camera rests.
+    if (new URLSearchParams(window.location.search).has('debug3d')) window.__mpStage = st;
+    return () => { st.dispose(); api.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -436,6 +169,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     setState((p) => ({ ...p, [layer]: { ...p[layer], loading: true } }));
     try {
       const list = await api.current.load(layer);
+      for (const i of list) items.current.set(i.id, { item: i, layer });
       setState((p) => ({ ...p, [layer]: { ...p[layer], loading: false, loaded: true } }));
       // What a lesson opens with taken off — the platysma over the neck.
       const drop = lessonRef.current?.drop;
@@ -450,10 +184,10 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   }, [t]);
 
   // Where the camera goes for the lesson, or for the body.
-  const home = useCallback((ix = index) => {
+  const home = useCallback((ix = index, cut = false) => {
     if (!ix || !api.current) return;
-    if (L?.box && !whole) api.current.frame(L.box, L.from || [0, 0.05, 1]);
-    else api.current.frame(ix.regions[S.home] || ix.regions.corps, L?.from || [0, 0.05, 1]);
+    if (L?.box && !whole) api.current.frame(L.aim, L.from || [0, 0.05, 1], cut);
+    else api.current.frame(ix.regions[S.home] || ix.regions.corps, L?.from || [0, 0.05, 1], cut);
   }, [index, L, whole, S.home]);
 
   useEffect(() => {
@@ -467,7 +201,8 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
         if (view) applyView(view, false);
         else ensure(LAYERS.find((l) => l.on)?.id || LAYERS[0].id);
       }
-      setTimeout(() => home(ix), 50);
+      // The first view is where the screen opens, not a flight to it.
+      setTimeout(() => home(ix, true), 50);
     }).catch(() => setError(t('تعذّر تحميل الجسم — تحقّق من الاتصال وأعد المحاولة.')));
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -494,28 +229,41 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     api.current?.paint({ layers: state, hidden, picked, alone, follow, marks, whole, ins: ins?.ids || null });
   }, [state, hidden, picked, alone, follow, marks, whole, ins]);
 
+  // Whatever sheet is open over the bottom of the canvas, the model moves up
+  // out of its way — once per sheet, not on every keystroke: a search list
+  // growing under the finger kept the model sliding.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      const el = host.current;
+      if (!el || !api.current) return;
+      const sheet = el.parentElement?.querySelector('.bd-panel, .bd-card, .bd-ask');
+      const covered = sheet ? (sheet.getBoundingClientRect().height + 6) / Math.max(1, el.clientHeight) : 0;
+      // The region chips lie over the top of the canvas.
+      const chips = el.parentElement?.querySelector('.bd-regions');
+      const box = el.getBoundingClientRect();
+      const top = chips ? Math.max(0, chips.getBoundingClientRect().bottom - box.top) / Math.max(1, box.height) : 0;
+      api.current.setInset(Math.min(0.62, covered), Math.min(0.15, top));
+    });
+    return () => cancelAnimationFrame(id);
+  }, [panel, picked, reading, repsOn, rep, ins, !!quiz, quiz?.answered, quiz?.done]);
+
   // ---------------------------------------------------------------- taps
   const choose = useCallback((id, aim = false) => {
     setPicked(id);
     setReading(false);
     setFollow(false);
+    setRepsOn(false);
+    setRep(null);
+    if (aloneBefore.current !== null) { setAlone(aloneBefore.current); aloneBefore.current = null; }
     if (id) setTouched(true);
     // Touching an attachment keeps the attachments on screen; touching
     // anything else puts them away.
     if (!id || items.current.get(id)?.layer !== 'insertions') setIns(null);
-    if (aim && id && api.current) {
-      const [mesh] = api.current.meshesOf(id);
-      if (mesh) {
-        const [lo, hi] = api.current.boxOfMesh(mesh);
-        const pad = 0.04;
-        api.current.frame([lo.map((v) => v - pad), hi.map((v) => v + pad)]);
-      }
-    }
+    if (aim && id) api.current?.frameId(id);
   }, []);
 
   useEffect(() => {
-    api.current?.setTap((obj) => {
-      const id = obj?.userData.id || null;
+    api.current?.setTap((id) => {
       if (quizRef.current?.mode === 'find' && quizRef.current.target && !quizRef.current.answered) {
         if (!id) return;
         answerFind(id);
@@ -544,6 +292,66 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     }
     return () => { alive = false; };
   }, [reading, pickedEntry, ROOT]);
+
+  // ------------------------------------------------------------ landmarks
+  // The named points of the skeleton (scripts/carve-landmarks.mjs): fetched
+  // the first time a bone is picked, drawn as dots on the picked bone when
+  // asked, each one read in the card — and what passes through, for an opening.
+  const loadReps = useCallback(async () => {
+    if (reps || set !== 'corps') return reps;
+    try {
+      const r = await fetch(`${ROOT}/reperes.json`).then((x) => x.json());
+      setReps(r.items);
+      return r.items;
+    } catch { return null; }
+  }, [reps, set, ROOT]);
+  useEffect(() => {
+    if (pickedEntry?.layer === 'squelette') loadReps();
+  }, [pickedEntry, loadReps]);
+  const boneReps = useMemo(() => {
+    const it = pickedEntry?.item;
+    if (!reps || !it || pickedEntry.layer !== 'squelette') return [];
+    return reps.filter((r) => r.bone === it.n && (!it.s || !r.s || r.s === it.s));
+  }, [reps, pickedEntry]);
+  const repNow = repsOn && rep ? boneReps.find((r) => r.id === rep) || null : null;
+  useEffect(() => {
+    api.current?.setMarks(repsOn ? boneReps : null, rep);
+    api.current?.setTag(repNow?.p || null, repNow ? fullName({ n: repNow.n, s: repNow.h }) : '');
+  }, [repsOn, boneReps, rep, repNow]);
+  // Close enough to read the bone around the point: a fifth of the bone,
+  // between 2 and 6 cm — the foramen ovale and the greater trochanter are not
+  // looked at from the same distance.
+  const lookAtRep = (r, boneId = picked) => {
+    const box = boneId && api.current?.boxOf(boneId);
+    const size = box ? Math.max(...box[1].map((v, i) => v - box[0][i])) : 0.1;
+    api.current?.focusPoint(r.p, Math.min(0.06, Math.max(0.02, size * 0.2)), r.o);
+  };
+  useEffect(() => {
+    api.current?.setMarkTap((id) => {
+      const r = (reps || []).find((x) => x.id === id);
+      if (r) { setRep(id); lookAtRep(r); }
+    });
+  });
+  const pickRep = (r) => { setRep(r.id); lookAtRep(r); };
+  const stepRep = (by) => {
+    const i = boneReps.findIndex((r) => r.id === rep);
+    const next = boneReps[(i + by + boneReps.length) % boneReps.length];
+    if (next) pickRep(next);
+  };
+  // The bone by itself while its points are read: half of them are under a
+  // muscle. What was on before comes back when the points are put away.
+  const aloneBefore = useRef(null);
+  const repsOff = () => {
+    setRepsOn(false); setRep(null);
+    if (aloneBefore.current !== null) { setAlone(aloneBefore.current); aloneBefore.current = null; }
+  };
+  const showReps = () => {
+    if (repsOn) { repsOff(); return; }
+    setRepsOn(true);
+    if (aloneBefore.current === null) aloneBefore.current = alone;
+    setAlone(true);
+    if (picked) api.current?.frameId(picked);
+  };
 
   // ----------------------------------------------------------- insertions
   const waitFor = (test, n = 60) => new Promise((resolve) => {
@@ -603,7 +411,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     setWhole(on);
     if (!index || !api.current) return;
     if (on) api.current.frame(index.regions.corps, [0, 0.05, 1]);
-    else if (L?.box) api.current.frame(L.box, L.from || [0, 0.05, 1]);
+    else if (L?.box) api.current.frame(L.aim, L.from || [0, 0.05, 1]);
   };
 
   const reset = () => {
@@ -618,7 +426,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     setWhole(false);
     if (L) {
       if (index && api.current) {
-        if (L.box) api.current.frame(L.box, L.from || [0, 0.05, 1]);
+        if (L.box) api.current.frame(L.aim, L.from || [0, 0.05, 1]);
         else api.current.frame(index.regions[S.home] || index.regions.corps, L.from || [0, 0.05, 1]);
       }
       // What the lesson opens with taken off goes back off.
@@ -630,28 +438,60 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   const openSearch = async () => {
     setPanel('search');
     if (catalogue) return;
-    const lists = await Promise.all(LAYERS.map((l) => fetch(`${ROOT}/${l.id}.json`)
+    const lists = await Promise.all(OFFERED.map((l) => fetch(`${ROOT}/${l.id}.json`)
       .then((r) => r.json()).then((m) => m.items.map((i) => ({ ...i, layer: l.id }))).catch(() => [])));
-    setCatalogue(lists.flat());
+    // The landmarks too: «foramen ovale» is searched as often as a bone.
+    const marks = (await loadReps()) || [];
+    setCatalogue([...lists.flat(), ...marks.map((r) => ({ ...r, layer: 'reperes', k: 'mark', c: r.p }))]);
   };
   const found = useMemo(() => {
     if (!catalogue) return [];
     const q = fold(query);
     if (q.length < 2) return [];
     const ws = q.split(/\s+/);
-    return catalogue
+    const hits = catalogue
       .filter((i) => whole || inLesson(L, i, i.layer))
-      .filter((i) => { const n = fold(i.n); return ws.every((w) => n.includes(w)); })
-      .slice(0, 60);
+      .filter((i) => { const n = fold(i.n); return ws.every((w) => n.includes(w)); });
+    if (!L?.layers) return hits.slice(0, 60);
+    // In a lesson, what the lesson shows comes first, and a name another
+    // system also has is not offered twice: the ear lesson's stapes is the
+    // scanner's, not the body's one hidden under it.
+    const mine = (i) => (L.layers[i.layer] != null ? 0 : 1);
+    const seen = new Set();
+    return hits.sort((a, b) => mine(a) - mine(b)).filter((i) => {
+      const key = fullName(i.layer === 'reperes' ? { n: i.n, s: i.s || i.h } : i);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, 60);
   }, [catalogue, query, whole, L]);
 
   const jumpTo = async (hit) => {
     setPanel(null);
+    if (hit.layer === 'reperes') {
+      // A landmark: its bone picked, its dots on, the camera on the point.
+      if (!state.squelette.on) setState((p) => ({ ...p, squelette: { ...p.squelette, on: true, see: Math.max(p.squelette.see, 0.8) } }));
+      await ensure('squelette');
+      const tryBone = (n = 0) => {
+        const bone = [...items.current.values()].find((e) => e.layer === 'squelette' && e.item.n === hit.bone && (!hit.s || e.item.s === hit.s));
+        if (bone) {
+          choose(bone.item.id);
+          setTimeout(() => {
+            setRepsOn(true); setRep(hit.id);
+            if (aloneBefore.current === null) aloneBefore.current = false;
+            setAlone(true);
+            lookAtRep(hit, bone.item.id);
+          }, 0);
+        } else if (n < 40) setTimeout(() => tryBone(n + 1), 100);
+      };
+      tryBone();
+      return;
+    }
     if (!state[hit.layer].on) setState((p) => ({ ...p, [hit.layer]: { ...p[hit.layer], on: true, see: Math.max(p[hit.layer].see, 0.6) } }));
     await ensure(hit.layer);
     // Waits for the geometry to be in the scene before aiming at it.
     const tryAim = (n = 0) => {
-      if (api.current?.meshesOf(hit.id).length) choose(hit.id, true);
+      if (api.current?.has(hit.id)) choose(hit.id, true);
       else if (n < 40) setTimeout(() => tryAim(n + 1), 100);
     };
     tryAim();
@@ -660,7 +500,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   // ----------------------------------------------------------------- quiz
   const quizRef = useRef(quiz);
   quizRef.current = quiz;
-  const quizLayers = (L?.quiz || LAYERS.map((l) => l.id)).filter((id) => layerOf(id) && !NOT_QUIZZED.has(id));
+  const quizLayers = (L?.quiz || OFFERED.map((l) => l.id)).filter((id) => layerOf(id) && !NOT_QUIZZED.has(id));
   const [setup, setSetup] = useState(() => ({
     layer: quizLayers.includes(S.quizLayer) ? S.quizLayer : quizLayers[0], region: S.all, mode: 'find',
   }));
@@ -691,11 +531,10 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
       const near = shuffle(pool.filter((p) => p.n !== target.n && p.k === target.k));
       const rest = shuffle(pool.filter((p) => p.n !== target.n && p.k !== target.k));
       next.options = shuffle([target, ...[...near, ...rest].slice(0, 3)]).map((p) => p.n);
-      const [mesh] = api.current?.meshesOf(ids[0]) || [];
-      if (mesh) {
-        const [lo, hi] = api.current.boxOfMesh(mesh);
+      const box = api.current?.boxOf(ids[0]);
+      if (box) {
         const pad = 0.06;
-        api.current.frame([lo.map((v) => v - pad), hi.map((v) => v + pad)]);
+        api.current.frame([box[0].map((v) => v - pad), box[1].map((v) => v + pad)]);
       }
     }
     setQuiz(next);
@@ -741,11 +580,17 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   const pLayer = pickedEntry?.layer;
   const mb = (bytes) => `${(bytes / 1e6).toFixed(1)} Mo`;
   const busy = LAYERS.some((l) => state[l.id].on && state[l.id].loading);
+  // A system from another source credits it while it is on, its licence one
+  // tap away (the scanner's ear asks for its licence to travel with it).
+  const credits = [...new Map(LAYERS.filter((l) => l.credit && state[l.id].on).map((l) => [l.credit, l.licence])).entries()];
+  const extraCredit = credits.map(([c, licence]) => (
+    <span key={c}> · {licence ? <a href={licence} target="_blank" rel="noreferrer">{c}</a> : c}</span>
+  ));
   const toggle = (id) => setPanel((x) => (x === id ? null : id));
   const canInsert = set === 'corps' && p && (pLayer === 'squelette' || pLayer === 'muscles') && p.k !== 'tooth';
 
   return (
-    <div className="bd" data-lesson={!!L}>
+    <div className="bd" data-lesson={!!L} data-credits={credits.length || undefined}>
       <div className="bd-canvas" ref={host} />
 
       {/* Where to look: the body's regions, French because they are anatomy.
@@ -782,7 +627,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
           )}
           <p className="bd-hint">{t('اسحب الشريط لترى ما تحت الطبقة: العضلات شفافة والأعصاب تحتها.')}</p>
           <ul className="bd-layers">
-            {LAYERS.map((l) => {
+            {OFFERED.map((l) => {
               const s = state[l.id];
               const size = index?.layers?.[l.id];
               return (
@@ -808,13 +653,13 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
           {hidden.length > 0 && (
             <button className="bd-wide" onClick={() => setHidden([])}>{t('أعد البنى المخفية ({n})', { n: hidden.length })}</button>
           )}
-          <p className="bd-credit-in" dir="ltr">{S.credit}</p>
+          <p className="bd-credit-in" dir="ltr">{S.credit}{extraCredit}</p>
         </section>
       )}
 
       {/* ---------------- search ---------------- */}
       {panel === 'search' && (
-        <section className="bd-panel">
+        <section className="bd-panel bd-panel-search">
           <div className="bd-panel-h">
             <input className="bd-search" autoFocus value={query} onChange={(e) => setQuery(e.target.value)}
               placeholder={t('اسم بالفرنسية — nerf médian، fémur…')} dir="auto" aria-label={t('ابحث عن بنية')} />
@@ -825,8 +670,8 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
             {found.map((hit) => (
               <li key={hit.id}>
                 <button onClick={() => jumpTo(hit)}>
-                  <i style={{ background: TINT[hit.k] }} />
-                  <span className="grow" dir="ltr"><b>{fullName(hit)}</b><s>{layerOf(hit.layer)?.name}{hit.r ? ` · ${regionName(hit.r)}` : ''}</s></span>
+                  <i style={{ background: TINT[hit.k] || '#FFB020' }} />
+                  <span className="grow" dir="ltr"><b>{fullName(hit.layer === 'reperes' ? { n: hit.n, s: hit.s || hit.h } : hit)}</b><s>{hit.layer === 'reperes' ? `Repère osseux · ${hit.bone}` : layerOf(hit.layer)?.name}{hit.r ? ` · ${regionName(hit.r)}` : ''}</s></span>
                 </button>
               </li>
             ))}
@@ -974,12 +819,42 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
               </button>
             )}
             {pLayer === 'insertions' && <button onClick={toMuscle}>{t('العضلة')}</button>}
+            {boneReps.length > 0 && (
+              <button data-on={repsOn} onClick={showReps}><i className="bd-rep-dot" />{t('المعالم ({n})', { n: boneReps.length })}</button>
+            )}
             <button data-on={reading} onClick={() => setReading((r) => !r)}>{t('الوصف')}</button>
             {/* The drawings of the same system, as an atlas page beside the specimen. */}
             {!L && GROUPS_OF_LAYER[pLayer] && (
               <Link href={`/anatomie/planches?g=${GROUPS_OF_LAYER[pLayer][0]}`}>{t('اللوحات')}</Link>
             )}
           </div>
+          {/* One point at a time, stepped through like the pages of a plate;
+              the list is one tap away. */}
+          {repNow && (
+            <div className="bd-rep-now" dir="ltr" lang="fr">
+              <div className="bd-rep-step">
+                <button onClick={() => stepRep(-1)} aria-label={t('السابق')}>‹</button>
+                <div className="grow">
+                  <b>{repNow.n}</b>
+                  <s>{[repNow.h ? SIDE[repNow.h] : null, `${boneReps.indexOf(repNow) + 1} / ${boneReps.length}`].filter(Boolean).join(' · ')}</s>
+                </div>
+                <button onClick={() => stepRep(1)} aria-label={t('التالي')}>›</button>
+              </div>
+              {repNow.t && (
+                <div className="bd-through"><b>Éléments qui le traversent</b><ul>{repNow.t.map((x) => <li key={x}>{x}</li>)}</ul></div>
+              )}
+              <button className="bd-rep-all" onClick={() => setRep(null)}>{t('كل المعالم')}</button>
+            </div>
+          )}
+          {repsOn && !repNow && (
+            <ul className="bd-reps" dir="ltr" lang="fr">
+              {boneReps.map((r) => (
+                <li key={r.id}>
+                  <button onClick={() => pickRep(r)}><i />{r.n}{r.h ? <s> — {SIDE[r.h]}</s> : null}</button>
+                </li>
+              ))}
+            </ul>
+          )}
           {ins?.none && <p className="bd-hint">{t('لا ارتكازات مرسومة لهذه البنية.')}</p>}
           {ins && !ins.none && (
             <p className="bd-legend"><i className="o" />{t('المنشأ')}<i className="e" />{t('الانتهاء')}</p>
@@ -1009,7 +884,9 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
         <p className="bd-tip">{t('أدِر الجسم بإصبع، وكبّر بإصبعين، والمس أي بنية لتعرف اسمها')}</p>
       )}
 
-      {/* ---------------- the tools, one row, each with its name ---------------- */}
+      {/* ---------------- the tools, one row, each with its name ----------------
+          and the credit under them, however many lines it takes. */}
+      <div className="bd-foot">
       <nav className="bd-dock" aria-label={t('أدوات النموذج')}>
         <button onClick={() => toggle('layers')} data-on={panel === 'layers'}>
           <Icon name="layers" size={22} /><s>{t('الأجهزة')}</s>
@@ -1029,8 +906,8 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
           <Icon name="again" size={22} /><s>{t('إعادة')}</s>
         </button>
       </nav>
-
-      <p className="bd-credit" dir="ltr">{S.credit}</p>
+      <p className="bd-credit" dir="ltr">{S.credit}{extraCredit}</p>
+      </div>
     </div>
   );
 }

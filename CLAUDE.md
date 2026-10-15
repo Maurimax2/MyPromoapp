@@ -623,8 +623,23 @@ missing from both sources, and is not faked:
   Z-Anatomy's French definitions. The carve stops on any structure without a
   French name. The side is said as «— côté droit», which agrees with no noun.
 - **Descriptions**: `notes.js` where a regional model wrote one, then
-  `lib/anatomy/body-notes.js` (the limb nerves, written here), then Z-Anatomy's
-  French definitions (Wikipédia, CC BY-SA, credited on screen).
+  `lib/anatomy/body-notes.js` — which gathers `lib/anatomy/notes-body/`, one
+  file per system, written here — then Z-Anatomy's French definitions
+  (Wikipédia, CC BY-SA, credited on screen). **Every structure has one** (the
+  owner found too many without): after a re-carve, count the structures whose
+  `.defs.json` entry is empty, and write the missing ones rather than ship them.
+- **Landmarks (repères)**: 1,018 named points on 54 bones — tubercles,
+  processes, foramina with what runs through them — from the leader lines
+  Z-Anatomy draws for its labels (`scripts/carve-landmarks.mjs` →
+  `reperes.json`, French names in `lib/anatomy/landmark-names.js`). The end of
+  a leader that touches bone is the point; the bone's own surface says which
+  way it faces. **Two faces of a joint touch**, so nearest-bone put the head of
+  the radius on the ulna: a name that says whose it is («of femur», «of
+  frontal bone») is believed, and `BONE_OF` names the rest. A midline bone's
+  feature gets a side only when it exists on both (the sphenoid's two foramina
+  ovalia, not the foramen magnum). Searched like structures; «المعالم» on a
+  bone isolates it, shows its points, and steps through them one at a time
+  with the chosen one named on the model.
 - **Quiz 3D** in every lesson, on the lesson's structures and systems:
   «Où est-ce ?» (touch it — either side counts) or «Son nom ?» (the structure
   glows, four names from the same system and tissue). Ten questions per
@@ -633,6 +648,61 @@ missing from both sources, and is not faked:
   and its 1,000 `Resources/Descriptions/French definitions` in `../zanat/fr-defs`
   (both from github.com/LluisV/Z-Anatomy, branch PC-Version); the HRA files are
   fetched and cached in `../hra` by the script itself.
+
+## The viewer's engine (`lib/anatomy/stage.js`)
+
+- **Smoothness was the owner's first complaint after content** («zooming is
+  not smooth at all», against Visible Body's Atlas). Each system is drawn as a
+  few `BatchedMesh`es, one per tissue — five draw calls for the dressed body
+  where there were 760 — and the camera is `camera-controls` (MIT): inertia,
+  pinch zooms to where the fingers are, a double tap flies to the point.
+- **A sheet over the screen moves the picture, not the camera** — a view
+  offset, slid in. It was once a camera offset in metres, worked out at the
+  distance of the moment: a flight from the whole body to a foramen then left
+  the bone half a metre off screen. The region chips at the top count too.
+- **Framing fits what the sheets leave**, measured on the structure's own
+  vertices seen from the camera's direction (a femur at a slant is a thin
+  diagonal; its box is twice as big), never from straight above or below. A
+  view framed is framed again when a sheet opens, until a finger moves it.
+- **What is picked shows through what covers it**, faintly and only where
+  covered (a second pass drawn where something is in front): a femur found
+  by name under the thigh is found. Nothing around it is made see-through.
+- `?debug3d` in the address puts the stage on `window.__mpStage`; the
+  screenshot scripts use it to wait until the camera rests. **Test against a
+  build made with the mock's addresses**: `NEXT_PUBLIC_*` is baked into the
+  build, and a plain `next build` here bakes in the real Supabase.
+- On the software renderer the tests use, a frame of the dressed body takes
+  about a second; a camera "still moving" there is not a phone's experience.
+
+## L'oreille, from a scanner
+
+- Z-Anatomy's ear was ossicles, a cochlea, a vestibule and a membrane floating
+  in nothing — «just the middle and the inner ear». The lesson now opens the
+  **SPL Inner Ear Atlas** (Surgical Planning Laboratory, Brigham and Women's
+  Hospital): a high-resolution CT of a temporal bone, everything in it
+  segmented — the bone with its mastoid cells, the cochlea, the vestibule and
+  canals, the osseous spiral lamina, the round window, the ossicles and their
+  two muscles, the membrane, VII and VIII in their canals, the carotid, the
+  sigmoid sinus. `scripts/carve-oreille.mjs` (reads Slicer's VTK through
+  `scripts/vtk.mjs`).
+- **Its licence is not CC**: 3D Slicer licence part B — commercial use and
+  redistribution allowed, provided the licence text travels with the data and
+  a modified version says so. It does: `public/anatomy/body/LICENCE-oreille-SPL.txt`,
+  linked from the credit line whenever the scanner's systems are on. Never
+  use Brigham's name to promote the app; the licence forbids it.
+- **The specimen was scanned in whatever pose it lay**, at its own scale. It is
+  placed on the body's left ear by a similarity (rotation, one scale, shift)
+  fitted by closest points on what both sources have — ossicles, membrane,
+  cochlea, vestibule; nerves and vessels as weak guides. Both handednesses are
+  tried; the fit prints about 1.6 mm. The right ear is the mirror.
+- **The labyrinth is cut from its own anatomy**, not from Z-Anatomy's: the
+  osseous spiral lamina runs up the cochlea, so the wall within 1.6 mm of it
+  is the cochlea. Cut by nearness to Z-Anatomy's pieces, the whole labyrinth
+  fitted as one had its cochlea turned towards their vestibule.
+- Two systems, `rocher` (the bone) and `oreille` (the rest), so the bone can
+  open see-through over solid ossicles. Both are `only`: listed and searched
+  in the lessons that open them, not in Le corps entier. In a lesson, search
+  puts the lesson's own systems first and offers a name once.
 
 ## The female pelvis (lesson L'utérus et ses annexes)
 
