@@ -39,6 +39,11 @@ import {
 } from '@/lib/anatomy/body';
 
 const QUIZ_LENGTH = 10;
+// The three planes, by the axis across them. Their names are anatomy, so French.
+const CUTS = [['x', 'Sagittale'], ['z', 'Frontale'], ['y', 'Horizontale']];
+const CUT_NAME = Object.fromEntries(CUTS);
+// Where the camera goes to face each cut, for the side kept by default.
+const FACING = { x: [1, 0.08, 0.12], y: [0.05, 0.85, 0.5], z: [0.12, 0.08, 1] };
 const NOT_QUIZZED = new Set(['peau', 'fascias', 'insertions']);
 const shuffle = (list) => {
   const a = list.slice();
@@ -121,6 +126,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   const [error, setError] = useState('');
   const [region, setRegion] = useState(S.home);
   const [whole, setWhole] = useState(false);          // a lesson shown in the whole body
+  const [cut, setCut] = useState(null);               // { axis, at: 0..1 across the scene, flip }
   const [panel, setPanel] = useState(openQuiz ? 'quiz' : null);   // layers | search | quiz | planches | null
   const [plate, setPlate] = useState(null);           // a drawing open full screen
   const [picked, setPicked] = useState(null);         // a mesh id
@@ -239,13 +245,43 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
       const sheet = el.parentElement?.querySelector('.bd-panel, .bd-card, .bd-ask');
       const covered = sheet ? (sheet.getBoundingClientRect().height + 6) / Math.max(1, el.clientHeight) : 0;
       // The region chips lie over the top of the canvas.
-      const chips = el.parentElement?.querySelector('.bd-regions');
+      // The region chips and the cut's bar lie over the top of the canvas.
       const box = el.getBoundingClientRect();
-      const top = chips ? Math.max(0, chips.getBoundingClientRect().bottom - box.top) / Math.max(1, box.height) : 0;
+      const tops = [...(el.parentElement?.querySelectorAll('.bd-regions, .bd-cutbar') || [])].map((n) => n.getBoundingClientRect().bottom - box.top);
+      const top = Math.max(0, ...tops) / Math.max(1, box.height);
       api.current.setInset(Math.min(0.62, covered), Math.min(0.15, top));
     });
     return () => cancelAnimationFrame(id);
-  }, [panel, picked, reading, repsOn, rep, ins, !!quiz, quiz?.answered, quiz?.done]);
+  }, [panel, picked, reading, repsOn, rep, ins, !!quiz, quiz?.answered, quiz?.done, !!cut && !panel]);
+
+  // ------------------------------------------------------------------ the cut
+  // A plane through the scene — the lesson's part of the body, or the region
+  // looked at — slid along its axis. Choosing a plane turns the model to face
+  // the cut; sliding does not move the camera.
+  const cutBox = L?.box && !whole ? L.box : (index?.regions?.[region] || index?.regions?.corps || null);
+  useEffect(() => {
+    if (!api.current) return;
+    if (!cut || !cutBox) { api.current.setCut(null); return; }
+    const k = { x: 0, y: 1, z: 2 }[cut.axis];
+    const lo = cutBox[0][k], hi = cutBox[1][k];
+    api.current.setCut({ axis: cut.axis, at: lo + (hi - lo) * cut.at, flip: cut.flip });
+  }, [cut, cutBox]);
+  const faceCut = (axis, flip) => {
+    const [x, y, z] = FACING[axis];
+    const from = !flip ? [x, y, z] : axis === 'x' ? [-x, y, z] : axis === 'y' ? [x, -y, z] : [-x, y, -z];
+    const box = L?.box && !whole ? L.aim : cutBox;
+    if (box) api.current?.frame(box, from);
+  };
+  const chooseCut = (axis) => {
+    if (!axis) { setCut(null); return; }
+    setCut({ axis, at: 0.5, flip: false });
+    faceCut(axis, false);
+  };
+  const flipCut = () => {
+    if (!cut) return;
+    setCut({ ...cut, flip: !cut.flip });
+    faceCut(cut.axis, !cut.flip);
+  };
 
   // ---------------------------------------------------------------- taps
   const choose = useCallback((id, aim = false) => {
@@ -415,7 +451,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   };
 
   const reset = () => {
-    setPicked(null); setHidden([]); setAlone(false); setFollow(false); setQuiz(null); setIns(null); setPanel(null);
+    setPicked(null); setHidden([]); setAlone(false); setFollow(false); setQuiz(null); setIns(null); setPanel(null); setCut(null);
     if (L?.layers) {
       const o = opening();
       setState((p) => Object.fromEntries(Object.entries(p).map(([k, v]) => [k, { ...v, ...o[k] }])));
@@ -620,6 +656,15 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
               <button data-on={whole} onClick={() => showWhole(true)}>{t('الجسم كاملًا')}</button>
             </div>
           )}
+          <div className="bd-cut">
+            <b><Icon name="cut" size={16} />{t('قطع النموذج')}</b>
+            <div className="bd-seg">
+              <button data-on={!cut} onClick={() => chooseCut(null)}>{t('بلا')}</button>
+              {CUTS.map(([axis, name]) => (
+                <button key={axis} data-on={cut?.axis === axis} onClick={() => chooseCut(axis)} lang="fr">{name}</button>
+              ))}
+            </div>
+          </div>
           {!L && (
             <div className="bd-views" dir="ltr">
               {VIEWS.map((v) => <button key={v.id} onClick={() => applyView(v)}>{v.name}</button>)}
@@ -882,6 +927,20 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
 
       {!p && !panel && !quiz && !touched && (
         <p className="bd-tip">{t('أدِر الجسم بإصبع، وكبّر بإصبعين، والمس أي بنية لتعرف اسمها')}</p>
+      )}
+
+      {/* ---------------- the cut, slid while looking ---------------- */}
+      {/* Under an open panel it would cover the panel's own controls. */}
+      {cut && !panel && (
+        <div className="bd-cutbar" dir="ltr">
+          <Icon name="cut" size={18} />
+          <span lang="fr">{CUT_NAME[cut.axis]}</span>
+          <input type="range" min="0" max="1" step="0.005" value={cut.at}
+            onChange={(e) => { const at = Number(e.target.value); setCut((c) => (c ? { ...c, at } : c)); }}
+            aria-label={t('موضع القطع')} />
+          <button onClick={flipCut} aria-label={t('اقلب الجهة الباقية')}><Icon name="swap" size={18} /></button>
+          <button onClick={() => setCut(null)} aria-label={t('أزل القطع')}><Icon name="x" size={16} /></button>
+        </div>
       )}
 
       {/* ---------------- the tools, one row, each with its name ----------------

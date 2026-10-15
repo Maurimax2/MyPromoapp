@@ -5253,6 +5253,17 @@ html[dir='ltr'] [dir='rtl'] .flip-ltr { transform: none; }
 /* The tools: one row along the bottom, every button with its name under it.
    A column of bare glyphs down the side was a puzzle — a palette, a target,
    a pin — and it sat over the model. */
+/* The cut: a section in the systems panel, and a bar over the model to slide it while looking. */
+.bd-cut { margin: 4px 0 12px; }
+.bd-cut > b { display: flex; align-items: center; gap: 6px; font-size: 13.5px; margin-bottom: 6px; }
+.bd-cutbar {
+  position: absolute; top: 56px; inset-inline: 12px; z-index: 5; display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px 4px 12px; border-radius: 16px; background: rgba(16,23,19,.86); border: 1px solid rgba(255,255,255,.1);
+  color: #F3F1E9; font-size: 13px; font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.bd[data-lesson="true"] .bd-cutbar { top: 10px; }
+.bd-cutbar input { flex: 1; min-width: 0; accent-color: #E08A5E; height: 44px; }
+.bd-cutbar button { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #F3F1E9; background: rgba(255,255,255,.06); }
 /* The dock and the credit stacked at the bottom: a third line of credit (the
    scanner's ear) lifts the dock instead of sliding under it. */
 .bd-foot {
