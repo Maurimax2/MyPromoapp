@@ -614,7 +614,11 @@ missing from both sources, and is not faked:
 - **Each system has its own transparency.** A see-through system is blended as
   one surface (a depth-only twin per mesh draws first), inside to outside, so
   muscles at 20 % really are 20 % and the nerves under them read clearly. A tap
-  goes through a system under 50 % to what is behind it.
+  goes through a system under 50 % to what is behind it. **The depth pass is
+  pushed a hair back and the colour pass is strict (`LessDepth`, writing
+  depth, in a fixed order)**: with an equal test, coincident surfaces — the
+  auricle's overlapping skin patches, bones meeting at a suture — both passed
+  and shimmered on phones as the model turned, though never on a desktop.
 - **Thin structures are helped.** A tap that misses tries a ring of rays
   around the finger and takes the nearest nerve or vessel. «Suivre son trajet»
   draws a nerve or vessel above everything, so its whole course reads at once.
