@@ -111,7 +111,10 @@ Answer only what is true for you. The facts, for reference:
   under the 3D Slicer licence part B, which allows commercial use; its text
   is published beside the files (`/anatomy/body/LICENCE-oreille-SPL.txt`)
   and linked from the credit line. The deep-brain lesson uses the SPL-PNL
-  Brain Atlas under the same licence (`/anatomy/body/LICENCE-cerveau-SPL.txt`).
+  Brain Atlas under the same licence (`/anatomy/body/LICENCE-cerveau-SPL.txt`),
+  and «Le thorax au scanner» the Mauritanian Anatomy Laboratory Thoracic
+  Atlas (Faculty of Medicine of Nouakchott, published by the Open Anatomy
+  Project under the same licence, `/anatomy/nouakchott/LICENCE.txt`).
 - Anatomy drawings: Servier Medical Art (CC BY 4.0), credited under each.
 - Written descriptions of the structures are MyPromo's own; a few come
   from Wikipédia (CC BY-SA), credited on screen.

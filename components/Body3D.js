@@ -643,6 +643,8 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
   // A system from another source credits it while it is on, its licence one
   // tap away (the scanner's ear asks for its licence to travel with it).
   const credits = [...new Map(LAYERS.filter((l) => l.credit && state[l.id].on).map((l) => [l.credit, l.licence])).entries()];
+  // A body whose licence must travel with it links to it from its credit.
+  const setCredit = S.licence ? <a href={S.licence} target="_blank" rel="noreferrer">{S.credit}</a> : S.credit;
   const extraCredit = credits.map(([c, licence]) => (
     <span key={c}> · {licence ? <a href={licence} target="_blank" rel="noreferrer">{c}</a> : c}</span>
   ));
@@ -722,7 +724,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
           {hidden.length > 0 && (
             <button className="bd-wide" onClick={() => setHidden([])}>{t('أعد البنى المخفية ({n})', { n: hidden.length })}</button>
           )}
-          <p className="bd-credit-in" dir="ltr">{S.credit}{extraCredit}</p>
+          <p className="bd-credit-in" dir="ltr">{setCredit}{extraCredit}</p>
         </section>
       )}
 
@@ -1025,7 +1027,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
           <Icon name="again" size={22} /><s>{t('إعادة')}</s>
         </button>
       </nav>
-      <p className="bd-credit" dir="ltr">{S.credit}{extraCredit}</p>
+      <p className="bd-credit" dir="ltr">{setCredit}{extraCredit}</p>
       </div>
     </div>
   );

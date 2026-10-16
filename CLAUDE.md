@@ -737,6 +737,24 @@ missing from both sources, and is not faked:
 - Two systems, `irm` and `irm-blanche` (the white matter, opened at 12 %),
   both `only`. Z-Anatomy's brain stays in the panel.
 
+## Le thorax au scanner (Nouakchott)
+
+- The **Mauritanian Anatomy Laboratory Thoracic Atlas** — H. Guermazi,
+  A. Moulaye Idriss, T. Yahya, Faculty of Medicine of the University of
+  Nouakchott Al Aasriya, with the National Cardiovascular Centre; Open Anatomy
+  Project, Slicer licence part B — is one man's thorax from a CT: five lobes,
+  the airways to the segmental bronchi, heart and coronaries, great and
+  pulmonary vessels, oesophagus, thoracic skeleton. Made by the students' own
+  faculty, so it is credited by name on its screen.
+- Its zip link is dead (404) but the viewer's unpacked files are served:
+  `atlasStructure.json`, then each structure's **GeometrySelector** file
+  under `models/` (the first selector is the label map, not the mesh).
+- A clinical CT is in RAS millimetres, so it needs no fitting: (x, y, z) →
+  (−x, z, y) × 0.001 is a rotation and keeps the winding. Its own set,
+  `nouakchott` (`scripts/carve-nouakchott.mjs`), opened by the PCEM1 S2
+  lesson «Le thorax au scanner». Pulmonary arteries are drawn blue and
+  pulmonary veins red (kinds `pulmart`, `pulmvein`), as plates draw them.
+
 ## The female pelvis (lesson L'utérus et ses annexes)
 
 - **A separate body, never drawn inside the male one**, and never alone in
