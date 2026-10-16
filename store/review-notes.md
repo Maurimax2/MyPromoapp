@@ -110,7 +110,8 @@ Answer only what is true for you. The facts, for reference:
   ear lesson uses the SPL Inner Ear Atlas (Brigham and Women's Hospital),
   under the 3D Slicer licence part B, which allows commercial use; its text
   is published beside the files (`/anatomy/body/LICENCE-oreille-SPL.txt`)
-  and linked from the credit line.
+  and linked from the credit line. The deep-brain lesson uses the SPL-PNL
+  Brain Atlas under the same licence (`/anatomy/body/LICENCE-cerveau-SPL.txt`).
 - Anatomy drawings: Servier Medical Art (CC BY 4.0), credited under each.
 - Written descriptions of the structures are MyPromo's own; a few come
   from Wikipédia (CC BY-SA), credited on screen.
