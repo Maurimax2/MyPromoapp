@@ -715,6 +715,28 @@ missing from both sources, and is not faked:
   in the lessons that open them, not in Le corps entier. In a lesson, search
   puts the lesson's own systems first and offers a name once.
 
+## Le diencéphale et les noyaux gris, from an MRI
+
+- Z-Anatomy has one thalamus and one hypothalamus; the lecture is taught
+  nucleus by nucleus. The lesson opens the **SPL-PNL Brain Atlas** (Brigham
+  and Women's Hospital, the same Slicer licence part B as the ear, its text in
+  `public/anatomy/body/LICENCE-cerveau-SPL.txt`): one healthy brain from a 3 T
+  MRI — ten thalamic nuclei and the internal medullary lamina, five
+  hypothalamic regions, the subthalamic nucleus, the substantia nigra, both
+  pallidal segments, the accumbens, the claustrum, the hypophysis and pineal,
+  the cerebellar nuclei, the ventricles, the white matter.
+  `scripts/carve-cerveau.mjs`, sharing `scripts/spl-lib.mjs` with the ear.
+- **Fitted on both sides.** Z-Anatomy stores one side of most of the brain
+  and mirrors it at carve time; the fit mirrors it too, or half the guides
+  are missing and the cortex is compared with one hemisphere (16 mm off; 3.5
+  mm once mirrored).
+- **Each nucleus keeps the atlas's colour** (`t` in the manifest, kind
+  `atlas`, drawn over white): a thalamus in ten shades of one grey teaches
+  nothing. Lightened, because the atlas's colours are dark under a studio
+  light.
+- Two systems, `irm` and `irm-blanche` (the white matter, opened at 12 %),
+  both `only`. Z-Anatomy's brain stays in the panel.
+
 ## The female pelvis (lesson L'utérus et ses annexes)
 
 - **A separate body, never drawn inside the male one**, and never alone in

@@ -146,7 +146,7 @@ export function fit(guides, mirror) {
   const per = guides.map((g) => {
     let e = 0;
     for (const q of g.src) e += g.near(...move(T, M(q)))[3];
-    return `${g.f.replace(/Model_\d+_|\.vtk/g, '')} ${(e / g.src.length * 1000).toFixed(1)}`;
+    return `${g.label || g.f.replace(/Model_\d+_|\.vtk/g, '')} ${(e / g.src.length * 1000).toFixed(1)}`;
   });
   return { mirror, T, err, per };
 }

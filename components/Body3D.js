@@ -739,7 +739,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
             {found.map((hit) => (
               <li key={hit.id}>
                 <button onClick={() => jumpTo(hit)}>
-                  <i style={{ background: TINT[hit.k] || '#FFB020' }} />
+                  <i style={{ background: hit.t || TINT[hit.k] || '#FFB020' }} />
                   <span className="grow" dir="ltr"><b>{fullName(hit.layer === 'reperes' ? { n: hit.n, s: hit.s || hit.h } : hit)}</b><s>{hit.layer === 'reperes' ? `Repère osseux · ${hit.bone}` : layerOf(hit.layer)?.name}{hit.r ? ` · ${regionName(hit.r)}` : ''}</s></span>
                 </button>
               </li>
@@ -869,7 +869,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
       {p && !quiz && !panel && (
         <section className="bd-card">
           <div className="bd-card-h">
-            <i style={{ background: TINT[p.k] }} />
+            <i style={{ background: p.t || TINT[p.k] }} />
             <div className="grow" dir="ltr">
               <b>{p.n}</b>
               <s>{[p.s ? SIDE[p.s] : null, p.o ? `sur : ${p.o}` : null, layerOf(pLayer)?.name, p.r ? regionName(p.r) : null].filter(Boolean).join(' · ')}</s>
@@ -991,7 +991,7 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
                   {here.map((e) => (
                     <li key={e.item.id}>
                       <button onClick={() => { setPanel(null); choose(e.item.id); }}>
-                        <i style={{ background: TINT[e.item.k] || TINT[l.tint] }} />
+                        <i style={{ background: e.item.t || TINT[e.item.k] || TINT[l.tint] }} />
                         <span className="grow"><b>{fullName(e.item)}</b>{e.item.r ? <s>{regionName(e.item.r)}</s> : null}</span>
                       </button>
                     </li>
