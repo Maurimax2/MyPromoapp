@@ -667,6 +667,13 @@ missing from both sources, and is not faked:
 - **What is picked shows through what covers it**, faintly and only where
   covered (a second pass drawn where something is in front): a femur found
   by name under the thigh is found. Nothing around it is made see-through.
+- **Coupe**: one clipping plane — sagittal, frontal or horizontal — chosen in
+  الأجهزة and slid from a bar over the model. What it opens is drawn flat and
+  darker from behind, so a section reads solid; taps ignore what was cut
+  away. A horizontal cut names its vertebral level («Niveau T7»), takes the
+  camera up and down with it, and lists what it passes through, trunk before
+  the hanging arms — the owner asked to cut transversely «and see what's on
+  each level».
 - `?debug3d` in the address puts the stage on `window.__mpStage`; the
   screenshot scripts use it to wait until the camera rests. **Test against a
   build made with the mock's addresses**: `NEXT_PUBLIC_*` is baked into the

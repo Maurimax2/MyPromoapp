@@ -265,18 +265,42 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
     const k = { x: 0, y: 1, z: 2 }[cut.axis];
     const lo = cutBox[0][k], hi = cutBox[1][k];
     api.current.setCut({ axis: cut.axis, at: lo + (hi - lo) * cut.at, flip: cut.flip });
+    if (cut.axis === 'y') api.current.followHeight(lo + (hi - lo) * cut.at);
   }, [cut, cutBox]);
-  const faceCut = (axis, flip) => {
+  const faceCut = (axis, flip, at = cut?.at ?? 0.5) => {
     const [x, y, z] = FACING[axis];
     const from = !flip ? [x, y, z] : axis === 'x' ? [-x, y, z] : axis === 'y' ? [x, -y, z] : [-x, y, -z];
-    const box = L?.box && !whole ? L.aim : cutBox;
+    let box = L?.box && !whole ? L.aim : cutBox;
+    // Looked at from above, a section is a slab, not the whole body below it.
+    if (box && axis === 'y' && cutBox) {
+      const h = cutBox[0][1] + (cutBox[1][1] - cutBox[0][1]) * at;
+      const slab = Math.max(0.03, (cutBox[1][1] - cutBox[0][1]) * 0.06);
+      box = [[box[0][0], h - slab, box[0][2]], [box[1][0], h + slab * 0.3, box[1][2]]];
+    }
     if (box) api.current?.frame(box, from);
   };
   const chooseCut = (axis) => {
     if (!axis) { setCut(null); return; }
     setCut({ axis, at: 0.5, flip: false });
-    faceCut(axis, false);
+    faceCut(axis, false, 0.5);
   };
+  // A horizontal cut says which vertebra it passes: «Niveau T8» is how a
+  // section is named in every atlas of cross-sectional anatomy.
+  const cutLevel = (() => {
+    if (!cut || cut.axis !== 'y' || !cutBox || !api.current) return null;
+    const y = cutBox[0][1] + (cutBox[1][1] - cutBox[0][1]) * cut.at;
+    let best = null;
+    for (const e of items.current.values()) {
+      if (e.layer !== 'squelette' || !/^(Vertèbre [CTL]\d+|Atlas|Axis|Sacrum|Coccyx)/.test(e.item.n)) continue;
+      const b = api.current.boxOf(e.item.id);
+      if (!b) continue;
+      const d = y < b[0][1] ? b[0][1] - y : y > b[1][1] ? y - b[1][1] : 0;
+      if (!best || d < best.d) best = { d, n: e.item.n };
+    }
+    return best && best.d < 0.03 ? best.n.replace(/^Vertèbre /, '') : null;
+  })();
+  const [through, setThrough] = useState([]);
+  const openThrough = () => { setThrough(api.current?.cutThrough() || []); setPanel('coupe'); };
   const flipCut = () => {
     if (!cut) return;
     setCut({ ...cut, flip: !cut.flip });
@@ -933,14 +957,50 @@ export default function Body3D({ set = 'corps', start = null, quiz: openQuiz = f
       {/* Under an open panel it would cover the panel's own controls. */}
       {cut && !panel && (
         <div className="bd-cutbar" dir="ltr">
-          <Icon name="cut" size={18} />
-          <span lang="fr">{CUT_NAME[cut.axis]}</span>
-          <input type="range" min="0" max="1" step="0.005" value={cut.at}
+          <div className="bd-cutbar-h">
+            <Icon name="cut" size={18} />
+            <span lang="fr">{CUT_NAME[cut.axis]}{cutLevel ? <b> · Niveau {cutLevel}</b> : null}</span>
+            <button onClick={openThrough} aria-label={t('ما يمرّ به القطع')}><Icon name="list" size={18} /></button>
+            <button onClick={flipCut} aria-label={t('اقلب الجهة الباقية')}><Icon name="swap" size={18} /></button>
+            <button onClick={() => setCut(null)} aria-label={t('أزل القطع')}><Icon name="x" size={16} /></button>
+          </div>
+          <input type="range" min="0" max="1" step="0.002" value={cut.at}
             onChange={(e) => { const at = Number(e.target.value); setCut((c) => (c ? { ...c, at } : c)); }}
             aria-label={t('موضع القطع')} />
-          <button onClick={flipCut} aria-label={t('اقلب الجهة الباقية')}><Icon name="swap" size={18} /></button>
-          <button onClick={() => setCut(null)} aria-label={t('أزل القطع')}><Icon name="x" size={16} /></button>
         </div>
+      )}
+
+      {/* ---------------- what the cut passes through ---------------- */}
+      {panel === 'coupe' && (
+        <section className="bd-panel">
+          <div className="bd-panel-h">
+            <b>{t('ما في المقطع ({n})', { n: through.length })}</b>
+            <button onClick={() => setPanel(null)} aria-label={t('إغلاق')}><Icon name="x" size={18} /></button>
+          </div>
+          {cut && <p className="bd-hint" dir="ltr" lang="fr">Coupe {CUT_NAME[cut.axis].toLowerCase()}{cutLevel ? ` · niveau ${cutLevel}` : ''}</p>}
+          {!through.length && <p className="bd-hint">{t('لا شيء ظاهر في هذا المستوى.')}</p>}
+          {LAYERS.map((l) => {
+            const limb = (e) => (/^membre/.test(e.item.r || '') ? 1 : 0);
+            const here = through.map((id) => items.current.get(id)).filter((e) => e && e.layer === l.id)
+              .sort((a, b) => limb(a) - limb(b) || a.item.n.localeCompare(b.item.n, 'fr'));
+            if (!here.length) return null;
+            return (
+              <div key={l.id} className="bd-through-g">
+                <b dir="ltr"><i style={{ background: TINT[l.tint] }} />{l.name}</b>
+                <ul className="bd-found" dir="ltr" lang="fr">
+                  {here.map((e) => (
+                    <li key={e.item.id}>
+                      <button onClick={() => { setPanel(null); choose(e.item.id); }}>
+                        <i style={{ background: TINT[e.item.k] || TINT[l.tint] }} />
+                        <span className="grow"><b>{fullName(e.item)}</b>{e.item.r ? <s>{regionName(e.item.r)}</s> : null}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </section>
       )}
 
       {/* ---------------- the tools, one row, each with its name ----------------
