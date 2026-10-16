@@ -105,7 +105,15 @@ Answer only what is true for you. The facts, for reference:
   September); the terms of use say some answers are MyPromo's and may be
   wrong.
 - 3D anatomy: BodyParts3D (© The Database Center for Life Science, CC BY
-  4.0) and Z-Anatomy (CC BY-SA 4.0), credited on each model's screen.
+  4.0) and Z-Anatomy (CC BY-SA 4.0), credited on each model's screen. The
+  female pelvis is from the Human Reference Atlas (HuBMAP, CC BY 4.0). The
+  ear lesson uses the SPL Inner Ear Atlas (Brigham and Women's Hospital),
+  under the 3D Slicer licence part B, which allows commercial use; its text
+  is published beside the files (`/anatomy/body/LICENCE-oreille-SPL.txt`)
+  and linked from the credit line.
+- Anatomy drawings: Servier Medical Art (CC BY 4.0), credited under each.
+- Written descriptions of the structures are MyPromo's own; a few come
+  from Wikipédia (CC BY-SA), credited on screen.
 
 In App Store Connect → App Information → **Content Rights**, the question is
 «Does your app contain, show, or access third-party content?» — the answer

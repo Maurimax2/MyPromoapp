@@ -53,34 +53,80 @@ These change the live app, so they are yours to do:
 
 ## 3. The day Apple approves the account
 
-In this order; `codemagic.yaml` has the same steps at its top.
+Approved on 16 October 2026. There is no Mac: Codemagic builds the app on
+one of its own, and everything below happens in a browser. In this order —
+each step needs the one before it. `codemagic.yaml` has the same list at its
+top.
 
-1. developer.apple.com → **Identifiers** → (+) App ID `com.mypromo.app`,
-   tick **Push Notifications**.
-2. **Keys** → (+) → APNs key → download the `.p8` → put `APNS_KEY`,
-   `APNS_KEY_ID`, `APNS_TEAM_ID` on Vercel (SETUP.md, «…and three more for
-   the iPhone app») → redeploy.
-3. App Store Connect → **Users and Access → Integrations → App Store Connect
-   API** → new key, role App Manager. Add it in Codemagic → Teams →
-   Integrations, named `mypromo`.
-4. App Store Connect → **Apps → (+) New App**: iOS, name `MyPromo`, primary
-   language Arabic, bundle id `com.mypromo.app`, SKU `mypromo-ios`.
-5. Codemagic → this repo → workflow **MyPromo iOS → TestFlight** → Start.
-   About 20 minutes; the build appears in TestFlight.
-6. Install it from TestFlight on an iPhone (yours, or a classmate's). Check:
-   sign in, a lecture opens, a quiz works, the 3D model turns, notifications
-   switch on (then اللوحة ← إعلان للطلبة ← جرّب على هاتفي), a study room
-   asks for the microphone only when you turn it on.
-7. Fill the App Store page:
-   - App Information: category, content rights (`review-notes.md` §4),
-     age rating (`privacy-answers.md`).
-   - App Privacy (`privacy-answers.md`) and the privacy URL.
-   - Version 1.0: screenshots `ios-ar` (and `ios-fr` in the French
-     localisation), promotional text, description, keywords, support URL
-     (`listing.md`), the build from TestFlight.
-   - App Review Information: account and notes (`review-notes.md` §2).
-8. **Add for Review → Submit.** The first review usually takes one to
-   three days.
+**On developer.apple.com → Certificates, IDs & Profiles**
+
+1. **Identifiers** → (+) → App IDs → App → Continue. Description `MyPromo`,
+   Bundle ID **Explicit** `com.mypromo.app`. Scroll down, tick **Push
+   Notifications** → Continue → Register.
+2. **Keys** → (+). Name `MyPromo push`, tick **Apple Push Notifications
+   service (APNs)** → Continue → Register → **Download**. The `.p8`
+   downloads once only; keep it. Put it on Vercel as `APNS_KEY` (the file
+   pasted whole), `APNS_KEY_ID` (the 10 characters beside the key) and
+   `APNS_TEAM_ID` (top right of the account page), then redeploy
+   (SETUP.md, «…and three more for the iPhone app»).
+
+**On appstoreconnect.apple.com**
+
+3. **Users and Access → Integrations → App Store Connect API** (the first
+   time, **Request Access**, then accept). **Team Keys** → (+): name
+   `Codemagic`, access **App Manager** → Generate. Download the `.p8`
+   (once only) and note the **Issuer ID** (above the list) and the **Key ID**.
+4. **Apps → (+) → New App**: iOS, name `MyPromo`, primary language Arabic,
+   bundle id `com.mypromo.app`, SKU `mypromo-ios`, full access. If the
+   name is taken on the store, `MyPromo — طلاب الطب` reads the same.
+
+**On codemagic.io** (sign up with the GitHub account that owns the repo)
+
+5. **Add application** → GitHub → `MyPromoapp` → it finds `codemagic.yaml`.
+6. **Team settings → Team integrations → Developer Portal → Connect**:
+   name it `mypromo` (exactly — the yaml asks for that name), paste the
+   Issuer ID and Key ID from step 3, upload its `.p8`.
+7. **Team settings → codemagic.yaml settings → Code signing identities →
+   iOS certificates → Generate certificate**: type **Apple Distribution**,
+   key `mypromo` → Create. If it offers the certificate to download, keep
+   the file and its password.
+
+**Back on developer.apple.com**
+
+8. **Profiles** → (+) → Distribution → **App Store Connect** → App ID
+   `com.mypromo.app` → the certificate from step 7 (created today) → name
+   `MyPromo App Store` → Generate.
+
+**Back on codemagic.io**
+
+9. Code signing identities → **iOS provisioning profiles → Fetch profiles**
+   → tick `MyPromo App Store` → Download selected. Codemagic now has both
+   halves of the signature; without them the build stops at «Apply the
+   signing files».
+10. The app → **Start new build** → branch `claude/mypromo-web-kickoff-mwtduw`
+    (any branch would do: the app is a frame around the live site) →
+    workflow **MyPromo iOS → TestFlight**. About 20 minutes, then Apple
+    processes it for 10 to 30 more; it appears in App Store Connect →
+    TestFlight. The encryption question is answered in the app itself.
+
+**Then**
+
+11. App Store Connect → TestFlight → **Internal Testing** → (+) a group, add
+    yourself; install **TestFlight** on an iPhone (yours or a classmate's, who
+    must be added the same way) and the app from it. Check: sign in, a
+    lecture opens, a quiz works, the 3D model turns, notifications switch on
+    (then اللوحة ← إعلان للطلبة ← جرّب على هاتفي), a study room asks for the
+    microphone only when you turn it on, a photo can be posted.
+12. Fill the App Store page:
+    - App Information: category Education, content rights
+      (`review-notes.md` §4), age rating (`privacy-answers.md`).
+    - App Privacy (`privacy-answers.md`) and the privacy URL.
+    - Version 1.0: screenshots `ios-ar` (and `ios-fr` in the French
+      localisation), promotional text, description, keywords, support URL
+      (`listing.md`), and the build from TestFlight.
+    - App Review Information: account and notes (`review-notes.md` §2).
+13. **Add for Review → Submit.** The first review usually takes one to
+    three days.
 
 ## While a review is open
 
