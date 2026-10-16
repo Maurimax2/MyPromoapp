@@ -44,7 +44,7 @@ await p.locator('input[type=email]').fill('owner@unem.mr'); await pw.fill('x');
 await Promise.all([p.waitForURL((u) => !u.pathname.startsWith('/login'), { timeout: 60000 }).catch(() => {}), p.locator('form button.btn.p').click()]);
 await p.waitForTimeout(2500);
 
-const PAGES = (process.env.SHOTS || '/feed:feed,/study:study,/model/crane:model,/duel:duel,/points:points,/notes:notes,/profile:me')
+const PAGES = (process.env.SHOTS || '/feed:feed,/study:study,/anatomie/pcem2/s1/vaisseaux-tete-cou:model:35000,/duel:duel,/points:points,/notes:notes,/profile:me')
   .split(',').map((x) => x.split(':'));
 for (const [path, name, wait] of PAGES) {
   await p.goto(`${B}${path}`, { waitUntil: 'domcontentloaded', timeout: 180000 });
