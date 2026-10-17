@@ -33,6 +33,10 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  // An app, not a page: an iPhone zooms in when a field is focused and leaves the
+  // page zoomed after the keyboard closes. Together with the 16px fields in
+  // globals.css this keeps the screen where it was.
+  maximumScale: 1,
   themeColor: '#2A5B3E',
   // The app draws its own bar along the bottom; on a notched phone it has to
   // reach the edge of the glass rather than stopping above it.

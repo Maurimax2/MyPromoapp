@@ -5482,3 +5482,9 @@ html[dir='ltr'] [dir='rtl'] .flip-ltr { transform: none; }
 .pl-view-foot { display: flex; align-items: center; gap: 8px; padding: 8px 12px calc(10px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
 .pl-view-foot p { flex: 1; margin: 0; text-align: center; font-size: 10.5px; color: var(--ink-3); }
 .pl-view-foot a { color: var(--olive); }
+
+/* iPhone zooms into any field whose text is under 16px and stays zoomed when the
+   keyboard closes. Every field is 16px there, whatever its own rule says. */
+@supports (-webkit-touch-callout: none) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), textarea, select { font-size: 16px !important; }
+}
