@@ -18,6 +18,7 @@
   },
   "ios": {
     "backgroundColor": "#F3F1E9",
-    "contentInset": "always"
+    "contentInset": "never",
+    "allowsLinkPreview": false
   }
 }

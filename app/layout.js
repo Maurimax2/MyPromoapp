@@ -3,6 +3,7 @@ import { Readex_Pro } from 'next/font/google';
 import BottomNav from '@/components/BottomNav';
 import PushListener from '@/components/PushListener';
 import Heartbeat from '@/components/Heartbeat';
+import StatusBar from '@/components/StatusBar';
 import { LangProvider } from '@/components/Lang';
 import { getLang, dictOf } from '@/lib/lang';
 import { dirOf } from '@/lib/i18n';
@@ -58,6 +59,7 @@ export default async function RootLayout({ children }) {
           </div>
           <PushListener />
           <Heartbeat />
+          <StatusBar />
         </LangProvider>
       </body>
     </html>

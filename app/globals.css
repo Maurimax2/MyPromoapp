@@ -36,7 +36,9 @@
   --shadow-nav: 0 -1px 18px rgba(23, 32, 26, .07);
   --r-card: 17px;
   --r-tile: 14px;
-  --nav-h: 76px;
+  /* The bar and the home bar under it, on a phone that has one. Every screen
+     that keeps room for the bar asks for this, so it is said once. */
+  --nav-h: calc(76px + env(safe-area-inset-bottom, 0px));
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +103,9 @@ a, button, [role='button'], label, input, select, textarea, summary {
 /* ---------- header ---------- */
 .head {
   background: var(--bg);
-  padding: 18px 18px 14px;
+  /* Under the clock on a phone drawn edge to edge (the iPhone app, Android's
+     recent WebView); nothing there anywhere else. */
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 18px 14px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -272,7 +276,7 @@ a, button, [role='button'], label, input, select, textarea, summary {
   width: 100%; max-width: var(--app-w); height: var(--nav-h);
   background: var(--surface); border-top: 1px solid var(--line-soft);
   box-shadow: var(--shadow-nav);
-  display: flex; align-items: center; padding: 0 4px; z-index: 10;
+  display: flex; align-items: center; padding: 0 4px env(safe-area-inset-bottom, 0px); z-index: 10;
   /* It arrives a beat after the screen it belongs to — measured at about a
      quarter of a second — and snapping into place afterwards is what made
      the bar look finished while the page behind it was still empty. It
@@ -936,7 +940,7 @@ button.pill:active { transform: scale(.94); }
 }
 
 /* ---------- public pages: privacy, delete-account ---------- */
-.legal { min-height: 100dvh; padding: 18px 20px 48px; background: var(--bg); color: var(--ink); line-height: 1.9; font-size: 15px; }
+.legal { min-height: 100dvh; padding: calc(18px + env(safe-area-inset-top, 0px)) 20px calc(48px + env(safe-area-inset-bottom, 0px)); background: var(--bg); color: var(--ink); line-height: 1.9; font-size: 15px; }
 .legal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .legal-brand { font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); text-decoration: none; }
 .legal-brand b { color: var(--olive); }
@@ -1573,8 +1577,10 @@ button.pill:active { transform: scale(.94); }
   width: 100%; max-width: var(--app-w); z-index: 11;
   background: var(--surface); border-top: 1px solid var(--line-soft);
   box-shadow: var(--shadow-nav);
-  display: flex; align-items: center; gap: 9px; padding: 11px 14px 14px;
+  display: flex; align-items: center; gap: 9px; padding: 11px 14px calc(14px + env(safe-area-inset-bottom, 0px));
 }
+/* Typing, it sits on the keyboard, and the home bar is under the keyboard. */
+.say-new:focus-within { padding-bottom: 14px; }
 .say-new input {
   flex: 1; height: 44px; border-radius: 22px; border: 1px solid var(--line);
   background: var(--bg); padding: 0 15px; font: inherit; font-size: 15px; color: var(--ink);
@@ -2574,7 +2580,7 @@ html:has(.lp) { scroll-behavior: smooth; }
     radial-gradient(700px 480px at -6% 104%, rgba(217, 180, 74, .14), transparent 60%),
     linear-gradient(170deg, #134A2D 0%, #0F3322 55%, #0B2618 100%);
 }
-.lp-top { display: flex; align-items: center; justify-content: space-between; min-height: 54px; }
+.lp-top { display: flex; align-items: center; justify-content: space-between; min-height: calc(54px + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); }
 .lp-brand { display: inline-flex; align-items: center; gap: 9px; }
 .lp-brand b { font-family: var(--lp-mark), 'Poppins', sans-serif; font-weight: 800; font-size: 21px; letter-spacing: -.3px; }
 .lp-lang { font-family: var(--lp-mark), 'Poppins', sans-serif; font-weight: 700; font-size: 13px; color: rgba(255, 255, 255, .82); border: 1.5px solid rgba(255, 255, 255, .35); border-radius: 999px; padding: 6px 14px; min-height: 30px; display: inline-flex; align-items: center; }
@@ -3749,7 +3755,8 @@ button.pts-b:active { background: var(--olive-pale); }
 .sj { display: flex; flex-direction: column; padding-bottom: calc(var(--nav-h) + 84px); }
 
 .sj-hero {
-  position: relative; color: #FFFDF8; padding: 12px 16px 22px; border-radius: 0 0 30px 30px; min-height: 250px;
+  position: relative; color: #FFFDF8; border-radius: 0 0 30px 30px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 22px; min-height: calc(250px + env(safe-area-inset-top, 0px));
   background: var(--sj-bg);
   background: radial-gradient(130% 110% at 10% 20%, color-mix(in srgb, var(--sj-bg) 82%, #fff) 0%, var(--sj-bg) 48%, color-mix(in srgb, var(--sj-bg) 72%, #000) 100%);
 }
@@ -3766,7 +3773,7 @@ button.pts-b:active { background: var(--olive-pale); }
 .sj-sem a[data-on='true'] { background: #FFFDF8; color: var(--sj-bg); }
 
 .sj-model {
-  position: absolute; inset-inline-end: 0; top: 58px; height: 200px; max-width: 50%; object-fit: contain; z-index: 1;
+  position: absolute; inset-inline-end: 0; top: calc(58px + env(safe-area-inset-top, 0px)); height: 200px; max-width: 50%; object-fit: contain; z-index: 1;
   filter: drop-shadow(0 20px 24px rgba(0,0,0,.4)); animation: sj-hero 6.5s ease-in-out infinite; pointer-events: none;
 }
 .sj-hero-t { position: relative; z-index: 2; width: 54%; margin-top: 10px; display: flex; flex-direction: column; }
@@ -4134,7 +4141,7 @@ button.pts-b:active { background: var(--olive-pale); }
   position: relative; min-height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
   background: radial-gradient(120% 70% at 50% 0%, #26352B 0%, #17201A 55%, #101712 100%); color: #F3F1E9;
 }
-.ar-top { display: flex; align-items: center; gap: 8px; padding: 14px 16px 0; }
+.ar-top { display: flex; align-items: center; gap: 8px; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 0; }
 .ar-top > b { text-align: center; font-size: 14px; font-weight: 600; opacity: .8; }
 .ar-x, .ar-x-pad { width: 44px; height: 44px; flex-shrink: 0; }
 .ar-x { border-radius: 50%; background: rgba(255,255,255,.08); color: #F3F1E9; display: flex; align-items: center; justify-content: center; }
@@ -4302,7 +4309,7 @@ button.pts-b:active { background: var(--olive-pale); }
 
 .rm { display: flex; flex-direction: column; min-height: 100dvh; }
 .rm-top {
-  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 14px 16px 10px; background: var(--bg);
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 10px; background: var(--bg);
 }
 .rm-back { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); color: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .rm-top .grow { min-width: 0; display: flex; flex-direction: column; }
@@ -4388,6 +4395,7 @@ button.pts-b:active { background: var(--olive-pale); }
   display: flex; align-items: center; gap: 8px; padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
   background: var(--bg); border-top: 1px solid var(--line-soft);
 }
+.rm-foot:focus-within { padding-bottom: 12px; }
 .rm-foot input {
   flex: 1; min-width: 0; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line);
   background: var(--surface); font: inherit; font-size: 13.5px; color: var(--ink); outline: 0;
@@ -4421,7 +4429,7 @@ button.pts-b:active { background: var(--olive-pale); }
   flex: 1; display: flex; flex-direction: column; min-height: 100dvh; color: #F3F1E9;
   background: radial-gradient(100% 60% at 50% 40%, #26352C 0%, #141C17 60%, #0B100D 100%);
 }
-.m3d-top { display: flex; align-items: center; gap: 10px; padding: 14px 16px 8px; position: relative; z-index: 5; }
+.m3d-top { display: flex; align-items: center; gap: 10px; padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 8px; position: relative; z-index: 5; }
 .m3d-back {
   width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
   color: #F3F1E9; display: flex; align-items: center; justify-content: center;
@@ -5496,3 +5504,18 @@ a, img, button { -webkit-touch-callout: none; }
 a { -webkit-user-drag: none; }
 body { -webkit-tap-highlight-color: transparent; }
 body *:not(input):not(textarea):not([contenteditable]):not(.selectable):not(.selectable *) { -webkit-touch-callout: none; }
+
+/* The strip under the clock (components/StatusBar.js). Drawn only once the page
+   has scrolled, in the colour the screen starts with; under the sheets and the
+   full-screen views, which bring their own colour. Hit-testable while drawn,
+   so the clock's colour is read from it and not from what scrolls beneath. */
+.sb-shade {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--sb, var(--bg));
+  visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s;
+}
+html[data-scrolled] .sb-shade { visibility: visible; opacity: 1; }
+/* A button or a bar's label is not text to select. */
+button, .nav, .head-t, .head-s { -webkit-user-select: none; user-select: none; }
+.only-pages .sb-shade { display: none; }

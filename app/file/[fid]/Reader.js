@@ -13,6 +13,7 @@ import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
 import { opened } from '@/lib/resume';
 import { useT } from '@/components/Lang';
+import { edgeToEdge } from '@/components/StatusBar';
 
 export default function Reader({ fid, src, title, subject = null }) {
   const t = useT();
@@ -32,7 +33,21 @@ export default function Reader({ fid, src, title, subject = null }) {
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('only-pages', full);
-    return () => root.classList.remove('only-pages');
+    // Inside the app, the clock goes too, the way a reader app does it.
+    let bars = null;
+    let over = false;
+    if (full && edgeToEdge()) {
+      import('@capacitor/core').then(({ SystemBars }) => {
+        if (over) return;
+        bars = SystemBars;
+        SystemBars.hide({ bar: 'StatusBar' }).catch(() => {});
+      }).catch(() => {});
+    }
+    return () => {
+      over = true;
+      root.classList.remove('only-pages');
+      bars?.show({ bar: 'StatusBar' }).catch(() => {});
+    };
   }, [full]);
 
   useEffect(() => {
