@@ -5488,3 +5488,11 @@ html[dir='ltr'] [dir='rtl'] .flip-ltr { transform: none; }
 @supports (-webkit-touch-callout: none) {
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), textarea, select { font-size: 16px !important; }
 }
+
+/* An app, not a page: no long-press menu or preview window on a link or a picture,
+   no blue flash on touch, no rubber-banding of the whole page. Text students write
+   and read stays selectable. */
+a, img, button { -webkit-touch-callout: none; }
+a { -webkit-user-drag: none; }
+body { -webkit-tap-highlight-color: transparent; }
+body *:not(input):not(textarea):not([contenteditable]):not(.selectable):not(.selectable *) { -webkit-touch-callout: none; }

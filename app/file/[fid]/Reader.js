@@ -23,50 +23,26 @@ export default function Reader({ fid, src, title, subject = null }) {
   // reasoning is in lib/resume.js.
   useEffect(() => { opened({ fid, title, subject }); }, [fid, title, subject]);
 
-  // Two things happen at once, because neither is enough on its own.
-  //
-  // The class is ours. It takes away the header and this bar, drops the width
-  // the page is held to, and works in every browser — which matters, because
-  // the one that refuses the other half must still end up with a full screen
-  // of pages rather than nothing having happened.
-  //
-  // Fullscreen is the browser's, and it takes away the address bar too. On a
-  // tablet held sideways that is the inch that decides whether a page fits.
+  // Full screen is ours alone. The class takes away the header and this bar and
+  // drops the width the page is held to, and that is all of it. The browser's
+  // own fullscreen used to be asked for as well, and inside the phone app it
+  // put up a banner naming the website's address over the pages — the one
+  // moment the app admitted to being a website. Escape and the button still
+  // end it.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('only-pages', full);
     return () => root.classList.remove('only-pages');
   }, [full]);
 
-  // Our button is not the only way out. Escape, the back gesture and the
-  // browser's own control all end fullscreen without telling React, and a
-  // screen still wearing the class after that has no header and no way back.
   useEffect(() => {
-    const sync = () => { if (!document.fullscreenElement) setFull(false); };
     const key = (e) => { if (e.key === 'Escape') setFull(false); };
-    document.addEventListener('fullscreenchange', sync);
     document.addEventListener('keydown', key);
-    return () => {
-      document.removeEventListener('fullscreenchange', sync);
-      document.removeEventListener('keydown', key);
-      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-    };
+    return () => document.removeEventListener('keydown', key);
   }, []);
 
-  // A browser that has never heard of it returns nothing rather than a
-  // promise, and a browser that refuses rejects one. Both are fine: the class
-  // has already done the half that always works.
-  const settle = (p) => { if (p && p.catch) p.catch(() => {}); };
-
-  const enter = () => {
-    setFull(true);
-    settle(document.documentElement.requestFullscreen?.());
-  };
-
-  const leave = () => {
-    setFull(false);
-    if (document.fullscreenElement) settle(document.exitFullscreen());
-  };
+  const enter = () => setFull(true);
+  const leave = () => setFull(false);
 
   return (
     <>
