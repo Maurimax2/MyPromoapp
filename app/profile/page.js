@@ -90,6 +90,10 @@ export default async function Profile() {
       </header>
 
       <div className="scroll st-flow">
+        {/* A classmate, by name or number — first on the screen, where it is
+            looked for, not under the badges. */}
+        <Find />
+
         {/* ================= you ================= */}
         <LevelUp level={level} toNext={toNext} />
         <div className="me-hero r2">
@@ -128,9 +132,6 @@ export default async function Profile() {
 
         {/* ================= badges ================= */}
         <Badges badges={badgesOf(mine)} />
-
-        {/* ================= a classmate, by number ================= */}
-        <Find />
 
         {/* ================= your things ================= */}
         <div className="me-list">
