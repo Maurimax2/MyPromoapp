@@ -272,6 +272,9 @@ export default function Home({ me, posts, subjects, mySubjects = [],
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
   const [module, setModule] = useState('');    // the subject it belongs to
+  // A post, or a résumé: a résumé is filed under its subject in الملخصات as
+  // well as shown here, which is why it cannot go without one.
+  const [kind, setKind] = useState('post');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const picker = useRef(null);
@@ -331,12 +334,15 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
   const send = async () => {
     if (busy) return;
+    if (kind === 'note' && !module) { setError(t('اختر مادة الملخص')); return; }
+    if (kind === 'note' && !files.some((f) => !f.pending)) { setError(t('أرفق الملخص: ملف أو صورة')); return; }
     setBusy(true); setError('');
     const res = await fetch('/api/posts', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         body,
+        kind,
         module: module || null,
         media: files.filter((f) => !f.pending).map(({ kind, path, name, bytes }) =>
           ({ kind, path, name, bytes })),
@@ -345,7 +351,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     if (!res.ok) { setError(data.error || t('تعذّر النشر ({status})', { status: res.status })); return; }
-    setBody(''); setFiles([]); setModule(''); setWriting(false);
+    setBody(''); setFiles([]); setModule(''); setKind('post'); setWriting(false);
     router.refresh();
   };
 
@@ -474,17 +480,27 @@ export default function Home({ me, posts, subjects, mySubjects = [],
             </div>
           )}
 
+          {(body.trim() || files.length > 0) && (
+            <div className="composer-kind" role="radiogroup" aria-label={t('نوع المنشور')}>
+              {[['post', t('منشور')], ['note', t('ملخص')]].map(([k, label]) => (
+                <button key={k} type="button" role="radio" aria-checked={kind === k} data-on={kind === k}
+                        onClick={() => { setKind(k); setError(''); }}>{label}</button>
+              ))}
+            </div>
+          )}
+
+          {/* Your own year's subjects: the post is going into your year. Tap
+              the chosen one again to post without a subject. */}
           {(body.trim() || files.length > 0) && mySubjects.length > 0 && (
-            <select
-              className="admin-input sm"
-              value={module}
-              onChange={(e) => setModule(e.target.value)}
-              aria-label={t('المادة')}
-            >
-              <option value="">{t('بلا مادة')}</option>
-              {/* Your own year's subjects: the post is going into your year. */}
-              {mySubjects.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
-            </select>
+            <div className="composer-subjects" role="radiogroup" aria-label={t('المادة')}>
+              {mySubjects.map((m) => (
+                <button key={m.id} type="button" role="radio" dir="ltr"
+                        aria-checked={module === m.id} data-on={module === m.id}
+                        onClick={() => { setModule(module === m.id ? '' : m.id); setError(''); }}>
+                  {m.name}
+                </button>
+              ))}
+            </div>
           )}
 
           {error && <div className="admin-err">{error}</div>}

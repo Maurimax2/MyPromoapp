@@ -140,7 +140,6 @@ export default function NoteList({ groups, subjects, me }) {
             <div className="admin-import-ic"><Icon name="plus" size={22} /></div>
             <div className="grow ct-start">
               <div className="admin-card-t">{t('شارك ملخصك')}</div>
-              <div className="admin-card-b">{t('ارفعه مرة، وتستفيد منه دفعتك كلها')}</div>
             </div>
           </button>
         )}
