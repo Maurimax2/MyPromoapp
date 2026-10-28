@@ -404,7 +404,6 @@ export default function Room({ room, subject, people, here, first, regions, me }
           <Icon name="share" size={17} />
           <span className="grow">
             <b>{copied ? t('نُسخ الرابط — الصقه لصديقك') : t('ادعُ صديقًا برابط')}</b>
-            <s>{t('غرفة خاصة: لا يدخلها إلا من وصله هذا الرابط')}</s>
           </span>
         </button>
       )}
@@ -448,7 +447,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
             </span>
             <span className="grow">
               <b>{clock?.working === false ? t('استراحة — قوموا تمدّدوا') : t('وقت التركيز')}</b>
-              <s>{t('الجولة {v1} من 4 · كلّكم على نفس الساعة', { v1: clock?.round ?? 1 })}</s>
+              <s>{t('الجولة {v1} من 4', { v1: clock?.round ?? 1 })}</s>
               <span className="rm-rounds">
                 {[1, 2, 3, 4].map((n) => (
                   <i key={n} className={clock && n < clock.round ? 'done' : clock && n === clock.round ? 'now' : ''} />
@@ -493,7 +492,6 @@ export default function Room({ room, subject, people, here, first, regions, me }
             <div className="rm-quiet">
               <Icon name="msgs" size={26} />
               <b>{t('لا رسائل بعد')}</b>
-              <s>{t('ابدأ الكلام — من في الغرفة سيرى.')}</s>
             </div>
           )}
           {error && <div className="admin-err">{error}</div>}
@@ -540,7 +538,6 @@ export default function Room({ room, subject, people, here, first, regions, me }
         <Sheet onClose={() => setPicking(false)}>
           <div className="rm-pick">
             <b>{t('اعرض نموذجًا على الغرفة')}</b>
-            <s>{t('يراه الجميع، وحين تلمس عظمًا يُحدَّد عندهم أيضًا.')}</s>
             <div className="rm-regions">
               {regions.map((r) => (
                 <button key={r.key} className="rm-region" onClick={() => present(r.key)}>

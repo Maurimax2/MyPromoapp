@@ -166,9 +166,8 @@ export default function LoginForm({ years = PROMOS }) {
   }
 
   const go = (to) => () => { setHow(to); setState('idle'); setError(''); };
-  const hello = how === 'join' ? t('أنشئ حسابك لتنضمّ إلى دفعتك')
-    : how === 'link' ? t('نسيت كلمة السر؟ سنرسل لك رابطًا للدخول')
-    : t('أهلًا بعودتك');
+  // Only the link door says something under the name: what will happen next.
+  const hello = how === 'link' ? t('نسيت كلمة السر؟ سنرسل لك رابطًا للدخول') : null;
 
   return (
     <div className="login">
@@ -176,7 +175,7 @@ export default function LoginForm({ years = PROMOS }) {
       <div className="login-top">
         <Logo size={64} id="login" />
         <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
-        <p className="login-hello">{hello}</p>
+        {hello && <p className="login-hello">{hello}</p>}
       </div>
 
       {how !== 'link' && (

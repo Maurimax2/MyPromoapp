@@ -11,7 +11,6 @@ export default async function Loading() {
         <div className="head-row">
           <div className="grow">
             <div className="head-t">{t('الاختبارات')}</div>
-            <div className="head-s">{t('اختبر نفسك قبل الامتحان')}</div>
           </div>
           <div className="sk sk-flat" style={{ width: 38, height: 38, borderRadius: 12 }} />
         </div>

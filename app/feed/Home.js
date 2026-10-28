@@ -69,7 +69,6 @@ function Here({ studying, rooms }) {
         <span className="here-cam"><Icon name="video" size={20} /></span>
         <span className="here-say">
           <b>{t('لا أحد يدرس الآن')}</b>
-          <s>{t('افتح غرفة وسيرونها')}</s>
         </span>
         <Icon name="chev" size={16} />
       </Link>
@@ -96,7 +95,7 @@ function Here({ studying, rooms }) {
         <Sheet onClose={() => setOpen(false)}>
           <div className="rooms-head">
             <b>{t('غرف مفتوحة الآن')}</b>
-            <s>{rooms.length ? t('ادخل واحدة، أو افتح غرفتك') : t('لا غرفة مفتوحة — كن أول من يفتح')}</s>
+            {!rooms.length && <s>{t('لا غرفة مفتوحة')}</s>}
           </div>
           {rooms.map((r) => (
             <Link key={r.id} href={`/rooms/${r.id}`} className="room-row">
@@ -224,10 +223,10 @@ function Continue({ review, resume }) {
     ? { at: `/file/${resume.fid}`, icon: 'book', kicker: t('تابع من حيث توقّفت'), title: resume.title,
         art: resume.subject ? artOf(resume.subject) : null }
     : !review ? { at: '/review', icon: 'quiz', kicker: t('المراجعة'), title: t('المراجعة') }
-    : due > 0 ? { at: '/review', icon: 'clock', kicker: t('ما أخطأت فيه يعود إليك'),
+    : due > 0 ? { at: '/review', icon: 'clock', kicker: null,
                   title: t('{due} {v1} المراجعة', { due, v1: due === 1 ? t('سؤال يستحقّ') : t('أسئلة تستحقّ') }) }
-    : started ? { at: '/review', icon: 'quiz', kicker: t('أحسنت — سنعيدها عليك في وقتها'), title: t('لا شيء للمراجعة الآن') }
-    : { at: '/quiz', icon: 'quiz', kicker: t('ما تخطئ فيه يعود إليك وحده'), title: t('ابدأ أوّل اختبار') };
+    : started ? { at: '/review', icon: 'quiz', kicker: null, title: t('لا شيء للمراجعة الآن') }
+    : { at: '/quiz', icon: 'quiz', kicker: null, title: t('ابدأ أوّل اختبار') };
 
   // How far in, when the reader got far enough to know. A bar at 2% reads as
   // a broken bar, so nothing is drawn until there is something to show.
@@ -245,7 +244,7 @@ function Continue({ review, resume }) {
             : <Icon name={said.icon} size={22} />}
       </span>
       <span className="grow">
-        <s>{said.kicker}</s>
+        {said.kicker && <s>{said.kicker}</s>}
         <b dir="auto">{said.title}</b>
         {far >= 3 && <span className="h-cont-bar"><i style={{ width: `${far}%` }} /></span>}
       </span>
@@ -529,7 +528,6 @@ export default function Home({ me, posts, subjects, mySubjects = [],
             <div className="empty">
               <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
               <div className="empty-t">{t('لا منشورات بعد')}</div>
-              <div className="empty-b">{t('كن أول من ينشر في دفعتك.')}</div>
             </div>
           )}
       </div>

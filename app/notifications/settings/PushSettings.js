@@ -9,12 +9,12 @@ import { useT } from '@/components/Lang';
 
 // The groups lib/push.js sends under, said the way a student would.
 const KINDS = [
-  { id: 'messages',  icon: 'msgs',   t: 'الرسائل',        s: 'حين يكتب لك أحد' },
-  { id: 'friends',   icon: 'friends', t: 'الأصدقاء',       s: 'طلبات الصداقة، ومنشوراتهم وغرفهم' },
-  { id: 'duels',     icon: 'swords', t: 'التحدّيات',       s: 'حين يتحدّاك أحد، أو يُنهي تحدّيًا' },
-  { id: 'social',    icon: 'heart',  t: 'منشوراتك',        s: 'الإعجابات والتعليقات والأجوبة' },
-  { id: 'reminders', icon: 'flame',  t: 'التذكير اليومي', s: 'مساءً، إن لم تدرس بعد — مرة واحدة' },
-  { id: 'news',      icon: 'news',   t: 'إعلانات الكلية', s: 'من فريق MyPromo' },
+  { id: 'messages',  icon: 'msgs',   t: 'الرسائل' },
+  { id: 'friends',   icon: 'friends', t: 'الأصدقاء' },
+  { id: 'duels',     icon: 'swords', t: 'التحدّيات' },
+  { id: 'social',    icon: 'heart',  t: 'منشوراتك' },
+  { id: 'reminders', icon: 'flame',  t: 'التذكير اليومي' },
+  { id: 'news',      icon: 'news',   t: 'إعلانات الكلية' },
 ];
 
 const SAY = {
@@ -100,13 +100,12 @@ export default function PushSettings({ off: initial, ready }) {
               <button key={k.id} className="ps-row" role="switch" aria-checked={yes}
                       onClick={() => flip(k.id)} disabled={!ready}>
                 <span className="ps-row-ic"><Icon name={k.icon} size={18} /></span>
-                <span className="grow"><b>{t(k.t)}</b><s>{t(k.s)}</s></span>
+                <span className="grow"><b>{t(k.t)}</b></span>
                 <span className={`ps-sw${yes ? ' on' : ''}`} aria-hidden="true"><i /></span>
               </button>
             );
           })}
         </div>
-        <p className="ps-note">{t('تُطبَّق على كل أجهزتك. الإشعارات داخل التطبيق (الجرس) تبقى كما هي.')}</p>
       </div>
     </>
   );

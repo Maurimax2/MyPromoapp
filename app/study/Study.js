@@ -64,7 +64,6 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
         <div className="st-title">
           <span className="grow">
             <b>{t('الدراسة')}</b>
-            <s>{t('كل ما تحتاجه لامتحانك، في مكان واحد')}</s>
           </span>
           <Link href="/saved" className="h-bell" aria-label={t('المحفوظات')}>
             <Icon name="bookmark" size={20} />
@@ -93,7 +92,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
           <Link href="/quiz" className="st-tool olive">
             <span className="st-tool-mark"><Icon name="quiz" size={96} weight="light" /></span>
             <span className="st-tool-ic"><Icon name="quiz" size={21} /></span>
-            <span><b>{t('اختبر نفسك')}</b><s>{t('QCM لكل مادة')}</s></span>
+            <span><b>{t('اختبر نفسك')}</b></span>
           </Link>
           <Link href="/duel" className="st-tool ink">
             <span className="st-tool-mark"><Icon name="swords" size={96} weight="light" /></span>
@@ -101,12 +100,12 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
               <span className="st-tool-ic"><Icon name="swords" size={21} /></span>
               {waiting > 0 && <span className="st-tool-live"><i />{t('{waiting} ينتظرك', { waiting })}</span>}
             </span>
-            <span><b>{t('التحدّي')}</b><s>{t('واجه زميلًا على نفس الأسئلة')}</s></span>
+            <span><b>{t('التحدّي')}</b></span>
           </Link>
           <Link href="/notes" className="st-tool plain">
             <span className="st-tool-mark"><Icon name="book2" size={96} weight="light" /></span>
             <span className="st-tool-ic"><Icon name="book2" size={21} /></span>
-            <span><b>{t('الملخصات')}</b><s>{t('ما كتبته دفعتك')}</s></span>
+            <span><b>{t('الملخصات')}</b></span>
           </Link>
           <Link href="/review" className={`st-tool ${due > 0 ? 'clay' : 'plain'}`}>
             <span className="st-tool-mark"><Icon name="clock" size={96} weight="light" /></span>
@@ -114,7 +113,7 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
               <span className="st-tool-ic"><Icon name="clock" size={21} /></span>
               {due > 0 && <b className="st-tool-n">{due}</b>}
             </span>
-            <span><b>{t('المراجعة')}</b><s>{due > 0 ? t('أسئلة أخطأت فيها، تعود اليوم') : t('ما أخطأت فيه يعود إليك')}</s></span>
+            <span><b>{t('المراجعة')}</b></span>
           </Link>
         </div>
 

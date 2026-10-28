@@ -46,15 +46,15 @@ export default function PushAsk() {
       <span className="pa-ic"><Icon name="bell" size={21} weight="fill" /></span>
       <span className="grow">
         <b>{t('لا تفوّتك دفعتك')}</b>
-        <s>
+        {(state === 'install' || state === 'error') && <s>
           {state === 'install'
             ? t(
             'على iPhone: اضغط زرّ المشاركة ثم «إضافة إلى الشاشة الرئيسية»، وافتح MyPromo من هناك لتصلك الإشعارات.'
           )
             : state === 'error'
               ? <>{t('تعذّر التفعيل — حاول مرة أخرى بعد قليل.')}{pushError() && <><br /><bdi dir="ltr" className="pa-why">{pushError()}</bdi></>}</>
-              : t('رسائل أصدقائك، التحدّيات، تذكير سلسلتك، وإعلانات الكلية — على هاتفك.')}
-        </s>
+              : null}
+        </s>}
         <span className="pa-acts">
           {state !== 'install' && (
             <button className="pa-go" onClick={turnOn} disabled={busy}>{busy ? '…' : t('فعّل الإشعارات')}</button>

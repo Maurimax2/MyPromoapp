@@ -249,7 +249,7 @@ export default function Subject({
                     <span className="sj-exam-ic"><Icon name="clock" size={24} weight="fill" /></span>
                     <span className="grow">
                       <b>{t('اختبر نفسك')}</b>
-                      <s>{t('{questionsWord} · اختر المحاضرات أو الأوراق', { questionsWord: questionsWord(t, total) })}</s>
+                      <s>{questionsWord(t, total)}</s>
                     </span>
                     <span className="sj-exam-go">{t('ابدأ')}</span>
                   </Link>
@@ -319,7 +319,7 @@ export default function Subject({
               <Link href="/notes" className="sj-add"><Icon name="plus" size={16} />{' '}{t('انشر ملخّصك')}</Link>
               {!notes.length && (
                 <div className="sj-empty small">
-                  <s>{t('لا ملخّصات لهذه المادة بعد — كن أول من يرفع واحدًا.')}</s>
+                  <s>{t('لا ملخّصات لهذه المادة بعد')}</s>
                 </div>
               )}
             </div>
@@ -356,7 +356,6 @@ export default function Subject({
                 <img src="/anatomy/thumbs/corps.webp" alt="" />
                 <span className="grow">
                   <b dir="ltr">Le corps entier</b>
-                  <s>{t('كل الأجهزة في جسم واحد، شرّحه طبقة بطبقة')}</s>
                 </span>
                 <Icon name="chev" size={16} />
               </Link>
@@ -364,7 +363,6 @@ export default function Subject({
                 <span className="sj-whole-ic"><Icon name="images" size={24} /></span>
                 <span className="grow">
                   <b dir="ltr">Planches d’anatomie</b>
-                  <s>{t('كل اللوحات، حسب الجهاز')}</s>
                 </span>
                 <Icon name="chev" size={16} />
               </Link>

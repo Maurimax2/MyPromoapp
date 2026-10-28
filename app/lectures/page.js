@@ -10,7 +10,6 @@ export default async function Lectures() {
         <div className="head-row">
           <div className="grow">
             <div className="head-t">{t('المحاضرات')}</div>
-            <div className="head-s">{t('جدول اليوم')}</div>
           </div>
         </div>
       </header>

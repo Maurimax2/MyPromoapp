@@ -58,7 +58,7 @@ export default function Friends({ friends, asked, sent, off }) {
           <Link href="/profile" className="icobtn" aria-label={t('رجوع')}><Icon name="chevR" size={19} /></Link>
           <div className="grow">
             <div className="head-t">{t('الأصدقاء')}</div>
-            <div className="head-s">{friends.length ? `${friends.length} ${friends.length === 1 ? t('صديق') : t('أصدقاء')}` : t('من دفعتك')}</div>
+            {friends.length > 0 && <div className="head-s">{`${friends.length} ${friends.length === 1 ? t('صديق') : t('أصدقاء')}`}</div>}
           </div>
         </div>
       </header>

@@ -75,12 +75,10 @@ export default function RoomList({ rooms, secret = [], subjects, me }) {
               <button type="button" role="radio" aria-checked={!secretly} data-on={!secretly} onClick={() => setSecretly(false)}>
                 <Icon name="friends" size={17} />
                 <b>{t('عامة')}</b>
-                <s>{t('تظهر لدفعتك ويدخلها من يشاء')}</s>
               </button>
               <button type="button" role="radio" aria-checked={secretly} data-on={secretly} onClick={() => setSecretly(true)}>
                 <Icon name="lock" size={17} />
                 <b>{t('خاصة')}</b>
-                <s>{t('لا تظهر لأحد — تدخلها برابط ترسله لأصدقائك')}</s>
               </button>
             </div>
             <select className="admin-input" value={module} onChange={(e) => setModule(e.target.value)}>

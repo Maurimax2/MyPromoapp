@@ -25,7 +25,6 @@ export default async function BodyPage({ searchParams }) {
         <BackButton fallback="/study" className="m3d-back" />
         <div className="grow">
           <b dir="ltr">Le corps entier</b>
-          <s>{t('شرّح طبقة بطبقة، والمس أي بنية لتعرف اسمها')}</s>
         </div>
       </header>
       <Body3D start={start} quiz={q.quiz === '1'} />
