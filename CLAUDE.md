@@ -69,26 +69,39 @@ necessity, not a preference.
 
 ## Subject pictures
 
-- A subject's banner is **used whole** — logo, name and drawing together. Never
-  cropped to a tile, and **never print the name over or under it**: the banner
-  already says it.
+- **A subject is shown as its banner (`components/SubjectBanner.js`)**, the
+  owner's pick of 2026-10 after rejecting stock medical drawings: two shades
+  of the subject's hue (`BANNER` in `lib/subjectArt.js`), faint rings from the
+  far corner, the subject's 3D render turned grey and blended `luminosity` so
+  it takes that hue, the name in French, and the student's progress when the
+  planner knows it. Every subject gets one from its name, whatever the year.
 - Banners scroll sideways, one at a time, the next one peeking so a thumb
   knows there is more.
-- A subject with no banner yet falls back to its French name on a tinted
-  block, never a broken image.
+- The model hangs off the far edge and the name sits at the start, in logical
+  properties, so French mirrors it.
 
 ## Design
 
-- Cards direction: white cards on grey, soft shadows, generous spacing.
-- Typeface is **IBM Plex Sans Arabic**, chosen over the Cairo named on the
-  identity sheet. The sheet is out of date on this one point.
+- **The v2 look (2026-10), approved by the owner on mock-ups** in `design/`
+  (`v2-screens.html`, `v2-feed.html`): a deep green head (`#0F4A3B`) with the
+  one thing to do now, white cards on a cool grey (`#F2F4F3`), soft shadows,
+  22px radius. Mock up a screen and show it before building it.
+- **No gray helper line under a title.** A title says what it is; a second
+  line exists only when it carries a fact (a count, a date, an author).
+- Typeface is **Alexandria**, Arabic and Latin in one face.
 - **The font is served from our own domain**, through `next/font`. It was a
   `<link>` to fonts.googleapis.com, and a browser will not paint a page until
   a stylesheet answers — which on mobile data is most of why a screen took
   seconds to appear. Never put a render-blocking third-party request back.
 - One icon set (Lucide paths, stroke 2), one radius, one shadow.
 - Orange is spent only where something needs attention — not decoration.
-- Light theme only. Dark mode is deliberately not designed yet.
+- **Dark mode is a switch** (الرئيسية's head, أنا ← الوضع الليلي), kept per
+  phone in the cookie `mp-theme` and put on `<html data-theme>` by the layout,
+  so the first paint is already the right one. The tokens have a dark set in
+  `globals.css`; the colours typed by hand in the rules are converted by
+  `scripts/build-dark-css.mjs` into `app/dark.css`, run before every build —
+  never edit that file. Banners, the violet head and the reader's pages keep
+  their own colours.
 - Touch targets are never below 44px.
 
 ## Accounts
@@ -212,9 +225,18 @@ necessity, not a preference.
 
 - **العرض السريع only.** Google's own preview, in a frame on our screen: Google
   draws the pages and sends pictures, so a 40 MB scan starts at once.
-- **Our own renderer (`PdfViewer`) was removed** on the owner's word — it had
+- **Our own renderer (`PdfViewer`) was removed from online reading** on the owner's word — it had
   to fetch the whole document first and students found it slow. Do not bring
-  it back, and do not add a switch between readers.
+  it back there, and do not add a switch between readers.
+- **A downloaded lecture is the one exception** (owner, 2026-10-28). «تنزيل» in
+  the reader's bar keeps the file on the phone, in IndexedDB
+  (`lib/downloads.js`), and أنا ← التنزيلات opens it in `PdfViewer` — the
+  whole file is already there, so the reason it was slow is gone. One download
+  button per lecture: the header's own download icon went when this came.
+- **Opening the app with no connection at all is native.** The shell shows
+  `native/shell/offline.html`, which is on another origin and cannot read the
+  site's IndexedDB. Downloads read with no network only once the app is open;
+  a cold start offline needs a store update.
 - The student stays on our screen. The rule was never "no iframe", it was
   never handing them to the Drive app. If Google refuses to be framed, the
   fallback is the download, through `/api/file`.

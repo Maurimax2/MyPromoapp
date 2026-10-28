@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyPromo planner</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Baloo+Bhaijaan+2:wght@800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Page: rows of phones by step. The phones are the app, light, in the v2 look. */
+  :root { --page: #EEF1EC; --surface: #FFFFFF; --text: #17201A; --muted: #5D645C; --line: #DCE1DA;
+    --ui: 'Poppins', system-ui, sans-serif; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #111511; --surface: #1A201B; --text: #ECEFE8; --muted: #A2A99F; --line: #2C352D; color-scheme: dark; } }
+  :root[data-theme="dark"] { --page: #111511; --surface: #1A201B; --text: #ECEFE8; --muted: #A2A99F; --line: #2C352D; color-scheme: dark; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--page); color: var(--text); font-family: var(--ui); padding-block: 32px 72px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1320px; margin: 0 auto; display: grid; gap: 52px; }
+  header h1 { font-size: 30px; font-weight: 700; }
+  header p { color: var(--muted); font-size: 15px; margin-top: 6px; }
+  section > h2 { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
+  .phones { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; }
+  .pcol { display: grid; gap: 10px; justify-items: center; align-content: start; }
+  .pcol > span { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+
+  /* the app */
+  .phone { width: 300px; height: 624px; border-radius: 42px; background: #0B0B0B; padding: 8px; box-shadow: 0 22px 50px rgba(0,0,0,.22); flex: none; }
+  .screen { --olive: #2A5B3E; --olive-2: #23503A; --mint: #9AF3B6; --mint-pale: #E4F7EA; --orange: #F06A2A;
+    --ground: #F4F6F1; --card: #FFFFFF; --ink: #17201A; --ink-2: #4F564E; --ink-3: #9AA098; --line: #E3E7DF;
+    --good: #3E8E5E; --some: #E3A238; --none: #D8DDD5;
+    width: 100%; height: 100%; border-radius: 35px; overflow: hidden; position: relative; direction: rtl; background: var(--ground); color: var(--ink);
+    font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; display: flex; flex-direction: column; }
+  .fr { direction: ltr; unicode-bidi: isolate; }
+  .lat { font-family: var(--ui); }
+  .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .stk { font-family: 'Baloo Bhaijaan 2', 'IBM Plex Sans Arabic', sans-serif; font-weight: 800; color: #fff; line-height: 1.15;
+    text-shadow: 2px 0 var(--ink), -2px 0 var(--ink), 0 2px var(--ink), 0 -2px var(--ink), 2px 2px var(--ink), -2px 2px var(--ink), 2px -2px var(--ink), -2px -2px var(--ink), 0 5px 0 var(--ink); }
+
+  .qtop { padding: 44px 18px 0; display: flex; align-items: center; gap: 12px; }
+  .ib { width: 36px; height: 36px; border-radius: 12px; background: var(--card); display: grid; place-items: center; box-shadow: 0 0 0 1px var(--line); color: var(--ink-2); flex: none; }
+  .prog { flex: 1; height: 8px; border-radius: 4px; background: #E1E6DE; overflow: hidden; }
+  .prog i { display: block; height: 100%; background: var(--olive); border-radius: 4px; }
+  .q { padding: 26px 20px 0; }
+  .q h3 { font-size: 23px; font-weight: 700; line-height: 1.35; }
+  .body { padding: 20px 16px 0; flex: 1; min-height: 0; }
+  .cta { margin: 0 16px 26px; height: 50px; border-radius: 16px; background: var(--olive); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 16px; flex: none; }
+
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .tile { background: var(--card); border-radius: 18px; padding: 14px; box-shadow: 0 0 0 1.5px var(--line); display: grid; gap: 10px; position: relative; }
+  .tile .ic { width: 38px; height: 38px; border-radius: 12px; background: var(--ground); display: grid; place-items: center; color: var(--ink-2); }
+  .tile b { font-size: 15px; }
+  .tile.on { box-shadow: 0 0 0 2.5px var(--olive); background: #F7FBF8; }
+  .tile.on .ic { background: var(--olive); color: #fff; }
+
+  .grid { display: grid; grid-template-columns: 54px repeat(4, 1fr); gap: 6px; align-items: center; }
+  .grid .h { font-size: 11px; font-weight: 600; color: var(--ink-2); text-align: center; }
+  .grid .d { font-size: 12.5px; font-weight: 600; }
+  .grid .c { height: 36px; border-radius: 10px; background: var(--card); box-shadow: 0 0 0 1px var(--line); }
+  .grid .c.on { background: var(--olive); box-shadow: none; }
+
+  .rate { display: grid; gap: 9px; }
+  .r { background: var(--card); border-radius: 16px; padding: 10px 12px; box-shadow: 0 0 0 1px var(--line); }
+  .r b { font: 700 12.5px var(--ui); letter-spacing: .04em; display: block; text-align: right; }
+  .seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 8px; }
+  .seg span { font-size: 12px; font-weight: 600; text-align: center; padding: 6px 0; border-radius: 9px; background: var(--ground); color: var(--ink-2); }
+  .seg span.on { background: var(--olive); color: #fff; }
+
+  .intro { background: var(--olive); color: #fff; justify-content: space-between; }
+  .intro .art { margin: 78px auto 0; width: 220px; height: 200px; position: relative; }
+  .intro .card { position: absolute; background: #fff; color: var(--ink); border-radius: 16px; padding: 10px 12px; width: 180px; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+  .intro .card b { display: block; font: 700 11.5px var(--ui); letter-spacing: .03em; text-align: right; }
+  .intro .card span { display: block; font: 500 12.5px var(--ui); color: var(--ink-2); text-align: right; margin-top: 2px; }
+  .intro .txt { padding: 0 24px; }
+  .intro h3 { font-size: 32px; }
+  .intro p { font-size: 17px; line-height: 1.6; margin-top: 12px; font-weight: 500; }
+  .intro .cta { background: #fff; color: var(--olive); }
+
+  /* chapters */
+  .subj { display: grid; gap: 9px; }
+  .subj .row { background: var(--card); border-radius: 16px; padding: 12px 14px; box-shadow: 0 0 0 1px var(--line); display: grid; grid-template-columns: minmax(0, 1fr) 18px; gap: 8px; align-items: center; }
+  .subj b { font: 700 12.5px var(--ui); letter-spacing: .04em; text-align: right; }
+  .bits { grid-column: 1; display: flex; gap: 3px; margin-top: 2px; }
+  .bits i { flex: 1; height: 7px; border-radius: 4px; background: var(--none); }
+  .bits i.st-g { background: var(--good); } .bits i.st-s { background: var(--some); } .bits i.st-n { background: transparent; box-shadow: inset 0 0 0 1.5px var(--none); }
+  .subj .chev { grid-row: 1 / 3; grid-column: 2; color: var(--ink-3); }
+  .chap { display: grid; gap: 7px; }
+  .ch { background: var(--card); border-radius: 14px; padding: 10px 12px; box-shadow: 0 0 0 1px var(--line); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .ch b { font: 600 13.5px var(--ui); min-width: 0; }
+  .pill { font-size: 11.5px; font-weight: 700; border-radius: 99px; padding: 4px 10px; flex: none; }
+  .pill.st-g { background: var(--good); color: #fff; } .pill.st-s { background: var(--some); color: #3A2600; }
+  .pill.st-x { background: var(--none); color: var(--ink-2); } .pill.st-n { box-shadow: inset 0 0 0 1.5px var(--none); color: var(--ink-3); }
+  .ch.open { display: grid; box-shadow: 0 0 0 2px var(--olive); }
+  .ch.open .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; }
+  .ch.open .opts span { text-align: center; padding: 7px 0; border-radius: 10px; font-size: 12.5px; font-weight: 700; background: var(--ground); color: var(--ink-2); }
+  .ch.open .opts span.on { background: var(--ink); color: #fff; }
+
+  /* program */
+  .phead { background: var(--olive); color: #fff; padding: 44px 18px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .phead h3 { font-size: 28px; }
+  .phead .ib { background: rgba(255,255,255,.14); box-shadow: none; color: #fff; }
+  .days { display: flex; gap: 5px; padding: 12px 14px 0; }
+  .days span { flex: 1; text-align: center; border-radius: 12px; padding: 6px 0; background: var(--card); box-shadow: 0 0 0 1px var(--line); font-size: 11px; font-weight: 600; color: var(--ink-2); }
+  .days span b { display: block; font: 700 14px var(--ui); color: var(--ink); }
+  .days span.on { background: var(--ink); color: #DDE2DA; box-shadow: none; }
+  .days span.on b { color: #fff; }
+  .sess { display: grid; gap: 8px; padding: 12px 14px 0; }
+  .s { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 10px; align-items: center; background: var(--card); border-radius: 16px; padding: 11px 12px; box-shadow: 0 0 0 1px var(--line); }
+  .s .t { font: 700 13.5px var(--ui); text-align: center; line-height: 1.25; }
+  .s .t small { display: block; font: 600 11.5px 'IBM Plex Sans Arabic'; color: var(--ink-2); }
+  .tagx { font: 700 10.5px var(--ui); letter-spacing: .05em; padding: 2px 7px; border-radius: 6px; color: #fff; display: inline-block; }
+  .s b { display: block; font: 600 14px var(--ui); margin-top: 4px; text-align: right; }
+  .s .ok { width: 26px; height: 26px; border-radius: 50%; background: var(--olive); color: #fff; display: grid; place-items: center; }
+  .s .go { height: 32px; padding: 0 14px; display: flex; align-items: center; border-radius: 10px; background: var(--olive); color: #fff; font-size: 13px; font-weight: 700; }
+  .s.next { box-shadow: 0 0 0 2.5px var(--olive); }
+  .s.done { opacity: .6; }
+  .add { border-radius: 16px; padding: 12px; text-align: center; font-size: 14px; font-weight: 700; color: var(--olive); box-shadow: inset 0 0 0 1.5px #C9D4CB; }
+
+  .dim { position: absolute; inset: 0; background: rgba(15,25,18,.38); }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--card); border-radius: 26px 26px 0 0; padding: 10px 18px 24px; box-shadow: 0 -16px 40px rgba(23,32,26,.25); }
+  .sheet::before { content: ''; display: block; width: 40px; height: 5px; border-radius: 3px; background: #D6DBD3; margin: 0 auto 14px; }
+  .sheet h4 { font-size: 19px; font-weight: 700; }
+  .fields { display: grid; margin-top: 10px; }
+  .fields div { display: flex; justify-content: space-between; align-items: center; padding: 12px 2px; border-top: 1px solid var(--line); font-size: 14.5px; }
+  .fields div:first-child { border-top: 0; }
+  .fields b { font-weight: 600; color: var(--ink-2); }
+  .fields span { font-weight: 700; display: flex; align-items: center; gap: 4px; }
+  .sheet .btns { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 12px; }
+  .sheet .btns span { height: 48px; border-radius: 14px; display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+  .sheet .save { background: var(--olive); color: #fff; }
+  .sheet .del { padding: 0 18px; color: #C2412D; box-shadow: inset 0 0 0 1.5px #F0D3CD; }
+
+  /* reader */
+  .rbar { background: #1E241F; color: #fff; padding: 44px 14px 12px; display: flex; align-items: center; gap: 10px; }
+  .rbar .ib { background: rgba(255,255,255,.1); box-shadow: none; color: #fff; }
+  .rbar b { font: 600 13.5px var(--ui); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .doc { flex: 1; background: #5B605B; padding: 14px; overflow: hidden; }
+  .page { background: #fff; border-radius: 4px; padding: 18px 16px; direction: ltr; height: 100%; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+  .page h5 { font: 700 13px var(--ui); color: #1C3557; text-align: center; letter-spacing: .02em; }
+  .page h6 { font: 700 11px var(--ui); color: #1C3557; margin-top: 14px; }
+  .page i { display: block; height: 6px; border-radius: 3px; background: #E3E5E8; margin-top: 7px; }
+  .page .fig { margin: 12px auto 0; width: 70%; height: 110px; border-radius: 6px; background: #F3F1EE; position: relative; overflow: hidden; }
+  .page .fig::before, .page .fig::after { content: ''; position: absolute; left: 46%; top: 6px; bottom: 6px; width: 7px; border-radius: 4px; background: #C9473F; transform: rotate(8deg); }
+  .page .fig::after { left: 56%; background: #3E6CB3; transform: rotate(-6deg); }
+  .qbtn { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); background: var(--olive); color: #fff; height: 46px; padding: 0 16px 0 10px; border-radius: 99px;
+    display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14.5px; box-shadow: 0 10px 24px rgba(0,0,0,.35); white-space: nowrap; }
+  .qbtn em { font-style: normal; font: 700 12px var(--ui); background: var(--mint); color: var(--olive-2); border-radius: 99px; padding: 2px 8px; }
+
+  /* lock screen */
+  .lock { background: radial-gradient(120% 70% at 80% 0%, #2B3F63 0%, #17233B 45%, #0A0F1C 100%); color: #fff; padding: 0 10px; }
+  .clock { text-align: center; padding-top: 46px; }
+  .clock small { display: block; font-size: 13px; opacity: .85; }
+  .clock b { display: block; font: 600 60px/1.05 var(--ui); letter-spacing: -.02em; }
+  .stack { display: grid; gap: 7px; margin-top: 22px; }
+  .n { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 9px; align-items: center; background: rgba(246,246,244,.84); backdrop-filter: blur(16px); color: #111; border-radius: 18px; padding: 10px 11px; }
+  .n .ap { width: 32px; height: 32px; border-radius: 8px; background: var(--olive); display: grid; place-items: center; color: #fff; font: 800 15px var(--ui); }
+  .n b { font-size: 13.5px; font-weight: 600; line-height: 1.4; }
+  .n time { font: 500 11px var(--ui); color: #6D6D6A; align-self: start; padding-top: 2px; }
+
+  /* lists on the page */
+  .qs, .rem { background: var(--surface); border-radius: 18px; box-shadow: 0 0 0 1px var(--line); overflow: hidden; max-width: 820px; margin: 0 auto; }
+  .qrow { direction: rtl; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 12px; padding: 12px 18px; border-top: 1px solid var(--line); font-family: 'IBM Plex Sans Arabic', sans-serif; }
+  .qrow:first-child { border-top: 0; }
+  .qrow .i { font: 700 13px var(--ui); color: var(--muted); padding-top: 2px; grid-row: span 2; }
+  .qrow b { font-size: 15.5px; }
+  .qrow span { font-size: 14px; color: var(--muted); }
+  .rrow { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; padding: 12px 18px; border-top: 1px solid var(--line); align-items: center; }
+  .rrow:first-child { border-top: 0; }
+  .rrow > span { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+  .rrow > b { direction: rtl; text-align: right; font: 600 15px 'IBM Plex Sans Arabic', sans-serif; }
+  @media (max-width: 560px) { .rrow { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="back" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></symbol>
+  <symbol id="chev" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+  <symbol id="home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="lib" viewBox="0 0 24 24"><path d="M4 19V5a1 1 0 0 1 1-1h3v15M8 4h4v15M12 6l4-1 4 14-4 1z"/><path d="M3 20h18"/></symbol>
+  <symbol id="cup" viewBox="0 0 24 24"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3"/></symbol>
+  <symbol id="fac" viewBox="0 0 24 24"><path d="M3 21h18M5 21V10M19 21V10M9 21v-6h6v6M2 10l10-6 10 6z"/></symbol>
+  <symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="quiz" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header>
+    <h1>The personal planner</h1>
+    <p>Second version, after your notes.</p>
+  </header>
+
+  <section>
+    <h2>1. The questions</h2>
+    <div class="phones">
+      <div class="pcol"><span>Start</span>
+        <div class="phone"><div class="screen intro">
+          <div class="art">
+            <div class="card" style="top:0;right:0;transform:rotate(4deg)"><b>ANATOMIE · 17:00</b><span>Tête et cou</span></div>
+            <div class="card" style="top:66px;left:0;transform:rotate(-5deg)"><b>BIOCHIMIE · 19:30</b><span>Enzymologie</span></div>
+            <div class="card" style="top:132px;right:12px;transform:rotate(2deg)"><b>HISTOLOGIE · 21:00</b><span>Tissu épithélial</span></div>
+          </div>
+          <div class="txt"><h3 class="stk">برنامجك الشخصي</h3><p>برنامج مراجعة حسب وقتك ومستواك</p></div>
+          <div class="cta">ابدأ</div>
+        </div></div>
+      </div>
+
+      <div class="pcol"><span>Where</span>
+        <div class="phone"><div class="screen">
+          <div class="qtop"><div class="ib"><svg class="ico"><use href="#x"/></svg></div><div class="prog"><i style="width:18%"></i></div></div>
+          <div class="q"><h3>أين تراجع عادةً؟</h3></div>
+          <div class="body">
+            <div class="tiles">
+              <div class="tile on"><div class="ic"><svg class="ico"><use href="#home"/></svg></div><b>في البيت</b></div>
+              <div class="tile on"><div class="ic"><svg class="ico"><use href="#lib"/></svg></div><b>في المكتبة</b></div>
+              <div class="tile"><div class="ic"><svg class="ico"><use href="#cup"/></svg></div><b>في مقهى</b></div>
+              <div class="tile"><div class="ic"><svg class="ico"><use href="#fac"/></svg></div><b>في الكلية</b></div>
+              <div class="tile"><div class="ic"><svg class="ico"><use href="#users"/></svg></div><b>مع زملاء</b></div>
+            </div>
+          </div>
+          <div class="cta">التالي</div>
+        </div></div>
+      </div>
+
+      <div class="pcol"><span>Free time</span>
+        <div class="phone"><div class="screen">
+          <div class="qtop"><div class="ib"><svg class="ico"><use href="#x"/></svg></div><div class="prog"><i style="width:27%"></i></div></div>
+          <div class="q"><h3>متى تكون متفرغًا للمراجعة؟</h3></div>
+          <div class="body">
+            <div class="grid">
+              <span></span><span class="h">صباحًا</span><span class="h">بعد الظهر</span><span class="h">مساءً</span><span class="h">ليلًا</span>
+              <span class="d">السبت</span><i class="c on"></i><i class="c on"></i><i class="c"></i><i class="c on"></i>
+              <span class="d">الأحد</span><i class="c"></i><i class="c on"></i><i class="c on"></i><i class="c"></i>
+              <span class="d">الاثنين</span><i class="c"></i><i class="c"></i><i class="c on"></i><i class="c on"></i>
+              <span class="d">الثلاثاء</span><i class="c"></i><i class="c on"></i><i class="c on"></i><i class="c"></i>
+              <span class="d">الأربعاء</span><i class="c"></i><i class="c"></i><i class="c on"></i><i class="c on"></i>
+              <span class="d">الخميس</span><i class="c"></i><i class="c on"></i><i class="c on"></i><i class="c"></i>
+              <span class="d">الجمعة</span><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i>
+            </div>
+          </div>
+          <div class="cta">التالي</div>
+        </div></div>
+      </div>
+
+      <div class="pcol"><span>Level</span>
+        <div class="phone"><div class="screen">
+          <div class="qtop"><div class="ib"><svg class="ico"><use href="#x"/></svg></div><div class="prog"><i style="width:63%"></i></div></div>
+          <div class="q"><h3>ما مستواك في كل مادة؟</h3></div>
+          <div class="body">
+            <div class="rate">
+              <div class="r"><b class="fr">ANATOMIE</b><div class="seg"><span>ضعيف</span><span class="on">متوسط</span><span>جيد</span><span>ممتاز</span></div></div>
+              <div class="r"><b class="fr">BIOCHIMIE</b><div class="seg"><span class="on">ضعيف</span><span>متوسط</span><span>جيد</span><span>ممتاز</span></div></div>
+              <div class="r"><b class="fr">HISTOLOGIE</b><div class="seg"><span>ضعيف</span><span>متوسط</span><span class="on">جيد</span><span>ممتاز</span></div></div>
+              <div class="r"><b class="fr">PHYSIOLOGIE</b><div class="seg"><span>ضعيف</span><span class="on">متوسط</span><span>جيد</span><span>ممتاز</span></div></div>
+            </div>
+          </div>
+          <div class="cta">التالي</div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>All the questions</h2>
+    <div class="qs">
+      <div class="qrow"><span class="i">1</span><b>هل تحضر المحاضرات؟</b><span>دائمًا · أحيانًا · نادرًا</span></div>
+      <div class="qrow"><span class="i">2</span><b>أين تراجع عادةً؟</b><span>في البيت · في المكتبة · في مقهى · في الكلية · مع زملاء</span></div>
+      <div class="qrow"><span class="i">3</span><b>متى تكون متفرغًا للمراجعة؟</b><span>جدول الأسبوع</span></div>
+      <div class="qrow"><span class="i">4</span><b>كم ساعة تستطيع أن تراجع في اليوم؟</b><span>أقل من ساعة · ساعة إلى ساعتين · 2 إلى 3 ساعات · أكثر من 3</span></div>
+      <div class="qrow"><span class="i">5</span><b>متى تركّز أكثر؟</b><span>الصباح · بعد الظهر · المساء · الليل</span></div>
+      <div class="qrow"><span class="i">6</span><b>كم من الوقت تركّز دون توقف؟</b><span>25 دقيقة · 45 دقيقة · ساعة · ساعة ونصف</span></div>
+      <div class="qrow"><span class="i">7</span><b>ما مستواك في كل مادة؟</b><span>ضعيف · متوسط · جيد · ممتاز</span></div>
+      <div class="qrow"><span class="i">8</span><b>ما المواد الصعبة عليك؟</b><span>من مواد سنتك</span></div>
+      <div class="qrow"><span class="i">9</span><b>تحب المراجعة وحدك أم مع زملاء؟</b><span>وحدي · مع زملاء · كلاهما</span></div>
+      <div class="qrow"><span class="i">10</span><b>ما الذي يمنعك من المراجعة أكثر؟</b><span>الهاتف · التعب · لا أعرف من أين أبدأ · المحاضرات كثيرة</span></div>
+      <div class="qrow"><span class="i">11</span><b>متى نذكّرك؟</b><span>قبل كل مراجعة · مرة في اليوم · لا تذكير</span></div>
+      <div class="qrow"><span class="i">12</span><b>أين وصلت في كل مادة؟</b><span>فصلًا فصلًا، في الخطوة التالية</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Chapter by chapter</h2>
+    <div class="phones">
+      <div class="pcol"><span>Every subject</span>
+        <div class="phone"><div class="screen">
+          <div class="qtop"><div class="ib"><svg class="ico"><use href="#x"/></svg></div><div class="prog"><i style="width:92%"></i></div></div>
+          <div class="q"><h3>أين وصلت في كل مادة؟</h3></div>
+          <div class="body">
+            <div class="subj">
+              <div class="row"><b class="fr">ANATOMIE</b><div class="bits"><i class="st-g"></i><i class="st-s"></i><i class="st-n"></i></div><svg class="ico chev"><use href="#chev"/></svg></div>
+              <div class="row" style="box-shadow:0 0 0 2px var(--olive)"><b class="fr">BIOCHIMIE</b><div class="bits"><i class="st-g"></i><i class="st-s"></i><i></i><i></i><i class="st-n"></i><i class="st-n"></i></div><svg class="ico chev"><use href="#chev"/></svg></div>
+              <div class="row"><b class="fr">HISTOLOGIE</b><div class="bits"><i class="st-g"></i><i class="st-g"></i><i class="st-s"></i><i></i></div><svg class="ico chev"><use href="#chev"/></svg></div>
+              <div class="row"><b class="fr">EMBRYOLOGIE</b><div class="bits"><i></i><i></i><i></i><i class="st-n"></i></div><svg class="ico chev"><use href="#chev"/></svg></div>
+              <div class="row"><b class="fr">PHYSIOLOGIE</b><div class="bits"><i class="st-s"></i><i></i><i></i><i class="st-n"></i><i class="st-n"></i></div><svg class="ico chev"><use href="#chev"/></svg></div>
+            </div>
+          </div>
+          <div class="cta">جهّز برنامجي</div>
+        </div></div>
+      </div>
+
+      <div class="pcol"><span>One subject's chapters</span>
+        <div class="phone"><div class="screen">
+          <div class="qtop"><div class="ib"><svg class="ico"><use href="#back"/></svg></div><b class="fr" style="font:700 15px var(--ui);letter-spacing:.04em">BIOCHIMIE</b></div>
+          <div class="body">
+            <div class="chap">
+              <div class="ch"><b class="fr">Glucides</b><span class="pill st-g">أتقنته</span></div>
+              <div class="ch"><b class="fr">Lipides</b><span class="pill st-s">راجعته قليلًا</span></div>
+              <div class="ch open"><b class="fr" style="text-align:right">Acides aminés et protéines</b>
+                <div class="opts"><span>أتقنته</span><span>راجعته قليلًا</span><span class="on">لم أراجعه</span><span>لم يُدرَّس بعد</span></div></div>
+              <div class="ch"><b class="fr">Enzymologie</b><span class="pill st-x">لم أراجعه</span></div>
+              <div class="ch"><b class="fr">Bioénergétique</b><span class="pill st-n">لم يُدرَّس بعد</span></div>
+              <div class="ch"><b class="fr">Métabolisme des glucides</b><span class="pill st-n">لم يُدرَّس بعد</span></div>
+            </div>
+          </div>
+          <div class="cta">تم</div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. The program, and editing it</h2>
+    <div class="phones">
+      <div class="pcol"><span>Today</span>
+        <div class="phone"><div class="screen">
+          <div class="phead"><h3 class="stk">برنامجك</h3><div class="ib"><svg class="ico"><use href="#pen"/></svg></div></div>
+          <div class="days">
+            <span><b>2</b>سبت</span><span class="on"><b>3</b>أحد</span><span><b>4</b>اثنين</span><span><b>5</b>ثلاثاء</span><span><b>6</b>أربعاء</span><span><b>7</b>خميس</span><span><b>8</b>جمعة</span>
+          </div>
+          <div class="sess">
+            <div class="s done"><div class="t">14:00<small>25 د</small></div><div><span class="tagx" style="background:#4E9A6B">HISTOLOGIE</span><b>Tissu épithélial</b></div><span class="ok"><svg class="ico" style="width:15px;height:15px;stroke-width:3"><use href="#check"/></svg></span></div>
+            <div class="s next"><div class="t">17:00<small>45 د</small></div><div><span class="tagx" style="background:#C9762F">BIOCHIMIE</span><b>Acides aminés et protéines</b></div><span class="go">ابدأ</span></div>
+            <div class="s"><div class="t">21:00<small>45 د</small></div><div><span class="tagx" style="background:#2A5B3E">ANATOMIE</span><b>Tête et cou</b></div><span></span></div>
+            <div class="add">+ أضف مراجعة</div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="pcol"><span>Editing one</span>
+        <div class="phone"><div class="screen">
+          <div class="phead"><h3 class="stk">برنامجك</h3><div class="ib"><svg class="ico"><use href="#pen"/></svg></div></div>
+          <div class="dim"></div>
+          <div class="sheet">
+            <h4>تعديل المراجعة</h4>
+            <div class="fields">
+              <div><b>المادة</b><span class="lat">BIOCHIMIE<svg class="ico" style="width:16px;height:16px;color:var(--ink-3)"><use href="#chev"/></svg></span></div>
+              <div><b>الفصل</b><span class="lat">Enzymologie<svg class="ico" style="width:16px;height:16px;color:var(--ink-3)"><use href="#chev"/></svg></span></div>
+              <div><b>اليوم</b><span>الأحد<svg class="ico" style="width:16px;height:16px;color:var(--ink-3)"><use href="#chev"/></svg></span></div>
+              <div><b>الساعة</b><span class="lat">17:00<svg class="ico" style="width:16px;height:16px;color:var(--ink-3)"><use href="#chev"/></svg></span></div>
+              <div><b>المدة</b><span>45 دقيقة<svg class="ico" style="width:16px;height:16px;color:var(--ink-3)"><use href="#chev"/></svg></span></div>
+            </div>
+            <div class="btns"><span class="save">حفظ</span><span class="del">حذف</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Questions from the lecture</h2>
+    <div class="phones">
+      <div class="pcol"><span>Reading a lecture</span>
+        <div class="phone"><div class="screen">
+          <div class="rbar"><div class="ib"><svg class="ico"><use href="#back"/></svg></div><b class="fr">Les vaisseaux tête et cou</b></div>
+          <div class="doc"><div class="page">
+            <h5>LES VAISSEAUX DE LA TÊTE ET DU COU</h5>
+            <h6>I. L’artère carotide commune</h6><i></i><i></i><i style="width:80%"></i>
+            <div class="fig"></div>
+            <h6>II. L’artère carotide externe</h6><i></i><i></i><i style="width:64%"></i><i></i><i style="width:72%"></i>
+          </div></div>
+          <div class="qbtn"><svg class="ico"><use href="#quiz"/></svg>أسئلة المحاضرة<em>12</em></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Reminders, one line each</h2>
+    <div class="phones">
+      <div class="pcol"><span>On the lock screen</span>
+        <div class="phone"><div class="screen lock">
+          <div class="clock"><small>الأحد 3 نوفمبر</small><b>16:45</b></div>
+          <div class="stack">
+            <div class="n"><div class="ap">M</div><b>مراجعة <span class="fr">Biochimie</span> بعد 15 دقيقة</b><time>now</time></div>
+            <div class="n"><div class="ap">M</div><b>ملخص جديد في <span class="fr">Physiologie</span></b><time>2h</time></div>
+            <div class="n"><div class="ap">M</div><b>لم تبدأ مراجعة <span class="fr">Histologie</span>. نؤجلها إلى الغد؟</b><time>5h</time></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+    <div class="rem" style="margin-top:22px">
+      <div class="rrow"><span>Before each session</span><b>مراجعة <span class="fr">Biochimie</span> بعد 15 دقيقة</b></div>
+      <div class="rrow"><span>A session not started</span><b>لم تبدأ مراجعة <span class="fr">Histologie</span>. نؤجلها إلى الغد؟</b></div>
+      <div class="rrow"><span>No program</span><b>راجعت اليوم؟</b></div>
+      <div class="rrow"><span>Streak</span><b>سلسلتك 12 يومًا، لا تقطعها 🔥</b></div>
+      <div class="rrow"><span>New content</span><b>ملخص جديد في <span class="fr">Physiologie</span></b></div>
+      <div class="rrow"><span>New questions</span><b>أسئلة جديدة في <span class="fr">Physiologie S1</span></b></div>
+    </div>
+  </section>
+</div>
+<script>
+  // Phones keep their size and shrink as a whole on a narrow screen.
+  (function () {
+    function fit() {
+      var z = Math.min(1, (document.documentElement.clientWidth - 32) / 300);
+      document.querySelectorAll('.phone').forEach(function (p) { p.style.zoom = z; });
+    }
+    fit();
+    addEventListener('resize', fit);
+  })();
+</script>
+</body>
+</html>

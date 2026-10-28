@@ -19,26 +19,53 @@
      stops here, because past this a page is not more readable, only larger —
      and every pixel of it is a bitmap the browser has to hold. */
   --doc-w: 1100px;
-  --olive: #2A5B3E;
-  --olive-light: #3F7A57;
-  --olive-pale: #E3EDE5;
-  --clay: #A8502A;
-  --clay-light: #C97A50;
-  --clay-pale: #F2E3DA;
-  --bg: #F3F1E9;
-  --surface: #FFFDF8;
-  --ink: #17201A;
-  --ink-2: #6B6F69;
-  --ink-3: #979992;
-  --line: #DDDCD4;
-  --line-soft: #EAE8E0;
-  --shadow: 0 0 0 1px rgba(23, 32, 26, .10);
+  /* v2 (2026-10): the deep green of the home header, white cards on a cool grey. */
+  --olive: #0F4A3B;
+  --olive-light: #1C7457;
+  --olive-pale: #E6F2EC;
+  --clay: #F26B1D;
+  --clay-light: #FF8A4C;
+  --clay-pale: #FFE7D6;
+  --bg: #F2F4F3;
+  --surface: #FFFFFF;
+  --ink: #0D1B16;
+  --ink-2: #5E6B66;
+  --ink-3: #94A19B;
+  --line: #E3E8E5;
+  --line-soft: #EEF1EF;
+  --shadow: 0 1px 2px rgba(13, 27, 22, .05), 0 10px 24px -18px rgba(13, 27, 22, .3);
   --shadow-nav: 0 -1px 18px rgba(23, 32, 26, .07);
-  --r-card: 17px;
-  --r-tile: 14px;
+  --r-card: 22px;
+  --r-tile: 16px;
   /* The bar and the home bar under it, on a phone that has one. Every screen
      that keeps room for the bar asks for this, so it is said once. */
   --nav-h: calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Dark, chosen per phone (components/ThemeToggle.js, cookie mp-theme). The
+   tokens turn here; app/dark.css, written by scripts/build-dark-css.mjs,
+   turns the colours a rule typed by hand. The green head stays green. */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --olive: #2E9E6E;
+  --olive-light: #3DDC97;
+  --olive-pale: #163026;
+  --clay: #F26B1D;
+  --clay-light: #FF8A4C;
+  --clay-pale: #3A2416;
+  --bg: #0D1311;
+  --surface: #161E1A;
+  --ink: #E7EEEA;
+  --ink-2: #A7B4AE;
+  --ink-3: #76847E;
+  --line: #27322D;
+  --line-soft: #1E2723;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .45), 0 10px 24px -18px rgba(0, 0, 0, .9);
+  --shadow-nav: 0 -1px 18px rgba(0, 0, 0, .5);
+  --right: #3DDC97;
+  --right-bg: #12301F;
+  --wrong: #F2777A;
+  --wrong-bg: #3A1517;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,7 +78,7 @@ html { overscroll-behavior-y: none; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-app), 'Readex Pro', system-ui, sans-serif;
+  font-family: var(--font-app), 'Alexandria', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
 }
@@ -3487,6 +3514,12 @@ html:has(.lp) { scroll-behavior: smooth; }
 .st-tool.ink .st-tool-ic { background: rgba(224,138,94,.16); color: #E08A5E; }
 .st-tool.ink .st-tool-mark { color: #E08A5E; }
 .st-tool.ink s { opacity: .6; }
+/* The blocks drawn in ink are the dark ones among light cards. In the dark
+   theme --ink is light, and each would become the one white block on a dark
+   screen — some with white writing on it. They stay a dark surface, raised. */
+[data-theme='dark'] :is(.st-tool.ink, .cont, .podium, .chapter-n, .rm-back-to, .dl-go.win) {
+  background: #22302A; color: var(--ink);
+}
 .st-tool-live { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 600; color: #E08A5E; }
 .st-tool-live i { width: 6px; height: 6px; border-radius: 3px; background: #E08A5E; animation: h-breathe 2.2s ease-in-out infinite; }
 .st-tool.plain { background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
@@ -5545,3 +5578,157 @@ html[data-scrolled] .sb-shade { visibility: visible; opacity: 1; }
 /* A button or a bar's label is not text to select. */
 button, .nav, .head-t, .head-s { -webkit-user-select: none; user-select: none; }
 .only-pages .sb-shade { display: none; }
+
+/* ================= v2 home: the green head (app/feed/Home.js) =================
+   Full bleed past the column's padding, under the clock on an edge-to-edge
+   phone, with the sheet of banners pulled up into its lower edge. */
+.hh {
+  position: relative; overflow: hidden; isolation: isolate; color: #fff;
+  margin: -4px -16px 0; padding: calc(env(safe-area-inset-top, 0px) + 12px) 0 56px;
+  background: radial-gradient(110% 70% at 85% 0%, #1C7457 0%, #0F4A3B 45%, #0A2A24 100%);
+}
+.hh-ghost {
+  position: absolute; z-index: -1; width: 300px; inset-inline-end: -110px; top: 96px;
+  filter: grayscale(1) contrast(1.2); mix-blend-mode: luminosity; opacity: .12;
+  transform: rotate(-10deg); pointer-events: none;
+}
+.hh-bar { display: flex; align-items: center; gap: 10px; padding: 0 16px; }
+.hh-me {
+  width: 44px; height: 44px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  color: #fff; font-weight: 600; font-size: 14px; box-shadow: 0 0 0 2px rgba(242, 193, 78, .55);
+}
+.hh-find {
+  flex: 1; min-width: 0; height: 44px; border-radius: 999px; display: flex; align-items: center; gap: 8px;
+  padding: 0 15px; font-size: 14px; font-weight: 300; color: rgba(255, 255, 255, .8);
+  background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+.hh-bell {
+  position: relative; width: 44px; height: 44px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; background: rgba(255, 255, 255, .12);
+}
+.hh-bell i { position: absolute; top: 10px; inset-inline-end: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--clay); }
+.hh-now { text-align: center; padding: 22px 16px 18px; }
+.hh-streak {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; color: #F2C14E; background: rgba(242, 193, 78, .12);
+}
+.hh-now > b { display: block; margin-top: 14px; font-size: 29px; font-weight: 600; line-height: 1.3; text-wrap: balance; }
+.hh-due { display: block; margin-top: 6px; font-size: 15px; font-weight: 300; color: rgba(255, 255, 255, .86); }
+.hh-go {
+  display: inline-flex; align-items: center; min-height: 46px; margin-top: 16px; padding: 0 28px;
+  border-radius: 999px; background: #fff; color: var(--olive); font-weight: 600; font-size: 15px;
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .5); transition: transform .15s;
+}
+.hh-go:active { transform: scale(.96); }
+.hh-quick { display: flex; justify-content: space-around; padding: 0 12px; }
+.hh-quick a { display: grid; justify-items: center; gap: 7px; min-width: 64px; font-size: 12.5px; font-weight: 300; }
+.hh-quick span {
+  position: relative; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); transition: transform .15s;
+}
+.hh-quick a:active span { transform: scale(.92); }
+.hh-quick i {
+  position: absolute; top: -2px; inset-inline-end: -2px; min-width: 20px; height: 20px; padding: 0 5px;
+  border-radius: 10px; background: var(--clay); color: #fff; font: 600 11px/20px var(--font-app), sans-serif;
+  font-style: normal; text-align: center; box-shadow: 0 0 0 2px #0F4A3B;
+}
+.hh-quick i.live { min-width: 10px; width: 10px; height: 10px; padding: 0; top: 4px; inset-inline-end: 4px; background: #3DDC97; }
+.hh-sheet { position: relative; margin: -42px -16px 0; padding: 20px 0 4px; background: var(--bg); border-radius: 28px 28px 0 0; }
+.hh-sheet .h-sec { padding: 0 18px; margin-bottom: 10px; }
+.hh-strip {
+  display: flex; gap: 12px; overflow-x: auto; padding: 4px 16px 16px;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none;
+}
+.hh-strip::-webkit-scrollbar { display: none; }
+
+/* ================= a subject's banner (components/SubjectBanner.js) =================
+   Two shades of the subject's hue, faint rings from the far corner, the model
+   in that hue hanging off the far edge, the name and progress at the start. */
+.sban {
+  position: relative; display: block; flex: none; width: 272px; height: 156px; border-radius: 24px;
+  overflow: hidden; isolation: isolate; color: #fff; scroll-snap-align: start;
+  background: linear-gradient(135deg, var(--a) 0%, var(--b) 100%); box-shadow: 0 14px 28px -16px rgba(0, 0, 0, .55);
+  animation: sban-in .6s cubic-bezier(.2, .8, .2, 1) both; transition: transform .18s;
+}
+.sban:active { transform: scale(.97); }
+.sban-wide { width: 100%; height: 160px; }
+.sban-pat {
+  position: absolute; inset: 0; z-index: -1; opacity: .5;
+  background: repeating-radial-gradient(circle at 0% 100%, transparent 0 13px, rgba(255, 255, 255, .08) 13px 14px);
+}
+.sban::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(70% 90% at 15% 60%, rgba(255, 255, 255, .18), transparent 70%);
+}
+[dir='ltr'] .sban-pat { background: repeating-radial-gradient(circle at 100% 100%, transparent 0 13px, rgba(255, 255, 255, .08) 13px 14px); }
+[dir='ltr'] .sban::after { background: radial-gradient(70% 90% at 85% 60%, rgba(255, 255, 255, .18), transparent 70%); }
+.sban-obj {
+  position: absolute; pointer-events: none; opacity: .95;
+  filter: grayscale(1) contrast(1.15) brightness(1.08); mix-blend-mode: luminosity;
+  animation: sban-drift 6s ease-in-out infinite alternate;
+}
+.sban-txt { position: absolute; top: 16px; inset-inline-start: 18px; display: grid; justify-items: start; }
+.sban-tag { font-size: 11px; opacity: .72; letter-spacing: .04em; }
+.sban b { font-size: 21px; font-weight: 600; letter-spacing: .05em; margin-top: 2px; }
+.sban-foot { position: absolute; bottom: 16px; inset-inline-start: 18px; width: 46%; display: grid; gap: 7px; justify-items: start; }
+.sban-n { font-size: 20px; font-weight: 600; }
+.sban-n em { font-style: normal; font-size: 13px; font-weight: 300; opacity: .7; }
+.sban-track { justify-self: stretch; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .2); overflow: hidden; }
+.sban-track i { display: block; height: 100%; border-radius: 3px; background: #fff; }
+@keyframes sban-in { from { transform: translateX(-30px) scale(.96); } }
+@keyframes sban-drift { to { translate: 6px -4px; } }
+@media (prefers-reduced-motion: reduce) { .sban, .sban-obj { animation: none; } }
+
+/* ---------- التنزيلات ---------- */
+/* The reader's second button: keep this lecture on the phone. */
+/* Two halves of the bar, not two full widths: each wide button is otherwise
+   100% and the second is pushed off the screen. */
+.pdf-bar .pdf-full.wide { flex: 1 1 0; width: auto; min-width: 0; }
+.pdf-full.wide.pdf-dl { border-inline-start: 1px solid var(--line-soft); font-variant-numeric: tabular-nums; }
+.pdf-full.wide.pdf-dl.done { color: var(--olive-light); }
+.pdf-full.wide.pdf-dl:disabled { opacity: .45; }
+
+.dls-row { display: flex; align-items: center; padding-inline-end: 4px; }
+.dls-row:active { transform: none; }
+.dls-open { flex: 1; min-width: 0; background: none; border: 0; font: inherit; color: inherit; text-align: start; }
+.dls-open:active { transform: scale(.985); }
+.dls-open .nm, .dls-open .mt { display: block; }
+/* The subject's banner, cut down to a tile: same two shades, same drawing. */
+.dls-thumb {
+  position: relative; overflow: hidden; flex-shrink: 0;
+  width: 52px; height: 52px; border-radius: var(--r-tile);
+  background: linear-gradient(135deg, var(--a), var(--b));
+}
+.dls-thumb img {
+  position: absolute; inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px);
+  object-fit: contain; opacity: .95;
+  filter: grayscale(1) contrast(1.15) brightness(1.08); mix-blend-mode: luminosity;
+}
+.dls-del, .dls-no {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: none; color: var(--ink-3);
+}
+.dls-del:active, .dls-no:active { background: var(--bg); }
+.dls-ask { display: flex; align-items: center; flex-shrink: 0; }
+.dls-yes {
+  min-height: 44px; padding: 0 16px; border-radius: 14px;
+  background: var(--wrong-bg); color: var(--wrong);
+  font: inherit; font-size: 13.5px; font-weight: 600;
+}
+
+/* A downloaded lecture, read over the list. It covers the bottom bar too:
+   the bar is hidden on a file everywhere else in the app. */
+.dlv {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; flex-direction: column; background: var(--bg);
+}
+.dlv .head { position: static; flex-shrink: 0; }
+.dlv-t { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* The reader is its own scrolling surface here, laid out left to right so a
+   page pinched wider than the screen pans (the reasoning is at .only-pages). */
+.dlv .pdf {
+  flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain;
+  direction: ltr; touch-action: pan-x pan-y;
+  padding: 12px 10px calc(24px + env(safe-area-inset-bottom, 0px));
+}

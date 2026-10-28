@@ -1,5 +1,7 @@
 import './globals.css';
-import { Readex_Pro } from 'next/font/google';
+import { Alexandria } from 'next/font/google';
+import { cookies } from 'next/headers';
+import './dark.css';
 import BottomNav from '@/components/BottomNav';
 import PushListener from '@/components/PushListener';
 import Heartbeat from '@/components/Heartbeat';
@@ -15,10 +17,11 @@ import { dirOf } from '@/lib/i18n';
 // data in Nouakchott it is the whole reason a screen takes seconds to appear.
 // Next fetches the files at build time, serves them from here, and inlines
 // the CSS, so there is no third-party request in the way of the first paint.
-const readex = Readex_Pro({
+// Alexandria since the v2 look (2026-10): one face for Arabic and the French
+// of the course, with the light weight the big numbers and the quiet lines use.
+const appFont = Alexandria({
   subsets: ['arabic', 'latin'],
-  // Readex Pro ships 200–700; the app uses four of them.
-  weight: ['300', '400', '500', '600'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-app',
 });
@@ -38,7 +41,7 @@ export const viewport = {
   // page zoomed after the keyboard closes. Together with the 16px fields in
   // globals.css this keeps the screen where it was.
   maximumScale: 1,
-  themeColor: '#2A5B3E',
+  themeColor: '#0F4A3B',
   // The app draws its own bar along the bottom; on a notched phone it has to
   // reach the edge of the glass rather than stopping above it.
   viewportFit: 'cover',
@@ -49,8 +52,11 @@ export const viewport = {
 // sent down with it.
 export default async function RootLayout({ children }) {
   const lang = await getLang();
+  // Dark or light, as this phone chose (components/ThemeToggle.js), read here so
+  // the page arrives in its colours instead of flashing white first.
+  const theme = (await cookies()).get('mp-theme')?.value === 'dark' ? 'dark' : 'light';
   return (
-    <html lang={lang} dir={dirOf(lang)} className={readex.variable}>
+    <html lang={lang} dir={dirOf(lang)} data-theme={theme} className={appFont.variable}>
       <body>
         <LangProvider lang={lang} dict={dictOf(lang)}>
           <div className="app">

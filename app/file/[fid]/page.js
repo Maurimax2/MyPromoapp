@@ -1,4 +1,3 @@
-import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import Reader from './Reader';
 import { fileByFid } from '@/lib/data';
@@ -29,9 +28,6 @@ export default async function FileView({ params }) {
                 : t('من الأرشيف')}
             </div>
           </div>
-          <a className="icobtn" href={src} download aria-label={t('تحميل')}>
-            <Icon name="download" size={18} />
-          </a>
         </div>
       </header>
 
@@ -40,6 +36,7 @@ export default async function FileView({ params }) {
         src={src}
         title={file ? file.title : t('الملف')}
         subject={file?.module || null}
+        ext={file?.ext || null}
       />
     </>
   );

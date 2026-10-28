@@ -1,0 +1,146 @@
+/* Written by scripts/build-dark-css.mjs from globals.css. Do not edit. */
+[data-theme='dark'] .notice-t {
+    color: #dcccc4
+}
+[data-theme='dark'] .ctm-del {
+    background: #161E1A
+}
+[data-theme='dark'] .ctm-box {
+    background: #161E1A
+}
+[data-theme='dark'] .m3d-pin::before {
+    border: 2px solid #333333
+}
+[data-theme='dark'] .duelline {
+    border: 1px solid #534841
+}
+[data-theme='dark'] .door.needs {
+    border-color: #534841
+}
+[data-theme='dark'] .you-row {
+    border: 1px solid #454e47
+}
+[data-theme='dark'] .duel-rivals {
+    border: 1px solid #454e47
+}
+[data-theme='dark'] .st-tool.clay {
+    border: 1px solid #534841
+}
+[data-theme='dark'] .me-ring-lv {
+    background: #586639;
+    color: #d0ddd6
+}
+[data-theme='dark'] .me-nums > span.hot {
+    border-color: #534841
+}
+[data-theme='dark'] .me-cell.s1 {
+    background: #445749
+}
+[data-theme='dark'] .me-legend i.s1 {
+    background: #445749
+}
+[data-theme='dark'] .me-badge.done .me-medal, [data-theme='dark'] .me-medal.big.done {
+    color: #e1d9c9
+}
+[data-theme='dark'] .me-badge-tier.t1 {
+    background: #4e3927
+}
+[data-theme='dark'] .me-badge-tier.t2 {
+    background: #2b3135
+}
+[data-theme='dark'] .me-badge-tier.t3 {
+    background: #504729
+}
+[data-theme='dark'] .bc-ok {
+    background: #2a2415
+}
+[data-theme='dark'] .sj-ch.on {
+    border-color: #454e47
+}
+[data-theme='dark'] .sj-lec {
+    border-bottom: 1px solid #413f39
+}
+[data-theme='dark'] .qz-segs i.now {
+    background: #445749
+}
+[data-theme='dark'] .qz-why p {
+    color: #d6d6d6
+}
+[data-theme='dark'] .ar-go {
+    color: #dee2df
+}
+[data-theme='dark'] .arena .qz-opt.on .qz-l {
+    color: #dee2df
+}
+[data-theme='dark'] .arena .qz-opt.right .qz-l {
+    color: #dee2df
+}
+[data-theme='dark'] .arena .qz-opt.wrong .qz-l {
+    color: #dee2df
+}
+[data-theme='dark'] .arena .qz-go {
+    color: #dee2df
+}
+[data-theme='dark'] :is(.m3d-page, .rm-stage) .m3d-acts .icobtn.on {
+    color: #dee2df
+}
+[data-theme='dark'] :is(.m3d-page, .rm-stage) .m3d-tag.on {
+    color: #dee2df
+}
+[data-theme='dark'] .m3d-page .m3d-acts .icobtn.on {
+    color: #dee2df
+}
+[data-theme='dark'] .usr-wa {
+    background: #233a2a;
+    color: #c0d9ca
+}
+[data-theme='dark'] .me-goal .frz {
+    color: #c8dcdf;
+    background: #2b3c3e
+}
+[data-theme='dark'] .dq {
+    border: 1.5px solid #4f473e
+}
+[data-theme='dark'] .dq.right {
+    border-color: #415347
+}
+[data-theme='dark'] .dq.wrong {
+    border-color: #4f3d39
+}
+[data-theme='dark'] .pa {
+    border: 1.5px solid #424b44
+}
+[data-theme='dark'] .ps-dev.on {
+    background: #1f2b1f
+}
+[data-theme='dark'] .news-peek {
+    background: #3c392f
+}
+[data-theme='dark'] .pod1::before, [data-theme='dark'] .pod1::after {
+    background: #665a34
+}
+[data-theme='dark'] .lv-medal {
+    background: radial-gradient(circle at 35% 28%, #2d5a3f 0%, #43A26E 45%, #1B4A31 100%)
+}
+[data-theme='dark'] .tt-chip[data-on='true'] i {
+    background: #2a2415
+}
+[data-theme='dark'] .tt-card.exam {
+    border-color: #56463e;
+    background: #2e2117
+}
+[data-theme='dark'] .bd-regions button[data-on="true"], [data-theme='dark'] .bd-chips button[data-on="true"] {
+    color: #dee2df
+}
+[data-theme='dark'] .bd-dock button[data-on="true"] {
+    color: #dee2df
+}
+[data-theme='dark'] .bd-tag {
+    color: #ece7dd
+}
+[data-theme='dark'] .bd-acts button[data-on="true"] {
+    color: #dee2df
+}
+[data-theme='dark'] .bd-seg button[data-on="true"] {
+    color: #dee2df
+}

@@ -17,7 +17,7 @@ import {
   Crosshair, Crown, Cube, DotsThree, DownloadSimple, Exam, Eye, EyeSlash, FileText, Fire, Flag, Flask, Gear, GoogleLogo, Heart,
   House, Image, Lightbulb, Lightning, ListBullets, LockSimple, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin,
   Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, Prohibit, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
-  Megaphone, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
+  Megaphone, Moon, Sun, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
   Stack, Target, Images, Bone, Brain, Ear, Tooth, Hand, Heartbeat, Drop, Skull, Knife, ArrowsLeftRight,
 } from '@phosphor-icons/react/dist/ssr';
 
@@ -32,7 +32,7 @@ const ICONS = {
   image: Image, send: PaperPlaneTilt, check: Check, x: X, quiz: Exam,
   zoomIn: MagnifyingGlassPlus, zoomOut: MagnifyingGlassMinus, expand: CornersOut, shrink: CornersIn,
   box: Cube, rotate: ArrowsClockwise, list: ListBullets, palette: Palette, focus: Crosshair,
-  pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, video: VideoCamera,
+  pin: MapPin, eye: Eye, eyeOff: EyeSlash, download: DownloadSimple, moon: Moon, sun: Sun, video: VideoCamera,
   award: Trophy, swords: Sword, calendar: CalendarDots, flame: Fire, crown: Crown, lock: LockSimple,
   sparkle: Sparkle, bulb: Lightbulb, again: ArrowCounterClockwise, bolt: Lightning, share: ShareNetwork,
   google: GoogleLogo, mic: Microphone, micOff: MicrophoneSlash, camOff: VideoCameraSlash, speaker: SpeakerHigh,

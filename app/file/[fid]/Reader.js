@@ -7,17 +7,40 @@
 // of our own for the small files, and a switch between them; it had to fetch
 // the whole document before drawing anything, and students found it slow, so
 // it went.
+//
+// That reader is back for one case only: a lecture the student downloads
+// (تنزيل, in the bar) is kept on the phone and read from التنزيلات, where
+// the whole file is already there. Reading here stays Google's preview.
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
 import { opened } from '@/lib/resume';
 import { useT } from '@/components/Lang';
 import { edgeToEdge } from '@/components/StatusBar';
+import { download, isDownloaded } from '@/lib/downloads';
 
-export default function Reader({ fid, src, title, subject = null }) {
+export default function Reader({ fid, src, title, subject = null, ext = null }) {
   const t = useT();
   const [full, setFull] = useState(false);  // الصفحات وحدها
+  // Kept on this phone (lib/downloads.js): null while unknown, then a percent
+  // while it comes down, true once it is here.
+  const [kept, setKept] = useState(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => { isDownloaded(fid).then((yes) => setKept(yes || false)).catch(() => setKept(false)); }, [fid]);
+
+  const keep = async () => {
+    setFailed(false);
+    setKept(0);
+    try {
+      await download({ fid, title, subject }, (p) => setKept(p));
+      setKept(true);
+    } catch {
+      setKept(false);
+      setFailed(true);
+    }
+  };
 
   // Opening a lecture is what «تابع من حيث توقّفت» is made of, and this is
   // the moment it happens. Recorded in the browser, not on the server — the
@@ -65,6 +88,16 @@ export default function Reader({ fid, src, title, subject = null }) {
       <div className="pdf-bar">
         <button className="pdf-full wide" onClick={enter} aria-label={t('ملء الشاشة')}>
           <Icon name="expand" size={18} />{' '}{t('ملء الشاشة')}</button>
+        {ext && !/pdf/i.test(ext) ? null : kept === true ? (
+          <Link href="/downloads" className="pdf-full wide pdf-dl done">
+            <Icon name="check" size={18} />{' '}{t('في التنزيلات')}</Link>
+        ) : typeof kept === 'number' ? (
+          <span className="pdf-full wide pdf-dl" aria-live="polite">
+            <Icon name="download" size={18} />{' '}{kept}%</span>
+        ) : (
+          <button className="pdf-full wide pdf-dl" onClick={keep} disabled={kept === null}>
+            <Icon name="download" size={18} />{' '}{failed ? t('تعذّر التنزيل، أعد المحاولة') : t('تنزيل')}</button>
+        )}
       </div>
 
       <QuickView fid={fid} src={src} />

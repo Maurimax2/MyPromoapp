@@ -16,6 +16,7 @@ import Badges from './Badges';
 import LevelUp from './LevelUp';
 import { getT } from '@/lib/lang';
 import { LangRow } from '@/components/Lang';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export const dynamic = 'force-dynamic';
 
@@ -147,6 +148,12 @@ export default async function Profile() {
             <s>{saves.count || 0}</s>
             <Icon name="chev" size={15} />
           </Link>
+          {/* Lectures kept on this phone, opened without asking the network. */}
+          <Link href="/downloads">
+            <span className="me-list-ic"><Icon name="download" size={19} /></span>
+            <span className="grow">{t('التنزيلات')}</span>
+            <Icon name="chev" size={15} />
+          </Link>
           {/* المحادثات gave up its place in the bottom bar, and a
               conversation starts from a person, so it lives beside you. */}
           <Link href="/chat">
@@ -168,6 +175,7 @@ export default async function Profile() {
             <Icon name="chev" size={15} />
           </Link>
           <LangRow />
+          <ThemeToggle row />
           <Link href="/feed?tour=1">
             <span className="me-list-ic"><Icon name="sparkle" size={19} /></span>
             <span className="grow">{t('جولة في التطبيق')}</span>

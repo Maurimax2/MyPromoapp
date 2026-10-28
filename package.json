@@ -14,8 +14,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prebuild": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs && node scripts/build-search.mjs",
-    "predev": "node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
+    "prebuild": "node scripts/build-dark-css.mjs && node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs && node scripts/build-search.mjs",
+    "predev": "node scripts/build-dark-css.mjs && node scripts/copy-pdfjs.mjs && node scripts/copy-tesseract.mjs",
     "mock": "node scripts/mock-supabase.mjs",
     "check:lectures": "node scripts/check-lectures.mjs",
     "check:paste-json": "node scripts/check-paste-json.mjs",
@@ -25,7 +25,8 @@
     "native:ios": "npx cap open ios",
     "check:buttons": "node scripts/find-dead-buttons.mjs .",
     "check:presses": "node scripts/check-buttons.mjs",
-    "check:sql:lite": "node scripts/check-sql-lite.mjs"
+    "check:sql:lite": "node scripts/check-sql-lite.mjs",
+    "build:dark": "node scripts/build-dark-css.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.2",

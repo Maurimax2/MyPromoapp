@@ -2,21 +2,20 @@
 
 // الرئيسية.
 //
-// In the order a student actually wants it: who is studying right now, the
-// duels, where you left off, your subjects — each with its own model breaking
-// out of the card — and then what your promo is saying.
+// The v2 home (owner's pick, 2026-10): a green head that says who you are and
+// the one thing to do now, four shortcuts — test, challenge, summaries, rooms,
+// each carrying what is waiting there — then your subjects as banners, one at
+// a time, and under them what your promo is saying.
 //
-// Duels are a section here, always, and never an empty one: when none is in
-// play it offers classmates to challenge. They had been cut down to a single
-// line that appeared only when one was waiting on you, which is hiding them,
-// not showing them.
+// Duels, rooms and the next lecture used to be sections of their own here.
+// The challenge and the rooms are a tap away with their count on the
+// shortcut; the faculty's timetable is not trusted enough to lead the screen.
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Post from '@/components/Post';
-import Sheet from '@/components/Sheet';
 import PickPromo from './PickPromo';
 import { imageThumb, pdfThumb } from '@/lib/thumb';
 import { dueCount, trackedCount } from '@/lib/review';
@@ -24,10 +23,10 @@ import { lastOpened } from '@/lib/resume';
 import { daysKnown } from '@/lib/streak';
 import Flame from '@/components/Flame';
 import { streakOf, dayOf } from '@/lib/habit';
-import NextUp from './NextUp';
 import Welcome from '@/components/Welcome';
 import PushAsk from './PushAsk';
-import { artOf } from '@/lib/subjectArt';
+import SubjectBanner from '@/components/SubjectBanner';
+import ThemeToggle from '@/components/ThemeToggle';
 import { useT } from '@/components/Lang';
 import { daysWord } from '@/lib/i18n';
 
@@ -42,218 +41,7 @@ const faceOf = (id = '') => {
 };
 const initials = (name = '') => name.trim().slice(0, 2);
 
-// Arabic counts people differently below eleven, and a bare digit in the
-// middle of the sentence reads like a score rather than like people.
-const SOULS = ['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة',
-               'ثمانية', 'تسعة', 'عشرة'];
-const souls = (t, n) => (t.lang === 'fr' || n > 10 ? String(n) : SOULS[n]);
-
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
-
-/**
- * مَن يدرس الآن.
- *
- * Four faces, a count, and a live dot — and the whole row is the way into the
- * open rooms. When nobody is in one it becomes the camera and the offer to
- * open a room: the same row in the same place, so the screen does not reflow
- * depending on who happens to be online.
- */
-function Here({ studying, rooms }) {
-  const t = useT();
-  const [open, setOpen] = useState(false);
-  const n = studying.length;
-
-  if (!n) {
-    return (
-      <Link href="/rooms" className="here r2">
-        <span className="here-cam"><Icon name="video" size={20} /></span>
-        <span className="here-say">
-          <b>{t('لا أحد يدرس الآن')}</b>
-        </span>
-        <Icon name="chev" size={16} />
-      </Link>
-    );
-  }
-
-  return (
-    <>
-      <button className="here r2" onClick={() => setOpen(true)}>
-        <span className="stack">
-          {studying.slice(0, 4).map((p) => (
-            <span key={p.id} className="face" style={{ background: faceOf(p.id) }}>
-              {initials(p.name)}
-            </span>
-          ))}
-        </span>
-        <span className="here-say">
-          <b>{souls(t, n)}</b>{' '}{n === 1 ? t('من دفعتك يدرس الآن') : t('من دفعتك يدرسون الآن')}</span>
-        <span className="here-dot" />
-        <Icon name="chev" size={16} />
-      </button>
-
-      {open && (
-        <Sheet onClose={() => setOpen(false)}>
-          <div className="rooms-head">
-            <b>{t('غرف مفتوحة الآن')}</b>
-            {!rooms.length && <s>{t('لا غرفة مفتوحة')}</s>}
-          </div>
-          {rooms.map((r) => (
-            <Link key={r.id} href={`/rooms/${r.id}`} className="room-row">
-              {r.people.length > 0 && (
-                <span className="stack">
-                  {r.people.slice(0, 3).map((p) => (
-                    <span key={p.id} className="face" style={{ background: faceOf(p.id) }}>
-                      {initials(p.name)}
-                    </span>
-                  ))}
-                </span>
-              )}
-              <span className="grow">
-                <b dir="auto">{r.title}</b>
-                <s dir={t.lang === 'fr' ? 'ltr' : 'rtl'}>
-                  {r.people.length}{r.capacity ? t(' من {capacity}', { capacity: r.capacity }) : ''}
-                  {r.topic && <>{' · '}<bdi>{r.topic}</bdi></>}
-                </s>
-              </span>
-              <span className="room-go">{t('انضم')}</span>
-            </Link>
-          ))}
-          <Link href="/rooms" className="room-new">{t('+ افتح غرفة')}</Link>
-        </Sheet>
-      )}
-    </>
-  );
-}
-
-/**
- * التحدّيات.
- *
- * Your turn comes first and is drawn face to face; a duel you are waiting on
- * is quieter; and at the end, always, classmates you can challenge in one tap.
- */
-function Duels({ duels, rivals, me }) {
-  const t = useT();
-  const mine = duels.filter((d) => d.at === 'invited' || d.at === 'play');
-  const theirs = duels.filter((d) => d.at === 'sent' || d.at === 'waiting');
-
-  return (
-    <section className="h-duels r3">
-      <div className="h-sec">
-        <span className="h-sec-ic clay"><Icon name="swords" size={17} /></span>
-        <b>{t('التحدّيات')}</b>
-        {mine.length > 0 && <span className="h-sec-n">{t('{length} ينتظرك', { length: mine.length })}</span>}
-        <Link href="/duel" className="h-sec-all">{t('الكل')}</Link>
-      </div>
-
-      <div className="h-strip">
-        {mine.map((d) => (
-          <Link key={d.id} href={`/duel/${d.id}`} className="duel-turn">
-            <span className="duel-turn-top">
-              <span className="duel-live" />
-              <b>{d.at === 'invited' ? t('تحدٍّ ينتظر ردّك') : t('دورك')}</b>
-              {d.seconds > 0 && (
-                <span className="duel-turn-t"><Icon name="clock" size={12} />{' '}{t('{seconds} ث', { seconds: d.seconds })}</span>
-              )}
-            </span>
-            <span className="duel-vs">
-              <span className="duel-p">
-                <span className="duel-f" style={{ background: faceOf(me.id) }}>{initials(me.name)}</span>
-                <s>{t('أنت')}</s>
-              </span>
-              <span className="duel-mid">
-                <b>VS</b>
-                {d.count ? <s dir="ltr">{d.count} QCM</s> : null}
-              </span>
-              <span className="duel-p">
-                <span className="duel-f them" style={{ background: faceOf(d.them.id) }}>{initials(d.them.name)}</span>
-                <s>{d.them.name.split(' ')[0]}</s>
-              </span>
-            </span>
-            <span className="duel-turn-bot">
-              <bdi className="grow">{d.title}</bdi>
-              <span className="duel-go">{d.at === 'invited' ? t('اقبل') : t('أجب الآن')}</span>
-            </span>
-          </Link>
-        ))}
-
-        {theirs.map((d) => (
-          <Link key={d.id} href={`/duel/${d.id}`} className="duel-wait">
-            <span className="duel-wait-top">
-              <span className="duel-f sm" style={{ background: faceOf(d.them.id) }}>{initials(d.them.name)}</span>
-              <Icon name="clock" size={19} />
-            </span>
-            <b>{d.them.name}</b>
-            <bdi className="duel-wait-t">{d.title}</bdi>
-            <s>{d.at === 'sent' ? t('أرسلت الدعوة…') : t('بانتظار إجابته…')}</s>
-          </Link>
-        ))}
-
-        <div className="duel-rivals">
-          <b>{t('تحدَّ زميلًا')}</b>
-          {rivals.map((r) => (
-            <span key={r.id} className="duel-rival">
-              <span className="duel-f xs" style={{ background: faceOf(r.id) }}>{initials(r.name)}</span>
-              <span className="grow">{r.name}</span>
-              <Link href={`/duel/new?to=${encodeURIComponent(r.handle)}`} className="duel-rival-go"
-                    aria-label={t('تحدَّ {name}', { name: r.name })}>
-                <Icon name="swords" size={15} weight="fill" />
-              </Link>
-            </span>
-          ))}
-          <Link href="/duel/new" className="duel-rivals-any">{t('أو اختر أيّ زميل ←')}</Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/**
- * تابع من حيث توقّفت.
- *
- * Something true to say in every state, at one height, so the screen does not
- * jump while the browser is being read: the lecture you had open, questions
- * that are due, a calm all-clear, or the invitation to a first quiz.
- */
-function Continue({ review, resume }) {
-  const t = useT();
-  const due = review?.due ?? 0;
-  const started = (review?.tracked ?? 0) > 0;
-
-  const said = resume
-    ? { at: `/file/${resume.fid}`, icon: 'book', kicker: t('تابع من حيث توقّفت'), title: resume.title,
-        art: resume.subject ? artOf(resume.subject) : null }
-    : !review ? { at: '/review', icon: 'quiz', kicker: t('المراجعة'), title: t('المراجعة') }
-    : due > 0 ? { at: '/review', icon: 'clock', kicker: null,
-                  title: t('{due} {v1} المراجعة', { due, v1: due === 1 ? t('سؤال يستحقّ') : t('أسئلة تستحقّ') }) }
-    : started ? { at: '/review', icon: 'quiz', kicker: null, title: t('لا شيء للمراجعة الآن') }
-    : { at: '/quiz', icon: 'quiz', kicker: null, title: t('ابدأ أوّل اختبار') };
-
-  // How far in, when the reader got far enough to know. A bar at 2% reads as
-  // a broken bar, so nothing is drawn until there is something to show.
-  const far = resume?.page && resume?.pages
-    ? Math.min(100, Math.round((resume.page / resume.pages) * 100))
-    : 0;
-
-  return (
-    <Link href={said.at} className="h-cont r4">
-      <span className="h-cont-art" style={{ background: said.art?.bg || '#2A5B3E' }}>
-        {said.art
-          ? <img src={said.art.img} alt="" />
-          : resume?.thumb
-            ? <img className="thumb" src={resume.thumb} alt="" />
-            : <Icon name={said.icon} size={22} />}
-      </span>
-      <span className="grow">
-        {said.kicker && <s>{said.kicker}</s>}
-        <b dir="auto">{said.title}</b>
-        {far >= 3 && <span className="h-cont-bar"><i style={{ width: `${far}%` }} /></span>}
-      </span>
-      {far >= 3
-        ? <span className="h-cont-n" dir="ltr">{resume.page} / {resume.pages}</span>
-        : <Icon name="chev" size={17} />}
-    </Link>
-  );
-}
 
 export default function Home({ me, posts, subjects, mySubjects = [],
                                promos = [], unseen = 0,
@@ -358,72 +146,89 @@ export default function Home({ me, posts, subjects, mySubjects = [],
   const ready = !busy && (body.trim() || files.some((f) => !f.pending))
     && !files.some((f) => f.pending);
   const first = me.name.split(' ')[0];
+  // Morning or evening is the phone's, so it is worked out once we are on it.
+  const [hello, setHello] = useState(t('أهلًا {first}', { first }));
+  useEffect(() => {
+    setHello(new Date().getHours() < 12
+      ? t('صباح الخير، {first}', { first })
+      : t('مساء الخير، {first}', { first }));
+  }, [first, t]);
+
+  // The one thing to do now, until the planner says better: what came back
+  // for review, else the lecture left open, else a first test. Never a
+  // button that leads nowhere.
+  const due = review?.due ?? 0;
+  const act = due > 0 ? { href: '/review', label: t('راجع الآن') }
+    : resume ? { href: `/file/${resume.fid}`, label: t('تابع القراءة') }
+    : { href: '/quiz', label: t('ابدأ اختبارًا') };
+  const yourTurn = duels.filter((d) => d.at === 'invited' || d.at === 'play').length;
+  const year = me.promo && (promos.find((p) => p.id === me.promo)?.name || me.promo.toUpperCase());
 
   return (
     <>
-      {/* ================= who you are, today ================= */}
-      <header className="h-top r1">
-        <Link href="/profile" className="h-me" style={{ background: faceOf(me.id) }} aria-label={t('أنا')}>
-          {initials(me.name)}
-        </Link>
-        <span className="h-hi">
-          <b>{t('أهلًا {first}', { first })}</b>
-          <span className="h-sub">
-            {streak > 0 && (
-              <span className="h-streak"><Flame streak={streak} size={14} /> <b>{daysWord(t, streak)}</b>{' '}{t('متتالية ·')}</span>
-            )}
-            {/* Your year, as a fact rather than a menu: the home screen is
-                yours. Other years' material is browsed from الدراسة. */}
-            {me.promo && (
-              <span className="yr-tag" dir="ltr">
-                {promos.find((p) => p.id === me.promo)?.name || me.promo.toUpperCase()}
-              </span>
-            )}
-          </span>
-        </span>
-        <Link href="/notifications" className="h-bell"
-              aria-label={t('الإشعارات{v0}', {
-                v0: unseen ? t(' — {unseen} جديدة', { unseen }) : ''
-              })}>
-          <Icon name="bell" size={21} />
-          {unseen > 0 && <span className="tally">{unseen > 9 ? '+9' : unseen}</span>}
-        </Link>
-      </header>
-
       <Welcome name={me.name} ready={me.approved && !!me.promo} />
 
       <div className="scroll flow h-flow">
-        {next && next.length > 0 && <NextUp sessions={next} term={term} now={now} />}
+        {/* ================= the green head: who you are, and what now ================= */}
+        <header className="hh r1">
+          <img className="hh-ghost" src="/art/crane.webp" alt="" />
+          <div className="hh-bar">
+            <Link href="/profile" className="hh-me" style={{ background: faceOf(me.id) }} aria-label={t('أنا')}>
+              {initials(me.name)}
+            </Link>
+            <Link href="/study" className="hh-find">
+              <Icon name="search" size={18} /><span>{t('ابحث في موادك')}</span>
+            </Link>
+            <ThemeToggle className="hh-bell" />
+            <Link href="/notifications" className="hh-bell"
+                  aria-label={t('الإشعارات{v0}', {
+                    v0: unseen ? t(' — {unseen} جديدة', { unseen }) : ''
+                  })}>
+              <Icon name="bell" size={21} />
+              {unseen > 0 && <i />}
+            </Link>
+          </div>
+          <div className="hh-now">
+            {streak > 0 && (
+              <span className="hh-streak"><Flame streak={streak} size={14} />{daysWord(t, streak)}</span>
+            )}
+            <b>{hello}</b>
+            {due > 0 && (
+              <span className="hh-due">
+                {t('{due} {v1} المراجعة', { due, v1: due === 1 ? t('سؤال يستحقّ') : t('أسئلة تستحقّ') })}
+              </span>
+            )}
+            <Link href={act.href} className="hh-go">{act.label}</Link>
+          </div>
+          <nav className="hh-quick" aria-label={t('أدوات')}>
+            <Link href="/quiz"><span><Icon name="quiz" size={22} /></span>{t('اختبر')}</Link>
+            <Link href="/duel">
+              <span><Icon name="swords" size={22} />{yourTurn > 0 && <i>{yourTurn}</i>}</span>{t('تحدَّ')}
+            </Link>
+            <Link href="/notes"><span><Icon name="book2" size={22} /></span>{t('ملخصات')}</Link>
+            <Link href="/rooms">
+              <span><Icon name="video" size={22} />{studying.length > 0 && <i className="live" />}</span>{t('غرف')}
+            </Link>
+          </nav>
+        </header>
 
-        <Here studying={studying} rooms={rooms} />
-
-        <PushAsk />
-
-        <Duels duels={duels} rivals={rivals} me={me} />
-
-        <Continue review={review} resume={resume} />
-
-        {/* ================= موادك — each with its model breaking out ================= */}
+        {/* ================= موادك — a banner each, one at a time ================= */}
         {subjects.length > 0 && (
-          <section className="r5">
+          <section className="hh-sheet r2">
             <div className="h-sec">
               <b>{t('موادك')}</b>
-              <Link href="/study" className="h-sec-all">{t('كل المواد')}</Link>
+              <Link href="/study" className="h-sec-all">{t('الكل')}</Link>
             </div>
-            <div className="h-subjects">
-              {subjects.map((m, i) => {
-                const a = artOf(m.name);
-                return (
-                  <Link key={m.id} href={`/archive/${m.id}`} className="h-subj" style={{ background: a.bg }}>
-                    <img className="float" src={a.img} alt="" style={{ animationDelay: `${-i * 0.9}s` }} />
-                    <b dir="ltr">{m.name}</b>
-                    <s>{m.lectures ? t('{lectures} محاضرة', { lectures: m.lectures }) : t('لا ملفات بعد')}</s>
-                  </Link>
-                );
-              })}
+            <div className="hh-strip">
+              {subjects.map((m, i) => (
+                <SubjectBanner key={m.id} subject={m} href={`/archive/${m.id}`} index={i}
+                               tag={[year, m.semester].filter(Boolean).join(' · ')} />
+              ))}
             </div>
           </section>
         )}
+
+        <PushAsk />
 
         <div className="split" />
 
