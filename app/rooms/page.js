@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { subjectsOf } from '@/lib/catalogue';
+import { subjectsInProgram } from '@/lib/catalogue';
 import { isHere } from '@/lib/rooms';
 import RoomList from './RoomList';
 
@@ -45,7 +45,7 @@ export default async function Rooms() {
   const now = Date.now();
   for (const m of members || []) if (isHere(m, now)) count[m.room] = (count[m.room] || 0) + 1;
 
-  const subjects = (await subjectsOf(promo)).map((m) => ({ id: m.id, name: m.name }));
+  const subjects = (await subjectsInProgram(promo)).map((m) => ({ id: m.id, name: m.name }));
 
   return (
     <RoomList

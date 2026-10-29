@@ -34,7 +34,8 @@ export default function SubjectBanner({ subject, href, tag, done = 0, of = 0, si
       <span className="sban-icon"><SubjectGlyph glyph={g.glyph} size={44} /></span>
       <span className="sban-txt">
         {tag && <span className="sban-tag" dir="ltr">{tag}</span>}
-        <b dir="ltr">{subject.name}</b>
+        {/* A certificate's name runs to six words; it shrinks rather than being cut. */}
+        <b dir="ltr" data-long={String(subject.name || '').length > 28 || undefined}>{subject.name}</b>
       </span>
       {of > 0 && (
         <span className="sban-foot">

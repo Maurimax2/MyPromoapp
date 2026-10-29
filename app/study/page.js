@@ -1,4 +1,6 @@
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { PROGRAM_COOKIE } from '@/lib/data';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promosOf, allModules } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
@@ -46,6 +48,7 @@ export default async function StudyPage() {
       modules={subjects.modules}
       mine={await browsingPromo(me, years.promos)}
       waiting={waiting}
+      program={(await cookies()).get(PROGRAM_COOKIE)?.value || null}
       readError={trouble}
       fromFile={subjects.source === 'file'}
     />

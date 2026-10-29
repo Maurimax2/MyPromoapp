@@ -11,7 +11,7 @@ import { sessionsOf, hasPlanning, LECTURE } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
 import { getT } from '@/lib/lang';
 import { blockedAmong } from '@/lib/blocks';
-import { badgeOf } from '@/lib/data';
+import { badgeOf, inProgram } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
 
@@ -78,7 +78,7 @@ export default async function Feed({ searchParams }) {
   const upcomingP = planned.length
     ? subjectsP.then((rows) => withLinks(
         soon(planned, today),
-        rows.map((m) => ({ id: m.id, name: m.name })), sb))
+        inProgram(rows, 'own').map((m) => ({ id: m.id, name: m.name })), sb))
     : Promise.resolve([]);
 
   const [

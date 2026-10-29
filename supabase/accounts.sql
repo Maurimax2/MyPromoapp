@@ -106,7 +106,7 @@ where not exists (select 1 from promos where id = 'pced1')
 
 -- The later pharmacy and dental years. Each has its own subjects, which are
 -- added in the panel when they are known — nothing is shared with medicine.
--- Pharmacy: PCEP1, PCEP2, DCEP1, DCEP2. Dental: PCED1, PCED2, DCED1.
+-- Pharmacy: PCEP1, PCEP2, DCEP1, DCEP2, DCEP3. Dental: PCED1, PCED2, DCED1.
 insert into promos (id, name, label, badge, position, indexed, track, year)
 select 'pcep2', 'PCEP2', 'صيدلة — السنة الثانية', '#1C6B6F', 12, false, 'pharmacy', 2
 where not exists (select 1 from promos where id = 'pcep2');
@@ -118,6 +118,12 @@ where not exists (select 1 from promos where id = 'dcep1');
 insert into promos (id, name, label, badge, position, indexed, track, year)
 select 'dcep2', 'DCEP2', 'صيدلة — السنة الرابعة', '#2A7A72', 14, false, 'pharmacy', 4
 where not exists (select 1 from promos where id = 'dcep2');
+
+-- Pharmacy's fifth year. FMPOS has no programme of its own for it yet; it
+-- reads the Tunisian one (lib/modules/tn-dcep3.js), from the file.
+insert into promos (id, name, label, badge, position, indexed, track, year)
+select 'dcep3', 'DCEP3', 'صيدلة — السنة الخامسة', '#3D6B4F', 15, false, 'pharmacy', 5
+where not exists (select 1 from promos where id = 'dcep3');
 
 insert into promos (id, name, label, badge, position, indexed, track, year)
 select 'pced2', 'PCED2', 'طب الأسنان — السنة الثانية', '#9A7A22', 22, false, 'dental', 2

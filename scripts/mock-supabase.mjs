@@ -115,6 +115,8 @@ const db = {
     { id: 'pcep2', name: 'PCEP2', label: 'صيدلة — السنة الثانية', badge: '#1C6B6F', position: 12, indexed: false, track: 'pharmacy', year: 2, reads_from: null, reads_semesters: null },
     { id: 'dcep1', name: 'DCEP1', label: 'صيدلة — السنة الثالثة', badge: '#0F4A55', position: 13, indexed: false, track: 'pharmacy', year: 3, reads_from: null, reads_semesters: null },
     { id: 'dcep2', name: 'DCEP2', label: 'صيدلة — السنة الرابعة', badge: '#2A7A72', position: 14, indexed: false, track: 'pharmacy', year: 4, reads_from: null, reads_semesters: null },
+    // No FMPOS programme yet: it reads the Tunisian one (lib/modules/tn-dcep3.js).
+    { id: 'dcep3', name: 'DCEP3', label: 'صيدلة — السنة الخامسة', badge: '#3D6B4F', position: 15, indexed: false, track: 'pharmacy', year: 5, reads_from: null, reads_semesters: null },
     { id: 'pced2', name: 'PCED2', label: 'طب الأسنان — السنة الثانية', badge: '#9A7A22', position: 22, indexed: false, track: 'dental', year: 2, reads_from: null, reads_semesters: null },
     { id: 'dced1', name: 'DCED1', label: 'طب الأسنان — السنة الثالثة', badge: '#6E5410', position: 23, indexed: false, track: 'dental', year: 3, reads_from: null, reads_semesters: null },
   ],

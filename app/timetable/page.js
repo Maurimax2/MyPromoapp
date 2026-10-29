@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { subjectsOf } from '@/lib/catalogue';
-import { promoById } from '@/lib/data';
+import { promoById, inProgram } from '@/lib/data';
 import { sessionsOf, hasPlanning, SEMESTER } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
 import Timetable from './Timetable';
@@ -20,7 +20,7 @@ export default async function TimetablePage() {
   }
 
   const sb = await supabaseServer();
-  const subjects = (await subjectsOf(promo)).map((m) => ({ id: m.id, name: m.name }));
+  const subjects = inProgram(await subjectsOf(promo), 'own').map((m) => ({ id: m.id, name: m.name }));
   const sessions = await withLinks(sessionsOf(promo), subjects, sb);
 
   return (

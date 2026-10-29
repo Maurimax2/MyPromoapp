@@ -138,7 +138,10 @@ export default function Subject({
 
           <div className="sj-hero-t">
             <span className="sj-promo" dir="ltr">{promo} · {semester}</span>
-            <b dir="ltr">{name}</b>
+            {/* A long name, or one long word (PARASITOLOGIE, PHARMACOVIGILANCE),
+                takes a smaller size rather than breaking in the middle. */}
+            <b dir="ltr" data-long={String(name || '').length > 28
+              || String(name || '').split(/[\s-]+/).some((w) => w.length > 11) || undefined}>{name}</b>
             {topics && <span className="sj-topics" dir="ltr">{topics}</span>}
           </div>
 

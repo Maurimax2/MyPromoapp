@@ -13,7 +13,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
-import { badgeOf } from '@/lib/data';
+import { badgeOf, inProgram, isTunisian, PROGRAM_COOKIE } from '@/lib/data';
 import SubjectBanner from '@/components/SubjectBanner';
 import { dueCount } from '@/lib/review';
 import { useT } from '@/components/Lang';
@@ -23,12 +23,20 @@ const SEMESTERS = ['S1', 'S2'];
 
 const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-export default function Study({ promos, modules: all, mine, waiting = 0,
+export default function Study({ promos, modules: all, mine, waiting = 0, program: picked = null,
                                 readError = null, fromFile = false }) {
   const t = useT();
   const [promo, setPromo] = useState(
     promos.some((p) => p.id === mine) ? mine : promos[0]?.id);
   const [sem, setSem] = useState('S1');
+  // FMPOS's programme or the Tunisian one, for the pharmacy years that have
+  // both. Kept per phone, like the theme: it is how this student studies, not
+  // which year they are looking at.
+  const [program, setProgram] = useState(picked === 'tn' ? 'tn' : 'own');
+  const pickProgram = (p) => {
+    setProgram(p);
+    document.cookie = `${PROGRAM_COOKIE}=${p}; path=/; max-age=31536000; samesite=lax`;
+  };
   const [q, setQ] = useState('');
   // The review schedule lives in this browser, so its count arrives a moment
   // after the page does.
@@ -54,7 +62,11 @@ export default function Study({ promos, modules: all, mine, waiting = 0,
   const inPromo = all.filter((m) => m.promo === promo
     || (year?.reads_from === m.promo
       && (!year.reads_semesters?.length || year.reads_semesters.includes(m.semester))));
-  const modules = inPromo
+  const hasTn = inPromo.some(isTunisian);
+  const hasOwn = inPromo.some((m) => !isTunisian(m));
+  const shown = inProgram(inPromo, program);
+  const active = hasTn && (!hasOwn || program === 'tn') ? 'tn' : 'own';
+  const modules = shown
     .filter((m) => m.semester === sem)
     .filter((m) => !q || strip(m.name).includes(strip(q)));
 
@@ -120,6 +132,22 @@ export default function Study({ promos, modules: all, mine, waiting = 0,
           </span>
         </div>
 
+        {/* Which programme. Only where a Tunisian one exists; a year with no
+            FMPOS programme of its own (DCEP3) shows ours dimmed rather than
+            hiding the choice, so the student knows which one this is. */}
+        {hasTn && (
+          <div className="st-prog" role="tablist" aria-label={t('البرنامج')}>
+            <button role="tab" aria-selected={active === 'own'} data-on={active === 'own'}
+                    disabled={!hasOwn} onClick={() => pickProgram('own')}>
+              {t('برنامجنا')}
+            </button>
+            <button role="tab" aria-selected={active === 'tn'} data-on={active === 'tn'}
+                    onClick={() => pickProgram('tn')}>
+              {t('البرنامج التونسي')}
+            </button>
+          </div>
+        )}
+
         {/* Silence here is what makes "the panel saved it and the app never
             got it" impossible to tell apart from "nobody has catalogued it".
             One of these is a bug and the other is a Tuesday. */}
@@ -147,7 +175,7 @@ export default function Study({ promos, modules: all, mine, waiting = 0,
           <div className="st-banners" key={`${promo}-${sem}`}>
             {modules.map((m, i) => (
               <SubjectBanner key={m.id} subject={m} href={`/archive/${m.id}`} size="wide" index={i}
-                             tag={[chosen?.name, m.semester].filter(Boolean).join(' · ')} />
+                             tag={[chosen?.name, m.semester, isTunisian(m) && t('تونس')].filter(Boolean).join(' · ')} />
             ))}
           </div>
         )}
