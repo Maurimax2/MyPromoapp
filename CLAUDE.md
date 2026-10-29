@@ -117,6 +117,13 @@ necessity, not a preference.
   never edit that file. Banners, the violet head and the reader's pages keep
   their own colours.
 - Touch targets are never below 44px.
+- **An iPad gets the whole glass** (owner, 2026-10-29: iPad students «hate»
+  the phone-shaped window). The iOS app was built iPhone-only
+  (`TARGETED_DEVICE_FAMILY = 1`), so iPadOS ran it in a phone-sized window —
+  nothing on the website can change that; the project now says `"1,2"` and it
+  takes a new store version (with iPad screenshots) to reach them. The site
+  itself already fills a tablet: every v2 head and sheet is a full-width band
+  of the card grid above 820px, its contents held to a readable width.
 
 ## Accounts
 

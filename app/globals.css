@@ -6004,3 +6004,34 @@ button, .nav, .head-t, .head-s { -webkit-user-select: none; user-select: none; }
 .head .tt-chip[data-on='true'] i { background: #0F4A3B; }
 .head .sk, .head .sk-line { background: rgba(255, 255, 255, .14); }
 .hh-find span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ================= the v2 screens on a tablet =================
+   The green heads and the sheets pulled up into them are bands: they take
+   the whole row of the card grid above (min-width 820px), or each lands in a
+   330px cell beside its own page. Inside a band the content keeps a width a
+   hand can cross — tabs, a podium, a greeting — and what is a list of cards
+   (banners, tools, posts) spreads into as many columns as fit. */
+@media (min-width: 820px) {
+  .scroll > .hh, .scroll > .hh-sheet, .scroll > .pa, .scroll > .fd-head,
+  .scroll > .h-say, .scroll > .split, .scroll > .h-sec, .scroll > .admin-err,
+  .scroll > .rk-head, .scroll > .rk-sheet, .scroll > .me2-head, .scroll > .me2-sheet,
+  .scroll > .st-tools2, .scroll > .st-head, .scroll > .st-banners, .scroll > .st-empty {
+    grid-column: 1 / -1;
+  }
+
+  /* الرئيسية: the greeting and its button over the four tools, centred */
+  .hh-now, .hh-quick { max-width: 640px; margin-inline: auto; }
+  .hh-bar { max-width: 960px; margin-inline: auto; }
+  .hh-ghost { width: 420px; inset-inline-end: -60px; }
+
+  /* الدراسة: four tools in one row, the banners in columns */
+  .st-tools2 { grid-template-columns: repeat(4, 1fr); }
+  .st-banners { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+
+  /* الترتيب and أنا: the head's contents held to a readable width */
+  .rk-head > *, .me2-head > * { max-width: 680px; margin-inline: auto; }
+  .rk-head .podium { max-width: 560px; }
+  .rk-sheet, .me2-sheet { align-items: stretch; }
+  .rk-sheet > *, .me2-sheet > * { width: 100%; max-width: 760px; margin-inline: auto; }
+  .me2-sheet > .badges { max-width: none; }
+}
