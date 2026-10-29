@@ -37,177 +37,182 @@ const faceOf = (id = '') => {
 };
 const initials = (name = '') => name.trim().slice(0, 2);
 
-export default function Points({ total, rank, rows, badges, board, meId, mine = null, week = false }) {
+export default function Points({ total, rank, rows, badges, board, meId, mine = null, week = false, line = null }) {
   const t = useT();
   const [tab, setTab] = useState('board');
   // A classmate tapped on the board: their card, and a way to challenge them.
   const [who, setWho] = useState(null);
   const open = (p, place) => () => { if (p.id !== meId) setWho({ ...p, place }); };
 
+  const When = () => (
+    <div className="rk-when" role="group" aria-label={t('المدة')}>
+      <Link href="/points?w=1" data-on={!!week} replace>{t('هذا الأسبوع')}</Link>
+      <Link href="/points" data-on={!week} replace>{t('كل الوقت')}</Link>
+    </div>
+  );
+
   return (
     <div className="scroll">
-      <div className="rev-tabs">
-        {TABS.map((it) => (
-          <button
-            key={it.id}
-            className={`rev-tab${tab === it.id ? ' on' : ''}`}
-            onClick={() => setTab(it.id)}
-          >
-            {t(it.label)}
-          </button>
-        ))}
-      </div>
+      {/* ================= the green head: where you stand ================= */}
+      <header className="rk-head r1">
+        <div className="rk-title"><b>{t('الترتيب')}</b></div>
+        {line && <div className="rk-line">{line}</div>}
+        <div className="rk-tabs" role="tablist">
+          {TABS.map((it) => (
+            <button key={it.id} role="tab" aria-selected={tab === it.id} data-on={tab === it.id}
+                    onClick={() => setTab(it.id)}>
+              {t(it.label)}
+            </button>
+          ))}
+        </div>
 
-      {tab === 'me' ? (
-        <>
-          <div className="pts-hero">
-            <div className="pts-n"><CountUp to={total} /></div>
-            <div className="pts-l">{t('نقطة')}</div>
-            {total > 0 && <div className="pts-rank">{t('المركز {rank} في دفعتك', { rank })}</div>}
+        {tab === 'me' ? (
+          <div className="rk-total">
+            <b><CountUp to={total} /></b>
+            <span>{t('نقطة')}</span>
+            {total > 0 && <s>{t('المركز {rank} في دفعتك', { rank })}</s>}
           </div>
-
-          {rows.length > 0 && (
-            <>
-              <div className="eyebrow">{t('من أين جاءت')}</div>
-              <div className="card">
-                {rows.map((r) => (
-                  <div key={r.id} className="pts-row">
-                    <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
-                    <span className="grow">{t(r.label)}</span>
-                    <span className="pts-x">{r.n} × {r.each}</span>
-                    <b className="pts-p">{r.points}</b>
-                  </div>
-                ))}
+        ) : (
+          <>
+            {/* This week, or all time — a board somebody new can climb. */}
+            <When />
+            {/* The three at the top, as people rather than as rows one to
+                three. The tallest stands in the middle, so the order here is
+                second, first, third. */}
+            {board.length >= 3 && (
+              <div className="podium">
+                {[board[1], board[0], board[2]].map((p, i) => {
+                  const place = [2, 1, 3][i];
+                  return (
+                    <button key={p.id} className={`pod pod${place}`} onClick={open(p, place)}>
+                      {place === 1 && <span className="pod-crown"><Icon name="crown" size={30} weight="fill" /></span>}
+                      <span className="pod-f" style={{ background: faceOf(p.id) }}>
+                        {initials(p.name)}
+                      </span>
+                      <span className="pod-n">{p.name}</span>
+                      <b className="pod-p"><CountUp to={p.points} delay={600 + place * 120} /></b>
+                      <span className="pod-bar"><b>{place}</b></span>
+                    </button>
+                  );
+                })}
               </div>
-            </>
-          )}
+            )}
+          </>
+        )}
+      </header>
 
-          <div className="eyebrow">{t('الشارات')}</div>
-          <div className="badges">
-            {badges.map((b) => (
-              <div key={b.id} className={`badge${b.done ? ' on' : ''}`}>
-                <BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} done={b.done} size={48} />
-                <b>{t(b.label)}</b>
-                <span className="badge-w">{t(b.want)}</span>
-                {!b.done && (
-                  <>
-                    {/* Nothing drawn at zero: the bar has a minimum width, and
-                        a sliver of purple reads as progress you have not made. */}
-                    <div className="fill-bar">
-                      {b.have > 0 && (
-                        <div
-                          className="fill-bar-in"
-                          style={{ width: `${Math.min(100, (b.have / b.need) * 100)}%` }}
-                        />
-                      )}
+      {/* ================= the sheet, pulled up into the head ================= */}
+      <div className="rk-sheet r2">
+        {tab === 'me' ? (
+          <>
+            {rows.length > 0 && (
+              <>
+                <div className="rk-h">{t('من أين جاءت')}</div>
+                <div className="card">
+                  {rows.map((r) => (
+                    <div key={r.id} className="pts-row">
+                      <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
+                      <span className="grow">{t(r.label)}</span>
+                      <span className="pts-x">{r.n} × {r.each}</span>
+                      <b className="pts-p">{r.points}</b>
                     </div>
-                    <span className="badge-n">{b.have} / {b.need}</span>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+                  ))}
+                </div>
+              </>
+            )}
 
-          <div className="eyebrow">{t('كيف تُحسب')}</div>
-          <div className="card">
-            {RULES.map((r) => (
-              <div key={r.id} className="pts-row">
-                <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
-                <span className="grow">{t(r.label)}</span>
-                <b className="pts-p">+{r.each}</b>
-              </div>
-            ))}
-          </div>
-          {/* Said plainly, because a counter nobody understands is a counter
-              nobody trusts. */}
-          <p className="pts-note">{t('القراءة لا تُحسب. النقاط لِما يستفيد منه زملاؤك.')}</p>
-        </>
-      ) : board.length ? (
-        <>
-          {/* The three at the top, as people rather than as rows one to
-              three. The tallest stands in the middle, so the order here is
-              second, first, third. */}
-          {/* This week, or all time — a board somebody new can climb. */}
-          <div className="pts-when" role="group" aria-label={t('المدة')}>
-            <Link href="/points?w=1" data-on={!!week} replace>{t('هذا الأسبوع')}</Link>
-            <Link href="/points" data-on={!week} replace>{t('كل الوقت')}</Link>
-          </div>
-
-          {board.length >= 3 && (
-            <div className="podium">
-              {[board[1], board[0], board[2]].map((p, i) => {
-                const place = [2, 1, 3][i];
-                return (
-                  <button key={p.id} className={`pod pod${place}`} onClick={open(p, place)}>
-                    {place === 1 && <span className="pod-crown"><Icon name="crown" size={30} weight="fill" /></span>}
-                    <span className="pod-f" style={{ background: faceOf(p.id) }}>
-                      {initials(p.name)}
-                    </span>
-                    <span className="pod-n">{p.name}</span>
-                    <b className="pod-p"><CountUp to={p.points} delay={600 + place * 120} /></b>
-                    <span className="pod-bar"><b>{place}</b></span>
-                  </button>
-                );
-              })}
+            <div className="rk-h">{t('الشارات')}</div>
+            <div className="badges">
+              {badges.map((b) => (
+                <div key={b.id} className={`badge${b.done ? ' on' : ''}`}>
+                  <BadgeArt kind={b.kind} tier={b.tier} icon={b.icon} done={b.done} size={48} />
+                  <b>{t(b.label)}</b>
+                  <span className="badge-w">{t(b.want)}</span>
+                  {!b.done && (
+                    <>
+                      {/* Nothing drawn at zero: the bar has a minimum width, and
+                          a sliver of purple reads as progress you have not made. */}
+                      <div className="fill-bar">
+                        {b.have > 0 && (
+                          <div
+                            className="fill-bar-in"
+                            style={{ width: `${Math.min(100, (b.have / b.need) * 100)}%` }}
+                          />
+                        )}
+                      </div>
+                      <span className="badge-n">{b.have} / {b.need}</span>
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
-          )}
 
-          {/* You, pinned. The whole reason the board could be shown first. */}
-          {mine && (
-            <div className="you-row">
-              <span className="you-at">{mine.at}</span>
-              <span className="you-f" style={{ background: faceOf(meId) }}>
-                {initials(mine.name)}
-              </span>
-              <span className="grow">
-                <b>{t('أنت')}</b>
-                <s>{mine.gap}</s>
-                {mine.pct > 0 && mine.pct < 100 && (
-                  <span className="you-bar"><i style={{ width: `${mine.pct}%` }} /></span>
-                )}
-              </span>
-              <b className="you-p">{mine.points}</b>
+            <div className="rk-h">{t('كيف تُحسب')}</div>
+            <div className="card">
+              {RULES.map((r) => (
+                <div key={r.id} className="pts-row">
+                  <span className="pts-ic"><Icon name={r.icon} size={17} /></span>
+                  <span className="grow">{t(r.label)}</span>
+                  <b className="pts-p">+{r.each}</b>
+                </div>
+              ))}
             </div>
-          )}
-
-          <div className="pts-rules">
-            {RULES.map((r) => (
-              <span key={r.id}><b>+{r.each}</b>{t(r.label)}</span>
-            ))}
-          </div>
-
-          <div className="eyebrow">{t('دفعتك')}</div>
-          <div className="card pts-board">
-            {board.map((p, i) => (
-              <button key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`} onClick={open(p, i + 1)}>
-                <span className={`pts-place p${i + 1 <= 3 ? i + 1 : ''}`}>{i + 1}</span>
-                <span className="pts-face" style={{ background: faceOf(p.id) }}>
-                  {initials(p.name)}
+            {/* Said plainly, because a counter nobody understands is a counter
+                nobody trusts. */}
+            <p className="pts-note">{t('القراءة لا تُحسب. النقاط لِما يستفيد منه زملاؤك.')}</p>
+          </>
+        ) : board.length ? (
+          <>
+            {/* You, pinned. The whole reason the board could be shown first. */}
+            {mine && (
+              <div className="you-row">
+                <span className="you-at">{mine.at}</span>
+                <span className="you-f" style={{ background: faceOf(meId) }}>
+                  {initials(mine.name)}
                 </span>
-                <span className="grow">{p.name}</span>
-                {p.streak > 0 && (
-                  <span className="pts-streak" title={t('أيام متتالية')}>
-                    <Flame streak={p.streak} size={14} />{p.streak}
+                <span className="grow">
+                  <b>{t('أنت')}</b>
+                  <s>{mine.gap}</s>
+                  {mine.pct > 0 && mine.pct < 100 && (
+                    <span className="you-bar"><i style={{ width: `${mine.pct}%` }} /></span>
+                  )}
+                </span>
+                <b className="you-p">{mine.points}</b>
+              </div>
+            )}
+
+            <div className="pts-rules">
+              {RULES.map((r) => (
+                <span key={r.id}><b>+{r.each}</b>{t(r.label)}</span>
+              ))}
+            </div>
+
+            <div className="rk-h">{t('دفعتك')}</div>
+            <div className="card pts-board">
+              {board.map((p, i) => (
+                <button key={p.id} className={`pts-b${p.id === meId ? ' you' : ''}`} onClick={open(p, i + 1)}>
+                  <span className={`pts-place p${i + 1 <= 3 ? i + 1 : ''}`}>{i + 1}</span>
+                  <span className="pts-face" style={{ background: faceOf(p.id) }}>
+                    {initials(p.name)}
                   </span>
-                )}
-                <b>{p.points}</b>
-              </button>
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="pts-when" role="group" aria-label={t('المدة')}>
-            <Link href="/points?w=1" data-on={!!week} replace>{t('هذا الأسبوع')}</Link>
-            <Link href="/points" data-on={!week} replace>{t('كل الوقت')}</Link>
-          </div>
+                  <span className="grow">{p.name}</span>
+                  {p.streak > 0 && (
+                    <span className="pts-streak" title={t('أيام متتالية')}>
+                      <Flame streak={p.streak} size={14} />{p.streak}
+                    </span>
+                  )}
+                  <b>{p.points}</b>
+                </button>
+              ))}
+            </div>
+          </>
+        ) : (
           <div className="empty">
             <div className="tile tint-olive"><Icon name="check" size={24} /></div>
             <div className="empty-t">{week ? t('لا نقاط هذا الأسبوع بعد') : t('لا ترتيب بعد')}</div>
-            <div className="empty-b">{week ? t('الأسبوع بدأ السبت — أول من يجيب سؤال اليوم يتصدّر.') : t('أول من ينشر ملخصًا أو يُجيب زميلًا يفتح القائمة.')}</div>
           </div>
-        </>
-      )}
+        )}
+      </div>
       {who && (
         <Sheet onClose={() => setWho(null)}>
           <div className="pts-who">

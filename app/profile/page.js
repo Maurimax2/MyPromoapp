@@ -83,20 +83,14 @@ export default async function Profile() {
 
   return (
     <>
-      <header className="st-top r1">
-        <div className="st-title">
-          <span className="grow"><b>{t('أنا')}</b></span>
-        </div>
-      </header>
-
       <div className="scroll st-flow">
-        {/* A classmate, by name or number — first on the screen, where it is
-            looked for, not under the badges. */}
-        <Find />
-
-        {/* ================= you ================= */}
         <LevelUp level={level} toNext={toNext} />
-        <div className="me-hero r2">
+        {/* ================= the green head: you ================= */}
+        <header className="me2-head r1">
+          {/* A classmate, by name or number — first on the screen, where it
+              is looked for, not under the badges. */}
+          <Find variant="head" />
+          <div className="me-hero">
           <span className="me-ring">
             <svg width="112" height="112" viewBox="0 0 112 112" aria-hidden="true">
               <circle cx="56" cy="56" r="48" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="6" />
@@ -111,10 +105,14 @@ export default async function Profile() {
           <span className="me-hero-s" dir="ltr">
             {[me.username && `@${me.username}`, promo?.name, me.matricule].filter(Boolean).join(' · ') || t(ROLE[me.role] || me.role)}
           </span>
-          <span className="me-hero-t">
-            {score ? t('{toNext} نقطة للمستوى {v1}', { toNext, v1: level + 1 }) : t('انشر ملخّصًا أو أجب زميلًا لتبدأ')}
-          </span>
-        </div>
+          {score > 0 && (
+            <span className="me-hero-t">{t('{toNext} نقطة للمستوى {v1}', { toNext, v1: level + 1 })}</span>
+          )}
+          </div>
+        </header>
+
+        {/* ================= the sheet, pulled up into the head ================= */}
+        <div className="me2-sheet r2">
 
         {me.status !== 'approved' && (
           <div className="notice" style={{ width: '100%' }}>
@@ -206,6 +204,7 @@ export default async function Profile() {
           <Link href="/privacy">{t('الخصوصية')}</Link>
           <Link href="/support">{t('المساعدة والتواصل')}</Link>
         </nav>
+        </div>
       </div>
     </>
   );

@@ -98,7 +98,6 @@ export default function Notifications({ items }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="bell" size={24} /></div>
             <div className="empty-t">{t('لا إشعارات بعد')}</div>
-            <div className="empty-b">{t('حين يعجب أحدهم بمنشورك، أو يتحدّاك، أو ينشر أحد أصدقائك، ستجده هنا.')}</div>
           </div>
         )}
       </div>

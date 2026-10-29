@@ -50,20 +50,10 @@ export default async function PointsPage({ searchParams }) {
 
   return (
     <>
-      <header className="head">
-        <div className="head-row">
-          <div className="grow">
-            <div className="head-t">{t('الترتيب')}</div>
-            <div className="head-s">
-              {scoreOf(mine)
-                ? t('المركز {rank} من {length}{v2}', { rank, length: board.length, v2: week ? t(' هذا الأسبوع') : '' })
-                : week ? t('لا نقاط لك هذا الأسبوع بعد') : t('لم تجمع نقاطًا بعد')}
-            </div>
-          </div>
-        </div>
-      </header>
-
       <Points
+        line={scoreOf(mine)
+          ? t('المركز {rank} من {length}{v2}', { rank, length: board.length, v2: week ? t(' هذا الأسبوع') : '' })
+          : week ? t('لا نقاط لك هذا الأسبوع بعد') : t('لم تجمع نقاطًا بعد')}
         total={scoreOf(mine)}
         rank={rank}
         rows={breakdown(mine)}

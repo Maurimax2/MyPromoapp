@@ -66,7 +66,6 @@ export default async function Blocked() {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="block" size={24} /></div>
             <div className="empty-t">{t('لم تحظر أحدًا')}</div>
-            <div className="empty-b">{t('تحظر أحدًا من النقاط الثلاث بجانب ما كتبه، أو من ملفه.')}</div>
           </div>
         )}
       </div>

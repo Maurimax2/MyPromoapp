@@ -71,10 +71,19 @@ necessity, not a preference.
 
 - **A subject is shown as its banner (`components/SubjectBanner.js`)**, the
   owner's pick of 2026-10 after rejecting stock medical drawings: two shades
-  of the subject's hue (`BANNER` in `lib/subjectArt.js`), faint rings from the
-  far corner, the subject's 3D render turned grey and blended `luminosity` so
-  it takes that hue, the name in French, and the student's progress when the
-  planner knows it. Every subject gets one from its name, whatever the year.
+  of the subject's hue, faint rings from the far corner, the subject's
+  drawing on a frosted tile with the same drawing large and faint behind it,
+  the name in French, and the student's progress when the planner knows it.
+- **A subject's picture is a drawing of its field, not a 3D render**
+  (owner, 2026-10-29: «not fitting all the subjects»). A render exists only
+  for a part of the body, so ORL, chimie analytique or médecine du travail
+  landed on cells. `glyphOf` in `lib/subjectArt.js` reads the name —
+  most specific first — and `components/SubjectGlyph.js` draws it: Phosphor
+  duotone, plus lungs, kidney, stomach, molecule, cell, bacterium and morula
+  drawn on Phosphor's grid. Every catalogued subject maps to one; check a new
+  year's names against `glyphOf` and add a rule rather than let one fall to
+  the book. `SubjectTile` is the same drawing as a square, for lists. The
+  renders stay for anatomy regions and lessons only.
 - Banners scroll sideways, one at a time, the next one peeking so a thumb
   knows there is more.
 - The model hangs off the far edge and the name sits at the start, in logical
@@ -86,6 +95,11 @@ necessity, not a preference.
   (`v2-screens.html`, `v2-feed.html`): a deep green head (`#0F4A3B`) with the
   one thing to do now, white cards on a cool grey (`#F2F4F3`), soft shadows,
   22px radius. Mock up a screen and show it before building it.
+- **The green is the app's header everywhere** (owner, 2026-10-29: «change
+  all the screens»). الرئيسية, الترتيب and أنا have a full green head with
+  the page on a sheet pulled up into it; every other screen's `.head` is the
+  same green, rounded at the bottom, still sticky. الدراسة keeps the white
+  head of its mock-up.
 - **No gray helper line under a title.** A title says what it is; a second
   line exists only when it carries a fact (a count, a date, an author).
 - Typeface is **Alexandria**, Arabic and Latin in one face.
@@ -147,9 +161,14 @@ necessity, not a preference.
   hold the fourth slot and gave it up: it is reached by the picture of you in
   الرئيسية's head, which is the same one tap, and المحادثات is the only one of
   the four that can be waiting for you — so the count is where it is seen.
-- **الرئيسية is a violet head over white cards.** The head is the only
-  coloured surface in the app; the first card is pulled up into its lower edge.
-  It carries who you are, the notifications bell, and the tools.
+- **الرئيسية is a green head over white cards**; the first card is pulled up
+  into its lower edge. It carries who you are, the notifications bell, and the
+  tools.
+- **The feed has «دفعتي / كل الدفعات».** A student's own key reads only their
+  promo, so «كل الدفعات» (`/feed?all=1`) reads with the server's key and
+  applies blocks itself (`lib/blocks.js`); so does reading a post's replies.
+  Likes, replies and saves were already written with the server's key, so
+  they work on any year's post.
 - **الرئيسية carries every feature that has no other door**, live ones in
   colour and the rest dashed and marked قريبًا — a student should see the whole
   app on day one, and five fit in one row without a swipe. **Nothing may lead

@@ -90,7 +90,6 @@ export default function Talk({ chat, person, first, me }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="send" size={24} /></div>
             <div className="empty-t">{t('لا رسائل بعد')}</div>
-            <div className="empty-b">{t('ابدأ الكلام.')}</div>
           </div>
         )}
         {error && <div className="admin-err" style={{ margin: '0 12px' }}>{error}</div>}

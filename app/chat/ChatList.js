@@ -84,7 +84,6 @@ export default function ChatList({ chats, mates }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="send" size={24} /></div>
             <div className="empty-t">{t('لا أحد بعد')}</div>
-            <div className="empty-b">{t('حين ينضم زملاؤك ستجدهم هنا.')}</div>
           </div>
         )}
       </div>

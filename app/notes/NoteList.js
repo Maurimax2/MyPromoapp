@@ -202,9 +202,6 @@ export default function NoteList({ groups, subjects, me }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="book" size={24} /></div>
             <div className="empty-t">{q ? t('لا نتائج') : t('لا ملخصات بعد')}</div>
-            <div className="empty-b">
-              {q ? t('لا ملخص يطابق «{q}».', { q }) : t('كن أول من يشارك ملخصًا مع دفعتك.')}
-            </div>
           </div>
         )}
       </div>

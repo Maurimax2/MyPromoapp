@@ -28,6 +28,7 @@ import {
 } from '@livekit/components-react';
 import { Track, RoomEvent, ConnectionState } from 'livekit-client';
 import Icon from '@/components/Icon';
+import { SubjectTile } from '@/components/SubjectBanner';
 import Flag from '@/components/Flag';
 import Sheet from '@/components/Sheet';
 import { PING } from '@/lib/rooms';
@@ -464,7 +465,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
         {/* ================= what the room is about ================= */}
         {subject && !stageUp && (
           <Link href={`/archive/${subject.id}`} className="rm-subj r4">
-            <span className="rm-subj-art" style={{ background: subject.bg }}><img src={subject.img} alt="" /></span>
+            <SubjectTile name={subject.name} size={46} />
             <span className="grow">
               <s>{t('يراجعون الآن')}</s>
               <b dir="ltr">{subject.name}</b>

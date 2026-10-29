@@ -19,7 +19,6 @@ export default async function Lectures() {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="clock" size={24} /></div>
             <div className="empty-t">{t('لا جدول بعد')}</div>
-            <div className="empty-b">{t('سيظهر هنا حين يُضاف جدول المحاضرات.')}</div>
           </div>
         )}
         {TODAY.map((l) => (

@@ -10,6 +10,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
+import SubjectGlyph from '@/components/SubjectGlyph';
+import { SubjectTile } from '@/components/SubjectBanner';
 import { readsOf, isDone } from '@/lib/resume';
 import { bests } from '@/lib/best';
 import { useT } from '@/components/Lang';
@@ -77,7 +79,7 @@ function Lecture({ l, i, r }) {
 }
 
 export default function Subject({
-  id, name, promo, semester, semesters, img, bg, professors,
+  id, name, promo, semester, semesters, glyph, shades, professors,
   chapters, extra, banks, notes, atlas = null, empty, tab: firstTab = null,
 }) {
   const t = useT();
@@ -118,7 +120,7 @@ export default function Subject({
     <>
       <div className="sj">
         {/* ================= the banner ================= */}
-        <div className="sj-hero r1" style={{ '--sj-bg': bg }}>
+        <div className="sj-hero r1" style={{ '--sj-bg': shades[0], '--a': shades[0], '--b': shades[1] }}>
           <div className="sj-hero-top">
             <Link href="/study" className="sj-back" aria-label={t('رجوع')}><Icon name="chevR" size={18} /></Link>
             <span className="grow" />
@@ -131,7 +133,8 @@ export default function Subject({
             )}
           </div>
 
-          <img className="sj-model" src={img} alt="" />
+          <SubjectGlyph glyph={glyph} size={250} weight="thin" className="sj-mark" />
+          <span className="sj-icon"><SubjectGlyph glyph={glyph} size={60} /></span>
 
           <div className="sj-hero-t">
             <span className="sj-promo" dir="ltr">{promo} · {semester}</span>
@@ -178,9 +181,11 @@ export default function Subject({
                 return (
                   <div key={`${c.title}-${i}`} className={`sj-ch${on ? ' on' : ''}`}>
                     <button className="sj-ch-h" onClick={() => setOpen(on ? null : i)} aria-expanded={on}>
-                      <span className="sj-ch-art">
-                        <img src={c.img} alt="" style={{ animationDelay: `${-i * 0.7}s` }} />
-                      </span>
+                      {c.img ? (
+                        <span className="sj-ch-art">
+                          <img src={c.img} alt="" style={{ animationDelay: `${-i * 0.7}s` }} />
+                        </span>
+                      ) : <SubjectTile name={c.tile} size={54} radius={16} />}
                       <span className="grow">
                         <b dir="auto">{c.title}</b>
                         <s>{lecturesWord(t, c.lectures.length)}{n ? t(' · {n} مقروءة', { n }) : ''}</s>

@@ -5,7 +5,7 @@ import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { outcome, stage, saysTime } from '@/lib/duel';
-import { artOf } from '@/lib/subjectArt';
+import { SubjectTile } from '@/components/SubjectBanner';
 import Play from './Play';
 import Answer from './Answer';
 import Watch from './Watch';
@@ -106,7 +106,6 @@ export default async function DuelPage({ params }) {
   };
   const of = duel.questions.length;
   const time = saysTime(duel.seconds || 0, t);
-  const art = artOf(duel.title);
   const how = at === 'done' ? outcome(mine, theirs) : null;
 
   // «ردّ التحدّي»: the same person, the same subject, one tap.
@@ -117,7 +116,7 @@ export default async function DuelPage({ params }) {
   const Card = () => (
     <div className="ar-card">
       <span className="ar-card-t">
-        <span className="ar-art" style={{ background: art.bg }}><img src={art.img} alt="" /></span>
+        <SubjectTile name={duel.title} size={44} radius={13} />
         <b dir="auto">{duel.title}</b>
       </span>
       <span className="ar-chips">

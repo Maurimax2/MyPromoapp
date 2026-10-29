@@ -144,7 +144,6 @@ export default function RoomList({ rooms, secret = [], subjects, me }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="person" size={24} /></div>
             <div className="empty-t">{t('لا غرف مفتوحة')}</div>
-            <div className="empty-b">{t('افتح واحدة وادعُ دفعتك للمراجعة معك.')}</div>
           </div>
         )}
       </div>

@@ -10,6 +10,8 @@ import { streaksOf } from '@/lib/days';
 import { sessionsOf, hasPlanning, LECTURE } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
 import { getT } from '@/lib/lang';
+import { blockedAmong } from '@/lib/blocks';
+import { badgeOf } from '@/lib/data';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,8 +40,12 @@ const nameOf = (p) => ({ id: p.id, name: p.full_name || p.email?.split('@')[0] |
 // and on mobile data the screen took as long as all of them added together.
 // Now it takes as long as the slowest one, plus one more for who is sitting
 // in the rooms, which needs the rooms first.
-export default async function Feed() {
+export default async function Feed({ searchParams }) {
   const t = await getT();
+  // «كل الدفعات»: every year's posts, not only mine. A student's own key reads
+  // only their promo, so these are read with the server's key, and blocks —
+  // which the policies would have applied — are applied here (lib/blocks.js).
+  const every = (await searchParams)?.all === '1';
   const profile = await currentProfile();
   if (!profile) redirect('/login');
 
@@ -88,17 +94,21 @@ export default async function Feed() {
     rail,
     upcoming,
     habit,
+    { data: savedRows },
   ] = await Promise.all([
     promosOf(),
     // The posts, their authors and their attachments…
-    sb.from('posts')
-      .select(`id, body, kind, module, created_at, likes, comments,
-               author:profiles!posts_author_fkey(id, full_name, email, promo),
-               post_media(kind, path, name, bytes, position)`)
-      .eq('promo', promo).eq('removed', false)
-      .order('created_at', { ascending: false }).limit(30),
+    (() => {
+      const q = (every ? admin : sb).from('posts')
+        .select(`id, body, kind, module, promo, created_at, likes, comments,
+                 author:profiles!posts_author_fkey(id, full_name, email, promo),
+                 post_media(kind, path, name, bytes, position)`)
+        .eq('removed', false);
+      return (every ? q : q.eq('promo', promo))
+        .order('created_at', { ascending: false }).limit(30);
+    })(),
     // …which ones I have already liked…
-    sb.from('likes').select('post').eq('person', profile.id),
+    (every ? admin : sb).from('likes').select('post').eq('person', profile.id),
     // …and the bell. Read with the service key: a student's own
     // notifications are their own rows, and this is one head request.
     admin.from('notifications').select('id', { count: 'exact', head: true })
@@ -148,10 +158,13 @@ export default async function Feed() {
     upcomingP,
     // My own days (habits.sql), for the flame.
     streaksOf([profile.id]),
+    // …and which posts I have kept (المحفوظات), for the bookmark on each.
+    admin.from('saves').select('post').eq('person', profile.id).not('post', 'is', null).limit(500),
   ]);
 
 
   const liked = new Set((mine || []).map((l) => l.post));
+  const kept = new Set((savedRows || []).map((r) => r.post));
 
   // An empty feed has two very different causes and used to look identical
   // either way: nobody has posted, or the database has posts and will not
@@ -159,7 +172,7 @@ export default async function Feed() {
   // refuses — it simply returns nothing — so the only way to tell is to ask
   // again with the key that ignores policies and compare the two numbers.
   let refused = 0;
-  if (!readError && !(rows || []).length) {
+  if (!every && !readError && !(rows || []).length) {
     const { count } = await admin
       .from('posts').select('id', { count: 'exact', head: true })
       .eq('promo', promo).eq('removed', false);
@@ -167,6 +180,16 @@ export default async function Feed() {
   }
 
   const named = Object.fromEntries(subjectRows.map((m) => [m.id, m.name]));
+  // Other years' subjects, for the posts of other years.
+  if (every) {
+    const others = [...new Set((rows || []).map((p) => p.promo).filter((p) => p && p !== promo))];
+    for (const list of await Promise.all(others.map((p) => subjectsOf(p)))) {
+      for (const m of list) named[m.id] = m.name;
+    }
+  }
+  const hidden = every
+    ? await blockedAmong(profile.id, (rows || []).map((p) => p.author?.id))
+    : new Set();
 
   // A student in two rooms is one student studying, not two — and only who
   // is on a room screen now (lib/rooms.js), not who ever joined one.
@@ -216,10 +239,13 @@ export default async function Feed() {
     .slice(0, 3)
     .map((m) => ({ ...nameOf(m), handle: m.matricule || m.username }));
 
-  const posts = (rows || []).map((p) => ({
+  const yearOf = (id) => years.promos.find((y) => y.id === id);
+  const posts = (rows || []).filter((p) => !hidden.has(p.author?.id)).map((p) => ({
     ...p,
     liked: liked.has(p.id),
+    saved: kept.has(p.id),
     subject: named[p.module] || null,
+    year: p.promo ? { name: yearOf(p.promo)?.name || p.promo.toUpperCase(), badge: badgeOf(yearOf(p.promo)) } : null,
     media: (p.post_media || [])
       .sort((a, b) => a.position - b.position)
       .map((m) => ({ ...m, url: urlFor(m.path) })),
@@ -247,6 +273,7 @@ export default async function Feed() {
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
       promos={years.promos}
+      every={every}
       mySubjects={subjectRows.map((m) => ({ id: m.id, name: m.name }))}
       posts={posts}
       subjects={subjects}

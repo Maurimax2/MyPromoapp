@@ -146,9 +146,6 @@ export default async function Duels() {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="swords" size={24} /></div>
             <div className="empty-t">{t('لا تحدّيات بعد')}</div>
-            <div className="empty-b">{t(
-              'اختر مادة وزميلًا، وأرسل له دعوة. حين يقبل، تجيبان على الأسئلة نفسها — وتظهر النتيجتان معًا.'
-            )}</div>
           </div>
         )}
       </div>

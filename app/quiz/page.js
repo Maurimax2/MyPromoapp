@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { SubjectTile } from '@/components/SubjectBanner';
 import { quizzedModules } from '@/lib/data';
 import { currentProfile } from '@/lib/supabase/server';
 import { subjectsOf, promosOf } from '@/lib/catalogue';
@@ -63,7 +64,7 @@ export default async function QuizIndex() {
         {modules.map((m) => (
           <Link key={m.id} href={`/quiz/${m.id}`} className="card">
             <div className="card-row">
-              <div className={`tile tint-${m.tint}`}><Icon name={m.icon} size={22} /></div>
+              <SubjectTile name={m.name} size={46} />
               <div className="grow">
                 <div className="nm">{m.name}</div>
                 <div className="mt">{t('{questions} سؤال · {banks} ملف أسئلة', { questions: m.questions, banks: m.banks })}</div>
@@ -77,9 +78,6 @@ export default async function QuizIndex() {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="quiz" size={24} /></div>
             <div className="empty-t">{t('لا أسئلة بعد')}</div>
-            <div className="empty-b">{t(
-              'تُستخرج الأسئلة من امتحانات المادة في لوحة التحكم، وتظهر هنا حين تُنشر بإجاباتها.'
-            )}</div>
           </div>
         )}
       </div>

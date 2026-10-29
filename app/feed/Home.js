@@ -44,7 +44,7 @@ const initials = (name = '') => name.trim().slice(0, 2);
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
 export default function Home({ me, posts, subjects, mySubjects = [],
-                               promos = [], unseen = 0,
+                               promos = [], unseen = 0, every = false,
                                studying = [], rooms = [], duels = [], rivals = [],
                                readError = null, refused = 0,
                                next = null, term = null, now = 0, habitDays = null }) {
@@ -230,12 +230,15 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
         <PushAsk />
 
-        <div className="split" />
-
-        {/* ================= the promo ================= */}
-        <div className="h-sec r6">
-          <b>{t('من دفعتك')}</b>
-          <Link href="/qa" className="h-sec-all">{t('الكل')}</Link>
+        {/* ================= the promo, or every promo ================= */}
+        <div className="fd-head r6">
+          <b>{every ? t('من الدفعات') : t('من دفعتك')}</b>
+          <span className="fd-switch" role="tablist" aria-label={t('المنشورات')}>
+            <Link href="/feed" scroll={false} replace role="tab" aria-selected={!every} data-on={!every}>{t('دفعتي')}</Link>
+            <Link href="/feed?all=1" scroll={false} replace role="tab" aria-selected={every} data-on={every}>{t('كل الدفعات')}</Link>
+          </span>
+          {/* الأسئلة has no other door. */}
+          <Link href="/qa" className="h-sec-all">{t('الأسئلة')}</Link>
         </div>
 
         {!me.promo ? <PickPromo /> : !writing ? (
@@ -245,6 +248,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
           }}>
             <span className="face" style={{ background: faceOf(me.id) }}>{initials(me.name)}</span>
             <span className="grow">{t('شارك ملخّصًا أو اسأل دفعتك…')}</span>
+            <span className="h-say-pdf"><Icon name="image" size={18} /></span>
             <span className="h-say-pdf"><Icon name="file" size={18} /></span>
           </button>
         ) : (

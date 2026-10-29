@@ -13,7 +13,7 @@ import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { agenda, clockOf, LECTURE } from '@/lib/timetable-core';
 import { KIND, dayNumber, monthOf, longDay } from '@/lib/timetable-text';
-import { artOf } from '@/lib/subjectArt';
+import { glyphOf } from '@/lib/subjectArt';
 import { useT } from '@/components/Lang';
 
 const ONE = 86400000;
@@ -95,7 +95,6 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
           <div className="empty">
             <div className="tile tint-olive"><Icon name="calendar" size={24} /></div>
             <div className="empty-t">{t('لا جدول لسنتك بعد')}</div>
-            <div className="empty-b">{t('سيظهر هنا حين تنشر الكلية جدول سنتك.')}</div>
           </div>
         </div>
       </>
@@ -177,13 +176,13 @@ export default function Timetable({ promo, semester, sessions, now: serverNow })
               </div>
             );
           }
-          const art = artOf(s.module);
+          const art = glyphOf(s.module);
           const isLive = live && live.id === s.id;
           const href = s.fid ? `/file/${s.fid}` : s.sub ? `/archive/${s.sub}` : null;
           return (
             <div key={s.id} className={`tt-card${isLive ? ' live' : ''}${s.kind === 'exam' ? ' exam' : ''}`}>
               <span className="tt-time" dir="ltr"><b>{s.start}</b><s>{s.end}</s></span>
-              <span className="tt-bar" style={{ background: art.bg }} />
+              <span className="tt-bar" style={{ background: art.b }} />
               <span className="grow">
                 <b dir="auto">{s.title || s.module}</b>
                 <em dir="auto">

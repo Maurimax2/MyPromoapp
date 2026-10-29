@@ -80,11 +80,6 @@ export default function ReviewScreen({ all }) {
             <div className="empty-t">
               {state.tracked ? t('لا شيء حان وقته') : t('لا شيء للمراجعة بعد')}
             </div>
-            <div className="empty-b">
-              {state.tracked
-                ? t('ما أخطأت فيه سيعود إليك في وقته. عُد لاحقًا.')
-                : t('أجب على أسئلة في «اختبر نفسك» — ما تخطئ فيه يظهر هنا.')}
-            </div>
             <Link href="/quiz" className="btn g" style={{ maxWidth: 240 }}>{t('اختبر نفسك')}</Link>
           </div>
         )}

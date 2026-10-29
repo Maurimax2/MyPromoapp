@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Icon from '@/components/Icon';
+import { SubjectTile } from '@/components/SubjectBanner';
 import { sectionsFor } from '@/lib/data';
 import { moduleOf } from '@/lib/catalogue';
 import QuizPicker from '@/components/QuizPicker';
@@ -45,7 +46,7 @@ export default async function QuizModule({ params }) {
             <div className="head-t" style={{ fontSize: 17 }}>{t('اختبر نفسك')}</div>
             <div className="head-s">{t('{name} · {total} سؤال · {sourceCount} ملف', { name: m.name, total, sourceCount })}</div>
           </div>
-          <div className={`tile sm tint-${m.tint}`}><Icon name={m.icon} size={18} /></div>
+          <SubjectTile name={m.name} size={38} radius={11} />
         </div>
       </header>
 
@@ -59,12 +60,6 @@ export default async function QuizModule({ params }) {
           <div className="empty">
             <div className={`tile tint-${m.tint}`}><Icon name="quiz" size={24} /></div>
             <div className="empty-t">{t('لا أسئلة مستخرجة بعد')}</div>
-            <div className="empty-b">{t(
-                'أوراق {name} كلها ممسوحة كصور — تحتاج قراءة ضوئية (OCR) قبل استخراج الأسئلة.',
-                {
-                  name: m.name
-                }
-              )}</div>
           </div>
         )}
 

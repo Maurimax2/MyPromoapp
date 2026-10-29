@@ -105,7 +105,6 @@ export default function Ask({ questions, subjects, open, only, me }) {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="msg" size={24} /></div>
             <div className="empty-t">{only ? t('لا أسئلة بلا جواب') : t('لا أسئلة بعد')}</div>
-            <div className="empty-b">{t('اسأل أول سؤال — دفعتك ترى الأسئلة كلها.')}</div>
           </div>
         )}
       </div>

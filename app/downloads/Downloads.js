@@ -15,7 +15,7 @@ import Link from 'next/link';
 import Icon from '@/components/Icon';
 import PdfViewer from '@/components/PdfViewer';
 import { listDownloads, openDownload, removeDownload } from '@/lib/downloads';
-import { bannerOf } from '@/lib/subjectArt';
+import { SubjectTile } from '@/components/SubjectBanner';
 import { lecturesWord } from '@/lib/i18n';
 import { useT } from '@/components/Lang';
 
@@ -94,11 +94,10 @@ export default function Downloads() {
           </div>
         )}
         {(items || []).map((it) => {
-          const b = bannerOf(it.subject || it.title);
           return (
             <div key={it.fid} className="card dls-row">
               <button className="card-row dls-open" onClick={() => read(it.fid)}>
-                <span className="dls-thumb" style={{ '--a': b.a, '--b': b.b }}><img src={b.img} alt="" /></span>
+                <SubjectTile name={it.subject || it.title} size={52} radius={16} />
                 <span className="grow">
                   <span className="nm" dir="auto">{it.title}</span>
                   <span className="mt" dir="ltr">{[it.subject, mb(it.bytes)].filter(Boolean).join(' · ')}</span>

@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation';
 import { supabaseServer, currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { artOf, regionArt } from '@/lib/subjectArt';
+import { regionArt } from '@/lib/subjectArt';
 import { REGIONS, regionsFor } from '@/lib/anatomy/curriculum';
 import { CREDIT, bundleOf } from '@/lib/anatomy/bundles';
 import { isHere } from '@/lib/rooms';
@@ -66,8 +66,7 @@ export default async function RoomPage({ params }) {
   if (room.module) {
     const { data: m } = await sb.from('modules').select('id, name, promo, semester').eq('id', room.module).maybeSingle();
     if (m) {
-      const art = artOf(m.name);
-      subject = { id: m.id, name: m.name, img: art.img, bg: art.bg };
+      subject = { id: m.id, name: m.name };
       regions = regionsFor(m.promo, m.semester);
     }
   }

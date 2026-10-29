@@ -3,8 +3,8 @@
 // الدراسة.
 //
 // The four things you do with the material, then the material itself: every
-// year, both semesters, every subject — each with its own model breaking out
-// of its card, the same picture it wears on الرئيسية.
+// year, both semesters, every subject — each as its banner, the same one it
+// wears on الرئيسية (design/v2-screens.html, approved 2026-10).
 //
 // Only two of the tools ever carry a number, because only two can be waiting
 // on you: a duel somebody sent, and questions that have come due. Both are
@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Icon from '@/components/Icon';
 import { badgeOf } from '@/lib/data';
-import { artOf } from '@/lib/subjectArt';
+import SubjectBanner from '@/components/SubjectBanner';
 import { dueCount } from '@/lib/review';
 import { useT } from '@/components/Lang';
 
@@ -23,7 +23,7 @@ const SEMESTERS = ['S1', 'S2'];
 
 const strip = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-export default function Study({ promos, modules: all, counts, mine, waiting = 0,
+export default function Study({ promos, modules: all, mine, waiting = 0,
                                 readError = null, fromFile = false }) {
   const t = useT();
   const [promo, setPromo] = useState(
@@ -87,33 +87,21 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
       </header>
 
       <div className="scroll st-flow">
-        {/* ---------- the four tools ---------- */}
-        <div className="st-tools r2">
-          <Link href="/quiz" className="st-tool olive">
-            <span className="st-tool-mark"><Icon name="quiz" size={96} weight="light" /></span>
-            <span className="st-tool-ic"><Icon name="quiz" size={21} /></span>
-            <span><b>{t('اختبر نفسك')}</b></span>
+        {/* ---------- the four tools: compact, so the subjects come up the screen ---------- */}
+        <div className="st-tools2 r2">
+          <Link href="/quiz" className="st-t2">
+            <span className="st-t2-ic"><Icon name="quiz" size={20} /></span><b>{t('اختبر نفسك')}</b>
           </Link>
-          <Link href="/duel" className="st-tool ink">
-            <span className="st-tool-mark"><Icon name="swords" size={96} weight="light" /></span>
-            <span className="st-tool-row">
-              <span className="st-tool-ic"><Icon name="swords" size={21} /></span>
-              {waiting > 0 && <span className="st-tool-live"><i />{t('{waiting} ينتظرك', { waiting })}</span>}
-            </span>
-            <span><b>{t('التحدّي')}</b></span>
+          <Link href="/duel" className="st-t2">
+            <span className="st-t2-ic"><Icon name="swords" size={20} /></span><b>{t('التحدّي')}</b>
+            {waiting > 0 && <i className="st-t2-n">{waiting}</i>}
           </Link>
-          <Link href="/notes" className="st-tool plain">
-            <span className="st-tool-mark"><Icon name="book2" size={96} weight="light" /></span>
-            <span className="st-tool-ic"><Icon name="book2" size={21} /></span>
-            <span><b>{t('الملخصات')}</b></span>
+          <Link href="/notes" className="st-t2">
+            <span className="st-t2-ic"><Icon name="book2" size={20} /></span><b>{t('الملخصات')}</b>
           </Link>
-          <Link href="/review" className={`st-tool ${due > 0 ? 'clay' : 'plain'}`}>
-            <span className="st-tool-mark"><Icon name="clock" size={96} weight="light" /></span>
-            <span className="st-tool-row">
-              <span className="st-tool-ic"><Icon name="clock" size={21} /></span>
-              {due > 0 && <b className="st-tool-n">{due}</b>}
-            </span>
-            <span><b>{t('المراجعة')}</b></span>
+          <Link href="/review" className="st-t2">
+            <span className="st-t2-ic"><Icon name="clock" size={20} /></span><b>{t('المراجعة')}</b>
+            {due > 0 && <i className="st-t2-n">{due}</i>}
           </Link>
         </div>
 
@@ -149,36 +137,25 @@ export default function Study({ promos, modules: all, counts, mine, waiting = 0,
           <div className="st-empty">
             <span><Icon name="book" size={28} /></span>
             <b>{t('{name} — لا مواد بعد', { name: chosen?.name })}</b>
-            <s>{t(
-              'لم تُفهرس مواد هذه السنة بعد. تُضاف من لوحة التحكم، وتظهر هنا فور إضافتها.'
-            )}</s>
           </div>
         )}
 
+        {/* A banner each, full width, one under the other. Nothing printed under
+            it: the banner names the subject. Always a link — a count worked
+            out from another query never decides whether content opens. */}
         {modules.length > 0 && (
-          <div className="st-grid" key={`${promo}-${sem}`}>
-            {modules.map((m, i) => {
-              const n = counts[m.id]?.lectures || 0;
-              const total = counts[m.id]?.files || 0;
-              const a = artOf(m.name);
-              // Always a link. A count worked out from another query is never
-              // allowed to decide whether real content can be opened.
-              return (
-                <Link key={m.id} href={`/archive/${m.id}`} className="st-subj" style={{ background: a.bg }}>
-                  <img className="float" src={a.img} alt="" style={{ animationDelay: `${-i * 0.8}s` }} />
-                  <b dir="ltr">{m.name}</b>
-                  <s>{[n ? t('{n} محاضرة', { n }) : null, total ? t('{total} ملف', { total }) : null].filter(Boolean).join(' · ') || t('لا ملفات بعد')}</s>
-                </Link>
-              );
-            })}
+          <div className="st-banners" key={`${promo}-${sem}`}>
+            {modules.map((m, i) => (
+              <SubjectBanner key={m.id} subject={m} href={`/archive/${m.id}`} size="wide" index={i}
+                             tag={[chosen?.name, m.semester].filter(Boolean).join(' · ')} />
+            ))}
           </div>
         )}
 
         {inPromo.length > 0 && modules.length === 0 && (
           <div className="st-empty">
             <span><Icon name="search" size={28} /></span>
-            <b>{t('لا نتائج')}</b>
-            <s>{q ? <>{t('لا توجد مادة تطابق «{q}» في {sem}.', { q, sem })}</> : <>{t('لا مواد في {sem} لهذه السنة.', { sem })}</>}</s>
+            <b>{q ? t('لا توجد مادة تطابق «{q}» في {sem}.', { q, sem }) : t('لا مواد في {sem} لهذه السنة.', { sem })}</b>
           </div>
         )}
       </div>

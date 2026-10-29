@@ -82,7 +82,6 @@ export default async function Saved() {
           <div className="empty">
             <div className="tile tint-olive"><Icon name="bookmark" size={24} /></div>
             <div className="empty-t">{t('لا شيء محفوظ')}</div>
-            <div className="empty-b">{t('اضغط الإشارة على أي ملخص أو منشور لتجده هنا.')}</div>
           </div>
         )}
       </div>

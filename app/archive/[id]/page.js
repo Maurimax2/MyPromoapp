@@ -7,7 +7,7 @@ import { atlasOf } from '@/lib/anatomy/lessons';
 import { banksOf } from '@/lib/quiz-bank';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { urlFor } from '@/lib/storage';
-import { artOf, regionArt, chapterArt } from '@/lib/subjectArt';
+import { glyphOf, regionArt, chapterArt } from '@/lib/subjectArt';
 import Subject from './Subject';
 import { getT } from '@/lib/lang';
 
@@ -25,9 +25,6 @@ const thumbOf = (l) => {
   return thumbs.has(`${l.id}.webp`) ? `/anatomy/thumbs/${l.id}.webp` : regionArt({ id: l.region || l.id, title: l.title });
 };
 
-// The two models rendered large enough to stand as a hero; the rest are drawn
-// at their card size, which a 2× screen still shows sharp at this height.
-const BIG = new Set(['crane', 'coeur']);
 
 const doc = (d) => ({
   n: d.n ?? null, title: d.title, fid: d.fid, ext: d.ext || 'PDF', mb: d.mb,
@@ -59,8 +56,7 @@ export default async function Module({ params, searchParams }) {
       .order('likes', { ascending: false }).limit(40),
   ]);
 
-  const art = artOf(m.name);
-  const img = BIG.has(art.art) ? `/art/${art.art}-big.webp` : art.img;
+  const art = glyphOf(m.name);
 
   // Anatomy is studied with the body in front of you: the subject's «Atlas»
   // tab is every lecture's 3D scene and drawings, chapter by chapter, and a
@@ -80,7 +76,11 @@ export default async function Module({ params, searchParams }) {
   const chapters = m.chapters.map((ch) => ({
     title: ch.title,
     subtitle: ch.subtitle || null,
-    img: chapterArt(ch.title, art.img),
+    // An anatomy chapter that names a region keeps the region's own picture;
+    // any other wears a drawing — its own when its title names a field
+    // («Physiologie cardiaque»), else the subject's.
+    img: isAnatomy ? chapterArt(ch.title, null) : null,
+    tile: glyphOf(ch.title).glyph !== 'book' ? ch.title : m.name,
     lectures: ch.lectures.map((l) => ({
       ...doc(l), versions: (l.versions || []).map(doc), lessons: lessonsOf.get(l.fid) || [],
     })),
@@ -121,8 +121,8 @@ export default async function Module({ params, searchParams }) {
       promo={String(m.promo || '').toUpperCase()}
       semester={m.semester}
       semesters={semesters.map((s) => ({ id: s.id, semester: s.semester }))}
-      img={img}
-      bg={art.bg}
+      glyph={art.glyph}
+      shades={[art.a, art.b]}
       professors={m.professors || []}
       chapters={chapters}
       extra={extra}

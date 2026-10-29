@@ -15,7 +15,9 @@ import { useT } from '@/components/Lang';
  * leaves nothing here that could be asked a thousand times to find out which
  * usernames exist.
  */
-export default function Find() {
+//   variant  'head': one search field in أنا's green head, its button
+//            appearing once what is typed can be looked up.
+export default function Find({ variant }) {
   const t = useT();
   const router = useRouter();
   const [value, setValue] = useState('');
@@ -29,6 +31,21 @@ export default function Find() {
     if (!target) return;
     router.push(`/u/${encodeURIComponent(target)}`);
   };
+
+  if (variant === 'head') {
+    return (
+      <form className="me2-find" onSubmit={go} role="search">
+        <Icon name="search" size={18} />
+        <input
+          dir="auto" placeholder={t('ابحث عن زميل')}
+          autoCapitalize="none" autoCorrect="off" spellCheck={false}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          aria-label={t('اسم المستخدم أو الرقم الجامعي')} />
+        {target && <button className="me2-find-go">{t('اذهب')}</button>}
+      </form>
+    );
+  }
 
   return (
     <form className="card" onSubmit={go}>

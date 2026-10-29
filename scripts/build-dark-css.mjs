@@ -21,7 +21,7 @@ const OUT = new URL('../app/dark.css', import.meta.url);
 // Things that are light on purpose in both themes, or already dark: a page of
 // a PDF and an anatomy plate are paper; the landing page and the banners have
 // their own colours; a switch's knob is white on any track.
-const KEEP = /(^|[\s,>+~])\.(lp-|pdf-page|pl-thumb|pl-view|sban|hh|ps-sw|dl-|bd-plates|ar-flash|sj-sem)|canvas|::?selection/;
+const KEEP = /(^|[\s,>+~])\.(lp-|pdf-page|pl-thumb|pl-view|sban|hh|ps-sw|dl-|bd-plates|ar-flash|sj-sem|rk-|me2-|pv-file|pv-paper|pv-love|stile|head)|canvas|::?selection/;
 
 const hex = /#([0-9a-f]{6}|[0-9a-f]{3})\b/gi;
 const toRgb = (h) => {
