@@ -13,7 +13,7 @@
 // the whole file is already there. Reading here stays Google's preview.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import QuickView from '@/components/QuickView';
 import Icon from '@/components/Icon';
 import { opened } from '@/lib/resume';

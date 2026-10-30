@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from './Icon';
 import { findAnatomy, hrefOf } from '@/lib/anatomy/search';
 import { useT } from '@/components/Lang';

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import AdminHeader from './AdminHeader';
 import AdminLogin from './AdminLogin';
 import { currentProfile, isStaff } from '@/lib/supabase/server';

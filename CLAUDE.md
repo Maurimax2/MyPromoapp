@@ -512,6 +512,19 @@ missing from both sources, and is not faked:
   conflict target only from a unique CONSTRAINT, and several of ours are
   partial indexes. Look first, then insert what is missing.
 
+## Vercel's free plan
+
+- **MyPromo stays on Vercel's free plan** (owner, 2026-10-30: «I don't want to
+  pay for Pro»). Its limit is 4 hours of function CPU over the last 30 days, and
+  at the limit Vercel stops the functions for up to 30 days — which is the App
+  Store and Google Play apps gone. It was at 3 h 37 min, from 375,000 calls of
+  about 35 ms each: the cost is the number of calls, not any heavy page.
+- **Links do not prefetch** (`components/Link.js`, which every screen imports
+  instead of `next/link`): each Link in view used to fetch its page in advance,
+  twelve on الرئيسية alone. Only the bottom bar's four tabs still do.
+- A new call that runs on every screen, or on a timer, has to earn its place
+  against that limit.
+
 ## Working method
 
 - Show pictures before HTML. Screenshots of the running app, not file dumps.
@@ -553,8 +566,9 @@ missing from both sources, and is not faked:
 ## النشاط
 
 - **Online is worked out when it is asked, never stored.** The phone sends one
-  ping a minute while the app is in front of somebody (`components/Heartbeat.js`
-  → `/api/me/ping`); a row seen in the last 150 s is «online». Nothing is
+  ping every four minutes while the app is in front of somebody, never two
+  within a minute, and not on a change of screen (`components/Heartbeat.js`
+  → `/api/me/ping`); a row seen in the last 330 s is «online». Nothing is
   written for a closed app, so nothing can go stale.
 - **«Opened» is one row in `app_opens`** — a new session, or a visit after 30
   minutes away. Tracking starts the day `supabase/activity.sql` is pasted, and

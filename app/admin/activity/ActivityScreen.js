@@ -124,7 +124,7 @@ export default function ActivityScreen({ initial }) {
 
       <p className="act-note" suppressHydrationWarning>
         يحسب التتبّع من لحظة تفعيله{s.startedAt ? ` (${new Date(s.startedAt).toLocaleDateString('ar')})` : ''}؛
-        ما سبقه غير مسجَّل. «متصل» يعني أن التطبيق مفتوح أمامه خلال آخر دقيقتين.
+        ما سبقه غير مسجَّل. «متصل» يعني أن التطبيق مفتوح أمامه خلال آخر خمس دقائق.
       </p>
     </div>
   );

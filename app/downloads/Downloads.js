@@ -11,7 +11,7 @@
 // cannot work, and this screen is already here.
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import PdfViewer from '@/components/PdfViewer';
 import { listDownloads, openDownload, removeDownload } from '@/lib/downloads';

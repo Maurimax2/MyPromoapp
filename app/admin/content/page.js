@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile, isAdmin } from '@/lib/supabase/server';
 import PromoScreen from './PromoScreen';

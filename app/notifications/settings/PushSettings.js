@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { pushStatus, enablePush, disablePush, isNative } from '@/lib/pushClient';

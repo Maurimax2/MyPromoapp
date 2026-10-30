@@ -11,7 +11,7 @@
 // clay while they are, and plain the rest of the time.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { badgeOf, inProgram, isTunisian, PROGRAM_COOKIE } from '@/lib/data';
 import SubjectBanner from '@/components/SubjectBanner';

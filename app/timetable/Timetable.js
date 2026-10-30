@@ -8,7 +8,7 @@
 // could tell which file it is; the rest are plain on purpose.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { agenda, clockOf, LECTURE } from '@/lib/timetable-core';

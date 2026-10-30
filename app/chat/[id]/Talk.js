@@ -4,7 +4,7 @@
 // nothing is happening, and nothing to get stuck half-connected.
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Flag from '@/components/Flag';
 import { useT } from '@/components/Lang';

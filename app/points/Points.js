@@ -13,7 +13,7 @@
 // said in words.
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Sheet from '@/components/Sheet';
 import BadgeArt from '@/components/BadgeArt';

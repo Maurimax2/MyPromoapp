@@ -9,7 +9,7 @@
 // is worth points.
 
 import { useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 
 const LETTER = (n) => String.fromCharCode(65 + n);

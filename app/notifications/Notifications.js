@@ -7,7 +7,7 @@
 // for that, because nobody has ever wanted one.
 
 import { useEffect } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { useT } from '@/components/Lang';
 import { ago } from '@/lib/i18n';

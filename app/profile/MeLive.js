@@ -7,7 +7,7 @@
 // is a client component and why those two arrive a moment after the rest.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Flame from '@/components/Flame';
 import { lastWeeks, daysKnown } from '@/lib/streak';

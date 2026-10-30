@@ -28,7 +28,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Icon from '@/components/Icon';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useT } from '@/components/Lang';
 import { Viewer as PlateViewer } from '@/components/Planches';
 import { GROUPS_OF_LAYER, PLANCHES } from '@/lib/anatomy/planches';

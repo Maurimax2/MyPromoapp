@@ -1,7 +1,13 @@
 'use client';
 
-// Tells the server, once a minute, that somebody has MyPromo open and which
-// screen they are on — so the panel can say how many are here and doing what.
+// Tells the server, every four minutes, that somebody has MyPromo open and
+// which screen they are on — so the panel can say how many are here and doing
+// what.
+//
+// It was once a minute and again on every change of screen, which made it
+// most of the app's calls to the server — and on Vercel's free plan every
+// call is CPU (owner, 2026-10-30: no Pro). Four minutes, never twice within
+// one, and the screen it reports is wherever the student is at that moment.
 //
 // Mounted once in the root layout. Draws nothing, and does nothing while the
 // app is in the background: a phone in a pocket is not «online». It never asks
@@ -13,7 +19,8 @@ import { usePathname } from 'next/navigation';
 
 // Screens where nobody is signed in yet, or let in yet.
 const OUTSIDE = ['/login', '/waiting', '/feedback', '/auth', '/admin', '/privacy', '/delete-account', '/download', '/terms', '/support'];
-const EVERY = 60 * 1000;
+const EVERY = 4 * 60 * 1000;
+const SOON = 60 * 1000;          // a ping this soon after the last one is not sent
 const NEW_VISIT = 30 * 60 * 1000;
 const LAST = 'mypromo.ping';
 
@@ -38,6 +45,7 @@ export default function Heartbeat() {
       let last = 0;
       try { last = Number(sessionStorage.getItem(LAST) || 0); } catch { /* private mode */ }
       const now = Date.now();
+      if (last && now - last < SOON) return;
       const opened = !last || now - last > NEW_VISIT;
       try { sessionStorage.setItem(LAST, String(now)); } catch { /* private mode */ }
       fetch('/api/me/ping', {
@@ -47,14 +55,15 @@ export default function Heartbeat() {
       }).catch(() => {});
     };
 
-    // A moment after the screen has painted, then every minute, and again as
-    // soon as the app comes back to the front.
+    // A moment after the app has painted, then every four minutes, and again
+    // as soon as the app comes back to the front. Not on a change of screen:
+    // `here` carries the screen, and the next ping reports it.
     const first = setTimeout(ping, 2500);
     const timer = setInterval(ping, EVERY);
     const back = () => { if (document.visibilityState === 'visible') ping(); };
     document.addEventListener('visibilitychange', back);
     return () => { clearTimeout(first); clearInterval(timer); document.removeEventListener('visibilitychange', back); };
-  }, [outside, path]);
+  }, [outside]);
 
   return null;
 }

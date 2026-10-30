@@ -13,7 +13,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
 import { useT } from '@/components/Lang';

@@ -8,7 +8,7 @@
 // shows a folder's full contents or shows the error it hit.
 
 import { useEffect, useState, useCallback } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 
 const ROOT = 'root';
 const PARALLEL = 5;

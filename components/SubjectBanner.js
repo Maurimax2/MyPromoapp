@@ -6,7 +6,7 @@
 // layout. It was a 3D render until 2026-10-29; those exist only for parts of
 // the body, and half the subjects had none that fitted.
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import SubjectGlyph from './SubjectGlyph';
 import { glyphOf } from '@/lib/subjectArt';
 

@@ -12,7 +12,7 @@
 // shortcut; the faculty's timetable is not trusted enough to lead the screen.
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import Post from '@/components/Post';

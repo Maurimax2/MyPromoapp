@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/Link';
 
 // The shell for the two pages a store reviewer opens: readable signed out,
 // Arabic first, with a French copy for students who read that better.

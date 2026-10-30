@@ -8,7 +8,7 @@
 // inside an app. The parent is derived from the URL, so back always means the
 // same thing and always goes somewhere real.
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Icon from '@/components/Icon';
 

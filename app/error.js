@@ -7,7 +7,7 @@
 // Arabic, and offers the two things that actually help: try again, or go
 // home. The message itself is never shown — it names our tables.
 
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { useT } from '@/components/Lang';
 

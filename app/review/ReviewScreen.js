@@ -13,7 +13,7 @@
 // trip, and the server copy is what carries it to your next phone.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Quiz from '@/components/Quiz';
 import { dueIds, trackedCount, dueCount } from '@/lib/review';

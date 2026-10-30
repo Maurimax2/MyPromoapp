@@ -14,7 +14,7 @@
 // nothing jumps when the script arrives.
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { agenda, clockOf } from '@/lib/timetable-core';
 import { inTime, whenIs, longDay, KIND } from '@/lib/timetable-text';
