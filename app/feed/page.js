@@ -270,6 +270,7 @@ export default async function Feed({ searchParams }) {
       refused={refused}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             promo: profile.promo,
+            staff: ['owner', 'admin', 'editor'].includes(profile.role),
             approved: profile.status === 'approved'
               || ['owner', 'admin', 'editor'].includes(profile.role) }}
       promos={years.promos}

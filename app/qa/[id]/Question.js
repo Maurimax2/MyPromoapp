@@ -7,8 +7,16 @@ import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import Flag from '@/components/Flag';
 import { useT } from '@/components/Lang';
+import { ago } from '@/lib/i18n';
 
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
+// The same face as on the post in the feed (components/Post.js).
+const FACES = ['#2A5B3E', '#A8502A', '#14555F', '#8A6A14', '#4B5B3A', '#6B4A3A', '#5B3A6B', '#2F5560'];
+const faceOf = (id = '') => {
+  let n = 0;
+  for (let i = 0; i < id.length; i += 1) n = (n * 31 + id.charCodeAt(i)) % 997;
+  return FACES[n % FACES.length];
+};
 const initials = (p) => (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 // Somebody else's question or answer can be reported, and its author blocked.
 const whom = (p, me) => (p?.id && p.id !== me ? { id: p.id, name: name(p) } : null);
@@ -63,14 +71,17 @@ export default function Question({ post, subject, answers: first, me }) {
       </header>
 
       <div className="scroll">
+        {/* The question first and big, then who asked it — it is kept here
+            for whoever has the same question next year. */}
         <div className="qa-full">
-          <div className="post-head" style={{ padding: 0 }}>
-            <div className="av" style={{ width: 36, height: 36, fontSize: 12, background: '#A8502A' }}>
-              {initials(post.author)}
-            </div>
-            <div className="grow">
-              <div className="post-name"><b>{name(post.author)}</b></div>
-            </div>
+          <span className="pv-kind question">{t('سؤال')}</span>
+          <div className="qa-q" dir="auto">{post.body}</div>
+          <div className="qa-by">
+            <span className="pv-av" style={{ background: faceOf(post.author?.id) }}>{initials(post.author)}</span>
+            <span className="grow">
+              <b>{t('سؤال من {name}', { name: name(post.author) })}</b>
+              <s suppressHydrationWarning>{ago(t, post.created_at, { dateAfterWeek: true })}</s>
+            </span>
             {whom(post.author, me.id) && (
               <div className="post-more">
                 <Flag type="post" id={post.id} person={whom(post.author, me.id)}
@@ -78,7 +89,6 @@ export default function Question({ post, subject, answers: first, me }) {
               </div>
             )}
           </div>
-          <div className="qa-body" dir="auto">{post.body}</div>
         </div>
 
         <div className="eyebrow" style={{ margin: '4px 2px 0' }}>
@@ -88,9 +98,7 @@ export default function Question({ post, subject, answers: first, me }) {
         {answers.map((a) => (
           <div key={a.id} className={`ans${a.accepted ? ' ok' : ''}`}>
             <div className="ans-top">
-              <div className="av" style={{ width: 30, height: 30, fontSize: 11, background: 'var(--olive)' }}>
-                {initials(a.author)}
-              </div>
+              <span className="pv-av ans-av" style={{ background: faceOf(a.author?.id) }}>{initials(a.author)}</span>
               <b className="grow">{name(a.author)}</b>
               {a.accepted && <span className="pill ans-tag"><Icon name="check" size={13} />{' '}{t('الجواب')}</span>}
               {whom(a.author, me.id) && (

@@ -176,6 +176,15 @@ necessity, not a preference.
   applies blocks itself (`lib/blocks.js`); so does reading a post's replies.
   Likes, replies and saves were already written with the server's key, so
   they work on any year's post.
+- **A question asked as a post is kept as a question** (owner, 2026-10-31:
+  «it has to be something for the future»). A question is a post whose kind is
+  `question` and its replies are its answers, so moving one copies nothing:
+  its author (from «⋯») or staff (a button on the post) make it a question
+  (PATCH `/api/posts`), it stays in the feed and appears in سؤال وجواب, its
+  page showing the question big, who asked it, and the answers. The composer
+  offers منشور / سؤال / ملخص and takes a line ending in «?» for a question. The
+  question page reads with the server's key and applies blocks, like
+  «كل الدفعات», since a question is opened from any year's feed.
 - **الرئيسية carries every feature that has no other door**, live ones in
   colour and the rest dashed and marked قريبًا — a student should see the whole
   app on day one, and five fit in one row without a swipe. **Nothing may lead

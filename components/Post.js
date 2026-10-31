@@ -13,6 +13,7 @@
 // photo or the file likes it too, with a heart over it.
 
 import { useRef, useState } from 'react';
+import Link from './Link';
 import Sheet from './Sheet';
 import Icon from './Icon';
 import Flag from './Flag';
@@ -48,7 +49,20 @@ export default function Post({ post, me }) {
   const [busy, setBusy] = useState(false);
   const [menu, setMenu] = useState(false);
   const [burst, setBurst] = useState(0);   // the big heart over a double-tapped picture
+  // A post can be made a question (its replies become the answers) by its
+  // author or by staff — see PATCH /api/posts.
+  const [kind, setKind] = useState(post.kind);
   const field = useRef(null);
+
+  const toQuestion = async () => {
+    setMenu(false);
+    const res = await fetch('/api/posts', {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: post.id, kind: 'question' }),
+    });
+    if (res.ok) setKind('question');
+  };
 
   const remove = async () => {
     setMenu(false);
@@ -112,8 +126,11 @@ export default function Post({ post, me }) {
   };
 
   const author = post.author || {};
-  const kind = post.kind === 'note' ? t('ملخص') : post.kind === 'question' ? t('سؤال') : null;
+  const label = kind === 'note' ? t('ملخص') : kind === 'question' ? t('سؤال') : null;
   const shades = glyphOf(post.subject || '');
+  // Anything that is not already a question or a résumé can become a question.
+  const movable = kind !== 'question' && kind !== 'note';
+  const mine = author.id === me.id;
 
   return (
     <article className="pv">
@@ -155,14 +172,22 @@ export default function Post({ post, me }) {
 
         {menu && (
           <Sheet onClose={() => setMenu(false)}>
+            {movable && <button className="sheet-act" onClick={toQuestion}>{t('انقل إلى سؤال وجواب')}</button>}
             <button className="sheet-act warn" onClick={remove}>{t('احذف منشوري')}</button>
             <button className="sheet-act quiet" onClick={() => setMenu(false)}>{t('إلغاء')}</button>
           </Sheet>
         )}
       </header>
 
-      {kind && <span className={`pv-kind ${post.kind}`}>{kind}</span>}
+      {label && <span className={`pv-kind ${kind}`}>{label}</span>}
       {post.body && <div className="pv-body" dir="auto">{post.body}</div>}
+      {/* Staff can move anybody's question where questions are kept; the
+          author does it from their own menu above. */}
+      {movable && !mine && me.staff && (
+        <button className="pv-move" onClick={toQuestion}>
+          <Icon name="msg" size={16} />{t('انقل إلى سؤال وجواب')}
+        </button>
+      )}
 
       {post.media?.length > 0 && (
         <div className="pv-media" onDoubleClick={love}>
@@ -201,7 +226,11 @@ export default function Post({ post, me }) {
         </button>
       </div>
 
-      {count > 0 && (
+      {kind === 'question' ? (
+        // A question is read on its own page: the question big, the answers
+        // under it, the one that settled it first.
+        <Link href={`/qa/${post.id}`} className="pv-more">{t('افتح السؤال')}</Link>
+      ) : count > 0 && (
         <button className="pv-more" onClick={show}>{t('عرض التعليقات ({count})', { count })}</button>
       )}
 

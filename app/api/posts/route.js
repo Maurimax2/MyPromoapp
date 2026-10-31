@@ -109,3 +109,34 @@ export async function DELETE(request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
 }
+
+// A post becomes a question, or goes back to being a post.
+//
+// A question asked as a post gets answered in its replies and then sinks down
+// the feed for good. Made a question, it is kept where questions are found
+// (سؤال وجواب), its replies as the answers, and it stays in the feed too —
+// it is the same row (owner, 2026-10-31). Its author may, and so may staff,
+// on anybody's. A résumé stays a résumé.
+export async function PATCH(request) {
+  const t = await getT();
+  const profile = await currentProfile();
+  if (!profile) return NextResponse.json({ error: t('سجّل الدخول') }, { status: 401 });
+
+  const { id, kind } = await request.json();
+  if (!id || !['post', 'question'].includes(kind)) {
+    return NextResponse.json({ error: 'bad request' }, { status: 400 });
+  }
+
+  const db = supabaseAdmin();
+  const { data: post } = await db.from('posts').select('author, kind').eq('id', id).maybeSingle();
+  if (!post) return NextResponse.json({ error: t('لا منشور') }, { status: 404 });
+  if (post.kind === 'note') return NextResponse.json({ error: t('الملخص يبقى ملخصًا') }, { status: 400 });
+
+  if (post.author !== profile.id && !isStaff(profile)) {
+    return NextResponse.json({ error: t('ليس منشورك') }, { status: 403 });
+  }
+
+  const { error } = await db.from('posts').update({ kind }).eq('id', id);
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true, kind });
+}

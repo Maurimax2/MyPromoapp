@@ -6035,3 +6035,24 @@ button, .nav, .head-t, .head-s { -webkit-user-select: none; user-select: none; }
   .rk-sheet > *, .me2-sheet > * { width: 100%; max-width: 760px; margin-inline: auto; }
   .me2-sheet > .badges { max-width: none; }
 }
+
+/* ================= a question, kept (سؤال وجواب) =================
+   The question big, who asked it under it, then the answers — the page a
+   student finds next year with the same question. */
+.qa-full { padding: 20px 18px 16px; gap: 14px; }
+.qa-full > .pv-kind { margin-top: 0; }
+.qa-q { font-size: 22px; font-weight: 600; line-height: 1.55; color: var(--ink); overflow-wrap: anywhere; white-space: pre-wrap; }
+.qa-by { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
+.qa-by .grow { display: grid; gap: 2px; }
+.qa-by b { font-size: 14px; font-weight: 600; }
+.qa-by s { text-decoration: none; font-size: 12px; color: var(--ink-3); }
+.ans { border-radius: 20px; padding: 14px 16px; }
+.ans-av { width: 34px; height: 34px; font-size: 11.5px; }
+.ans-body { color: var(--ink); font-size: 15px; }
+/* Staff moving somebody's question to where questions are kept. */
+.pv-move {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+  min-height: 36px; padding: 0 12px; border-radius: 12px; font: inherit; font-size: 12.5px; font-weight: 600;
+  color: var(--olive); background: var(--olive-pale);
+}
+a.pv-more { display: inline-flex; align-items: center; color: var(--olive); font-weight: 600; }
