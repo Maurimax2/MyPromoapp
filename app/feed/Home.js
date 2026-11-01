@@ -60,13 +60,10 @@ export default function Home({ me, posts, subjects, mySubjects = [],
   const [body, setBody] = useState('');
   const [files, setFiles] = useState([]);      // what has been uploaded, not what is chosen
   const [module, setModule] = useState('');    // the subject it belongs to
-  // A post, a question or a résumé. A résumé is filed under its subject in
-  // الملخصات as well as shown here, which is why it cannot go without one; a
-  // question is kept in سؤال وجواب, its replies as the answers.
+  // A post, or a résumé: a résumé is filed under its subject in الملخصات as
+  // well as shown here, which is why it cannot go without one. Questions are
+  // asked in سؤال وجواب.
   const [kind, setKind] = useState('post');
-  // A line ending in a question mark is taken for a question, until the
-  // student picks a kind themselves.
-  const picked = useRef(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const picker = useRef(null);
@@ -143,7 +140,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     if (!res.ok) { setError(data.error || t('تعذّر النشر ({status})', { status: res.status })); return; }
-    setBody(''); setFiles([]); setModule(''); setKind('post'); picked.current = false; setWriting(false);
+    setBody(''); setFiles([]); setModule(''); setKind('post'); setWriting(false);
     router.refresh();
   };
 
@@ -268,10 +265,7 @@ export default function Home({ me, posts, subjects, mySubjects = [],
               rows={3}
               placeholder={t('شارك شيئًا مع دفعتك…')}
               value={body}
-              onChange={(e) => {
-                setBody(e.target.value);
-                if (!picked.current) setKind(/[?؟]\s*$/.test(e.target.value) ? 'question' : 'post');
-              }}
+              onChange={(e) => setBody(e.target.value)}
               aria-label={t('منشور جديد')}
             />
           </div>
@@ -298,9 +292,9 @@ export default function Home({ me, posts, subjects, mySubjects = [],
 
           {(body.trim() || files.length > 0) && (
             <div className="composer-kind" role="radiogroup" aria-label={t('نوع المنشور')}>
-              {[['post', t('منشور')], ['question', t('سؤال')], ['note', t('ملخص')]].map(([k, label]) => (
+              {[['post', t('منشور')], ['note', t('ملخص')]].map(([k, label]) => (
                 <button key={k} type="button" role="radio" aria-checked={kind === k} data-on={kind === k}
-                        onClick={() => { picked.current = true; setKind(k); setError(''); }}>{label}</button>
+                        onClick={() => { setKind(k); setError(''); }}>{label}</button>
               ))}
             </div>
           )}

@@ -49,8 +49,8 @@ export default function Post({ post, me }) {
   const [busy, setBusy] = useState(false);
   const [menu, setMenu] = useState(false);
   const [burst, setBurst] = useState(0);   // the big heart over a double-tapped picture
-  // A post can be made a question (its replies become the answers) by its
-  // author or by staff — see PATCH /api/posts.
+  // A post can be made a question (its replies become the answers) by staff
+  // only — see PATCH /api/posts.
   const [kind, setKind] = useState(post.kind);
   const field = useRef(null);
 
@@ -128,9 +128,10 @@ export default function Post({ post, me }) {
   const author = post.author || {};
   const label = kind === 'note' ? t('ملخص') : kind === 'question' ? t('سؤال') : null;
   const shades = glyphOf(post.subject || '');
-  // Anything that is not already a question or a résumé can become a question.
-  const movable = kind !== 'question' && kind !== 'note';
-  const mine = author.id === me.id;
+  // Staff, and only staff, can move a post to سؤال وجواب — from the «⋯» menu,
+  // never a button on every post (owner, 2026-11-01). A question or a résumé
+  // is never moved.
+  const movable = me.staff && kind !== 'question' && kind !== 'note';
 
   return (
     <article className="pv">
@@ -166,7 +167,8 @@ export default function Post({ post, me }) {
               <Icon name="dots" size={18} />
             </button>
           ) : (
-            <Flag type="post" id={post.id} person={whom(author, me.id)} />
+            <Flag type="post" id={post.id} person={whom(author, me.id)}
+                  extra={movable ? { label: t('انقل إلى سؤال وجواب'), onClick: toQuestion } : null} />
           )}
         </div>
 
@@ -181,13 +183,6 @@ export default function Post({ post, me }) {
 
       {label && <span className={`pv-kind ${kind}`}>{label}</span>}
       {post.body && <div className="pv-body" dir="auto">{post.body}</div>}
-      {/* Staff can move anybody's question where questions are kept; the
-          author does it from their own menu above. */}
-      {movable && !mine && me.staff && (
-        <button className="pv-move" onClick={toQuestion}>
-          <Icon name="msg" size={16} />{t('انقل إلى سؤال وجواب')}
-        </button>
-      )}
 
       {post.media?.length > 0 && (
         <div className="pv-media" onDoubleClick={love}>

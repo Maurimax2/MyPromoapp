@@ -115,8 +115,9 @@ export async function DELETE(request) {
 // A question asked as a post gets answered in its replies and then sinks down
 // the feed for good. Made a question, it is kept where questions are found
 // (سؤال وجواب), its replies as the answers, and it stays in the feed too —
-// it is the same row (owner, 2026-10-31). Its author may, and so may staff,
-// on anybody's. A résumé stays a résumé.
+// it is the same row (owner, 2026-10-31). Staff only (owner, 2026-11-01:
+// students moving anything they liked was not the idea). A résumé stays a
+// résumé.
 export async function PATCH(request) {
   const t = await getT();
   const profile = await currentProfile();
@@ -132,7 +133,7 @@ export async function PATCH(request) {
   if (!post) return NextResponse.json({ error: t('لا منشور') }, { status: 404 });
   if (post.kind === 'note') return NextResponse.json({ error: t('الملخص يبقى ملخصًا') }, { status: 400 });
 
-  if (post.author !== profile.id && !isStaff(profile)) {
+  if (!isStaff(profile)) {
     return NextResponse.json({ error: t('ليس منشورك') }, { status: 403 });
   }
 

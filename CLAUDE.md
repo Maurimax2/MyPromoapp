@@ -178,13 +178,16 @@ necessity, not a preference.
   they work on any year's post.
 - **A question asked as a post is kept as a question** (owner, 2026-10-31:
   «it has to be something for the future»). A question is a post whose kind is
-  `question` and its replies are its answers, so moving one copies nothing:
-  its author (from «⋯») or staff (a button on the post) make it a question
-  (PATCH `/api/posts`), it stays in the feed and appears in سؤال وجواب, its
-  page showing the question big, who asked it, and the answers. The composer
-  offers منشور / سؤال / ملخص and takes a line ending in «?» for a question. The
-  question page reads with the server's key and applies blocks, like
-  «كل الدفعات», since a question is opened from any year's feed.
+  `question` and its replies are its answers, so moving one copies nothing.
+  **Only staff move a post**, from its «⋯» menu (PATCH `/api/posts`); never
+  its author, never a button on every post (owner, 2026-11-01: students
+  turning anything into a question was not the idea). The composer stays
+  منشور / ملخص; questions are asked in سؤال وجواب. The post stays in the feed,
+  and its question page shows the question big, who asked it, and the answers.
+- **سؤال وجواب shows every year's questions**, with «دفعتي / كل الدفعات» like
+  the feed. It listed only your own year, so a question moved from another
+  year's feed never appeared there. It and the question page read with the
+  server's key and apply blocks, like «كل الدفعات».
 - **الرئيسية carries every feature that has no other door**, live ones in
   colour and the rest dashed and marked قريبًا — a student should see the whole
   app on day one, and five fit in one row without a swipe. **Nothing may lead

@@ -36,7 +36,9 @@ const REPORT = {
  * @param {string}  [p.className] the trigger's class
  * @param {number}  [p.size]
  */
-export default function Flag({ type, id, person, blocked = false, onBlocked, className, size = 18 }) {
+//   extra  { label, onClick } — one more action at the top of the menu, for
+//          what only staff may do (Post.js: move a post to سؤال وجواب).
+export default function Flag({ type, id, person, blocked = false, onBlocked, className, size = 18, extra = null }) {
   const t = useT();
   const [open, setOpen] = useState(false);
   const [view, setView] = useState('menu');     // menu | confirm | reported
@@ -86,6 +88,11 @@ export default function Flag({ type, id, person, blocked = false, onBlocked, cla
         <Sheet onClose={close}>
           {view === 'menu' && (
             <>
+              {extra && (
+                <button className="sheet-act" onClick={() => { close(); extra.onClick(); }} disabled={busy}>
+                  {extra.label}
+                </button>
+              )}
               {type && REPORT[type] && (
                 <button className="sheet-act" onClick={report} disabled={busy}>
                   <Icon name="flag" size={18} />&nbsp;{t(REPORT[type])}

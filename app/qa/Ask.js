@@ -10,7 +10,7 @@ import { useT } from '@/components/Lang';
 
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 
-export default function Ask({ questions, subjects, open, only, me }) {
+export default function Ask({ questions, subjects, open, only, mine = false, me }) {
   const t = useT();
   const router = useRouter();
   const [asking, setAsking] = useState(false);
@@ -47,9 +47,15 @@ export default function Ask({ questions, subjects, open, only, me }) {
             <div className="head-s">{open ? t('{open} بلا جواب', { open }) : t('كل الأسئلة مُجابة')}</div>
           </div>
         </div>
+        {/* Every year's questions or my year's, and all or only the ones
+            still waiting — each switch keeps the other's choice. */}
         <div className="seg">
-          <Link href="/qa" data-on={!only} className="seg-a">{t('الكل')}</Link>
-          <Link href="/qa?only=open" data-on={only} className="seg-a">{t('بلا جواب')}</Link>
+          <Link href={`/qa${only ? '?only=open' : ''}`} data-on={!mine} className="seg-a" replace>{t('كل الدفعات')}</Link>
+          <Link href={`/qa?mine=1${only ? '&only=open' : ''}`} data-on={mine} className="seg-a" replace>{t('دفعتي')}</Link>
+        </div>
+        <div className="seg">
+          <Link href={`/qa${mine ? '?mine=1' : ''}`} data-on={!only} className="seg-a" replace>{t('الكل')}</Link>
+          <Link href={`/qa?only=open${mine ? '&mine=1' : ''}`} data-on={only} className="seg-a" replace>{t('بلا جواب')}</Link>
         </div>
       </header>
 
@@ -91,8 +97,9 @@ export default function Ask({ questions, subjects, open, only, me }) {
               <div className="grow">
                 <div className="qa-q" dir="auto">{q.body}</div>
                 <div className="qa-m">
+                  {q.year && <span className="pv-year" style={{ '--y': q.year.badge }} dir="ltr">{q.year.name}</span>}
                   {name(q.author)}
-                  {q.module ? ` · ${subject(q.module) || ''}` : ''}
+                  {(q.subject || subject(q.module)) ? <> · <span dir="ltr">{q.subject || subject(q.module)}</span></> : ''}
                   {q.comments ? t(' · {comments} ردّ', { comments: q.comments }) : ''}
                 </div>
               </div>
