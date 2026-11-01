@@ -41,7 +41,7 @@ const Model3D = dynamic(() => import('@/components/Model3D'), {
   loading: () => <div className="rm-stage-wait">…</div>,
 });
 
-const EVERY = 4000;
+const EVERY = 10 * 1000;   // asking for new messages when there is no call
 const WORK = 25 * 60;
 const REST = 5 * 60;
 const ROUND = WORK + REST;
@@ -156,6 +156,23 @@ function ShowSync({ hostId, isHost, myId, show, held, file, onShow, onHeld, onFi
   return null;
 }
 
+// The chat, carried on the call: a message written (and saved) by one phone
+// reaches the others here, without anybody asking the server. Believed only
+// when its author is the participant who sent it — that identity was signed
+// by our server when the ticket was made.
+function ChatSync({ onMessage, sendRef }) {
+  const { send } = useDataChannel('chat', (msg) => {
+    const m = unpack(msg.payload);
+    if (!m?.id || !m.author?.id || m.author.id !== msg.from?.identity) return;
+    onMessage([m]);
+  });
+  useEffect(() => {
+    sendRef.current = (m) => send(pack(m), { reliable: true });
+    return () => { sendRef.current = null; };
+  }, [send, sendRef]);
+  return null;
+}
+
 function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onPickFile, onError }) {
   const t = useT();
   const { localParticipant, isMicrophoneEnabled, isCameraEnabled } = useLocalParticipant();
@@ -246,22 +263,49 @@ export default function Room({ room, subject, people, here, first, regions, subj
   useEffect(() => { foot.current?.scrollIntoView({ block: 'end', behavior: 'smooth' }); }, [messages.length]);
 
   // ---- the chat ----
+  //
+  // A message is written once (POST) and then travels over the call to
+  // everybody in it (ChatSync), which costs the server nothing. Asking the
+  // server for new messages every four seconds was about 900 calls an hour
+  // for each student in a room, on a plan with four hours of CPU a month
+  // (owner, 2026-11-01). The server is still asked — once a minute in a call,
+  // for whatever the call missed, and every ten seconds without one — and
+  // never while the app is in the background.
+  const calling = !!live?.token;
+  const take = useCallback((fresh) => {
+    if (!fresh?.length) return;
+    setMessages((list) => {
+      const have = new Set(list.map((x) => x.id));
+      const add = fresh.filter((x) => !have.has(x.id));
+      return add.length ? [...list, ...add].sort((a, b) => a.id - b.id) : list;
+    });
+    last.current = Math.max(last.current, ...fresh.map((x) => x.id));
+  }, []);
+  const chatRef = useRef(null);
+
   useEffect(() => {
     if (!me.inside) return undefined;
     let alive = true;
     const tick = async () => {
-      setNow(Date.now());
-      const res = await fetch(`/api/rooms/messages?room=${room.id}&after=${last.current}`);
-      if (!alive || !res.ok) return;
+      if (document.visibilityState !== 'visible') return;
+      const res = await fetch(`/api/rooms/messages?room=${room.id}&after=${last.current}`).catch(() => null);
+      if (!alive || !res?.ok) return;
       const { messages: fresh } = await res.json();
-      if (fresh?.length) {
-        last.current = fresh.at(-1).id;
-        setMessages((m) => [...m, ...fresh]);
-      }
+      take(fresh);
     };
-    const timer = setInterval(tick, EVERY);
-    return () => { alive = false; clearInterval(timer); };
-  }, [room.id, me.inside]);
+    const timer = setInterval(tick, calling ? 60 * 1000 : EVERY);
+    // Back from the background: catch up at once.
+    const back = () => { if (document.visibilityState === 'visible') tick(); };
+    document.addEventListener('visibilitychange', back);
+    return () => { alive = false; clearInterval(timer); document.removeEventListener('visibilitychange', back); };
+  }, [room.id, me.inside, calling, take]);
+
+  // Who has just written lights up for 45 seconds: the clock for that is the
+  // phone's own, not a call to the server.
+  useEffect(() => {
+    const timer = setInterval(() => setNow(Date.now()), 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   // ---- being here ----
   useEffect(() => {
@@ -310,8 +354,9 @@ export default function Room({ room, subject, people, here, first, regions, subj
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     if (!res.ok) { setError(data.error || t('تعذّر الإرسال ({status})', { status: res.status })); return; }
-    last.current = data.id;
-    setMessages((m) => [...m, data]);
+    take([data]);
+    // Everybody in the call has it now, without asking the server.
+    chatRef.current?.(data);
     setDraft('');
     setNow(Date.now());
   };
@@ -662,6 +707,7 @@ export default function Room({ room, subject, people, here, first, regions, subj
       <RoomAudioRenderer />
       <ShowSync hostId={hostId} isHost={me.host} myId={me.id} show={show} held={held} file={file}
         onShow={onShow} onHeld={setHeld} onFile={onFile} sendRef={sendRef} />
+      <ChatSync onMessage={take} sendRef={chatRef} />
       {body}
       {fileSheet}
     </LiveKitRoom>

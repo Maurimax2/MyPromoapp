@@ -536,6 +536,12 @@ missing from both sources, and is not faked:
   twelve on الرئيسية alone. Only the bottom bar's four tabs still do.
 - A new call that runs on every screen, or on a timer, has to earn its place
   against that limit.
+- **A study room's chat travels over the call** (`ChatSync` in
+  `app/rooms/[id]/Room.js`): a message is saved once and sent to the others on
+  the call's data channel. The server is asked for new messages once a minute
+  in a call and every 10 s without one, never in the background — it was every
+  4 s, about 900 calls an hour per student. «Here» in a room is a ping a
+  minute (`lib/rooms.js`, seen in the last 150 s), not every half minute.
 
 ## Working method
 
