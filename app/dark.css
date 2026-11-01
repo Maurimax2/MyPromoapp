@@ -144,3 +144,6 @@
 [data-theme='dark'] .bd-seg button[data-on="true"] {
     color: #dee2df
 }
+[data-theme='dark'] .rm-stage-doc .rm-stage-body {
+    background: #161E1A
+}
