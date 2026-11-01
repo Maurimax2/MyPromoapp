@@ -607,6 +607,13 @@ missing from both sources, and is not faked:
 - A link survives sign-in: the middleware sends a signed-out visitor to
   `/login?next=…` for `/rooms/join/*` only, and `/auth/home` honours exactly
   that shape and nothing else.
+- **Anybody in a room's call can open a file for everybody** (a student asked,
+  2026-11-01): «افتح ملفًا» picks a subject — the room's own first — and a
+  lecture (`/api/rooms/files`), and the call's data channel tells the others,
+  whose stage opens the same file in Google's preview. The same file, not the
+  same page: each phone scrolls its own. Only the host's messages are
+  believed for the 3D model; a file is believed from anyone in the call. The
+  one who opened it closes it for all; the others can hide it.
 
 ## The icon on an iPhone's home screen
 

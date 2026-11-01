@@ -5,7 +5,7 @@ import { regionArt } from '@/lib/subjectArt';
 import { REGIONS, regionsFor } from '@/lib/anatomy/curriculum';
 import { CREDIT, bundleOf } from '@/lib/anatomy/bundles';
 import { isHere } from '@/lib/rooms';
-import { sourcesOf, studies } from '@/lib/catalogue';
+import { sourcesOf, studies, subjectsInProgram } from '@/lib/catalogue';
 import Room from './Room';
 
 export const dynamic = 'force-dynamic';
@@ -78,6 +78,14 @@ export default async function RoomPage({ params }) {
     regions = REGIONS.filter((r) => studies(sources, { promo: r.promo.toLowerCase(), semester: String(r.semester).toUpperCase() }));
   }
 
+  // What anybody in the call can open on the stage: the room's subject first,
+  // then the rest of their own year's.
+  const mySubjects = (await subjectsInProgram(profile.promo || String(room.promo || '').toLowerCase()))
+    .map((m) => ({ id: m.id, name: m.name }));
+  const subjects = subject
+    ? [subject, ...mySubjects.filter((m) => m.id !== subject.id)]
+    : mySubjects;
+
   const now = Date.now();
   const people = (members || []).map((m) => m.person).filter(Boolean);
   const here = (members || []).filter((m) => m.person && isHere(m, now)).map((m) => m.person.id);
@@ -96,6 +104,7 @@ export default async function RoomPage({ params }) {
       here={inside ? [...new Set([...here, profile.id])] : here}
       first={said || []}
       regions={regions.map(scene)}
+      subjects={subjects}
       me={{ id: profile.id, name: profile.full_name || profile.email.split('@')[0],
             host: room.host?.id === profile.id, inside }}
     />

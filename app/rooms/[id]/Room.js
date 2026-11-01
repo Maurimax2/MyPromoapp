@@ -31,6 +31,7 @@ import Icon from '@/components/Icon';
 import { SubjectTile } from '@/components/SubjectBanner';
 import Flag from '@/components/Flag';
 import Sheet from '@/components/Sheet';
+import QuickView from '@/components/QuickView';
 import { PING } from '@/lib/rooms';
 import { useT } from '@/components/Lang';
 
@@ -111,17 +112,25 @@ function LiveSeats({ hostId, strip }) {
 }
 
 // The host's model, carried on the call's data channel so nothing about it
-// is written anywhere. Only the host's messages are believed — the identity
-// on each one was signed by our server when the ticket was made.
-function ShowSync({ hostId, isHost, show, held, onShow, onHeld, sendRef }) {
+// is written anywhere. Only the host's messages are believed for the model —
+// the identity on each one was signed by our server when the ticket was made.
+//
+// A file is different: anybody in the call may open one, and what they open
+// everybody sees (a student asked for it, 2026-11-01). Each phone draws it in
+// Google's preview, so it is the same file for all — not the same page.
+function ShowSync({ hostId, isHost, myId, show, held, file, onShow, onHeld, onFile, sendRef }) {
   const room = useRoomContext();
-  const latest = useRef({ show, held });
-  latest.current = { show, held };
+  const latest = useRef({ show, held, file });
+  latest.current = { show, held, file };
 
   const { send } = useDataChannel('show', (msg) => {
-    if (msg.from?.identity !== hostId) return;
     const m = unpack(msg.payload);
     if (!m) return;
+    if (m.t === 'file') {
+      onFile(m.fid ? { fid: m.fid, title: m.title || '', by: msg.from?.identity || null } : null);
+      return;
+    }
+    if (msg.from?.identity !== hostId) return;
     if (m.t === 'show' || m.t === 'state') { onShow(m.key ?? null); onHeld(m.name ?? null); }
     if (m.t === 'pick') onHeld(m.name ?? null);
   });
@@ -132,22 +141,22 @@ function ShowSync({ hostId, isHost, show, held, onShow, onHeld, sendRef }) {
   }, [send, sendRef]);
 
   // Somebody walks in while the host is explaining: tell them what is on the
-  // screen, so they land on the same bone instead of an empty room.
+  // screen, so they land on the same bone instead of an empty room. A file is
+  // told by whoever opened it.
   useEffect(() => {
-    if (!isHost) return undefined;
     const came = (p) => {
-      const { show: key, held: nm } = latest.current;
-      if (!key) return;
-      setTimeout(() => sendRef.current?.({ t: 'state', key, name: nm }, [p.identity]), 600);
+      const { show: key, held: nm, file: f } = latest.current;
+      if (isHost && key) setTimeout(() => sendRef.current?.({ t: 'state', key, name: nm }, [p.identity]), 600);
+      if (f && f.by === myId) setTimeout(() => sendRef.current?.({ t: 'file', fid: f.fid, title: f.title }, [p.identity]), 700);
     };
     room.on(RoomEvent.ParticipantConnected, came);
     return () => { room.off(RoomEvent.ParticipantConnected, came); };
-  }, [room, isHost, sendRef]);
+  }, [room, isHost, myId, sendRef]);
 
   return null;
 }
 
-function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }) {
+function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onPickFile, onError }) {
   const t = useT();
   const { localParticipant, isMicrophoneEnabled, isCameraEnabled } = useLocalParticipant();
   const state = useConnectionState();
@@ -189,6 +198,9 @@ function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }
             ? <button className="rm-ctrl wide on" onClick={onStop}><Icon name="box" size={19} />{' '}{t('أوقف العرض')}</button>
             : <button className="rm-ctrl wide" onClick={onPickModel}><Icon name="box" size={19} />{' '}{t('اعرض نموذجًا')}</button>
         )}
+        <button className="rm-ctrl wide" onClick={onPickFile} disabled={state !== ConnectionState.Connected}>
+          <Icon name="file" size={19} />{' '}{t('افتح ملفًا')}
+        </button>
         {state !== ConnectionState.Connected && (
           <span className="rm-conn">{state === ConnectionState.Reconnecting ? t('يعيد الاتصال…') : t('يتصل…')}</span>
         )}
@@ -199,7 +211,7 @@ function LiveControls({ isHost, canShow, showing, onPickModel, onStop, onError }
 
 // ================= the room =================
 
-export default function Room({ room, subject, people, here, first, regions, me }) {
+export default function Room({ room, subject, people, here, first, regions, subjects = [], me }) {
   const t = useT();
   const router = useRouter();
   const [messages, setMessages] = useState(first);
@@ -223,6 +235,12 @@ export default function Room({ room, subject, people, here, first, regions, me }
   const [held, setHeld] = useState(null);
   const [hidden, setHidden] = useState(false);
   const [picking, setPicking] = useState(false);
+  // A file somebody in the call opened for everybody: { fid, title, by }.
+  const [file, setFile] = useState(null);
+  // Choosing one: the sheet, the subject chosen in it, and its lectures.
+  const [filing, setFiling] = useState(false);
+  const [from, setFrom] = useState(null);
+  const [lectures, setLectures] = useState(null);
   const sendRef = useRef(null);
 
   useEffect(() => { foot.current?.scrollIntoView({ block: 'end', behavior: 'smooth' }); }, [messages.length]);
@@ -352,6 +370,29 @@ export default function Room({ room, subject, people, here, first, regions, me }
   const onShow = useCallback((key) => { setShow(key); if (key) setHidden(false); }, []);
   const shown = regions.find((r) => r.key === show) || null;
 
+  // ---- a file for everybody ----
+  const pickSubject = async (id) => {
+    setFrom(id); setLectures(null);
+    const res = await fetch(`/api/rooms/files?module=${encodeURIComponent(id)}`).catch(() => null);
+    const data = (await res?.json().catch(() => ({}))) || {};
+    setLectures(data.chapters || []);
+  };
+  const openFiling = () => {
+    setFiling(true);
+    // The room's own subject is open already; the others are a tap away.
+    if (!from && subjects[0]) pickSubject(subjects[0].id);
+  };
+  const shareFile = (l) => {
+    setFile({ fid: l.fid, title: l.title, by: me.id }); setHidden(false); setFiling(false);
+    sendRef.current?.({ t: 'file', fid: l.fid, title: l.title });
+  };
+  const closeFile = () => {
+    setFile(null);
+    sendRef.current?.({ t: 'file', fid: null });
+  };
+  const onFile = useCallback((f) => { setFile(f); if (f) setHidden(false); }, []);
+  const opener = file ? (file.by === me.id ? null : people.find((p) => p.id === file.by)) : null;
+
   // Without a call, who is here comes from the heartbeat, and a seat lights
   // up for whoever has just written.
   const spoke = new Map();
@@ -359,7 +400,8 @@ export default function Room({ room, subject, people, here, first, regions, me }
   const talking = (id) => now - (spoke.get(id) || 0) < TALKING;
   const sitting = people.filter((p) => here.includes(p.id));
   const connected = !!live?.token;
-  const stageUp = !!shown && !hidden;
+  // A file opened for everybody comes before the host's model.
+  const stageUp = (!!file || !!shown) && !hidden;
 
   const quietSeats = (
     <div className={`rm-seats r3${stageUp ? ' strip' : ''}`}>
@@ -410,12 +452,35 @@ export default function Room({ room, subject, people, here, first, regions, me }
       )}
 
       <div className="rm-flow">
+        {/* ================= a file opened for everybody ================= */}
+        {file && hidden && (
+          <button className="rm-back-to" onClick={() => setHidden(false)}>
+            <Icon name="file" size={17} /> <b dir="ltr">{file.title}</b>{' '}{t('— ارجع إليه')}</button>
+        )}
+        {stageUp && file && (
+          <div className="rm-stage rm-stage-doc r2">
+            <div className="rm-stage-top">
+              <span className="grow">
+                <s>{opener ? t('يعرض {name}', { name: name(opener) }) : t('تعرض الآن')}</s>
+                <b dir="auto">{file.title}</b>
+              </span>
+              {/* Whoever opened it closes it for everybody; the others hide it. */}
+              {file.by === me.id
+                ? <button className="rm-stage-x" onClick={closeFile} aria-label={t('أغلق الملف')}><Icon name="x" size={16} /></button>
+                : <button className="rm-stage-x" onClick={() => setHidden(true)} aria-label={t('أخفِ العرض')}><Icon name="x" size={16} /></button>}
+            </div>
+            <div className="rm-stage-body">
+              <QuickView key={file.fid} fid={file.fid} src={`/api/file/${file.fid}`} />
+            </div>
+          </div>
+        )}
+
         {/* ================= the host's model ================= */}
-        {shown && hidden && (
+        {shown && hidden && !file && (
           <button className="rm-back-to" onClick={() => setHidden(false)}>
             <Icon name="box" size={17} /> {me.host ? t('تعرض') : t('المضيف يعرض')} <b dir="ltr">{shown.title}</b>{' '}{t('— ارجع إليه')}</button>
         )}
-        {stageUp && (
+        {stageUp && !file && (
           <div className="rm-stage r2">
             <div className="rm-stage-top">
               <span className="grow">
@@ -510,7 +575,7 @@ export default function Room({ room, subject, people, here, first, regions, me }
         <div className="rm-foot col">
           {connected && (
             <LiveControls isHost={me.host} canShow={regions.length > 0} showing={!!show}
-              onPickModel={() => setPicking(true)} onStop={stop} onError={setError} />
+              onPickModel={() => setPicking(true)} onStop={stop} onPickFile={openFiling} onError={setError} />
           )}
           <div className="rm-type">
             <input
@@ -554,6 +619,38 @@ export default function Room({ room, subject, people, here, first, regions, me }
     </div>
   );
 
+  // ================= anybody chooses a file for the room =================
+  const fileSheet = filing && (
+    <Sheet onClose={() => setFiling(false)}>
+      <div className="rm-pick">
+        <b>{t('افتح ملفًا للغرفة')}</b>
+        <div className="rm-subjs">
+          {subjects.map((m) => (
+            <button key={m.id} className="rm-subj-chip" data-on={from === m.id} onClick={() => pickSubject(m.id)} dir="ltr">
+              {m.name}
+            </button>
+          ))}
+        </div>
+        <div className="rm-files">
+          {from && lectures === null && <div className="rm-files-wait">…</div>}
+          {lectures?.length === 0 && <div className="rm-files-wait">{t('لا محاضرات في هذه المادة')}</div>}
+          {lectures?.map((ch, i) => (
+            <div key={`${ch.title}-${i}`} className="rm-files-ch">
+              {ch.title && <s dir="auto">{ch.title}</s>}
+              {ch.lectures.map((l) => (
+                <button key={l.fid} className="rm-file" onClick={() => shareFile(l)}>
+                  {l.n != null && <span className="rm-file-n">{l.n}</span>}
+                  <span className="grow" dir="auto">{l.title}</span>
+                  <Icon name="chev" size={15} />
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </Sheet>
+  );
+
   if (!connected) return body;
 
   return (
@@ -563,9 +660,10 @@ export default function Room({ room, subject, people, here, first, regions, me }
       style={{ display: 'contents' }}
       onError={() => setError(t('انقطع الاتصال بالصوت والصورة'))}>
       <RoomAudioRenderer />
-      <ShowSync hostId={hostId} isHost={me.host} show={show} held={held}
-        onShow={onShow} onHeld={setHeld} sendRef={sendRef} />
+      <ShowSync hostId={hostId} isHost={me.host} myId={me.id} show={show} held={held} file={file}
+        onShow={onShow} onHeld={setHeld} onFile={onFile} sendRef={sendRef} />
       {body}
+      {fileSheet}
     </LiveKitRoom>
   );
 }
