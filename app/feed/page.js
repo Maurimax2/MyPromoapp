@@ -11,7 +11,7 @@ import { sessionsOf, hasPlanning, LECTURE } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
 import { getT } from '@/lib/lang';
 import { blockedAmong } from '@/lib/blocks';
-import { badgeOf, inProgram } from '@/lib/data';
+import { badgeOf, inProgram } from '@/lib/data-core';
 
 export const dynamic = 'force-dynamic';
 

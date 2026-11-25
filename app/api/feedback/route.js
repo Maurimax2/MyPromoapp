@@ -11,7 +11,7 @@
 
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { PROMOS } from '@/lib/data';
+import { PROMOS } from '@/lib/data-core';
 import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';

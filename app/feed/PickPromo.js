@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { PROMOS, badgeOf } from '@/lib/data';
+import { PROMOS, badgeOf } from '@/lib/data-core';
 import { useT } from '@/components/Lang';
 
 export default function PickPromo() {

@@ -2,7 +2,6 @@ import Link from '@/components/Link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { SubjectTile } from '@/components/SubjectBanner';
-import { quizzedModules } from '@/lib/data';
 import { currentProfile } from '@/lib/supabase/server';
 import { subjectsOf, promosOf } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';
@@ -36,7 +35,7 @@ export default async function QuizIndex() {
     // The read failed. The file is the fallback for a database that has
     // nothing to say, never for one that refused to answer — so this is the
     // subjects of this promo the app shipped with, and the screen says why.
-    : quizzedModules().filter((m) => m.promo === promo);
+    : (await import('@/lib/data')).quizzedModules().filter((m) => m.promo === promo);
 
   const modules = await Promise.all(listed.map(async (m) => ({
     id: m.id, name: m.name, icon: m.icon || 'book', tint: m.tint || 'purple',

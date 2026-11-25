@@ -5,13 +5,15 @@
 // rather than in the browser is what lets a question extracted this morning
 // turn up in tonight's revision.
 
-import { quizzedModules } from '@/lib/data';
 import { allOf } from '@/lib/quiz-bank';
 import ReviewScreen from './ReviewScreen';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Review() {
+  // The course (lib/data.js, 824 KB) is loaded when this runs, not when the
+  // server starts: see lib/data-core.js.
+  const { quizzedModules } = await import('@/lib/data');
   const all = (await Promise.all(
     quizzedModules().map(async (m) =>
       (await allOf(m.id)).map((q) => ({ ...q, module: m.name }))),

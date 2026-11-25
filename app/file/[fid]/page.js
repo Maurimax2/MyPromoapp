@@ -1,6 +1,5 @@
 import BackButton from '@/components/BackButton';
 import Reader from './Reader';
-import { fileByFid } from '@/lib/data';
 import { getT } from '@/lib/lang';
 
 // Files open here, inside MyPromo. The document is fetched through the app's
@@ -8,6 +7,9 @@ import { getT } from '@/lib/lang';
 export default async function FileView({ params }) {
   const t = await getT();
   const { fid } = await params;
+  // The course (lib/data.js, 824 KB) is loaded when this runs, not when the
+  // server starts: see lib/data-core.js.
+  const { fileByFid } = await import('@/lib/data');
   const file = fileByFid(fid);
   const src = `/api/file/${fid}`;
 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import Logo from '@/components/Logo';
-import { badgeOf } from '@/lib/data';
+import { badgeOf } from '@/lib/data-core';
 import { isFirstYear, normaliseUsername } from '@/lib/identity';
 import { useT, LangSwitch } from '@/components/Lang';
 

@@ -9,7 +9,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { PROMOS } from '@/lib/data';
+import { PROMOS } from '@/lib/data-core';
 import { whatsappLink } from '@/lib/identity';
 
 const TABS = [

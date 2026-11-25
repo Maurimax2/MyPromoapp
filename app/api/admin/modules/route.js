@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server';
 import { requireStaff } from '@/lib/staff';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { isAdmin } from '@/lib/supabase/server';
-import { subjectKey, subjectName } from '@/lib/data';
+import { subjectKey, subjectName } from '@/lib/data-core';
 
 export const runtime = 'nodejs';
 

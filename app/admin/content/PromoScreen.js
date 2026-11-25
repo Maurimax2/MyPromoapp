@@ -11,7 +11,7 @@ import { useState } from 'react';
 import Link from '@/components/Link';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { badgeOf } from '@/lib/data';
+import { badgeOf } from '@/lib/data-core';
 
 export default function PromoScreen({ promos, subjects, files, canDelete }) {
   const router = useRouter();

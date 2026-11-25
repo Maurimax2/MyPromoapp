@@ -13,7 +13,7 @@
 import { useEffect, useState } from 'react';
 import Link from '@/components/Link';
 import Icon from '@/components/Icon';
-import { badgeOf, inProgram, isTunisian, PROGRAM_COOKIE } from '@/lib/data';
+import { badgeOf, inProgram, isTunisian, PROGRAM_COOKIE } from '@/lib/data-core';
 import SubjectBanner from '@/components/SubjectBanner';
 import { dueCount } from '@/lib/review';
 import { useT } from '@/components/Lang';

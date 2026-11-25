@@ -2,7 +2,7 @@ import Link from '@/components/Link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { promoById, badgeOf } from '@/lib/data';
+import { promoById, badgeOf } from '@/lib/data-core';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, handleOf } from '@/lib/identity';
 import { friendState } from '@/lib/friends';

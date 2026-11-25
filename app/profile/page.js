@@ -2,7 +2,7 @@ import Link from '@/components/Link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
-import { promoById } from '@/lib/data';
+import { promoById } from '@/lib/data-core';
 import { zero, scoreOf, badgesOf } from '@/lib/points';
 import { standings } from '@/lib/standings';
 import { daysOf } from '@/lib/days';

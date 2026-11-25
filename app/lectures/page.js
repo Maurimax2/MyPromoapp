@@ -1,5 +1,5 @@
 import Icon from '@/components/Icon';
-import { TODAY } from '@/lib/data';
+import { TODAY } from '@/lib/data-core';
 import { getT } from '@/lib/lang';
 
 export default async function Lectures() {

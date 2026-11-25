@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { sectionsFor, subjectName } from '@/lib/data';
+import { sectionsFor, subjectName } from '@/lib/data-core';
 import { moduleOf, semestersOf } from '@/lib/catalogue';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';

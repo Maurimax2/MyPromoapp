@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { subjectsOf } from '@/lib/catalogue';
-import { promoById, inProgram } from '@/lib/data';
+import { promoById, inProgram } from '@/lib/data-core';
 import { sessionsOf, hasPlanning, SEMESTER } from '@/lib/timetable';
 import { withLinks } from '@/lib/timetable-links';
 import Timetable from './Timetable';

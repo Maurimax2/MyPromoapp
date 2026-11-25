@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { PROGRAM_COOKIE } from '@/lib/data';
+import { PROGRAM_COOKIE } from '@/lib/data-core';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { promosOf, allModules } from '@/lib/catalogue';
 import { browsingPromo } from '@/lib/promo';

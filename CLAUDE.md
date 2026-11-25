@@ -509,7 +509,8 @@ missing from both sources, and is not faked:
   wrote to the database and every screen read the file.
 - The file is still the **fallback, per subject**: a module the database knows
   but holds no files for falls back to the file's copy, so a half-finished
-  migration cannot blank the archive.
+  migration cannot blank the archive. It is loaded on demand, never imported
+  at the top (see Vercel's free plan, below).
 - **A year is ready when it has subjects**, not when somebody ticks `indexed`.
 - What students upload goes to **Supabase Storage**, not R2. R2 is paid for
   but has no bucket name or public URL set, and a half-configured store fails
@@ -553,9 +554,19 @@ missing from both sources, and is not faked:
     the middleware and a page whose only job was to redirect.
   - **What a call costs is mostly the cold start.** On quiet hours a fifth of
     calls start a fresh server, and the routes hit first on a launch (`/`,
-    `/login`, `/feed`) cost ten times what `/study` does. `/feed`, `/login`,
-    `/study` and `/profile` all load the 824 KB of `lib/modules/` through
-    `lib/catalogue.js`'s fallback; making that lazy is the next saving.
+    `/login`, `/feed`) cost ten times what `/study` does. So nothing heavy is
+    imported at the top of a module a common screen loads.
+  - **The course as files is loaded only when it is read.** `lib/data.js`
+    (824 KB compiled) was imported by 27 files for a badge colour or a
+    subject's name, so every cold start of `/feed` and `/login` evaluated
+    every lecture of every year, and four screens shipped 88 KB of it to the
+    phone. The years and helpers are in `lib/data-core.js` — import from
+    there. `lib/data.js` keeps the course, re-exports the helpers, and is
+    reached by `await import('@/lib/data')` in the catalogue's fallback, the
+    file page, the quiz index, المراجعة and `lib/daily.js`.
+    `TUNISIAN_YEARS` in `data-core` lets the catalogue know a year has no
+    Tunisian subjects without opening the file; a new `tn-` file for another
+    year must be added there (`lib/data.js` says so in the log if not).
   - **A chat asks every 10 s, 30 s after two quiet minutes**, nothing in the
     background (it was every 4 s, always). A waiting duel re-renders every 15 s,
     then once a minute after three (it was every 5 s, always).

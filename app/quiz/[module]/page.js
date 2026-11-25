@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import Icon from '@/components/Icon';
 import { SubjectTile } from '@/components/SubjectBanner';
-import { sectionsFor } from '@/lib/data';
+import { sectionsFor } from '@/lib/data-core';
 import { moduleOf } from '@/lib/catalogue';
 import QuizPicker from '@/components/QuizPicker';
 // Read through the bridge, not the file: every question the panel extracts

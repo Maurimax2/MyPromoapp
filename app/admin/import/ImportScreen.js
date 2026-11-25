@@ -11,7 +11,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { badgeOf } from '@/lib/data';
+import { badgeOf } from '@/lib/data-core';
 
 const KINDS = [
   { id: 'lecture', where: 'archive', label: 'محاضرة' },

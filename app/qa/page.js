@@ -3,7 +3,7 @@ import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { blockedAmong } from '@/lib/blocks';
 import { subjectsInProgram, subjectsOf, promosOf } from '@/lib/catalogue';
-import { badgeOf } from '@/lib/data';
+import { badgeOf } from '@/lib/data-core';
 import Ask from './Ask';
 
 export const dynamic = 'force-dynamic';

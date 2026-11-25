@@ -17,7 +17,7 @@ import Logo from '@/components/Logo';
 import Icon from '@/components/Icon';
 import { supabase } from '@/lib/supabase/browser';
 import { authMessage } from '@/lib/auth-error';
-import { PROMOS, badgeOf } from '@/lib/data';
+import { PROMOS, badgeOf } from '@/lib/data-core';
 import { isFirstYear, normaliseUsername } from '@/lib/identity';
 import { useT, LangSwitch } from '@/components/Lang';
 

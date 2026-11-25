@@ -1,7 +1,7 @@
 import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import { supabaseServer } from '@/lib/supabase/server';
-import { PROMOS } from '@/lib/data';
+import { PROMOS } from '@/lib/data-core';
 import Answers from './Answers';
 
 export const dynamic = 'force-dynamic';

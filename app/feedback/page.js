@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Zain, IBM_Plex_Sans_Arabic, Poppins } from 'next/font/google';
-import { PROMOS } from '@/lib/data';
+import { PROMOS } from '@/lib/data-core';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import Reveal from './Reveal';
 import Form from './Form';
