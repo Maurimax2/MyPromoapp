@@ -41,10 +41,8 @@ export async function POST(request) {
     .select('*').eq('id', id).maybeSingle();
   if (!room) return NextResponse.json({ error: t('لا غرفة') }, { status: 404 });
   if (room.closed) return NextResponse.json({ error: t('الغرفة مغلقة') }, { status: 409 });
-  // Membership is checked below; a private room's members can be from any year.
-  if (!room.private && room.promo !== profile.promo && !isStaff(profile)) {
-    return NextResponse.json({ error: t('ليست غرفة دفعتك') }, { status: 403 });
-  }
+  // Membership is checked below. Every year may sit in a public room
+  // (owner, 2026-11-25), and a private room's members can be from any year.
 
   const { data: member } = await db.from('room_members')
     .select('person').eq('room', id).eq('person', profile.id).maybeSingle();

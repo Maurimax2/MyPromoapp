@@ -3,8 +3,10 @@
 //   POST   { to }  ask — or, when they already asked you, accept
 //   DELETE { to }  withdraw a request, decline one, or unfriend
 //
-// `to` is a username, a university number, or an id. Only your own year:
-// the same rule chat keeps.
+// `to` is a username, a university number, or an id — from any year. The
+// first years of medicine, dentistry and pharmacy sit the same subjects, and
+// the line between years was the thing students asked most to remove
+// (owner, 2026-11-25: «everyone can do everything with everyone»).
 
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
@@ -41,10 +43,8 @@ async function guard(request) {
   }
   const { to } = await request.json().catch(() => ({}));
   const them = await find(me, to);
-  // Somebody in another year reads the same as nobody at all — the rule
-  // /u/ keeps, so this route cannot be used to ask who exists elsewhere.
-  if (!them || them.status !== 'approved' || them.promo !== me.promo) {
-    return { error: NextResponse.json({ error: t('لا أحد بهذا الاسم في دفعتك') }, { status: 404 }) };
+  if (!them || them.status !== 'approved') {
+    return { error: NextResponse.json({ error: t('لا أحد بهذا الاسم') }, { status: 404 }) };
   }
   if (them.id === me.id) return { error: NextResponse.json({ error: t('هذا أنت') }, { status: 400 }) };
   return { me, them };
@@ -57,7 +57,7 @@ export async function POST(request) {
   // A block, by either of you, reads like nobody being there — the person
   // blocked must not be able to find out by asking.
   if (await blockedBetween(me.id, them.id)) {
-    return NextResponse.json({ error: t('لا أحد بهذا الاسم في دفعتك') }, { status: 404 });
+    return NextResponse.json({ error: t('لا أحد بهذا الاسم') }, { status: 404 });
   }
 
   const db = supabaseAdmin();

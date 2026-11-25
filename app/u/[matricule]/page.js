@@ -1,7 +1,7 @@
 import Link from '@/components/Link';
 import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
-import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { currentProfile } from '@/lib/supabase/server';
 import { promoById, badgeOf } from '@/lib/data-core';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, handleOf } from '@/lib/identity';
@@ -25,11 +25,11 @@ const ROLE = {
  * The number is what a student actually has written down about somebody
  * else, so it is what the address bar takes: /u/D12345.
  *
- * What comes back is decided by the policies, not here. An approved student
- * reads the profiles of their own promo, so a number from another year finds
- * nobody — which is the same answer as a number nobody holds, and the screen
- * says so the same way rather than confirming that the person exists
- * elsewhere.
+ * From any year (owner, 2026-11-25): a student's own key reads only their
+ * year's profiles, so this reads with the server's key and takes only what the
+ * screen prints — never the email, past the name it falls back to. Somebody
+ * who has blocked you reads as nobody, the same answer as a number nobody
+ * holds; somebody you blocked is shown, with the way to undo it.
  */
 export default async function PersonPage({ params }) {
   const t = await getT();
@@ -42,13 +42,20 @@ export default async function PersonPage({ params }) {
   const number = normalise(raw);
   const byNumber = looksRight(number);
   const handle = normaliseUsername(raw);
-  const sb = await supabaseServer();
+  const db = supabaseAdmin();
 
-  const { data: person } = await sb
+  const { data: found } = await db
     .from('profiles')
-    .select('*')
+    .select('id, full_name, email, username, matricule, promo, role, status')
     .eq(byNumber ? 'matricule' : 'username', byNumber ? number : handle)
     .maybeSingle();
+  // An account not let in yet is nobody to a student.
+  const visible = found && (found.status === 'approved' || ['owner', 'admin', 'editor'].includes(found.role));
+  const theyBlocked = visible && found.id !== me.id
+    ? await db.from('blocks').select('blocker').eq('blocker', found.id).eq('blocked', me.id).maybeSingle()
+      .then((r) => !!r.data, () => false)
+    : false;
+  const person = visible && !theyBlocked ? found : null;
 
   // Your own number lands on your own screen, which has the things only you
   // may see on it.
@@ -61,14 +68,15 @@ export default async function PersonPage({ params }) {
 
   // Counted only when somebody was found, and counted the same way الملف
   // counts them, so two screens never disagree about how many answers a
-  // person has had accepted.
+  // person has had accepted. With the server's key: their posts are in their
+  // own year's feed, which your key does not read.
   const [posts, answers, rooms, friendship, blocking] = person
     ? await Promise.all([
-      sb.from('posts').select('*', { count: 'exact', head: true })
+      db.from('posts').select('*', { count: 'exact', head: true })
         .eq('author', person.id).eq('removed', false),
-      sb.from('comments').select('*', { count: 'exact', head: true })
+      db.from('comments').select('*', { count: 'exact', head: true })
         .eq('author', person.id).eq('accepted', true),
-      sb.from('room_members').select('*', { count: 'exact', head: true })
+      db.from('room_members').select('*', { count: 'exact', head: true })
         .eq('person', person.id),
       friendState(me.id, person.id),
       // Only a block you made is shown here. One they made is not yours to
@@ -99,8 +107,8 @@ export default async function PersonPage({ params }) {
           <div className="notice">
             <Icon name="alert" size={19} />
             <div>
-              <div className="notice-t">{t('لا أحد بهذا الاسم أو الرقم في دفعتك')}</div>
-              <div className="notice-b">{t('تحقّق من')}{' '}<span dir="ltr">{byNumber ? number : `@${handle}`}</span>{' '}{t('— أو أنّ صاحبه في دفعة أخرى.')}</div>
+              <div className="notice-t">{t('لا أحد بهذا الاسم أو الرقم')}</div>
+              <div className="notice-b">{t('تحقّق من')}{' '}<span dir="ltr">{byNumber ? number : `@${handle}`}</span></div>
             </div>
           </div>
         ) : (

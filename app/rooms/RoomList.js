@@ -1,6 +1,6 @@
 'use client';
 
-// The rooms your promo has open.
+// The rooms open in every year, your own year's first.
 
 import { useState } from 'react';
 import Link from '@/components/Link';
@@ -115,7 +115,7 @@ export default function RoomList({ rooms, secret = [], subjects, me }) {
                 </div>
               </Link>
             ))}
-            {rooms.length > 0 && <div className="admin-bar"><span>{t('غرف دفعتك')}</span><span>{rooms.length}</span></div>}
+            {rooms.length > 0 && <div className="admin-bar"><span>{t('الغرف المفتوحة')}</span><span>{rooms.length}</span></div>}
           </>
         )}
 
@@ -123,7 +123,14 @@ export default function RoomList({ rooms, secret = [], subjects, me }) {
           <div key={r.id} className="room">
             <div className="room-top">
               <div className="grow">
-                <div className="room-t">{r.title}</div>
+                <div className="room-t">
+                  {r.title}
+                  {r.year && (
+                    <span className="pill solid" style={{ background: r.year.badge, fontSize: 10, marginInlineStart: 6, verticalAlign: 'middle' }}>
+                      {r.year.name}
+                    </span>
+                  )}
+                </div>
                 {r.topic && <div className="room-b" dir="auto">{r.topic}</div>}
               </div>
               <span className="pill">{r.members}/{r.capacity}</span>

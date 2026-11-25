@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import BackButton from '@/components/BackButton';
 import { currentProfile } from '@/lib/supabase/server';
-import { modulesOf } from '@/lib/catalogue';
+import { modulesOf, moduleOf } from '@/lib/catalogue';
 import { quizzedIds } from '@/lib/quiz-bank';
 import NewDuel from './NewDuel';
 import { getT } from '@/lib/lang';
@@ -25,6 +25,13 @@ export default async function NewDuelPage({ searchParams }) {
   const params = (await searchParams) || {};
   const to = params.to || '';
   const subject = params.subject || '';
+
+  // «ردّ التحدّي» from a friend in another year comes back with their subject,
+  // which is not in your list: offered first, so the rematch is one tap.
+  if (subject && !subjects.some((m) => m.id === subject)) {
+    const theirs = await moduleOf(subject);
+    if (theirs) subjects.unshift({ id: theirs.id, name: theirs.name });
+  }
 
   return (
     <>

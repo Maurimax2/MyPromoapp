@@ -27,7 +27,16 @@ function Person({ p, children }) {
         <span className="fr-face" style={{ background: faceOf(p.id) }}>{p.name.slice(0, 2)}</span>
         <span className="grow">
           <b>{p.name}</b>
-          <s dir="ltr">{p.username ? `@${p.username}` : p.handle}</s>
+          {/* A friend from another year wears it — beside the handle, which is
+              short, not after the name, which a long one cuts off. */}
+          <s>
+            <span dir="ltr">{p.username ? `@${p.username}` : p.handle}</span>
+            {p.year && (
+              <span className="pill solid" style={{ background: p.year.badge, fontSize: 10, marginInlineStart: 6, verticalAlign: 'middle' }}>
+                {p.year.name}
+              </span>
+            )}
+          </s>
         </span>
       </Link>
       {children}

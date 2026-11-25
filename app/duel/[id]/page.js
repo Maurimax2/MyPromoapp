@@ -4,6 +4,7 @@ import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
+import { peopleById } from '@/lib/people';
 import { outcome, stage, saysTime } from '@/lib/duel';
 import { SubjectTile } from '@/components/SubjectBanner';
 import Play from './Play';
@@ -62,12 +63,16 @@ export default async function DuelPage({ params }) {
   const { data: duel } = await sb
     .from('duels')
     .select(`id, module, title, state, seconds, questions, challenger, opponent,
-             challenger_score, opponent_score, challenger_at, opponent_at,
-             a:profiles!duels_challenger_fkey(id, full_name, email, matricule),
-             b:profiles!duels_opponent_fkey(id, full_name, email, matricule)`)
+             challenger_score, opponent_score, challenger_at, opponent_at`)
     .eq('id', id).maybeSingle();
 
   if (!duel) notFound();
+
+  // The two players by name, from whatever year each is in: your own key
+  // reads only your year's profiles (lib/people.js).
+  const players = await peopleById([duel.challenger, duel.opponent]);
+  duel.a = players.get(duel.challenger) || null;
+  duel.b = players.get(duel.opponent) || null;
 
   const at = stage(duel, me.id);
   const iAmChallenger = duel.challenger === me.id;
@@ -109,8 +114,8 @@ export default async function DuelPage({ params }) {
   const how = at === 'done' ? outcome(mine, theirs) : null;
 
   // «ردّ التحدّي»: the same person, the same subject, one tap.
-  const again = them?.matricule
-    ? `/duel/new?to=${encodeURIComponent(them.matricule)}&subject=${encodeURIComponent(duel.module || '')}`
+  const again = them?.matricule || them?.username
+    ? `/duel/new?to=${encodeURIComponent(them.matricule || them.username)}&subject=${encodeURIComponent(duel.module || '')}`
     : '/duel/new';
 
   const Card = () => (

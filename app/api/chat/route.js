@@ -9,6 +9,7 @@ import { currentProfile, isStaff, supabaseServer } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { pushTo, later } from '@/lib/push';
 import { blockedBetween } from '@/lib/blocks';
+import { areFriends } from '@/lib/friends';
 import { getT } from '@/lib/lang';
 
 export const runtime = 'nodejs';
@@ -29,15 +30,16 @@ export async function POST(request) {
 
   const db = supabaseAdmin();
 
-  // Only inside your own promo. A first year should not be able to open a
-  // private channel to a stranger four years above them.
+  // Your own promo, or a friend from any other (owner, 2026-11-25). A first
+  // year still cannot open a private channel to a stranger four years above
+  // them — only to somebody who said yes to being their friend.
   const { data: them } = await db.from('profiles')
     .select('id, promo, status').eq('id', person).maybeSingle();
   if (!them || them.status !== 'approved') {
     return NextResponse.json({ error: t('لا يوجد هذا الطالب') }, { status: 404 });
   }
-  if (them.promo !== me.promo && !isStaff(me)) {
-    return NextResponse.json({ error: t('من دفعتك فقط') }, { status: 403 });
+  if (them.promo !== me.promo && !isStaff(me) && !(await areFriends(me.id, person))) {
+    return NextResponse.json({ error: t('دفعتك وأصدقاؤك فقط') }, { status: 403 });
   }
   // Blocked, by either of you: the same answer as nobody being there.
   if (await blockedBetween(me.id, person)) {

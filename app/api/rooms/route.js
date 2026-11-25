@@ -8,7 +8,7 @@ import crypto from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { currentProfile, isStaff } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
-import { friendsIn } from '@/lib/friends';
+import { friendIds } from '@/lib/friends';
 import { notifyMany } from '@/lib/notify';
 import { later } from '@/lib/push';
 import { getT } from '@/lib/lang';
@@ -60,12 +60,13 @@ export async function POST(request) {
   // waiting to be explained.
   await db.from('room_members').insert({ room: room.id, person: profile.id });
 
-  // A room is only worth opening if somebody comes: friends are asked. Not
-  // for a private one — its whole point is that only the people sent the link
-  // know it exists.
+  // A room is only worth opening if somebody comes: friends are asked, from
+  // every year, since a public room is open to every year. Not for a private
+  // one — its whole point is that only the people sent the link know it
+  // exists.
   if (!isPrivate) {
     await later(async () => {
-      await notifyMany(await friendsIn(profile.id, profile.promo), {
+      await notifyMany(await friendIds(profile.id), {
         actor: profile.id, kind: 'friend_room', body: name, link: `/rooms/${room.id}`,
       });
     });
@@ -96,9 +97,8 @@ export async function PATCH(request) {
     if (!inside && room.host !== profile.id && !isStaff(profile) && !invited) {
       return NextResponse.json({ error: t('هذه غرفة خاصة — تحتاج رابط الدعوة') }, { status: 403 });
     }
-  } else if (room.promo !== profile.promo && !isStaff(profile)) {
-    return NextResponse.json({ error: t('ليست غرفة دفعتك') }, { status: 403 });
   }
+  // A public room is open to every year (owner, 2026-11-25).
 
   if (close !== undefined) {
     if (room.host !== profile.id && !isStaff(profile)) {

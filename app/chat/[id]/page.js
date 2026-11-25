@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { peopleById } from '@/lib/people';
 import Talk from './Talk';
 
 export const dynamic = 'force-dynamic';
@@ -14,8 +15,13 @@ export default async function ChatPage({ params }) {
   if (!chat) notFound();
 
   const otherId = chat.a === me.id ? chat.b : chat.a;
-  const [{ data: person }, { data: messages }] = await Promise.all([
-    sb.from('profiles').select('id, full_name, email').eq('id', otherId).maybeSingle(),
+  // The other person may be a friend from another year, whom your own key
+  // cannot read — named with the server's (lib/people.js).
+  const [person, { data: messages }] = await Promise.all([
+    peopleById([otherId]).then((m) => {
+      const p = m.get(otherId);
+      return p ? { id: p.id, full_name: p.full_name, email: p.email } : null;
+    }),
     sb.from('chat_messages').select('id, body, author, created_at')
       .eq('chat', id).order('created_at').limit(300),
   ]);

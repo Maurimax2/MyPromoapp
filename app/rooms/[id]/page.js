@@ -54,9 +54,8 @@ export default async function RoomPage({ params }) {
 
   const insideRoom = (members || []).some((m) => m.person?.id === profile.id);
   // A private room does not exist for anybody without its link; a public one
-  // is looked at by its own promo, as it always was.
-  if (room.private ? !(insideRoom || room.host?.id === profile.id || isStaff(profile))
-                   : (room.promo !== profile.promo && !isStaff(profile))) notFound();
+  // is open to every year (owner, 2026-11-25).
+  if (room.private && !(insideRoom || room.host?.id === profile.id || isStaff(profile))) notFound();
   // Only people who are in it read what is said.
   const said = insideRoom || isStaff(profile) ? messages : [];
 

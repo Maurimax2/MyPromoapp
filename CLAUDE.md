@@ -205,7 +205,11 @@ necessity, not a preference.
 - **Files open inside MyPromo**, never by handing the student to the Drive app.
 - Six promos to begin with: PCEM1, PCEM2, DCEM1, DCEM2, DCEM3, DCEM4. Each has
   its own badge colour, shown on every post. **Six was a fact, not a rule —
-  the panel can add a year.** Only PCEM2 has content so far.
+  the panel can add a year.** Every year has content (owner, 2026-11-25:
+  DCEM1–DCEM3 were catalogued through the panel). **The database is the only
+  place to ask which years have material** — `lib/modules/` holds only the
+  years catalogued before the panel existed, and judging from it once
+  called three full years empty.
 
 ## النقاط
 
@@ -643,10 +647,9 @@ missing from both sources, and is not faked:
   room page answers anyone who is not in it as if there were nothing there. The
   link is `/rooms/join/<code>`; the code is 16 random characters, kept in
   `rooms.code`, and only people already inside are ever sent it.
-- **Whoever has the link may enter, from any year.** A private room is the one
-  place a PCEP1 student and a PCEM2 student can sit together, so its pages read
-  with the server's key and authorise in code — a student's own key sees only
-  their promo.
+- **Whoever has the link may enter, from any year** — as anybody may enter a
+  public room now (see Every year together). Its pages read with the server's
+  key and authorise in code — a student's own key sees only their promo.
 - `rooms_read` must not ask `room_members` (whose policy asks `rooms`):
   Postgres refuses that as infinite recursion. **If `social.sql` is ever pasted
   again it puts the old policies back — paste `rooms-private.sql` after it.**
@@ -668,6 +671,31 @@ missing from both sources, and is not faked:
   drawing with the mark 12 px low in 512. iOS fills transparency with black, so
   never ship one with an alpha channel. A phone that already added the site
   keeps the old picture until the icon is removed and added again.
+
+## Every year together
+
+- **Everyone can do everything with everyone** (owner, 2026-11-25, the thing
+  students asked for most): medicine's, dentistry's and pharmacy's first years
+  sit the same subjects, and the line between years was in the way.
+  - **Friends** from any year (`/api/friends`). A friend from another year
+    wears their year's badge in the list (`yearBadge` in `lib/data-core.js`).
+  - **A person's page** (`/u/…`) shows anybody approved, from any year.
+    Somebody who blocked you reads as nobody; somebody you blocked is shown,
+    with the way to undo it.
+  - **Duels** with anybody, on any subject there is: the screen offers your
+    own year's, and «ردّ التحدّي» from a friend in another year brings theirs.
+  - **Chat** with your own year, as before, and with **friends** from any
+    other — never a stranger from another year (owner's choice).
+  - **Public study rooms** are open to every year: listed your own year's
+    first, another year's wearing its badge, and «مَن يدرس الآن» counts them
+    all. Friends of every year are told when you open one.
+- What stays with your own year: your feed and what you post into it
+  («كل الدفعات» reads the rest), الترتيب, and the friends told about a post.
+- **None of this is in the policies.** A student's own key still reads only
+  their year's profiles and rooms, so anything that names somebody from
+  another year reads with the server's key: `lib/people.js` for names by id,
+  `blockedAmong` / `blockedBetween` for blocks — the server's key sees no
+  restrictive policy, so it has to ask.
 
 ## الإبلاغ والحظر
 

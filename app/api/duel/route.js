@@ -14,7 +14,7 @@ import { currentProfile } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { normalise, looksRight } from '@/lib/matricule';
 import { normaliseUsername, usernameLooksRight } from '@/lib/identity';
-import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
+import { moduleOf } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { pick, stage, myMove, countOf, secondsOf, LENGTH } from '@/lib/duel';
 import { notify } from '@/lib/notify';
@@ -44,9 +44,10 @@ export async function POST(request) {
 
   const db = supabaseAdmin();
 
-  // Who you are challenging. Their own year only: a duel across promos would
-  // be two people sitting different courses, and neither could read the
-  // other's row anyway.
+  // Who you are challenging — from any year (owner, 2026-11-25). The first
+  // years of medicine, dentistry and pharmacy sit the same subjects; and
+  // between any two years the subject is named in the invitation, which the
+  // other can decline.
   const { data: them } = await db.from('profiles')
     .select('id, full_name, email, promo, status')
     .eq(byNumber ? 'matricule' : 'username', byNumber ? number : handle).maybeSingle();
@@ -57,17 +58,16 @@ export async function POST(request) {
   if (them.id === me.id) {
     return NextResponse.json({ error: t('تحدَّ زميلًا، لا نفسك') }, { status: 400 });
   }
-  if (them.promo !== me.promo) {
-    return NextResponse.json({ error: t('زميلك في دفعة أخرى') }, { status: 400 });
-  }
   if (await blockedBetween(me.id, them.id)) {
     return NextResponse.json({ error: t('لا أحد بهذا الاسم أو الرقم') }, { status: 404 });
   }
 
-  // A subject of your year — including the first year the pharmacy and
-  // dental years share with medicine (lib/catalogue.js).
+  // Any subject there is. The screen offers your own year's (and the first
+  // year pharmacy and dentistry share with medicine), but a rematch with a
+  // friend from another year comes back with theirs, and every year's
+  // material is open to every student anyway.
   const m = await moduleOf(module);
-  if (!m || !studies(await sourcesOf(me.promo), m)) {
+  if (!m) {
     return NextResponse.json({ error: t('لا مادة بهذا الاسم') }, { status: 404 });
   }
 

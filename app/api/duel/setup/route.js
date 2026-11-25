@@ -6,7 +6,7 @@
 
 import { NextResponse } from 'next/server';
 import { currentProfile } from '@/lib/supabase/server';
-import { moduleOf, sourcesOf, studies } from '@/lib/catalogue';
+import { moduleOf } from '@/lib/catalogue';
 import { allOf } from '@/lib/quiz-bank';
 import { groupByLecture } from '@/lib/quiz-lectures';
 import { pick, usable, LENGTH } from '@/lib/duel';
@@ -24,8 +24,9 @@ export async function GET(request) {
   const lecture = url.searchParams.get('lecture');
   if (!module) return NextResponse.json({ error: t('أيّ مادة؟') }, { status: 400 });
 
+  // Any subject there is — the same rule as sending the duel (/api/duel).
   const m = await moduleOf(module);
-  if (!m || !studies(await sourcesOf(me.promo), m)) {
+  if (!m) {
     return NextResponse.json({ error: t('لا مادة بهذا الاسم') }, { status: 404 });
   }
 

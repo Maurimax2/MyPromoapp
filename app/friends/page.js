@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { currentProfile } from '@/lib/supabase/server';
 import { friendsOf } from '@/lib/friends';
+import { yearBadge } from '@/lib/data-core';
 import { streaksOf } from '@/lib/days';
 import Friends from './Friends';
 import { getT } from '@/lib/lang';
@@ -20,6 +21,8 @@ export default async function FriendsPage() {
     id: p.id, name: p.full_name || p.email?.split('@')[0] || t('زميل'),
     handle: p.username || p.matricule || p.id, username: p.username || null,
     streak: streaks.get(p.id)?.current || 0, today: !!streaks.get(p.id)?.today,
+    // Friends can be from any year; one from another year wears it.
+    year: p.promo && p.promo !== me.promo ? yearBadge(p.promo) : null,
   });
 
   return (

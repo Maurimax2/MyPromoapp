@@ -113,21 +113,24 @@ export default async function Feed({ searchParams }) {
     // notifications are their own rows, and this is one head request.
     admin.from('notifications').select('id', { count: 'exact', head: true })
       .eq('person', profile.id).eq('seen', false),
-    // مَن يدرس الآن — the promo's open rooms and who is sitting in them. The
-    // one thing on this screen that is true only at this second, so it is
+    // مَن يدرس الآن — the open rooms and who is sitting in them, from every
+    // year (a public room is open to all; owner, 2026-11-25), your own year's
+    // first. Read with the server's key, since yours reads only your year's.
+    // The one thing on this screen that is true only at this second, so it is
     // never cached and never guessed at.
     (async () => {
       // `*` and a filter here, not a column in the query: a database that has
       // not had rooms-private.sql has no `private`, and naming it would hide
       // every room until it did. A private room is never offered.
-      const { data: every } = await sb.from('rooms')
+      const { data: found } = await admin.from('rooms')
         .select('*')
-        .eq('promo', promo).eq('closed', false)
-        .order('created_at', { ascending: false }).limit(24);
-      const open = (every || []).filter((r) => !r.private).slice(0, 12);
+        .eq('closed', false)
+        .order('created_at', { ascending: false }).limit(40);
+      const publicRooms = (found || []).filter((r) => !r.private);
+      const open = [...publicRooms.filter((r) => r.promo === promo), ...publicRooms.filter((r) => r.promo !== promo)].slice(0, 12);
       const ids = (open || []).map((r) => r.id);
       const { data: seated } = ids.length
-        ? await sb.from('room_members')
+        ? await admin.from('room_members')
             .select('room, person, seen_at, profile:profiles!room_members_person_fkey(id, full_name, email)')
             .in('room', ids)
         : { data: [] };

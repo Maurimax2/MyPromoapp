@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Icon from '@/components/Icon';
 import BackButton from '@/components/BackButton';
 import { supabaseServer, currentProfile } from '@/lib/supabase/server';
+import { peopleById } from '@/lib/people';
 import { outcome, stage } from '@/lib/duel';
 import { getT } from '@/lib/lang';
 
@@ -25,13 +26,16 @@ export default async function Duels() {
   const { data, error } = await sb
     .from('duels')
     .select(`id, title, state, questions, challenger, opponent,
-             challenger_score, opponent_score, challenger_at, opponent_at, created_at,
-             a:profiles!duels_challenger_fkey(full_name, email),
-             b:profiles!duels_opponent_fkey(full_name, email)`)
+             challenger_score, opponent_score, challenger_at, opponent_at, created_at`)
     .order('created_at', { ascending: false })
     .limit(40);
 
-  const duels = (error ? [] : (data || [])).map((d) => ({ ...d, at: stage(d, me.id) }));
+  // Named from any year: your own key reads only your year's profiles.
+  const rows = error ? [] : (data || []);
+  const people = await peopleById(rows.flatMap((d) => [d.challenger, d.opponent]));
+  const duels = rows.map((d) => ({
+    ...d, a: people.get(d.challenger) || null, b: people.get(d.opponent) || null, at: stage(d, me.id),
+  }));
   const invited = duels.filter((d) => d.at === 'invited');
   const toPlay = duels.filter((d) => d.at === 'play');
   const theirs = duels.filter((d) => d.at === 'sent' || d.at === 'waiting');
