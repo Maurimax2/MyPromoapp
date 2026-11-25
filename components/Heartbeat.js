@@ -17,6 +17,9 @@
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
+/** The event the duel count travels on, from here to the bottom bar. */
+export const WAITING = 'mypromo:waiting';
+
 // Screens where nobody is signed in yet, or let in yet.
 const OUTSIDE = ['/login', '/waiting', '/feedback', '/auth', '/admin', '/privacy', '/delete-account', '/download', '/terms', '/support'];
 const EVERY = 4 * 60 * 1000;
@@ -48,11 +51,18 @@ export default function Heartbeat() {
       if (last && now - last < SOON) return;
       const opened = !last || now - last > NEW_VISIT;
       try { sessionStorage.setItem(LAST, String(now)); } catch { /* private mode */ }
+      // The answer carries the bottom bar's duel count, so the bar does not
+      // make a call of its own beside this one (BottomNav listens for it).
       fetch('/api/me/ping', {
         method: 'POST', keepalive: true,
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ path: here.current, opened, platform: platform() }),
-      }).catch(() => {});
+      })
+        .then((r) => (r.status === 200 ? r.json() : null))
+        .then((d) => {
+          if (typeof d?.waiting === 'number') window.dispatchEvent(new CustomEvent(WAITING, { detail: d.waiting }));
+        })
+        .catch(() => {});
     };
 
     // A moment after the app has painted, then every four minutes, and again

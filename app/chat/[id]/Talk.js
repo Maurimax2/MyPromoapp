@@ -9,7 +9,14 @@ import Icon from '@/components/Icon';
 import Flag from '@/components/Flag';
 import { useT } from '@/components/Lang';
 
-const EVERY = 4000;
+// It asked every 4 s whether or not anybody was looking — 900 calls an hour
+// for one open chat, on a free plan whose limit is the number of calls (owner,
+// 2026-11: Vercel nearly stopped the app). Now every 10 s while the chat is
+// alive, every 30 s once two minutes have gone by with nothing said, nothing at
+// all while the app is in the background, and once at once when it comes back.
+const QUICK = 10 * 1000;
+const SLOW = 30 * 1000;
+const QUIET = 2 * 60 * 1000;
 const name = (p) => p?.full_name || p?.email?.split('@')[0] || 'طالب';
 const initials = (p) => (p?.full_name || p?.email || '؟').trim().slice(0, 2);
 
@@ -21,22 +28,44 @@ export default function Talk({ chat, person, first, me }) {
   const [error, setError] = useState('');
   const foot = useRef(null);
   const last = useRef(first.at(-1)?.id ?? 0);
+  const heard = useRef(Date.now());   // when something was last said, by either of you
 
   useEffect(() => { foot.current?.scrollIntoView({ block: 'end' }); }, [messages.length]);
 
   useEffect(() => {
     let alive = true;
-    const tick = async () => {
-      const res = await fetch(`/api/chat?chat=${chat}&after=${last.current}`);
-      if (!alive || !res.ok) return;
-      const { messages: fresh } = await res.json();
-      if (fresh?.length) {
-        last.current = fresh.at(-1).id;
-        setMessages((m) => [...m, ...fresh]);
-      }
+    let timer = null;
+    let busy = false;
+    const later = () => {
+      clearTimeout(timer);
+      timer = setTimeout(tick, Date.now() - heard.current > QUIET ? SLOW : QUICK);
     };
-    const timer = setInterval(tick, EVERY);
-    return () => { alive = false; clearInterval(timer); };
+    async function tick() {
+      if (!alive || busy) return;
+      // In a pocket: stop, and let `back` pick it up again.
+      if (document.visibilityState !== 'visible') return;
+      busy = true;
+      try {
+        const res = await fetch(`/api/chat?chat=${chat}&after=${last.current}`);
+        if (alive && res.ok) {
+          const { messages: fresh } = await res.json();
+          if (alive && fresh?.length) {
+            last.current = fresh.at(-1).id;
+            heard.current = Date.now();
+            setMessages((m) => [...m, ...fresh]);
+          }
+        }
+      } catch { /* the next one will ask again */ }
+      busy = false;
+      if (alive) later();
+    }
+    const back = () => {
+      if (document.visibilityState === 'visible') tick();
+      else clearTimeout(timer);
+    };
+    later();
+    document.addEventListener('visibilitychange', back);
+    return () => { alive = false; clearTimeout(timer); document.removeEventListener('visibilitychange', back); };
   }, [chat]);
 
   const say = async () => {
@@ -57,6 +86,7 @@ export default function Talk({ chat, person, first, me }) {
     setError('');
     const made = await res.json();
     last.current = made.id;
+    heard.current = Date.now();
     setMessages((m) => [...m, made]);
     setDraft('');
   };

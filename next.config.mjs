@@ -6,6 +6,27 @@ const nextConfig = {
   // resolves it out of node_modules the way pdf.js expects.
   serverExternalPackages: ['pdfjs-dist'],
 
+  // How long the phone keeps a screen it already has before asking the server
+  // for it again. Next 15 keeps a dynamic screen for no time at all, so every
+  // bounce between two tabs drew both screens again on the server — and on
+  // Vercel's free plan the limit is the number of calls (owner, 2026-11:
+  // Vercel nearly stopped the app). Thirty seconds, which is what Next 14 did;
+  // anything that changes a screen calls router.refresh(), which skips it.
+  //
+  // `static` is how long a prefetched loading screen is reused — the bottom
+  // bar's four tabs prefetch theirs. It is a skeleton that never changes.
+  experimental: {
+    staleTimes: { dynamic: 30, static: 1800 },
+  },
+
+  // The phone apps open the site at `/`, so every launch began with two calls
+  // to the server — the middleware, then a page whose only job was to say
+  // «go to /feed». Said here, Vercel answers it itself and no function runs.
+  // `/feed` then sends a signed-out visitor to the door as before.
+  async redirects() {
+    return [{ source: '/', destination: '/feed', permanent: false }];
+  },
+
   // …but "left external" only helps if the file is actually deployed, and the
   // worker never was. Next works out what to ship by following imports, and
   // pdf.js reaches for its worker through a path it builds at runtime — so

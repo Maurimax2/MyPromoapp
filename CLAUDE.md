@@ -536,6 +536,35 @@ missing from both sources, and is not faked:
   twelve on الرئيسية alone. Only the bottom bar's four tabs still do.
 - A new call that runs on every screen, or on a timer, has to earn its place
   against that limit.
+- **2026-11: Vercel nearly stopped the app**, gave a 30-day grace at three
+  times the limit, and it reached 90 % of that. What was cut then:
+  - **The middleware runs only on a screen.** Not on `/api/` (every route checks
+    the session itself and can write the cookie back), not on any file — every
+    `.glb`/`.json`/`.bin` of the anatomy viewer went through it one by one, and
+    so did `robots.txt` — and not on a prefetch. On Vercel the middleware is a
+    function call of its own before the page's.
+  - **The bottom bar's duel count rides on the heartbeat**: `/api/me/ping`
+    answers `{ waiting }` and `Heartbeat` hands it to `BottomNav` by an event.
+    The bar asks on its own only on the way out of a duel. It used to ask on
+    every change of screen — a second call per tap, and with the ping, over
+    half of all calls.
+  - **`/` is redirected in `next.config.mjs`**, which Vercel answers without a
+    function. The phone apps open the site at `/`, and every launch used to pay
+    the middleware and a page whose only job was to redirect.
+  - **What a call costs is mostly the cold start.** On quiet hours a fifth of
+    calls start a fresh server, and the routes hit first on a launch (`/`,
+    `/login`, `/feed`) cost ten times what `/study` does. `/feed`, `/login`,
+    `/study` and `/profile` all load the 824 KB of `lib/modules/` through
+    `lib/catalogue.js`'s fallback; making that lazy is the next saving.
+  - **A chat asks every 10 s, 30 s after two quiet minutes**, nothing in the
+    background (it was every 4 s, always). A waiting duel re-renders every 15 s,
+    then once a minute after three (it was every 5 s, always).
+  - **A screen is reused for 30 s** (`staleTimes.dynamic`), so bouncing between
+    two tabs does not draw both again; anything that changes a screen calls
+    `router.refresh()`. Prefetched loading screens are kept 30 minutes.
+  - `app/robots.js` turns crawlers away from everything behind the door.
+  - Any timer that asks the server stops when the app is in the background and
+    slows down when nothing is happening. Never a fixed short interval.
 - **A study room's chat travels over the call** (`ChatSync` in
   `app/rooms/[id]/Room.js`): a message is saved once and sent to the others on
   the call's data channel. The server is asked for new messages once a minute

@@ -19,11 +19,20 @@
 // المحادثات is still there — reached from a person, which is how a
 // conversation starts anyway — it just no longer costs a fifth of the bar.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from './Icon';
 import { useT } from './Lang';
+import { WAITING } from './Heartbeat';
+
+// The last count. It comes with the heartbeat's answer (every four minutes,
+// and as soon as the app is opened or comes back to the front), and is kept
+// for the tab's life so a reload shows it at once — the heartbeat skips a ping
+// within a minute of the last, and the bar would otherwise sit at nothing.
+const KEPT = 'mypromo.waiting';
+const recall = () => { try { return Number(sessionStorage.getItem(KEPT)) || 0; } catch { return 0; } };
+const keep = (n) => { try { sessionStorage.setItem(KEPT, String(n)); } catch { /* private mode */ } };
 
 const TABS = [
   { href: '/feed',    icon: 'home',   label: 'الرئيسية' },
@@ -45,12 +54,31 @@ export default function BottomNav() {
     || path === '/privacy' || path === '/delete-account' || path === '/download'
     || path === '/terms' || path === '/support';
 
+  // The count arrives with the heartbeat. It used to be asked for on its own
+  // call on every change of screen — a second call to the server for every
+  // tap, on a free plan whose limit is the number of calls (owner, 2026-11:
+  // Vercel nearly stopped the app). Asked here only on the way out of a duel,
+  // which is where the number changes.
   useEffect(() => {
-    if (quiet) { setWaiting(0); return undefined; }
+    setWaiting(recall());
+    const hear = (e) => { keep(e.detail); setWaiting(e.detail); };
+    window.addEventListener(WAITING, hear);
+    return () => window.removeEventListener(WAITING, hear);
+  }, []);
+
+  const from = useRef(path);
+  useEffect(() => {
+    const left = from.current;
+    from.current = path;
+    if (left === path || !/^\/duel(\/|$)/.test(left || '') || quiet) return undefined;
     let alive = true;
     fetch('/api/duel/waiting')
       .then((r) => (r.ok ? r.json() : null))
-      .then((d) => { if (alive && d) setWaiting(d.waiting || 0); })
+      .then((d) => {
+        if (!d) return;
+        keep(d.waiting || 0);
+        if (alive) setWaiting(d.waiting || 0);
+      })
       .catch(() => { /* a counter is not worth a message about */ });
     return () => { alive = false; };
   }, [path, quiet]);

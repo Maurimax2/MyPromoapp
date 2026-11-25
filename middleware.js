@@ -67,9 +67,10 @@ export async function middleware(request) {
   // auth server before sending anybody to the door.
   if (!user) user = (await supabase.auth.getUser()).data?.user || null;
 
-  // Already where somebody without an account is allowed to be. The API is
-  // open here because every route behind it checks for itself, and a redirect
-  // would answer a fetch with a login page.
+  // Already where somebody without an account is allowed to be. The API never
+  // reaches here (see the matcher); it is listed anyway, because every route
+  // behind it checks for itself and a redirect would answer a fetch with a
+  // login page.
   const path = request.nextUrl.pathname;
   //
   // `/admin` is open here because the panel is its own door — a separate page
@@ -154,14 +155,35 @@ export async function middleware(request) {
   return response;
 }
 
+// On Vercel this runs as a function of its own, before the page's, and the free
+// plan's limit is function CPU (owner, 2026-11: Vercel nearly stopped the app).
+// So it runs only where it does something — a screen somebody navigates to.
+//
+// Not on /api: every route checks the session itself, and a route handler can
+// write a refreshed cookie back. It used to run here first and then wave the
+// request through, paying the same check twice on every call.
+//
+// Not on a file. Every `.glb`, `.json` and `.bin` of the anatomy viewer went
+// through this one by one — a lesson is a dozen files, each a sign-in check —
+// and so did the planches, pdf.js and tesseract. They are public files; there
+// is nothing to guard. `webp` and `jpeg` were once missing too, which is why
+// the pre-launch page's screenshots came back as a redirect to the door.
+// `robots.txt` was sent to the door as well, so a crawler never read it.
+//
+// Not on a prefetch. The bottom bar's tabs prefetch their loading screen, and
+// no layout above a loading screen reads the session (only /admin's does, and
+// nothing prefetches the panel).
+//
+// `sw.js` is the push worker: the browser re-fetches it on its own schedule,
+// and a redirect to the door in answer would break it.
 export const config = {
   matcher: [
-    // `webp` and `jpeg` were missing, which is why the pre-launch page's
-    // screenshots came back as a redirect to the door: a picture asked for by
-    // somebody signed out went through the gate like a screen would.
-    //
-    // `sw.js` is the push worker: the browser re-fetches it on its own
-    // schedule, and a redirect to the door in answer would break it.
-    '/((?!_next/static|_next/image|pdfjs|favicon.ico|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|webp|svg|ico|apk|exe)$).*)',
+    {
+      source: '/((?!api/|_next/static|_next/image|pdfjs|anatomy/|planches/|tesseract|tessdata|favicon.ico|manifest.webmanifest|sw.js|robots.txt|.*\\.(?:png|jpg|jpeg|webp|gif|svg|ico|apk|exe|glb|gltf|bin|json|wasm|js|mjs|map|txt|ttf|otf|woff|woff2|bcmap|pfb|gz|pdf|mp3|mp4|webm)$).*)',
+      missing: [
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
+      ],
+    },
   ],
 };
