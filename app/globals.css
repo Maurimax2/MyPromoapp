@@ -2220,6 +2220,12 @@ html[dir='ltr'] .notif-new { box-shadow: var(--shadow), inset 3px 0 0 var(--clay
 .sheet-say b { display: block; font-size: 17px; font-weight: 700; color: var(--ink); }
 .sheet-say p { margin: 6px auto 10px; max-width: 34ch; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
 .sheet-err { padding: 4px 12px 8px; text-align: center; font-size: 13.5px; color: var(--wrong); }
+/* The name a lecture takes on the phone (app/file/[fid]/Reader.js). */
+.sheet-name { display: grid; gap: 6px; padding: 2px 4px 10px; }
+.sheet-name > span { font-size: 13px; font-weight: 600; color: var(--ink-2); }
+.sheet-name-row { display: flex; align-items: center; gap: 6px; min-height: 48px; padding-inline: 14px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); }
+.sheet-name-row input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; font-size: 16px; color: var(--ink); outline: none; }
+.sheet-name-row i { font-style: normal; font-size: 15px; color: var(--ink-3); }
 
 @media (prefers-reduced-motion: reduce) {
   .sheet-back, .sheet { animation: none; }

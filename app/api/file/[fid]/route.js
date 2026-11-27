@@ -34,6 +34,14 @@ const SOURCES = (fid) => (FAKE ? [`${FAKE}/${fid}`] : [
   `https://drive.google.com/uc?export=download&id=${fid}`,
 ]);
 
+// A name a phone's file system will take: no slashes or the other characters
+// Windows and Android refuse, nothing invisible, and not endless.
+function fileName(raw) {
+  if (!raw) return null;
+  const clean = raw.replace(/[\\/:*?"<>|\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 150);
+  return clean && !/^\.+$/.test(clean) ? clean : null;
+}
+
 export async function GET(req, { params }) {
   const t = await getT();
   const { fid } = await params;
@@ -42,14 +50,21 @@ export async function GET(req, { params }) {
     return new Response(t('معرّف ملف غير صالح'), { status: 400 });
   }
 
+  // `?download=<name>`: kept on the phone under the name the student chose
+  // (owner, 2026-11-27: «download them on your phone and name them whatever
+  // you want»), so sent as an attachment instead of shown.
+  const name = fileName(new URL(req.url).searchParams.get('download'));
+
   // Our own copy, if we have one. A redirect rather than a relay: the phone
   // then talks to the CDN directly and this function is out of the way for
   // every byte range that follows.
   const ours = await cachedUrl(fid);
   if (ours) {
+    // Supabase's own `?download=` names an attachment the same way.
+    const to = name ? `${ours}${ours.includes('?') ? '&' : '?'}download=${encodeURIComponent(name)}` : ours;
     return new Response(null, {
       status: 307,
-      headers: { Location: ours, 'Cache-Control': 'public, max-age=3600' },
+      headers: { Location: to, 'Cache-Control': 'public, max-age=3600' },
     });
   }
 
@@ -79,6 +94,12 @@ export async function GET(req, { params }) {
     // Which of those two answers Drive gave decides what we may promise the
     // viewer — see lib/file-headers.js.
     const headers = relayHeaders(res);
+    if (name) {
+      // The plain filename is for browsers that read only that one; the
+      // starred one carries the accents and the Arabic.
+      const plain = name.replace(/[^\x20-\x7E]/g, '_').replace(/["\\]/g, '_');
+      headers.set('Content-Disposition', `attachment; filename="${plain}"; filename*=UTF-8''${encodeURIComponent(name)}`);
+    }
 
     // Kept after the answer has gone out, so nobody waits for it. A copy
     // that fails costs one more slow open, not a broken screen.
