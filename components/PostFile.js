@@ -135,9 +135,9 @@ export default function PostFile({ m, subject, shades }) {
               <Icon name="check" size={20} />{t('في التنزيلات')}
             </Link>
           ) : typeof kept === 'number' ? (
-            <button className="sheet-act" disabled>
+            <span className="sheet-act" role="status" aria-live="polite">
               <Icon name="archive" size={20} /><span dir="ltr">{kept}%</span>
-            </button>
+            </span>
           ) : (
             <button className="sheet-act" onClick={toApp} disabled={kept === null}>
               <Icon name="archive" size={20} />{t('احفظ في التطبيق')}
