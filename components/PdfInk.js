@@ -333,7 +333,9 @@ function InkPage({ slot, page, tool, erasing, color, strokes, notes, onStroke, o
     fingers.current.add(e.pointerId);
     // A second finger is a pinch, not a stroke: whatever was started goes.
     if (fingers.current.size > 1) { doing.current = null; setLive(null); return; }
-    svg.current.setPointerCapture?.(e.pointerId);
+    // Keep the stroke when the finger leaves the page; a capture refused
+    // (a pointer already gone) must not cost the stroke itself.
+    try { svg.current.setPointerCapture(e.pointerId); } catch { /* drawn without it */ }
     const p = at(e);
     if (tool === 'note') { doing.current = { note: p, x: e.clientX, y: e.clientY }; return; }
     if (erasing) { doing.current = { erase: true }; onErase(page, p, ratio, true); return; }
