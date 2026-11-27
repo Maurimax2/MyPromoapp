@@ -18,12 +18,11 @@ import Sheet from './Sheet';
 import Icon from './Icon';
 import Flag from './Flag';
 import PhotoViewer from './PhotoViewer';
+import PostFile from './PostFile';
 import { SubjectTile } from './SubjectBanner';
 import { glyphOf } from '@/lib/subjectArt';
 import { useT } from '@/components/Lang';
 import { ago } from '@/lib/i18n';
-
-const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
 
 // A face needs a colour, and it has to be the same colour tomorrow, so it is
 // read off the id rather than handed out (the same rule as الرئيسية's).
@@ -203,14 +202,7 @@ export default function Post({ post, me }) {
               role="button" tabIndex={0} onClick={() => tapPhoto(photos.indexOf(m))}
               onKeyDown={(e) => { if (e.key === 'Enter') setPhoto(photos.indexOf(m)); }} />
           ) : (
-            <a key={i} className="pv-file" href={m.url} target="_blank" rel="noreferrer"
-               style={{ '--a': shades.a, '--b': shades.b }}>
-              <span className="grow">
-                <b dir="ltr">{m.name || t('ملف')}</b>
-                <span dir="ltr">{mb(m.bytes)}</span>
-              </span>
-              <span className="pv-paper" aria-hidden="true"><i /><i /><i /><i /><i /></span>
-            </a>
+            <PostFile key={i} m={m} subject={post.subject} shades={shades} />
           )))}
           {burst > 0 && <span key={burst} className="pv-love" aria-hidden="true"><Icon name="heartFill" size={84} /></span>}
         </div>

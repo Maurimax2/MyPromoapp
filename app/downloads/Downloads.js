@@ -1,6 +1,7 @@
 'use client';
 
-// The lectures kept on this phone, and our own reader for them.
+// The lectures kept on this phone — and the PDFs kept from posts — and our
+// own reader for them.
 //
 // A downloaded lecture opens in PdfViewer from the phone's own copy: nothing
 // is asked of the network. Online lectures still open in Google's preview
@@ -16,7 +17,7 @@ import Icon from '@/components/Icon';
 import PdfViewer from '@/components/PdfViewer';
 import { listDownloads, openDownload, removeDownload } from '@/lib/downloads';
 import { SubjectTile } from '@/components/SubjectBanner';
-import { lecturesWord } from '@/lib/i18n';
+import { filesWord } from '@/lib/i18n';
 import { useT } from '@/components/Lang';
 
 const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} Mo` : '');
@@ -80,7 +81,7 @@ export default function Downloads() {
           <div className="grow">
             <div className="head-t">{t('التنزيلات')}</div>
             {items?.length > 0 && (
-              <div className="head-s">{lecturesWord(t, items.length)} · <span dir="ltr">{mb(total)}</span></div>
+              <div className="head-s">{filesWord(t, items.length)} · <span dir="ltr">{mb(total)}</span></div>
             )}
           </div>
         </div>
