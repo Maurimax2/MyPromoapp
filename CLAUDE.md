@@ -262,6 +262,63 @@ necessity, not a preference.
 - **Never promise `Accept-Ranges` we do not have.** pdf.js asks in 256 KB
   pieces and believes the header; if the upstream ignores Range, every piece
   comes back as the whole file.
+- **In fact the `archive` bucket was never created** (found 2026-11-27): the
+  code asks for a 60 MB-per-file bucket, Supabase's free plan allows 50, and
+  the refusal is not checked — so every file still comes from Drive. **Do not
+  "fix" it on the free plan**: Supabase's free storage is 1 GB in all, about
+  twenty-five scanned lectures. Keeping files belongs in R2.
+
+## Saving a file to the phone
+
+The soft update of 2026-11-27 (owner: shared photos «you cannot click it, you
+cannot zoom it, you cannot install it»; downloaded lectures «shouldn't be
+stuck in the app»).
+
+- **No store version for this** (owner: «it's all in a shell»). The shell
+  cannot save a file itself; what it does is hand the phone's browser any
+  address it does not count as the app, and the browser saves.
+  `lib/saveFile.js` is the only file that knows:
+  - **iOS** sends anything opened in a new window to Safari
+    (`createWebViewWith`), whatever `allowNavigation` says.
+  - **Android** sends a navigation to Chrome only when its host is outside
+    `allowNavigation`. `*.supabase.co` is allowed — but Capacitor's HostMask
+    matches only hosts with the same number of labels, so Supabase's storage
+    host, `<ref>.storage.supabase.co` (the same objects), is outside it.
+    `?download=<name>` makes Supabase answer with an attachment under that name.
+  - **Never offer an image to the share sheet inside the iOS shell**: «Save
+    Image» closes the app, which never declared
+    `NSPhotoLibraryAddUsageDescription`.
+- **A photo in a post opens full screen** (`components/PhotoViewer.js`): the
+  whole picture on black, pinch and double-tap zoom, a swipe to the post's
+  next one — the gestures are `lib/useZoom.js`, shared with the plates. One
+  tap opens; two are still the like.
+- **A PDF in a post opens on our screen**, in Google's document viewer (it is
+  not on Drive). **Held**, it offers «احفظ على الهاتف» or «احفظ في التطبيق»
+  (التنزيلات, as `post:<path>`).
+- **A lecture's «تنزيل» asks where**: onto the phone under a name the student
+  types, or kept in the app. `/api/file/<fid>?download=<name>` sends it as an
+  attachment under that name. In Android's shell it is Drive's own download
+  link, under Drive's name (owner: «Drive's names are fine») — our own host is
+  allowed there, so it would never reach Chrome.
+- **A lecture is named by the database** (`fileOf` in `lib/catalogue.js`), the
+  file only for what the database does not know: the years catalogued through
+  the panel were «ملف» in the reader, «الملف» in التنزيلات.
+
+## The reader's tools
+
+- **Only in our own reader**, on a file kept in التنزيلات. Online reading is
+  Google's preview, and nothing can be drawn on Google's pages.
+- **Drawn on the page, not on its text.** Half the course is scanned, with no
+  text to select, so a highlighter that needs a selection would work on one
+  lecture in two. تظليل is a broad see-through marker (a stroke kept near one
+  height is laid flat on its line), قلم a fine pen, each with ممحاة and تراجع;
+  ملاحظة pins a note where the page is touched; الصفحات lists every page with
+  what is on it.
+- With a tool in hand one finger draws and two zoom; «تمّ» puts it down.
+- Marks are fractions of the page, kept on the phone per file in their own
+  IndexedDB (`lib/marks.js`): deleting a download keeps them.
+- `PdfViewer` hands its page boxes out (`onPages`) and frees only its canvas
+  from them, so what is drawn over a page survives the bitmap being freed.
 
 ## One way to read a file
 
