@@ -7,7 +7,7 @@
 // like the phone's own gallery; two fingers zoom, a double tap zooms where it
 // lands, a swipe goes to the post's next photo. Below it, what this phone can
 // do with it (lib/saveFile.js) — download, share, or on an iPhone the one
-// sheet that does both. A phone that can do neither shows neither.
+// sheet that does both. In the store apps the phone's browser does the saving.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -53,12 +53,8 @@ export default function PhotoViewer({ photos, start = 0, name = 'MyPromo', onClo
     if (busy) return;
     setBusy(which); setNote('');
     try {
-      if (which === 'download') {
-        const { where } = await downloadFile(photo.url, file);
-        if (where) setNote(t('حُفظت في {where}', { where }));
-      } else {
-        await shareFile(photo.url, file, name);
-      }
+      if (which === 'download') await downloadFile(photo.url, file, 'image/*');
+      else await shareFile(photo.url, file, name, 'image/*');
     } catch {
       setNote(t('تعذّر ذلك، حاول مرة أخرى.'));
     } finally {
