@@ -9,6 +9,7 @@
 // jumps as the thumbnails arrive.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useZoom } from '@/lib/useZoom';
 import Icon from '@/components/Icon';
 import { useT } from '@/components/Lang';
 import { GROUPS, PLANCHES, PLANCHES_CREDIT } from '@/lib/anatomy/planches';
@@ -86,9 +87,7 @@ export default function Planches({ sizes = {}, group = null, open: first = null 
 export function Viewer({ plate, index, total, onClose, onStep }) {
   const t = useT();
   const box = useRef(null);
-  const [view, setView] = useState({ s: 1, x: 0, y: 0 });
-  const live = useRef(view);
-  live.current = view;
+  const [view] = useZoom(box, onStep);
 
   // Escape and the arrow keys, for a laptop.
   useEffect(() => {
@@ -102,87 +101,6 @@ export function Viewer({ plate, index, total, onClose, onStep }) {
     document.body.style.overflow = 'hidden';
     return () => { window.removeEventListener('keydown', key); document.body.style.overflow = had; };
   }, [onClose, onStep]);
-
-  // Two fingers zoom about their midpoint; one finger moves a zoomed plate;
-  // a quick sideways swipe on an unzoomed plate turns the page.
-  useEffect(() => {
-    const el = box.current;
-    if (!el) return undefined;
-    const pts = new Map();
-    let pinch = null, drag = null, lastTap = 0, swipe = null;
-    const clamp = (v) => {
-      const s = Math.min(5, Math.max(1, v.s));
-      if (s === 1) return { s: 1, x: 0, y: 0 };
-      const r = el.getBoundingClientRect();
-      const mx = (r.width * (s - 1)) / 2, my = (r.height * (s - 1)) / 2;
-      return { s, x: Math.max(-mx, Math.min(mx, v.x)), y: Math.max(-my, Math.min(my, v.y)) };
-    };
-    const down = (e) => {
-      el.setPointerCapture?.(e.pointerId);
-      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (pts.size === 2) {
-        const [a, b] = [...pts.values()];
-        pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), v: live.current, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2 };
-        drag = null; swipe = null;
-      } else if (pts.size === 1) {
-        drag = { x: e.clientX, y: e.clientY, v: live.current };
-        swipe = live.current.s === 1 ? { x: e.clientX, y: e.clientY, t: Date.now() } : null;
-      }
-    };
-    const move = (e) => {
-      if (!pts.has(e.pointerId)) return;
-      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (pinch && pts.size === 2) {
-        const [a, b] = [...pts.values()];
-        const r = el.getBoundingClientRect();
-        const k = Math.hypot(a.x - b.x, a.y - b.y) / pinch.d;
-        const s = pinch.v.s * k;
-        // Zoom about the fingers' midpoint, not the middle of the screen.
-        const cx = pinch.mx - (r.left + r.width / 2), cy = pinch.my - (r.top + r.height / 2);
-        setView(clamp({ s, x: cx - (cx - pinch.v.x) * (s / pinch.v.s), y: cy - (cy - pinch.v.y) * (s / pinch.v.s) }));
-      } else if (drag && live.current.s > 1) {
-        setView(clamp({ s: drag.v.s, x: drag.v.x + e.clientX - drag.x, y: drag.v.y + e.clientY - drag.y }));
-      }
-    };
-    const up = (e) => {
-      const was = pts.get(e.pointerId);
-      pts.delete(e.pointerId);
-      if (pts.size < 2) pinch = null;
-      if (pts.size === 0) {
-        drag = null;
-        if (swipe && was) {
-          const dx = was.x - swipe.x, dy = was.y - swipe.y;
-          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && Date.now() - swipe.t < 600) {
-            // In a right-to-left page a swipe to the left is «next» either way:
-            // the plate itself is a picture, not text.
-            onStep(dx < 0 ? 1 : -1);
-            swipe = null;
-            return;
-          }
-          if (Math.hypot(dx, dy) < 8) {
-            const now = Date.now();
-            if (now - lastTap < 300) {
-              const r = el.getBoundingClientRect();
-              const cx = was.x - (r.left + r.width / 2), cy = was.y - (r.top + r.height / 2);
-              setView(live.current.s > 1 ? { s: 1, x: 0, y: 0 } : clamp({ s: 2.5, x: -cx * 1.5, y: -cy * 1.5 }));
-              lastTap = 0;
-            } else lastTap = now;
-          }
-        }
-        swipe = null;
-      }
-    };
-    el.addEventListener('pointerdown', down);
-    el.addEventListener('pointermove', move);
-    el.addEventListener('pointerup', up);
-    el.addEventListener('pointercancel', up);
-    return () => {
-      el.removeEventListener('pointerdown', down);
-      el.removeEventListener('pointermove', move);
-      el.removeEventListener('pointerup', up);
-      el.removeEventListener('pointercancel', up);
-    };
-  }, [onStep]);
 
   return (
     <div className="pl-view" role="dialog" aria-modal="true" aria-label={plate.t}>

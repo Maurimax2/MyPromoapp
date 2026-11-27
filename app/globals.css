@@ -5841,6 +5841,20 @@ button, .nav, .head-t, .head-s { -webkit-user-select: none; user-select: none; }
 .pv-body { margin-top: 10px; font-size: 15.5px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
 .pv-media { position: relative; margin-top: 12px; display: grid; gap: 8px; }
 .pv-photo { width: 100%; max-height: 420px; object-fit: cover; border-radius: 18px; display: block; background: var(--bg); }
+.pv-photo { cursor: zoom-in; }
+
+/* A post's photo full screen (components/PhotoViewer.js): black, like the
+   phone's own gallery, in both themes. Above the bottom bar and every sheet. */
+.ph-view { position: fixed; inset: 0; z-index: 95; display: flex; flex-direction: column; background: #000; color: #fff; }
+.ph-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: calc(8px + env(safe-area-inset-top)) 10px 8px; }
+.ph-top button { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; }
+.ph-count { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); padding-inline: 10px; }
+.ph-stage { flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: none; }
+.ph-stage img { max-width: 100%; max-height: 100%; object-fit: contain; transform-origin: center; user-select: none; -webkit-user-drag: none; }
+.ph-note { margin: 0; padding: 6px 16px 0; text-align: center; font-size: 13px; color: rgba(255,255,255,.85); }
+.ph-foot { display: flex; justify-content: center; gap: 10px; padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
+.ph-foot button { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding-inline: 20px; border: 0; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; font: inherit; font-size: 14px; font-weight: 600; }
+.ph-foot button:disabled { opacity: .55; }
 /* A file is a card in its subject's colours, with a page peeking out. */
 .pv-file {
   position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px;

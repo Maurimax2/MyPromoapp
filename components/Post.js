@@ -17,6 +17,7 @@ import Link from './Link';
 import Sheet from './Sheet';
 import Icon from './Icon';
 import Flag from './Flag';
+import PhotoViewer from './PhotoViewer';
 import { SubjectTile } from './SubjectBanner';
 import { glyphOf } from '@/lib/subjectArt';
 import { useT } from '@/components/Lang';
@@ -49,6 +50,8 @@ export default function Post({ post, me }) {
   const [busy, setBusy] = useState(false);
   const [menu, setMenu] = useState(false);
   const [burst, setBurst] = useState(0);   // the big heart over a double-tapped picture
+  const [photo, setPhoto] = useState(-1);  // which photo is open full screen
+  const tap = useRef(0);
   // A post can be made a question (its replies become the answers) by staff
   // only — see PATCH /api/posts.
   const [kind, setKind] = useState(post.kind);
@@ -89,6 +92,15 @@ export default function Post({ post, me }) {
   // A double tap always likes, never unlikes — that is what it means
   // everywhere else a picture can be double-tapped.
   const love = () => { setBurst((b) => b + 1); like(true); };
+
+  // One tap opens a photo; two are the double tap that likes it. So the first
+  // tap waits a moment before opening anything, and a second one in time
+  // likes instead. The double-click handler below leaves photos to this.
+  const photos = (post.media || []).filter((m) => m.kind === 'image');
+  const tapPhoto = (i) => {
+    if (tap.current) { clearTimeout(tap.current); tap.current = 0; love(); return; }
+    tap.current = setTimeout(() => { tap.current = 0; setPhoto(i); }, 280);
+  };
 
   const keep = async () => {
     const on = !saved;
@@ -185,9 +197,11 @@ export default function Post({ post, me }) {
       {post.body && <div className="pv-body" dir="auto">{post.body}</div>}
 
       {post.media?.length > 0 && (
-        <div className="pv-media" onDoubleClick={love}>
+        <div className="pv-media" onDoubleClick={(e) => { if (!e.target.closest('.pv-photo')) love(); }}>
           {post.media.map((m, i) => (m.kind === 'image' ? (
-            <img key={i} className="pv-photo" src={m.url} alt="" loading="lazy" />
+            <img key={i} className="pv-photo" src={m.url} alt={t('صورة')} loading="lazy"
+              role="button" tabIndex={0} onClick={() => tapPhoto(photos.indexOf(m))}
+              onKeyDown={(e) => { if (e.key === 'Enter') setPhoto(photos.indexOf(m)); }} />
           ) : (
             <a key={i} className="pv-file" href={m.url} target="_blank" rel="noreferrer"
                style={{ '--a': shades.a, '--b': shades.b }}>
@@ -200,6 +214,10 @@ export default function Post({ post, me }) {
           )))}
           {burst > 0 && <span key={burst} className="pv-love" aria-hidden="true"><Icon name="heartFill" size={84} /></span>}
         </div>
+      )}
+      {photo >= 0 && photos[photo] && (
+        <PhotoViewer photos={photos} start={photo} name={`MyPromo-${String(post.id).slice(0, 8)}`}
+          onClose={() => setPhoto(-1)} />
       )}
 
       <div className="pv-acts">
