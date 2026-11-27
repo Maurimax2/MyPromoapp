@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from '@/components/Link';
 import Icon from '@/components/Icon';
 import PdfViewer from '@/components/PdfViewer';
+import PdfInk from '@/components/PdfInk';
 import { listDownloads, openDownload, removeDownload } from '@/lib/downloads';
 import { SubjectTile } from '@/components/SubjectBanner';
 import { filesWord } from '@/lib/i18n';
@@ -32,6 +33,7 @@ export default function Downloads() {
   const [open, setOpen] = useState(null);       // the record being read, with its url
   const [zoom, setZoom] = useState(1);
   const [asking, setAsking] = useState(null);   // fid whose delete is being confirmed
+  const [pages, setPages] = useState([]);       // the reader's page boxes, for the tools to draw on
   const worker = useRef(null);
 
   const load = () => listDownloads().then(setItems).catch(() => setItems([]));
@@ -130,7 +132,9 @@ export default function Downloads() {
             </div>
           </header>
           <PdfViewer src={open.url} title={open.title} zoom={zoom} onZoom={(z) => setZoom(hold(z))}
-            worker={worker.current} />
+            worker={worker.current} onPages={setPages} />
+          {/* Highlighting, the pen, notes and the page list (owner, 2026-11-27). */}
+          <PdfInk fid={open.fid} slots={pages} />
         </div>
       )}
     </>

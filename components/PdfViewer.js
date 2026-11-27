@@ -46,8 +46,12 @@ const BUDGET_ZOOM = 2200;
 const keepFor = (px) => (px > 1800 ? 1 : px > 800 ? 2 : 4);
 
 export default function PdfViewer({ src, title, zoom = 1, onZoom,
-                                    onThumb, onProgress, worker = null }) {
+                                    onThumb, onProgress, onPages, worker = null }) {
   const t = useT();
+  // Hands the page boxes to whoever draws over them (components/PdfInk.js),
+  // once they exist, and an empty list when they go.
+  const pagesTo = useRef(onPages);
+  pagesTo.current = onPages;
   const holder = useRef(null);        // .pdf-pages
   const [status, setStatus] = useState('loading');
   const [pages, setPages] = useState(0);
@@ -151,7 +155,8 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom,
       const n = Number(slot.dataset.page);
       const task = tasks.get(n);
       if (task) { try { task.cancel(); } catch {} tasks.delete(n); }
-      slot.replaceChildren();
+      // Only the drawing goes: what is drawn over the page stays with it.
+      slot.querySelector('canvas')?.remove();
       drawn.delete(n);
     };
 
@@ -227,6 +232,7 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom,
           slots.push(slot);
         }
         setStatus('ok');
+        pagesTo.current?.(slots);
 
         const drawPage = async (slot) => {
           const n = Number(slot.dataset.page);
@@ -254,7 +260,10 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom,
             tasks.set(n, task);
             await task.promise;
             tasks.delete(n);
-            if (!dead) slot.replaceChildren(canvas);
+            if (!dead) {
+              slot.querySelector('canvas')?.remove();
+              slot.prepend(canvas);
+            }
           } catch (err) {
             drawn.delete(n);
             if (err && err.name !== 'RenderingCancelledException') {
@@ -339,6 +348,7 @@ export default function PdfViewer({ src, title, zoom = 1, onZoom,
       if (observer) observer.disconnect();
       tasks.forEach((t) => { try { t.cancel(); } catch {} });
       tasks.clear();
+      pagesTo.current?.([]);
       if (holder.current) holder.current.replaceChildren();
       if (loadingTask) { try { loadingTask.destroy(); } catch {} }
     };

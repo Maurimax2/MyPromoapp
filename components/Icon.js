@@ -19,6 +19,7 @@ import {
   Microphone, MicrophoneSlash, Microscope, Minus, Notebook, Palette, PaperPlaneTilt, Person, Plus, Prohibit, ShareNetwork, ShieldCheck, SignOut, Sparkle, SpeakerHigh, Sword,
   Megaphone, Moon, Sun, Translate, Trash, Trophy, User, UserCheck, UserPlus, UsersThree, VideoCamera, VideoCameraSlash, Warning, X, XCircle,
   Stack, Target, Images, Bone, Brain, Ear, Tooth, Hand, Heartbeat, Drop, Skull, Knife, ArrowsLeftRight,
+  Highlighter, PenNib, Eraser, NoteBlank, SquaresFour, ArrowUUpLeft,
 } from '@phosphor-icons/react/dist/ssr';
 
 const ICONS = {
@@ -45,6 +46,8 @@ const ICONS = {
   // target to touch, the drawings are pictures.
   layers: Stack, target: Target, images: Images, cut: Knife, swap: ArrowsLeftRight,
   bone: Bone, brain: Brain, ear: Ear, tooth: Tooth, hand: Hand, pulse: Heartbeat, drop: Drop, skull: Skull,
+  // The reader's tools, for a lecture kept on the phone (components/PdfInk.js).
+  highlight: Highlighter, pen: PenNib, eraser: Eraser, note: NoteBlank, pages: SquaresFour, undo: ArrowUUpLeft,
 };
 
 // A few read as a state rather than a picture, and a state wants the solid
