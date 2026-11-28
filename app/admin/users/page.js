@@ -38,6 +38,8 @@ export default async function UsersPage({ searchParams }) {
   const counts = {};
   states.forEach((s, i) => { counts[s] = tallies[i]?.count || 0; });
 
+  const asks = await resetAsks();
+
   return (
     <UsersScreen
       // The list is held in state so a row can be approved without a round
@@ -50,10 +52,41 @@ export default async function UsersPage({ searchParams }) {
         username: p.username || null, phone: phoneOf[p.id] || null,
       }))}
       years={years.promos}
+      asks={asks}
       status={status}
       counts={counts}
       canAct={isAdmin(me)}
       meId={me?.id}
     />
   );
+}
+
+// «نسيت كلمة السر؟» requests still waiting: asked in the last two weeks and
+// not answered since (an answer is a `password_reset_done` row, written when
+// an admin makes the temporary password). See /api/auth/reset-request.
+async function resetAsks() {
+  const db = supabaseAdmin();
+  const since = new Date(Date.now() - 14 * 24 * 3600 * 1000).toISOString();
+  const { data: log } = await db.from('audit_log').select('action, target_id, at, detail')
+    .in('action', ['password_reset_asked', 'password_reset_done'])
+    .gte('at', since).order('at', { ascending: true }).limit(500);
+
+  const open = new Map();
+  for (const row of log || []) {
+    if (row.action === 'password_reset_asked') open.set(row.target_id, row);
+    else open.delete(row.target_id);
+  }
+  const ids = [...open.keys()];
+  if (!ids.length) return [];
+
+  const [{ data: who }, { data: phones }] = await Promise.all([
+    db.from('profiles').select('id, email, full_name, promo, username, matricule, role').in('id', ids),
+    db.from('profile_private').select('id, phone').in('id', ids),
+  ]);
+  const phoneOf = Object.fromEntries((phones || []).map((x) => [x.id, x.phone]));
+  return (who || []).map((p) => ({
+    id: p.id, email: p.email, full_name: p.full_name, promo: p.promo, role: p.role,
+    username: p.username || null, matricule: p.matricule || null, phone: phoneOf[p.id] || null,
+    at: open.get(p.id).at, typed: open.get(p.id).detail?.typed || null,
+  })).sort((a, b) => (a.at < b.at ? 1 : -1));
 }

@@ -25,7 +25,7 @@ const ROLES = [
   { id: 'admin',     label: 'مشرف' },
 ];
 
-export default function UsersScreen({ people, status, counts, canAct, meId, years = PROMOS }) {
+export default function UsersScreen({ people, status, counts, canAct, meId, years = PROMOS, asks = [] }) {
   const router = useRouter();
   const [rows, setRows] = useState(people);
   const [busy, setBusy] = useState(null);
@@ -71,6 +71,41 @@ export default function UsersScreen({ people, status, counts, canAct, meId, year
       </div>
 
       {error && <div className="admin-err">{error}</div>}
+
+      {/* Forgotten passwords, above every tab: somebody locked out is waiting
+          on us, whichever list we came to look at. */}
+      {asks.length > 0 && (
+        <section className="admin-card usr-asks">
+          <div className="admin-card-t">نسوا كلمة السر <span className="pill">{asks.length}</span></div>
+          <div className="admin-rows">
+            {asks.map((p) => (
+              <div key={p.id} className="usr">
+                <div className="usr-head">
+                  <div className="grow">
+                    <div className="usr-name">{p.full_name || p.email.split('@')[0]}</div>
+                    <div className="usr-mail" dir="ltr">{p.email}</div>
+                    {(p.username || p.matricule) && (
+                      <div className="usr-mail" dir="ltr">
+                        {[p.username && `@${p.username}`, p.matricule].filter(Boolean).join(' · ')}
+                      </div>
+                    )}
+                    <div className="usr-mail">
+                      طلب {when(p.at)}{p.typed ? <> — كتب <span dir="auto">«{p.typed}»</span></> : null}
+                    </div>
+                  </div>
+                  {p.promo && <span className="pill">{p.promo.toUpperCase()}</span>}
+                </div>
+                {p.phone && (
+                  <a className="usr-wa" href={whatsappLink(p.phone)} target="_blank" rel="noreferrer">
+                    <Icon name="msg" size={16} /> <span dir="ltr">{p.phone}</span> — افتح في واتساب
+                  </a>
+                )}
+                {canAct && <NewPassword person={p} />}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {!rows.length ? (
         <section className="admin-card admin-seed">
@@ -160,6 +195,10 @@ export default function UsersScreen({ people, status, counts, canAct, meId, year
                       </button>
                     </div>
                   )}
+
+                  {/* For the student who messages us instead of pressing the
+                      button: the same answer from their row. */}
+                  {status === 'approved' && p.id !== meId && <NewPassword person={p} />}
                 </>
               )}
 
@@ -169,5 +208,79 @@ export default function UsersScreen({ people, status, counts, canAct, meId, year
         </div>
       )}
     </div>
+  );
+}
+
+const when = (at) => new Date(at).toLocaleString('ar', {
+  day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
+});
+
+// A temporary password, made on a tap and shown once. Nobody can read the old
+// one — Supabase keeps only a hash — so the answer is always a new one, which
+// the student is asked to replace when they sign in with it.
+function NewPassword({ person }) {
+  const router = useRouter();
+  const [state, setState] = useState('idle');   // idle | ask | busy | done
+  const [temp, setTemp] = useState('');
+  const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
+
+  const make = async () => {
+    setState('busy'); setError('');
+    try {
+      const r = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ id: person.id, reset: true }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) { setError(data.error || `تعذّر (${r.status})`); setState('idle'); return; }
+      setTemp(data.temp); setState('done');
+    } catch {
+      setError('لا اتصال بالخادم'); setState('idle');
+    }
+  };
+
+  // What the student is sent: Arabic, like everything sent to somebody else.
+  const message = `مرحبًا، هذه كلمة سر مؤقتة لحسابك في MyPromo:\n${temp}\nادخل بها ببريدك ${person.email}، وسيُطلب منك اختيار كلمة سر جديدة.`;
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(temp); setCopied(true); } catch { /* shown anyway */ }
+  };
+
+  if (state === 'done') {
+    return (
+      <div className="usr-temp">
+        <div className="usr-mail">كلمة السر المؤقتة — تظهر مرة واحدة:</div>
+        <div className="usr-temp-pw" dir="ltr">{temp}</div>
+        <div className="usr-acts">
+          <button className="btn g sm" onClick={copy}>{copied ? 'نُسخت' : 'انسخ'}</button>
+          {person.phone && (
+            <a className="btn p sm" target="_blank" rel="noreferrer"
+              href={`${whatsappLink(person.phone)}?text=${encodeURIComponent(message)}`}>
+              <Icon name="msg" size={16} /> أرسلها على واتساب
+            </a>
+          )}
+        </div>
+        <button className="btn g sm usr-temp-close" onClick={() => router.refresh()}>تمّ</button>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {state === 'ask' || state === 'busy' ? (
+        <div className="usr-acts">
+          <button className="btn p sm" disabled={state === 'busy'} onClick={make}>
+            {state === 'busy' ? '…' : 'نعم، اصنع كلمة سر مؤقتة'}
+          </button>
+          <button className="btn g sm" disabled={state === 'busy'} onClick={() => setState('idle')}>إلغاء</button>
+        </div>
+      ) : (
+        <button className="btn g sm usr-reset" onClick={() => setState('ask')}>
+          <Icon name="lock" size={16} /> كلمة سر مؤقتة
+        </button>
+      )}
+      {error && <div className="admin-err">{error}</div>}
+    </>
   );
 }

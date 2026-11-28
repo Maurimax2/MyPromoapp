@@ -95,6 +95,11 @@ const db = {
     // A dental first-year, approved: studies PCEM1's programme all year.
     { id: 'u-9', email: 'dent1@gmail.com', username: 'khadija.d', full_name: 'Khadija Dental', promo: 'pced1',
       matricule: null, role: 'student', status: 'approved', created_at: '2026-09-10' },
+    // An approved first-year with a real UUID: Supabase's admin API refuses any
+    // other id, so a temporary password can only be tried on this one.
+    { id: '5f1c2a9e-3b7d-4c11-9e2a-7d0b6c1e4f20', email: 'first.year@gmail.com', username: 'cheikh.m',
+      full_name: 'Cheikh Med', promo: 'pcem1', matricule: null, role: 'student', status: 'approved',
+      created_at: '2026-10-02' },
     // A pharmacy first-year, waiting: no number, a WhatsApp number instead.
     { id: 'u-10', email: 'pharma1@gmail.com', username: 'moussa.p', full_name: 'Moussa Pharma', promo: 'pcep1',
       matricule: null, role: 'student', status: 'pending', created_at: '2026-09-22' },
@@ -102,6 +107,7 @@ const db = {
   // First-years' WhatsApp numbers — staff and the person only (accounts.sql).
   profile_private: [
     { id: 'u-10', phone: '+22236123456', updated_at: '2026-09-22T10:00:00Z' },
+    { id: '5f1c2a9e-3b7d-4c11-9e2a-7d0b6c1e4f20', phone: '+22220000001', updated_at: '2026-10-02T10:00:00Z' },
   ],
   promos: [
     { id: 'pcem1', name: 'PCEM1', label: 'السنة الأولى', badge: '#8B5CF6', position: 1, indexed: false, track: 'medicine', year: 1, reads_from: null, reads_semesters: null },
@@ -391,6 +397,13 @@ function matches(row, key, spec) {
   if (op === 'is') return val === 'null' ? cell == null : String(cell) === val;
   // not.is.null, not.eq.x — the rest of the spec is itself a spec, negated.
   if (op === 'not') return !matches(row, key, val);
+  // ilike: % and _ are wildcards, a backslash makes them literal.
+  if (op === 'ilike' || op === 'like') {
+    const re = val.replace(/\\(.)|([%_])|([.*+?^${}()|[\]\\])/g,
+      (m, lit, wild, special) => (lit ? lit.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        : wild ? (wild === '%' ? '.*' : '.') : `\\${special}`));
+    return new RegExp(`^${re}$`, op === 'ilike' ? 'i' : '').test(String(cell ?? ''));
+  }
   if (op === 'in') {
     const list = val.replace(/^\(|\)$/g, '').split(',').map((s) => s.replace(/^"|"$/g, ''));
     return list.includes(String(cell));
@@ -489,6 +502,18 @@ createServer(async (req, res) => {
         db.authUsers = db.authUsers.filter((u) => u.id !== uid);
         return send(res, 200, {});
       }
+      // A temporary password from the panel: kept, so signing in with the old
+      // one fails and the new one carries `must_change_pw`, as Supabase does.
+      const uid = path.split('/').pop();
+      const person = [...db.profiles, ...db.authUsers].find((p) => p.id === uid);
+      if (!person) return send(res, 404, { message: 'User not found' });
+      const meta = (db.authMeta ||= {})[uid] ||= { app_metadata: {} };
+      if (req.method === 'PUT') {
+        const b = await body(req);
+        if (b?.password) meta.password = b.password;
+        if (b?.app_metadata) meta.app_metadata = { ...meta.app_metadata, ...b.app_metadata };
+      }
+      return send(res, 200, { id: uid, email: person.email, app_metadata: meta.app_metadata, user_metadata: {} });
     }
 
     if (path.endsWith('/token')) {
@@ -500,7 +525,13 @@ createServer(async (req, res) => {
       if (email && !found) {
         return send(res, 400, { error: 'invalid_grant', error_description: 'Invalid login credentials' });
       }
-      const user = found ? { id: found.id, email: found.email, user_metadata: {} } : USER;
+      const meta = found && db.authMeta?.[found.id];
+      if (meta?.password && asked?.password && asked.password !== meta.password) {
+        return send(res, 400, { error: 'invalid_grant', error_description: 'Invalid login credentials' });
+      }
+      const user = found
+        ? { id: found.id, email: found.email, user_metadata: {}, app_metadata: meta?.app_metadata || {} }
+        : USER;
       return send(res, 200, {
         access_token: tokenFor(user.id), refresh_token: tokenFor(user.id),
         token_type: 'bearer', expires_in: 3600,
@@ -746,6 +777,7 @@ createServer(async (req, res) => {
     room_messages: () => ({ created_at: new Date().toISOString() }),
     room_members:  () => ({ joined_at: new Date().toISOString(), seen_at: new Date().toISOString() }),
     profiles: () => ({ created_at: new Date().toISOString() }),
+    audit_log: () => ({ at: new Date().toISOString() }),
     documents: () => ({ published: true }),
     duels:    () => ({ created_at: new Date().toISOString(),
                        opponent_score: null, opponent_at: null }),

@@ -134,6 +134,17 @@ necessity, not a preference.
   every policy is written against `is_approved()`, so a new account reads
   nothing until somebody approves it in اللوحة ← الأعضاء.
 - The student picks their own promo at sign-up. An admin changes it if wrong.
+- **A forgotten password is a request staff answer, not an emailed link**
+  (owner, 2026-11-28). The link opened in the phone's browser, which lacks
+  the half of the sign-in the app started, so it landed on the door again.
+  «نسيت كلمة السر؟» takes an email, username or number and writes
+  `password_reset_asked` to `audit_log` (same answer whether the account
+  exists); اللوحة ← الأعضاء lists open requests above every tab, and
+  «كلمة سر مؤقتة» (also on every member's row) makes one, shown once, with a
+  WhatsApp button. It marks the account `must_change_pw`, and the door asks
+  for a password of their own right after they sign in with it. Nobody can
+  read a password — Supabase keeps only a hash. Only the owner may reset a
+  staff account.
 - **An unapproved account sees one screen: `/waiting`.** Enforced in the
   middleware, in one place, because the screen somebody adds next month is
   the one that would forget it. Row-level security alone produced an app that

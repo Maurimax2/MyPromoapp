@@ -1,12 +1,8 @@
 'use client';
 
-// The front door — four ways through it.
-//
-// Google is the quickest: every Android phone already has an account, so it
-// is one tap and no password to forget. A link to your own inbox is the
-// right door for a student who forgets passwords, but Supabase's built-in
-// mailer sends two messages an hour — so there is also a password, and a way
-// to make an account that needs no email at all.
+// The front door: a password, a new account, Google on the website — and,
+// for a forgotten password, a request that staff answer with a temporary one
+// on WhatsApp (the emailed link never worked from a phone; see askReset).
 //
 // Making an account does not let you in. A new profile is `pending` and every
 // policy is written against is_approved(), so a student sees nothing until
@@ -23,7 +19,9 @@ import { useT, LangSwitch } from '@/components/Lang';
 
 export default function LoginForm({ years = PROMOS }) {
   const t = useT();
-  const [how, setHow] = useState('password');   // password | join | link (forgot)
+  const [how, setHow] = useState('password');   // password | join | link (forgot) | renew
+  const [who, setWho] = useState('');           // forgot: email, username or number
+  const [fresh, setFresh] = useState('');       // renew: the password of their own
   const [showPw, setShowPw] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,22 +44,35 @@ export default function LoginForm({ years = PROMOS }) {
   const chosen = years.find((y) => y.id === promo);
   const first = chosen ? isFirstYear(chosen) : null;
 
-  // The link signs you in. It does not sign you up.
+  // A forgotten password is a request a person answers, not an emailed link.
   //
-  // Supabase creates the account for an unknown address unless it is told
-  // not to, so typing any address here used to make a student — with no name
-  // and, worse, no year. Signing up takes an email, a password and a year;
-  // this is the other way in for somebody who already did that.
-  const sendLink = async () => {
-    const { error } = await supabase().auth.signInWithOtp({
-      email: email.trim(),
-      options: {
-        shouldCreateUser: false,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+  // The link opened in the phone's browser, which does not hold the half of
+  // the sign-in the app had started, so it landed back on this door — and
+  // Supabase's mailer sends two messages an hour. The request appears in
+  // اللوحة ← الأعضاء; an admin checks who it is and sends a temporary password
+  // on WhatsApp. See /api/auth/reset-request.
+  const askReset = async () => {
+    const res = await fetch('/api/auth/reset-request', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ who: who.trim() }),
     });
-    if (error) throw error;
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || t('تعذّر إرسال الطلب ({status})', { status: res.status }));
     setState('sent');
+  };
+
+  // Signed in with a temporary password: a password of their own first, then
+  // the app. The temporary one keeps working until this is done.
+  const renew = async () => {
+    const res = await fetch('/api/auth/new-password', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ password: fresh }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || t('تعذّر الحفظ ({status})', { status: res.status }));
+    window.location.href = afterSignIn();
   };
 
   // Where the door sends you: the screen the server picks, remembering the
@@ -72,10 +83,14 @@ export default function LoginForm({ years = PROMOS }) {
   };
 
   const signIn = async () => {
-    const { error } = await supabase().auth.signInWithPassword({
+    const { data, error } = await supabase().auth.signInWithPassword({
       email: email.trim(), password,
     });
     if (error) throw error;
+    if (data?.user?.app_metadata?.must_change_pw) {
+      setHow('renew'); setState('idle'); setShowPw(false);
+      return;
+    }
     // One destination for everybody; the server picks the screen, because it
     // is the only side that can see whether you are staff, a student, or an
     // account still waiting to be approved.
@@ -119,7 +134,8 @@ export default function LoginForm({ years = PROMOS }) {
   };
 
   const ready =
-    how === 'link' ? email.trim()
+    how === 'link' ? who.trim().length >= 3
+    : how === 'renew' ? fresh.length >= 8
     : how === 'password' ? email.trim() && password
     : email.trim() && password.length >= 8 && name.trim() && promo
       && normaliseUsername(username).length >= 3
@@ -130,21 +146,10 @@ export default function LoginForm({ years = PROMOS }) {
     if (!ready || state === 'busy') return;
     setState('busy'); setError('');
     try {
-      await (how === 'link' ? sendLink() : how === 'password' ? signIn() : join());
+      await (how === 'link' ? askReset() : how === 'renew' ? renew()
+        : how === 'password' ? signIn() : join());
     } catch (err) {
-      // The link is the only door where the rate limit has a different way
-      // out, so that one sentence stays here.
-      const rate = /rate limit|too many/i.test(err.message);
-      // Supabase's answer for an address it has never seen, now that the link
-      // no longer creates one. It is the commonest thing a new student will
-      // do here, so it says where to go instead of showing them the raw
-      // "Signups not allowed for otp".
-      const unknown = /signups? not allowed|user not found/i.test(err.message);
-      setError(rate && how === 'link'
-        ? t('تجاوزنا حدّ الرسائل — أنشئ حسابًا بكلمة سر بدل الرابط')
-        : unknown && how === 'link'
-        ? t('لا حساب بهذا البريد — أنشئ حسابًا أولًا')
-        : t(authMessage(err)));
+      setError(t(authMessage(err)));
       setState('error');
     }
   };
@@ -155,9 +160,8 @@ export default function LoginForm({ years = PROMOS }) {
         <Logo size={74} id="login" />
         <div className="login-name"><span>My</span><span className="login-name-b">Promo</span></div>
         <div className="login-sent">
-          <div className="login-sent-t">{t('تحقّق من بريدك')}</div>
-          <div className="login-sent-b">{t('أرسلنا رابط الدخول إلى')}<br /><span dir="ltr">{email}</span>
-          </div>
+          <div className="login-sent-t">{t('وصل طلبك')}</div>
+          <div className="login-sent-b">{t('سيتحقّق أحد المشرفين من حسابك ويرسل لك كلمة سر مؤقتة على واتساب. ادخل بها، ثم اختر كلمة سر جديدة.')}</div>
           <button className="btn g" onClick={() => { setState('idle'); setHow('password'); }}>{t('رجوع')}</button>
         </div>
         <Agree t={t} />
@@ -166,8 +170,10 @@ export default function LoginForm({ years = PROMOS }) {
   }
 
   const go = (to) => () => { setHow(to); setState('idle'); setError(''); };
-  // Only the link door says something under the name: what will happen next.
-  const hello = how === 'link' ? t('نسيت كلمة السر؟ سنرسل لك رابطًا للدخول') : null;
+  // Only the two side doors say something under the name: what happens next.
+  const hello = how === 'link' ? t('نسيت كلمة السر؟ اطلب كلمة سر مؤقتة يرسلها لك مشرف على واتساب')
+    : how === 'renew' ? t('دخلت بكلمة سر مؤقتة — اختر كلمة سر جديدة لحسابك')
+    : null;
 
   return (
     <div className="login">
@@ -178,7 +184,7 @@ export default function LoginForm({ years = PROMOS }) {
         {hello && <p className="login-hello">{hello}</p>}
       </div>
 
-      {how !== 'link' && (
+      {how !== 'link' && how !== 'renew' && (
         <div className="login-tabs" role="tablist">
           <button type="button" role="tab" aria-selected={how === 'password'}
             className={how === 'password' ? 'on' : ''} onClick={go('password')}>{t('تسجيل الدخول')}</button>
@@ -239,12 +245,39 @@ export default function LoginForm({ years = PROMOS }) {
           </>
         )}
 
-        <label className="login-lbl" htmlFor="lg-email">{t('البريد الإلكتروني')}</label>
-        <input id="lg-email" className="login-input" type="email" dir="ltr" inputMode="email"
-          autoComplete="email" placeholder="you@example.com"
-          value={email} onChange={(e) => setEmail(e.target.value)} />
+        {how === 'link' && (
+          <>
+            <label className="login-lbl" htmlFor="lg-who">{t('البريد أو اسم المستخدم أو رقم الهاتف')}</label>
+            <input id="lg-who" className="login-input" dir="ltr" autoCapitalize="none" autoCorrect="off"
+              spellCheck={false} value={who} onChange={(e) => setWho(e.target.value)} />
+          </>
+        )}
 
-        {how !== 'link' && (
+        {how === 'renew' && (
+          <>
+            <label className="login-lbl" htmlFor="lg-new">{t('كلمة السر الجديدة')}</label>
+            <div className="login-pw">
+              <input id="lg-new" className="login-input" type={showPw ? 'text' : 'password'} dir="ltr"
+                autoComplete="new-password" placeholder={t('8 أحرف على الأقل')}
+                value={fresh} onChange={(e) => setFresh(e.target.value)} />
+              <button type="button" className="login-eye" onClick={() => setShowPw((v) => !v)}
+                aria-label={showPw ? t('أخفِ كلمة السر') : t('أظهر كلمة السر')}>
+                {showPw ? t('إخفاء') : t('إظهار')}
+              </button>
+            </div>
+          </>
+        )}
+
+        {how !== 'link' && how !== 'renew' && (
+          <>
+            <label className="login-lbl" htmlFor="lg-email">{t('البريد الإلكتروني')}</label>
+            <input id="lg-email" className="login-input" type="email" dir="ltr" inputMode="email"
+              autoComplete="email" placeholder="you@example.com"
+              value={email} onChange={(e) => setEmail(e.target.value)} />
+          </>
+        )}
+
+        {how !== 'link' && how !== 'renew' && (
           <>
             <label className="login-lbl" htmlFor="lg-pw">{t('كلمة السر')}</label>
             <div className="login-pw">
@@ -266,7 +299,8 @@ export default function LoginForm({ years = PROMOS }) {
 
         <button className="btn p" disabled={!ready || state === 'busy'}>
           {state === 'busy' ? '…'
-            : how === 'link' ? t('أرسل رابط الدخول')
+            : how === 'link' ? t('اطلب كلمة سر مؤقتة')
+            : how === 'renew' ? t('احفظ وادخل')
             : how === 'password' ? t('تسجيل الدخول')
             : t('أنشئ الحساب')}
         </button>
@@ -278,7 +312,7 @@ export default function LoginForm({ years = PROMOS }) {
         )}
       </form>
 
-      {web && how !== 'link' && (
+      {web && how !== 'link' && how !== 'renew' && (
         <>
           <div className="login-or"><span>{t('أو')}</span></div>
           <button type="button" className="login-google" onClick={google} disabled={state === 'busy'}>
